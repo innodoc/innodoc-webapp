@@ -1,5 +1,7 @@
+import Layout from '../components/Layout.js'
+
 export default () => (
-  <div>
-    <p>This is the about page</p>
-  </div>
+    <Layout>
+        <p>This is the about page</p>
+    </Layout>
 )

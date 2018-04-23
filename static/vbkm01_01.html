@@ -1,0 +1,337 @@
+<h2 id="M01_Zahlenbereiche">Zahlen, Variablen, Terme</h2>
+<h3 id="einführung" class="intro">Einführung</h3>
+<p>Die Mathematik ist eine Wissenschaft, in der allgemein abstrakte Strukturen und deren logische Zusammenhänge untersucht werden. Bevor auf die eigentlichen Inhalte dieses Abschnitts näher eingegangen wird, soll kurz auf den grundlegenden Begriff der <span id="index-menge" data-index-concept="Menge"><strong>Menge</strong></span> Bezug genommen werden.</p>
+<div class="info">
+<p>Um Aussagen in kompakter Weise über eine Reihe von strukturell ähnlichen Objekten treffen zu können, kann man solche Objekte in Mengen zusammenfassen, die als Behältnis für die Objekte dienen. Seien die Objekte mit <span class="math inline">\(a,b,c,\ldots\)</span> benannt, dann bildet das Symbol <span class="math inline">\(M=\{a; b ; c ; \ldots\}\)</span> die Menge <span class="math inline">\(M\)</span>, welche die vorigen Objekte als <strong>Elemente</strong> enthält. Letzteres schreibt man kurz <span class="math inline">\(a\in M\)</span>, <span class="math inline">\(b\in M\)</span>, <span class="math inline">\(c\in M\)</span> usw.; das Zeichen „<span class="math inline">\(\in\)</span>&quot; bedeutet also „ist Element von“. (Manchmal ist es schreibtechnisch geboten, die Reihenfolge von Element und Menge auszutauschen. Zum Erhalten der gleichen Aussage(n) wird dann das <span class="math inline">\(\in\)</span>-Symbol umgedreht, d.h. <span class="math inline">\(M\ni a\)</span>, <span class="math inline">\(M\ni b\)</span>, <span class="math inline">\(M\ni c\)</span> usw. heißt dann dasselbe, wobei „<span class="math inline">\(\ni\)</span>” somit „enthält als Element&quot; bzw. „beinhaltet&quot; bedeutet.)</p>
+<p>Neben der aufzählenden Schreibweise von Mengen existieren weitere Schreibweisen. Wenn die Elemente z.B. eine Bedingung <span class="math inline">\(B\)</span> erfüllen sollen, dann schreibt man <span class="math inline">\(T=\{x {\,}:{\,} x\ \text{erfüllt}\  B\}\)</span>. Wird dabei <span class="math inline">\(x\)</span> (explizit) aus einer umfassenderen Menge <span class="math inline">\(U\)</span> entnommen, dann wird dies auch in der Form <span class="math inline">\(T=\{x {\,}:{\,} x\in U \ \text{und}\  x\ \text{erfüllt}\  B\}\)</span> oder kurz <span class="math inline">\(T=\{x\in U {\,}:{\,} x\ \text{erfüllt}\  B\}\)</span> geschrieben.</p>
+<p>Aussagen wie „<span class="math inline">\(x\in U\)</span>&quot; oder „<span class="math inline">\(x\ \text{erfüllt}\  B\)</span>&quot; sind Aussagen im mathematischen Sinn, d.h. ihnen kann ein eindeutiger Wahrheitswert „wahr&quot; oder „falsch&quot; zugeordnet werden. Seien <span class="math inline">\(A_1\)</span> und <span class="math inline">\(A_2\)</span> solche Aussagen. Für den Fall, dass sowohl <span class="math inline">\(A_1\)</span> als auch <span class="math inline">\(A_2\)</span> gelten soll, also <span class="math inline">\(A_1\)</span> <strong>und</strong> <span class="math inline">\(A_2\)</span> gelten sollen, schreibt man auch <span class="math inline">\(A_1 \wedge A_2\)</span>. Im Fall, dass nur eine von beiden Aussagen zu gelten braucht, d.h. <span class="math inline">\(A_1\)</span> <strong>oder</strong> <span class="math inline">\(A_2\)</span> (oder beide Aussagen) gelten sollen, schreibt man auch <span class="math inline">\(A_1\vee A_2\)</span>.</p>
+<p>Für zwei Mengen <span class="math inline">\(M\)</span> und <span class="math inline">\(N\)</span> notiert man</p>
+<ul>
+<li><p><span class="math inline">\(M\subseteq N\)</span>, d.h. <span class="math inline">\(M\)</span> ist (unechte) <strong>Teilmenge</strong> von <span class="math inline">\(N\)</span>, wenn jedes Element von <span class="math inline">\(M\)</span> auch in <span class="math inline">\(N\)</span> enthalten ist; gibt es dann mindestens ein Element in <span class="math inline">\(N\)</span>, das nicht in <span class="math inline">\(M\)</span> enthalten ist, wenn also <span class="math inline">\(M\)</span> eine echte Teilmenge von <span class="math inline">\(N\)</span> ist, so schreibt man (auch) <span class="math inline">\(M\subset N\)</span>;</p></li>
+<li><p><span class="math inline">\(M\cup N\)</span> für die <strong>Vereinigung</strong> der beiden Mengen; diese bezeichnet jene Menge, die alle Elemente enthält, die in mindestens einer der beiden Mengen vorkommen;</p></li>
+<li><p><span class="math inline">\(M\cap N\)</span> für den <strong>Schnitt</strong> der beiden Mengen; dieser bezeichnet jene Menge, in der alle Elemente enthalten sind, die in beiden Mengen vorkommen;</p></li>
+<li><p><span class="math inline">\(N\setminus M\)</span> für die <strong>Differenzmenge</strong>, d.h. für diejenige Menge, welche die Elemente von <span class="math inline">\(N\)</span> enthält, die <em>nicht</em> in <span class="math inline">\(M\)</span> vorkommen.</p></li>
+</ul>
+<p>Die obige Vereinigung ist also charakterisiert durch Elemente, die <span class="math inline">\((x\in M) \vee (x\in N)\)</span> erfüllen. Für die Elemente der obigen Schnittmenge gilt dagegen <span class="math inline">\((x\in M) \wedge (x\in N)\)</span>. Demgegenüber enthält die obige Differenzmenge solche Elemente, für die <span class="math inline">\((x\in N) \wedge (x\notin M)\)</span> gilt. Mit dem Symbol <span class="math inline">\(\notin\)</span>-Symbol wird die Verneinung (Negation) der Element-Aussage beschrieben.</p>
+</div>
+<p>Mathematik beinhaltet die Welt der Zahlen: <span class="math display">\[\dots; 0; -3; 4; \dfrac{4}{5}; \sqrt 2; e; \pi; \num{12.3}; 10^{23}; \dots \, .\]</span> Wenn man verschiedene Zahlen näher betrachtet, so erkennt man jedoch grundlegende Unterschiede. Manche Zahlen lassen sich nicht als geschlossener Dezimalbruch darstellen, andere sind schier unvorstellbar (imaginär), wieder andere kann man an den Fingern abzählen oder aber als Lösungen von Gleichungen gewinnen.</p>
+<div class="info">
+<p>Die in diesem Kurs verwendeten Zahlenbereiche sind:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\displaystyle \mathbb{N}=\lbrace 1; 2; 3;\ldots\rbrace\)</span></td>
+<td style="text-align: left;">die <strong>Menge der natürlichen Zahlen ohne Null</strong>,</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\displaystyle \mathbb{N}_{0}=\lbrace 0; 1; 2; 3;\ldots\rbrace\)</span></td>
+<td style="text-align: left;">die <strong>Menge der natürlichen Zahlen inklusive Null</strong>,</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\displaystyle \mathbb{Z}=\lbrace \ldots; -2; -1; 0; 1; 2; \ldots\rbrace\)</span></td>
+<td style="text-align: left;">die <strong>Menge der ganzen Zahlen</strong>,</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\displaystyle \mathbb{Q}\)</span></td>
+<td style="text-align: left;">die <strong>Menge der rationalen Zahlen (Brüche)</strong>,</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\displaystyle \mathbb{R}\)</span></td>
+<td style="text-align: left;">die <strong>Menge der reellen Zahlen</strong>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Diese Zahlenbereiche sind nicht unabhängig voneinander, sondern bilden eine Kette ineinander geschachtelter Zahlenmengen: <span class="math display">\[\mathbb{N}\subset\mathbb{N}_{0}\subset\mathbb{Z}\subset\mathbb{Q}\subset\mathbb{R} \, .\]</span> Diese Zahlenbereiche erhält man, indem man sich nacheinander die Lösungen folgender Gleichungen anschaut und die Zahlenbereiche so erweitert, dass immer eine Lösung existiert:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Zahlenbereich</th>
+<th style="text-align: right;">lösbare Gleichung</th>
+<th style="text-align: right;">nicht lösbar</th>
+<th style="text-align: right;">Hinzunahme</th>
+<th style="text-align: center;">neuer Bereich</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\displaystyle \mathbb{N}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(x+2=4\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(x+2=1\)</span></td>
+<td style="text-align: right;">negativer Zahlen</td>
+<td style="text-align: center;"><span class="math inline">\(\displaystyle \mathbb{Z}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\displaystyle \mathbb{Z}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(4x=20\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(4x=5\)</span></td>
+<td style="text-align: right;">von Brüchen</td>
+<td style="text-align: center;"><span class="math inline">\(\displaystyle \mathbb{Q}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\displaystyle \mathbb{Q}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(x^2=4\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(x^2=2\)</span></td>
+<td style="text-align: right;">irrationaler Zahlen</td>
+<td style="text-align: center;"><span class="math inline">\(\displaystyle \mathbb{R}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\displaystyle \mathbb{R}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(x^2=2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(x^2=-1\)</span></td>
+<td style="text-align: right;">usw.</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>Natürliche Zahlen treten immer dann auf, wenn Anzahlen bestimmt oder Dinge nummeriert werden müssen. Sie spielen in der Kombinatorik eine große Rolle: die Anzahl der Möglichkeiten, aus 49 Kugeln 6 Kugeln zu ziehen, ist zum Beispiel eine natürliche Zahl. In der Informatik bilden sie die Grundlage für die verschiedenen Zahlensysteme: das Dualsystem hat die Basis 2, das Dezimalsystem die Basis 10 und das Hexadezimalsystem die Basis 16. Bestimmte natürliche Zahlen, die Primzahlen, bilden die Grundlage der modernen Verschlüsselungstechniken.</p>
+<p>In der Menge der natürlichen Zahlen lässt es sich einfach rechnen, aber man stößt an Grenzen, wenn man zum Beispiel eine Temperaturangabe von 3<span class="math inline">\(^\circ\)</span>C liest (handelt es sich um Plus- oder Minusgrade?) oder eine Gleichung der Form <span class="math inline">\(x+5=1\)</span> auflösen möchte. Daher muss die Menge der natürlichen Zahlen um die negativen natürlichen Zahlen erweitert werden und man erhält <span class="math inline">\(\mathbb{Z}\)</span>. Die <span id="index-ganze-zahlen-z" data-index-concept="Ganze Zahlen $\Z$"><strong>Menge der ganzen Zahlen</strong></span> wird mit <span class="math display">\[\mathbb{Z}:=\{\dots;  -4; -3; -2; -1; 0; 1; 2; 3; 4; \dots\}\]</span> bezeichnet. Ganze Zahlen werden immer dann benötigt, wenn das Vorzeichen der natürlichen Zahlen eine Rolle spielt. In <span class="math inline">\(\mathbb{Z}\)</span> können Zahlen unbeschränkt voneinander subtrahiert werden, d.h. Gleichungssysteme der Form <span class="math inline">\(\displaystyle a+x=b\)</span> sind in <span class="math inline">\(\mathbb{Z}\)</span> immer lösbar (<span class="math inline">\(\displaystyle x=b+(-a)\)</span>).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode tikz"><code class="sourceCode latex"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">\begin</span>{<span class="ex">tikzpicture</span>}[x=1.0cm, y=1.0cm]</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="fu">\draw</span>[thick, black] (-5.2,0) -- (6.2,0);</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="fu">\foreach</span> <span class="fu">\x</span> in {-5, -4, ..., 6}</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="fu">\draw</span>[shift={(<span class="fu">\x</span>,0)},color=black] (0pt,6pt) -- (0pt,-6pt) node[below=1.5pt] {<span class="fu">\normalsize</span> <span class="ss">$</span><span class="sc">\x</span><span class="ss">$</span>};</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">\end</span>{<span class="ex">tikzpicture</span>}</a></code></pre></div>
+<p>Auf den ganzen Zahlen lässt sich eindeutig ein Vergleichssymbol <span class="math inline">\(&lt;\)</span> (<em>kleiner als</em> genannt) definieren, die ganzen Zahlen lassen sich damit zu einer Kette anordnen: <span class="math display">\[\dots &lt; -3 &lt; -2 &lt; -1 &lt; 0 &lt; 1 &lt; 2 &lt; 3 &lt; \dots \, .\]</span></p>
+<p>Eine rationale Zahl stellt das Verhältnis zweier ganzer Zahlen dar:</p>
+<div class="info">
+<p>Die Menge der <span id="index-rationale-zahlen-q" data-index-concept="Rationale Zahlen $\Q$"><strong>rationalen Zahlen</strong></span> wird mit <span class="math display">\[\mathbb{Q}:=\left\{{\dfrac{p}{q} {\,}:{\,} p,q\in\mathbb{Z}, q\neq 0 }\right\}\]</span> bezeichnet. Die Elemente <span class="math inline">\(\displaystyle \tfrac{p}{q}\)</span> der Menge <span class="math inline">\(\mathbb{Q}\)</span> heißen <span id="index-bruch" data-index-concept="Bruch"><strong>Brüche</strong></span>, wobei <span class="math inline">\(p\)</span> der <span id="index-zahler" data-index-concept="Zähler"><strong>Zähler</strong></span> des Bruchs und <span class="math inline">\(q\)</span> der von Null verschiedene <span id="index-nenner" data-index-concept="Nenner"><strong>Nenner</strong></span> des Bruchs ist.</p>
+</div>
+<p>Rationale Zahlen spielen immer dann eine Rolle, wenn Angaben „genauer&quot; werden sollen, also Temperaturen in Bruchteilen von <span class="math inline">\(^\circ\)</span>C angegeben, Anteile von Flächen eingefärbt oder Medikamente aus bestimmten Bestandteilen zusammengemischt werden sollen.</p>
+<p>Dabei ist zu beachten, dass die Darstellung als Bruch nicht eindeutig ist, man kann die gleiche Zahl durch mehrere Brüche beschreiben. Beispielsweise ist <span class="math display">\[2 \;=\; \dfrac{4}{2} \;=\; \dfrac{1024}{512}\]</span> die gleiche rationale Zahl.</p>
+<p>Andererseits kann nicht jede Zahl auf dem Zahlenstrahl als Bruch dargestellt werden. Betrachtet man zum Beispiel ein Quadrat mit der Seitenlänge 1 und will die Länge der Diagonalen <span class="math inline">\(d\)</span> berechnen, so erhält man nach dem Satz von Pythagoras (<span class="math inline">\(c^2=a^2+b^2\)</span>):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode tikz"><code class="sourceCode latex"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">\begin</span>{<span class="ex">tikzpicture</span>}[x=4.0cm, y=4.0cm]</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="fu">\draw</span>[thick, black] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="fu">\draw</span>[thick, black] (0,1) -- (1,0);</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="fu">\draw</span>[color=black] (0.5,0.5) node[anchor=south west] {<span class="fu">\normalsize</span> <span class="ss">$d$</span>};</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="fu">\draw</span>[stealth&#39;-,black] (0.0,-0.1) -- (0.36,-0.1);</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="fu">\draw</span>[-stealth&#39;,black] (0.65,-0.1) -- (1.0,-0.1);</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="fu">\draw</span> (0.5,-0.1) node {<span class="fu">\scriptsize</span> <span class="ss">$1</span><span class="sc">\MEinheit</span><span class="ss">{cm}$</span>};</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="kw">\end</span>{<span class="ex">tikzpicture</span>}</a></code></pre></div>
+<p><span class="math display">\[d^2 = 1^2+1^2 = 2, \;\mbox{also formal}\; d=\sqrt{2}.\]</span></p>
+<p>Eine weitere Zahl, die nicht als Bruch dargestellt werden kann, erhält man durch Abrollen eines Rades mit Durchmesser <span class="math inline">\(1\)</span> auf der Zahlengeraden. Es handelt sich um die Zahl <span class="math inline">\(\pi\)</span> (<em>Pi</em> genannt). Man kann zeigen, dass diese beiden Zahlen (<span class="math inline">\(\sqrt{2}\)</span> und <span class="math inline">\(\pi\)</span>) nicht in Form eines Bruchs geschrieben werden können. (Der Beweis für <span class="math inline">\(\sqrt{2}\)</span> ist dabei verhältnismäßig einfach.) Sie sind zwei Beispiele aus der Menge der sogenannten <span id="index-irrationale-zahlen" data-index-concept="Irrationale Zahlen"><strong>irrationalen Zahlen</strong></span>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode tikz"><code class="sourceCode latex"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">\begin</span>{<span class="ex">tikzpicture</span>}[x=2.0cm, y=2.0cm]</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="fu">\draw</span>[-stealth&#39;,black] (-0.7,0.0) -- (4.0,0.0) node[right=3pt] {<span class="ss">$x$</span>};</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="fu">\draw</span>[color=black] (0,0.5) circle (0.5) ({pi},0.5) circle (0.5);</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="fu">\draw</span>[-stealth&#39;,black] (1.0,0.7) -- (2.14,0.7);</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="fu">\draw</span>[color=black] (0,3pt) -- (0,-3pt) node[below=2pt] {<span class="fu">\small</span> <span class="ss">$0$</span>};</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="fu">\draw</span>[color=black] ({pi},3pt) -- ({pi},-3pt) node[below=2pt] {<span class="fu">\small</span> Pi};</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="fu">\draw</span>[stealth&#39;-,color=black] (0,0.5) ++(20:0.65) arc (20:60:0.65);</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw">\end</span>{<span class="ex">tikzpicture</span>}</a></code></pre></div>
+<p>Eine Zahl ist irrational, wenn sie nicht rational ist, also nicht als Bruch aufgeschrieben werden kann. Die irrationalen Zahlen schließen nun die noch vorhandenen Lücken auf der Zahlengeraden, jedem Punkt entspricht genau eine reelle Zahl.</p>
+<div class="info">
+<p>Die Menge der <span id="index-reelle-zahlen-r" data-index-concept="Reelle Zahlen $\R$"><strong>reellen Zahlen</strong></span> wird mit <span class="math inline">\(\mathbb{R}\)</span> bezeichnet und setzt sich aus der Menge der rationalen Zahlen und der Menge der irrationalen Zahlen zusammen. Sie enthält alle auf der Zahlengeraden darstellbaren Zahlen.</p>
+</div>
+<p>Reelle Zahlen dienen als Maßzahlen für Längen, Flächeninhalte, Temperaturen, Massen, etc. In diesem Kurs werden die mathematischen Probleme typischerweise mit reellen Zahlen gelöst.</p>
+<p>Eine Grundeigenschaft reeller Zahlen ist, dass diese geordnet sind, d.h. für zwei reelle Zahlen <span class="math inline">\(a,b\)</span> gilt genau eine der drei Beziehungen <span class="math inline">\(a&lt;b\)</span> (<em>kleiner als</em>), <span class="math inline">\(a=b\)</span> (<em>ist gleich</em>) oder <span class="math inline">\(a&gt;b\)</span> (<em>größer als</em>). Eine weitere definierende Eigenschaft ist die Vollständigkeit, die - grob gesprochen - die „Lückenlosigkeit&quot; der Zahlengeraden beschreibt.</p>
+<div id="VBKM01_Intervalle" class="info">
+<p>Für zwei verschiedene reelle Zahlen betrachtet man insbesondere alle Zahlen, die auf der Zahlengeraden zwischen diesen beiden Zahlen liegen. Solche Teilmengen reeller Zahlen bezeichnet man als <span id="index-intervall" data-index-concept="Intervall"><strong>Intervalle</strong></span>. Deren Beschreibung wird so festgelegt, dass man ihnen eine linke Intervallgrenze (<span class="math inline">\(a\)</span>) und eine rechte Intervallgrenze <span class="math inline">\((b)\)</span> zuordnet mit <span class="math inline">\(a&lt;b\)</span>. Je nachdem, ob eine oder beide Intervallgrenzen zum Intervall dazugehören, ergeben sich folgende Fälle:</p>
+<ul>
+<li><p><span class="math inline">\(\{x\in\mathbb{R} {\,}:{\,} x\ge a \ \text{und}\  x\le b\}  = [a; b]\)</span> bezeichnet das <strong>abgeschlossene</strong> Intervall zwischen <span class="math inline">\(a\)</span> und <span class="math inline">\(b\)</span>, bei dem die Grenzen zum Intervall dazugehören.</p></li>
+<li><p><span class="math inline">\(\{x\in\mathbb{R} {\,}:{\,} x&gt; a \ \text{und}\  x&lt; b\}  = ] a; b[\)</span> bezeichnet das <strong>offene</strong> Intervall zwischen <span class="math inline">\(a\)</span> und <span class="math inline">\(b\)</span>, bei dem die Grenzen <em>nicht</em> zum Intervall dazugehören.</p></li>
+<li><p><span class="math inline">\(\{x\in\mathbb{R} {\,}:{\,} x\ge a \ \text{und}\  x&lt; b\}  = [a; b[\)</span> bezeichnet das <strong>links abgeschlossene und rechts offene</strong> Intervall zwischen <span class="math inline">\(a\)</span> und <span class="math inline">\(b\)</span>, bei dem die linke Grenze zum Intervall dazugehört, die rechte aber nicht.</p></li>
+<li><p><span class="math inline">\(\{x\in\mathbb{R} {\,}:{\,} x&gt; a \ \text{und}\  x\le b\}  = ] a; b]\)</span> bezeichnet das <strong>links offene und rechts abgeschlossene</strong> Intervall zwischen <span class="math inline">\(a\)</span> und <span class="math inline">\(b\)</span>, bei dem die rechte Grenze zum Intervall dazugehört, die linke aber nicht.</p></li>
+</ul>
+<p>Die Intervalle der letzten beiden Typen heißen auch <strong>halboffene</strong> Intervalle.</p>
+<p>Im Falle offener Intervallenden kann man auch <strong>unbeschränkte</strong> Intervalle betrachten. In diesen Fällen entfällt die jeweilige Bedingung in der Mengenbeschreibung: <span class="math inline">\(\{x\in\mathbb{R} {\,}:{\,} x\ge a\} = \left[a; \infty\right[\)</span>, <span class="math inline">\(\{x\in\mathbb{R} {\,}:{\,} x&gt; a\} = \left] a; \infty\right[\)</span>, <span class="math inline">\(\{x\in\mathbb{R} {\,}:{\,} x\le b\} = \left] {-}\infty; b\right]\)</span>, <span class="math inline">\(\{x\in\mathbb{R} {\,}:{\,} x&lt; b\} = \left] {-}\infty; b\right[\)</span>, <span class="math inline">\(\{x\in\mathbb{R}\} = \mathbb{R} = \left] {-}\infty; \infty\right[\)</span>.</p>
+<p>Darüber hinaus sind folgende Bezeichnungen gebräuchlich: <span class="math inline">\(\mathbb{R}^{+}=\left] 0; \infty\right[\)</span>, <span class="math inline">\({\mathbb{R}_{0}}^{+}= \left[ 0; \infty\right[\)</span>, <span class="math inline">\(\mathbb{R}^{-}=\left] -\infty ; 0\right[\)</span>, <span class="math inline">\({\mathbb{R}_{0}}^{-}=\left] -\infty ; 0\right]\)</span>.</p>
+<p>Eine letzte Bemerkung zur Schreibweise: Sie werden in der Literatur zwei verschiedene Schreibweisen für das offene Ende eines Intervalls finden, entweder mit runden Klammern oder mit nach außen weisenden eckigen Klammern, etwa <span class="math inline">\([a; b[=[a; b)\)</span>, <span class="math inline">\(]a; b[=(a ; b)\)</span>. Beide Schreibweisen sind korrekt, lassen Sie sich davon nicht verwirren.</p>
+</div>
+<h3 id="variablen-und-terme">Variablen und Terme</h3>
+<p>Die Verwendung von Variablen, Termen und Gleichungen ist notwendig, um Aussagen mit noch unbestimmten Werten zu formalisieren.</p>
+<div class="info">
+<p>Eine <span id="index-variable" data-index-concept="Variable"><strong>Variable</strong></span> ist ein Symbol (typischerweise ein Buchstabe), das als Platzhalter für einen unbestimmten Wert eingesetzt wird. Ein <span id="index-term" data-index-concept="Term"><strong>Term</strong></span> ist ein mathematischer Ausdruck, der Variablen, Rechenoperationen und weitere Symbole enthalten kann, und der nach Einsetzung von Zahlen für die Variablen einen konkreten Zahlenwert ergibt. Terme können zu Gleichungen bzw. Ungleichungen kombiniert oder in Funktionsbeschreibungen eingesetzt werden, dazu später mehr.</p>
+</div>
+<div class="example">
+<p>Die textuelle Frage</p>
+<p><em>In einer Schulklasse gibt es vier Mädchen mehr als Jungs und insgesamt 20 Kinder, wieviele Mädchen bzw. Jungs sind in der Klasse?</em></p>
+<p>kann man beispielsweise formalisieren, indem man die Variablen <span class="math inline">\(a\)</span> für die Anzahl der Mädchen und <span class="math inline">\(b\)</span> für die Anzahl der Jungs in der Schulklasse einführt und damit die beiden Gleichungen <span class="math inline">\(a=b+4\)</span> und <span class="math inline">\(a+b=20\)</span> aufstellt. Diese kann man durch Einsetzen nun auflösen zu <span class="math inline">\(a=12\)</span> und <span class="math inline">\(b=8\)</span> und daraus den textuellen Antwortsatz</p>
+<p><em>In der Schulklasse befinden sich <span class="math inline">\(12\)</span> Mädchen und <span class="math inline">\(8\)</span> Jungs</em></p>
+<p>aufbauen. Dabei ist beispielsweise <span class="math inline">\(b+4\)</span> ein Term, <span class="math inline">\(b\)</span> selbst ist eine Variable und <span class="math inline">\(a+b=20\)</span> ist eine Gleichung mit einem Term auf der linken und einer Zahl auf der rechten Seite.</p>
+</div>
+<p>Generell werden Variablen (und manchmal auch Terme) mit kleinen lateinischen Buchstaben <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span>, usw. bezeichnet. Oft werden auch griechische Buchstaben dafür verwendet, zum Beispiel wenn Winkel(variablen) von Zahlen(variablen) unterschieden werden sollen.</p>
+<div id="VBKM01_Griechisch" class="info">
+<p>Hier werden die Buchstaben des griechischen Alphabets in einer Übersicht gezeigt, die auch die Großbuchstaben enthält, sortiert nach dem griechischen Alphabet:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\alpha\)</span>, <span class="math inline">\(A\)</span></td>
+<td style="text-align: left;">„alpha“</td>
+<td style="text-align: center;"><span class="math inline">\(\beta\)</span>, <span class="math inline">\(B\)</span></td>
+<td style="text-align: left;">„beta“</td>
+<td style="text-align: center;"><span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\Gamma\)</span></td>
+<td style="text-align: left;">„gamma“</td>
+<td style="text-align: center;"><span class="math inline">\(\delta\)</span>, <span class="math inline">\(\Delta\)</span></td>
+<td style="text-align: left;">„delta“</td>
+<td style="text-align: center;"><span class="math inline">\(\epsilon\)</span>, <span class="math inline">\(E\)</span></td>
+<td style="text-align: left;">„epsilon“</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\zeta\)</span>, <span class="math inline">\(Z\)</span></td>
+<td style="text-align: left;">„zeta“</td>
+<td style="text-align: center;"><span class="math inline">\(\eta\)</span>, <span class="math inline">\(H\)</span></td>
+<td style="text-align: left;">„eta“</td>
+<td style="text-align: center;"><span class="math inline">\(\theta\)</span>, <span class="math inline">\(\Theta\)</span></td>
+<td style="text-align: left;">„theta“</td>
+<td style="text-align: center;"><span class="math inline">\(\iota\)</span>, <span class="math inline">\(I\)</span></td>
+<td style="text-align: left;">„iota“</td>
+<td style="text-align: center;"><span class="math inline">\(\kappa\)</span>, <span class="math inline">\(K\)</span></td>
+<td style="text-align: left;">„kappa“</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\lambda\)</span>, <span class="math inline">\(\Lambda\)</span></td>
+<td style="text-align: left;">„lambda“</td>
+<td style="text-align: center;"><span class="math inline">\(\mu\)</span>, <span class="math inline">\(M\)</span></td>
+<td style="text-align: left;">„mü“</td>
+<td style="text-align: center;"><span class="math inline">\(\nu\)</span>, <span class="math inline">\(N\)</span></td>
+<td style="text-align: left;">„nü“</td>
+<td style="text-align: center;"><span class="math inline">\(\xi\)</span>, <span class="math inline">\(\Xi\)</span></td>
+<td style="text-align: left;">„xi“</td>
+<td style="text-align: center;"><span class="math inline">\(o\)</span>, <span class="math inline">\(O\)</span></td>
+<td style="text-align: left;">„omikron“</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\pi\)</span>, <span class="math inline">\(\Pi\)</span></td>
+<td style="text-align: left;">„pi“</td>
+<td style="text-align: center;"><span class="math inline">\(\varrho\)</span>, <span class="math inline">\(P\)</span></td>
+<td style="text-align: left;">„rho“</td>
+<td style="text-align: center;"><span class="math inline">\(\sigma\)</span>, <span class="math inline">\(\Sigma\)</span></td>
+<td style="text-align: left;">„sigma“</td>
+<td style="text-align: center;"><span class="math inline">\(\tau\)</span>, <span class="math inline">\(T\)</span></td>
+<td style="text-align: left;">„tau“</td>
+<td style="text-align: center;"><span class="math inline">\(\upsilon\)</span>, <span class="math inline">\(\Upsilon\)</span></td>
+<td style="text-align: left;">„üpsilon“</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\phi\)</span>, <span class="math inline">\(\Phi\)</span></td>
+<td style="text-align: left;">„phi“</td>
+<td style="text-align: center;"><span class="math inline">\(\chi\)</span>, <span class="math inline">\(X\)</span></td>
+<td style="text-align: left;">„chi“</td>
+<td style="text-align: center;"><span class="math inline">\(\psi\)</span>, <span class="math inline">\(\Psi\)</span></td>
+<td style="text-align: left;">„psi“</td>
+<td style="text-align: center;"><span class="math inline">\(\omega\)</span>, <span class="math inline">\(\Omega\)</span></td>
+<td style="text-align: left;">„omega“</td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<div class="hint-text">
+<p>Griechische Buchstaben können in Aufgaben mit Ihrer Bezeichnung eingegeben werden, z. B. <code>alpha</code> statt <span class="math inline">\(\alpha\)</span>.</p>
+</div>
+</div>
+<p>Bei einem Term ist wesentlich, dass er zu einem konkreten Zahlenwert ausgewertet werden kann, wenn man Zahlen für die im Term auftretenden Variablen einsetzt:</p>
+<div class="example">
+<p>Die folgenden Ausdrücke sind Terme:</p>
+<ul>
+<li><p><span class="math inline">\(x\cdot (y+z)-1\)</span>, für <span class="math inline">\(x=1\)</span>, <span class="math inline">\(y=2\)</span> und <span class="math inline">\(z=0\)</span> erhält man beispielsweise den Wert <span class="math inline">\(1\)</span> des Terms.</p></li>
+<li><p><span class="math inline">\(\sin(\alpha)+\cos(\alpha)\)</span>, für <span class="math inline">\(\alpha=0^\circ\)</span> und <span class="math inline">\(\beta=0^\circ\)</span> erhält man beispielsweise den Wert <span class="math inline">\(1\)</span> (für die Berechnung von Sinus und Kosinus sei auf das Kapitel <span data-link-section="VBKM05">VBKM05</span> verwiesen).</p></li>
+<li><p><span class="math inline">\(1+2+3+4\)</span>, es treten keine Variablen auf, trotzdem handelt es sich um einen Term (der immer den Wert <span class="math inline">\(10\)</span> ergibt).</p></li>
+<li><p><span class="math inline">\(\tfrac{\alpha+\beta}{1+\gamma}\)</span>, beispielsweise erhält man für <span class="math inline">\(\alpha=1\)</span>, <span class="math inline">\(\beta=2\)</span> und <span class="math inline">\(\gamma=3\)</span> den Wert <span class="math inline">\(\tfrac{3}{4}\)</span> für den Term. Hier darf man aber nicht <span class="math inline">\(\gamma=-1\)</span> einsetzen.</p></li>
+<li><p><span class="math inline">\(\sin(\pi (x+1))\)</span>, beispielsweise ergibt der Term den Wert Null wenn man für <span class="math inline">\(x\)</span> eine ganze Zahl einsetzt.</p></li>
+<li><p><span class="math inline">\(z\)</span>, eine Variable für sich allein ist auch ein Term.</p></li>
+<li><span class="math inline">\(1+2+3+\cdots+(n-1)+n\)</span> ist ein Term, bei dem die Variable <span class="math inline">\(n\)</span> im Term auftritt und gleichzeitig seine Länge festlegt.</li>
+</ul>
+</div>
+<div class="example">
+<p>Diese Ausdrücke sind keine Terme im Sinne der Mathematik:</p>
+<ul>
+<li><p><span class="math inline">\(a+b=20\)</span>, ist eine Gleichung (Einsetzen von Werten für <span class="math inline">\(a\)</span> und <span class="math inline">\(b\)</span> ergibt keine Zahl, sondern die Gleichung ist eben wahr oder falsch).</p></li>
+<li><p><span class="math inline">\(a\cdot (b+c\)</span> ist nicht richtig geklammert,</p></li>
+<li><p>„<em>Anteil der Mädchen in der Schulklasse</em>“ ist kein Term, kann aber durch den Term <span class="math inline">\(\tfrac{a}{a+b}\)</span> formalisiert werden,</p></li>
+<li><span class="math inline">\(\sin\)</span> ist kein Term sondern ein Funktionsname, dagegen ist <span class="math inline">\(\sin(\alpha)\)</span> ein Term (der bei Einsetzen eines Winkels für <span class="math inline">\(\alpha\)</span> ausgewertet werden kann).</li>
+</ul>
+</div>
+<div class="exercise">
+<p>Gegeben sind jeweils ein Term und Zahlenwerte für die im Term auftretenden Variablen. Wie lautet die Auswertung des Terms?</p>
+<ol type="1">
+<li><p><span class="math inline">\(\tfrac{\alpha+\beta}{\alpha-\beta}\)</span> nimmt den Wert an für <span class="math inline">\(\alpha=6\)</span> und <span class="math inline">\(\beta=4\)</span>.</p></li>
+<li><p><span class="math inline">\(y^2+x^2\)</span> nimmt den Wert an für <span class="math inline">\(y=2x+1\)</span> und <span class="math inline">\(x=-1\)</span>.</p></li>
+<li><p><span class="math inline">\(1+2+3+\cdots+(n-1)+n\)</span> nimmt den Wert an für <span class="math inline">\(n=6\)</span>.</p></li>
+</ol>
+<div class="hint">
+<p>Einsetzen der gegebenen Werte für die Variablen ergibt<br />
+<span class="math inline">\(\tfrac{\alpha+\beta}{\alpha-\beta}=\tfrac{6+4}{6-4}=\tfrac{10}{2}=5\)</span> in Teil a),<br />
+<span class="math inline">\(y^2+x^2=(-1)^2+(-1)^2=2\)</span> in Teil b) mit <span class="math inline">\(y=2 \cdot (-1)+1=-1\)</span> und<br />
+<span class="math inline">\(1+2+3+4+5+6=21\)</span> in Teil c).</p>
+</div>
+</div>
+<div class="exercise">
+<p>Formalisieren Sie mit den vorgegebenen Variablen den Anteil der Mädchen, deren Anzahl durch die Variable <span class="math inline">\(a\)</span> gegeben sei, sowie den der Jungen, deren Anzahl durch die Variable <span class="math inline">\(b\)</span> gegeben sei, an der Gesamtzahl an Kindern:</p>
+<p>Anteil der Mädchen ist und Anteil der Jungen ist .<br />
+<span class="hint-text">Brüche können mit dem Strich (über der 7-Taste auf den meisten Tastaturen) eingegeben werden, dabei sollten Zähler bzw. Nenner geklammert werden wenn Rechenoperationen auftreten. Beispielsweise kann man den Bruch <span class="math inline">\(\tfrac{1+x}{2+y}\)</span> eingeben als <code>(1+x)/(2+y)</code>.</span></p>
+<div class="hint">
+<p>Die Gesamtanzahl der Kinder ist <span class="math inline">\(a+b\)</span>, der Mädchenanteil ist daher <span class="math inline">\(\tfrac{a}{a+b}\)</span> und der Jungenanteil ist <span class="math inline">\(\tfrac{b}{a+b}\)</span>.</p>
+</div>
+</div>
+<p>Terme können auch ineinander eingesetzt werden:</p>
+<div class="info">
+<p>Beim <span id="index-einsetzen-terme" data-index-concept="Einsetzen (Terme)"><strong>Einsetzen</strong></span> von Termen wird ein Term anstelle eines Symbols in einem anderen Term eingesetzt, wobei das ersetzte Symbol ggf. vorher geklammert werden muss, wenn der einzusetzende Term mehrere Ausdrücke enthält.</p>
+</div>
+<div class="example">
+<p>Setzt man in den Term <span class="math inline">\(x^2+y^2\)</span> beispielsweise den Wert <span class="math inline">\(x=1+2+3\)</span> ein, so entsteht der neue Term <span class="math inline">\(x^2+y^2=(1+2+3)^2+y^2=36+y^2\)</span>, und nicht etwa <span class="math inline">\(1+2+3^2+y^2=12+y^2\)</span>.</p>
+</div>
+<div class="exercise">
+<p>Welcher Term entsteht, wenn man in <span class="math inline">\(x^2+y^2\)</span> Folgendes einsetzt und soweit wie möglich vereinfacht:</p>
+<ol type="1">
+<li><p>Den Winkel <span class="math inline">\(\alpha\)</span> sowohl für <span class="math inline">\(x\)</span> als auch für <span class="math inline">\(y\)</span>: Dann ist <span class="math inline">\(x^2+y^2\)</span><span class="math inline">\(\;\;=\;\)</span>.</p></li>
+<li><p>Die Zahl <span class="math inline">\(2\)</span> für <span class="math inline">\(y\)</span> und der Term <span class="math inline">\(t+1\)</span> für <span class="math inline">\(x\)</span>: Dann ist <span class="math inline">\(x^2+y^2\)</span><span class="math inline">\(\;\;=\;\)</span>.</p></li>
+<li><p>Den Term <span class="math inline">\(z+1\)</span> für <span class="math inline">\(x\)</span> und der Term <span class="math inline">\(z-1\)</span> für <span class="math inline">\(y\)</span>: Dann ist <span class="math inline">\(x^2+y^2\)</span><span class="math inline">\(\;\;=\;\)</span>.</p></li>
+</ol>
+<div class="hint-text">
+<p>Der griechische Buchstabe <span class="math inline">\(\alpha\)</span> kann als <code>alpha</code> eingetippt werden.</p>
+</div>
+<div class="hint">
+<p>Am sichersten ist es, die Variablen vor der Termeinsetzung zu klammern, wenn der neue Term mehrere Symbole enthält:</p>
+<ol type="1">
+<li><p><span class="math inline">\(x^2+y^2=\alpha^2+\alpha^2=2\alpha^2\)</span>.</p></li>
+<li><p><span class="math inline">\(x^2+y^2=(x)^2+y^2=(t+1)^2+2^2=t^2+2t+5\)</span>.</p></li>
+<li><span class="math inline">\(x^2+y^2=(x)^2+(y)^2=(z+1)^2+(z-1)^2=z^2+2z+1+z^2-2z+1=2z^2+2\)</span>.</li>
+</ol>
+</div>
+</div>
+<div class="exercise">
+<p>In dieser Figur habe ein Kästchen auf dem Papier die Seitenlänge <span class="math inline">\(x\)</span>. Welchen Flächeninhalt (als Term in der Variablen <span class="math inline">\(x\)</span>) besitzt die Figur?</p>
+<p>Antwort:</p>
+<ul>
+<li><p>Der große Kreis hat insgesamt den Flächeninhalt ,</p></li>
+<li><p>je ein kleiner Kreis hat den Flächeninhalt ,</p></li>
+<li><p>die Figur insgesamt hat den Flächeninhalt .</p></li>
+</ul>
+<div class="hint-text">
+<p>Die Kreiszahl <span class="math inline">\(\pi\)</span> kann als <code>pi</code> eingegeben werden.</p>
+</div>
+<div class="hint">
+<p>In späteren Kapiteln wird die Berechnung von Flächen vorgestellt. Für diese Aufgabe benötigt man davon nur, dass ein Rechteck mit Seitenlängen <span class="math inline">\(a\)</span> und <span class="math inline">\(b\)</span> den Flächeninhalt <span class="math inline">\(a\cdot b\)</span> (geschrieben <code>a*b</code>) besitzt, und dass ein Kreis mit Radius <span class="math inline">\(r\)</span> den Flächeninhalt <span class="math inline">\(\pi r^2\)</span> (geschrieben <code>pi*r^2</code>) besitzt.</p>
+</div>
+<div class="hint">
+<p>Der große Kreis hat insgesamt den Flächeninhalt <span class="math inline">\((\num{2.5})^2\pi x^2=\tfrac{25}{4}\pi x^2\)</span> (oder getippt <code>25/4*pi*x*x</code>). Je ein kleiner Kreis hat den Flächeninhalt <span class="math inline">\((\num{0.5})^2\pi x^2=\tfrac{1}{4}\pi x^2\)</span> und die Figur insgesamt hat den Flächeninhalt <span class="math inline">\((\tfrac{25}{4}\pi-\tfrac{1}{2}\pi-3)\cdot x^2\)</span>.</p>
+</div>
+</div>
+<h3 id="VBKM01_TermeUmformen">Terme umformen</h3>
+<p>Verschiedene Operationen in einem Term können den gleichen Wert beschreiben, beispielsweise ist <span class="math inline">\(x+x\)</span> eine von <span class="math inline">\(2x\)</span> verschiedene Symbolanordnung, die aber den gleichen Term beschreibt, d.h. wenn man eine konkrete Zahl für <span class="math inline">\(x\)</span> einsetzt kommt bei <span class="math inline">\(x+x\)</span> und <span class="math inline">\(2x\)</span> der gleiche Wert heraus.</p>
+<div class="info">
+<p>Zwischen Termen wird ein Gleichheitszeichen geschrieben, wenn diese stets zum gleichen Wert ausgewertet werden.</p>
+</div>
+<p>Neue Terme entstehen in der Regel durch Umformen vorhandener Terme:</p>
+<div class="info">
+<p>Eine <span id="index-umformung" data-index-concept="Umformung"><strong>Umformung</strong></span> eines Terms entsteht, indem man eine oder mehrere Rechenregeln auf einen Term anwendet:</p>
+<ul>
+<li><p>Zusammenfassen: <span class="math inline">\(a+a+\cdots+a=n\cdot a\)</span> (<span class="math inline">\(n\)</span> ist die Anzahl der Summanden).</p></li>
+<li><p>Distributivgesetze („Ausmultiplizieren“): <span class="math inline">\((a+b)\cdot c = a c+b c\)</span> und <span class="math inline">\(c\cdot(a+b)=c a+c b\)</span>.</p></li>
+<li><p>Kommutativgesetz: <span class="math inline">\(a+b=b+a\)</span>.</p></li>
+<li><p>Assoziativgesetz („Klammern umsetzen bei gleichen Operationen“): <span class="math inline">\(a+(b+c)=(a+b)+c=a+b+c\)</span>, ebenso für die Multiplikation.</p></li>
+<li><p>Rechenregeln für Potenzen und spezielle Funktionen.</p></li>
+<li><p>Rechenregeln für bestimmte Formen von Termen (z.B. die binomischen Formeln).</p></li>
+<li>Rechenregeln für Brüche: <span class="math inline">\(\tfrac1{\phantom{2}\tfrac{a}{b}\phantom{2}}=\tfrac{b}{a}\)</span>.</li>
+</ul>
+</div>
+<p>Die Regeln werden im Detail in den folgenden Abschnitten vorgestellt. Ziel dieser Umformungen ist es meist, den Term einfacher zu machen, einzelne Variablen zu isolieren oder den Term in eine gewünschte Form zu bringen:</p>
+<div class="example">
+<p>Zulässige Umformungen sind</p>
+<ul>
+<li><p><span class="math inline">\(a(a+a+a)+a^2+a^2+a^2 = 6a^2\)</span>, der Term auf der rechten Seite ist einfacher da er weniger Symbole benötigt.</p></li>
+<li><p><span class="math inline">\((x+3)^2-9=x^2+6x\)</span> (1. binomische Formel), beide Terme beschreiben eine Parabel. An der linken Seite kann man gut den Scheitelpunkt <span class="math inline">\((-3,-9)\)</span> ablesen, an der rechten Seite die beiden Nullstellen (<span class="math inline">\(x_1=0\)</span> und <span class="math inline">\(x_2=-6\)</span>).</p></li>
+<li><p><span class="math inline">\(1+3x+3x^2+x^3=(1+x)^3\)</span>, an der rechten Seite kann man beispielsweise ablesen, dass die durch den Term beschriebene Funktion nur die Nullstelle <span class="math inline">\(x_1=-1\)</span> besitzt.</p></li>
+<li><span class="math inline">\(\tfrac{a+1}{a}=1+\tfrac{1}{a}\)</span>, an der linken Seite kann man ablesen, dass der Term die Nullstelle <span class="math inline">\(a_1=-1\)</span> besitzt, an der rechten Seite kann man ablesen, dass der Term für sehr große <span class="math inline">\(a\)</span> gegen den Wert <span class="math inline">\(1\)</span> strebt (weil <span class="math inline">\(\tfrac{1}{a}\)</span> dann sehr klein ist).</li>
+</ul>
+</div>
