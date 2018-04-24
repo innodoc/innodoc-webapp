@@ -32,4 +32,4 @@ const Index = () => (
   </Layout>
 )
 
-Index
+export default Index
