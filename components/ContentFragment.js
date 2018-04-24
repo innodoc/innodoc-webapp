@@ -5,14 +5,14 @@ import UnknownType from './content/UnknownType'
 import Str from './content/Str'
 import Header from './content/Header'
 import Para from './content/Para'
+import Span from './content/Span'
+import Strong from './content/Strong'
 
 const Space = () => ' '
 const LineBreak = () => <br />
 
-// Is used to mark soft breaks between sentences. <wbr> or &shy; wouldn't make
-// sense here.
+// Marks soft breaks between sentences. <wbr> or &shy; wouldn't make sense here.
 const SoftBreak = () => ' '
-
 
 const contentTypeComponentMap = {
   'Header': Header,
@@ -20,7 +20,9 @@ const contentTypeComponentMap = {
   'Space': Space,
   'SoftBreak': SoftBreak,
   'LineBreak': LineBreak,
-  'Para': Para
+  'Para': Para,
+  'Span': Span,
+  'Strong': Strong
 }
 
 const mapContentTypeToComponent = (name) => {
