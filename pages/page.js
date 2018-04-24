@@ -1,9 +1,14 @@
-import React, {Component} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Layout from '../components/Layout.js'
 import fetch from 'isomorphic-unfetch'
 import loadScript from 'load-script'
 
-class Page extends Component {
+class Page extends React.Component {
+
+  static propTypes = {
+    html: PropTypes.string.isRequired
+  }
 
   constructor(props) {
     super(props)
@@ -22,10 +27,9 @@ class Page extends Component {
 
   componentDidMount() {
     if (this.state.loaded)
-      MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.content])
+      window.MathJax.Hub.Queue(['Typeset', window.MathJax.Hub, this.content])
     else {
       window.MathJax = {
-        // extensions: ['[innoconv]innoconv.mathjax.js'],
         skipStartupTypeset: true,
         jax: ["input/TeX", "output/CommonHTML"],
         extensions: [
@@ -41,8 +45,7 @@ class Page extends Component {
         ],
         // showProcessingMessages: true,
         AuthorInit: () => {
-          MathJax.Ajax.config.path['innoconv'] = window.location.origin + '/static'
-          // MathJax.Hub.config.extensions.push("[innoconv]innoconv.mathjax.js");
+          window.MathJax.Ajax.config.path['innoconv'] = window.location.origin + '/static'
         }
       }
       loadScript('/static/vendor/MathJax/unpacked/MathJax.js', this.onLoadMathJax)
@@ -54,9 +57,8 @@ class Page extends Component {
       loaded: true
     })
     if (err)
-      console.log(err)
-    else
-      MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.content])
+      throw new Error(err)
+    window.MathJax.Hub.Queue(['Typeset', window.MathJax.Hub, this.content])
   }
 
   render() {

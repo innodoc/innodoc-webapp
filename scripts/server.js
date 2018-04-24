@@ -1,5 +1,5 @@
-const express = require('express')
-const next = require('next')
+import express from 'express'
+import next from 'next'
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({
@@ -22,8 +22,8 @@ app.prepare()
     })
 
     server.listen(3000, (err) => {
-      if (err) throw err
-      console.log('> Ready on http://localhost:3000')
+      if (err)
+        throw err
     })
   })
   .catch((ex) => {

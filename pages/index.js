@@ -1,13 +1,27 @@
+import React from 'react'
+import PropTypes from 'prop-types'
 import Link from 'next/link'
 import Layout from '../components/Layout.js'
 
-const PostLink = (props) => (
-  <li>
-    <Link as={`/page/${props.id}`} href={`/post?title=${props.title}`}>
-      <a>{props.title}</a>
-    </Link>
-  </li>
-)
+class PostLink extends React.Component {
+
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
+  }
+
+  render() {
+    return (
+      <li>
+        <Link as={`/page/${this.props.id}`}
+              href={`/post?title=${this.props.title}`}>
+          <a>{this.props.title}</a>
+        </Link>
+      </li>
+    )
+  }
+
+}
 
 const Index = () => (
   <Layout>
