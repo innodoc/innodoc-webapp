@@ -5,6 +5,7 @@ import UnknownType from './content/UnknownType'
 import Str from './content/Str'
 import Header from './content/Header'
 import Para from './content/Para'
+import Div from './content/Div'
 import Span from './content/Span'
 import Strong from './content/Strong'
 
@@ -21,6 +22,7 @@ const contentTypeComponentMap = {
   'SoftBreak': SoftBreak,
   'LineBreak': LineBreak,
   'Para': Para,
+  'Div': Div,
   'Span': Span,
   'Strong': Strong
 }
