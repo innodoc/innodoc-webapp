@@ -1,7 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import mapContentTypeToComponent from './contentTypes'
+import Str from './content/Str'
+import Header from './content/Header'
+import UnknownType from './content/UnknownType'
+
+const contentTypeComponentMap = {
+  'Header': Header,
+  'Str': Str,
+  'Space': () => ' '
+}
+
+const mapContentTypeToComponent = (name) => {
+  const Component = contentTypeComponentMap[name]
+  if (!Component)
+    return UnknownType
+  return Component
+}
 
 export default class ContentFragment extends React.Component {
 

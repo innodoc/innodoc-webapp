@@ -6,7 +6,7 @@ import loadScript from 'load-script'
 import Layout from '../components/Layout.js'
 import ContentFragment from '../components/ContentFragment.js'
 
-class Page extends React.Component {
+export default class Page extends React.Component {
 
   static propTypes = {
     content: PropTypes.array.isRequired
@@ -76,5 +76,3 @@ class Page extends React.Component {
   }
 
 }
-
-export default Page

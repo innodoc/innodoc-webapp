@@ -9,14 +9,14 @@ const UnknownTypeData = ({ data }) => {
   return <pre style={style}>{JSON.stringify(data, null, 2)}</pre>
 }
 UnknownTypeData.propTypes = {
-  data: PropTypes.array.isRequired
+  data: PropTypes.any
 }
 
 export default class UnknownType extends React.Component {
 
   static propTypes = {
     name: PropTypes.string.isRequired,
-    data: PropTypes.array.isRequired
+    data: PropTypes.any
   }
 
   constructor(props) {
@@ -35,15 +35,27 @@ export default class UnknownType extends React.Component {
       this.setState(prevState => ({ showData: !prevState.showData }))
     }
 
-    return (
-      <div className="unknown-component" style={divStyle} onClick={toggleData}>
+    let collapseIndicator = null
+    let data = null
+    if (this.props.data) {
+      collapseIndicator = (
         <span style={spanStyle}>
           { this.state.showData ? '➖' : '➕'}
         </span>
+      )
+      if (this.state.showData) {
+        data = <UnknownTypeData data={this.props.data} />
+      }
+
+    }
+
+    return (
+      <div className="unknown-component" style={divStyle} onClick={toggleData}>
+        {collapseIndicator}
         <p>
           Unkown component: <strong><code>{this.props.name}</code></strong>
         </p>
-        { this.state.showData ? <UnknownTypeData data={this.props.data} /> : null }
+        {data}
       </div>
     )
   }
