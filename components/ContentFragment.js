@@ -1,14 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import UnknownType from './content/UnknownType'
 import Str from './content/Str'
 import Header from './content/Header'
-import UnknownType from './content/UnknownType'
+import Para from './content/Para'
+
+const Space = () => ' '
+const LineBreak = () => <br />
+
+// Is used to mark soft breaks between sentences. <wbr> or &shy; wouldn't make
+// sense here.
+const SoftBreak = () => ' '
+
 
 const contentTypeComponentMap = {
   'Header': Header,
   'Str': Str,
-  'Space': () => ' '
+  'Space': Space,
+  'SoftBreak': SoftBreak,
+  'LineBreak': LineBreak,
+  'Para': Para
 }
 
 const mapContentTypeToComponent = (name) => {
