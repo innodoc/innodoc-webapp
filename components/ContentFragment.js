@@ -13,6 +13,7 @@ import Code from './content/Code'
 import BulletList from './content/BulletList'
 import OrderedList from './content/OrderedList'
 import Math from './content/Math'
+import Link from './content/Link'
 
 const Space = () => ' '
 const LineBreak = () => <br />
@@ -34,7 +35,8 @@ const contentTypeComponentMap = {
   'Code': Code,
   'BulletList': BulletList,
   'OrderedList': OrderedList,
-  'Math': Math
+  'Math': Math,
+  'Link': Link
 }
 
 const mapContentTypeToComponent = (name) => {
