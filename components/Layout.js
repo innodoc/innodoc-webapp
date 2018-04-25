@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Head from 'next/head'
 
+import Sidebar from './Sidebar'
 import Header from './Header'
+
 
 export default class Layout extends React.Component {
 
@@ -14,14 +15,30 @@ export default class Layout extends React.Component {
   }
 
   render() {
+
+    const navTree = [
+      {
+        id: 'vbkm01',
+        title: 'Kapitel 1',
+      },
+      {
+        id: 'exercises',
+        title: 'Exercises',
+      },
+      {
+        id: 'vbkm01_exercises',
+        title: 'vbkm01_exercises',
+      },
+    ]
+
     return (
       <div>
-        <Head>
-          <title key="title">innoDoc web app</title>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        </Head>
-        <Header />
-        {this.props.children}
+        <Sidebar navTree={navTree}>
+          <div className="container">
+            <Header />
+            {this.props.children}
+          </div>
+        </Sidebar>
       </div>
     )
   }

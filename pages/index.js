@@ -1,34 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import Link from 'next/link'
-import Layout from '../components/Layout.js'
 
-class PostLink extends React.Component {
-
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
-  }
-
-  render() {
-    return (
-      <li>
-        <Link as={`/page/${this.props.id}`}
-              href={`/post?title=${this.props.title}`}>
-          <a>{this.props.title}</a>
-        </Link>
-      </li>
-    )
-  }
-
-}
+import Layout from '../components/Layout'
+import PageLink from '../components/PageLink'
 
 const Index = () => (
   <Layout>
     <h1>innoDoc</h1>
-    <ul>
-      <PostLink id="vbkm01" title="Kapitel 1"/>
-    </ul>
+    <p>
+      PageLink: <PageLink id="vbkm01">Kapitel 1</PageLink>
+    </p>
   </Layout>
 )
 
