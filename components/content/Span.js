@@ -17,7 +17,7 @@ IndexSpan.propTypes = {
 
 const SectionLink = ({section}) => (
   // insert proper href and section Title as text
-  <Link href={section}>{section}</Link>
+  <Link href={section}><a>{section}</a></Link>
 )
 SectionLink.propTypes = {
   section: PropTypes.string.isRequired
