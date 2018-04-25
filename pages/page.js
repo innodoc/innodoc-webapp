@@ -46,10 +46,10 @@ export default class Page extends React.Component {
           'TeX/AMSmath.js',
           'TeX/AMSsymbols.js',
           '[a11y]/accessibility-menu.js',
-          '[innoconv]/innoconv.mathjax.js'
+          '[innodoc]/innodoc.mathjax.js'
         ],
         AuthorInit: () => {
-          window.MathJax.Ajax.config.path['innoconv'] = window.location.origin + '/static'
+          window.MathJax.Ajax.config.path['innodoc'] = window.location.origin + '/static'
         }
       }
       loadScript('/static/vendor/MathJax/unpacked/MathJax.js', this.onLoadMathJax)

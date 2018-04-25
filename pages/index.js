@@ -25,7 +25,7 @@ class PostLink extends React.Component {
 
 const Index = () => (
   <Layout>
-    <h1>innoConv</h1>
+    <h1>innoDoc</h1>
     <ul>
       <PostLink id="kap-1" title="Kapitel 1"/>
     </ul>

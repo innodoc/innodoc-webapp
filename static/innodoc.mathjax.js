@@ -1,6 +1,6 @@
 /*************************************************************
  *
- *  innoconv.mathjax.js
+ *  innodoc.mathjax.js
  *
  *  Implements the \num command inspired by the siunitx package. It uses
  *  dot or comma as decimal marker depending on the HTML lang attribute.
@@ -9,11 +9,11 @@
  *
  *  Use \decmarker to output the decimal marker.
  *
- * Use \coordsep to insert a coordination point separator (x; y)
+ *  Use \coordsep to insert a coordination point separator (x; y)
  *
  */
 
-MathJax.Extension.innoconv = {};
+MathJax.Extension.innodoc = {};
 
 MathJax.Hub.Register.StartupHook("TeX Jax Ready", function() {
   var TEX = MathJax.InputJax.TeX;
@@ -58,7 +58,7 @@ MathJax.Hub.Register.StartupHook("TeX Jax Ready", function() {
     }
   });
 
-  MathJax.Hub.Startup.signal.Post("TeX innoconv Ready")
+  MathJax.Hub.Startup.signal.Post("TeX innoDoc Ready")
 });
 
-MathJax.Ajax.loadComplete("[innoconv]/innoconv.mathjax.js");
+MathJax.Ajax.loadComplete("[innodoc]/innodoc.mathjax.js");

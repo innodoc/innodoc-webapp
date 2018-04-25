@@ -1,10 +1,10 @@
 {
-  "name": "innoconv-webapp",
+  "name": "innodoc-webapp",
   "version": "0.0.1",
   "author": "Mirko Dietrich <dietrich@math.tu-berlin.de>",
-  "description": "innoConv web app",
+  "description": "innoDoc web app",
   "main": "index.js",
-  "repository": "https://gitlab.tu-berlin.de/innodoc/innoconv-webapp",
+  "repository": "https://gitlab.tu-berlin.de/innodoc/innodoc-webapp",
   "files": [
     "LICENSE.txt",
     "README.md"
@@ -15,7 +15,7 @@
     "lint": "eslint ./"
   },
   "keywords": [
-    "innoconv",
+    "innodoc",
     "react",
     "elearning"
   ],
