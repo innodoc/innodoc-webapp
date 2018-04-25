@@ -8,6 +8,7 @@ import Para from './content/Para'
 import Div from './content/Div'
 import Span from './content/Span'
 import Strong from './content/Strong'
+import Math from './content/Math'
 
 const Space = () => ' '
 const LineBreak = () => <br />
@@ -24,7 +25,8 @@ const contentTypeComponentMap = {
   'Para': Para,
   'Div': Div,
   'Span': Span,
-  'Strong': Strong
+  'Strong': Strong,
+  'Math': Math
 }
 
 const mapContentTypeToComponent = (name) => {

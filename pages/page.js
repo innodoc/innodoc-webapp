@@ -68,9 +68,9 @@ export default class Page extends React.Component {
   render() {
     return (
       <Layout>
-        <div ref={(node) => {this.mathJaxNode = node}}>
-          <ContentFragment content={this.props.content} />
-        </div>
+        <ContentFragment content={this.props.content}
+                         ref={(node) => {this.mathJaxNode = node}}
+        />
       </Layout>
     )
   }
