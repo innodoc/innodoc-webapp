@@ -53,7 +53,7 @@ export default class UnknownType extends React.Component {
       <div className="unknown-component" style={divStyle} onClick={toggleData}>
         {collapseIndicator}
         <p>
-          Unkown component: <strong><code>{this.props.name}</code></strong>
+          Unknown component: <strong><code>{this.props.name}</code></strong>
         </p>
         {data}
       </div>
