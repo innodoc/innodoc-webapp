@@ -9,6 +9,7 @@ import Div from './content/Div'
 import Span from './content/Span'
 import Emph from './content/Emph'
 import Strong from './content/Strong'
+import BulletList from './content/BulletList'
 import Math from './content/Math'
 
 const Space = () => ' '
@@ -28,6 +29,7 @@ const contentTypeComponentMap = {
   'Span': Span,
   'Emph': Emph,
   'Strong': Strong,
+  'BulletList': BulletList,
   'Math': Math
 }
 
