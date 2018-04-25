@@ -37,6 +37,10 @@ export default class Page extends React.Component {
       window.MathJax = {
         skipStartupTypeset: true,
         jax: ['input/TeX', 'output/CommonHTML'],
+        tex2jax:{
+          inlineMath: [['\\(', '\\)']],
+          displayMath: [['\\[', '\\]']]
+        },
         extensions: [
           'tex2jax.js',
           'MathEvents.js',
