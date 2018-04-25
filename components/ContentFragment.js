@@ -9,6 +9,7 @@ import Div from './content/Div'
 import Span from './content/Span'
 import Emph from './content/Emph'
 import Strong from './content/Strong'
+import Code from './content/Code'
 import BulletList from './content/BulletList'
 import OrderedList from './content/OrderedList'
 import Math from './content/Math'
@@ -30,6 +31,7 @@ const contentTypeComponentMap = {
   'Span': Span,
   'Emph': Emph,
   'Strong': Strong,
+  'Code': Code,
   'BulletList': BulletList,
   'OrderedList': OrderedList,
   'Math': Math
