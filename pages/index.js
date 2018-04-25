@@ -27,7 +27,7 @@ const Index = () => (
   <Layout>
     <h1>innoDoc</h1>
     <ul>
-      <PostLink id="kap-1" title="Kapitel 1"/>
+      <PostLink id="vbkm01" title="Kapitel 1"/>
     </ul>
   </Layout>
 )

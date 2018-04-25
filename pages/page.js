@@ -9,7 +9,8 @@ import ContentFragment from '../components/ContentFragment.js'
 export default class Page extends React.Component {
 
   static propTypes = {
-    content: PropTypes.array.isRequired
+    content: PropTypes.array.isRequired,
+    url: PropTypes.object.isRequired
   }
 
   constructor(props) {
@@ -19,10 +20,14 @@ export default class Page extends React.Component {
     }
   }
 
-  static async getInitialProps() {
-    const res = await fetch('http://localhost:3000/static/vbkm01.json')
-    const content = await res.json()
-    return { content: content }
+  static async getInitialProps({ query }) {
+    try {
+      const res = await fetch(`http://localhost:3000/static/${query.title}.json`)
+      const content = await res.json()
+      return { content: content }
+    } catch (e) {
+      return { content: [ {'t': 'Str', 'c': 'Page not found!' } ] }
+    }
   }
 
   typesetMathJax() {
