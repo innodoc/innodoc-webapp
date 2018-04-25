@@ -10,6 +10,7 @@ import Span from './content/Span'
 import Emph from './content/Emph'
 import Strong from './content/Strong'
 import BulletList from './content/BulletList'
+import OrderedList from './content/OrderedList'
 import Math from './content/Math'
 
 const Space = () => ' '
@@ -30,6 +31,7 @@ const contentTypeComponentMap = {
   'Emph': Emph,
   'Strong': Strong,
   'BulletList': BulletList,
+  'OrderedList': OrderedList,
   'Math': Math
 }
 
