@@ -7,6 +7,7 @@ import Header from './content/Header'
 import Para from './content/Para'
 import Div from './content/Div'
 import Span from './content/Span'
+import Emph from './content/Emph'
 import Strong from './content/Strong'
 import Math from './content/Math'
 
@@ -25,6 +26,7 @@ const contentTypeComponentMap = {
   'Para': Para,
   'Div': Div,
   'Span': Span,
+  'Emph': Emph,
   'Strong': Strong,
   'Math': Math
 }
