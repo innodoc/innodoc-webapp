@@ -2,10 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import BaseContentComponent from './Base'
-import {InputQuestionComponent, MathInputQuestionComponent} from '../questions/Input'
+import {InputQuestionComponent, MathInputQuestionComponent} from './questions/Input'
 
 export default class Code extends BaseContentComponent {
-
   static propTypes = {
     data: PropTypes.array.isRequired
   }

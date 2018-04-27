@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import fetch from 'isomorphic-unfetch'
 import loadScript from 'load-script'
 
-import Layout from '../components/Layout.js'
+import Layout from '../components/layout'
 import ContentFragment from '../components/ContentFragment.js'
 
 export default class Page extends React.Component {

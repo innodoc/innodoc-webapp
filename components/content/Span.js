@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import BaseContentComponent from './Base'
 import ContentFragment from '../ContentFragment'
+import debugCSS from './debug-style.sass'
 
 const IndexSpan = ({indexConcept, content}) => (
   <span className="index-concept" data-index-concept={indexConcept}>
@@ -33,7 +34,6 @@ HintText.propTypes = {
 }
 
 export default class Span extends BaseContentComponent {
-
   static propTypes = {
     data: PropTypes.array.isRequired
   }
@@ -67,14 +67,17 @@ export default class Span extends BaseContentComponent {
         content.length > 0)
       return <ContentFragment content={content} />
 
+    if (process.env.NODE_ENV === 'production')
+      return null
+
+    // if nothing matches return a debug element
     return (
       <span>
-        <span style={{backgroundColor: 'red'}}>
+        <span className={debugCSS.errorBGColor}>
           Strange span: classes={classNames} attrs={attributes} content-length={content.length}
         </span>
         <ContentFragment content={content} />
       </span>
     )
   }
-
 }

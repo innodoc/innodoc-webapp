@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Sidebar from 'react-sidebar'
 
-import PageLink from '../PageLink'
+import PageLink from '../../PageLink'
+import css from './style.sass'
 
 export default class InnodocSidebar extends React.Component {
   constructor(props) {
@@ -50,27 +51,19 @@ export default class InnodocSidebar extends React.Component {
   render() {
     const { navTree, children } = this.props
 
-    const aStyle = {
-      display: 'block',
-      padding: '0.7rem 2.8rem',
-      marginBottom: '0.3rem',
-      fontSize: '160%',
-      backgroundColor: '#ececec',
-    }
-    const sidebarLis = navTree.map((l, i) =>
+    const sidebarNavItems = navTree.map((l, i) =>
       <li key={i.toString()}>
         <PageLink id={l.id}>
-          <a style={aStyle}>{l.title}</a>
+          <a>{l.title}</a>
         </PageLink>
       </li>
     )
 
-    const ulStyle = {
-      listStyleType: 'none',
-      padding: 0,
-      margin: '1rem 0',
-    }
-    const sidebarContent = <ul style={ulStyle}>{sidebarLis}</ul>
+    const sidebarContent = (
+      <ul className={css.sidebarNav}>
+        {sidebarNavItems}
+      </ul>
+    )
 
     return (
       <Sidebar sidebar={sidebarContent}

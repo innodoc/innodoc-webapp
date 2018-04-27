@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 var math = require('mathjs');
 
-import BaseContentComponent from '../content/Base'
+import BaseContentComponent from '../Base'
 
 
 class QuestionComponent extends BaseContentComponent{

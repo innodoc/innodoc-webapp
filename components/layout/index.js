@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import Sidebar from './Sidebar'
 import Header from './Header'
 
-
 export default class Layout extends React.Component {
 
   static propTypes = {
@@ -28,6 +27,10 @@ export default class Layout extends React.Component {
       {
         id: 'vbkm01_exercises',
         title: 'vbkm01_exercises',
+      },
+      {
+        id: 'test',
+        title: 'Test',
       },
     ]
 

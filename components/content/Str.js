@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 const Str = ({data}) => data
 Str.propTypes = {
-  content: PropTypes.string.isRequired
+  data: PropTypes.string.isRequired
 }
 
 export default Str

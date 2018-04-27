@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import BaseContentComponent from './Base'
-import ContentFragment from '../ContentFragment'
+import BaseContentComponent from '../Base'
+import ContentFragment from '../../ContentFragment'
+import css from './style.sass'
 
 export default class Table extends BaseContentComponent {
   static propTypes = {
@@ -10,23 +11,15 @@ export default class Table extends BaseContentComponent {
   }
 
   render() {
-    const alignment = this.props.data[1]
+    const alignment = this.props.data[1].map(a => a.t)
     const headerData = this.props.data[3]
     const rowData = this.props.data[4]
-    const tableStyle = { width: '100%' }
-
-    const alignMap = {
-      'AlignLeft': 'left',
-      'AlignRight': 'right',
-      'AlignCenter': 'center'
-    }
-    const getAlignStyle = (i) => ({ textAlign: alignMap[alignment[i].t] })
 
     // thead
     let thead
     if (headerData.some((tr) => tr.length > 0)) {
       const ths = headerData.map((th, i) =>
-        <th key={i.toString()} style={getAlignStyle(i)}>
+        <th key={i.toString()} className={css[alignment[i]]}>
           <ContentFragment content={th} />
         </th>
       )
@@ -36,7 +29,7 @@ export default class Table extends BaseContentComponent {
     // tbody
     const trs = rowData.map((tr, i) => {
       const tds = tr.map((td, j) =>
-        <td key={j.toString()} style={getAlignStyle(j)}>
+        <td key={j.toString()} className={css[alignment[j]]}>
           <ContentFragment content={td} />
         </td>
       )
@@ -45,7 +38,7 @@ export default class Table extends BaseContentComponent {
     const tbody = <tbody>{trs}</tbody>
 
     return (
-      <table style={tableStyle}>
+      <table className={css.fullWidth}>
         {thead}
         {tbody}
       </table>

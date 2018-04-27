@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import css from './debug-style.sass'
+
 const UnknownTypeData = ({ data }) => {
-  const style = {
-    margin: '0',
-    padding: '0.1rem'
-  }
-  return <pre style={style}>{JSON.stringify(data, null, 2)}</pre>
+  return <pre className={css.componentData}>{JSON.stringify(data, null, 2)}</pre>
 }
 UnknownTypeData.propTypes = {
   data: PropTypes.any
@@ -25,12 +23,6 @@ export default class UnknownType extends React.Component {
   }
 
   render() {
-    const divStyle = {
-      backgroundColor: '#ff000033'
-    }
-    const spanStyle = {
-      float: 'left'
-    }
     const toggleData = () => {
       this.setState(prevState => ({ showData: !prevState.showData }))
     }
@@ -39,7 +31,7 @@ export default class UnknownType extends React.Component {
     let data = null
     if (this.props.data) {
       collapseIndicator = (
-        <span style={spanStyle}>
+        <span className={css.toggler}>
           { this.state.showData ? '➖' : '➕'}
         </span>
       )
@@ -50,7 +42,7 @@ export default class UnknownType extends React.Component {
     }
 
     return (
-      <div className="unknown-component" style={divStyle} onClick={toggleData}>
+      <div className={css.unknownComponent} onClick={toggleData}>
         {collapseIndicator}
         <p>
           Unknown component: <strong><code>{this.props.name}</code></strong>
