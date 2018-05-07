@@ -1,9 +1,10 @@
 import React from 'react'
 
+import {withReduxSaga} from '../store'
 import Layout from '../components/layout'
 import PageLink from '../components/PageLink'
 
-const Index = () => (
+const IndexPage = () => (
   <Layout>
     <h1>innoDoc</h1>
     <p>
@@ -12,4 +13,4 @@ const Index = () => (
   </Layout>
 )
 
-export default Index
+export default withReduxSaga()(IndexPage)

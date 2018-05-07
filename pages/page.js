@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import fetch from 'isomorphic-unfetch'
 import loadScript from 'load-script'
 
+import {withReduxSaga} from '../store'
+import {loadPage} from '../store/actions'
 import Layout from '../components/layout'
 import ContentFragment from '../components/ContentFragment.js'
 
-export default class Page extends React.Component {
+class CoursePage extends React.Component {
 
   static propTypes = {
     content: PropTypes.array.isRequired,
@@ -20,14 +21,9 @@ export default class Page extends React.Component {
     }
   }
 
-  static async getInitialProps({ query }) {
-    try {
-      const res = await fetch(`http://localhost:3000/static/${query.title}.json`)
-      const content = await res.json()
-      return { content: content }
-    } catch (e) {
-      return { content: [ {'t': 'Str', 'c': 'Page not found!' } ] }
-    }
+  static getInitialProps({query, store}) {
+    store.dispatch(loadPage(query.title))
+    return { content: [ {'t': 'Str', 'c': 'Loading…' } ] }
   }
 
   typesetMathJax() {
@@ -85,3 +81,5 @@ export default class Page extends React.Component {
   }
 
 }
+
+export default withReduxSaga(state => ({content: state.content}))(CoursePage)
