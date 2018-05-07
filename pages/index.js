@@ -7,7 +7,7 @@ const Index = () => (
   <Layout>
     <h1>innoDoc</h1>
     <p>
-      PageLink: <PageLink id="vbkm01">Kapitel 1</PageLink>
+      PageLink: <PageLink id="vbkm01"><a>Kapitel 1</a></PageLink>
     </p>
   </Layout>
 )
