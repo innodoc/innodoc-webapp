@@ -1,10 +1,10 @@
 import React from 'react'
-import {Container, Dropdown, Image, Menu} from 'semantic-ui-react'
+import {Container, Divider, Dropdown, Image, Menu} from 'semantic-ui-react'
 import Link from 'next/link'
 
 import css from './style.sass'
 
-const InnoDocHeader = () => (
+const Header = () => (
   <Menu fixed="top">
     <Container>
       <Link href="/">
@@ -23,23 +23,24 @@ const InnoDocHeader = () => (
         </Menu.Item>
       </Link>
 
-      <Menu.Menu position='right'>
-        <div className='ui right aligned category search item'>
-          <div className='ui transparent icon input'>
-            <input className='prompt' type='text' placeholder='Suche…' />
-            <i className='search link icon' />
+      <Menu.Menu position="right">
+        <div className="ui right aligned category search item">
+          <div className="ui transparent icon input">
+            <input className="prompt" type="text" placeholder="Suche…" />
+            <i className="search link icon" />
           </div>
-          <div className='results' />
+          <div className="results" />
         </div>
       </Menu.Menu>
+      <Divider />
       <Dropdown item simple text="Login">
         <Dropdown.Menu>
-          <Dropdown.Item>Anmelden</Dropdown.Item>
-          <Dropdown.Item>Account erstellen</Dropdown.Item>
+          <Dropdown.Item icon="user" text="Anmelden" />
+          <Dropdown.Item icon="add user" text="Account erstellen" />
         </Dropdown.Menu>
       </Dropdown>
     </Container>
   </Menu>
 )
 
-export default InnoDocHeader
+export default Header

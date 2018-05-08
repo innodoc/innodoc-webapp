@@ -4,6 +4,7 @@ import {Container} from 'semantic-ui-react'
 
 import css from './style.sass'
 import Header from './Header'
+import Footer from './Footer'
 
 export default class Layout extends React.Component {
   static propTypes = {
@@ -39,6 +40,7 @@ export default class Layout extends React.Component {
         <Container text className={css.courseContent}>
           {this.props.children}
         </Container>
+        <Footer />
       </div>
     )
   }
