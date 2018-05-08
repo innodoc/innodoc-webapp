@@ -8,10 +8,8 @@ import Layout from '../components/layout'
 import ContentFragment from '../components/ContentFragment.js'
 
 class CoursePage extends React.Component {
-
   static propTypes = {
     content: PropTypes.array.isRequired,
-    url: PropTypes.object.isRequired
   }
 
   constructor(props) {
@@ -22,7 +20,7 @@ class CoursePage extends React.Component {
   }
 
   static getInitialProps({query, store}) {
-    store.dispatch(loadPage(query.title))
+    store.dispatch(loadPage(query.pageSlug))
     return { content: [ {'t': 'Str', 'c': 'Loading…' } ] }
   }
 
@@ -79,7 +77,6 @@ class CoursePage extends React.Component {
       </Layout>
     )
   }
-
 }
 
 export default connect(state => ({content: state.content}))(CoursePage)

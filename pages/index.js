@@ -8,7 +8,7 @@ const IndexPage = () => (
   <Layout>
     <h1>innoDoc</h1>
     <p>
-      PageLink: <PageLink id="vbkm01"><a>Kapitel 1</a></PageLink>
+      PageLink: <PageLink pageSlug="vbkm01"><a>Kapitel 1</a></PageLink>
     </p>
   </Layout>
 )

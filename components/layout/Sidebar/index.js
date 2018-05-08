@@ -53,7 +53,7 @@ export default class InnodocSidebar extends React.Component {
 
     const sidebarNavItems = navTree.map((l, i) =>
       <li key={i.toString()}>
-        <PageLink id={l.id}>
+        <PageLink pageSlug={l.pageSlug}>
           <a>{l.title}</a>
         </PageLink>
       </li>

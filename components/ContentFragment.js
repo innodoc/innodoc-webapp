@@ -57,9 +57,10 @@ export default class ContentFragment extends React.Component {
   }
 
   render() {
+    const {content} = this.props
     const output = []
-    for (let i = 0; i < this.props.content.length; i++) {
-      const el = this.props.content[i]
+    for (let i = 0; i < content.length; i++) {
+      const el = content[i]
       const Component = mapContentTypeToComponent(el.t)
       output.push(<Component key={i.toString()} name={el.t} data={el.c} />)
     }

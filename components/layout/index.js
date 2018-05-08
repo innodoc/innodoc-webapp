@@ -5,7 +5,6 @@ import Sidebar from './Sidebar'
 import Header from './Header'
 
 export default class Layout extends React.Component {
-
   static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
@@ -14,22 +13,21 @@ export default class Layout extends React.Component {
   }
 
   render() {
-
     const navTree = [
       {
-        id: 'vbkm01',
+        pageSlug: 'vbkm01',
         title: 'Kapitel 1',
       },
       {
-        id: 'exercises',
+        pageSlug: 'exercises',
         title: 'Exercises',
       },
       {
-        id: 'vbkm01_exercises',
+        pageSlug: 'vbkm01_exercises',
         title: 'vbkm01_exercises',
       },
       {
-        id: 'test',
+        pageSlug: 'test',
         title: 'Test',
       },
     ]
@@ -45,5 +43,4 @@ export default class Layout extends React.Component {
       </div>
     )
   }
-
 }
