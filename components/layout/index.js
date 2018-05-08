@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {Container} from 'semantic-ui-react'
 
-import Sidebar from './Sidebar'
+import css from './style.sass'
 import Header from './Header'
 
 export default class Layout extends React.Component {
@@ -13,33 +14,31 @@ export default class Layout extends React.Component {
   }
 
   render() {
-    const navTree = [
-      {
-        pageSlug: 'vbkm01',
-        title: 'Kapitel 1',
-      },
-      {
-        pageSlug: 'exercises',
-        title: 'Exercises',
-      },
-      {
-        pageSlug: 'vbkm01_exercises',
-        title: 'vbkm01_exercises',
-      },
-      {
-        pageSlug: 'test',
-        title: 'Test',
-      },
-    ]
+    // const navTree = [
+    //   {
+    //     pageSlug: 'vbkm01',
+    //     title: 'Kapitel 1',
+    //   },
+    //   {
+    //     pageSlug: 'exercises',
+    //     title: 'Exercises',
+    //   },
+    //   {
+    //     pageSlug: 'vbkm01_exercises',
+    //     title: 'vbkm01_exercises',
+    //   },
+    //   {
+    //     pageSlug: 'test',
+    //     title: 'Test',
+    //   },
+    // ]
 
     return (
       <div>
-        <Sidebar navTree={navTree}>
-          <div className="container">
-            <Header />
-            {this.props.children}
-          </div>
-        </Sidebar>
+        <Header />
+        <Container text className={css.courseContent}>
+          {this.props.children}
+        </Container>
       </div>
     )
   }
