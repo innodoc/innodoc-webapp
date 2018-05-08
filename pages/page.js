@@ -21,7 +21,6 @@ class CoursePage extends React.Component {
 
   static getInitialProps({query, store}) {
     store.dispatch(loadPage(query.pageSlug))
-    return { content: [ {'t': 'Str', 'c': 'Loading…' } ] }
   }
 
   typesetMathJax() {
@@ -79,4 +78,4 @@ class CoursePage extends React.Component {
   }
 }
 
-export default connect(state => ({content: state.content}))(CoursePage)
+export default connect(state => ({content: state.pageContent}))(CoursePage)

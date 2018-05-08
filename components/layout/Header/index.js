@@ -1,11 +1,11 @@
 import React from 'react'
-import {Container, Divider, Dropdown, Image, Menu} from 'semantic-ui-react'
+import {Container, Dropdown, Icon, Image, Menu} from 'semantic-ui-react'
 import Link from 'next/link'
 
 import css from './style.sass'
 
 const Header = () => (
-  <Menu fixed="top">
+  <Menu stackable className={css.menu}>
     <Container>
       <Link href="/">
         <Menu.Item as="a" header>
@@ -19,11 +19,22 @@ const Header = () => (
       </Link>
       <Link href="/about">
         <Menu.Item as="a" header>
-          About
+          <Icon name="info" size="large" />
+          Über den Kurs
         </Menu.Item>
       </Link>
+      <Menu.Item as="a" header>
+        <Icon name="file pdf outline" size="large" />
+        PDF
+      </Menu.Item>
 
       <Menu.Menu position="right">
+        <Dropdown item simple text="Login">
+          <Dropdown.Menu>
+            <Dropdown.Item icon="user" text="Anmelden" />
+            <Dropdown.Item icon="add user" text="Account erstellen" />
+          </Dropdown.Menu>
+        </Dropdown>
         <div className="ui right aligned category search item">
           <div className="ui transparent icon input">
             <input className="prompt" type="text" placeholder="Suche…" />
@@ -32,13 +43,6 @@ const Header = () => (
           <div className="results" />
         </div>
       </Menu.Menu>
-      <Divider />
-      <Dropdown item simple text="Login">
-        <Dropdown.Menu>
-          <Dropdown.Item icon="user" text="Anmelden" />
-          <Dropdown.Item icon="add user" text="Account erstellen" />
-        </Dropdown.Menu>
-      </Dropdown>
     </Container>
   </Menu>
 )

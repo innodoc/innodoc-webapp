@@ -1,7 +1,8 @@
 import {actionTypes} from './actions'
 
 export const defaultInitialState = {
-  placeholderData: null
+  sidebarVisible: true,
+  pageContent: [],
 }
 
 function reducer(state = defaultInitialState, action) {
@@ -15,7 +16,13 @@ function reducer(state = defaultInitialState, action) {
     case actionTypes.LOAD_PAGE_SUCCESS:
       return {
         ...state,
-        ...{content: action.data}
+        ...{pageContent: action.data}
+      }
+
+    case actionTypes.TOGGLE_SIDEBAR:
+      return {
+        ...state,
+        ...{sidebarVisible: !state.sidebarVisible}
       }
 
     default:
