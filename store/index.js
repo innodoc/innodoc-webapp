@@ -1,6 +1,4 @@
 import {createStore, applyMiddleware} from 'redux'
-import withRedux from 'next-redux-wrapper'
-import nextReduxSaga from 'next-redux-saga'
 import createSagaMiddleware from 'redux-saga'
 
 import rootReducer, {defaultInitialState} from './reducer'
@@ -16,7 +14,7 @@ const bindMiddleware = (middleware) => {
   return applyMiddleware(...middleware)
 }
 
-export function configureStore(initialState = defaultInitialState) {
+export default function makeStore(initialState = defaultInitialState) {
   const store = createStore(
     rootReducer,
     initialState,
@@ -29,8 +27,4 @@ export function configureStore(initialState = defaultInitialState) {
 
   store.runSagaTask()
   return store
-}
-
-export function withReduxSaga(...connectArgs) {
-  return BaseComponent => withRedux(configureStore, ...connectArgs)(nextReduxSaga(BaseComponent))
 }

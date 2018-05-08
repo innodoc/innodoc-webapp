@@ -1,7 +1,6 @@
 import React from 'react'
 import Layout from '../components/layout'
-
-import {withReduxSaga} from '../store'
+import {connect} from 'react-redux'
 
 class AboutPage extends React.Component {
   render() {
@@ -11,4 +10,4 @@ class AboutPage extends React.Component {
   }
 }
 
-export default withReduxSaga()(AboutPage)
+export default connect()(AboutPage)

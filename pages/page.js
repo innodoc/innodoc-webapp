@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import loadScript from 'load-script'
+import {connect} from 'react-redux'
 
-import {withReduxSaga} from '../store'
 import {loadPage} from '../store/actions'
 import Layout from '../components/layout'
 import ContentFragment from '../components/ContentFragment.js'
@@ -82,4 +82,4 @@ class CoursePage extends React.Component {
 
 }
 
-export default withReduxSaga(state => ({content: state.content}))(CoursePage)
+export default connect(state => ({content: state.content}))(CoursePage)

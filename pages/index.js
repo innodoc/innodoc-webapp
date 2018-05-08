@@ -1,6 +1,6 @@
 import React from 'react'
+import {connect} from 'react-redux'
 
-import {withReduxSaga} from '../store'
 import Layout from '../components/layout'
 import PageLink from '../components/PageLink'
 
@@ -13,4 +13,4 @@ const IndexPage = () => (
   </Layout>
 )
 
-export default withReduxSaga()(IndexPage)
+export default connect()(IndexPage)
