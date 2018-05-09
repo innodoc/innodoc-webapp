@@ -8,7 +8,28 @@ import css from './style.sass'
 export default class Toc extends React.Component {
   static propTypes = {
     navTree: PropTypes.array.isRequired,
-    onSidebarToggleClick: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    ...React.Component.defaultProps,
+    navTree: [
+      {
+        pageSlug: 'vbkm01',
+        title: 'Kapitel 1',
+      },
+      {
+        pageSlug: 'exercises',
+        title: 'Exercises',
+      },
+      {
+        pageSlug: 'vbkm01_exercises',
+        title: 'vbkm01_exercises',
+      },
+      {
+        pageSlug: 'test',
+        title: 'Test',
+      },
+    ],
   }
 
   render() {

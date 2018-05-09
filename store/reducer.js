@@ -1,7 +1,7 @@
 import {actionTypes} from './actions'
 
 export const defaultInitialState = {
-  sidebarVisible: true,
+  sidebarVisible: false,
   pageContent: [],
 }
 

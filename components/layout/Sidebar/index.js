@@ -1,77 +1,72 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Sidebar from 'react-sidebar'
+import {connect} from 'react-redux'
+import {Button, Container, Icon, Menu, Sidebar, Transition} from 'semantic-ui-react'
 
-import PageLink from '../../PageLink'
+import Toc from '../../Toc'
+import {toggleSidebar} from '../../../store/actions'
 import css from './style.sass'
 
-export default class InnodocSidebar extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      mql: null,
-      docked: true,
-      open: true,
-    }
-
-    this.mediaQueryChanged = this.mediaQueryChanged.bind(this)
-    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this)
-  }
-
+class InnodocSidebar extends React.Component {
   static propTypes = {
-    navTree: PropTypes.array,
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node
-    ]).isRequired
-  }
-
-  onSetSidebarOpen(open) {
-    this.setState({ sidebarOpen: open })
-  }
-
-  componentDidMount() {
-    const mql = window.matchMedia(`(min-width: 800px)`)
-    mql.addListener(this.mediaQueryChanged)
-    this.setState({
-      mql: mql,
-      sidebarDocked: mql.matches
-    })
-  }
-
-  componentWillUnmount() {
-    this.state.mql.removeListener(this.mediaQueryChanged)
-  }
-
-  mediaQueryChanged() {
-    this.setState({ sidebarDocked: this.state.mql.matches })
+    ]).isRequired,
+    navTree: PropTypes.array,
+    onSidebarToggleClick: PropTypes.func.isRequired,
+    sidebarVisible: PropTypes.bool.isRequired,
   }
 
   render() {
-    const { navTree, children } = this.props
-
-    const sidebarNavItems = navTree.map((l, i) =>
-      <li key={i.toString()}>
-        <PageLink pageSlug={l.pageSlug}>
-          <a>{l.title}</a>
-        </PageLink>
-      </li>
-    )
-
-    const sidebarContent = (
-      <ul className={css.sidebarNav}>
-        {sidebarNavItems}
-      </ul>
-    )
+    const {
+      children,
+      navTree,
+      sidebarVisible,
+      onSidebarToggleClick
+    } = this.props
 
     return (
-      <Sidebar sidebar={sidebarContent}
-               open={this.state.sidebarOpen}
-               docked={this.state.sidebarDocked}
-               onSetOpen={this.onSetSidebarOpen}>
-        {children}
-      </Sidebar>
+      <React.Fragment>
+        <Transition visible={!sidebarVisible} animation="fade right" duration={500}>
+          <Menu vertical compact className={css.sidebarToggle}>
+            <Menu.Item onClick={onSidebarToggleClick} as={Button} icon>
+              <Icon name="content" />
+            </Menu.Item>
+          </Menu>
+        </Transition>
+        <Sidebar.Pushable>
+          <Sidebar animation="overlay"
+                   width="wide"
+                   visible={sidebarVisible}
+                   className={css.sidebar}>
+            <div className={css.tocWrapper}>
+              <Menu vertical fluid className={css.sidebarToggleInMenu}>
+                <Menu.Item onClick={onSidebarToggleClick}>
+                  Menü ausblenden
+                  <Icon name="content" />
+                </Menu.Item>
+              </Menu>
+              <Toc navTree={navTree} />
+            </div>
+          </Sidebar>
+          <Sidebar.Pusher>
+            <Container className={css.content}>
+              {children}
+            </Container>
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
+      </React.Fragment>
     )
   }
 }
+
+const mapStateToProps = state => ({
+  sidebarVisible: state.sidebarVisible,
+})
+
+const mapDispatchToProps = dispatch => ({
+  onSidebarToggleClick: () => { dispatch(toggleSidebar()) }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(InnodocSidebar)
