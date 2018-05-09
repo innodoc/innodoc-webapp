@@ -10,18 +10,6 @@ import Toc from '../Toc'
 import {toggleSidebar} from '../../store/actions'
 
 class Layout extends React.Component {
-  // constructor(props) {
-  //   super(props)
-  //
-  //   this.state = {
-  //     // mql: null,
-  //     sidebarVisible: true,
-  //   }
-  //
-  //   // this.mediaQueryChanged = this.mediaQueryChanged.bind(this)
-  //   // this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this)
-  // }
-
   static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
@@ -70,7 +58,7 @@ class Layout extends React.Component {
                    vertical
                    className={css.sidebar}>
             <div className={css.tocWrapper}>
-              <Menu vertical className={css.sidebarToggleInMenu}>
+              <Menu vertical fluid className={css.sidebarToggleInMenu}>
                 <Menu.Item onClick={onSidebarToggleClick}>
                   Menü ausblenden
                   <Icon name="content" />
