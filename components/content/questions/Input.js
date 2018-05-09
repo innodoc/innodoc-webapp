@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import math from 'mathjs'
+import classNames from 'classnames'
 
 import BaseContentComponent from '../Base'
 
+import { Input, Icon } from 'semantic-ui-react'
+
+import css from './style.sass'
 
 class QuestionComponent extends BaseContentComponent{
   constructor(props) {
@@ -22,18 +26,7 @@ class QuestionComponent extends BaseContentComponent{
 
     let solved = this.validate()
 
-    // debugging color
-    let color
-    if (this.state.inputValue == '') {
-      color = 'transparent'
-    } else if (solved) {
-      color = 'green'
-    } else {
-      color = 'red'
-    }
-
     this.setState({
-      color: color,
       solved: solved
     })
   }
@@ -56,14 +49,33 @@ class InputQuestionComponent extends QuestionComponent {
     return solved
   }
 
+  getIcon() {
+    if (this.state.inputValue == '') {
+      return <Icon name='question' />
+    } else {
+      if (this.state.solved) {
+        return <Icon name='check' color='green'/>
+      } else {
+        return <Icon name='close' color='red' />
+      }
+    }
+
+  }
+
   render() {
+    var inputClass = classNames('exercise', css, {
+      solved: this.state.solved,
+      wrong: this.state.inputValue !== '' && !this.state.solved
+    })
+
     return (
-      <input
+      <Input
         type='text'
-        className='exercise inputquestion'
+        className={inputClass}
         value={this.state.inputValue}
+        icon={this.getIcon()}
         onChange={this.handleChange}
-        style={{ backgroundColor: this.state.color}}/>
+      />
     )
   }
 }
