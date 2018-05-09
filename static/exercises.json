@@ -1,762 +1,638 @@
 [
     {
-      "t": "Para",
-      "c": [
-        {
-          "t": "Str",
-          "c": "Der"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "Einzelwert"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Math",
-          "c": [
-            {
-              "t": "InlineMath"
-            },
-            "x=2"
-          ]
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "ist"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "keine"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "Lösung"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "der"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "ursprünglichen"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "Ungleichung,"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "da"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "er"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "nicht"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "zu"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "der"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Code",
-          "c": [
-            [
-              "",
-              [
-                "exercise",
-                "text"
-              ],
-              [
-                [
-                  "length",
-                  "25"
-                ],
-                [
-                  "solution",
-                  "Definitionsmenge"
-                ],
-                [
-                  "uxid",
-                  "UGX"
-                ],
-                [
-                  "validator",
-                  "string"
-                ]
-              ]
-            ],
-            ""
-          ]
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "gehört."
-        },
-        {
-          "t": "SoftBreak"
-        },
-        {
-          "t": "Str",
-          "c": "Berechnen"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "Sie"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "mit"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "Hilfe"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "der"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Math",
-          "c": [
-            {
-              "t": "InlineMath"
-            },
-            "\\textsf{round}"
-          ]
-        },
-        {
-          "t": "Str",
-          "c": "-Funktion"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "die"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "Rundung"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "von"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Math",
-          "c": [
-            {
-              "t": "InlineMath"
-            },
-            "\\pi=3,141592654\\ldots"
-          ]
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "auf"
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Math",
-          "c": [
-            {
-              "t": "InlineMath"
-            },
-            "4"
-          ]
-        },
-        {
-          "t": "Space"
-        },
-        {
-          "t": "Str",
-          "c": "Nachkommastellen: MEquationItem"
-        },
-        {
-          "t": "Span",
-          "c": [
-            [
-              "",
-              [],
-              []
-            ],
-            [
-              {
-                "t": "Math",
-                "c": [
-                  {
-                    "t": "InlineMath"
-                  },
-                  "\\overline{\\pi}"
-                ]
-              }
-            ]
-          ]
-        },
-        {
-          "t": "Span",
-          "c": [
-            [
-              "",
-              [],
-              []
-            ],
-            [
-              {
-                "t": "Code",
-                "c": [
-                  [
-                    "",
-                    [
-                      "exercise",
-                      "text"
-                    ],
-                    [
-                      [
-                        "length",
-                        "20"
-                      ],
-                      [
-                        "solution",
-                        "3.1416"
-                      ],
-                      [
-                        "precision",
-                        "7"
-                      ],
-                      [
-                        "uxid",
-                        "STOCHROUND1"
-                      ],
-                      [
-                        "validator",
-                        "math"
-                      ]
-                    ]
-                  ],
-                  ""
-                ]
-              }
-            ]
-          ]
-        },
-        {
-          "t": "Str",
-          "c": "."
-        }
-      ]
-    },
-    {
-      "t": "Div",
+      "t": "OrderedList",
       "c": [
         [
-          "",
-          [
-            "exercise"
-          ],
-          []
-        ],
-        [
+          1,
           {
-            "t": "Para",
-            "c": [
-              {
-                "t": "Str",
-                "c": "Welches"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "Endkapital"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "ergibt"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "sich"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "bei"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "einfacher"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "Verzinsung"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "in"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "Höhe"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "von"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Math",
-                "c": [
-                  {
-                    "t": "InlineMath"
-                  },
-                  "p=2,5\\%"
-                ]
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "p."
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "a."
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "nach"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Math",
-                "c": [
-                  {
-                    "t": "InlineMath"
-                  },
-                  "t=10"
-                ]
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "Jahren"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "Laufzeit"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "bei"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "einem"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "Anfangskapital"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "von"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Math",
-                "c": [
-                  {
-                    "t": "InlineMath"
-                  },
-                  "K=4000"
-                ]
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Str",
-                "c": "EUR?"
-              },
-              {
-                "t": "SoftBreak"
-              },
-              {
-                "t": "Str",
-                "c": " "
-              },
-              {
-                "t": "LineBreak"
-              },
-              {
-                "t": "Str",
-                "c": " "
-              },
-              {
-                "t": "LineBreak"
-              },
-              {
-                "t": "Str",
-                "c": "Antwort:"
-              },
-              {
-                "t": "Space"
-              },
-              {
-                "t": "Span",
-                "c": [
-                  [
-                    "",
-                    [],
-                    []
-                  ],
-                  [
-                    {
-                      "t": "Math",
-                      "c": [
-                        {
-                          "t": "InlineMath"
-                        },
-                        "K_{10}"
-                      ]
-                    },
-                    {
-                      "t": "Math",
-                      "c": [
-                        {
-                          "t": "InlineMath"
-                        },
-                        "\\;\\;=\\;"
-                      ]
-                    },
-                    {
-                      "t": "Span",
-                      "c": [
-                        [
-                          "",
-                          [],
-                          []
-                        ],
-                        [
-                          {
-                            "t": "Code",
-                            "c": [
-                              [
-                                "",
-                                [
-                                  "exercise",
-                                  "text"
-                                ],
-                                [
-                                  [
-                                    "length",
-                                    "10"
-                                  ],
-                                  [
-                                    "solution",
-                                    "5000"
-                                  ],
-                                  [
-                                    "precision",
-                                    "4"
-                                  ],
-                                  [
-                                    "uxid",
-                                    "STOCHPRO1"
-                                  ],
-                                  [
-                                    "validator",
-                                    "math"
-                                  ]
-                                ]
-                              ],
-                              ""
-                            ]
-                          },
-                          {
-                            "t": "Space"
-                          },
-                          {
-                            "t": "Str",
-                            "c": "EUR"
-                          }
-                        ]
-                      ]
-                    }
-                  ]
-                ]
-              },
-              {
-                "t": "Str",
-                "c": "."
-              },
-              {
-                "t": "SoftBreak"
-              },
-              {
-                "t": "Str",
-                "c": " "
-              },
-              {
-                "t": "LineBreak"
-              },
-              {
-                "t": "Str",
-                "c": " "
-              },
-              {
-                "t": "LineBreak"
-              }
-            ]
+            "t": "DefaultStyle"
           },
           {
-            "t": "Div",
-            "c": [
-              [
-                "",
-                [
-                  "hint"
-                ],
-                []
-              ],
-              [
+            "t": "DefaultDelim"
+          }
+        ],
+        [
+          [
+            {
+              "t": "Para",
+              "c": [
                 {
-                  "t": "Para",
+                  "t": "Span",
                   "c": [
-                    {
-                      "t": "Str",
-                      "c": "Einsetzen"
-                    },
-                    {
-                      "t": "Space"
-                    },
-                    {
-                      "t": "Str",
-                      "c": "der"
-                    },
-                    {
-                      "t": "Space"
-                    },
-                    {
-                      "t": "Str",
-                      "c": "entsprechenden"
-                    },
-                    {
-                      "t": "Space"
-                    },
-                    {
-                      "t": "Str",
-                      "c": "Werte"
-                    },
-                    {
-                      "t": "Space"
-                    },
-                    {
-                      "t": "Str",
-                      "c": "in"
-                    },
-                    {
-                      "t": "Space"
-                    },
-                    {
-                      "t": "Str",
-                      "c": "die"
-                    },
-                    {
-                      "t": "Space"
-                    },
-                    {
-                      "t": "Str",
-                      "c": "Zinsformel"
-                    },
-                    {
-                      "t": "Space"
-                    },
-                    {
-                      "t": "Str",
-                      "c": "für"
-                    },
-                    {
-                      "t": "Space"
-                    },
-                    {
-                      "t": "Str",
-                      "c": "die"
-                    },
-                    {
-                      "t": "Space"
-                    },
-                    {
-                      "t": "Str",
-                      "c": "einfache"
-                    },
-                    {
-                      "t": "Space"
-                    },
-                    {
-                      "t": "Str",
-                      "c": "Verzinsung"
-                    },
-                    {
-                      "t": "Space"
-                    },
-                    {
-                      "t": "Str",
-                      "c": "ergibt"
-                    },
-                    {
-                      "t": "SoftBreak"
-                    },
-                    {
-                      "t": "Math",
-                      "c": [
-                        {
-                          "t": "DisplayMath"
-                        },
-                        "K_{10}\\; =\\; K\\cdot \\left({ 1 + 10\\cdot \\frac{2,5}{100}}\\right) =4000\\; \\text{EUR} \\cdot 1,25\\; =\\; 5000\\;\\text{EUR}\\: ."
-                      ]
-                    }
+                    [
+                      "",
+                      [],
+                      []
+                    ],
+                    [
+                      {
+                        "t": "Str",
+                        "c": "Den"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "Winkel"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Math",
+                        "c": [
+                          {
+                            "t": "InlineMath"
+                          },
+                          "\\alpha"
+                        ]
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "sowohl"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "für"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Math",
+                        "c": [
+                          {
+                            "t": "InlineMath"
+                          },
+                          "x"
+                        ]
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "als"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "auch"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "für"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Math",
+                        "c": [
+                          {
+                            "t": "InlineMath"
+                          },
+                          "y"
+                        ]
+                      },
+                      {
+                        "t": "Str",
+                        "c": ":"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "Dann"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "ist"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Span",
+                        "c": [
+                          [
+                            "",
+                            [],
+                            []
+                          ],
+                          [
+                            {
+                              "t": "Math",
+                              "c": [
+                                {
+                                  "t": "InlineMath"
+                                },
+                                "x^2+y^2"
+                              ]
+                            },
+                            {
+                              "t": "Math",
+                              "c": [
+                                {
+                                  "t": "InlineMath"
+                                },
+                                "\\;\\;=\\;"
+                              ]
+                            },
+                            {
+                              "t": "Code",
+                              "c": [
+                                [
+                                  "",
+                                  [
+                                    "exercise",
+                                    "text"
+                                  ],
+                                  [
+                                    [
+                                      "length",
+                                      "13"
+                                    ],
+                                    [
+                                      "solution",
+                                      "2*alpha^2"
+                                    ],
+                                    [
+                                      "supporting-points",
+                                      "5"
+                                    ],
+                                    [
+                                      "variables",
+                                      "alpha"
+                                    ],
+                                    [
+                                      "precision",
+                                      "5"
+                                    ],
+                                    [
+                                      "uxid",
+                                      "ERX1"
+                                    ],
+                                    [
+                                      "validator",
+                                      "function"
+                                    ]
+                                  ]
+                                ],
+                                ""
+                              ]
+                            }
+                          ]
+                        ]
+                      },
+                      {
+                        "t": "Str",
+                        "c": "."
+                      }
+                    ]
                   ]
                 }
               ]
-            ]
-          }
+            }
+          ],
+          [
+            {
+              "t": "Para",
+              "c": [
+                {
+                  "t": "Span",
+                  "c": [
+                    [
+                      "",
+                      [],
+                      []
+                    ],
+                    [
+                      {
+                        "t": "Str",
+                        "c": "Die"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "Zahl"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Math",
+                        "c": [
+                          {
+                            "t": "InlineMath"
+                          },
+                          "2"
+                        ]
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "für"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Math",
+                        "c": [
+                          {
+                            "t": "InlineMath"
+                          },
+                          "y"
+                        ]
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "und"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "der"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "Term"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Math",
+                        "c": [
+                          {
+                            "t": "InlineMath"
+                          },
+                          "t+1"
+                        ]
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "für"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Math",
+                        "c": [
+                          {
+                            "t": "InlineMath"
+                          },
+                          "x"
+                        ]
+                      },
+                      {
+                        "t": "Str",
+                        "c": ":"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "Dann"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "ist"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Span",
+                        "c": [
+                          [
+                            "",
+                            [],
+                            []
+                          ],
+                          [
+                            {
+                              "t": "Math",
+                              "c": [
+                                {
+                                  "t": "InlineMath"
+                                },
+                                "x^2+y^2"
+                              ]
+                            },
+                            {
+                              "t": "Math",
+                              "c": [
+                                {
+                                  "t": "InlineMath"
+                                },
+                                "\\;\\;=\\;"
+                              ]
+                            },
+                            {
+                              "t": "Code",
+                              "c": [
+                                [
+                                  "",
+                                  [
+                                    "exercise",
+                                    "text"
+                                  ],
+                                  [
+                                    [
+                                      "length",
+                                      "13"
+                                    ],
+                                    [
+                                      "solution",
+                                      "4+(t+1)^2"
+                                    ],
+                                    [
+                                      "supporting-points",
+                                      "5"
+                                    ],
+                                    [
+                                      "variables",
+                                      "t"
+                                    ],
+                                    [
+                                      "precision",
+                                      "5"
+                                    ],
+                                    [
+                                      "uxid",
+                                      "ERX2"
+                                    ],
+                                    [
+                                      "validator",
+                                      "function"
+                                    ]
+                                  ]
+                                ],
+                                ""
+                              ]
+                            }
+                          ]
+                        ]
+                      },
+                      {
+                        "t": "Str",
+                        "c": "."
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "t": "Para",
+              "c": [
+                {
+                  "t": "Span",
+                  "c": [
+                    [
+                      "",
+                      [],
+                      []
+                    ],
+                    [
+                      {
+                        "t": "Str",
+                        "c": "Den"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "Term"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Math",
+                        "c": [
+                          {
+                            "t": "InlineMath"
+                          },
+                          "z+1"
+                        ]
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "für"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Math",
+                        "c": [
+                          {
+                            "t": "InlineMath"
+                          },
+                          "x"
+                        ]
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "und"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "der"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "Term"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Math",
+                        "c": [
+                          {
+                            "t": "InlineMath"
+                          },
+                          "z-1"
+                        ]
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "für"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Math",
+                        "c": [
+                          {
+                            "t": "InlineMath"
+                          },
+                          "y"
+                        ]
+                      },
+                      {
+                        "t": "Str",
+                        "c": ":"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "Dann"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Str",
+                        "c": "ist"
+                      },
+                      {
+                        "t": "Space"
+                      },
+                      {
+                        "t": "Span",
+                        "c": [
+                          [
+                            "",
+                            [],
+                            []
+                          ],
+                          [
+                            {
+                              "t": "Math",
+                              "c": [
+                                {
+                                  "t": "InlineMath"
+                                },
+                                "x^2+y^2"
+                              ]
+                            },
+                            {
+                              "t": "Math",
+                              "c": [
+                                {
+                                  "t": "InlineMath"
+                                },
+                                "\\;\\;=\\;"
+                              ]
+                            },
+                            {
+                              "t": "Code",
+                              "c": [
+                                [
+                                  "",
+                                  [
+                                    "exercise",
+                                    "text"
+                                  ],
+                                  [
+                                    [
+                                      "length",
+                                      "13"
+                                    ],
+                                    [
+                                      "solution",
+                                      "2*z*z+2"
+                                    ],
+                                    [
+                                      "supporting-points",
+                                      "5"
+                                    ],
+                                    [
+                                      "variables",
+                                      "z"
+                                    ],
+                                    [
+                                      "precision",
+                                      "5"
+                                    ],
+                                    [
+                                      "uxid",
+                                      "ERX3"
+                                    ],
+                                    [
+                                      "validator",
+                                      "function"
+                                    ]
+                                  ]
+                                ],
+                                ""
+                              ]
+                            }
+                          ]
+                        ]
+                      },
+                      {
+                        "t": "Str",
+                        "c": "."
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
         ]
       ]
     }
