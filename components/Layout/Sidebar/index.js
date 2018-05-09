@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Button, Container, Icon, Menu, Sidebar, Transition} from 'semantic-ui-react'
+import {Icon, Menu, Sidebar, Transition} from 'semantic-ui-react'
 
+import Content from '../Content'
 import Toc from '../../Toc'
 import {toggleSidebar} from '../../../store/actions'
 import css from './style.sass'
@@ -30,7 +31,8 @@ class InnodocSidebar extends React.Component {
       <React.Fragment>
         <Transition visible={!sidebarVisible} animation="fade right" duration={500}>
           <Menu vertical compact className={css.sidebarToggle}>
-            <Menu.Item onClick={onSidebarToggleClick} as={Button} icon>
+            <Menu.Item onClick={onSidebarToggleClick}>
+              &nbsp;
               <Icon name="content" />
             </Menu.Item>
           </Menu>
@@ -51,9 +53,9 @@ class InnodocSidebar extends React.Component {
             </div>
           </Sidebar>
           <Sidebar.Pusher>
-            <Container className={css.content}>
+            <Content>
               {children}
-            </Container>
+            </Content>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </React.Fragment>

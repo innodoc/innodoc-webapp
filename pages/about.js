@@ -1,6 +1,7 @@
 import React from 'react'
-import Layout from '../components/layout'
 import {connect} from 'react-redux'
+
+import Layout from '../components/Layout'
 
 class AboutPage extends React.Component {
   render() {

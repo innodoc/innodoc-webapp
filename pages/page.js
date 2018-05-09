@@ -4,7 +4,7 @@ import loadScript from 'load-script'
 import {connect} from 'react-redux'
 
 import {loadPage} from '../store/actions'
-import Layout from '../components/layout'
+import Layout from '../components/Layout'
 import ContentFragment from '../components/ContentFragment.js'
 
 class CoursePage extends React.Component {
@@ -69,7 +69,7 @@ class CoursePage extends React.Component {
 
   render() {
     return (
-      <Layout>
+      <Layout sidebar>
         <ContentFragment content={this.props.content}
                          ref={(node) => {this.mathJaxNode = node}}
         />
