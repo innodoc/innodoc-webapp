@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-var math = require('mathjs');
+import math from 'mathjs'
 
 import BaseContentComponent from '../Base'
 
@@ -47,7 +47,6 @@ class QuestionComponent extends BaseContentComponent{
 
 class InputQuestionComponent extends QuestionComponent {
 
-
   static propTypes = {
     solution: PropTypes.string.isRequired,
   }
@@ -71,30 +70,54 @@ class InputQuestionComponent extends QuestionComponent {
 
 class MathInputQuestionComponent extends InputQuestionComponent {
   validate() {
-
+    //TODO is this mathematecally correct (creates the same wrongs and corrects
+    //as before?)
     var epsilon = this.props.attrs.precision
     epsilon = math.eval('1e-' + epsilon)
-    math = math.create({
+    math.config({
       epsilon: epsilon
     })
 
     try{
-      var parsedInput = math.eval(this.state.inputValue)
-      var parsedSolution = math.eval(this.props.solution)
+      var evalInput = math.eval(this.state.inputValue)
+      var evalSolution = math.eval(this.props.solution)
     } catch (e) {
       if (e instanceof SyntaxError) {
         return false
       }
     }
-    if (typeof parsedInput !== 'undefined') {
-      return math.equal(parsedInput, parsedSolution)
+    if (typeof evalInput !== 'undefined') {
+      return math.equal(evalInput, evalSolution)
     }
     return false
   }
 }
 
-// class FunctionInputQuestionComponent extends InputQuestionComponent {
-//
-// }
+class FunctionInputQuestionComponent extends InputQuestionComponent {
 
-export {QuestionComponent, InputQuestionComponent, MathInputQuestionComponent}
+    validate() {
+
+      try {
+        var parsedInput = math.simplify(math.parse(this.state.inputValue))
+        var parsedSolution = math.simplify(math.parse(this.props.solution))
+      } catch (e) {
+        if (e instanceof SyntaxError) {
+          return false
+        }
+      }
+
+      if (typeof parsedInput !== 'undefined') {
+        return parsedInput.equals(parsedSolution)
+      }
+
+      return false
+    }
+}
+
+
+export {
+  QuestionComponent,
+  InputQuestionComponent,
+  MathInputQuestionComponent,
+  FunctionInputQuestionComponent
+}
