@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Icon, Menu, Sidebar, Transition} from 'semantic-ui-react'
+import {Icon, Menu, Transition} from 'semantic-ui-react'
 
+import SidebarToggle from './SidebarToggle'
 import Content from '../Content'
 import Toc from '../../Toc'
 import {toggleSidebar} from '../../../store/actions'
@@ -16,55 +17,44 @@ class InnodocSidebar extends React.Component {
     ]).isRequired,
     navTree: PropTypes.array,
     onSidebarToggleClick: PropTypes.func.isRequired,
-    sidebarVisible: PropTypes.bool.isRequired,
+    visible: PropTypes.bool.isRequired,
   }
 
   render() {
     const {
       children,
       navTree,
-      sidebarVisible,
-      onSidebarToggleClick
+      visible,
+      onSidebarToggleClick,
     } = this.props
 
     return (
       <React.Fragment>
-        <Transition visible={!sidebarVisible} animation="fade right" duration={500}>
-          <Menu vertical compact className={css.sidebarToggle}>
+        <Transition visible={!visible} animation="fade right">
+          <SidebarToggle onClick={onSidebarToggleClick} />
+        </Transition>
+        <Transition visible={visible} animation="fade right">
+          <Menu vertical fixed="left" className={css.sidebarToggleInMenu}>
             <Menu.Item onClick={onSidebarToggleClick}>
-              &nbsp;
-              <Icon name="content" />
+              Menü ausblenden
+              <Icon name="close" />
+            </Menu.Item>
+            <Menu.Item>
+              <Menu.Header>Kursinhalt</Menu.Header>
+              <Toc navTree={navTree} as={Menu.Menu} />
             </Menu.Item>
           </Menu>
         </Transition>
-        <Sidebar.Pushable>
-          <Sidebar animation="overlay"
-                   width="wide"
-                   visible={sidebarVisible}
-                   className={css.sidebar}>
-            <div className={css.tocWrapper}>
-              <Menu vertical fluid className={css.sidebarToggleInMenu}>
-                <Menu.Item onClick={onSidebarToggleClick}>
-                  Menü ausblenden
-                  <Icon name="content" />
-                </Menu.Item>
-              </Menu>
-              <Toc navTree={navTree} />
-            </div>
-          </Sidebar>
-          <Sidebar.Pusher>
-            <Content>
-              {children}
-            </Content>
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
+        <Content>
+          {children}
+        </Content>
       </React.Fragment>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  sidebarVisible: state.sidebarVisible,
+  visible: state.sidebarVisible,
 })
 
 const mapDispatchToProps = dispatch => ({

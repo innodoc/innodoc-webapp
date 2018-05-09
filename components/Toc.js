@@ -2,16 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {Menu} from 'semantic-ui-react'
 
-import PageLink from '../PageLink'
-import css from './style.sass'
+import PageLink from './PageLink'
 
 export default class Toc extends React.Component {
   static propTypes = {
     navTree: PropTypes.array.isRequired,
+    as: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object,
+    ]).isRequired,
   }
 
   static defaultProps = {
     ...React.Component.defaultProps,
+    as: Menu,
     navTree: [
       {
         pageSlug: 'vbkm01',
@@ -33,7 +37,9 @@ export default class Toc extends React.Component {
   }
 
   render() {
-    const sidebarNavItems = this.props.navTree.map((l, i) =>
+    const { navTree, as: ElementType, ...otherProps } = this.props
+
+    const sidebarNavItems = navTree.map((l, i) =>
       <PageLink pageSlug={l.pageSlug} key={i.toString()}>
         <Menu.Item>
           {l.title}
@@ -42,9 +48,9 @@ export default class Toc extends React.Component {
     )
 
     return (
-      <Menu vertical fluid className={css.toc}>
+      <ElementType {...otherProps}>
         {sidebarNavItems}
-      </Menu>
+      </ElementType>
     )
   }
 }
