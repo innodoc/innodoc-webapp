@@ -7,10 +7,7 @@ import PageLink from './PageLink'
 export default class Toc extends React.Component {
   static propTypes = {
     navTree: PropTypes.array.isRequired,
-    as: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-    ]).isRequired,
+    as: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
