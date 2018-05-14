@@ -1,8 +1,11 @@
 import React from 'react';
+import classNames from 'classnames'
 import {Card, Button} from 'semantic-ui-react'
 
 import BaseContentComponent from '../Base'
 import ContentFragment from '../../ContentFragment'
+
+import css from './style.sass'
 
 class Exercise extends BaseContentComponent {
 
@@ -12,10 +15,10 @@ class Exercise extends BaseContentComponent {
 
   render() {
     return (
-      <Card color='blue' fluid className='exercise'>
+      <Card color='blue' fluid className={classNames('exercise', css.exercise)}>
         {/* TODO i18n */}
         <Card.Content header='Exercise' />
-        <Card.Content>
+        <Card.Content className={css.exerciseContent}>
           <ContentFragment content={this.props.content} />
         </Card.Content>
       </Card>

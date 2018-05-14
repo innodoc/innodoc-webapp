@@ -63,9 +63,9 @@ class InputQuestionComponent extends QuestionComponent {
   }
 
   render() {
-    var inputClass = classNames('exercise', css, {
-      solved: this.state.solved,
-      wrong: this.state.inputValue !== '' && !this.state.solved
+    const inputClass = classNames('exercise', css.inputquestion, {
+      [css.solved]: this.state.solved,
+      [css.wrong]: this.state.inputValue !== '' && !this.state.solved
     })
 
     return (
