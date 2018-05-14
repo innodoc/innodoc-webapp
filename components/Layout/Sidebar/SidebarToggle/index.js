@@ -8,7 +8,11 @@ export default class SidebarToggle extends React.Component {
     const icon = <Icon name="content" />
     return (
       <div className={css.sidebarToggle}>
-        <Button basic icon={icon} {...this.props} />
+        <Button basic
+                icon={icon}
+                title="Kursinhalt einblenden"
+                {...this.props}
+        />
       </div>
     )
   }
