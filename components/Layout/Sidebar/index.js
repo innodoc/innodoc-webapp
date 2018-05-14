@@ -34,7 +34,7 @@ class InnodocSidebar extends React.Component {
           <SidebarToggle onClick={onSidebarToggleClick} />
         </Transition>
         <Transition visible={visible} animation="fade right">
-          <Menu vertical fixed="left" className={css.sidebarToggleInMenu}>
+          <Menu vertical fixed="left" className={css.sidebar}>
             <Menu.Item onClick={onSidebarToggleClick}>
               Menü ausblenden
               <Icon name="close" />
