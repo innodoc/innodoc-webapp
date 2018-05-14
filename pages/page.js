@@ -14,6 +14,7 @@ class CoursePage extends React.Component {
 
   constructor(props) {
     super(props)
+    this.mathJaxNode = React.createRef()
     this.state = {
       loaded: false
     }
@@ -24,7 +25,9 @@ class CoursePage extends React.Component {
   }
 
   typesetMathJax() {
-    window.MathJax.Hub.Queue(['Typeset', window.MathJax.Hub, this.content])
+    if (this.mathJaxNode) {
+      window.MathJax.Hub.Queue(['Typeset', window.MathJax.Hub, this.mathJaxNode.current])
+    }
   }
 
   componentDidMount() {
@@ -58,6 +61,11 @@ class CoursePage extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.content !== this.props.content)
+      this.typesetMathJax()
+  }
+
   onLoadMathJax = (err) => {
     this.setState({
       loaded: true
@@ -70,9 +78,9 @@ class CoursePage extends React.Component {
   render() {
     return (
       <Layout sidebar>
-        <ContentFragment content={this.props.content}
-                         ref={(node) => {this.mathJaxNode = node}}
-        />
+        <div ref={this.mathJaxNode}>
+          <ContentFragment content={this.props.content} />
+        </div>
       </Layout>
     )
   }
