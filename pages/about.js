@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 
 import Layout from '../components/Layout'
+import withI18next from '../lib/withI18next'
 
 class AboutPage extends React.Component {
   render() {
@@ -11,4 +12,4 @@ class AboutPage extends React.Component {
   }
 }
 
-export default connect()(AboutPage)
+export default connect()(withI18next()(AboutPage))

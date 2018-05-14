@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Icon, Menu, Transition} from 'semantic-ui-react'
+import {translate} from 'react-i18next'
 
 import SidebarToggle from './SidebarToggle'
 import Content from '../Content'
@@ -18,6 +19,7 @@ class InnodocSidebar extends React.Component {
     navTree: PropTypes.array,
     onSidebarToggleClick: PropTypes.func.isRequired,
     visible: PropTypes.bool.isRequired,
+    t: PropTypes.func.isRequired,
   }
 
   render() {
@@ -26,6 +28,7 @@ class InnodocSidebar extends React.Component {
       navTree,
       visible,
       onSidebarToggleClick,
+      t,
     } = this.props
 
     return (
@@ -36,11 +39,11 @@ class InnodocSidebar extends React.Component {
         <Transition visible={visible} animation="fade right">
           <Menu vertical fixed="left" className={css.sidebar}>
             <Menu.Item onClick={onSidebarToggleClick}>
-              Menü ausblenden
+              {t('sidebar.close')}
               <Icon name="close" />
             </Menu.Item>
             <Menu.Item>
-              <Menu.Header>Kursinhalt</Menu.Header>
+              <Menu.Header>{t('sidebar.courseContent')}</Menu.Header>
               <Toc navTree={navTree} as={Menu.Menu} />
             </Menu.Item>
           </Menu>
@@ -61,4 +64,4 @@ const mapDispatchToProps = dispatch => ({
   onSidebarToggleClick: () => { dispatch(toggleSidebar()) }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(InnodocSidebar)
+export default connect(mapStateToProps, mapDispatchToProps)(translate('common')(InnodocSidebar))

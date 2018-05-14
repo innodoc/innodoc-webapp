@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 
 import Layout from '../components/Layout'
 import PageLink from '../components/PageLink'
+import withI18next from '../lib/withI18next'
 
 const IndexPage = () => (
   <Layout>
@@ -18,4 +19,4 @@ const IndexPage = () => (
   </Layout>
 )
 
-export default connect()(IndexPage)
+export default connect()(withI18next()(IndexPage))

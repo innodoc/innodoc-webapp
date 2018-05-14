@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import {loadPage} from '../store/actions'
 import Layout from '../components/Layout'
 import ContentFragment from '../components/ContentFragment.js'
+import withI18next from '../lib/withI18next'
 
 class CoursePage extends React.Component {
   static propTypes = {
@@ -86,4 +87,4 @@ class CoursePage extends React.Component {
   }
 }
 
-export default connect(state => ({content: state.pageContent}))(CoursePage)
+export default connect(state => ({content: state.pageContent}))(withI18next()(CoursePage))

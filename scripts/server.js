@@ -1,32 +1,61 @@
+import path from 'path'
 import express from 'express'
 import next from 'next'
 
+import i18nextMiddleware, {LanguageDetector} from 'i18next-express-middleware'
+import Backend from 'i18next-node-fs-backend'
+
+import {i18nInstance} from '../i18n'
+
 const dev = process.env.NODE_ENV !== 'production'
-const app = next({
-  dev
-})
+const app = next({ dev })
 const handle = app.getRequestHandler()
 
-app.prepare()
-  .then(() => {
-    const server = express()
+// init i18next with serverside settings
+// using i18next-express-middleware
+i18nInstance
+  .use(Backend)
+  .use(LanguageDetector)
+  .init({
+    fallbackLng: 'en',
+    preload: ['en', 'de'], // preload all langages
+    ns: ['common'], // need to preload all the namespaces
+    backend: {
+      loadPath: path.join(__dirname, '../locales/{{lng}}/{{ns}}.json'),
+      addPath: path.join(__dirname, '../locales/{{lng}}/{{ns}}.missing.json')
+    }
+  }, () => {
+    // loaded translations we can bootstrap our routes
+    app.prepare()
+      .then(() => {
+        const server = express()
 
-    server.get('/page/:pageSlug', (req, res) => {
-      const actualPage = '/page'
-      const queryParams = { pageSlug: req.params.pageSlug }
-      app.render(req, res, actualPage, queryParams)
-    })
+        // enable middleware for i18next
+        server.use(i18nextMiddleware.handle(i18nInstance))
 
-    server.get('*', (req, res) => {
-      return handle(req, res)
-    })
+        // serve locales for client
+        server.use('/locales', express.static(path.join(__dirname, '../locales')))
 
-    server.listen(3000, (err) => {
-      if (err)
-        throw err
-    })
-  })
-  .catch((ex) => {
-    console.error(ex.stack)
-    process.exit(1)
+        // missing keys
+        server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18nInstance))
+
+        server.get('/page/:pageSlug', (req, res) => {
+          const actualPage = '/page'
+          const queryParams = { pageSlug: req.params.pageSlug }
+          app.render(req, res, actualPage, queryParams)
+        })
+
+        server.get('*', (req, res) => {
+          return handle(req, res)
+        })
+
+        server.listen(3000, (err) => {
+          if (err)
+            throw err
+        })
+      })
+      .catch((ex) => {
+        console.error(ex.stack)
+        process.exit(1)
+      })
   })
