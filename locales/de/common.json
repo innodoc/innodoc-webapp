@@ -1,6 +1,22 @@
 {
-  "preparatoryMathematicsCourse": "Onlinebrückenkurs Mathematik",
-  "nav": {
+  "footer": {
+    "aboutThisProject": "Über dieses Projekt",
+    "authors": "List der Autor*innen",
+    "collaborators": "Mitwirkende",
+    "contact": "Kontact",
+    "course": "Kurs",
+    "courseInformation": "Kursinformationen",
+    "displayOfFormulas": "Formeldarstellung",
+    "imprint": "Impressum",
+    "institutions": "Institutionen",
+    "institutionsPhrase": "Die folgenden Institutionen waren an der Entwicklung beteiligt:",
+    "liability": "Haftungsauschluss",
+    "license": "Lizenz",
+    "licensePhrase": "Die Bestandteile dieses Kurses stehen unter der <1>Creative Commons License CC BY-SA 3.0</1> und können kopiert oder nach Bearbeitung weiterverwendet werden solange der Ursprung (dieser Kurs) zitiert wird.",
+    "veundmintPhrase": "Dieser Kurs wurde im Rahmen des <1>VE&MINT-Projekts</1> entwickelt.",
+    "viewIndex": "Stichwortliste"
+  },
+  "header": {
     "aboutTheCourse": "Über den Kurs",
     "downloadPDF": "PDF",
     "linkEN": "Englisch",
@@ -8,7 +24,8 @@
     "login": "Login",
     "createAccount": "Konto erstellen",
     "language": "Sprache",
-    "searchPlaceholder": "Suche…"
+    "searchPlaceholder": "Suche…",
+    "preparatoryMathematicsCourse": "Onlinebrückenkurs<1></1>Mathematik"
   },
   "sidebar": {
     "close": "Menü ausblenden",

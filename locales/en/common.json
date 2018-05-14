@@ -1,6 +1,21 @@
 {
-  "preparatoryMathematicsCourse": "Preparatory Mathematics Course",
-  "nav": {
+  "footer": {
+    "aboutThisProject": "About this project",
+    "authors": "List of authors",
+    "contact": "Contact",
+    "course": "Course",
+    "courseInformation": "Course information",
+    "displayOfFormulas": "Display of formulas",
+    "imprint": "Imprint",
+    "institutions": "Institutions",
+    "institutionsPhrase": "The following institutions took part in the development:",
+    "liability": "Exclusion of liability",
+    "license": "License",
+    "licensePhrase": "The components of this course are licensed under the <1>Creative Commons License CC BY-SA 3.0</1> and can be copied or reused after editing as long as the source (this course) is cited.",
+    "veundmintPhrase": "This course was developed within the <1>VE&MINT project</1>.",
+    "viewIndex": "View index"
+  },
+  "header": {
     "aboutTheCourse": "About the course",
     "downloadPDF": "PDF",
     "linkEN": "English",
@@ -8,7 +23,8 @@
     "login": "Login",
     "createAccount": "Create Account",
     "language": "Language",
-    "searchPlaceholder": "Search…"
+    "searchPlaceholder": "Search…",
+    "preparatoryMathematicsCourse": "Preparatory Mathematics<1></1>Course"
   },
   "sidebar": {
     "close": "Close menu",
