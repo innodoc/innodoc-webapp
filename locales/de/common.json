@@ -1,7 +1,18 @@
 {
   "preparatoryMathematicsCourse": "Onlinebrückenkurs Mathematik",
   "nav": {
+    "aboutTheCourse": "Über den Kurs",
+    "downloadPDF": "PDF",
     "linkEN": "Englisch",
-    "linkDE": "Deutsch"
+    "linkDE": "Deutsch",
+    "login": "Login",
+    "createAccount": "Konto erstellen",
+    "language": "Sprache",
+    "searchPlaceholder": "Suche…"
+  },
+  "sidebar": {
+    "close": "Menü ausblenden",
+    "courseContent": "Kursinhalt",
+    "showMenu": "Menü einblenden"
   }
 }

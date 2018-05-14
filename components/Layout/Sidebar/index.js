@@ -34,7 +34,7 @@ class InnodocSidebar extends React.Component {
     return (
       <React.Fragment>
         <Transition visible={!visible} animation="fade right">
-          <SidebarToggle onClick={onSidebarToggleClick} />
+          <SidebarToggle onClick={onSidebarToggleClick} title={t('sidebar.showMenu')} />
         </Transition>
         <Transition visible={visible} animation="fade right">
           <Menu vertical fixed="left" className={css.sidebar}>

@@ -1,7 +1,18 @@
 {
   "preparatoryMathematicsCourse": "Preparatory Mathematics Course",
   "nav": {
+    "aboutTheCourse": "About the course",
+    "downloadPDF": "PDF",
     "linkEN": "English",
-    "linkDE": "German"
+    "linkDE": "German",
+    "login": "Login",
+    "createAccount": "Create Account",
+    "language": "Language",
+    "searchPlaceholder": "Search…"
+  },
+  "sidebar": {
+    "close": "Close menu",
+    "courseContent": "Course content",
+    "showMenu": "Show menu"
   }
 }
