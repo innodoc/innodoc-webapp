@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import math from 'mathjs'
 import classNames from 'classnames'
+import {Input, Icon} from 'semantic-ui-react'
 
 import BaseContentComponent from '../Base'
-
-import { Input, Icon } from 'semantic-ui-react'
-
 import css from './style.sass'
 
 class QuestionComponent extends BaseContentComponent{
@@ -23,7 +21,6 @@ class QuestionComponent extends BaseContentComponent{
   }
 
   update() {
-
     let solved = this.validate()
 
     this.setState({
@@ -39,7 +36,6 @@ class QuestionComponent extends BaseContentComponent{
 }
 
 class InputQuestionComponent extends QuestionComponent {
-
   static propTypes = {
     solution: PropTypes.string.isRequired,
   }
@@ -106,9 +102,7 @@ class MathInputQuestionComponent extends InputQuestionComponent {
 }
 
 class FunctionInputQuestionComponent extends InputQuestionComponent {
-
     validate() {
-
       try {
         var parsedInput = math.simplify(math.parse(this.state.inputValue))
         var parsedSolution = math.simplify(math.parse(this.props.solution))
@@ -125,7 +119,6 @@ class FunctionInputQuestionComponent extends InputQuestionComponent {
       return false
     }
 }
-
 
 export {
   QuestionComponent,
