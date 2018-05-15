@@ -13,9 +13,11 @@
     "README.md"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "next build",
     "dev": "babel-node scripts/server.js",
-    "lint": "eslint ./"
+    "lint": "eslint ./",
+    "start": "NODE_ENV=production babel-node scripts/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "innodoc",

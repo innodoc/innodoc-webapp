@@ -1,6 +1,7 @@
 const i18next = require('i18next')
 const XHR = require('i18next-xhr-backend')
 const LanguageDetector = require('i18next-browser-languagedetector')
+const dev = process.env.NODE_ENV !== 'production'
 
 const options = {
   fallbackLng: 'en',
@@ -10,8 +11,8 @@ const options = {
   ns: ['common'],
   defaultNS: 'common',
 
-  debug: process.env.NODE_ENV !== 'production',
-  saveMissing: true,
+  debug: dev,
+  saveMissing: dev,
 
   interpolation: {
     escapeValue: false, // not needed for react!!

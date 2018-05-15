@@ -10,6 +10,7 @@ import {i18nInstance} from '../i18n'
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
+const port = dev ? 3000 : 8000
 
 // init i18next with serverside settings
 // using i18next-express-middleware
@@ -49,7 +50,7 @@ i18nInstance
           return handle(req, res)
         })
 
-        server.listen(3000, (err) => {
+        server.listen(port, (err) => {
           if (err)
             throw err
         })

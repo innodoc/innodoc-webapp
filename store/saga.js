@@ -7,7 +7,9 @@ import {actionTypes, failure, loadPageSuccess} from './actions'
 es6promise.polyfill()
 
 function * loadPageSaga(action) {
-  const loc = `http://localhost:3000/static/${action.pageSlug}.json`
+  const loc = process.browser
+    ? `/static/${action.pageSlug}.json`
+    : `http://localhost:8000/static/${action.pageSlug}.json`
   try {
     const res = yield fetch(loc)
     const data = yield res.json()
