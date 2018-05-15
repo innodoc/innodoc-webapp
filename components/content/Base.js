@@ -7,7 +7,7 @@ class BaseContentComponent extends React.Component {
   }
 }
 BaseContentComponent.propTypes = {
-  data: PropTypes.any
+  data: PropTypes.any,
 }
 
 export default BaseContentComponent

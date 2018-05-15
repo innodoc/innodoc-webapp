@@ -62,4 +62,4 @@ Footer.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
-export default translate('common')(Footer)
+export default translate()(Footer)

@@ -1,8 +1,11 @@
 {
+  "content": {
+    "exercise": "Aufgabe",
+    "solution": "Lösung"
+  },
   "footer": {
     "aboutThisProject": "Über dieses Projekt",
     "authors": "List der Autor*innen",
-    "collaborators": "Mitwirkende",
     "contact": "Kontact",
     "course": "Kurs",
     "courseInformation": "Kursinformationen",

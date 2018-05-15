@@ -4,8 +4,8 @@ import classNames from 'classnames'
 
 import BaseContentComponent from './Base'
 import ContentFragment from '../ContentFragment'
-
-import {Exercise, ExerciseHint} from './panels/Exercise'
+import Exercise from './panels/Exercise'
+import ExerciseHint from './panels/ExerciseHint'
 
 export default class Div extends BaseContentComponent {
   static propTypes = {

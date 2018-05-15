@@ -1,4 +1,8 @@
 {
+  "content": {
+    "exercise": "Exercise",
+    "solution": "Solution"
+  },
   "footer": {
     "aboutThisProject": "About this project",
     "authors": "List of authors",

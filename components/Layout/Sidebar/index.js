@@ -64,4 +64,4 @@ const mapDispatchToProps = dispatch => ({
   onSidebarToggleClick: () => { dispatch(toggleSidebar()) }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate('common')(InnodocSidebar))
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(InnodocSidebar))
