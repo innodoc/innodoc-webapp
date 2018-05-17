@@ -2,7 +2,7 @@ import {put, takeLatest} from 'redux-saga/effects'
 import es6promise from 'es6-promise'
 import 'isomorphic-unfetch'
 
-import {actionTypes, failure, loadPageSuccess} from './actions'
+import {actionTypes, failure, loadPageSuccess} from './actions/content'
 
 es6promise.polyfill()
 

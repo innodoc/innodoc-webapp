@@ -7,7 +7,7 @@ import {translate} from 'react-i18next'
 import SidebarToggle from './SidebarToggle'
 import Content from '../Content'
 import Toc from '../../Toc'
-import {toggleSidebar} from '../../../store/actions'
+import {toggleSidebar} from '../../../store/actions/ui'
 import css from './style.sass'
 
 class InnodocSidebar extends React.Component {
@@ -57,7 +57,7 @@ class InnodocSidebar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  visible: state.sidebarVisible,
+  visible: state.ui.sidebarVisible,
 })
 
 const mapDispatchToProps = dispatch => ({

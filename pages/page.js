@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import loadScript from 'load-script'
 import {connect} from 'react-redux'
 
-import {loadPage} from '../store/actions'
+import {loadPage} from '../store/actions/content'
 import Layout from '../components/Layout'
 import ContentFragment from '../components/ContentFragment.js'
 import withI18next from '../lib/withI18next'
@@ -87,4 +87,8 @@ class CoursePage extends React.Component {
   }
 }
 
-export default connect(state => ({content: state.pageContent}))(withI18next()(CoursePage))
+const mapStateToProps = state => ({
+  content: state.content.page,
+})
+
+export default connect(mapStateToProps)(withI18next()(CoursePage))
