@@ -1,13 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
 import {Menu} from 'semantic-ui-react'
 
+import {loadToc} from '../store/actions/content'
 import PageLink from './PageLink'
 
-export default class Toc extends React.Component {
+class Toc extends React.Component {
   static propTypes = {
     navTree: PropTypes.array.isRequired,
     as: PropTypes.func.isRequired,
+  }
+
+  static getInitialProps({store}) {
+    store.dispatch(loadToc())
   }
 
   static defaultProps = {
@@ -51,3 +57,9 @@ export default class Toc extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  toc: state.stoc,
+})
+
+export default connect(mapStateToProps)(Toc)

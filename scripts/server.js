@@ -1,3 +1,6 @@
+import Dotenv from 'dotenv'
+Dotenv.config({ path: `${__dirname}/../.env` })
+
 import path from 'path'
 import express from 'express'
 import next from 'next'

@@ -4,11 +4,10 @@ import {connect} from 'react-redux'
 import {Icon, Menu, Transition} from 'semantic-ui-react'
 import {translate} from 'react-i18next'
 
+import {toggleSidebar} from '../../../store/actions/ui'
 import SidebarToggle from './SidebarToggle'
 import Content from '../Content'
 import Toc from '../../Toc'
-import {toggleSidebar} from '../../../store/actions/ui'
-import css from './style.sass'
 
 class InnodocSidebar extends React.Component {
   static propTypes = {
@@ -37,7 +36,7 @@ class InnodocSidebar extends React.Component {
           <SidebarToggle onClick={onSidebarToggleClick} title={t('sidebar.showMenu')} />
         </Transition>
         <Transition visible={visible} animation="fade right">
-          <Menu vertical fixed="left" className={css.sidebar}>
+          <Menu vertical fixed="left">
             <Menu.Item onClick={onSidebarToggleClick}>
               {t('sidebar.close')}
               <Icon name="close" />

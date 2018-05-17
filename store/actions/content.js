@@ -1,20 +1,28 @@
 export const actionTypes = {
-  FAILURE: 'FAILURE',
+  LOAD_TOC: 'LOAD_TOC',
+  LOAD_TOC_SUCCESS: 'LOAD_TOC_SUCCESS',
   LOAD_PAGE: 'LOAD_PAGE',
   LOAD_PAGE_SUCCESS: 'LOAD_PAGE_SUCCESS',
+  LOAD_PAGE_FAILURE: 'LOAD_PAGE_FAILURE',
 }
 
-export function failure(error) {
+export function loadToc() {
   return {
-    type: actionTypes.FAILURE,
-    error,
+    type: actionTypes.LOAD_TOC,
   }
 }
 
-export function loadPage(pageSlug) {
+export function loadTocSuccess(data) {
+  return {
+    type: actionTypes.LOAD_TOC_SUCCESS,
+    data,
+  }
+}
+
+export function loadPage(section) {
   return {
     type: actionTypes.LOAD_PAGE,
-    pageSlug,
+    section,
   }
 }
 
@@ -22,5 +30,12 @@ export function loadPageSuccess(data) {
   return {
     type: actionTypes.LOAD_PAGE_SUCCESS,
     data,
+  }
+}
+
+export function loadPageFailure(error) {
+  return {
+    type: actionTypes.LOAD_PAGE_FAILURE,
+    error,
   }
 }

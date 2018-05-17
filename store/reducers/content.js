@@ -7,12 +7,24 @@ function content(state = defaultInitialState.content, action) {
       return {
         ...state,
         ...{error: action.error}
-      }
+    }
+
+    case actionTypes.LOAD_TOC_SUCCESS:
+      return {
+        ...state,
+        ...{toc: action.data}
+    }
 
     case actionTypes.LOAD_PAGE_SUCCESS:
       return {
         ...state,
         ...{page: action.data}
+      }
+
+    case actionTypes.LOAD_PAGE_FAILURE:
+      return {
+        ...state,
+        ...{error: action.error}
       }
 
     default:

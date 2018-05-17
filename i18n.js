@@ -1,6 +1,7 @@
 const i18next = require('i18next')
 const XHR = require('i18next-xhr-backend')
 const LanguageDetector = require('i18next-browser-languagedetector')
+
 const dev = process.env.NODE_ENV !== 'production'
 
 const options = {
@@ -11,7 +12,7 @@ const options = {
   ns: ['common'],
   defaultNS: 'common',
 
-  debug: dev,
+  debug: false,
   saveMissing: dev,
 
   interpolation: {

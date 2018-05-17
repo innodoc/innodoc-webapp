@@ -4,6 +4,7 @@ const defaultInitialState = {
   },
   content: {
     page: [],
+    toc: {},
   },
   exercise: {},
 }
