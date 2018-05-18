@@ -21,8 +21,8 @@ const options = {
     format: (value, format) => {
       if (format === 'uppercase') return value.toUpperCase()
       return value
-    }
-  }
+    },
+  },
 }
 
 const i18nInstance = i18next
@@ -39,29 +39,31 @@ if (process.browser) {
 if (!i18nInstance.isInitialized) i18nInstance.init(options)
 
 // a simple helper to getInitialProps passed on loaded i18n data
-const getInitialProps = (req, namespaces) => {
-  if (!namespaces) namespaces = i18nInstance.options.defaultNS
-  if (typeof namespaces === 'string') namespaces = [namespaces]
+const getInitialProps = (req, namespaces = i18nInstance.options.defaultNS) => {
+  const namespacesArr = Array.isArray(namespaces) ? namespaces : [namespaces]
 
-  req.i18n.toJSON = () => null // do not serialize i18next instance and send to client
+  // do not serialize i18next instance and send to client
+  req.i18n.toJSON = () => null
 
   const initialI18nStore = {}
   req.i18n.languages.forEach((l) => {
     initialI18nStore[l] = {}
-    namespaces.forEach((ns) => {
+    namespacesArr.forEach((ns) => {
       initialI18nStore[l][ns] = (req.i18n.services.resourceStore.data[l] || {})[ns] || {}
     })
   })
 
   return {
-    i18n: req.i18n, // use the instance on req - fixed language on request (avoid issues in race conditions with lngs of different users)
+    // use the instance on req - fixed language on request (avoid issues in
+    // race conditions with lngs of different users)
+    i18n: req.i18n,
     initialI18nStore,
-    initialLanguage: req.i18n.language
+    initialLanguage: req.i18n.language,
   }
 }
 
 module.exports = {
   getInitialProps,
   i18nInstance,
-  I18n: i18next.default
+  I18n: i18next.default,
 }

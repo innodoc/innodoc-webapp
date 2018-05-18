@@ -1,19 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import BaseContentComponent from './Base'
+import { contentType } from '../../lib/propTypes'
 import ContentFragment from '../ContentFragment'
 
-export default class Strong extends BaseContentComponent {
-  static propTypes = {
-    data: PropTypes.array.isRequired
-  }
+const Strong = ({ data }) => (
+  <strong>
+    <ContentFragment content={data} />
+  </strong>
+)
 
-  render() {
-    return (
-      <strong>
-        <ContentFragment content={this.props.data} />
-      </strong>
-    )
-  }
-}
+Strong.propTypes = { data: contentType.isRequired }
+
+export default Strong

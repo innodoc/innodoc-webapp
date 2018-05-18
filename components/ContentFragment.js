@@ -1,6 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
+import { contentType } from '../lib/propTypes'
 import UnknownType from './content/UnknownType'
 import Str from './content/Str'
 import Header from './content/Header'
@@ -24,47 +24,44 @@ const LineBreak = () => <br />
 const SoftBreak = () => ' '
 
 const contentTypeComponentMap = {
-  'Header': Header,
-  'Str': Str,
-  'Space': Space,
-  'SoftBreak': SoftBreak,
-  'LineBreak': LineBreak,
-  'Para': Para,
-  'Div': Div,
-  'Span': Span,
-  'Emph': Emph,
-  'Strong': Strong,
-  'Code': Code,
-  'BulletList': BulletList,
-  'OrderedList': OrderedList,
-  'Math': Math,
-  'Link': Link,
-  'Table': Table,
-  'Plain': Plain
+  Header,
+  Str,
+  Space,
+  SoftBreak,
+  LineBreak,
+  Para,
+  Div,
+  Span,
+  Emph,
+  Strong,
+  Code,
+  BulletList,
+  OrderedList,
+  Math,
+  Link,
+  Table,
+  Plain,
 }
 
 const mapContentTypeToComponent = (name) => {
   const Component = contentTypeComponentMap[name]
-  if (!Component)
-    return UnknownType
+  if (!Component) { return UnknownType }
   return Component
 }
 
 export default class ContentFragment extends React.Component {
-
   static propTypes = {
-    content: PropTypes.array.isRequired
+    content: contentType.isRequired,
   }
 
   render() {
-    const {content} = this.props
+    const { content } = this.props
     const output = []
-    for (let i = 0; i < content.length; i++) {
+    for (let i = 0; i < content.length; i += 1) {
       const el = content[i]
       const Component = mapContentTypeToComponent(el.t)
       output.push(<Component key={i.toString()} name={el.t} data={el.c} />)
     }
     return output
   }
-
 }

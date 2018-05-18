@@ -1,44 +1,44 @@
-import {put, takeLatest} from 'redux-saga/effects'
+import { put, takeLatest } from 'redux-saga/effects'
 import es6promise from 'es6-promise'
 import 'isomorphic-unfetch'
 
 import {
   actionTypes,
-  failure,
   loadTocSuccess,
+  loadTocFailure,
   loadPageSuccess,
+  loadPageFailure,
 } from './actions/content'
 
-es6promise.polyfill()
+es6promise.polyfill() // TODO: make sure we really need this
 
-const baseContent = process.env.CONTENT_ROOT
+const contentRoot = process.env.CONTENT_ROOT
 
-function * loadTocSaga() {
-  // const loc = `${baseContent}/de/toc.json`
+function* loadTocSaga() {
+  // TODO make this work
+  const loc = `${contentRoot}/de/toc.json`
   try {
-    const res = yield fetch(baseContent)
+    const res = yield fetch(loc)
     const data = yield res.json()
     yield put(loadTocSuccess(data))
   } catch (err) {
-    yield put(failure(err))
+    yield put(loadTocFailure(err))
   }
 }
 
-function * loadPageSaga(section) {
-  const loc = `${baseContent}/de/VBKM01/M01_Bruchrechnung/mit-bruchen-rechnen/content.json`
-  // const loc = process.browser
-  //   ? `/static/${action.pageSlug}.json`
-  //   : `http://localhost:3000/static/${action.pageSlug}.json`
+function* loadPageSaga({ section }) {
+  // TODO make this work
+  const loc = `${contentRoot}/de/${section}/content.json`
   try {
     const res = yield fetch(loc)
     const data = yield res.json()
     yield put(loadPageSuccess(data.content))
   } catch (err) {
-    yield put(failure(err))
+    yield put(loadPageFailure(err))
   }
 }
 
-function * rootSaga() {
+function* rootSaga() {
   yield takeLatest(actionTypes.LOAD_TOC, loadTocSaga)
   yield takeLatest(actionTypes.LOAD_PAGE, loadPageSaga)
 }

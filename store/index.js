@@ -1,4 +1,4 @@
-import {createStore, applyMiddleware} from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 
 import defaultInitialState from './defaultInitialState'
@@ -8,7 +8,9 @@ import rootSaga from './saga'
 const sagaMiddleware = createSagaMiddleware()
 
 const bindMiddleware = (middleware) => {
+  // add redux devtools
   if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line global-require, import/no-extraneous-dependencies
     const { composeWithDevTools } = require('redux-devtools-extension')
     return composeWithDevTools(applyMiddleware(...middleware))
   }

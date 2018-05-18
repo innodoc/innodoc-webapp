@@ -41,3 +41,5 @@ $ npm run dev
 ```sh
 $ npm run lint
 ```
+
+Based on [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript). Most notable difference: We're not using semicolons at the end of a statement.

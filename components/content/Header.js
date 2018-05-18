@@ -1,23 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
-import BaseContentComponent from './Base'
 import ContentFragment from '../ContentFragment'
 
-export default class Header extends BaseContentComponent {
-  static propTypes = {
-    data: PropTypes.array.isRequired
-  }
-
-  render() {
-    const level = this.props.data[0]
-    const [id, classNames] = this.props.data[1]
-    const content = this.props.data[2]
-    const HeaderTag = `h${level}`;
-    return (
-      <HeaderTag id={id} className={classNames}>
-        <ContentFragment content={content} />
-      </HeaderTag>
-    )
-  }
+const Header = ({ data }) => {
+  const [level, [id, classes, content]] = data
+  const HeaderTag = `h${level}`
+  return (
+    <HeaderTag id={id} className={classNames(classes)}>
+      <ContentFragment content={content} />
+    </HeaderTag>
+  )
 }
+
+Header.propTypes = { data: PropTypes.arrayOf(PropTypes.array).isRequired }
+
+export default Header

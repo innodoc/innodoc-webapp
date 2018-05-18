@@ -1,36 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { childrenType } from '../../lib/propTypes'
 import Header from './Header'
 import Content from './Content'
 import Sidebar from './Sidebar'
 import Footer from './Footer'
 
-export default class Layout extends React.Component {
-  static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ]).isRequired,
-    sidebar: PropTypes.bool.isRequired,
-  }
-
-  static defaultProps = {
-    ...React.Component.defaultProps,
-    sidebar: false,
-  }
-
-  render() {
-    const ContentWrapper = this.props.sidebar ? Sidebar : Content
-
-    return (
-      <div>
-        <Header />
-        <ContentWrapper>
-          {this.props.children}
-        </ContentWrapper>
-        <Footer />
-      </div>
-    )
-  }
+const Layout = ({ children, sidebar }) => {
+  const ContentWrapper = sidebar ? Sidebar : Content
+  return (
+    <div>
+      <Header />
+      <ContentWrapper>
+        {children}
+      </ContentWrapper>
+      <Footer />
+    </div>
+  )
 }
+
+Layout.propTypes = {
+  children: childrenType.isRequired,
+  sidebar: PropTypes.bool.isRequired,
+}
+
+Layout.defaultProps = {
+  ...React.Component.defaultProps,
+  sidebar: false,
+}
+
+export default Layout

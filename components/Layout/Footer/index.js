@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Container, Segment, Grid, Image, List, Header} from 'semantic-ui-react'
-import {translate, Trans} from 'react-i18next'
+import { Container, Segment, Grid, Image, List, Header } from 'semantic-ui-react'
+import { translate, Trans } from 'react-i18next'
 
 import css from './style.sass'
 
-const Footer = ({t}) => (
+const Footer = ({ t }) => (
   <Segment inverted vertical className={css.footerSegment}>
     <Container>
       <Grid divided inverted stackable>

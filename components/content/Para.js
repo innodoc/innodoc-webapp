@@ -1,19 +1,13 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import BaseContentComponent from './Base'
+import { contentType } from '../../lib/propTypes'
 import ContentFragment from '../ContentFragment'
 
-export default class Para extends BaseContentComponent {
-  static propTypes = {
-    data: PropTypes.array.isRequired
-  }
+const Para = ({ data }) => (
+  <p>
+    <ContentFragment content={data} />
+  </p>
+)
+Para.propTypes = { data: contentType.isRequired }
 
-  render() {
-    return (
-      <p>
-        <ContentFragment content={this.props.data} />
-      </p>
-    )
-  }
-}
+export default Para

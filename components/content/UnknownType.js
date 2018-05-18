@@ -3,19 +3,19 @@ import PropTypes from 'prop-types'
 
 import css from './debug-style.sass'
 
-const UnknownTypeData = ({ data }) => {
-  return <pre className={css.componentData}>{JSON.stringify(data, null, 2)}</pre>
-}
-UnknownTypeData.propTypes = {
-  data: PropTypes.any
-}
+const UnknownTypeData = ({ data }) =>
+  <pre className={css.componentData}>{JSON.stringify(data, null, 2)}</pre>
+
+UnknownTypeData.propTypes = { data: PropTypes.objectOf(PropTypes.object) }
+UnknownTypeData.defaultProps = { data: [] }
 
 export default class UnknownType extends React.Component {
-
   static propTypes = {
     name: PropTypes.string.isRequired,
-    data: PropTypes.any
+    data: PropTypes.objectOf(PropTypes.object),
   }
+
+  static defaultProps = { data: [] }
 
   constructor(props) {
     super(props)
@@ -38,9 +38,12 @@ export default class UnknownType extends React.Component {
       if (this.state.showData) {
         data = <UnknownTypeData data={this.props.data} />
       }
-
     }
 
+    /* eslint-disable
+         jsx-a11y/click-events-have-key-events,
+         jsx-a11y/no-static-element-interactions
+    */
     return (
       <div className={css.unknownComponent} onClick={toggleData}>
         {collapseIndicator}

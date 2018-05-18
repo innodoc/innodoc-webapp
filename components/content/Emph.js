@@ -1,19 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import BaseContentComponent from './Base'
+import { contentType } from '../../lib/propTypes'
 import ContentFragment from '../ContentFragment'
 
-export default class Emph extends BaseContentComponent {
-  static propTypes = {
-    data: PropTypes.array.isRequired
-  }
+const Emph = ({ data }) => (
+  <em>
+    <ContentFragment content={data} />
+  </em>
+)
 
-  render() {
-    return (
-      <em>
-        <ContentFragment content={this.props.data} />
-      </em>
-    )
-  }
-}
+Emph.propTypes = { data: contentType.isRequired }
+
+export default Emph

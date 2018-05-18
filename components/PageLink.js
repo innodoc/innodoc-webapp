@@ -2,19 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 
-export default class PageLink extends React.Component {
-  static propTypes = {
-    pageSlug: PropTypes.string.isRequired,
-    children: PropTypes.node.isRequired,
-  }
+import { childrenType } from '../lib/propTypes'
 
-  render() {
-    const {pageSlug} = this.props
-    return (
-      <Link href={{ pathname: '/page', query: { pageSlug } }}
-            as={`/page/${pageSlug}`}>
-            {this.props.children}
-      </Link>
-    )
-  }
+const PageLink = ({ section, children }) => {
+  const href = { pathname: '/page', query: { section } }
+  const as = `/page/${section}`
+  return (
+    <Link href={href} as={as}>
+      {children}
+    </Link>
+  )
 }
+PageLink.propTypes = {
+  section: PropTypes.string.isRequired,
+  children: childrenType.isRequired,
+}
+
+export default PageLink

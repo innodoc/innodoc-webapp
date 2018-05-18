@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 
-const Str = ({data}) => data
+const Str = ({ data }) => data
 Str.propTypes = {
-  data: PropTypes.string.isRequired
+  data: PropTypes.string.isRequired,
 }
 
 export default Str

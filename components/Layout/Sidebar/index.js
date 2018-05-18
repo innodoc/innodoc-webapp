@@ -1,58 +1,51 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-import {Icon, Menu, Transition} from 'semantic-ui-react'
-import {translate} from 'react-i18next'
+import { connect } from 'react-redux'
+import { Icon, Menu, Transition } from 'semantic-ui-react'
+import { translate } from 'react-i18next'
 
-import {toggleSidebar} from '../../../store/actions/ui'
+import { childrenType, tocTreeType } from '../../../lib/propTypes'
+import { toggleSidebar } from '../../../store/actions/ui'
 import SidebarToggle from './SidebarToggle'
 import Content from '../Content'
 import Toc from '../../Toc'
 
-class InnodocSidebar extends React.Component {
-  static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ]).isRequired,
-    navTree: PropTypes.array,
-    onSidebarToggleClick: PropTypes.func.isRequired,
-    visible: PropTypes.bool.isRequired,
-    t: PropTypes.func.isRequired,
-  }
+const Sidebar = (props) => {
+  const {
+    children,
+    visible,
+    onSidebarToggleClick,
+    t,
+  } = props
+  return (
+    <React.Fragment>
+      <Transition visible={!visible} animation="fade right">
+        <SidebarToggle onClick={onSidebarToggleClick} title={t('sidebar.showMenu')} />
+      </Transition>
+      <Transition visible={visible} animation="fade right">
+        <Menu vertical fixed="left">
+          <Menu.Item onClick={onSidebarToggleClick}>
+            {t('sidebar.close')}
+            <Icon name="close" />
+          </Menu.Item>
+          <Menu.Item>
+            <Menu.Header>{t('sidebar.courseContent')}</Menu.Header>
+            <Toc as={Menu.Menu} />
+          </Menu.Item>
+        </Menu>
+      </Transition>
+      <Content>
+        {children}
+      </Content>
+    </React.Fragment>
+  )
+}
 
-  render() {
-    const {
-      children,
-      navTree,
-      visible,
-      onSidebarToggleClick,
-      t,
-    } = this.props
-
-    return (
-      <React.Fragment>
-        <Transition visible={!visible} animation="fade right">
-          <SidebarToggle onClick={onSidebarToggleClick} title={t('sidebar.showMenu')} />
-        </Transition>
-        <Transition visible={visible} animation="fade right">
-          <Menu vertical fixed="left">
-            <Menu.Item onClick={onSidebarToggleClick}>
-              {t('sidebar.close')}
-              <Icon name="close" />
-            </Menu.Item>
-            <Menu.Item>
-              <Menu.Header>{t('sidebar.courseContent')}</Menu.Header>
-              <Toc navTree={navTree} as={Menu.Menu} />
-            </Menu.Item>
-          </Menu>
-        </Transition>
-        <Content>
-          {children}
-        </Content>
-      </React.Fragment>
-    )
-  }
+Sidebar.propTypes = {
+  children: childrenType.isRequired,
+  onSidebarToggleClick: PropTypes.func.isRequired,
+  visible: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -60,7 +53,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onSidebarToggleClick: () => { dispatch(toggleSidebar()) }
+  onSidebarToggleClick: () => { dispatch(toggleSidebar()) },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(InnodocSidebar))
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(Sidebar))

@@ -1,15 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import BaseContentComponent from './Base'
+import { contentType } from '../../lib/propTypes'
 import ContentFragment from '../ContentFragment'
 
-export default class Plain extends BaseContentComponent {
-  static propTypes = {
-    data: PropTypes.array.isRequired
-  }
+const Plain = ({ data }) => (
+  <ContentFragment content={data} />
+)
 
-  render() {
-    return <ContentFragment content={this.props.data} />
-  }
-}
+Plain.propTypes = { data: contentType.isRequired }
+
+export default Plain

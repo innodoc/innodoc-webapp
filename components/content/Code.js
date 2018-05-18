@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import BaseContentComponent from './Base'
-import {InputQuestionComponent, MathInputQuestionComponent,
-  FunctionInputQuestionComponent} from './questions/Input'
+import {
+  InputQuestionComponent, MathInputQuestionComponent,
+  FunctionInputQuestionComponent,
+} from './questions/Input'
 
-export default class Code extends BaseContentComponent {
+export default class Code extends React.Component {
   static propTypes = {
-    data: PropTypes.array.isRequired
+    data: PropTypes.array.isRequired,
   }
 
   constructor(props) {
@@ -21,7 +22,7 @@ export default class Code extends BaseContentComponent {
   }
 
   attrsToObj(attrs) {
-    let a = attrs.reduce((obj, item) => {
+    const a = attrs.reduce((obj, item) => {
       obj[item[0]] = item[1]
       return obj
     }, {})
@@ -30,12 +31,12 @@ export default class Code extends BaseContentComponent {
 
   getQuestionComponent(classNames, attrs) {
     if (attrs.validator == 'math') {
-      return <MathInputQuestionComponent solution={this.solution} attrs={attrs}/>
+      return <MathInputQuestionComponent solution={this.solution} attrs={attrs} />
     } else if (attrs.validator == 'function') {
       return <FunctionInputQuestionComponent solution={this.solution} attrs={attrs} />
     }
 
-    return <InputQuestionComponent solution={this.solution} attrs={attrs}/>
+    return <InputQuestionComponent solution={this.solution} attrs={attrs} />
   }
 
   render() {

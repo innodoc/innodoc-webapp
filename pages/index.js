@@ -1,5 +1,5 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 import Layout from '../components/Layout'
 import PageLink from '../components/PageLink'
@@ -10,10 +10,9 @@ const IndexPage = () => (
     <h1>innoDoc</h1>
     <ul>
       <li>
-        <PageLink pageSlug="vbkm01"><a>Kapitel 1</a></PageLink>
-      </li>
-      <li>
-        <PageLink pageSlug="test"><a>Test</a></PageLink>
+        <PageLink section="VBKM01/M01_Bruchrechnung/mit-bruchen-rechnen">
+          <a>Test</a>
+        </PageLink>
       </li>
     </ul>
   </Layout>

@@ -1,4 +1,4 @@
-import {actionTypes} from '../actions/content'
+import { actionTypes } from '../actions/content'
 import defaultInitialState from '../defaultInitialState'
 
 function content(state = defaultInitialState.content, action) {
@@ -6,25 +6,25 @@ function content(state = defaultInitialState.content, action) {
     case actionTypes.FAILURE:
       return {
         ...state,
-        ...{error: action.error}
-    }
+        ...{ error: action.error },
+      }
 
     case actionTypes.LOAD_TOC_SUCCESS:
       return {
         ...state,
-        ...{toc: action.data}
-    }
+        ...{ toc: action.data },
+      }
 
     case actionTypes.LOAD_PAGE_SUCCESS:
       return {
         ...state,
-        ...{page: action.data}
+        ...{ page: action.data },
       }
 
     case actionTypes.LOAD_PAGE_FAILURE:
       return {
         ...state,
-        ...{error: action.error}
+        ...{ error: action.error },
       }
 
     default:

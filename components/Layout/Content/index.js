@@ -1,22 +1,17 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import {Container} from 'semantic-ui-react'
+import { Container } from 'semantic-ui-react'
 
+import { childrenType } from '../../../lib/propTypes'
 import css from './style.sass'
 
-export default class Content extends React.Component {
-  static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ]).isRequired,
-  }
+const Content = ({ children }) => (
+  <Container className={css.content}>
+    {children}
+  </Container>
+)
 
-  render() {
-    return (
-      <Container className={css.content}>
-        {this.props.children}
-      </Container>
-    )
-  }
+Content.propTypes = {
+  children: childrenType.isRequired,
 }
+
+export default Content

@@ -1,20 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import BaseContentComponent from './Base'
 import ContentFragment from '../ContentFragment'
 
-export default class ExternalLink extends BaseContentComponent {
-  static propTypes = {
-    data: PropTypes.array.isRequired
-  }
-
-  render() {
-    const content = this.props.data[1]
-    const href = this.props.data[2][0]
-    const title = this.props.data[2][1]
-    return <a href={href} title={title}>
+const ExternalLink = ({ data }) => {
+  const [, content, [href, title]] = data
+  return (
+    <a href={href} title={title}>
       <ContentFragment content={content} />
     </a>
-  }
+  )
 }
+
+ExternalLink.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.array).isRequired,
+}
+
+export default ExternalLink

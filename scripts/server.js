@@ -1,14 +1,15 @@
 import Dotenv from 'dotenv'
-Dotenv.config({ path: `${__dirname}/../.env` })
 
 import path from 'path'
 import express from 'express'
 import next from 'next'
 
-import i18nextMiddleware, {LanguageDetector} from 'i18next-express-middleware'
+import i18nextMiddleware, { LanguageDetector } from 'i18next-express-middleware'
 import Backend from 'i18next-node-fs-backend'
 
-import {i18nInstance} from '../i18n'
+import { i18nInstance } from '../i18n'
+
+Dotenv.config({ path: `${__dirname}/../.env` })
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -26,8 +27,8 @@ i18nInstance
     ns: ['common'], // need to preload all the namespaces
     backend: {
       loadPath: path.join(__dirname, '../locales/{{lng}}/{{ns}}.json'),
-      addPath: path.join(__dirname, '../locales/{{lng}}/{{ns}}.missing.json')
-    }
+      addPath: path.join(__dirname, '../locales/{{lng}}/{{ns}}.missing.json'),
+    },
   }, () => {
     // loaded translations we can bootstrap our routes
     app.prepare()
@@ -43,19 +44,16 @@ i18nInstance
         // missing keys
         server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18nInstance))
 
-        server.get('/page/:pageSlug', (req, res) => {
+        server.get('/page/:section', (req, res) => {
           const actualPage = '/page'
-          const queryParams = { pageSlug: req.params.pageSlug }
+          const queryParams = { section: req.params.section }
           app.render(req, res, actualPage, queryParams)
         })
 
-        server.get('*', (req, res) => {
-          return handle(req, res)
-        })
+        server.get('*', (req, res) => handle(req, res))
 
         server.listen(port, (err) => {
-          if (err)
-            throw err
+          if (err) { throw err }
         })
       })
       .catch((ex) => {

@@ -1,4 +1,4 @@
-import {actionTypes} from '../actions/ui'
+import { actionTypes } from '../actions/ui'
 import defaultInitialState from '../defaultInitialState'
 
 function ui(state = defaultInitialState.ui, action) {
@@ -6,7 +6,7 @@ function ui(state = defaultInitialState.ui, action) {
     case actionTypes.TOGGLE_SIDEBAR:
       return {
         ...state,
-        ...{sidebarVisible: !state.sidebarVisible}
+        ...{ sidebarVisible: !state.sidebarVisible },
       }
 
     default:
