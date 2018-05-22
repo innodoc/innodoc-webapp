@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { childrenType } from '../lib/propTypes'
 
-const PageLink = ({ section, children }) => {
+const SectionLink = ({ section, children }) => {
   const href = { pathname: '/page', query: { section } }
   const as = `/page/${section}`
   return (
@@ -13,9 +13,9 @@ const PageLink = ({ section, children }) => {
     </Link>
   )
 }
-PageLink.propTypes = {
+SectionLink.propTypes = {
   section: PropTypes.string.isRequired,
   children: childrenType.isRequired,
 }
 
-export default PageLink
+export default SectionLink

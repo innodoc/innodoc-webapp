@@ -15,16 +15,35 @@ function content(state = defaultInitialState.content, action) {
         ...{ toc: action.data },
       }
 
-    case actionTypes.LOAD_PAGE_SUCCESS:
+    case actionTypes.LOAD_SECTION:
       return {
         ...state,
-        ...{ page: action.data },
+        ...{
+          loading: true,
+          currentSectionId: null,
+        },
       }
 
-    case actionTypes.LOAD_PAGE_FAILURE:
+    case actionTypes.LOAD_SECTION_SUCCESS:
       return {
         ...state,
-        ...{ error: action.error },
+        ...{
+          loading: false,
+          currentSectionId: action.data.id,
+          sections: {
+            ...state.sections,
+            [action.data.id]: action.data.content,
+          },
+        },
+      }
+
+    case actionTypes.LOAD_SECTION_FAILURE:
+      return {
+        ...state,
+        ...{
+          loading: false,
+          error: action.error,
+        },
       }
 
     default:

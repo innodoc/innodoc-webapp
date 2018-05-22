@@ -3,64 +3,99 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Menu } from 'semantic-ui-react'
 
-import { tocTreeType } from '../lib/propTypes'
 import { loadToc } from '../store/actions/content'
-import PageLink from './PageLink'
+import { contentType, tocTreeType } from '../lib/propTypes'
+import SectionLink from './SectionLink'
+import ContentFragment from './ContentFragment'
+
+const TocItem = ({ title, sectionId, subSections }) => {
+  if (!subSections.length) {
+    return (
+      <SectionLink section={sectionId}>
+        <Menu.Item as="a">
+          <ContentFragment content={title} />
+        </Menu.Item>
+      </SectionLink>
+    )
+  }
+  return (
+    <Menu.Item>
+      <SectionLink section={sectionId}>
+        <a>
+          <ContentFragment content={title} />
+        </a>
+      </SectionLink>
+      <Menu.Menu>
+        {
+          subSections.map(
+            (subSection, i) => (
+              <TocItem
+                title={subSection.title}
+                sectionId={`${sectionId}/${subSection.id}`}
+                subSections={subSection.children}
+                key={i.toString()}
+              />
+            )
+          )
+        }
+      </Menu.Menu>
+    </Menu.Item>
+  )
+}
+TocItem.propTypes = {
+  title: contentType.isRequired,
+  sectionId: PropTypes.string.isRequired,
+  subSections: PropTypes.arrayOf(PropTypes.object),
+}
+TocItem.defaultProps = { subSections: [] }
 
 class Toc extends React.Component {
   static propTypes = {
-    navTree: tocTreeType.isRequired,
+    toc: tocTreeType.isRequired,
     as: PropTypes.func.isRequired,
-  }
-
-  static getInitialProps({ store }) {
-    store.dispatch(loadToc())
+    dispatchLoadToc: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     ...React.Component.defaultProps,
     as: Menu,
-    navTree: [
-      {
-        section: 'vbkm01',
-        title: 'Kapitel 1',
-      },
-      {
-        section: 'exercises',
-        title: 'Exercises',
-      },
-      {
-        section: 'vbkm01_exercises',
-        title: 'vbkm01_exercises',
-      },
-      {
-        section: 'test',
-        title: 'Test',
-      },
-    ],
+    toc: {},
+  }
+
+  componentDidMount() {
+    this.props.dispatchLoadToc()
   }
 
   render() {
-    const { navTree, as: ElementType, ...otherProps } = this.props
+    const {
+      toc,
+      as: ElementType,
+      dispatchLoadToc,
+      ...otherProps
+    } = this.props
 
-    const sidebarNavItems = navTree.map((l, i) => (
-      <PageLink section={l.section} key={i.toString()}>
-        <Menu.Item>
-          {l.title}
-        </Menu.Item>
-      </PageLink>)
+    const sections = toc.map(
+      (section, i) => (
+        <TocItem
+          sectionId={section.id}
+          title={section.title}
+          subSections={section.children}
+          key={i.toString()}
+        />
+      )
     )
 
     return (
       <ElementType {...otherProps}>
-        {sidebarNavItems}
+        {sections}
       </ElementType>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  toc: state.stoc,
+const mapStateToProps = state => ({ toc: state.content.toc })
+const mapDispatchToProps = dispatch => ({
+  dispatchLoadToc: () => dispatch(loadToc()),
 })
 
-export default connect(mapStateToProps)(Toc)
+export default connect(mapStateToProps, mapDispatchToProps)(Toc)

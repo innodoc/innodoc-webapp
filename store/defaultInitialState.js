@@ -3,8 +3,10 @@ const defaultInitialState = {
     sidebarVisible: false,
   },
   content: {
-    page: [],
-    toc: {},
+    loading: false,
+    currentSectionId: null,
+    sections: {},
+    toc: [],
   },
   exercise: {},
 }

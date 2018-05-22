@@ -2,31 +2,48 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import loadScript from 'load-script'
 import { connect } from 'react-redux'
+import { Dimmer, Header, Loader, Image } from 'semantic-ui-react'
 
-import { loadPage } from '../store/actions/content'
+import { loadSection } from '../store/actions/content'
+import getSectionById from '../lib/selectors'
 import Layout from '../components/Layout'
 import ContentFragment from '../components/ContentFragment'
 import withI18next from '../lib/withI18next'
 
+const Placeholder = () => (
+  <React.Fragment>
+    <Header as="h1">&nbsp;</Header>
+    <p><Image src="/static/img/paragraph.png" /></p>
+    <p><Image src="/static/img/paragraph.png" /></p>
+  </React.Fragment>
+)
+
 class CoursePage extends React.Component {
   static propTypes = {
-    content: PropTypes.arrayOf(PropTypes.object).isRequired,
+    loading: PropTypes.bool.isRequired,
+    content: PropTypes.arrayOf(PropTypes.object),
+    title: PropTypes.arrayOf(PropTypes.object),
+  }
+
+  static defaultProps = {
+    title: [],
+    content: [],
   }
 
   constructor(props) {
     super(props)
     this.mathJaxNode = React.createRef()
     this.state = {
-      loaded: false,
+      mathJaxLoaded: false,
     }
   }
 
   static getInitialProps({ query, store }) {
-    store.dispatch(loadPage(query.section))
+    store.dispatch(loadSection(query.section))
   }
 
   componentDidMount() {
-    if (this.state.loaded) {
+    if (this.state.mathJaxLoaded) {
       this.typesetMathJax()
     } else {
       window.MathJax = {
@@ -60,32 +77,65 @@ class CoursePage extends React.Component {
   }
 
   onLoadMathJax = (err) => {
-    this.setState({
-      loaded: true,
-    })
+    this.setState({ mathJaxLoaded: true })
     if (err) { throw new Error(err) }
     this.typesetMathJax()
   }
 
   typesetMathJax() {
     if (this.mathJaxNode) {
-      window.MathJax.Hub.Queue(['Typeset', window.MathJax.Hub, this.mathJaxNode.current])
+      window.MathJax.Hub.Queue([
+        'Typeset',
+        window.MathJax.Hub,
+        this.mathJaxNode.current,
+      ])
     }
   }
 
   render() {
+    const { content, title, loading } = this.props
+    // TODO: insert sub-TOC for section level <=2
     return (
       <Layout sidebar>
-        <div ref={this.mathJaxNode}>
-          <ContentFragment content={this.props.content} />
-        </div>
+        <Dimmer.Dimmable dimmed={loading}>
+          <Dimmer active={loading} inverted>
+            <Loader active={loading} size="big" />
+          </Dimmer>
+          {
+            loading
+              ? <Placeholder />
+              : (
+                <React.Fragment>
+                  <Header as="h1">
+                    <ContentFragment content={title} />
+                  </Header>
+                  <div ref={this.mathJaxNode}>
+                    <ContentFragment content={content} />
+                  </div>
+                </React.Fragment>
+              )
+          }
+        </Dimmer.Dimmable>
       </Layout>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  content: state.content.page,
-})
+const mapStateToProps = (state) => {
+  const props = { loading: state.content.loading }
+  try {
+    const sectionId = state.content.currentSectionId
+    const { title } = getSectionById(state, sectionId)
+    const content = state.content.sections[sectionId]
+    return {
+      ...props,
+      content,
+      title,
+    }
+  } catch (error) {
+    if (!(error instanceof TypeError)) { throw error }
+  }
+  return props
+}
 
 export default connect(mapStateToProps)(withI18next()(CoursePage))

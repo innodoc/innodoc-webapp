@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Icon, Menu, Transition } from 'semantic-ui-react'
 import { translate } from 'react-i18next'
 
-import { childrenType, tocTreeType } from '../../../lib/propTypes'
+import { childrenType } from '../../../lib/propTypes'
 import { toggleSidebar } from '../../../store/actions/ui'
 import SidebarToggle from './SidebarToggle'
 import Content from '../Content'
@@ -23,7 +23,7 @@ const Sidebar = (props) => {
         <SidebarToggle onClick={onSidebarToggleClick} title={t('sidebar.showMenu')} />
       </Transition>
       <Transition visible={visible} animation="fade right">
-        <Menu vertical fixed="left">
+        <Menu vertical fixed="left" size="massive">
           <Menu.Item onClick={onSidebarToggleClick}>
             {t('sidebar.close')}
             <Icon name="close" />
