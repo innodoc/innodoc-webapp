@@ -7,7 +7,7 @@ import Toc from '../components/Toc'
 
 const IndexPage = () => (
   <Layout>
-    <Toc vertical fluid size="massive" />
+    <Toc vertical fluid secondary size="massive" />
   </Layout>
 )
 
