@@ -1,20 +1,16 @@
-import es6promise from 'es6-promise'
-import { all, put, takeLatest } from 'redux-saga/effects'
+import { put } from 'redux-saga/effects'
 import 'isomorphic-unfetch'
 
 import {
-  actionTypes,
   loadTocSuccess,
   loadTocFailure,
   loadSectionSuccess,
   loadSectionFailure,
-} from './actions/content'
-
-es6promise.polyfill() // for IE
+} from '../store/actions/content'
 
 const contentRoot = process.env.CONTENT_ROOT
 
-function* loadTocSaga() {
+export function* loadTocSaga() {
   const loc = `${contentRoot}/de/toc.json`
   try {
     const res = yield fetch(loc)
@@ -25,7 +21,7 @@ function* loadTocSaga() {
   }
 }
 
-function* loadSectionSaga({ sectionId }) {
+export function* loadSectionSaga({ sectionId }) {
   const loc = `${contentRoot}/de/${sectionId}/content.json`
   try {
     const res = yield fetch(loc)
@@ -45,12 +41,3 @@ function* loadSectionSaga({ sectionId }) {
     yield put(loadSectionFailure(err))
   }
 }
-
-function* rootSaga() {
-  yield all([
-    yield takeLatest(actionTypes.LOAD_TOC, loadTocSaga),
-    yield takeLatest(actionTypes.LOAD_SECTION, loadSectionSaga),
-  ])
-}
-
-export default rootSaga

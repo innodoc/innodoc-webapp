@@ -11,7 +11,7 @@ import ContentFragment from './ContentFragment'
 const TocItem = ({ title, sectionId, subSections }) => {
   if (!subSections.length) {
     return (
-      <SectionLink section={sectionId}>
+      <SectionLink sectionId={sectionId}>
         <Menu.Item as="a">
           <ContentFragment content={title} />
         </Menu.Item>
@@ -20,7 +20,7 @@ const TocItem = ({ title, sectionId, subSections }) => {
   }
   return (
     <Menu.Item>
-      <SectionLink section={sectionId}>
+      <SectionLink sectionId={sectionId}>
         <a>
           <ContentFragment content={title} />
         </a>

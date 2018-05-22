@@ -16,6 +16,7 @@ IndexSpan.propTypes = {
   content: contentType.isRequired,
 }
 
+// TODO: use components/SectionLink
 const SectionLink = ({ section }) => (
   // insert proper href and section Title as text
   <Link href={section}><a>{section}</a></Link>
