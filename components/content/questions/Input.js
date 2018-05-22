@@ -10,6 +10,7 @@ class QuestionComponent extends React.Component {
   constructor(props) {
     super(props)
 
+    /* eslint-disable react/no-unused-state */
     this.state = {
       points: 0,
       inputValue: '',
@@ -40,12 +41,12 @@ class InputQuestionComponent extends QuestionComponent {
   }
 
   validate() {
-    const solved = this.state.inputValue == this.props.solution
+    const solved = this.state.inputValue === this.props.solution
     return solved
   }
 
   getIcon() {
-    if (this.state.inputValue == '') {
+    if (this.state.inputValue === '') {
       return <Icon name="question" />
     }
     if (this.state.solved) {
@@ -82,9 +83,11 @@ class MathInputQuestionComponent extends InputQuestionComponent {
       epsilon,
     })
 
+    let evalInput
+    let evalSolution
     try {
-      var evalInput = math.eval(this.state.inputValue)
-      var evalSolution = math.eval(this.props.solution)
+      evalInput = math.eval(this.state.inputValue)
+      evalSolution = math.eval(this.props.solution)
     } catch (e) {
       if (e instanceof SyntaxError) {
         return false
@@ -99,9 +102,11 @@ class MathInputQuestionComponent extends InputQuestionComponent {
 
 class FunctionInputQuestionComponent extends InputQuestionComponent {
   validate() {
+    let parsedInput
+    let parsedSolution
     try {
-      var parsedInput = math.simplify(math.parse(this.state.inputValue))
-      var parsedSolution = math.simplify(math.parse(this.props.solution))
+      parsedInput = math.simplify(math.parse(this.state.inputValue))
+      parsedSolution = math.simplify(math.parse(this.props.solution))
     } catch (e) {
       if (e instanceof SyntaxError) {
         return false

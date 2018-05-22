@@ -8,31 +8,30 @@ import {
 
 export default class Code extends React.Component {
   static propTypes = {
-    data: PropTypes.array.isRequired,
+    data: PropTypes.node.isRequired,
+  }
+
+  static attrsToObj(attrs) {
+    const a = attrs.reduce((obj, [key, value]) => ({
+      ...obj, [key]: value,
+    }), {})
+    return a
   }
 
   constructor(props) {
     super(props)
-    const [id, classNames, attrs] = props.data[0]
+    const [[id, classNames, attrs], content] = props.data
     this.id = id
     this.classNames = classNames
-    this.attrs = this.attrsToObj(attrs)
-    this.content = this.props.data[1]
+    this.attrs = Code.attrsToObj(attrs)
+    this.content = content
     this.solution = this.attrs.solution
   }
 
-  attrsToObj(attrs) {
-    const a = attrs.reduce((obj, item) => {
-      obj[item[0]] = item[1]
-      return obj
-    }, {})
-    return a
-  }
-
   getQuestionComponent(classNames, attrs) {
-    if (attrs.validator == 'math') {
+    if (attrs.validator === 'math') {
       return <MathInputQuestionComponent solution={this.solution} attrs={attrs} />
-    } else if (attrs.validator == 'function') {
+    } else if (attrs.validator === 'function') {
       return <FunctionInputQuestionComponent solution={this.solution} attrs={attrs} />
     }
 
@@ -43,7 +42,6 @@ export default class Code extends React.Component {
     if (this.classNames.includes('exercise')) {
       return this.getQuestionComponent(this.classNames, this.attrs)
     }
-
     return (
       <code id={this.id} className={this.classNames}>{this.content}</code>
     )
