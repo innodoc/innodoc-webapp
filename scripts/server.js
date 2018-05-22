@@ -44,9 +44,15 @@ i18nInstance
         // missing keys
         server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18nInstance))
 
-        server.get('/page/:section', (req, res) => {
+        // a course section
+        server.get(/^\/page\/([A-Za-z0-9_/:-]+)$/, (req, res) => {
+          const sectionId = req.params[0]
+          if (sectionId.endsWith('/')) {
+            // remove trailing slash
+            res.redirect(req.path.slice(0, -1))
+          }
           const actualPage = '/page'
-          const queryParams = { section: req.params.section }
+          const queryParams = { sectionId }
           app.render(req, res, actualPage, queryParams)
         })
 

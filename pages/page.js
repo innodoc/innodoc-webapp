@@ -39,7 +39,7 @@ class CoursePage extends React.Component {
   }
 
   static getInitialProps({ query, store }) {
-    store.dispatch(loadSection(query.section))
+    store.dispatch(loadSection(query.sectionId))
   }
 
   componentDidMount() {
