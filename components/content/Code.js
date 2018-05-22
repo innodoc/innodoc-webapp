@@ -1,10 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import md5 from 'md5'
 
-import {
-  InputQuestionComponent, MathInputQuestionComponent,
-  FunctionInputQuestionComponent,
-} from './questions/Input'
+import InputQuestion from './questions/InputQuestionComponent'
+import questionTypes from '../../lib/questionTypes'
+
+import StringEqualityValidator from '../../lib/validators/StringEqualityValidator'
+import MathExpressionEqualityValidator from '../../lib/validators/MathExpressionEqualityValidator'
+import MathFormulaValidator from '../../lib/validators/MathFormulaValidator'
 
 export default class Code extends React.Component {
   static propTypes = {
@@ -26,16 +29,68 @@ export default class Code extends React.Component {
     this.attrs = Code.attrsToObj(attrs)
     this.content = content
     this.solution = this.attrs.solution
+
+    this.transformAttributes()
   }
 
   getQuestionComponent(classNames, attrs) {
-    if (attrs.validator === 'math') {
-      return <MathInputQuestionComponent solution={this.solution} attrs={attrs} />
-    } else if (attrs.validator === 'function') {
-      return <FunctionInputQuestionComponent solution={this.solution} attrs={attrs} />
-    }
+    const validator = this.getValidator()
+    const uuid = md5(`${this.solution}${this.questionType}`)
 
-    return <InputQuestionComponent solution={this.solution} attrs={attrs} />
+    return (
+      <InputQuestion
+        uuid={uuid}
+        solution={this.solution}
+        attrs={attrs}
+        validator={validator}
+      />
+    )
+  }
+
+  getValidator() {
+    let validator
+
+    switch (this.attrs.questionType) {
+      case questionTypes.MATH_EXPRESSION:
+
+        validator = {
+          validate: MathExpressionEqualityValidator.validate,
+          args: {
+            precision: this.attrs.precision,
+          },
+        }
+        break
+
+      case questionTypes.MATH_FORMULA:
+        validator = {
+          validate: MathFormulaValidator.validate,
+          args: {
+            precision: this.attrs.precision,
+          },
+        }
+        break
+
+      case questionTypes.EXACT:
+        validator = {
+          validate: StringEqualityValidator.validate,
+        }
+        break
+
+      default:
+        validator = { validate: StringEqualityValidator.validate }
+    }
+    return validator
+  }
+
+  // TODO to be deleted, when we agree on the names for question types
+  transformAttributes() {
+    if (this.attrs.validator === 'math') {
+      this.attrs.questionType = questionTypes.MATH_EXPRESSION
+    } else if (this.attrs.validator === 'function') {
+      this.attrs.questionType = questionTypes.MATH_FORMULA
+    } else {
+      this.attrs.questionType = questionTypes.EXACT
+    }
   }
 
   render() {

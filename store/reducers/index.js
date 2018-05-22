@@ -6,7 +6,7 @@ import uiReducer from './ui'
 
 const rootReducer = combineReducers({
   content: contentReducer,
-  exercise: exerciseReducer,
+  exercises: exerciseReducer,
   ui: uiReducer,
 })
 

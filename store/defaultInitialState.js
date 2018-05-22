@@ -8,7 +8,7 @@ const defaultInitialState = {
     sections: {},
     toc: [],
   },
-  exercise: {},
+  exercises: {},
 }
 
 export default defaultInitialState

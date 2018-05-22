@@ -40,6 +40,7 @@
     "isomorphic-unfetch": "^2.0.0",
     "load-script": "^1.0.0",
     "mathjs": "^4.2.2",
+    "md5": "^2.2.1",
     "next": "^6.0.3",
     "next-redux-saga": "^3.0.0-beta.1",
     "next-redux-wrapper": "^2.0.0-beta.6",

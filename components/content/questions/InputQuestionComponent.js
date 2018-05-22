@@ -1,43 +1,11 @@
 import React from 'react'
 import classNames from 'classnames'
-import PropTypes from 'prop-types'
 import { Input, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import css from './style.sass'
-
+import QuestionComponent from './QuestionComponent'
 import { exerciseInputAsync } from '../../../store/actions/exercises'
-
-class QuestionComponent extends React.Component {
-  constructor(props) {
-    super(props)
-    this.handleChange = this.handleChange.bind(this)
-  }
-
-  handleChange(event) {
-    this.props.onInputChanged({
-      uuid: this.props.uuid,
-      inputValue: event.target.value,
-      solved: this.props.solved,
-      solution: this.props.solution,
-      validator: this.props.validator,
-    })
-  }
-}
-
-QuestionComponent.propTypes = {
-  solution: PropTypes.string.isRequired,
-  validator: PropTypes.func.isRequired,
-  solved: PropTypes.bool.isRequired,
-  uuid: PropTypes.string.isRequired,
-  onInputChanged: PropTypes.shape({
-    uuid: PropTypes.string.isRequired,
-    inputValue: PropTypes.string.isRequired,
-    solved: PropTypes.bool.isRequired,
-    solution: PropTypes.string.isRequired,
-    validator: PropTypes.func.isRequired,
-  }).isRequired,
-}
 
 class InputQuestionComponent extends QuestionComponent {
   getIcon() {
@@ -68,24 +36,23 @@ class InputQuestionComponent extends QuestionComponent {
   }
 }
 
-const getInputValue = (state, uuid) => {
+const getInputValueFromState = (state, uuid) => {
   if (state.exercises[uuid] !== undefined) {
     return state.exercises[uuid].inputValue
   }
   return ''
 }
 
-const getSolved = (state, uuid) => {
+const getSolvedFromState = (state, uuid) => {
   if (state.exercises[uuid] !== undefined) {
     return state.exercises[uuid].solved
   }
   return false
 }
 
-
 const mapStateToProps = (state, ownProps) => ({
-  inputValue: getInputValue(state, ownProps.uuid),
-  solved: getSolved(state, ownProps.uuid),
+  inputValue: getInputValueFromState(state, ownProps.uuid),
+  solved: getSolvedFromState(state, ownProps.uuid),
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -99,7 +66,4 @@ const InputQuestion = connect(
   mapDispatchToProps
 )(InputQuestionComponent)
 
-export {
-  QuestionComponent,
-  InputQuestion,
-}
+export default InputQuestion
