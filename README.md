@@ -26,9 +26,16 @@ Find the resulting build in `.next/dist`.
 
 ### Setup environment
 
+Install node packages
 ```sh
 $ npm install
 ```
+Install Mathjax submodule
+```sh
+$ git submodule init
+$ git submodule update --remote
+```
+
 
 ### Development server
 
