@@ -19,18 +19,32 @@ const Sidebar = (props) => {
     onSidebarToggleClick,
     t,
   } = props
+
+  // The ugly <style> tag creates a more specific CSS class to override
+  // semantic-ui styles that use !important everywhere
+
   return (
     <React.Fragment>
+      <style>
+        {`
+          .${css.sidebar}.transition { display: flex !important }
+        `}
+      </style>
       <Transition visible={!visible} animation="fade right">
         <SidebarToggle onClick={onSidebarToggleClick} title={t('sidebar.showMenu')} />
       </Transition>
       <Transition visible={visible} animation="fade right">
-        <Menu vertical fixed="left" size="massive" className={css.sidebar}>
+        <Menu
+          vertical
+          fixed="left"
+          size="massive"
+          className={css.sidebar}
+        >
           <Menu.Item onClick={onSidebarToggleClick}>
             {t('sidebar.close')}
             <Icon name="close" />
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item className={css.sidebarContent}>
             <Menu.Header>{t('sidebar.courseContent')}</Menu.Header>
             <Toc as={Menu.Menu} />
           </Menu.Item>
