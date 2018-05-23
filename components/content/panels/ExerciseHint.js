@@ -38,7 +38,7 @@ class ExerciseHint extends React.Component {
         {button}
         <Message
           hidden={!visible}
-          color="blue"
+          color="green"
           icon="lightbulb"
           header={t('content.solution')}
           onDismiss={this.handleToggle}

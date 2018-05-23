@@ -7,7 +7,7 @@ import { contentType } from '../../../lib/propTypes'
 import ContentFragment from '../../ContentFragment'
 
 const Exercise = ({ t, content }) => (
-  <Card color="blue" fluid>
+  <Card color="green" fluid>
     <Card.Content>
       <Card.Header>
         {t('content.exercise')}

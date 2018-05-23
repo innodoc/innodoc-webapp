@@ -1,9 +1,9 @@
 {
   "content": {
+    "example": "Example",
     "exercise": "Exercise",
-    "solution": "Solution",
     "info": "Info",
-    "examlpe": "Example"
+    "solution": "Solution"
   },
   "footer": {
     "aboutThisProject": "About this project",
