@@ -41,6 +41,6 @@ const Table = ({ data }) => {
   )
 }
 
-Table.propTypes = { data: PropTypes.arrayOf(PropTypes.object).isRequired }
+Table.propTypes = { data: PropTypes.arrayOf(PropTypes.array).isRequired }
 
 export default Table

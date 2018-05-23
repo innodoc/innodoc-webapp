@@ -19,7 +19,7 @@ const BulletList = ({ data }) => {
 }
 
 BulletList.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.array).isRequired,
 }
 
 export default BulletList

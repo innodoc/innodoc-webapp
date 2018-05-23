@@ -6,13 +6,13 @@ import css from './debug-style.sass'
 const UnknownTypeData = ({ data }) =>
   <pre className={css.componentData}>{JSON.stringify(data, null, 2)}</pre>
 
-UnknownTypeData.propTypes = { data: PropTypes.objectOf(PropTypes.object) }
+UnknownTypeData.propTypes = { data: PropTypes.arrayOf(PropTypes.object) }
 UnknownTypeData.defaultProps = { data: [] }
 
 export default class UnknownType extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
-    data: PropTypes.objectOf(PropTypes.object),
+    data: PropTypes.arrayOf(PropTypes.any),
   }
 
   static defaultProps = { data: [] }

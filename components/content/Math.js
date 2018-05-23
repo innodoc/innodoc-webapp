@@ -16,7 +16,7 @@ const Math = ({ data }) => {
 }
 
 Math.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
 }
 
 export default Math
