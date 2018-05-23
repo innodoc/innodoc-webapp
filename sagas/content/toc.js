@@ -1,5 +1,4 @@
-import { put, takeLatest } from 'redux-saga/effects'
-import 'isomorphic-unfetch'
+import { fork, put, take } from 'redux-saga/effects'
 
 import {
   actionTypes,
@@ -21,5 +20,8 @@ function* loadToc() {
 }
 
 export default function* watchLoadToc() {
-  yield takeLatest(actionTypes.LOAD_TOC, loadToc)
+  while (true) {
+    yield take(actionTypes.LOAD_TOC)
+    yield fork(loadToc)
+  }
 }

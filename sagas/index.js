@@ -1,5 +1,6 @@
 import es6promise from 'es6-promise'
 import { all, fork } from 'redux-saga/effects'
+import 'isomorphic-unfetch' // TODO: refactor to lib/api.js
 
 import { watchLoadToc, watchLoadSection } from './content'
 

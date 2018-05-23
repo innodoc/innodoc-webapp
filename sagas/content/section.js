@@ -1,5 +1,4 @@
-import { put, takeLatest } from 'redux-saga/effects'
-import 'isomorphic-unfetch'
+import { fork, put, take } from 'redux-saga/effects'
 
 import {
   actionTypes,
@@ -31,5 +30,8 @@ function* loadSection({ sectionId }) {
 }
 
 export default function* watchLoadSection() {
-  yield takeLatest(actionTypes.LOAD_SECTION, loadSection)
+  while (true) {
+    const sectionId = yield take(actionTypes.LOAD_SECTION)
+    yield fork(loadSection, sectionId)
+  }
 }
