@@ -31,5 +31,6 @@ class InnoDocApp extends App {
   }
 }
 
-const withReduxConfig = { debug: process.env.NODE_ENV !== 'production' }
+const nextReduxWrapperDebug = process.env.NODE_ENV !== 'production' && process.env.NEXT_REDUX_WRAPPER_DEBUG === 'true'
+const withReduxConfig = { debug: nextReduxWrapperDebug }
 export default withRedux(configureStore, withReduxConfig)(withReduxSaga(InnoDocApp))
