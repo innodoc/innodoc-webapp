@@ -4,17 +4,18 @@ import App, { Container } from 'next/app'
 import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 
-import makeStore from '../store'
+import configureStore from '../store'
+import { loadToc } from '../store/actions/content'
 
 class InnoDocApp extends App {
   static async getInitialProps({ Component, ctx }) {
-    let pageProps = {}
+    // initially load TOC
+    ctx.store.dispatch(loadToc())
 
     // call getInitialProps from page
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx)
-    }
-
+    const pageProps = Component.getInitialProps
+      ? await Component.getInitialProps(ctx)
+      : {}
     return { pageProps }
   }
 
@@ -30,4 +31,5 @@ class InnoDocApp extends App {
   }
 }
 
-export default withRedux(makeStore)(withReduxSaga(InnoDocApp))
+const withReduxConfig = { debug: process.env.NODE_ENV !== 'production' }
+export default withRedux(configureStore, withReduxConfig)(withReduxSaga(InnoDocApp))

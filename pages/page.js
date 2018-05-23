@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Dimmer, Header, Loader, Image } from 'semantic-ui-react'
 
 import { loadSection } from '../store/actions/content'
-import getSectionById from '../lib/selectors'
+import { getCurrentSection, getCurrentSectionId } from '../store/selectors'
 import Layout from '../components/Layout'
 import ContentFragment from '../components/ContentFragment'
 import withI18next from '../lib/withI18next'
@@ -123,19 +123,15 @@ class CoursePage extends React.Component {
 
 const mapStateToProps = (state) => {
   const props = { loading: state.content.loading }
-  try {
-    const sectionId = state.content.currentSectionId
-    const { title } = getSectionById(state, sectionId)
-    const content = state.content.sections[sectionId]
-    return {
-      ...props,
-      content,
-      title,
-    }
-  } catch (error) {
-    if (!(error instanceof TypeError)) { throw error }
+  const currentSectionId = getCurrentSectionId(state)
+  const currentSection = getCurrentSection(state)
+  const { title } = currentSection
+  const content = state.content.sections[currentSectionId]
+  return {
+    ...props,
+    content,
+    title,
   }
-  return props
 }
 
 export default connect(mapStateToProps)(withI18next()(CoursePage))

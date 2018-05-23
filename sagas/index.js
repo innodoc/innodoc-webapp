@@ -1,15 +1,14 @@
 import es6promise from 'es6-promise'
-import { all, takeLatest } from 'redux-saga/effects'
+import { all, fork } from 'redux-saga/effects'
 
-import { actionTypes } from '../store/actions/content'
-import { loadTocSaga, loadSectionSaga } from './content'
+import { loadTocWatcher, loadSectionWatcher } from './content'
 
 es6promise.polyfill() // for IE
 
 function* rootSaga() {
   yield all([
-    takeLatest(actionTypes.LOAD_TOC, loadTocSaga),
-    takeLatest(actionTypes.LOAD_SECTION, loadSectionSaga),
+    fork(loadTocWatcher),
+    fork(loadSectionWatcher),
   ])
 }
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Menu } from 'semantic-ui-react'
 
-import { loadToc } from '../store/actions/content'
+// import { loadToc } from '../store/actions/content'
 import { contentType, tocTreeType } from '../lib/propTypes'
 import SectionLink from './SectionLink'
 import ContentFragment from './ContentFragment'
@@ -53,7 +53,6 @@ class Toc extends React.Component {
   static propTypes = {
     toc: tocTreeType.isRequired,
     as: PropTypes.func.isRequired,
-    dispatchLoadToc: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -62,15 +61,10 @@ class Toc extends React.Component {
     toc: {},
   }
 
-  componentDidMount() {
-    this.props.dispatchLoadToc()
-  }
-
   render() {
     const {
       toc,
       as: ElementType,
-      dispatchLoadToc,
       ...otherProps
     } = this.props
 
@@ -94,8 +88,5 @@ class Toc extends React.Component {
 }
 
 const mapStateToProps = state => ({ toc: state.content.toc })
-const mapDispatchToProps = dispatch => ({
-  dispatchLoadToc: () => dispatch(loadToc()),
-})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Toc)
+export default connect(mapStateToProps)(Toc)

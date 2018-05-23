@@ -17,7 +17,7 @@ const bindMiddleware = (middleware) => {
   return applyMiddleware(...middleware)
 }
 
-export default function makeStore(initialState = defaultInitialState) {
+export default function configureStore(initialState = defaultInitialState) {
   const store = createStore(
     rootReducer,
     initialState,

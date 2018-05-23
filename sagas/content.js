@@ -1,7 +1,8 @@
-import { put } from 'redux-saga/effects'
+import { put, takeLatest } from 'redux-saga/effects'
 import 'isomorphic-unfetch'
 
 import {
+  actionTypes,
   loadTocSuccess,
   loadTocFailure,
   loadSectionSuccess,
@@ -10,7 +11,7 @@ import {
 
 const contentRoot = process.env.CONTENT_ROOT
 
-export function* loadTocSaga() {
+function* loadToc() {
   const loc = `${contentRoot}/de/toc.json`
   try {
     const res = yield fetch(loc)
@@ -21,7 +22,11 @@ export function* loadTocSaga() {
   }
 }
 
-export function* loadSectionSaga({ sectionId }) {
+export function* loadTocWatcher() {
+  yield takeLatest(actionTypes.LOAD_TOC, loadToc)
+}
+
+function* loadSection({ sectionId }) {
   const loc = `${contentRoot}/de/${sectionId}/content.json`
   try {
     const res = yield fetch(loc)
@@ -40,4 +45,8 @@ export function* loadSectionSaga({ sectionId }) {
   } catch (err) {
     yield put(loadSectionFailure(err))
   }
+}
+
+export function* loadSectionWatcher() {
+  yield takeLatest(actionTypes.LOAD_SECTION, loadSection)
 }
