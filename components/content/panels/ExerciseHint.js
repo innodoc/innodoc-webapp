@@ -7,8 +7,8 @@ import { contentType } from '../../../lib/propTypes'
 import ContentFragment from '../../ContentFragment'
 
 class ExerciseHint extends React.Component {
-  propTypes = {
-    content: contentType,
+  static propTypes = {
+    content: contentType.isRequired,
     t: PropTypes.func.isRequired,
   }
 

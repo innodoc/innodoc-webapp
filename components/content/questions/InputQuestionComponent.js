@@ -59,13 +59,7 @@ InputQuestionComponent.propTypes = {
   solution: PropTypes.string.isRequired,
   validator: PropTypes.func.isRequired,
   solved: PropTypes.bool.isRequired,
-  onInputChanged: PropTypes.shape({
-    uuid: PropTypes.string.isRequired,
-    inputValue: PropTypes.string.isRequired,
-    solved: PropTypes.bool.isRequired,
-    solution: PropTypes.string.isRequired,
-    validator: PropTypes.func.isRequired,
-  }).isRequired,
+  onInputChanged: PropTypes.func.isRequired,
 }
 
 const getInputValueFromState = (state, uuid) => {
