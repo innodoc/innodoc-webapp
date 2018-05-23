@@ -5,12 +5,7 @@ import { connect } from 'react-redux'
 import { Dimmer, Header, Loader, Image } from 'semantic-ui-react'
 
 import { loadSection } from '../store/actions/content'
-import {
-  getContentLoading,
-  getCurrentSectionId,
-  getSectionMeta,
-  getSectionContent,
-} from '../store/reducers/content'
+import { selectors } from '../store/reducers/content'
 import Layout from '../components/Layout'
 import ContentFragment from '../components/ContentFragment'
 import withI18next from '../lib/withI18next'
@@ -127,11 +122,11 @@ class CoursePage extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const loading = getContentLoading(state)
-  const id = getCurrentSectionId(state)
+  const loading = selectors.getContentLoading(state)
+  const id = selectors.getCurrentSectionId(state)
   if (id) {
-    const { title } = getSectionMeta(state, id)
-    const content = getSectionContent(state, id)
+    const { title } = selectors.getSectionMeta(state, id)
+    const content = selectors.getSectionContent(state, id)
     return { loading, content, title }
   }
   return { loading }

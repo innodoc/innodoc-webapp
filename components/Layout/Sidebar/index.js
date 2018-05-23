@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Icon, Menu, Transition } from 'semantic-ui-react'
 import { translate } from 'react-i18next'
 
+import { selectors } from '../../../store/reducers/ui'
 import { childrenType } from '../../../lib/propTypes'
 import { toggleSidebar } from '../../../store/actions/ui'
 import SidebarToggle from './SidebarToggle'
@@ -49,7 +50,7 @@ Sidebar.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  visible: state.ui.sidebarVisible,
+  visible: selectors.getSidebarVisible(state),
 })
 
 const mapDispatchToProps = dispatch => ({
