@@ -1,16 +1,14 @@
-import { put, takeEvery, call } from 'redux-saga/effects'
+import { fork, put, take, call } from 'redux-saga/effects'
 
 import {
-  changeExerciseInput, exerciseToggleSolved,
+  exerciseToggleSolved,
   actionTypes as exerciseActionTypes,
 } from '../store/actions/exercises'
 
-function* exerciseInputChangedSaga(payload) {
+function* exerciseInputChanged(payload) {
   const {
     uuid, inputValue, solved: isSolved, solution, validator,
   } = payload.data
-
-  yield put(changeExerciseInput({ uuid, inputValue }))
 
   const solved = yield call(
     validator.validate, inputValue, solution, validator.args
@@ -22,6 +20,8 @@ function* exerciseInputChangedSaga(payload) {
 }
 
 export default function* watchExerciseChange() {
-  yield takeEvery(
-    exerciseActionTypes.EXERCISE_INPUT_SAGA, exerciseInputChangedSaga)
+  while (true) {
+    const data = yield take(exerciseActionTypes.EXERCISE_INPUT_CHANGED)
+    yield fork(exerciseInputChanged, data)
+  }
 }
