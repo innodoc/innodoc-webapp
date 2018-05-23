@@ -8,6 +8,7 @@ module.exports = withSass({
     importLoaders: 1,
     localIdentName: '[local]___[hash:base64:5]',
   },
+  pageExtensions: ['js'],
   webpack: (config) => {
     config.plugins.push(new Dotenv({
       path: `${__dirname}/.env`,
