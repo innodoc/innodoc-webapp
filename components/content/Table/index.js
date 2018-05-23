@@ -1,10 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Table } from 'semantic-ui-react'
 
 import ContentFragment from '../../ContentFragment'
-import css from './style.sass'
 
-const Table = ({ data }) => {
+const alignMap = {
+  AlignLeft: 'left',
+  AlignRight: 'right',
+  AlignCenter: 'center',
+}
+
+const InnoTable = ({ data }) => {
   const [, alignment, , headerData, rowData] = data
 
   // thead
@@ -12,35 +18,35 @@ const Table = ({ data }) => {
   if (headerData.some(tr => tr.length > 0)) {
     const ths = headerData.map(
       (th, i) => (
-        <th key={i.toString()} className={css[alignment[i].t]}>
+        <Table.HeaderCell key={i.toString()} textAlign={alignMap[alignment[i].t]}>
           <ContentFragment content={th} />
-        </th>
+        </Table.HeaderCell>
       )
     )
-    thead = <thead><tr>{ths}</tr></thead>
+    thead = <Table.Header><Table.Row>{ths}</Table.Row></Table.Header>
   }
 
   // tbody
   const trs = rowData.map((tr, i) => {
     const tds = tr.map(
       (td, j) => (
-        <td key={j.toString()} className={css[alignment[j].t]}>
+        <Table.Cell key={j.toString()} textAlign={alignMap[alignment[j].t]}>
           <ContentFragment content={td} />
-        </td>
+        </Table.Cell>
       )
     )
-    return <tr key={i.toString()}>{tds}</tr>
+    return <Table.Row key={i.toString()}>{tds}</Table.Row>
   })
-  const tbody = <tbody>{trs}</tbody>
+  const tbody = <Table.Body>{trs}</Table.Body>
 
   return (
-    <table className={css.fullWidth}>
+    <Table>
       {thead}
       {tbody}
-    </table>
+    </Table>
   )
 }
 
-Table.propTypes = { data: PropTypes.arrayOf(PropTypes.array).isRequired }
+InnoTable.propTypes = { data: PropTypes.arrayOf(PropTypes.array).isRequired }
 
-export default Table
+export default InnoTable
