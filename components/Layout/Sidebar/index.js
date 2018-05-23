@@ -10,6 +10,7 @@ import { toggleSidebar } from '../../../store/actions/ui'
 import SidebarToggle from './SidebarToggle'
 import Content from '../Content'
 import Toc from '../../Toc'
+import css from './style.sass'
 
 const Sidebar = (props) => {
   const {
@@ -24,7 +25,7 @@ const Sidebar = (props) => {
         <SidebarToggle onClick={onSidebarToggleClick} title={t('sidebar.showMenu')} />
       </Transition>
       <Transition visible={visible} animation="fade right">
-        <Menu vertical fixed="left" size="massive">
+        <Menu vertical fixed="left" size="massive" className={css.sidebar}>
           <Menu.Item onClick={onSidebarToggleClick}>
             {t('sidebar.close')}
             <Icon name="close" />
