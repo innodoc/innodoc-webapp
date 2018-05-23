@@ -1,15 +1,13 @@
 import es6promise from 'es6-promise'
 import { all, fork } from 'redux-saga/effects'
 
-import { loadTocWatcher, loadSectionWatcher } from './content'
+import { watchLoadToc, watchLoadSection } from './content'
 
 es6promise.polyfill() // for IE
 
-function* rootSaga() {
+export default function* root() {
   yield all([
-    fork(loadTocWatcher),
-    fork(loadSectionWatcher),
+    fork(watchLoadToc),
+    fork(watchLoadSection),
   ])
 }
-
-export default rootSaga

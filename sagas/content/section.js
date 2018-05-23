@@ -3,28 +3,11 @@ import 'isomorphic-unfetch'
 
 import {
   actionTypes,
-  loadTocSuccess,
-  loadTocFailure,
   loadSectionSuccess,
   loadSectionFailure,
-} from '../store/actions/content'
+} from '../../store/actions/content'
 
 const contentRoot = process.env.CONTENT_ROOT
-
-function* loadToc() {
-  const loc = `${contentRoot}/de/toc.json`
-  try {
-    const res = yield fetch(loc)
-    const data = yield res.json()
-    yield put(loadTocSuccess(data))
-  } catch (err) {
-    yield put(loadTocFailure(err))
-  }
-}
-
-export function* loadTocWatcher() {
-  yield takeLatest(actionTypes.LOAD_TOC, loadToc)
-}
 
 function* loadSection({ sectionId }) {
   const loc = `${contentRoot}/de/${sectionId}/content.json`
@@ -47,6 +30,6 @@ function* loadSection({ sectionId }) {
   }
 }
 
-export function* loadSectionWatcher() {
+export default function* watchLoadSection() {
   yield takeLatest(actionTypes.LOAD_SECTION, loadSection)
 }
