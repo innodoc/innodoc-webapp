@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Menu } from 'semantic-ui-react'
 
-import { getToc } from '../../store/selectors'
+import { getToc } from '../../store/reducers/content'
 import { tocTreeType } from '../../lib/propTypes'
 import TocItem from './Item'
 
