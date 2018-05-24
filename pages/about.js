@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import Layout from '../components/Layout'
-import withI18next from '../lib/withI18next'
+import withI18next from '../components/hoc/withI18next'
 
 const AboutPage = () => (
   <Layout>

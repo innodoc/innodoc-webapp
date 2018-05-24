@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { tocTreeType } from '../lib/propTypes'
 
 import { selectors as contentSelectors } from '../store/reducers/content'
-import withI18next from '../lib/withI18next'
+import withI18next from '../components/hoc/withI18next'
 import Layout from '../components/Layout'
 import Toc from '../components/Toc'
 
