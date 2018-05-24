@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 
-import { contentType } from '../../lib/propTypes'
+import { contentType } from '../../../lib/propTypes'
 import ContentFragment from '../ContentFragment'
 import InputHint from './messages/InputHint'
 import debugCSS from './debug-style.sass'

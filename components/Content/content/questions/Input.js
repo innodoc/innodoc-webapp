@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 import css from './style.sass'
 
-import { exerciseInputAsync } from '../../../store/actions/exercises'
+import { exerciseInputAsync } from '../../../../store/actions/exercises'
 
 class QuestionComponent extends React.Component {
   constructor(props) {

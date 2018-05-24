@@ -4,11 +4,12 @@ import { connect } from 'react-redux'
 import { Icon, Menu, Transition } from 'semantic-ui-react'
 import { translate } from 'react-i18next'
 
-import { selectors } from '../../../store/reducers/ui'
-import { childrenType } from '../../../lib/propTypes'
+import { selectors as uiSelectors } from '../../../store/reducers/ui'
+import { selectors as contentSelectors } from '../../../store/reducers/content'
+import { childrenType, tocTreeType } from '../../../lib/propTypes'
 import { toggleSidebar } from '../../../store/actions/ui'
 import SidebarToggle from './SidebarToggle'
-import Content from '../Content'
+import Main from '../Main'
 import Toc from '../../Toc'
 import css from './style.sass'
 
@@ -17,6 +18,7 @@ const Sidebar = (props) => {
     children,
     visible,
     onSidebarToggleClick,
+    toc,
     t,
   } = props
 
@@ -46,13 +48,13 @@ const Sidebar = (props) => {
           </Menu.Item>
           <Menu.Item className={css.sidebarContent}>
             <Menu.Header>{t('sidebar.courseContent')}</Menu.Header>
-            <Toc as={Menu.Menu} />
+            <Toc as={Menu.Menu} toc={toc} />
           </Menu.Item>
         </Menu>
       </Transition>
-      <Content>
+      <Main>
         {children}
-      </Content>
+      </Main>
     </React.Fragment>
   )
 }
@@ -62,10 +64,12 @@ Sidebar.propTypes = {
   onSidebarToggleClick: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
+  toc: tocTreeType.isRequired,
 }
 
 const mapStateToProps = state => ({
-  visible: selectors.getSidebarVisible(state),
+  toc: contentSelectors.getToc(state),
+  visible: uiSelectors.getSidebarVisible(state),
 })
 
 const mapDispatchToProps = dispatch => ({

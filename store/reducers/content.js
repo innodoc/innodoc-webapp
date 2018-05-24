@@ -1,19 +1,22 @@
 import { actionTypes } from '../actions/content'
 import defaultInitialState from '../defaultInitialState'
 
+const splitSectionId = id => id.split('/')
+
 export const selectors = {
   getContentLoading: state => state.content.loading,
   getCurrentSectionId: state => state.content.currentSectionId,
   getSectionContent: (state, id) => state.content.sections[id],
   getToc: state => state.content.toc,
   getSectionMeta: (state, id) => {
-    const idFragments = id.split('/')
+    const idFragments = splitSectionId(id)
     let section = { children: selectors.getToc(state) }
     for (let i = 0; i < idFragments.length; i += 1) {
       section = section.children.find(s => s.id === idFragments[i])
     }
     return section
   },
+  getSectionLevel: (state, id) => splitSectionId(id).length,
 }
 
 function content(state = defaultInitialState.content, action) {

@@ -4,14 +4,14 @@ import { Container } from 'semantic-ui-react'
 import { childrenType } from '../../../lib/propTypes'
 import css from './style.sass'
 
-const Content = ({ children }) => (
+const Main = ({ children }) => (
   <Container className={css.content}>
     {children}
   </Container>
 )
 
-Content.propTypes = {
+Main.propTypes = {
   children: childrenType.isRequired,
 }
 
-export default Content
+export default Main

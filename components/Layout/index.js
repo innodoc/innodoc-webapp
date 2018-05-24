@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 
 import { childrenType } from '../../lib/propTypes'
 import Header from './Header'
-import Content from './Content'
+import Main from './Main'
 import Sidebar from './Sidebar'
 import Footer from './Footer'
 
 const Layout = ({ children, sidebar }) => {
-  const ContentWrapper = sidebar ? Sidebar : Content
+  const ContentWrapper = sidebar ? Sidebar : Main
   return (
     <div>
       <Header />

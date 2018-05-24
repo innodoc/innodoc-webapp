@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 import css from './style.sass'
 // import QuestionComponent from './QuestionComponent'
-import { exerciseInputChanged } from '../../../store/actions/exercises'
+import { exerciseInputChanged } from '../../../../store/actions/exercises'
 
 class InputQuestionComponent extends React.Component {
   constructor(props) {

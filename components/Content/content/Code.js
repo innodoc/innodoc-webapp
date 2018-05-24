@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import md5 from 'md5'
 
 import InputQuestion from './questions/InputQuestionComponent'
-import questionTypes from '../../lib/questionTypes'
+import questionTypes from '../../../lib/questionTypes'
 
-import StringEqualityValidator from '../../lib/validators/StringEqualityValidator'
-import MathExpressionEqualityValidator from '../../lib/validators/MathExpressionEqualityValidator'
-import MathFormulaValidator from '../../lib/validators/MathFormulaValidator'
+import StringEqualityValidator from '../../../lib/validators/StringEqualityValidator'
+import MathExpressionEqualityValidator from '../../../lib/validators/MathExpressionEqualityValidator'
+import MathFormulaValidator from '../../../lib/validators/MathFormulaValidator'
 
 export default class Code extends React.Component {
   static propTypes = {

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { contentType } from '../lib/propTypes'
+import { contentType } from '../../lib/propTypes'
 import UnknownType from './content/UnknownType'
 import Str from './content/Str'
 import Header from './content/Header'

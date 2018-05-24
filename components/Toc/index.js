@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { Menu } from 'semantic-ui-react'
 
-import { selectors } from '../../store/reducers/content'
 import { tocTreeType } from '../../lib/propTypes'
 import TocItem from './Item'
 
@@ -33,16 +31,13 @@ const Toc = ({
 
 Toc.propTypes = {
   toc: tocTreeType.isRequired,
-  as: PropTypes.func.isRequired,
+  as: PropTypes.func,
   dispatch: PropTypes.func,
 }
 
 Toc.defaultProps = {
   ...React.Component.defaultProps,
   as: Menu,
-  toc: {},
 }
 
-const mapStateToProps = state => ({ toc: selectors.getToc(state) })
-
-export default connect(mapStateToProps)(Toc)
+export default Toc

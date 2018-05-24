@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Message } from 'semantic-ui-react'
 import { translate } from 'react-i18next'
 
-import { contentType } from '../../../lib/propTypes'
+import { contentType } from '../../../../lib/propTypes'
 import ContentFragment from '../../ContentFragment'
 
 const InputHint = ({ content, t, ...otherProps }) => {
