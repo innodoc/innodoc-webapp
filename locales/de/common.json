@@ -1,7 +1,9 @@
 {
   "content": {
     "exercise": "Aufgabe",
-    "solution": "Lösung"
+    "solution": "Lösung",
+    "info": "Info",
+    "example": "Beispiel"
   },
   "footer": {
     "aboutThisProject": "Über dieses Projekt",

@@ -4,6 +4,8 @@ import classNames from 'classnames'
 
 import ContentFragment from '../ContentFragment'
 import Exercise from './panels/Exercise'
+import InfoPanel from './panels/InfoPanel'
+import ExamplePanel from './panels/ExamplePanel'
 import ExerciseHint from './panels/ExerciseHint'
 
 const Div = ({ data }) => {
@@ -12,6 +14,14 @@ const Div = ({ data }) => {
   if (classes.includes('exercise')) {
     return (
       <Exercise id={id} content={content} />
+    )
+  } else if (classes.includes('info')) {
+    return (
+      <InfoPanel id={id} content={content} />
+    )
+  } else if (classes.includes('example')) {
+    return (
+      <ExamplePanel id={id} content={content} />
     )
   } else if (classes.includes('hint')) {
     return (

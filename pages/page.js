@@ -10,6 +10,8 @@ import Layout from '../components/Layout'
 import ContentFragment from '../components/ContentFragment'
 import withI18next from '../lib/withI18next'
 
+import css from './style.sass'
+
 const Placeholder = () => (
   <React.Fragment>
     <Header as="h1">&nbsp;</Header>
@@ -109,7 +111,7 @@ class CoursePage extends React.Component {
                   <Header as="h1">
                     <ContentFragment content={title} />
                   </Header>
-                  <div ref={this.mathJaxNode}>
+                  <div className={css.content} ref={this.mathJaxNode}>
                     <ContentFragment content={content} />
                   </div>
                 </React.Fragment>
