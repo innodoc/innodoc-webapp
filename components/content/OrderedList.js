@@ -8,13 +8,13 @@ const OrderedList = ({ data }) => {
   // TODO: unwrap paragraphs
   const listItems = data[1].map(
     (item, i) => (
-      <List.Item as="li" key={i.toString()}>
+      <List.Item key={i.toString()}>
         <ContentFragment content={item} />
       </List.Item>
     )
   )
   return (
-    <List ordered divided verticalAlign="middle" relaxed="very" as="ol">
+    <List ordered divided verticalAlign="middle" relaxed="very">
       {listItems}
     </List>
   )

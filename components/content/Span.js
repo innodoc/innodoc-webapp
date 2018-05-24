@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import { contentType } from '../../lib/propTypes'
 import ContentFragment from '../ContentFragment'
+import InputHint from './messages/InputHint'
 import debugCSS from './debug-style.sass'
 
 const IndexSpan = ({ indexConcept, content }) => (
@@ -32,7 +33,7 @@ const HintText = ({ content }) => (
 HintText.propTypes = { content: contentType.isRequired }
 
 const Span = ({ data }) => {
-  const [[, classNames, attributes], content] = data
+  const [[id, classNames, attributes], content] = data
 
   if (attributes.length === 1) {
     const attr = attributes[0][0]
@@ -42,7 +43,7 @@ const Span = ({ data }) => {
   }
 
   if (classNames.includes('hint-text')) {
-    return <HintText classNames="hint-text" content={content} />
+    return <InputHint id={id} content={content} />
   }
 
   // skip empty spans
@@ -55,17 +56,19 @@ const Span = ({ data }) => {
       attributes.length === 0 &&
       content.length > 0) { return <ContentFragment content={content} /> }
 
-  if (process.env.NODE_ENV === 'production') { return null }
-
-  // if nothing matches return a debug element
-  return (
-    <span>
-      <span className={debugCSS.errorBGColor}>
-        Strange span: classes={classNames} attrs={attributes} content-length={content.length}
+  if (process.env.NODE_ENV !== 'production') {
+    // if nothing matches return a debug element
+    return (
+      <span>
+        <span className={debugCSS.errorBGColor}>
+          Strange span: classes={classNames} attrs={attributes} content-length={content.length}
+        </span>
+        <ContentFragment content={content} />
       </span>
-      <ContentFragment content={content} />
-    </span>
-  )
+    )
+  }
+
+  return null
 }
 
 Span.propTypes = { data: PropTypes.arrayOf(PropTypes.array).isRequired }

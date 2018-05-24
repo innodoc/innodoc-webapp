@@ -6,8 +6,8 @@ import { translate } from 'react-i18next'
 import { contentType } from '../../../lib/propTypes'
 import ContentFragment from '../../ContentFragment'
 
-const Exercise = ({ t, content }) => (
-  <Card color="green" fluid>
+const ExercisePanel = ({ t, content }) => (
+  <Card className="exercise" color="green" fluid>
     <Card.Content>
       <Card.Header>
         {t('content.exercise')}
@@ -19,9 +19,9 @@ const Exercise = ({ t, content }) => (
   </Card>
 )
 
-Exercise.propTypes = {
+ExercisePanel.propTypes = {
   content: contentType.isRequired,
   t: PropTypes.func.isRequired,
 }
 
-export default translate()(Exercise)
+export default translate()(ExercisePanel)

@@ -1,39 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 
-import ContentFragment from '../ContentFragment'
-import Exercise from './panels/Exercise'
-import InfoPanel from './panels/InfoPanel'
-import ExamplePanel from './panels/ExamplePanel'
-import ExerciseHint from './panels/ExerciseHint'
+import ExercisePanel from './cards/ExercisePanel'
+import InfoPanel from './cards/InfoPanel'
+import ExamplePanel from './cards/ExamplePanel'
+import SolutionHint from './messages/SolutionHint'
+import InputHint from './messages/InputHint'
+import UnknownType from './UnknownType'
 
 const Div = ({ data }) => {
   const [[id, classes], content] = data
 
   if (classes.includes('exercise')) {
-    return (
-      <Exercise id={id} content={content} />
-    )
+    return <ExercisePanel id={id} content={content} />
   } else if (classes.includes('info')) {
-    return (
-      <InfoPanel id={id} content={content} />
-    )
+    return <InfoPanel id={id} content={content} />
   } else if (classes.includes('example')) {
-    return (
-      <ExamplePanel id={id} content={content} />
-    )
+    return <ExamplePanel id={id} content={content} />
   } else if (classes.includes('hint')) {
-    return (
-      <ExerciseHint id={id} content={content} />
-    )
+    return <SolutionHint id={id} content={content} />
+  } else if (classes.includes('hint-text')) {
+    return <InputHint id={id} content={content} />
   }
 
-  return (
-    <div id={id} className={classNames(classes.concat(['panel']))}>
-      <ContentFragment content={content} />
-    </div>
-  )
+  return <UnknownType name="Div" data={data} />
 }
 
 Div.propTypes = {

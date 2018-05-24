@@ -6,23 +6,23 @@ import { translate } from 'react-i18next'
 import { contentType } from '../../../lib/propTypes'
 import ContentFragment from '../../ContentFragment'
 
-const InfoPanel = ({ t, content }) => (
-  <Card color="blue" fluid>
+const ExamplePanel = ({ t, content }) => (
+  <Card className="example" color="orange" fluid>
     <Card.Content>
       <Card.Header>
-        <Icon name="info circle" size="large" color="blue" />
-        {t('content.info')}
+        <Icon name="star" size="large" color="orange" />
+        {t('content.example')}
       </Card.Header>
-      <Card.Description>
+      <Card.Description color="orange">
         <ContentFragment content={content} />
       </Card.Description>
     </Card.Content>
   </Card>
 )
 
-InfoPanel.propTypes = {
+ExamplePanel.propTypes = {
   content: contentType.isRequired,
   t: PropTypes.func.isRequired,
 }
 
-export default translate()(InfoPanel)
+export default translate()(ExamplePanel)

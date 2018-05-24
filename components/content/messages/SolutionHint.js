@@ -6,7 +6,7 @@ import { translate } from 'react-i18next'
 import { contentType } from '../../../lib/propTypes'
 import ContentFragment from '../../ContentFragment'
 
-class ExerciseHint extends React.Component {
+class SolutionHint extends React.Component {
   static propTypes = {
     content: contentType.isRequired,
     t: PropTypes.func.isRequired,
@@ -20,7 +20,7 @@ class ExerciseHint extends React.Component {
   handleToggle = () => this.setState({ visible: !this.state.visible })
 
   render() {
-    const { content, t } = this.props
+    const { content, t, ...otherProps } = this.props
     const { visible } = this.state
     const button = !visible
       ? (
@@ -37,16 +37,18 @@ class ExerciseHint extends React.Component {
         <Divider />
         {button}
         <Message
+          className="exercise-hint"
           hidden={!visible}
           color="green"
           icon="lightbulb"
           header={t('content.solution')}
           onDismiss={this.handleToggle}
           content={contentFragment}
+          {...otherProps}
         />
       </React.Fragment>
     )
   }
 }
 
-export default translate()(ExerciseHint)
+export default translate()(SolutionHint)
