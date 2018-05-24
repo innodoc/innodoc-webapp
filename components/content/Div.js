@@ -8,22 +8,33 @@ import SolutionHint from './messages/SolutionHint'
 import InputHint from './messages/InputHint'
 import UnknownType from './UnknownType'
 
+const classNameComponentMap = {
+  exercise: ExercisePanel,
+  info: InfoPanel,
+  example: ExamplePanel,
+  hint: SolutionHint,
+  'hint-text': InputHint,
+}
+
+const mapClassNameToComponent = (divClasses) => {
+  const classNames = Object.keys(classNameComponentMap)
+  for (let i = 0; i < classNames.length; i += 1) {
+    const className = classNames[i]
+    if (divClasses.includes(className)) {
+      return classNameComponentMap[className]
+    }
+  }
+  return null
+}
+
 const Div = ({ data }) => {
   const [[id, classes], content] = data
 
-  if (classes.includes('exercise')) {
-    return <ExercisePanel id={id} content={content} />
-  } else if (classes.includes('info')) {
-    return <InfoPanel id={id} content={content} />
-  } else if (classes.includes('example')) {
-    return <ExamplePanel id={id} content={content} />
-  } else if (classes.includes('hint')) {
-    return <SolutionHint id={id} content={content} />
-  } else if (classes.includes('hint-text')) {
-    return <InputHint id={id} content={content} />
-  }
+  const Component = mapClassNameToComponent(classes)
 
-  return <UnknownType name="Div" data={data} />
+  return Component
+    ? <Component id={id} content={content} />
+    : <UnknownType name="Div" data={data} />
 }
 
 Div.propTypes = {
