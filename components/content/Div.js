@@ -1,19 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ExercisePanel from './cards/ExercisePanel'
-import InfoPanel from './cards/InfoPanel'
-import ExamplePanel from './cards/ExamplePanel'
+import ExerciseCard from './cards/ExerciseCard'
+import InfoCard from './cards/InfoCard'
+import ExampleCard from './cards/ExampleCard'
 import SolutionHint from './messages/SolutionHint'
 import InputHint from './messages/InputHint'
+import TestCard from './cards/TestCard'
 import UnknownType from './UnknownType'
 
 const classNameComponentMap = {
-  exercise: ExercisePanel,
-  info: InfoPanel,
-  example: ExamplePanel,
+  exercise: ExerciseCard,
+  info: InfoCard,
+  example: ExampleCard,
   hint: SolutionHint,
   'hint-text': InputHint,
+  test: TestCard,
 }
 
 const mapClassNameToComponent = (divClasses) => {

@@ -4,7 +4,8 @@
     "exercise": "Aufgabe",
     "info": "Info",
     "inputHint": "Eingabe",
-    "solution": "Lösung"
+    "solution": "Lösung",
+    "test": "Test"
   },
   "footer": {
     "aboutThisProject": "Über dieses Projekt",
