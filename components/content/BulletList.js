@@ -1,20 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import { List } from 'semantic-ui-react'
 import ContentFragment from '../ContentFragment'
 
 const BulletList = ({ data }) => {
   const listItems = data.map(
     (item, i) => (
-      <li key={i.toString()}>
+      <List.Item key={i.toString()}>
         <ContentFragment content={item} />
-      </li>
+      </List.Item>
     )
   )
   return (
-    <ul>
+    <List bulleted verticalAlign="middle">
       {listItems}
-    </ul>
+    </List>
   )
 }
 

@@ -1,20 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import { List } from 'semantic-ui-react'
 import ContentFragment from '../ContentFragment'
 
 const OrderedList = ({ data }) => {
   const listItems = data[1].map(
     (item, i) => (
-      <li key={i.toString()}>
+      <List.Item key={i.toString()}>
         <ContentFragment content={item} />
-      </li>
+      </List.Item>
     )
   )
   return (
-    <ol>
+    <List ordered divided verticalAlign="middle" relaxed="very">
       {listItems}
-    </ol>
+    </List>
   )
 }
 
