@@ -29,8 +29,6 @@ export default class Code extends React.Component {
     this.attrs = Code.attrsToObj(attrs)
     this.content = content
     this.solution = this.attrs.solution
-
-    this.transformAttributes()
   }
 
   getQuestionComponent(classNames, attrs) {
@@ -52,7 +50,6 @@ export default class Code extends React.Component {
 
     switch (this.attrs.questionType) {
       case questionTypes.MATH_EXPRESSION:
-
         validator = {
           validate: MathExpressionEqualityValidator.validate,
           args: {
@@ -80,17 +77,6 @@ export default class Code extends React.Component {
         validator = { validate: StringEqualityValidator.validate }
     }
     return validator
-  }
-
-  // TODO to be deleted, when we agree on the names for question types
-  transformAttributes() {
-    if (this.attrs.validator === 'math') {
-      this.attrs.questionType = questionTypes.MATH_EXPRESSION
-    } else if (this.attrs.validator === 'function') {
-      this.attrs.questionType = questionTypes.MATH_FORMULA
-    } else {
-      this.attrs.questionType = questionTypes.EXACT
-    }
   }
 
   render() {
