@@ -45,8 +45,7 @@ const contentTypeComponentMap = {
 
 const mapContentTypeToComponent = (name) => {
   const Component = contentTypeComponentMap[name]
-  if (!Component) { return UnknownType }
-  return Component
+  return Component || UnknownType
 }
 
 export default class ContentFragment extends React.Component {
