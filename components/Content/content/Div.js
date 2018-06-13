@@ -8,6 +8,7 @@ import SolutionHint from './messages/SolutionHint'
 import InputHint from './messages/InputHint'
 import TestCard from './cards/TestCard'
 import QuestionGroup from './questions/QuestionGroup'
+import VerifyInfoButton from './questions/VerifyInfoButton'
 import UnknownType from './UnknownType'
 
 const classNameComponentMap = {
@@ -18,6 +19,7 @@ const classNameComponentMap = {
   'hint-text': InputHint,
   test: TestCard,
   'question-group': QuestionGroup,
+  'verify-input-button': VerifyInfoButton,
 }
 
 const classNameComponentMapNames = Object.keys(classNameComponentMap)
