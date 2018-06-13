@@ -7,6 +7,7 @@ import ExampleCard from './cards/ExampleCard'
 import SolutionHint from './messages/SolutionHint'
 import InputHint from './messages/InputHint'
 import TestCard from './cards/TestCard'
+import QuestionGroup from './questions/QuestionGroup'
 import UnknownType from './UnknownType'
 
 const classNameComponentMap = {
@@ -16,12 +17,14 @@ const classNameComponentMap = {
   hint: SolutionHint,
   'hint-text': InputHint,
   test: TestCard,
+  'question-group': QuestionGroup,
 }
 
+const classNameComponentMapNames = Object.keys(classNameComponentMap)
+
 const mapClassNameToComponent = (divClasses) => {
-  const classNames = Object.keys(classNameComponentMap)
-  for (let i = 0; i < classNames.length; i += 1) {
-    const className = classNames[i]
+  for (let i = 0; i < classNameComponentMapNames.length; i += 1) {
+    const className = classNameComponentMapNames[i]
     if (divClasses.includes(className)) {
       return classNameComponentMap[className]
     }
