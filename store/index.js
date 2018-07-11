@@ -31,14 +31,6 @@ export default function configureStore(initialState = defaultInitialState) {
       const nextReducer = require('./reducers').default
       store.replaceReducer(nextReducer)
     })
-    module.hot.accept('../sagas', () => {
-      // eslint-disable-next-line global-require
-      const nextSagas = require('../sagas').default
-      store.sagaTask.cancel()
-      store.sagaTask.done.then(() => {
-        store.runSagas(nextSagas)
-      })
-    })
   }
 
   store.runSagaTask = () => {
