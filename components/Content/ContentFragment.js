@@ -3,6 +3,8 @@ import React from 'react'
 import { contentType } from '../../lib/propTypes'
 import UnknownType from './content/UnknownType'
 import Str from './content/Str'
+// TODO: fix dependency cycles
+// https://stackoverflow.com/questions/35559631/how-to-handle-react-nested-component-circular-dependency-using-es6-classes#35560750
 import Header from './content/Header'
 import Para from './content/Para'
 import Div from './content/Div'
