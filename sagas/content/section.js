@@ -6,6 +6,7 @@ import {
   loadSectionSuccess,
   loadSectionFailure,
 } from '../../store/actions/content'
+import { showMessage } from '../../store/actions/ui'
 
 const contentRoot = process.env.CONTENT_ROOT
 
@@ -17,23 +18,32 @@ function* loadSection({ sectionId }) {
       content: cachedContent,
     }))
   } else {
-    const loc = `${contentRoot}/de/${sectionId}/content.json`
+    const url = `${contentRoot}/de/${sectionId}/content.json`
     try {
-      const res = yield fetch(loc)
-      if (res.status === 404) {
+      const response = yield fetch(url)
+      if (response.status === 404) {
         // it's ok if content.json is not there
         yield put(loadSectionSuccess({
           id: sectionId,
           content: [],
         }))
+      } else {
+        if (!response.ok) {
+          throw new Error(`Could not fetch section. (Status: ${response.status} URL: ${url})`)
+        }
+        const data = yield response.json()
+        yield put(loadSectionSuccess({
+          id: sectionId,
+          content: data,
+        }))
       }
-      const data = yield res.json()
-      yield put(loadSectionSuccess({
-        id: sectionId,
-        content: data,
-      }))
     } catch (err) {
       yield put(loadSectionFailure(err))
+      yield put(showMessage({
+        title: 'Loading section failed!',
+        msg: err.message,
+        level: 'error',
+      }))
     }
   }
 }

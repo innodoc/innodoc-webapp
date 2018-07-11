@@ -34,6 +34,13 @@
     "searchPlaceholder": "Suche…",
     "preparatoryMathematicsCourse": "Onlinebrückenkurs<1></1>Mathematik"
   },
+  "message": {
+    "title": {
+      "error": "Oh, nein! Ein Fehler ist aufgetreten.",
+      "fatal": "Fataler Fehler!",
+      "info": "Info"
+    }
+  },
   "sidebar": {
     "close": "Menü ausblenden",
     "courseContent": "Kursinhalt",

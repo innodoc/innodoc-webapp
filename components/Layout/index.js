@@ -1,28 +1,43 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import { childrenType } from '../../lib/propTypes'
+import { childrenType, messageType } from '../../lib/propTypes'
+import { selectors as uiSelectors } from '../../store/reducers/ui'
+import { clearMessage } from '../../store/actions/ui'
 import Header from './Header'
 import Main from './Main'
 import Sidebar from './Sidebar'
 import Footer from './Footer'
+import MessageModal from './MessageModal'
 
-const Layout = ({ children, sidebar }) => {
+const Layout = ({
+  children,
+  sidebar,
+  message,
+  onMessageModalClosed,
+}) => {
   const ContentWrapper = sidebar ? Sidebar : Main
+  const modal = message
+    ? <MessageModal message={message} onClose={onMessageModalClosed} />
+    : null
   return (
-    <div>
+    <React.Fragment>
       <Header />
       <ContentWrapper>
         {children}
       </ContentWrapper>
       <Footer />
-    </div>
+      {modal}
+    </React.Fragment>
   )
 }
 
 Layout.propTypes = {
   children: childrenType.isRequired,
   sidebar: PropTypes.bool.isRequired,
+  message: messageType,
+  onMessageModalClosed: PropTypes.func.isRequired,
 }
 
 Layout.defaultProps = {
@@ -30,4 +45,12 @@ Layout.defaultProps = {
   sidebar: false,
 }
 
-export default Layout
+const mapDispatchToProps = dispatch => ({
+  onMessageModalClosed: () => { dispatch(clearMessage()) },
+})
+
+const mapStateToProps = state => ({
+  message: uiSelectors.getMessage(state),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Layout)

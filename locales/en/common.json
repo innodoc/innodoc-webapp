@@ -34,6 +34,13 @@
     "searchPlaceholder": "Search…",
     "preparatoryMathematicsCourse": "Preparatory Mathematics<1></1>Course"
   },
+  "message": {
+    "title": {
+      "error": "Oh no! An error occured.",
+      "fatal": "Fatal error!",
+      "info": "Info"
+    }
+  },
   "sidebar": {
     "close": "Close menu",
     "courseContent": "Course content",

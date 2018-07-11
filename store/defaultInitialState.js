@@ -1,6 +1,7 @@
 const defaultInitialState = {
   ui: {
     sidebarVisible: false,
+    message: null,
   },
   content: {
     loading: false,

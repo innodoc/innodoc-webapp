@@ -21,16 +21,16 @@ export const selectors = {
 
 function content(state = defaultInitialState.content, action) {
   switch (action.type) {
-    case actionTypes.FAILURE:
-      return {
-        ...state,
-        ...{ error: action.error },
-      }
-
     case actionTypes.LOAD_TOC_SUCCESS:
       return {
         ...state,
         ...{ toc: action.data },
+      }
+
+    case actionTypes.LOAD_TOC_FAILURE:
+      return {
+        ...state,
+        ...{ toc: [] },
       }
 
     case actionTypes.LOAD_SECTION:
