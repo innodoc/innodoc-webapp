@@ -1,4 +1,9 @@
-import { fork, put, take, call } from 'redux-saga/effects'
+import {
+  fork,
+  put,
+  take,
+  call,
+} from 'redux-saga/effects'
 
 import {
   exerciseToggleSolved,

@@ -16,36 +16,46 @@ class InputQuestionComponent extends React.Component {
   }
 
   getIcon() {
-    if (this.props.inputValue === '') {
+    const { inputValue, solved } = this.props
+    if (inputValue === '') {
       return <Icon name="question" />
     }
-    if (this.props.solved) {
+    if (solved) {
       return <Icon name="check" color="green" />
     }
     return <Icon name="close" color="red" />
   }
 
   handleChange(event) {
-    this.props.onInputChanged({
-      uuid: this.props.uuid,
+    const {
+      onInputChanged,
+      uuid,
+      solved,
+      solution,
+      validator,
+    } = this.props
+    onInputChanged({
+      uuid,
+      solved,
+      solution,
+      validator,
       inputValue: event.target.value,
-      solved: this.props.solved,
-      solution: this.props.solution,
-      validator: this.props.validator,
     })
   }
 
   render() {
+    const { inputValue, solved } = this.props
+
     const inputClass = classNames('exercise', css.inputquestion, {
-      [css.solved]: this.props.solved,
-      [css.wrong]: this.props.inputValue !== '' && !this.props.solved,
+      [css.solved]: solved,
+      [css.wrong]: inputValue !== '' && !solved,
     })
 
     return (
       <Input
         type="text"
         className={inputClass}
-        value={this.props.inputValue}
+        value={inputValue}
         icon={this.getIcon()}
         onChange={this.handleChange}
       />

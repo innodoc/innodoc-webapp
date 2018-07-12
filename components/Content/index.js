@@ -29,8 +29,9 @@ class Content extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.content !== this.props.content) {
-      this.props.typesetMathJax()
+    const { content, typesetMathJax } = this.props
+    if (prevProps.content !== content) {
+      typesetMathJax()
     }
   }
 

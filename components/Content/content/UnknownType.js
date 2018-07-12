@@ -3,8 +3,11 @@ import PropTypes from 'prop-types'
 
 import css from './debug-style.sass'
 
-const UnknownTypeData = ({ data }) =>
-  <pre className={css.componentData}>{JSON.stringify(data, null, 2)}</pre>
+const UnknownTypeData = ({ data }) => (
+  <pre className={css.componentData}>
+    {JSON.stringify(data, null, 2)}
+  </pre>
+)
 
 UnknownTypeData.propTypes = { data: PropTypes.arrayOf(PropTypes.object) }
 UnknownTypeData.defaultProps = { data: [] }
@@ -23,20 +26,23 @@ export default class UnknownType extends React.Component {
   }
 
   render() {
+    const { data, name } = this.props
+    const { showData } = this.state
+
     const toggleData = () => {
       this.setState(prevState => ({ showData: !prevState.showData }))
     }
 
     let collapseIndicator = null
-    let data = null
-    if (this.props.data) {
+    let dataDisplay = null
+    if (data) {
       collapseIndicator = (
         <span className={css.toggler}>
-          { this.state.showData ? '➖' : '➕'}
+          { showData ? '➖' : '➕'}
         </span>
       )
-      if (this.state.showData) {
-        data = <UnknownTypeData data={this.props.data} />
+      if (showData) {
+        dataDisplay = <UnknownTypeData data={data} />
       }
     }
 
@@ -48,9 +54,14 @@ export default class UnknownType extends React.Component {
       <div className={css.unknownComponent} onClick={toggleData}>
         {collapseIndicator}
         <p>
-          Unknown component: <strong><code>{this.props.name}</code></strong>
+          Unknown component:
+          <strong>
+            <code>
+              {name}
+            </code>
+          </strong>
         </p>
-        {data}
+        {dataDisplay}
       </div>
     )
   }

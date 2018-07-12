@@ -10,7 +10,9 @@ const Math = ({ data }) => {
 
   return (
     <span className={classNames(classes)}>
-      {delims[0]}{texCode}{delims[1]}
+      {delims[0]}
+      {texCode}
+      {delims[1]}
     </span>
   )
 }

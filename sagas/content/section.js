@@ -1,4 +1,9 @@
-import { fork, put, select, take } from 'redux-saga/effects'
+import {
+  fork,
+  put,
+  select,
+  take,
+} from 'redux-saga/effects'
 
 import { selectors } from '../../store/reducers/content'
 import {

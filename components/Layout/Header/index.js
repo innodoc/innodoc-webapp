@@ -1,6 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Container, Dropdown, Flag, Icon, Image, Menu } from 'semantic-ui-react'
+import {
+  Container,
+  Dropdown,
+  Flag,
+  Icon,
+  Image,
+  Menu,
+} from 'semantic-ui-react'
 import Link from 'next/link'
 import { translate, Trans } from 'react-i18next'
 
@@ -17,7 +24,9 @@ const Header = ({ t, i18n }) => (
             src="/static/img/m4r-logo-simple.png"
           />
           <Trans i18nKey="header.preparatoryMathematicsCourse">
-            Preparatory Mathematics<br />Course
+            Preparatory Mathematics
+            <br />
+            Course
           </Trans>
         </Menu.Item>
       </Link>

@@ -49,6 +49,8 @@ const withMathJax = (ComposedComponent) => {
         && window.MathJax.isReady
     }
 
+    mathJaxContentRef = React.createRef()
+
     componentDidMount() {
       if (WithMathJax.isMathJaxLoaded()) {
         this.typesetMathJax()
@@ -78,8 +80,6 @@ const withMathJax = (ComposedComponent) => {
         }
       }
     }
-
-    mathJaxContentRef = React.createRef()
 
     render() {
       return (

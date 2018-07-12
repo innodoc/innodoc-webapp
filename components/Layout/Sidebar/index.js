@@ -47,7 +47,9 @@ const Sidebar = (props) => {
             <Icon name="close" />
           </Menu.Item>
           <Menu.Item className={css.sidebarContent}>
-            <Menu.Header>{t('sidebar.courseContent')}</Menu.Header>
+            <Menu.Header>
+              {t('sidebar.courseContent')}
+            </Menu.Header>
             <Toc as={Menu.Menu} toc={toc} />
           </Menu.Item>
         </Menu>

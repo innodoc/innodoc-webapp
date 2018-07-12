@@ -20,8 +20,13 @@ IndexSpan.propTypes = {
 // TODO: use components/SectionLink
 const SectionLink = ({ section }) => (
   // insert proper href and section Title as text
-  <Link href={section}><a>{section}</a></Link>
+  <Link href={section}>
+    <a>
+      {section}
+    </a>
+  </Link>
 )
+
 
 SectionLink.propTypes = { section: PropTypes.string.isRequired }
 
@@ -47,21 +52,22 @@ const Span = ({ data }) => {
   }
 
   // skip empty spans
-  if (classNames.length === 0 &&
-      attributes.length === 0 &&
-      content.length === 0) { return null }
+  if (classNames.length === 0 && attributes.length === 0 && content.length === 0) {
+    return null
+  }
 
   // unwrap useless wrapper span
-  if (classNames.length === 0 &&
-      attributes.length === 0 &&
-      content.length > 0) { return <ContentFragment content={content} /> }
+  if (classNames.length === 0 && attributes.length === 0 && content.length > 0) {
+    return <ContentFragment content={content} />
+  }
 
   if (process.env.NODE_ENV !== 'production') {
     // if nothing matches return a debug element
+    const msg = `Strange span: classes=${classNames} attrs=${attributes} content-length=${content.length}`
     return (
       <span>
         <span className={debugCSS.errorBGColor}>
-          Strange span: classes={classNames} attrs={attributes} content-length={content.length}
+          {msg}
         </span>
         <ContentFragment content={content} />
       </span>

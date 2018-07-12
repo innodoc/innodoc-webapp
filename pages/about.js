@@ -6,7 +6,9 @@ import withI18next from '../components/hoc/withI18next'
 
 const AboutPage = () => (
   <Layout>
-    <p>This is the about page</p>
+    <p>
+      This is the about page
+    </p>
   </Layout>
 )
 

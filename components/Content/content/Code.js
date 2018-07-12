@@ -10,15 +10,15 @@ import MathExpressionEqualityValidator from '../../../lib/validators/MathExpress
 import MathFormulaValidator from '../../../lib/validators/MathFormulaValidator'
 
 export default class Code extends React.Component {
-  static propTypes = {
-    data: PropTypes.node.isRequired,
-  }
-
   static attrsToObj(attrs) {
     const a = attrs.reduce((obj, [key, value]) => ({
       ...obj, [key]: value,
     }), {})
     return a
+  }
+
+  static propTypes = {
+    data: PropTypes.node.isRequired,
   }
 
   constructor(props) {
@@ -84,7 +84,9 @@ export default class Code extends React.Component {
       return this.getQuestionComponent(this.classNames, this.attrs)
     }
     return (
-      <code id={this.id} className={this.classNames}>{this.content}</code>
+      <code id={this.id} className={this.classNames}>
+        {this.content}
+      </code>
     )
   }
 }

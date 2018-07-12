@@ -23,7 +23,13 @@ const InnoTable = ({ data }) => {
         </Table.HeaderCell>
       )
     )
-    thead = <Table.Header><Table.Row>{ths}</Table.Row></Table.Header>
+    thead = (
+      <Table.Header>
+        <Table.Row>
+          {ths}
+        </Table.Row>
+      </Table.Header>
+    )
   }
 
   // tbody
@@ -35,9 +41,17 @@ const InnoTable = ({ data }) => {
         </Table.Cell>
       )
     )
-    return <Table.Row key={i.toString()}>{tds}</Table.Row>
+    return (
+      <Table.Row key={i.toString()}>
+        {tds}
+      </Table.Row>
+    )
   })
-  const tbody = <Table.Body>{trs}</Table.Body>
+  const tbody = (
+    <Table.Body>
+      {trs}
+    </Table.Body>
+  )
 
   return (
     <Table>

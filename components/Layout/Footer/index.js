@@ -1,6 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Container, Segment, Grid, Image, List, Header } from 'semantic-ui-react'
+import {
+  Container,
+  Segment,
+  Grid,
+  Image,
+  List,
+  Header,
+} from 'semantic-ui-react'
 import { translate, Trans } from 'react-i18next'
 
 import css from './style.sass'
@@ -26,10 +33,15 @@ const Footer = ({ t }) => (
             </List>
           </Grid.Column>
           <Grid.Column width={7}>
-            <Header as="h4" inverted>{t('footer.license')}</Header>
+            <Header as="h4" inverted>
+              {t('footer.license')}
+            </Header>
             <p>
               <Trans i18nKey="footer.licensePhrase">
-                License: <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">License</a>
+                License:
+                <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">
+                  License
+                </a>
               </Trans>
             </p>
             <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">
@@ -41,14 +53,23 @@ const Footer = ({ t }) => (
             </a>
           </Grid.Column>
           <Grid.Column width={5}>
-            <Header as="h4" inverted>{t('footer.institutions')}</Header>
+            <Header as="h4" inverted>
+              {t('footer.institutions')}
+            </Header>
             <p>
               <Trans i18nKey="footer.projectPhrase">
-                Project link: <a href="http://www.ve-und-mint.de/" target="_blank" rel="noopener noreferrer">Project name</a>
+                Project link:
+                <a href="http://www.ve-und-mint.de/" target="_blank" rel="noopener noreferrer">
+                  Project name
+                </a>
               </Trans>
             </p>
-            <p>{t('footer.institutionsPhrase')}</p>
-            <p>TODO</p>
+            <p>
+              {t('footer.institutionsPhrase')}
+            </p>
+            <p>
+              TODO
+            </p>
           </Grid.Column>
         </Grid.Row>
       </Grid>

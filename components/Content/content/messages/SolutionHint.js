@@ -17,7 +17,7 @@ class SolutionHint extends React.Component {
     this.state = { visible: false }
   }
 
-  handleToggle = () => this.setState({ visible: !this.state.visible })
+  handleToggle = () => this.setState(prevState => ({ visible: !prevState.visible }))
 
   render() {
     const { content, t, ...otherProps } = this.props
