@@ -16,7 +16,7 @@ class Content extends React.Component {
     loading: PropTypes.bool.isRequired,
     content: PropTypes.arrayOf(PropTypes.object),
     title: PropTypes.arrayOf(PropTypes.object),
-    sectionLevel: PropTypes.number.isRequired,
+    sectionLevel: PropTypes.number,
     subToc: tocTreeType,
     mathJaxContentRef: PropTypes.objectOf(PropTypes.any).isRequired,
     typesetMathJax: PropTypes.func.isRequired,
@@ -26,6 +26,7 @@ class Content extends React.Component {
     title: [],
     content: [],
     subToc: [],
+    sectionLevel: null,
   }
 
   componentDidUpdate(prevProps) {
