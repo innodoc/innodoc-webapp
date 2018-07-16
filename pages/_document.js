@@ -1,12 +1,13 @@
 import React from 'react'
 import Document, { Head, Main, NextScript } from 'next/document'
 
-// TODO: set html lang attribute from i18n store
+import withI18next from '../components/hoc/withI18next'
 
-export default class InnodocDocument extends Document {
+class InnodocDocument extends Document {
   render() {
+    const { language } = this.props.i18n
     return (
-      <html>
+      <html lang={language}>
         <Head>
           <title key="title">
             innoDoc web app
@@ -23,3 +24,5 @@ export default class InnodocDocument extends Document {
     )
   }
 }
+
+export default withI18next()(InnodocDocument)
