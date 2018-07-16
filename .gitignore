@@ -4,3 +4,4 @@ node_modules
 *~
 locales/en/*.missing.json
 .env
+coverage
