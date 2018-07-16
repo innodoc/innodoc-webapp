@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import loadScript from 'load-script'
 
 import { getHocDisplayName } from '../../lib/util'
@@ -41,7 +42,7 @@ const mathJaxOptions = cb => ({
   },
 })
 
-const withMathJax = (ComposedComponent) => {
+const withMathJax = (WrappedComponent) => {
   class WithMathJax extends React.Component {
     static isMathJaxLoaded() {
       return document.getElementById(MATHJAX_SCRIPT_ID)
@@ -83,7 +84,7 @@ const withMathJax = (ComposedComponent) => {
 
     render() {
       return (
-        <ComposedComponent
+        <WrappedComponent
           mathJaxContentRef={this.mathJaxContentRef}
           typesetMathJax={this.typesetMathJax}
           {...this.props}
@@ -92,8 +93,12 @@ const withMathJax = (ComposedComponent) => {
     }
   }
 
-  WithMathJax.displayName = getHocDisplayName('WithMathJax', ComposedComponent)
+  WithMathJax.displayName = getHocDisplayName('WithMathJax', WrappedComponent)
   return WithMathJax
+}
+
+withMathJax.propTypes = {
+  WrappedComponent: PropTypes.element,
 }
 
 export default withMathJax
