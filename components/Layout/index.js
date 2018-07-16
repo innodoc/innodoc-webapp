@@ -9,7 +9,7 @@ import Header from './Header'
 import Main from './Main'
 import Sidebar from './Sidebar'
 import Footer from './Footer'
-import MessageModal from './MessageModal'
+import MessageModal from '../MessageModal'
 
 const Layout = ({
   children,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Header, Modal } from 'semantic-ui-react'
 import { translate } from 'react-i18next'
 
-import { messageType } from '../../../lib/propTypes'
+import { messageType } from '../../lib/propTypes'
 
 const MessageModal = ({ t, message, onClose }) => {
   const { level, title, msg } = message
