@@ -1,23 +1,26 @@
+/* ContentFragment is used recursively in a number of sub-components. This leads
+ * to dependency cycles. This is why eslint rule 'import/no-cycle' was disabled
+ * for the entire module in .eslintrc.json.
+ */
+
 import React from 'react'
 
-import { contentType } from '../../lib/propTypes'
-import UnknownType from './content/UnknownType'
-import Str from './content/Str'
-// TODO: fix dependency cycles
-// https://stackoverflow.com/questions/35559631/how-to-handle-react-nested-component-circular-dependency-using-es6-classes#35560750
-import Header from './content/Header'
-import Para from './content/Para'
-import Div from './content/Div'
-import Span from './content/Span'
-import Emph from './content/Emph'
-import Strong from './content/Strong'
-import Code from './content/Code'
-import BulletList from './content/BulletList'
-import OrderedList from './content/OrderedList'
-import Math from './content/Math'
-import Link from './content/Link'
-import Table from './content/Table'
-import Plain from './content/Plain'
+import { contentType } from '../../../lib/propTypes'
+import UnknownType from './UnknownType'
+import Str from './Str'
+import Header from './Header'
+import Para from './Para'
+import Div from './Div'
+import Span from './Span'
+import Emph from './Emph'
+import Strong from './Strong'
+import Code from './Code'
+import BulletList from './BulletList'
+import OrderedList from './OrderedList'
+import Math from './Math'
+import Link from './Link'
+import Table from './Table'
+import Plain from './Plain'
 
 const Space = () => ' '
 const LineBreak = () => <br />

@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Dimmer, Header, Loader } from 'semantic-ui-react'
 
-import { selectors } from '../../store/reducers/content'
-import { tocTreeType } from '../../lib/propTypes'
-import withMathJax from '../hoc/withMathJax'
-import ContentFragment from './ContentFragment'
+import { selectors } from '../../../store/reducers/content'
+import { tocTreeType } from '../../../lib/propTypes'
+import withMathJax from '../../hoc/withMathJax'
+import ContentFragment from '../ContentFragment'
 import Placeholder from './Placeholder'
-import Toc from '../Toc'
+import Toc from '../../Toc'
 import css from './style.sass'
 
 class Content extends React.Component {

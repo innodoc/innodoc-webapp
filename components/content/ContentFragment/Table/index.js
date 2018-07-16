@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'semantic-ui-react'
 
-import ContentFragment from '../../ContentFragment'
+import ContentFragment from '..'
 
 const alignMap = {
   AlignLeft: 'left',

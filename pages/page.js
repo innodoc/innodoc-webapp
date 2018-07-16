@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { loadSection } from '../store/actions/content'
 import withI18next from '../components/hoc/withI18next'
 import Layout from '../components/Layout'
-import Content from '../components/Content'
+import Content from '../components/content/Content'
 
 class CoursePage extends React.Component {
   static getInitialProps({ query, store }) {

@@ -4,17 +4,14 @@ import { Card, Icon } from 'semantic-ui-react'
 import { translate } from 'react-i18next'
 
 import { contentType } from '../../../../lib/propTypes'
-import ContentFragment from '../../ContentFragment'
+import ContentFragment from '..'
 
-const TestCard = ({ t, content }) => (
-  <Card className="info" color="violet" fluid>
+const InfoCard = ({ t, content }) => (
+  <Card className="info" color="blue" fluid>
     <Card.Content>
       <Card.Header>
-        <Icon.Group size="large">
-          <Icon name="file outline" color="violet" />
-          <Icon corner name="pencil" color="violet" />
-        </Icon.Group>
-        {t('content.test')}
+        <Icon name="info circle" size="large" color="blue" />
+        {t('content.info')}
       </Card.Header>
       <Card.Description>
         <ContentFragment content={content} />
@@ -23,9 +20,9 @@ const TestCard = ({ t, content }) => (
   </Card>
 )
 
-TestCard.propTypes = {
+InfoCard.propTypes = {
   content: contentType.isRequired,
   t: PropTypes.func.isRequired,
 }
 
-export default translate()(TestCard)
+export default translate()(InfoCard)

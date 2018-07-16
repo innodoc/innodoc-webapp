@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container } from 'semantic-ui-react'
 
-import ContentFragment from '../../ContentFragment'
+import ContentFragment from '..'
 import { contentType } from '../../../../lib/propTypes'
 
 const QuestionGroup = ({ content }) => (

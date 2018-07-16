@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Divider } from 'semantic-ui-react'
 
-import ContentFragment from '../../ContentFragment'
+import ContentFragment from '..'
 import { contentType } from '../../../../lib/propTypes'
 
 // TODO: make button verify Exercise

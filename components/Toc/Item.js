@@ -4,7 +4,7 @@ import { Menu } from 'semantic-ui-react'
 
 import { contentType } from '../../lib/propTypes'
 import SectionLink from '../SectionLink'
-import ContentFragment from '../Content/ContentFragment'
+import ContentFragment from '../content/ContentFragment'
 
 const Item = ({ title, sectionId, subSections }) => {
   if (!subSections.length) {

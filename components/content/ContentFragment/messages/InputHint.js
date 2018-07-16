@@ -4,7 +4,7 @@ import { Message } from 'semantic-ui-react'
 import { translate } from 'react-i18next'
 
 import { contentType } from '../../../../lib/propTypes'
-import ContentFragment from '../../ContentFragment'
+import ContentFragment from '..'
 
 const InputHint = ({ content, t, ...otherProps }) => {
   const contentFragment = <ContentFragment content={content} />

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 
 import { contentType } from '../../../lib/propTypes'
-import ContentFragment from '../ContentFragment'
+import ContentFragment from '.'
 import InputHint from './messages/InputHint'
 import debugCSS from './debug-style.sass'
 
