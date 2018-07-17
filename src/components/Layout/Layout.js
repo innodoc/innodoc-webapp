@@ -53,4 +53,5 @@ const mapStateToProps = state => ({
   message: uiSelectors.getMessage(state),
 })
 
+export { Layout } // for testing
 export default connect(mapStateToProps, mapDispatchToProps)(Layout)
