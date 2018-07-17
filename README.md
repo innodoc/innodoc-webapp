@@ -42,6 +42,26 @@ $ git submodule update --remote
 $ npm run dev
 ```
 
+### Tests
+
+[Jest](https://jestjs.io/) and [Enzyme](http://airbnb.io/enzyme/) are used for testing.
+
+```sh
+$ npm run test
+```
+
+#### Watch tests
+
+```sh
+$ npm run test:watch
+```
+
+#### Show coverage
+
+```sh
+$ npm run test:coverage
+```
+
 ### Linting
 
 ```sh
