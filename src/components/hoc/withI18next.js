@@ -1,7 +1,7 @@
 import { translate, loadNamespaces } from 'react-i18next'
 import PropTypes from 'prop-types'
-import { getInitialProps, I18n } from '../../i18n'
 
+import { getInitialProps, I18n } from '../../lib/i18n'
 import { getHocDisplayName } from '../../lib/util'
 
 const withI18next = (namespaces = ['common']) => (WrappedComponent) => {

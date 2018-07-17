@@ -4,7 +4,7 @@ import Dotenv from 'dotenv'
 import i18nextMiddleware, { LanguageDetector } from 'i18next-express-middleware'
 import Backend from 'i18next-node-fs-backend'
 
-import { i18nInstance } from '../src/i18n'
+import { i18nInstance } from '../src/lib/i18n'
 
 const srcDir = `${__dirname}/../src`
 const localesDir = `${srcDir}/locales`
