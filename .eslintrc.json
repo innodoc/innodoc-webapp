@@ -35,7 +35,7 @@
   "overrides": [
     {
       "files": [
-        "components/content/ContentFragment/**/*.js"
+        "src/components/content/ContentFragment/**/*.js"
       ],
       "rules": {
         "import/no-cycle": "off"

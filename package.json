@@ -13,10 +13,10 @@
     "README.md"
   ],
   "scripts": {
-    "build": "next build",
-    "dev": "babel-node scripts/server.js",
-    "lint": "eslint ./",
-    "start": "NODE_ENV=production babel-node scripts/server.js",
+    "build": "next build src",
+    "dev": "babel-node server/server.js",
+    "lint": "eslint src server",
+    "start": "NODE_ENV=production babel-node server/server.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
@@ -76,24 +76,18 @@
     "redux-devtools-extension": "^2.13.5"
   },
   "jest": {
-    "roots": [
-      "components",
-      "lib",
-      "pages",
-      "sagas",
-      "store"
-    ],
     "setupTestFrameworkScriptFile": "jest-enzyme",
     "testEnvironment": "enzyme",
     "testEnvironmentOptions": {
       "enzymeAdapter": "react16"
     },
+    "roots": [
+      "src"
+    ],
     "collectCoverageFrom": [
-      "components/**/*.js",
-      "lib/**/*.js",
-      "pages/**/*.js",
-      "sagas/**/*.js",
-      "store/**/*.js"
+      "src/**/*.js",
+      "!src/static/**",
+      "!src/.next/**"
     ],
     "coverageReporters": [
       "text",

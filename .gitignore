@@ -1,7 +1,7 @@
 .DS_Store
-.next
+src/.next
 node_modules
 *~
-locales/en/*.missing.json
+src/locales/en/*.missing.json
 .env
 coverage
