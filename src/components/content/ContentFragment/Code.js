@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import md5 from 'md5'
 
-import InputQuestion from './questions/InputQuestionComponent'
+import InputQuestion from './questions/InputQuestion'
 import questionTypes from '../../../lib/questionTypes'
 
 import StringEqualityValidator from '../../../lib/validators/StringEqualityValidator'

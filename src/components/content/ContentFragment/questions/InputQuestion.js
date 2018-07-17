@@ -6,10 +6,9 @@ import { Input, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import css from './style.sass'
-// import QuestionComponent from './QuestionComponent'
 import { exerciseInputChanged } from '../../../../store/actions/exercises'
 
-class InputQuestionComponent extends React.Component {
+class InputQuestion extends React.Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
@@ -63,11 +62,14 @@ class InputQuestionComponent extends React.Component {
   }
 }
 
-InputQuestionComponent.propTypes = {
+InputQuestion.propTypes = {
   uuid: PropTypes.string.isRequired,
   inputValue: PropTypes.string.isRequired,
   solution: PropTypes.string.isRequired,
-  validator: PropTypes.func.isRequired,
+  validator: PropTypes.shape({
+    validate: PropTypes.func.isRequired,
+    args: PropTypes.any,
+  }).isRequired,
   solved: PropTypes.bool.isRequired,
   onInputChanged: PropTypes.func.isRequired,
 }
@@ -97,9 +99,4 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
-const InputQuestion = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(InputQuestionComponent)
-
-export default InputQuestion
+export default connect(mapStateToProps, mapDispatchToProps)(InputQuestion)
