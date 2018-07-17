@@ -20,7 +20,7 @@ class SolutionHint extends React.Component {
   handleToggle = () => this.setState(prevState => ({ visible: !prevState.visible }))
 
   render() {
-    const { content, t, ...otherProps } = this.props
+    const { content, t } = this.props
     const { visible } = this.state
     const button = !visible
       ? (
@@ -44,7 +44,6 @@ class SolutionHint extends React.Component {
           header={t('content.solution')}
           onDismiss={this.handleToggle}
           content={contentFragment}
-          {...otherProps}
         />
       </React.Fragment>
     )

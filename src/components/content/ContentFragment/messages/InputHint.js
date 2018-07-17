@@ -6,7 +6,7 @@ import { translate } from 'react-i18next'
 import { contentType } from '../../../../lib/propTypes'
 import ContentFragment from '..'
 
-const InputHint = ({ content, t, ...otherProps }) => {
+const InputHint = ({ content, t }) => {
   const contentFragment = <ContentFragment content={content} />
 
   return (
@@ -16,7 +16,6 @@ const InputHint = ({ content, t, ...otherProps }) => {
       icon="keyboard"
       header={t('content.inputHint')}
       content={contentFragment}
-      {...otherProps}
     />
   )
 }
