@@ -1,5 +1,6 @@
 .DS_Store
 src/.next
+src/bundles
 node_modules
 *~
 src/locales/en/*.missing.json

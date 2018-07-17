@@ -1,7 +1,8 @@
 const withSass = require('@zeit/next-sass')
 const Dotenv = require('dotenv-webpack')
+const withBundleAnalyzer = require('@zeit/next-bundle-analyzer')
 
-module.exports = withSass({
+module.exports = withBundleAnalyzer(withSass({
   // only use .js (not .jsx)
   pageExtensions: ['js'],
 
@@ -12,6 +13,20 @@ module.exports = withSass({
     localIdentName: '[local]___[hash:base64:5]',
   },
 
+  // bundle analyzer
+  analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
+  analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
+  bundleAnalyzerConfig: {
+    server: {
+      analyzerMode: 'static',
+      reportFilename: '../../bundles/server.html',
+    },
+    browser: {
+      analyzerMode: 'static',
+      reportFilename: '../bundles/client.html',
+    },
+  },
+
   // webpack
   webpack: (config) => {
     config.plugins.push(new Dotenv({
@@ -19,4 +34,4 @@ module.exports = withSass({
     }))
     return config
   },
-})
+}))

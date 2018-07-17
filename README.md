@@ -36,7 +36,6 @@ $ git submodule init
 $ git submodule update --remote
 ```
 
-
 ### Development server
 
 ```sh
@@ -50,3 +49,11 @@ $ npm run lint
 ```
 
 Based on [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript). Most notable difference: We're not using semicolons at the end of a statement.
+
+### Bundle analyzer
+
+Visualize bundles using `webpack-bundle-analyzer`.
+
+```sh
+$ BUNDLE_ANALYZE=both npm run build
+```
