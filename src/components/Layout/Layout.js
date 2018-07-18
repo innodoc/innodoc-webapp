@@ -45,13 +45,13 @@ Layout.defaultProps = {
   sidebar: false,
 }
 
-const mapDispatchToProps = dispatch => ({
-  onMessageModalClosed: () => { dispatch(clearMessage()) },
-})
-
 const mapStateToProps = state => ({
   message: uiSelectors.getMessage(state),
 })
+
+const mapDispatchToProps = {
+  onMessageModalClosed: clearMessage,
+}
 
 export { Layout } // for testing
 export default connect(mapStateToProps, mapDispatchToProps)(Layout)

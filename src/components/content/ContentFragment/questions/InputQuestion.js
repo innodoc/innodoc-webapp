@@ -93,10 +93,8 @@ const mapStateToProps = (state, ownProps) => ({
   solved: getSolvedFromState(state, ownProps.uuid),
 })
 
-const mapDispatchToProps = dispatch => ({
-  onInputChanged: (data) => {
-    dispatch(exerciseInputChanged(data))
-  },
-})
+const mapDispatchToProps = {
+  onInputChanged: exerciseInputChanged,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(InputQuestion)

@@ -74,8 +74,8 @@ const mapStateToProps = state => ({
   visible: uiSelectors.getSidebarVisible(state),
 })
 
-const mapDispatchToProps = dispatch => ({
-  onSidebarToggleClick: () => { dispatch(toggleSidebar()) },
-})
+const mapDispatchToProps = {
+  onSidebarToggleClick: toggleSidebar,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(Sidebar))
