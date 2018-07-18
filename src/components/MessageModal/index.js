@@ -1,3 +1,1 @@
-import MessageModal from './MessageModal'
-
-export default MessageModal
+export default from './MessageModal'

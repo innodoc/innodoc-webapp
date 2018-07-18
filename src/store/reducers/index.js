@@ -1,3 +1,1 @@
-import rootReducer from './rootReducer'
-
-export default rootReducer
+export default from './rootReducer'

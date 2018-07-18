@@ -1,3 +1,1 @@
-import SidebarToggle from './SidebarToggle'
-
-export default SidebarToggle
+export default from './SidebarToggle'

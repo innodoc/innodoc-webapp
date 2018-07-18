@@ -1,3 +1,1 @@
-import ContentFragment from './ContentFragment'
-
-export default ContentFragment
+export default from './ContentFragment'
