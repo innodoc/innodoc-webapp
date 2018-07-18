@@ -6,7 +6,11 @@ HTML viewer for interactive educational content.
 
 ### Configuration
 
-TODO
+Copy example configuration `.env.example` to `.env` and edit to your liking.
+
+```sh
+$ cp .env.example .env
+```
 
 ### Build
 

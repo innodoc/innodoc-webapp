@@ -1,3 +1,5 @@
+import fs from 'fs'
+import path from 'path'
 import express from 'express'
 import next from 'next'
 import Dotenv from 'dotenv'
@@ -6,17 +8,28 @@ import Backend from 'i18next-node-fs-backend'
 
 import { i18nInstance } from '../src/lib/i18n'
 
-const srcDir = `${__dirname}/../src`
+// directories
+const rootDir = `${__dirname}/..`
+const srcDir = `${rootDir}/src`
 const localesDir = `${srcDir}/locales`
+
+// node environment
 const dev = process.env.NODE_ENV !== 'production'
+
+// load configuration
+const dotEnvFile = path.normalize(`${rootDir}/.env`)
+if (!fs.existsSync(dotEnvFile)) {
+  console.error(`Could not find configuration file '${dotEnvFile}'`)
+  console.error("Copy '.env.example' to '.env' and edit to your liking.")
+  process.exit(1)
+}
+Dotenv.config({ path: dotEnvFile })
+
+// create next.js app
 const app = next({
   dir: srcDir,
   dev,
 })
-const handle = app.getRequestHandler()
-const port = dev ? 3000 : 8000
-
-Dotenv.config({ path: `${__dirname}/../.env` })
 
 // init i18next with serverside settings
 // using i18next-express-middleware
@@ -36,6 +49,7 @@ i18nInstance
     app.prepare()
       .then(() => {
         const server = express()
+        const handle = app.getRequestHandler()
 
         // enable middleware for i18next
         server.use(i18nextMiddleware.handle(i18nInstance))
@@ -60,6 +74,7 @@ i18nInstance
 
         server.get('*', (req, res) => handle(req, res))
 
+        const port = dev ? process.env.DEV_PORT : process.env.PROD_PORT
         server.listen(port, (err) => {
           if (err) { throw err }
         })
