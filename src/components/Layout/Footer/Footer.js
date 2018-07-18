@@ -76,8 +76,10 @@ const Footer = ({ t }) => (
     </Container>
   </Segment>
 )
+
 Footer.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
+export { Footer } // for testing
 export default translate()(Footer)

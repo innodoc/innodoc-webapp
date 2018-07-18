@@ -79,4 +79,5 @@ Header.propTypes = {
   i18n: PropTypes.objectOf(PropTypes.any).isRequired,
 }
 
+export { Header } // for testing
 export default translate()(Header)
