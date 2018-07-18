@@ -73,6 +73,7 @@
     "eslint-plugin-jest": "^21.17.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.10.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^23.4.1",
     "jest-environment-enzyme": "^6.0.2",
     "jest-enzyme": "^6.0.2",
@@ -95,6 +96,9 @@
     "coverageReporters": [
       "text",
       "text-summary"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.sass$": "identity-obj-proxy"
+    }
   }
 }
