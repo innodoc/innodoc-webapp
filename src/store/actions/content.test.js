@@ -33,7 +33,7 @@ it('should dispatch LOAD_TOC_FAILURE action', () => {
 })
 
 it('should dispatch LOAD_SECTION action', () => {
-  expect(loadSection()).toEqual({ type: 'LOAD_SECTION' })
+  expect(loadSection(87)).toEqual({ type: 'LOAD_SECTION', id: 87 })
 })
 
 it('should dispatch LOAD_SECTION_SUCCESS action', () => {

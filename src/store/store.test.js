@@ -40,7 +40,7 @@ describe('initial state', () => {
     })
 
     test('toc empty', () => {
-      expect(content.toc).toEqual([])
+      expect(content.toc).toBeNull()
     })
   })
 

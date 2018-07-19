@@ -7,7 +7,7 @@ const defaultInitialState = {
     loading: false,
     currentSectionId: null,
     sections: {},
-    toc: [],
+    toc: null,
   },
   exercises: {},
 }

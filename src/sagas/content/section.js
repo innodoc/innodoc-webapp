@@ -1,4 +1,5 @@
 import {
+  call,
   fork,
   put,
   select,
@@ -11,40 +12,22 @@ import {
   loadSectionSuccess,
   loadSectionFailure,
 } from '../../store/actions/content'
+import { fetchSection } from '../../lib/api'
 import { showMessage } from '../../store/actions/ui'
 
-const contentRoot = process.env.CONTENT_ROOT
-
-function* loadSection({ sectionId }) {
-  const cachedContent = yield select(selectors.getSectionContent, sectionId)
-  if (cachedContent) {
-    yield put(loadSectionSuccess({
-      id: sectionId,
-      content: cachedContent,
-    }))
+export function* loadSection({ id }) {
+  // query cache
+  let content = yield select(selectors.getSectionContent, id)
+  if (content) {
+    yield put(loadSectionSuccess({ id, content }))
   } else {
-    const url = `${contentRoot}/de/${sectionId}/content.json`
+    // fetch from remote
     try {
-      const response = yield fetch(url)
-      if (response.status === 404) {
-        // it's ok if content.json is not there
-        yield put(loadSectionSuccess({
-          id: sectionId,
-          content: [],
-        }))
-      } else {
-        if (!response.ok) {
-          throw new Error(`Could not fetch section. (Status: ${response.status} URL: ${url})`)
-        }
-        const data = yield response.json()
-        yield put(loadSectionSuccess({
-          id: sectionId,
-          content: data,
-        }))
-      }
+      content = yield call(fetchSection, id, 'de') // TODO: make language dynamic
+      yield put(loadSectionSuccess({ id, content }))
     } catch (err) {
       yield put(loadSectionFailure(err))
-      yield put(showMessage({
+      yield put(showMessage({ // TODO this should go to ui sagas
         title: 'Loading section failed!',
         msg: err.message,
         level: 'error',
@@ -55,7 +38,7 @@ function* loadSection({ sectionId }) {
 
 export default function* watchLoadSection() {
   while (true) {
-    const sectionId = yield take(actionTypes.LOAD_SECTION)
-    yield fork(loadSection, sectionId)
+    const id = yield take(actionTypes.LOAD_SECTION)
+    yield fork(loadSection, id)
   }
 }
