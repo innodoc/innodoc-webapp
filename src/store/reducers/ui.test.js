@@ -33,10 +33,11 @@ describe('ui selectors', () => {
 })
 
 describe('ui reducer', () => {
-  const initialState = {
-    message: null,
-    sidebarVisible: false,
-  }
+  const initialState = defaultInitialState.ui
+
+  it('should return the initial state', () => {
+    expect(uiReducer(undefined, {})).toEqual(initialState)
+  })
 
   const message = {
     title: 'Foo',
@@ -44,24 +45,21 @@ describe('ui reducer', () => {
     level: 'info',
   }
 
-  it('should return the initial state', () => {
-    expect(uiReducer(undefined, {})).toEqual(initialState)
-  })
+  const stateWithMessage = {
+    message,
+    sidebarVisible: false,
+    language: null,
+  }
 
   it('should handle SHOW_MESSAGE', () => {
-    expect(uiReducer(initialState, showMessage(message))).toEqual({
-      message,
-      sidebarVisible: false,
-    })
+    expect(uiReducer(initialState, showMessage(message))).toEqual(stateWithMessage)
   })
 
   it('should handle CLEAR_MESSAGE', () => {
-    expect(uiReducer({
-      message,
-      sidebarVisible: false,
-    }, clearMessage())).toEqual({
+    expect(uiReducer(stateWithMessage, clearMessage())).toEqual({
       message: null,
       sidebarVisible: false,
+      language: null,
     })
   })
 
@@ -69,6 +67,7 @@ describe('ui reducer', () => {
     expect(uiReducer(initialState, toggleSidebar())).toEqual({
       message: null,
       sidebarVisible: true,
+      language: null,
     })
   })
 

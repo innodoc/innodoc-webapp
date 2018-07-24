@@ -1,4 +1,6 @@
-import { selectors } from './content'
+import contentReducer, { selectors } from './content'
+import { loadSection, loadSectionSuccess } from '../actions/content'
+import defaultInitialState from '../defaultInitialState'
 
 describe('content selectors', () => {
   const state = {
@@ -56,5 +58,31 @@ describe('content selectors', () => {
 
   it('should select section level', () => {
     expect(selectors.getSectionLevel(state, 'TEST01/foo/bar')).toEqual(3)
+  })
+})
+
+describe('content reducer', () => {
+  const initialState = defaultInitialState.content
+
+  it('should return the initial state', () => {
+    expect(contentReducer(undefined, {})).toEqual(initialState)
+  })
+
+  const sectionData = {
+    id: 78,
+    content: [{ t: 'p', c: 'foo' }],
+  }
+
+  it('should handle LOAD_SECTION', () => {
+    const newState = contentReducer(initialState, loadSection(sectionData.id))
+    expect(newState.loading).toEqual(true)
+    expect(newState.currentSectionId).toEqual(null)
+  })
+
+  it('should handle LOAD_SECTION_SUCCESS', () => {
+    const newState = contentReducer(initialState, loadSectionSuccess(sectionData))
+    expect(newState.loading).toEqual(false)
+    expect(newState.currentSectionId).toEqual(sectionData.id)
+    expect(newState.sections[sectionData.id]).toEqual(sectionData.content)
   })
 })

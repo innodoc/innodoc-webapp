@@ -22,6 +22,10 @@ describe('initial state', () => {
     test('no message', () => {
       expect(ui.message).toBe(null)
     })
+
+    test('have language', () => {
+      expect(ui.language).toBe(null)
+    })
   })
 
   describe('content', () => {
