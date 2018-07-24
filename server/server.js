@@ -75,6 +75,14 @@ i18nInstance
         server.get('*', (req, res) => handle(req, res))
 
         const port = dev ? process.env.DEV_PORT : process.env.PROD_PORT
+
+        if (!port) {
+          const varName = dev ? 'DEV_PORT' : 'PROD_PORT'
+          throw new Error(`You need to configure ${varName} your local .env file!`)
+        }
+
+        console.info(`Starting server on port ${port}.`)
+
         server.listen(port, (err) => {
           if (err) { throw err }
         })
