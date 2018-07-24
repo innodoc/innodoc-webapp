@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { getInitialProps, I18n } from '../../lib/i18n'
 import { getHocDisplayName } from '../../lib/util'
 
+// Create I18next instance
 const withI18next = (namespaces = ['common']) => (WrappedComponent) => {
   const translateEnhance = translate(namespaces, { i18n: I18n, wait: process.browser })
   const WithI18next = translateEnhance(WrappedComponent)

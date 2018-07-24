@@ -1,13 +1,8 @@
 import uiReducer, { selectors } from './ui'
-import {
-  changeLanguage,
-  clearMessage,
-  showMessage,
-  toggleSidebar,
-} from '../actions/ui'
+import { clearMessage, showMessage, toggleSidebar } from '../actions/ui'
 import defaultInitialState from '../defaultInitialState'
 
-describe('ui selectors', () => {
+describe('uiSelectors', () => {
   const state = {
     ui: {
       sidebarVisible: true,
@@ -19,11 +14,11 @@ describe('ui selectors', () => {
     },
   }
 
-  it('should select sidebarVisible', () => {
+  test('getSidebarVisible', () => {
     expect(selectors.getSidebarVisible(state)).toEqual(true)
   })
 
-  it('should select message', () => {
+  test('getMessage', () => {
     expect(selectors.getMessage(state)).toEqual({
       title: 'Foo',
       msg: 'Bar',
@@ -32,10 +27,10 @@ describe('ui selectors', () => {
   })
 })
 
-describe('ui reducer', () => {
+describe('uiReducer', () => {
   const initialState = defaultInitialState.ui
 
-  it('should return the initial state', () => {
+  test('initialState', () => {
     expect(uiReducer(undefined, {})).toEqual(initialState)
   })
 
@@ -48,34 +43,23 @@ describe('ui reducer', () => {
   const stateWithMessage = {
     message,
     sidebarVisible: false,
-    language: null,
   }
 
-  it('should handle SHOW_MESSAGE', () => {
+  test('SHOW_MESSAGE', () => {
     expect(uiReducer(initialState, showMessage(message))).toEqual(stateWithMessage)
   })
 
-  it('should handle CLEAR_MESSAGE', () => {
+  test('CLEAR_MESSAGE', () => {
     expect(uiReducer(stateWithMessage, clearMessage())).toEqual({
       message: null,
       sidebarVisible: false,
-      language: null,
     })
   })
 
-  it('should handle TOGGLE_SIDEBAR', () => {
+  test('TOGGLE_SIDEBAR', () => {
     expect(uiReducer(initialState, toggleSidebar())).toEqual({
       message: null,
       sidebarVisible: true,
-      language: null,
-    })
-  })
-
-  it('should handle CHANGE_LANGUAGE', () => {
-    expect(uiReducer(initialState, changeLanguage('de'))).toEqual({
-      message: null,
-      sidebarVisible: false,
-      language: 'de',
     })
   })
 })

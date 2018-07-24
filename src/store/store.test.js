@@ -12,6 +12,14 @@ describe('initial state', () => {
   const store = configureStore()
   const state = store.getState()
 
+  describe('i18n', () => {
+    const { i18n } = state
+
+    test('have language', () => {
+      expect(i18n.language).toBe(null)
+    })
+  })
+
   describe('ui', () => {
     const { ui } = state
 
@@ -21,10 +29,6 @@ describe('initial state', () => {
 
     test('no message', () => {
       expect(ui.message).toBe(null)
-    })
-
-    test('have language', () => {
-      expect(ui.language).toBe(null)
     })
   })
 
@@ -44,7 +48,7 @@ describe('initial state', () => {
     })
 
     test('toc empty', () => {
-      expect(content.toc).toBeNull()
+      expect(content.toc).toEqual([])
     })
   })
 

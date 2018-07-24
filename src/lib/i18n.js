@@ -62,8 +62,12 @@ const getInitialProps = (req, namespaces = i18nInstance.options.defaultNS) => {
   }
 }
 
+// Normalize language code to 2 letters (e.g. 'en-US' -> 'en').
+const toTwoLetterCode = lang => (lang.length > 2 ? lang.substring(0, 2) : lang)
+
 module.exports = {
   getInitialProps,
   i18nInstance,
   I18n: i18next.default,
+  toTwoLetterCode,
 }

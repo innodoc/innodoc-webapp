@@ -1,7 +1,4 @@
-import {
-  exerciseInputChanged,
-  exerciseToggleSolved,
-} from './exercises'
+import { exerciseInputChanged, exerciseToggleSolved } from './exercises'
 
 it('should dispatch EXERCISE_INPUT_CHANGED action', () => {
   const data = [

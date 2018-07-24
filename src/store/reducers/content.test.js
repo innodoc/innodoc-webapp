@@ -2,7 +2,7 @@ import contentReducer, { selectors } from './content'
 import { loadSection, loadSectionSuccess } from '../actions/content'
 import defaultInitialState from '../defaultInitialState'
 
-describe('content selectors', () => {
+describe('contentSelectors', () => {
   const state = {
     content: {
       loading: false,
@@ -31,40 +31,40 @@ describe('content selectors', () => {
     },
   }
 
-  it('should select loading', () => {
+  test('getContentLoading', () => {
     expect(selectors.getContentLoading(state)).toEqual(false)
   })
 
-  it('should select current section ID', () => {
+  test('getCurrentSectionId', () => {
     expect(selectors.getCurrentSectionId(state)).toEqual('TEST01/foo/bar')
   })
 
-  it('should select section content', () => {
+  test('getSectionContent', () => {
     expect(selectors.getSectionContent(state, 'TEST01/foo/bar')).toEqual(
       [{ t: 'Para', c: 'Lorem ipsum.' }]
     )
   })
 
-  it('should select TOC', () => {
+  test('getToc', () => {
     expect(selectors.getToc(state)).toEqual(state.content.toc)
   })
 
-  it('should select section meta', () => {
+  test('getSectionMeta', () => {
     expect(selectors.getSectionMeta(state, 'TEST01/foo/bar')).toEqual({
       title: 'bar section',
       id: 'bar',
     })
   })
 
-  it('should select section level', () => {
+  test('getSectionLevel', () => {
     expect(selectors.getSectionLevel(state, 'TEST01/foo/bar')).toEqual(3)
   })
 })
 
-describe('content reducer', () => {
+describe('contentReducer', () => {
   const initialState = defaultInitialState.content
 
-  it('should return the initial state', () => {
+  test('initialState', () => {
     expect(contentReducer(undefined, {})).toEqual(initialState)
   })
 
@@ -73,13 +73,13 @@ describe('content reducer', () => {
     content: [{ t: 'p', c: 'foo' }],
   }
 
-  it('should handle LOAD_SECTION', () => {
+  test('LOAD_SECTION', () => {
     const newState = contentReducer(initialState, loadSection(sectionData.id))
     expect(newState.loading).toEqual(true)
     expect(newState.currentSectionId).toEqual(null)
   })
 
-  it('should handle LOAD_SECTION_SUCCESS', () => {
+  test('LOAD_SECTION_SUCCESS', () => {
     const newState = contentReducer(initialState, loadSectionSuccess(sectionData))
     expect(newState.loading).toEqual(false)
     expect(newState.currentSectionId).toEqual(sectionData.id)

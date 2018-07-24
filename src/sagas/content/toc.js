@@ -6,24 +6,26 @@ import {
   take,
 } from 'redux-saga/effects'
 
-import { selectors } from '../../store/reducers/content'
+import { selectors as contentSelectors } from '../../store/reducers/content'
+import { selectors as i18nSelectors } from '../../store/reducers/i18n'
 import {
-  actionTypes,
+  actionTypes as contentActionTypes,
   loadTocSuccess,
   loadTocFailure,
 } from '../../store/actions/content'
-import { fetchToc } from '../../lib/api'
+import { actionTypes as i18nActionTypes } from '../../store/actions/i18n'
 import { showMessage } from '../../store/actions/ui'
+import { fetchToc } from '../../lib/api'
 
-export function* loadToc() {
+export function* loadToc(language) {
   // query cache
-  let content = yield select(selectors.getToc)
-  if (content) {
+  let content = yield select(contentSelectors.getToc)
+  if (content && content.length > 0) {
     yield put(loadTocSuccess(content))
   } else {
     // fetch from remote
     try {
-      content = yield call(fetchToc, 'de') // TODO: make language dynamic
+      content = yield call(fetchToc, language)
       yield put(loadTocSuccess(content))
     } catch (err) {
       yield put(loadTocFailure(err))
@@ -38,7 +40,12 @@ export function* loadToc() {
 
 export default function* watchLoadToc() {
   while (true) {
-    yield take(actionTypes.LOAD_TOC)
-    yield fork(loadToc)
+    yield take(contentActionTypes.LOAD_TOC)
+    let language = yield select(i18nSelectors.getLanguage)
+    if (!language) {
+      yield take(i18nActionTypes.CHANGE_LANGUAGE)
+      language = yield select(i18nSelectors.getLanguage)
+    }
+    yield fork(loadToc, language)
   }
 }

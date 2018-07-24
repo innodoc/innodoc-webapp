@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import Layout from '../components/Layout'
 import withI18next from '../components/hoc/withI18next'
-import withReduxI18nextSync from '../components/hoc/withReduxI18nextSync'
+import withI18nDispatch from '../components/hoc/withI18nDispatch'
 
 const AboutPage = () => (
   <Layout>
@@ -13,4 +13,4 @@ const AboutPage = () => (
   </Layout>
 )
 
-export default connect()(withI18next()(withReduxI18nextSync(AboutPage)))
+export default connect()(withI18next()(withI18nDispatch(AboutPage)))

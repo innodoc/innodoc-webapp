@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import {
   Container,
   Dropdown,
@@ -12,8 +13,9 @@ import Link from 'next/link'
 import { translate, Trans } from 'react-i18next'
 
 import css from './style.sass'
+import { changeLanguage } from '../../../store/actions/i18n'
 
-const Header = ({ t, i18n }) => (
+const Header = ({ t, dispatchChangeLanguage }) => (
   <Menu stackable className={css.menu}>
     <Container>
       <Link href="/">
@@ -53,12 +55,12 @@ const Header = ({ t, i18n }) => (
             <Dropdown.Item
               icon={<Flag name="gb" />}
               text={t('header.linkEN')}
-              onClick={() => { i18n.changeLanguage('en') }}
+              onClick={() => { dispatchChangeLanguage('en') }}
             />
             <Dropdown.Item
               icon={<Flag name="de" />}
               text={t('header.linkDE')}
-              onClick={() => { i18n.changeLanguage('de') }}
+              onClick={() => { dispatchChangeLanguage('de') }}
             />
           </Dropdown.Menu>
         </Dropdown>
@@ -76,8 +78,10 @@ const Header = ({ t, i18n }) => (
 
 Header.propTypes = {
   t: PropTypes.func.isRequired,
-  i18n: PropTypes.objectOf(PropTypes.any).isRequired,
+  dispatchChangeLanguage: PropTypes.func.isRequired,
 }
 
+const mapDispatchToProps = { dispatchChangeLanguage: changeLanguage }
+
 export { Header } // for testing
-export default translate()(Header)
+export default connect(null, mapDispatchToProps)(translate()(Header))

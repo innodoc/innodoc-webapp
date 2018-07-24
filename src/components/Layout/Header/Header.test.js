@@ -5,10 +5,10 @@ import { Menu, Dropdown } from 'semantic-ui-react'
 import { Header } from './Header'
 
 describe('<Header />', () => {
-  const i18nMock = {
-    changeLanguage: jest.fn(),
-  }
-  const wrapper = shallow(<Header t={() => {}} i18n={i18nMock} />)
+  const mockDispatchChangeLanguage = jest.fn()
+  const wrapper = shallow(
+    <Header t={() => {}} dispatchChangeLanguage={mockDispatchChangeLanguage} />
+  )
 
   it('should render menu', () => {
     expect(wrapper.find(Menu).exists()).toBe(true)
@@ -39,14 +39,14 @@ describe('<Header />', () => {
     describe('switch language', () => {
       it('should switch language to EN', () => {
         dropdown.find(Dropdown.Item).at(0).simulate('click')
-        expect(i18nMock.changeLanguage.mock.calls).toHaveLength(1)
-        expect(i18nMock.changeLanguage.mock.calls[0][0]).toBe('en')
+        expect(mockDispatchChangeLanguage.mock.calls).toHaveLength(1)
+        expect(mockDispatchChangeLanguage.mock.calls[0][0]).toBe('en')
       })
 
       it('should switch language to DE', () => {
         dropdown.find(Dropdown.Item).at(1).simulate('click')
-        expect(i18nMock.changeLanguage.mock.calls).toHaveLength(2)
-        expect(i18nMock.changeLanguage.mock.calls[1][0]).toBe('de')
+        expect(mockDispatchChangeLanguage.mock.calls).toHaveLength(2)
+        expect(mockDispatchChangeLanguage.mock.calls[1][0]).toBe('de')
       })
     })
   })
