@@ -27,7 +27,7 @@ export function* loadSection({ id }) {
       yield put(loadSectionSuccess({ id, content }))
     } catch (err) {
       yield put(loadSectionFailure(err))
-      yield put(showMessage({ // TODO this should go to ui sagas
+      yield put(showMessage({
         title: 'Loading section failed!',
         msg: err.message,
         level: 'error',

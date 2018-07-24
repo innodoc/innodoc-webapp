@@ -27,7 +27,7 @@ export function* loadToc() {
       yield put(loadTocSuccess(content))
     } catch (err) {
       yield put(loadTocFailure(err))
-      yield put(showMessage({ // TODO this should go to ui sagas
+      yield put(showMessage({
         title: 'Loading TOC failed!',
         msg: err.message,
         level: 'fatal',
