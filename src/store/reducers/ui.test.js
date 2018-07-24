@@ -1,5 +1,11 @@
 import uiReducer, { selectors } from './ui'
-import { clearMessage, showMessage, toggleSidebar } from '../actions/ui'
+import {
+  changeLanguage,
+  clearMessage,
+  showMessage,
+  toggleSidebar,
+} from '../actions/ui'
+import defaultInitialState from '../defaultInitialState'
 
 describe('ui selectors', () => {
   const state = {
@@ -63,6 +69,14 @@ describe('ui reducer', () => {
     expect(uiReducer(initialState, toggleSidebar())).toEqual({
       message: null,
       sidebarVisible: true,
+    })
+  })
+
+  it('should handle CHANGE_LANGUAGE', () => {
+    expect(uiReducer(initialState, changeLanguage('de'))).toEqual({
+      message: null,
+      sidebarVisible: false,
+      language: 'de',
     })
   })
 })

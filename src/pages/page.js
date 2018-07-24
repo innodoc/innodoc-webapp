@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { loadSection } from '../store/actions/content'
 import withI18next from '../components/hoc/withI18next'
+import withReduxI18nextSync from '../components/hoc/withReduxI18nextSync'
 import Layout from '../components/Layout'
 import Content from '../components/content/Content'
 
@@ -20,4 +21,4 @@ class CoursePage extends React.Component {
   }
 }
 
-export default connect()(withI18next()(CoursePage))
+export default connect()(withI18next()(withReduxI18nextSync(CoursePage)))

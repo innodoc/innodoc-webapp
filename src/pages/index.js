@@ -4,6 +4,7 @@ import { tocTreeType } from '../lib/propTypes'
 
 import { selectors as contentSelectors } from '../store/reducers/content'
 import withI18next from '../components/hoc/withI18next'
+import withReduxI18nextSync from '../components/hoc/withReduxI18nextSync'
 import Layout from '../components/Layout'
 import Toc from '../components/Toc'
 
@@ -19,4 +20,4 @@ IndexPage.propTypes = {
 
 const mapStateToProps = state => ({ toc: contentSelectors.getToc(state) })
 
-export default connect(mapStateToProps)(withI18next()(IndexPage))
+export default connect(mapStateToProps)(withI18next()(withReduxI18nextSync(IndexPage)))

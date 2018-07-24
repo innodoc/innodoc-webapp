@@ -26,6 +26,12 @@ function ui(state = defaultInitialState.ui, action) {
         ...{ sidebarVisible: !state.sidebarVisible },
       }
 
+    case actionTypes.CHANGE_LANGUAGE:
+      return {
+        ...state,
+        ...{ language: action.lang.substring(0, 2) },
+      }
+
     default:
       return state
   }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import Layout from '../components/Layout'
 import withI18next from '../components/hoc/withI18next'
+import withReduxI18nextSync from '../components/hoc/withReduxI18nextSync'
 
 const AboutPage = () => (
   <Layout>
@@ -12,4 +13,4 @@ const AboutPage = () => (
   </Layout>
 )
 
-export default connect()(withI18next()(AboutPage))
+export default connect()(withI18next()(withReduxI18nextSync(AboutPage)))

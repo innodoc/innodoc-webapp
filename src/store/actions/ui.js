@@ -2,6 +2,7 @@ export const actionTypes = {
   CLEAR_MESSAGE: 'CLEAR_MESSAGE',
   SHOW_MESSAGE: 'SHOW_MESSAGE',
   TOGGLE_SIDEBAR: 'TOGGLE_SIDEBAR',
+  CHANGE_LANGUAGE: 'CHANGE_LANGUAGE',
 }
 
 export function clearMessage() {
@@ -20,5 +21,12 @@ export function showMessage(data) {
 export function toggleSidebar() {
   return {
     type: actionTypes.TOGGLE_SIDEBAR,
+  }
+}
+
+export function changeLanguage(lang) {
+  return {
+    type: actionTypes.CHANGE_LANGUAGE,
+    lang,
   }
 }

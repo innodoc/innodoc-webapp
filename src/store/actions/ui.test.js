@@ -1,4 +1,9 @@
-import { clearMessage, showMessage, toggleSidebar } from './ui'
+import {
+  changeLanguage,
+  clearMessage,
+  showMessage,
+  toggleSidebar,
+} from './ui'
 
 it('should dispatch CLEAR_MESSAGE action', () => {
   expect(clearMessage()).toEqual({ type: 'CLEAR_MESSAGE' })
@@ -18,4 +23,11 @@ it('should dispatch SHOW_MESSAGE action', () => {
 
 it('should dispatch TOGGLE_SIDEBAR action', () => {
   expect(toggleSidebar()).toEqual({ type: 'TOGGLE_SIDEBAR' })
+})
+
+it('should dispatch CHANGE_LANGUAGE action', () => {
+  expect(changeLanguage('de')).toEqual({
+    type: 'CHANGE_LANGUAGE',
+    lang: 'de',
+  })
 })
