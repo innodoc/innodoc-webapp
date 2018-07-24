@@ -2,6 +2,24 @@
 
 HTML viewer for interactive educational content.
 
+## Setup environment
+
+### Requirements
+
+Please make sure you have a current version of [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your system. Use your package manager of choice or use [nvm](https://github.com/creationix/nvm) for an installation in your home directory.
+
+### Install dependencies
+
+Install node packages
+```sh
+$ npm install
+```
+Install Mathjax submodule
+```sh
+$ git submodule init
+$ git submodule update --remote
+```
+
 ## Deployment
 
 ### Configuration
@@ -27,18 +45,6 @@ $ npm run start
 Find the resulting build in `.next/dist`.
 
 ## Development
-
-### Setup environment
-
-Install node packages
-```sh
-$ npm install
-```
-Install Mathjax submodule
-```sh
-$ git submodule init
-$ git submodule update --remote
-```
 
 ### Development server
 
