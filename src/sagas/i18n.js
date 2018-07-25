@@ -13,18 +13,14 @@ export function* watchChangeLanguage() {
   while (true) {
     const { language } = yield take(actionTypes.CHANGE_LANGUAGE)
     const i18n = yield getContext('i18n')
-    if (i18n) {
-      yield call([i18n, i18n.changeLanguage], language)
-    } else {
-      throw Error('No i18n instance available!')
-    }
+    yield call([i18n, i18n.changeLanguage], language)
   }
 }
 
 // Wait for i18n instance and set initial language
 export default function* watchI18n() {
-  yield fork(watchChangeLanguage)
   const { i18n } = yield take(actionTypes.I18N_CREATED)
   yield setContext({ i18n })
+  yield fork(watchChangeLanguage)
   yield put(changeLanguage(i18n.language))
 }
