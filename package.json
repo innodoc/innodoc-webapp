@@ -99,6 +99,7 @@
     ],
     "moduleNameMapper": {
       "\\.sass$": "identity-obj-proxy"
-    }
+    },
+    "verbose": true
   }
 }
