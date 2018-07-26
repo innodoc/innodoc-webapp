@@ -3,42 +3,58 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Breadcrumb } from 'semantic-ui-react'
 
-import { selectors } from '../../../store/reducers/content'
+import { selectors } from '../../store/reducers/content'
+import ContentFragment from './ContentFragment'
+import SectionLink from '../SectionLink'
 
-class BreadcrumbWrapper extends React.Component {
-  static propTypes = {
-    titles: PropTypes.array.isRequired,
-  }
+const BreadcrumbWrapper = ({ sections }) => {
+  const breadcrumbSections = []
+    .concat(...sections.map(e => [-1, e]))
+    .slice(1)
+    .map((section, idx, arr) => {
+      if (section === -1) {
+        const divProps = {
+          key: idx.toString(),
+        }
 
-  static defaultProps = {
-    titles: [],
-  }
+        if (idx === arr.length - 2) {
+          divProps.icon = 'right angle'
+        }
 
-  render() {
-    const sections = titles.map((title, idx, arr) => {
-      return idx == arr.length - 1
-        ? (
-          <Breadcrumb.Section active key={idx.toString()}>
-            title
-          </Breadcrumb.Section>
-        )
-        : (
-          <Breadcrumb.Section link key={idx.toString()}>
-            title
-          </Breadcrumb.Section>
-        )
+        return (<Breadcrumb.Divider {...divProps} />)
+      }
+
+      const breadcrumbSectionProps = {
+        key: idx.toString(),
+      }
+
+      if (idx === arr.length - 1) {
+        breadcrumbSectionProps.active = true
+      } else {
+        breadcrumbSectionProps.link = true
+      }
+
+      return (
+        <Breadcrumb.Section {...breadcrumbSectionProps}>
+          <SectionLink sectionId={section.id}>
+            <a>
+              <ContentFragment content={section.title} />
+            </a>
+          </SectionLink>
+        </Breadcrumb.Section>
+      )
     })
 
-    return (
-      <Breadcrumb>
-        {sections}
-      </Breadcrumb>
-    )
-  }
+  return (
+    <Breadcrumb>
+      {breadcrumbSections}
+    </Breadcrumb>
+  )
+}
+BreadcrumbWrapper.propTypes = {
+  sections: PropTypes.arrayOf(PropTypes.any).isRequired,
 }
 
-const mapStateToProps = (state) => {
-  return { titles: selectors.getCurrentTOCTitles(state) }
-}
+const mapStateToProps = state => ({ sections: selectors.getCurrentBreadcrumbSections(state) })
 
 export default connect(mapStateToProps)(BreadcrumbWrapper)

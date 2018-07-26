@@ -17,21 +17,27 @@ export const selectors = {
     return section
   },
   getSectionLevel: (state, id) => splitSectionId(id).length,
-  getCurrentTOCTitles: state => {
+  getCurrentBreadcrumbSections: (state) => {
     const tokens = splitSectionId(selectors.getCurrentSectionId(state))
     const result = tokens.reduce((acc, sectionId) => {
-      let section = acc.root.find(section => section.id == sectionId)
-      acc.titles.push(section.title)
+      const section = acc.root.find(s => s.id === sectionId)
+      acc.sections.push(
+        {
+          id: acc.sections.length > 0
+            ? `${acc.sections[acc.sections.length - 1].id}/${sectionId}`
+            : sectionId,
+          title: section.title,
+        })
       return {
         root: section.children,
-        titles: acc.titles,
+        sections: acc.sections,
       }
     }, {
       root: selectors.getToc(state),
-      titles: [],
+      sections: [],
     })
 
-    return result.titles
+    return result.sections
   },
 }
 

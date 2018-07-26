@@ -59,6 +59,7 @@ class Content extends React.Component {
           <Header as="h1">
             <ContentFragment content={title} />
           </Header>
+          <BreadcrumbWrapper />
           <div className={css.content} ref={mathJaxContentRef}>
             <ContentFragment content={sectionContent} />
           </div>

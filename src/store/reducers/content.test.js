@@ -61,7 +61,23 @@ describe('contentSelectors', () => {
   })
 
   it('should select TOC titles from section ID', () => {
-    expect(selectors.getCurrentTOCTitles(state)).toEqual(['TEST01 section', 'foo section', 'bar section'])
+    expect(selectors.getCurrentBreadcrumbSections(state))
+      .toEqual(
+        [
+          {
+            id: 'TEST01',
+            title: 'TEST01 section',
+          },
+          {
+            id: 'TEST01/foo',
+            title: 'foo section',
+          },
+          {
+            id: 'TEST01/foo/bar',
+            title: 'bar section',
+          },
+        ]
+      )
   })
 })
 
