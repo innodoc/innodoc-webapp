@@ -57,4 +57,8 @@ describe('content selectors', () => {
   it('should select section level', () => {
     expect(selectors.getSectionLevel(state, 'TEST01/foo/bar')).toEqual(3)
   })
+
+  it('should select TOC titles from section ID', () => {
+    expect(selectors.getCurrentTOCTitles(state)).toEqual(['TEST01 section', 'foo section', 'bar section'])
+  })
 })
