@@ -60,7 +60,7 @@ describe('contentSelectors', () => {
     expect(selectors.getSectionLevel(state, 'TEST01/foo/bar')).toEqual(3)
   })
 
-  it('should select TOC titles from section ID', () => {
+  test('getCurrentBreadcrumbSections', () => {
     expect(selectors.getCurrentBreadcrumbSections(state))
       .toEqual(
         [
