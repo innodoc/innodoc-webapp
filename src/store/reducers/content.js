@@ -17,6 +17,22 @@ export const selectors = {
     return section
   },
   getSectionLevel: (state, id) => splitSectionId(id).length,
+  getCurrentTOCTitles: state => {
+    const tokens = splitSectionId(selectors.getCurrentSectionId(state))
+    const result = tokens.reduce((acc, sectionId) => {
+      let section = acc.root.find(section => section.id == sectionId)
+      acc.titles.push(section.title)
+      return {
+        root: section.children,
+        titles: acc.titles,
+      }
+    }, {
+      root: selectors.getToc(state),
+      titles: [],
+    })
+
+    return result.titles
+  },
 }
 
 function content(state = defaultInitialState.content, action) {
