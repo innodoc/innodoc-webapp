@@ -59,6 +59,26 @@ describe('contentSelectors', () => {
   test('getSectionLevel', () => {
     expect(selectors.getSectionLevel(state, 'TEST01/foo/bar')).toEqual(3)
   })
+
+  test('getCurrentBreadcrumbSections', () => {
+    expect(selectors.getCurrentBreadcrumbSections(state))
+      .toEqual(
+        [
+          {
+            id: 'TEST01',
+            title: 'TEST01 section',
+          },
+          {
+            id: 'TEST01/foo',
+            title: 'foo section',
+          },
+          {
+            id: 'TEST01/foo/bar',
+            title: 'bar section',
+          },
+        ]
+      )
+  })
 })
 
 describe('contentReducer', () => {
