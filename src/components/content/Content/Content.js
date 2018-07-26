@@ -7,6 +7,7 @@ import { selectors } from '../../../store/reducers/content'
 import { tocTreeType } from '../../../lib/propTypes'
 import withMathJax from '../../hoc/withMathJax'
 import ContentFragment from '../ContentFragment'
+import BreadcrumbWrapper from '../BreadcrumbWrapper'
 import Placeholder from './Placeholder'
 import Toc from '../../Toc'
 import css from './style.sass'
@@ -54,10 +55,11 @@ class Content extends React.Component {
       ? <Placeholder />
       : (
         <React.Fragment>
-          {toc}
+          <BreadcrumbWrapper />
           <Header as="h1">
             <ContentFragment content={title} />
           </Header>
+          {toc}
           <div className={css.content} ref={mathJaxContentRef}>
             <ContentFragment content={sectionContent} />
           </div>
