@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Breadcrumb } from 'semantic-ui-react'
+import { Breadcrumb, Segment } from 'semantic-ui-react'
 
 import { selectors } from '../../store/reducers/content'
 import ContentFragment from './ContentFragment'
@@ -13,15 +13,7 @@ const BreadcrumbWrapper = ({ sections }) => {
     .slice(1)
     .map((section, idx, arr) => {
       if (section === -1) {
-        const divProps = {
-          key: idx.toString(),
-        }
-
-        if (idx === arr.length - 2) {
-          divProps.icon = 'right angle'
-        }
-
-        return (<Breadcrumb.Divider {...divProps} />)
+        return (<Breadcrumb.Divider key={idx.toString()} icon="right angle" />)
       }
 
       const breadcrumbSectionProps = {
@@ -46,9 +38,11 @@ const BreadcrumbWrapper = ({ sections }) => {
     })
 
   return (
-    <Breadcrumb>
-      {breadcrumbSections}
-    </Breadcrumb>
+    <Segment basic>
+      <Breadcrumb size="big">
+        {breadcrumbSections}
+      </Breadcrumb>
+    </Segment>
   )
 }
 BreadcrumbWrapper.propTypes = {

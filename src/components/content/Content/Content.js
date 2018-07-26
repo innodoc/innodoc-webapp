@@ -55,11 +55,11 @@ class Content extends React.Component {
       ? <Placeholder />
       : (
         <React.Fragment>
-          {toc}
+          <BreadcrumbWrapper />
           <Header as="h1">
             <ContentFragment content={title} />
           </Header>
-          <BreadcrumbWrapper />
+          {toc}
           <div className={css.content} ref={mathJaxContentRef}>
             <ContentFragment content={sectionContent} />
           </div>
