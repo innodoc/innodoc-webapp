@@ -1,0 +1,36 @@
+image: node:latest
+
+stages:
+  - setup
+  - build
+  - test
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+  - node_modules/
+  - src/.next/
+  - .env
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+install_node_modules:
+  stage: setup
+  script:
+    - npm install
+
+build_next:
+  stage: build
+  script:
+    - cp .env.example .env
+    - npm run build
+
+lint:
+  stage: test
+  script: npm run lint:coverage
+
+jest:
+  stage: test
+  script: npm test:coverage
+  coverage: '/^Statements\s*:\s*([^%]+)/'
