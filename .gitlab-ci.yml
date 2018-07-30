@@ -1,0 +1,41 @@
+stages:
+  - setup
+  - build
+  - test
+
+cache:
+  key: "$CI_COMMIT_REF_NAME"
+  paths:
+    - node_modules/
+    - src/.next
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+before_script:
+  - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+  - nvm install node
+  - nvm use node
+
+setup_submodule:
+  stage: setup
+  script:
+    - git submodule sync
+    - git submodule update --remote --force
+
+setup_node_packages:
+  stage: setup
+  script:
+    - npm install
+
+build_next:
+  stage: build
+  script: npm run build
+
+lint:
+  stage: test
+  script: npm run lint
+
+jest:
+  stage: test
+  script: npm test
