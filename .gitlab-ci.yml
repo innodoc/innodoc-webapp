@@ -1,0 +1,37 @@
+image: node:latest
+
+stages:
+  - setup
+  - build
+  - test
+
+# Cache modules in between jobs
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+  - node_modules/
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+install_node_modules:
+  stage: setup
+  script:
+    - npm install
+
+configure:
+  stage: build
+  script:
+    - cp .env.example .env
+
+build_next:
+  stage: build
+  script: npm run build
+
+lint:
+  stage: test
+  script: npm run lint
+
+jest:
+  stage: test
+  script: npm test
