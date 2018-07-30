@@ -52,16 +52,19 @@ const withMathJax = (WrappedComponent) => {
 
     mathJaxContentRef = React.createRef()
 
+    constructor() {
+      super()
+      this.typesetMathJax = this.typesetMathJax.bind(this)
+    }
+
     componentDidMount() {
-      if (WithMathJax.isMathJaxLoaded()) {
-        this.typesetMathJax()
-      } else {
+      if (!WithMathJax.isMathJaxLoaded()) {
         this.injectMathJax()
       }
     }
 
     injectMathJax() {
-      window.MathJax = mathJaxOptions(this.typesetMathJax.bind(this))
+      window.MathJax = mathJaxOptions(this.typesetMathJax)
       loadScript(
         '/static/vendor/MathJax/unpacked/MathJax.js',
         { attrs: { id: MATHJAX_SCRIPT_ID } },
