@@ -6,8 +6,7 @@ const defaultInitialState = {
   content: {
     loading: false,
     currentSectionId: null,
-    sections: {},
-    toc: [],
+    data: {},
   },
   exercises: {},
   i18n: {
@@ -15,4 +14,11 @@ const defaultInitialState = {
   },
 }
 
+// empty content (resides in state.content.data[lang])
+const defaultContentData = {
+  sections: {},
+  toc: [],
+}
+
+export { defaultContentData }
 export default defaultInitialState

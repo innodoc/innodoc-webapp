@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { getHocDisplayName } from '../../lib/util'
-import { changeLanguage, i18nCreated } from '../../store/actions/i18n'
+import { i18nCreated } from '../../store/actions/i18n'
 
 // Make i18next instance available in sagas
 const withI18nDispatch = (WrappedComponent) => {
@@ -41,7 +41,6 @@ const withI18nDispatch = (WrappedComponent) => {
   WithReduxI18nextSync.displayName = getHocDisplayName('WithReduxI18nextSync', WrappedComponent)
 
   const mapDispatchToProps = {
-    onLanguageChange: changeLanguage,
     dispatchI18nCreated: i18nCreated,
   }
   return connect(null, mapDispatchToProps)(WithReduxI18nextSync)
