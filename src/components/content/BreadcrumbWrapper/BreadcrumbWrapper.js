@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Breadcrumb, Segment } from 'semantic-ui-react'
 
-import { selectors } from '../../../store/reducers/content'
+import { selectors as contentSelectors } from '../../../store/reducers/content'
+import { selectors as i18nSelectors } from '../../../store/reducers/i18n'
 import ContentFragment from '../ContentFragment'
 import SectionLink from '../../SectionLink'
 import css from './style.sass'
@@ -52,7 +53,9 @@ BreadcrumbWrapper.propTypes = {
   sections: PropTypes.arrayOf(PropTypes.any).isRequired,
 }
 
-const mapStateToProps = state => ({ sections: selectors.getCurrentBreadcrumbSections(state) })
+const mapStateToProps = state => ({
+  sections: contentSelectors.getCurrentBreadcrumbSections(state, i18nSelectors.getLanguage(state)),
+})
 
 export { BreadcrumbWrapper } // for testing
 export default connect(mapStateToProps)(BreadcrumbWrapper)

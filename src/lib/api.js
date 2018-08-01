@@ -18,7 +18,7 @@ export function fetchToc(language) {
   return fetchJson(url)
 }
 
-export function fetchSection(sectionId, language) {
+export function fetchSection(language, sectionId) {
   // 404 is ok and means section doesn't have any content
   const url = `${process.env.CONTENT_ROOT}${language}/${sectionId}/content.json`
   return fetchJson(url, [])

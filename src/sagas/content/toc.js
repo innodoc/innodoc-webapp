@@ -19,19 +19,19 @@ import { fetchToc } from '../../lib/api'
 
 export function* loadToc(language) {
   // query cache
-  let content = yield select(contentSelectors.getToc)
+  let content = yield select(contentSelectors.getToc, language)
   if (content && content.length > 0) {
-    yield put(loadTocSuccess(content))
+    yield put(loadTocSuccess({ language, content }))
   } else {
     // fetch from remote
     try {
       content = yield call(fetchToc, language)
-      yield put(loadTocSuccess(content))
-    } catch (err) {
-      yield put(loadTocFailure(err))
+      yield put(loadTocSuccess({ language, content }))
+    } catch (error) {
+      yield put(loadTocFailure({ language, error }))
       yield put(showMessage({
         title: 'Loading TOC failed!',
-        msg: err.message,
+        msg: error.message,
         level: 'fatal',
       }))
     }
