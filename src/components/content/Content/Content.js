@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Dimmer, Header, Loader } from 'semantic-ui-react'
 
-import { selectors } from '../../../store/reducers/content'
+import { selectors as contentSelectors } from '../../../store/reducers/content'
+import { selectors as i18nSelectors } from '../../../store/reducers/i18n'
 import { tocTreeType } from '../../../lib/propTypes'
 import withMathJax from '../../hoc/withMathJax'
 import ContentFragment from '../ContentFragment'
@@ -78,12 +79,13 @@ class Content extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const loading = selectors.getContentLoading(state)
-  const id = selectors.getCurrentSectionId(state)
+  const loading = contentSelectors.getContentLoading(state)
+  const id = contentSelectors.getCurrentSectionId(state)
+  const language = i18nSelectors.getLanguage(state)
   if (id) {
-    const { title } = selectors.getSectionMeta(state, id)
-    const content = selectors.getSectionContent(state, id)
-    const sectionLevel = selectors.getSectionLevel(state, id)
+    const { title } = contentSelectors.getSectionMeta(state, language, id)
+    const content = contentSelectors.getSectionContent(state, language, id)
+    const sectionLevel = contentSelectors.getSectionLevel(state, id)
     return {
       loading,
       content,

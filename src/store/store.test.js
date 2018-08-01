@@ -43,12 +43,8 @@ describe('initial state', () => {
       expect(content.currentSectionId).toBe(null)
     })
 
-    test('sections empty', () => {
-      expect(content.sections).toEqual({})
-    })
-
-    test('toc empty', () => {
-      expect(content.toc).toEqual([])
+    test('data empty', () => {
+      expect(content.data).toEqual({})
     })
   })
 

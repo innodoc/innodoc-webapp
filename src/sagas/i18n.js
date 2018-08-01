@@ -7,6 +7,7 @@ import {
   put,
 } from 'redux-saga/effects'
 import { actionTypes, changeLanguage } from '../store/actions/i18n'
+import { toTwoLetterCode } from '../lib/i18n'
 
 // Notify i18next about language changes
 export function* watchChangeLanguage() {
@@ -22,5 +23,6 @@ export default function* watchI18n() {
   const { i18n } = yield take(actionTypes.I18N_CREATED)
   yield setContext({ i18n })
   yield fork(watchChangeLanguage)
-  yield put(changeLanguage(i18n.language))
+  // i18n.language might be like 'en-US' but we're using two-letter code
+  yield put(changeLanguage(toTwoLetterCode(i18n.language)))
 }

@@ -1,36 +1,41 @@
 import contentReducer, { selectors } from './content'
 import { loadSection, loadSectionSuccess } from '../actions/content'
-import defaultInitialState from '../defaultInitialState'
+import { changeLanguage } from '../actions/i18n'
+import defaultInitialState, { defaultContentData } from '../defaultInitialState'
+
+const state = {
+  content: {
+    loading: false,
+    currentSectionId: 'TEST01/foo/bar',
+    data: {
+      en: {
+        sections: {
+          'TEST01/foo/bar': [{ t: 'Para', c: 'Lorem ipsum.' }],
+        },
+        toc: [
+          {
+            title: 'TEST01 section',
+            id: 'TEST01',
+            children: [
+              {
+                title: 'foo section',
+                id: 'foo',
+                children: [
+                  {
+                    title: 'bar section',
+                    id: 'bar',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    },
+  },
+}
 
 describe('contentSelectors', () => {
-  const state = {
-    content: {
-      loading: false,
-      currentSectionId: 'TEST01/foo/bar',
-      sections: {
-        'TEST01/foo/bar': [{ t: 'Para', c: 'Lorem ipsum.' }],
-      },
-      toc: [
-        {
-          title: 'TEST01 section',
-          id: 'TEST01',
-          children: [
-            {
-              title: 'foo section',
-              id: 'foo',
-              children: [
-                {
-                  title: 'bar section',
-                  id: 'bar',
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  }
-
   test('getContentLoading', () => {
     expect(selectors.getContentLoading(state)).toEqual(false)
   })
@@ -39,18 +44,22 @@ describe('contentSelectors', () => {
     expect(selectors.getCurrentSectionId(state)).toEqual('TEST01/foo/bar')
   })
 
+  it('should return languageContent', () => {
+    expect(selectors.getLanguageContent(state, 'en')).toEqual(state.content.data.en)
+  })
+
   test('getSectionContent', () => {
-    expect(selectors.getSectionContent(state, 'TEST01/foo/bar')).toEqual(
+    expect(selectors.getSectionContent(state, 'en', 'TEST01/foo/bar')).toEqual(
       [{ t: 'Para', c: 'Lorem ipsum.' }]
     )
   })
 
   test('getToc', () => {
-    expect(selectors.getToc(state)).toEqual(state.content.toc)
+    expect(selectors.getToc(state, 'en')).toEqual(state.content.data.en.toc)
   })
 
   test('getSectionMeta', () => {
-    expect(selectors.getSectionMeta(state, 'TEST01/foo/bar')).toEqual({
+    expect(selectors.getSectionMeta(state, 'en', 'TEST01/foo/bar')).toEqual({
       title: 'bar section',
       id: 'bar',
     })
@@ -61,7 +70,7 @@ describe('contentSelectors', () => {
   })
 
   test('getCurrentBreadcrumbSections', () => {
-    expect(selectors.getCurrentBreadcrumbSections(state))
+    expect(selectors.getCurrentBreadcrumbSections(state, 'en'))
       .toEqual(
         [
           {
@@ -82,27 +91,34 @@ describe('contentSelectors', () => {
 })
 
 describe('contentReducer', () => {
-  const initialState = defaultInitialState.content
+  const initialContentState = defaultInitialState.content
 
   test('initialState', () => {
-    expect(contentReducer(undefined, {})).toEqual(initialState)
+    expect(contentReducer(undefined, {})).toEqual(initialContentState)
   })
 
-  const sectionData = {
-    id: 78,
-    content: [{ t: 'p', c: 'foo' }],
-  }
-
   test('LOAD_SECTION', () => {
-    const newState = contentReducer(initialState, loadSection(sectionData.id))
+    const newState = contentReducer(initialContentState, loadSection(78))
     expect(newState.loading).toEqual(true)
     expect(newState.currentSectionId).toEqual(null)
   })
 
   test('LOAD_SECTION_SUCCESS', () => {
-    const newState = contentReducer(initialState, loadSectionSuccess(sectionData))
+    const newState = contentReducer(state.content, loadSectionSuccess({
+      language: 'en',
+      id: 'welcome/bar',
+      content: [{ t: 'p', c: 'bar' }],
+    }))
     expect(newState.loading).toEqual(false)
-    expect(newState.currentSectionId).toEqual(sectionData.id)
-    expect(newState.sections[sectionData.id]).toEqual(sectionData.content)
+    expect(newState.currentSectionId).toEqual('welcome/bar')
+    expect(newState.data.en.sections).toEqual({
+      'TEST01/foo/bar': [{ t: 'Para', c: 'Lorem ipsum.' }],
+      'welcome/bar': [{ t: 'p', c: 'bar' }],
+    })
+  })
+
+  test('CHANGE_LANGUAGE', () => {
+    const newState = contentReducer(initialContentState, changeLanguage('de'))
+    expect(newState.data.de).toEqual(defaultContentData)
   })
 })
