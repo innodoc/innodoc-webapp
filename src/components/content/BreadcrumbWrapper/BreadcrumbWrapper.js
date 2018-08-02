@@ -52,7 +52,9 @@ BreadcrumbWrapper.propTypes = {
   sections: PropTypes.arrayOf(PropTypes.any).isRequired,
 }
 
-const mapStateToProps = state => ({ sections: selectors.getCurrentBreadcrumbSections(state) })
+const mapStateToProps = state => (
+  { sections: selectors.getBreadcrumbSections(state, selectors.getCurrentSectionId(state)) }
+)
 
 export { BreadcrumbWrapper } // for testing
 export default connect(mapStateToProps)(BreadcrumbWrapper)

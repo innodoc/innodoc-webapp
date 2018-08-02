@@ -20,6 +20,10 @@ describe('contentSelectors', () => {
               id: 'foo',
               children: [
                 {
+                  title: 'foo test section',
+                  id: 'foo-test',
+                },
+                {
                   title: 'bar section',
                   id: 'bar',
                 },
@@ -60,8 +64,8 @@ describe('contentSelectors', () => {
     expect(selectors.getSectionLevel(state, 'TEST01/foo/bar')).toEqual(3)
   })
 
-  test('getCurrentBreadcrumbSections', () => {
-    expect(selectors.getCurrentBreadcrumbSections(state))
+  test('getBreadcrumbSections', () => {
+    expect(selectors.getBreadcrumbSections(state, selectors.getCurrentSectionId(state)))
       .toEqual(
         [
           {
@@ -78,6 +82,28 @@ describe('contentSelectors', () => {
           },
         ]
       )
+  })
+
+  test('getPrevSectionId', () => {
+    expect(selectors.getPrevSectionId(state, 'TEST01/foo/bar'))
+      .toEqual('TEST01/foo/foo-test')
+    expect(selectors.getPrevSectionId(state, 'TEST01/foo/foo-test'))
+      .toEqual('TEST01/foo')
+    expect(selectors.getPrevSectionId(state, 'TEST01/foo'))
+      .toEqual('TEST01')
+    expect(selectors.getPrevSectionId(state, 'TEST01'))
+      .toEqual(undefined)
+  })
+
+  test('getNextSectionId', () => {
+    expect(selectors.getNextSectionId(state, 'TEST01'))
+      .toEqual('TEST01/foo')
+    expect(selectors.getNextSectionId(state, 'TEST01/foo'))
+      .toEqual('TEST01/foo/foo-test')
+    expect(selectors.getNextSectionId(state, 'TEST01/foo/foo-test'))
+      .toEqual('TEST01/foo/bar')
+    expect(selectors.getNextSectionId(state, 'TEST01/foo/bar'))
+      .toEqual(undefined)
   })
 })
 

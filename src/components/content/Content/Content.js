@@ -8,6 +8,7 @@ import { tocTreeType } from '../../../lib/propTypes'
 import withMathJax from '../../hoc/withMathJax'
 import ContentFragment from '../ContentFragment'
 import BreadcrumbWrapper from '../BreadcrumbWrapper'
+import SectionNav from '../SectionNav'
 import Placeholder from './Placeholder'
 import Toc from '../../Toc'
 import css from './style.sass'
@@ -55,6 +56,7 @@ class Content extends React.Component {
       ? <Placeholder />
       : (
         <React.Fragment>
+          <SectionNav />
           <BreadcrumbWrapper />
           <Header as="h1">
             <ContentFragment content={title} />
