@@ -22,6 +22,10 @@ const state = {
                 id: 'foo',
                 children: [
                   {
+                    title: 'foo test section',
+                    id: 'foo-test',
+                  },
+                  {
                     title: 'bar section',
                     id: 'bar',
                   },
@@ -87,6 +91,28 @@ describe('contentSelectors', () => {
           },
         ]
       )
+  })
+
+  test('getPrevSectionId', () => {
+    expect(selectors.getPrevSectionId(state, 'en', 'TEST01/foo/bar'))
+      .toEqual('TEST01/foo/foo-test')
+    expect(selectors.getPrevSectionId(state, 'en', 'TEST01/foo/foo-test'))
+      .toEqual('TEST01/foo')
+    expect(selectors.getPrevSectionId(state, 'en', 'TEST01/foo'))
+      .toEqual('TEST01')
+    expect(selectors.getPrevSectionId(state, 'en', 'TEST01'))
+      .toEqual(undefined)
+  })
+
+  test('getNextSectionId', () => {
+    expect(selectors.getNextSectionId(state, 'en', 'TEST01'))
+      .toEqual('TEST01/foo')
+    expect(selectors.getNextSectionId(state, 'en', 'TEST01/foo'))
+      .toEqual('TEST01/foo/foo-test')
+    expect(selectors.getNextSectionId(state, 'en', 'TEST01/foo/foo-test'))
+      .toEqual('TEST01/foo/bar')
+    expect(selectors.getNextSectionId(state, 'en', 'TEST01/foo/bar'))
+      .toEqual(undefined)
   })
 })
 
