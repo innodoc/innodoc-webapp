@@ -9,6 +9,7 @@ import { selectors as i18nSelectors } from '../../../store/reducers/i18n'
 import withMathJax from '../../hoc/withMathJax'
 import ContentFragment from '../ContentFragment'
 import BreadcrumbWrapper from '../BreadcrumbWrapper'
+import SectionNav from '../SectionNav'
 import Placeholder from './Placeholder'
 import Toc from '../../Toc'
 import { sectionType } from '../../../lib/propTypes'
@@ -52,6 +53,7 @@ class Content extends React.Component {
       ? <Placeholder />
       : (
         <React.Fragment>
+          <SectionNav />
           <BreadcrumbWrapper />
           <Header as="h1">
             <ContentFragment content={section.title} />
