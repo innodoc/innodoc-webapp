@@ -10,6 +10,19 @@ const getSubSection = (currentSection, sectionId) => (
 const getSection = (root, idTokens) => idTokens.reduce(getSubSection, root)
 const getParentSection = (root, idTokens) => getSection(root, idTokens.slice(0, -1))
 
+const astToString = ast => (
+  ast.map((node) => {
+    switch (node.t) {
+      case 'Str':
+        return node.c
+      case 'Space':
+        return ' '
+      default:
+        return undefined
+    }
+  }).join('')
+)
+
 export const selectors = {
   getContentLoading: state => state.content.loading,
   getCurrentSectionId: state => state.content.currentSectionId,
@@ -25,6 +38,22 @@ export const selectors = {
     return section
   },
   getSectionLevel: (state, id) => splitSectionId(id).length,
+  getSectionTitle: (state, language, id) => {
+    if (id === undefined) {
+      return undefined
+    }
+
+    const tokens = splitSectionId(id)
+    const root = { children: selectors.getToc(state, language) }
+    const section = tokens.reduce(
+      (acc, sectionId) => acc.children.find(s => s.id === sectionId), root)
+
+    if (section === undefined) {
+      return undefined
+    }
+
+    return typeof section.title === 'string' ? section.title : astToString(section.title)
+  },
   getCurrentBreadcrumbSections: (state, language) => {
     const tokens = splitSectionId(selectors.getCurrentSectionId(state))
     const result = tokens.reduce((acc, sectionId) => {

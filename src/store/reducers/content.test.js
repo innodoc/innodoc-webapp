@@ -73,6 +73,19 @@ describe('contentSelectors', () => {
     expect(selectors.getSectionLevel(state, 'TEST01/foo/bar')).toEqual(3)
   })
 
+  test('getSectionTitle', () => {
+    expect(selectors.getSectionTitle(state, 'en', 'TEST01'))
+      .toEqual('TEST01 section')
+    expect(selectors.getSectionTitle(state, 'en', 'TEST01/foo'))
+      .toEqual('foo section')
+    expect(selectors.getSectionTitle(state, 'en', 'TEST01/foo/foo-test'))
+      .toEqual('foo test section')
+    expect(selectors.getSectionTitle(state, 'en', 'bla'))
+      .toEqual(undefined)
+    expect(selectors.getSectionTitle(state, 'en', undefined))
+      .toEqual(undefined)
+  })
+
   test('getCurrentBreadcrumbSections', () => {
     expect(selectors.getCurrentBreadcrumbSections(state, 'en'))
       .toEqual(
