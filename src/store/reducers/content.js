@@ -77,13 +77,11 @@ export const selectors = {
 
     return prevSectionIdTokens.join('/')
   },
-  getNextSectionId: (state, language, id, lvl) => { // Lvl should be undefined or 0 on initial call
+  getNextSectionId: (state, language, id, level = 0) => {
+    // level indicates whether this is the initial call or a recursive one
     if (id === null || id === undefined) {
       return undefined
     }
-
-    // Level indicates whether this is the initial call or a recursive one
-    const level = lvl === undefined ? 0 : lvl
 
     const root = { children: selectors.getToc(state, language) }
     const idTokens = splitSectionId(id)
