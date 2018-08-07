@@ -37,6 +37,9 @@ i18nInstance
   .use(Backend)
   .use(LanguageDetector)
   .init({
+    detection: {
+      order: ['cookie', 'header'],
+    },
     fallbackLng: 'en',
     preload: ['en', 'de'], // preload all langages
     ns: ['common'], // need to preload all the namespaces

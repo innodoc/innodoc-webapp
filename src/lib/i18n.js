@@ -29,6 +29,11 @@ const i18nInstance = i18next
 
 // for browser use xhr backend to load translations and browser lng detector
 if (process.browser) {
+  options.detection = {
+    order: ['cookie', 'navigator'],
+    caches: ['cookie'],
+  }
+
   i18nInstance
     .use(XHR)
     // .use(Cache)
