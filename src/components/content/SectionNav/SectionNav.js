@@ -23,7 +23,7 @@ const SectionNav = ({ prevSection, nextSection }) => (
   </div>
 )
 
-// TODO: that is how it should look like after # is closed
+// TODO: that is how it should look like after #29 is closed
 // const mapStateToProps = (state) => {
 //     prevSection: contentSelectors.getPrevSection(state),
 //     nextSection: contentSelectors.getNextSection(state),
