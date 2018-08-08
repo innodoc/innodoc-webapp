@@ -23,6 +23,12 @@ const SectionNav = ({ prevSection, nextSection }) => (
   </div>
 )
 
+// TODO: that is how it should look like after # is closed
+// const mapStateToProps = (state) => {
+//     prevSection: contentSelectors.getPrevSection(state),
+//     nextSection: contentSelectors.getNextSection(state),
+// }
+
 const mapStateToProps = (state) => {
   const prevSectionId = contentSelectors.getPrevSectionId(
     state, i18nSelectors.getLanguage(state), contentSelectors.getCurrentSectionId(state))
