@@ -58,8 +58,8 @@ describe('contentSelectors', () => {
     expect(selectors.getToc(state, 'en')).toEqual(state.content.data.en.toc)
   })
 
-  test('getSectionMeta', () => {
-    expect(selectors.getSectionMeta(state, 'en', 'TEST01/foo/bar')).toEqual({
+  test('getSection', () => {
+    expect(selectors.getSection(state, 'en', 'TEST01/foo/bar')).toEqual({
       title: 'bar section',
       id: 'bar',
     })

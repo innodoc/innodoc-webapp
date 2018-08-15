@@ -6,10 +6,16 @@ import { contentType } from '../../lib/propTypes'
 import SectionLink from '../SectionLink'
 import ContentFragment from '../content/ContentFragment'
 
-const Item = ({ title, sectionId, subSections }) => {
+const Item = ({
+  title,
+  sectionId,
+  subSections,
+  sectionPrefix,
+}) => {
+  const fullSectionId = `${sectionPrefix}${sectionId}`
   if (!subSections.length) {
     return (
-      <SectionLink sectionId={sectionId}>
+      <SectionLink sectionId={fullSectionId}>
         <Menu.Item as="a">
           <ContentFragment content={title} />
         </Menu.Item>
@@ -18,7 +24,7 @@ const Item = ({ title, sectionId, subSections }) => {
   }
   return (
     <Menu.Item>
-      <SectionLink sectionId={sectionId}>
+      <SectionLink sectionId={fullSectionId}>
         <a>
           <ContentFragment content={title} />
         </a>
@@ -29,7 +35,7 @@ const Item = ({ title, sectionId, subSections }) => {
             (subSection, i) => (
               <Item
                 title={subSection.title}
-                sectionId={`${sectionId}/${subSection.id}`}
+                sectionId={`${fullSectionId}/${subSection.id}`}
                 subSections={subSection.children}
                 key={i.toString()}
               />
@@ -45,8 +51,12 @@ Item.propTypes = {
   title: contentType.isRequired,
   sectionId: PropTypes.string.isRequired,
   subSections: PropTypes.arrayOf(PropTypes.object),
+  sectionPrefix: PropTypes.string,
 }
 
-Item.defaultProps = { subSections: [] }
+Item.defaultProps = {
+  subSections: [],
+  sectionPrefix: '',
+}
 
 export default Item

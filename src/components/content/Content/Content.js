@@ -2,32 +2,32 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Dimmer, Header, Loader } from 'semantic-ui-react'
+import { translate } from 'react-i18next'
 
 import { selectors as contentSelectors } from '../../../store/reducers/content'
 import { selectors as i18nSelectors } from '../../../store/reducers/i18n'
-import { tocTreeType } from '../../../lib/propTypes'
 import withMathJax from '../../hoc/withMathJax'
 import ContentFragment from '../ContentFragment'
 import BreadcrumbWrapper from '../BreadcrumbWrapper'
 import Placeholder from './Placeholder'
 import Toc from '../../Toc'
+import { sectionType } from '../../../lib/propTypes'
 import css from './style.sass'
 
 class Content extends React.Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     content: PropTypes.arrayOf(PropTypes.object),
-    title: PropTypes.arrayOf(PropTypes.object),
+    section: sectionType,
     sectionLevel: PropTypes.number,
-    subToc: tocTreeType,
     mathJaxContentRef: PropTypes.objectOf(PropTypes.any).isRequired,
     typesetMathJax: PropTypes.func.isRequired,
+    t: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
-    title: [],
     content: [],
-    subToc: [],
+    section: null,
     sectionLevel: null,
   }
 
@@ -40,17 +40,13 @@ class Content extends React.Component {
 
   render() {
     const {
+      section,
       content: sectionContent,
-      title,
       loading,
       sectionLevel,
-      subToc,
       mathJaxContentRef,
+      t,
     } = this.props
-
-    const toc = subToc && sectionLevel < 3
-      ? <Toc toc={subToc} />
-      : null
 
     const content = loading
       ? <Placeholder />
@@ -58,9 +54,22 @@ class Content extends React.Component {
         <React.Fragment>
           <BreadcrumbWrapper />
           <Header as="h1">
-            <ContentFragment content={title} />
+            <ContentFragment content={section.title} />
           </Header>
-          {toc}
+          {
+            section.children && section.children.length && sectionLevel < 3
+              ? (
+                <Toc
+                  vertical
+                  borderless
+                  size="large"
+                  toc={section.children}
+                  header={t('content.subsections')}
+                  sectionPrefix={`${section.id}/`}
+                />
+              )
+              : null
+          }
           <div className={css.content} ref={mathJaxContentRef}>
             <ContentFragment content={sectionContent} />
           </div>
@@ -79,21 +88,20 @@ class Content extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const loading = contentSelectors.getContentLoading(state)
   const id = contentSelectors.getCurrentSectionId(state)
-  const language = i18nSelectors.getLanguage(state)
   if (id) {
-    const { title } = contentSelectors.getSectionMeta(state, language, id)
-    const content = contentSelectors.getSectionContent(state, language, id)
-    const sectionLevel = contentSelectors.getSectionLevel(state, id)
-    return {
-      loading,
-      content,
-      title,
-      sectionLevel,
+    const language = i18nSelectors.getLanguage(state)
+    const section = contentSelectors.getSection(state, language, id)
+    if (section) {
+      return {
+        loading: false,
+        section: contentSelectors.getSection(state, language, id),
+        content: contentSelectors.getSectionContent(state, language, id),
+        sectionLevel: contentSelectors.getSectionLevel(state, id),
+      }
     }
   }
-  return { loading }
+  return { loading: true }
 }
 
-export default connect(mapStateToProps)(withMathJax(Content))
+export default connect(mapStateToProps)(withMathJax(translate()(Content)))

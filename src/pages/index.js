@@ -11,7 +11,7 @@ import Toc from '../components/Toc'
 
 const IndexPage = ({ toc }) => (
   <Layout>
-    <Toc vertical fluid secondary size="massive" toc={toc} />
+    <Toc vertical fluid secondary size="massive" toc={toc} header="TODO: fill in course title" />
   </Layout>
 )
 

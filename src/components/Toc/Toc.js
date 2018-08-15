@@ -9,6 +9,8 @@ const Toc = ({
   toc,
   as: ElementType,
   dispatch,
+  header,
+  sectionPrefix,
   ...otherProps
 }) => {
   const sections = toc.map(
@@ -17,13 +19,23 @@ const Toc = ({
         sectionId={section.id}
         title={section.title}
         subSections={section.children}
+        sectionPrefix={sectionPrefix}
         key={i.toString()}
       />
     )
   )
 
+  const headerItem = header
+    ? (
+      <Menu.Item header>
+        {header}
+      </Menu.Item>
+    )
+    : null
+
   return (
     <ElementType {...otherProps}>
+      {headerItem}
       {sections}
     </ElementType>
   )
@@ -33,11 +45,15 @@ Toc.propTypes = {
   toc: tocTreeType.isRequired,
   as: PropTypes.func,
   dispatch: PropTypes.func,
+  header: PropTypes.string,
+  sectionPrefix: PropTypes.string,
 }
 
 Toc.defaultProps = {
   ...React.Component.defaultProps,
   as: Menu,
+  sectionPrefix: '',
+  header: null,
 }
 
 export default Toc

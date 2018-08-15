@@ -14,6 +14,8 @@ const Header = ({ data }) => {
   )
 }
 
-Header.propTypes = { data: PropTypes.arrayOf(PropTypes.array).isRequired }
+Header.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
+}
 
 export default Header

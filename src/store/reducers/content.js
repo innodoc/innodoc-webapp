@@ -10,7 +10,7 @@ export const selectors = {
   getSectionContent: (state, lang, id) => selectors.getLanguageContent(state, lang).sections[id],
   getLanguageContent: (state, language) => state.content.data[language],
   getToc: (state, language) => selectors.getLanguageContent(state, language).toc,
-  getSectionMeta: (state, language, id) => {
+  getSection: (state, language, id) => {
     const idFragments = splitSectionId(id)
     let section = { children: selectors.getToc(state, language) }
     for (let i = 0; i < idFragments.length; i += 1) {
