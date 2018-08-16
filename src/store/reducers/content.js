@@ -16,18 +16,6 @@ function content(state = defaultInitialState.content, action) {
         },
       }
 
-    case contentActionTypes.LOAD_TOC_FAILURE:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          [action.data.language]: {
-            ...state.data[action.data.language],
-            toc: [],
-          },
-        },
-      }
-
     case contentActionTypes.LOAD_SECTION:
       return {
         ...state,
