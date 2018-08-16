@@ -35,10 +35,6 @@ describe('initial state', () => {
   describe('content', () => {
     const { content } = state
 
-    test('loading flag false', () => {
-      expect(content.loading).toBe(false)
-    })
-
     test('current section null', () => {
       expect(content.currentSectionId).toBe(null)
     })

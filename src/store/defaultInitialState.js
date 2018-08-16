@@ -4,7 +4,6 @@ const defaultInitialState = {
     message: null,
   },
   content: {
-    loading: false,
     currentSectionId: null,
     data: {},
   },

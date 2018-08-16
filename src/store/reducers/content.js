@@ -5,7 +5,6 @@ import defaultInitialState, { defaultContentData } from '../defaultInitialState'
 const splitSectionId = id => id.split('/')
 
 export const selectors = {
-  getContentLoading: state => state.content.loading,
   getCurrentSectionId: state => state.content.currentSectionId,
   getSectionContent: (state, lang, id) => selectors.getLanguageContent(state, lang).sections[id],
   getLanguageContent: (state, language) => state.content.data[language],
@@ -14,6 +13,9 @@ export const selectors = {
     const idFragments = splitSectionId(id)
     let section = { children: selectors.getToc(state, language) }
     for (let i = 0; i < idFragments.length; i += 1) {
+      if (!section) {
+        return undefined // not loaded yet
+      }
       section = section.children.find(s => s.id === idFragments[i])
     }
     return section
@@ -71,14 +73,12 @@ function content(state = defaultInitialState.content, action) {
     case contentActionTypes.LOAD_SECTION:
       return {
         ...state,
-        loading: true,
         currentSectionId: null,
       }
 
     case contentActionTypes.LOAD_SECTION_SUCCESS:
       return {
         ...state,
-        loading: false,
         currentSectionId: action.data.id,
         data: {
           ...state.data,
@@ -95,7 +95,6 @@ function content(state = defaultInitialState.content, action) {
     case contentActionTypes.LOAD_SECTION_FAILURE:
       return {
         ...state,
-        loading: false,
         error: action.error,
       }
 

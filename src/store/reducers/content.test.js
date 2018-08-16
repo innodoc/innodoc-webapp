@@ -5,7 +5,6 @@ import defaultInitialState, { defaultContentData } from '../defaultInitialState'
 
 const state = {
   content: {
-    loading: false,
     currentSectionId: 'TEST01/foo/bar',
     data: {
       en: {
@@ -36,10 +35,6 @@ const state = {
 }
 
 describe('contentSelectors', () => {
-  test('getContentLoading', () => {
-    expect(selectors.getContentLoading(state)).toEqual(false)
-  })
-
   test('getCurrentSectionId', () => {
     expect(selectors.getCurrentSectionId(state)).toEqual('TEST01/foo/bar')
   })
@@ -99,7 +94,6 @@ describe('contentReducer', () => {
 
   test('LOAD_SECTION', () => {
     const newState = contentReducer(initialContentState, loadSection(78))
-    expect(newState.loading).toEqual(true)
     expect(newState.currentSectionId).toEqual(null)
   })
 
@@ -109,7 +103,6 @@ describe('contentReducer', () => {
       id: 'welcome/bar',
       content: [{ t: 'p', c: 'bar' }],
     }))
-    expect(newState.loading).toEqual(false)
     expect(newState.currentSectionId).toEqual('welcome/bar')
     expect(newState.data.en.sections).toEqual({
       'TEST01/foo/bar': [{ t: 'Para', c: 'Lorem ipsum.' }],
