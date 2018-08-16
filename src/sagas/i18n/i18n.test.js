@@ -1,38 +1,36 @@
 import {
   call,
-  fork,
-  getContext,
-  setContext,
   put,
   take,
+  takeLatest,
 } from 'redux-saga/effects'
 
-import watchI18n, { watchChangeLanguage } from './i18n'
-import { actionTypes, changeLanguage } from '../../store/actions/i18n'
+import watchI18nInstanceAvailable, { notifyI18next } from './i18n'
+import { actionTypes, changeLanguage, i18nInstanceAvailable } from '../../store/actions/i18n'
+import { toTwoLetterCode } from '../../lib/i18n'
 
 const language = 'de'
-const mockI18n = {
+const i18nMock = {
   changeLanguage: () => {},
   language,
 }
 
-describe('watchChangeLanguage', () => {
-  const gen = watchChangeLanguage()
+describe('notifyI18next', () => {
+  const gen = notifyI18next(i18nMock, changeLanguage(language))
 
-  it('should notify i18n on CHANGE_LANGUAGE', () => {
-    expect(gen.next().value).toEqual(take(actionTypes.CHANGE_LANGUAGE))
-    expect(gen.next({ language }).value).toEqual(getContext('i18n'))
-    expect(gen.next(mockI18n).value).toEqual(call([mockI18n, mockI18n.changeLanguage], language))
+  it('should notify i18n instance', () => {
+    expect(gen.next().value).toEqual(call([i18nMock, i18nMock.changeLanguage], language))
   })
 })
 
 describe('watchI18n', () => {
-  const gen = watchI18n()
+  const gen = watchI18nInstanceAvailable()
 
-  it('should wait for i18n instance, fork watchChangeLanguage and put changeLanguage', () => {
-    expect(gen.next().value).toEqual(take(actionTypes.I18N_CREATED))
-    expect(gen.next({ i18n: mockI18n }).value).toEqual(setContext({ i18n: mockI18n }))
-    expect(gen.next().value).toEqual(fork(watchChangeLanguage))
-    expect(gen.next().value).toEqual(put(changeLanguage(mockI18n.language)))
+  it('should receive i18n instance, normalize language, put changeLanguage and takeLatest', () => {
+    expect(gen.next().value).toEqual(take(actionTypes.I18N_INSTANCE_AVAILABLE))
+    expect(gen.next(i18nInstanceAvailable(i18nMock)).value).toEqual(call(toTwoLetterCode, language))
+    expect(gen.next(language).value).toEqual(put(changeLanguage(language)))
+    expect(gen.next().value).toEqual(
+      takeLatest(actionTypes.CHANGE_LANGUAGE, notifyI18next, i18nMock))
   })
 })

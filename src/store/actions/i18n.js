@@ -1,6 +1,6 @@
 export const actionTypes = {
   CHANGE_LANGUAGE: 'CHANGE_LANGUAGE',
-  I18N_CREATED: 'I18N_CREATED',
+  I18N_INSTANCE_AVAILABLE: 'I18N_INSTANCE_AVAILABLE',
 }
 
 export function changeLanguage(language) {
@@ -10,9 +10,9 @@ export function changeLanguage(language) {
   }
 }
 
-export function i18nCreated(i18n) {
+export function i18nInstanceAvailable(i18n) {
   return {
-    type: actionTypes.I18N_CREATED,
+    type: actionTypes.I18N_INSTANCE_AVAILABLE,
     i18n,
   }
 }

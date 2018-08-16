@@ -15,8 +15,8 @@ export function* notifyI18next(i18n, { language }) {
 // Wait for i18n instance and set initial language. i18next does language
 // detection. Once the initial language is set, the store becomes the
 // source of truth.
-export default function* watchI18nInstanceCreated() {
-  const { i18n } = yield take(actionTypes.I18N_CREATED)
+export default function* watchI18nInstanceAvailable() {
+  const { i18n } = yield take(actionTypes.I18N_INSTANCE_AVAILABLE)
   // normalize language (header might give something like 'en-US' but we're
   // using the two-letter code.
   const language = yield call(toTwoLetterCode, i18n.language)
