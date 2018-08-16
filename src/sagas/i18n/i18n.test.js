@@ -20,6 +20,7 @@ describe('notifyI18next', () => {
 
   it('should notify i18n instance', () => {
     expect(gen.next().value).toEqual(call([i18nMock, i18nMock.changeLanguage], language))
+    expect(gen.next().done).toEqual(true)
   })
 })
 
@@ -32,5 +33,6 @@ describe('watchI18n', () => {
     expect(gen.next(language).value).toEqual(put(changeLanguage(language)))
     expect(gen.next().value).toEqual(
       takeLatest(actionTypes.CHANGE_LANGUAGE, notifyI18next, i18nMock))
+    expect(gen.next().done).toEqual(true)
   })
 })

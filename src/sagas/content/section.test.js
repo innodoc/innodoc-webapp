@@ -1,51 +1,51 @@
-import {
-  call,
-  fork,
-  put,
-  select,
-  take,
-} from 'redux-saga/effects'
+import { call, put, select } from 'redux-saga/effects'
 import { cloneableGenerator } from 'redux-saga/utils'
 
-import watchLoadSection, { loadSection } from './section'
-import { actionTypes, loadSectionSuccess, loadSectionFailure } from '../../store/actions/content'
+import loadSectionSaga from './section'
+import { loadSection, loadSectionSuccess, loadSectionFailure } from '../../store/actions/content'
 import { fetchSection } from '../../lib/api'
-import { selectors } from '../../store/reducers/content'
+import { selectors as contentSelectors } from '../../store/reducers/content'
+import { selectors as i18nSelectors } from '../../store/reducers/i18n'
 
-describe('loadSection', () => {
+describe('loadSectionSaga', () => {
   const language = 'en'
   const id = 78
   const content = ['sectioncontent']
 
-  const gen = cloneableGenerator(loadSection)(language, id)
+  const gen = cloneableGenerator(loadSectionSaga)(loadSection(id))
+
+  it('should not fetch a section without language', () => {
+    const clone = gen.clone()
+    expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
+    expect(clone.next().done).toEqual(true)
+  })
 
   it('should fetch a section', () => {
     const clone = gen.clone()
-    expect(clone.next().value).toEqual(select(selectors.getSectionContent, language, id))
+    expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
+    expect(clone.next(language).value).toEqual(
+      select(contentSelectors.getSectionContent, language, id))
     expect(clone.next().value).toEqual(call(fetchSection, language, id))
     expect(clone.next(content).value).toEqual(put(loadSectionSuccess({ language, id, content })))
+    expect(clone.next().done).toEqual(true)
   })
 
   it('should return cached section', () => {
     const clone = gen.clone()
-    expect(clone.next().value).toEqual(select(selectors.getSectionContent, language, id))
+    expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
+    expect(clone.next(language).value).toEqual(
+      select(contentSelectors.getSectionContent, language, id))
     expect(clone.next(content).value).toEqual(put(loadSectionSuccess({ language, id, content })))
+    expect(clone.next().done).toEqual(true)
   })
 
   it('should put loadSectionFailure on error', () => {
     const clone = gen.clone()
-    expect(clone.next().value).toEqual(select(selectors.getSectionContent, language, id))
+    expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
+    expect(clone.next(language).value).toEqual(
+      select(contentSelectors.getSectionContent, language, id))
     expect(clone.next().value).toEqual(call(fetchSection, language, id))
     const error = new Error('error')
     expect(clone.throw(error).value).toEqual(put(loadSectionFailure({ language, error })))
-  })
-})
-
-describe('watchLoadSection', () => {
-  const gen = watchLoadSection()
-
-  xit('should fork loadSection saga on LOAD_SECTION', () => {
-    expect(gen.next().value).toEqual(take(actionTypes.LOAD_SECTION))
-    expect(gen.next(67).value).toEqual(fork(loadSection, 67))
   })
 })

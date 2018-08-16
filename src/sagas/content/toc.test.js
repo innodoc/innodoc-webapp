@@ -1,61 +1,47 @@
-import {
-  call,
-  fork,
-  put,
-  select,
-  take,
-} from 'redux-saga/effects'
+import { call, put, select } from 'redux-saga/effects'
 import { cloneableGenerator } from 'redux-saga/utils'
 
-import watchLoadToc, { loadToc } from './toc'
-import { actionTypes, loadTocSuccess, loadTocFailure } from '../../store/actions/content'
-import { actionTypes as i18nActionTypes } from '../../store/actions/i18n'
+import loadTocSaga from './toc'
+import { loadToc, loadTocSuccess, loadTocFailure } from '../../store/actions/content'
 import { selectors as contentSelectors } from '../../store/reducers/content'
 import { selectors as i18nSelectors } from '../../store/reducers/i18n'
 import { fetchToc } from '../../lib/api'
 
 const language = 'de'
 
-describe('loadToc', () => {
+describe('loadTocSaga', () => {
   const content = ['toccontent']
-  const gen = cloneableGenerator(loadToc)(language)
+  const gen = cloneableGenerator(loadTocSaga)(loadToc())
+
+  it('should not fetch the TOC without language', () => {
+    const clone = gen.clone()
+    expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
+    expect(clone.next().done).toEqual(true)
+  })
 
   it('should fetch the TOC', () => {
     const clone = gen.clone()
-    expect(clone.next().value).toEqual(select(contentSelectors.getToc, language))
+    expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
+    expect(clone.next(language).value).toEqual(select(contentSelectors.getToc, language))
     expect(clone.next().value).toEqual(call(fetchToc, language))
     expect(clone.next(content).value).toEqual(put(loadTocSuccess({ language, content })))
+    expect(clone.next().done).toEqual(true)
   })
 
-  it('should return cached TOC', () => {
+  it('should return TOC from store', () => {
     const clone = gen.clone()
-    expect(clone.next().value).toEqual(select(contentSelectors.getToc, language))
+    expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
+    expect(clone.next(language).value).toEqual(select(contentSelectors.getToc, language))
     expect(clone.next(content).value).toEqual(put(loadTocSuccess({ language, content })))
+    expect(clone.next().done).toEqual(true)
   })
 
   it('should put loadTocFailure on error', () => {
     const clone = gen.clone()
-    expect(clone.next().value).toEqual(select(contentSelectors.getToc, language))
+    expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
+    expect(clone.next(language).value).toEqual(select(contentSelectors.getToc, language))
     expect(clone.next().value).toEqual(call(fetchToc, language))
     const error = new Error('error')
     expect(clone.throw(error).value).toEqual(put(loadTocFailure({ language, error })))
-  })
-})
-
-describe('watchLoadToc', () => {
-  const gen = watchLoadToc()
-
-  xit('should select languageuage and fork loadToc on LOAD_TOC', () => {
-    expect(gen.next().value).toEqual(take(actionTypes.LOAD_TOC))
-    expect(gen.next().value).toEqual(select(i18nSelectors.getlanguageuage))
-    expect(gen.next(language).value).toEqual(fork(loadToc, language))
-  })
-
-  xit('should wait for changelanguageuage and then fork loadToc if languageuage not available', () => {
-    expect(gen.next().value).toEqual(take(actionTypes.LOAD_TOC))
-    expect(gen.next().value).toEqual(select(i18nSelectors.getlanguageuage))
-    expect(gen.next().value).toEqual(take(i18nActionTypes.CHANGE_languageUAGE))
-    expect(gen.next().value).toEqual(select(i18nSelectors.getlanguageuage))
-    expect(gen.next(language).value).toEqual(fork(loadToc, language))
   })
 })
