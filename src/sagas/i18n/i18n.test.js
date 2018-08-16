@@ -8,7 +8,7 @@ import {
 } from 'redux-saga/effects'
 
 import watchI18n, { watchChangeLanguage } from './i18n'
-import { actionTypes, changeLanguage } from '../store/actions/i18n'
+import { actionTypes, changeLanguage } from '../../store/actions/i18n'
 
 const language = 'de'
 const mockI18n = {

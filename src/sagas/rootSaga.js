@@ -1,21 +1,13 @@
-import es6promise from 'es6-promise'
-import { all, fork } from 'redux-saga/effects'
+import { all } from 'redux-saga/effects'
 
-import watchI18n from './i18n'
-import { watchLoadToc, watchLoadSection } from './content'
-import watchExerciseChange from './exercise'
+import i18nSagas from './i18n'
+import contentSagas from './content'
+import exerciseSagas from './exercise'
 
-es6promise.polyfill() // for IE
-
-export default function* root() {
+export default function* rootSaga() {
   yield all([
-    // i18n
-    fork(watchI18n),
-    // fork(watchChangeLanguage),
-    // content
-    fork(watchLoadToc),
-    fork(watchLoadSection),
-    // exercise
-    fork(watchExerciseChange),
+    ...i18nSagas,
+    ...contentSagas,
+    ...exerciseSagas,
   ])
 }

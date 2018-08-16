@@ -8,7 +8,7 @@ import {
 import {
   exerciseToggleSolved,
   actionTypes as exerciseActionTypes,
-} from '../store/actions/exercises'
+} from '../../store/actions/exercises'
 
 function* exerciseInputChanged(payload) {
   const {

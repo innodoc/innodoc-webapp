@@ -6,8 +6,8 @@ import {
   setContext,
   put,
 } from 'redux-saga/effects'
-import { actionTypes, changeLanguage } from '../store/actions/i18n'
-import { toTwoLetterCode } from '../lib/i18n'
+import { actionTypes, changeLanguage } from '../../store/actions/i18n'
+import { toTwoLetterCode } from '../../lib/i18n'
 
 // Notify i18next about language changes
 export function* watchChangeLanguage() {
