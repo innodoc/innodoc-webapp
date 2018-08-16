@@ -1,0 +1,8 @@
+{
+  "globals": {
+    "visit": true,
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": 0
+  }
+}

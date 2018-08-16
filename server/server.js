@@ -13,9 +13,6 @@ const rootDir = `${__dirname}/..`
 const srcDir = `${rootDir}/src`
 const localesDir = `${srcDir}/locales`
 
-// node environment
-const dev = process.env.NODE_ENV !== 'production'
-
 // load configuration
 const dotEnvFile = path.normalize(`${rootDir}/.env`)
 if (!fs.existsSync(dotEnvFile)) {
@@ -25,10 +22,27 @@ if (!fs.existsSync(dotEnvFile)) {
 }
 Dotenv.config({ path: dotEnvFile })
 
+let nodeEnv
+let portVarName
+if (process.env.NODE_ENV === 'production') {
+  nodeEnv = 'production'
+  portVarName = 'PROD_PORT'
+} else if (process.env.NODE_ENV === 'test') {
+  nodeEnv = 'test'
+  portVarName = 'E2E_PORT'
+} else {
+  nodeEnv = 'development'
+  portVarName = 'DEV_PORT'
+}
+const port = process.env[portVarName]
+if (!port) {
+  throw new Error(`You need to configure ${portVarName} in your .env file!`)
+}
+
 // create next.js app
 const app = next({
   dir: srcDir,
-  dev,
+  dev: nodeEnv === 'development',
 })
 
 // init i18next with serverside settings
@@ -77,14 +91,7 @@ i18nInstance
 
         server.get('*', (req, res) => handle(req, res))
 
-        const port = dev ? process.env.DEV_PORT : process.env.PROD_PORT
-
-        if (!port) {
-          const varName = dev ? 'DEV_PORT' : 'PROD_PORT'
-          throw new Error(`You need to configure ${varName} your local .env file!`)
-        }
-
-        console.info(`Starting server on port ${port}.`)
+        console.info(`Starting ${nodeEnv} server on port ${port}.`)
 
         server.listen(port, (err) => {
           if (err) { throw err }
