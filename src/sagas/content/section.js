@@ -1,7 +1,7 @@
 import { call, put, select } from 'redux-saga/effects'
 
-import { selectors } from '../../store/reducers/content'
-import { selectors as i18nSelectors } from '../../store/reducers/i18n'
+import selectors from '../../store/selectors/content'
+import i18nSelectors from '../../store/selectors/i18n'
 import { loadSectionSuccess, loadSectionFailure } from '../../store/actions/content'
 import { fetchSection } from '../../lib/api'
 import { showMessage } from '../../store/actions/ui'

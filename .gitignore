@@ -6,3 +6,4 @@ node_modules
 src/locales/en/*.missing.json
 .env
 coverage
+src/static/content

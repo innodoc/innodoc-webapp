@@ -16,14 +16,14 @@ describe('<SectionNav />', () => {
 
   it('renders', () => {
     const wrapper = shallow(
-      <SectionNav prevSection={prevSection} nextSection={nextSection} />
+      <SectionNav prev={prevSection} next={nextSection} />
     )
     const sectionLinks = wrapper.find(SectionLink)
     expect(sectionLinks).toHaveLength(2)
     const prevSectionLink = sectionLinks.at(0)
     const nextSectionLink = sectionLinks.at(1)
-    expect(prevSectionLink.prop('sectionId')).toBe(prevSection.id)
-    expect(nextSectionLink.prop('sectionId')).toBe(nextSection.id)
+    expect(prevSectionLink.prop('sectionId')).toBe(prevSection.path)
+    expect(nextSectionLink.prop('sectionId')).toBe(nextSection.path)
     expect(prevSectionLink.find('a')).toExist()
     expect(nextSectionLink.find('a')).toExist()
     const prevSectionInnerLink = prevSectionLink.find('a')

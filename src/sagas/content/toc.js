@@ -1,7 +1,7 @@
 import { call, put, select } from 'redux-saga/effects'
 
-import { selectors as contentSelectors } from '../../store/reducers/content'
-import { selectors as i18nSelectors } from '../../store/reducers/i18n'
+import contentSelectors from '../../store/selectors/content'
+import i18nSelectors from '../../store/selectors/i18n'
 import { loadTocSuccess, loadTocFailure } from '../../store/actions/content'
 import { showMessage } from '../../store/actions/ui'
 import { fetchToc } from '../../lib/api'
