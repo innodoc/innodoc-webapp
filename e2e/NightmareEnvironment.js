@@ -1,16 +1,16 @@
 /* eslint-disable no-console */
 
-const NodeEnvironment = require('jest-environment-node')
-const nightmare = require('nightmare')
-const url = require('url')
-const waitPort = require('wait-port')
-const { spawn } = require('child_process')
+const http = require('http')
 const path = require('path')
+const { spawn } = require('child_process')
+const url = require('url')
+const NodeEnvironment = require('jest-environment-node')
+const ecstatic = require('ecstatic')
+const nightmare = require('nightmare')
+const waitPort = require('wait-port')
 
 const TEST_PORT = 7000
 const CONTENT_PORT = 7001
-const WAIT_PORT_OPTS = { timeout: 3000, output: 'silent' }
-const SPAWN_OPTS = { cwd: path.join(__dirname, '..'), detached: true }
 
 const BASE_URL = url.format({
   protocol: 'http',
@@ -29,12 +29,6 @@ const handleError = (err) => {
   throw err
 }
 
-const printProcessOutput = prefix => (
-  process.env.DEBUG
-    ? (data) => { console.log(`${prefix}: ${data.toString()}`) }
-    : () => {}
-)
-
 class NightmareEnvironment extends NodeEnvironment {
   async setup() {
     await super.setup()
@@ -42,27 +36,39 @@ class NightmareEnvironment extends NodeEnvironment {
     // spawn app server
 
     this.serverProcess = spawn('npm', ['run', 'start'], {
-      ...SPAWN_OPTS,
+      cwd: path.join(__dirname, '..'),
+      detached: true,
       env: { PROD_PORT: TEST_PORT },
     })
     this.serverProcess.on('error', handleError)
-    this.serverProcess.stdout.on('data', printProcessOutput('Server STDOUT'))
+    this.serverProcess.stdout.on('data', (data) => {
+      if (process.env.DEBUG) {
+        console.log(`'Server STDOUT': ${data.toString()}`)
+      }
+    })
     this.serverProcess.stderr.on('data', (data) => {
       throw new Error(`FATAL: Server is printing to STDERR: ${data.toString()}`)
     })
-
-    if (!await waitPort({ ...WAIT_PORT_OPTS, port: TEST_PORT })) {
+    if (!await waitPort({ timeout: 3000, output: 'silent', port: TEST_PORT })) {
       throw new Error("Server didn't come up!")
     }
 
     // spawn content server
+    await new Promise((resolve, reject) => {
+      this.contentServer = http.createServer(ecstatic({
+        root: path.join(__dirname, 'content'),
+        cors: true,
+      })).listen(CONTENT_PORT, (err) => {
+        if (err) {
+          reject(err)
+        }
+        resolve()
+      })
+    })
 
-    // if (!await waitPort({ ...WAIT_PORT_OPTS, port: CONTENT_PORT })) {
-    //   throw new Error('Content server timeout…')
-    // }
+    console.log('content server listening!', this.contentServer)
 
     // visit function used in tests
-
     this.global.visit = (pathFragment) => {
       const location = url.resolve(BASE_URL, pathFragment)
       this.browser = nightmare({
@@ -82,6 +88,9 @@ class NightmareEnvironment extends NodeEnvironment {
     }
     if (this.serverProcess.pid) {
       process.kill(-this.serverProcess.pid)
+    }
+    if (this.contentServer.listening) {
+      this.contentServer.close()
     }
     await super.teardown()
   }

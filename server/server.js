@@ -27,9 +27,6 @@ let portVarName
 if (process.env.NODE_ENV === 'production') {
   nodeEnv = 'production'
   portVarName = 'PROD_PORT'
-} else if (process.env.NODE_ENV === 'test') {
-  nodeEnv = 'test'
-  portVarName = 'E2E_PORT'
 } else {
   nodeEnv = 'development'
   portVarName = 'DEV_PORT'

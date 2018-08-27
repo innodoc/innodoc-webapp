@@ -1,5 +1,5 @@
 describe('When visiting innoDoc webapp', () => {
-  it('loads', async () => {
+  it("loads and there's no error", async () => {
     const page = visit('/')
 
     const title = await page.title()
