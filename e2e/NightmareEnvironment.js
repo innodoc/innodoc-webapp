@@ -34,7 +34,7 @@ class NightmareEnvironment extends NodeEnvironment {
     await super.setup()
 
     // spawn app server
-
+    // TODO: find solution for setting CONTENT_ROOT dynamically
     this.serverProcess = spawn('npm', ['run', 'start'], {
       cwd: path.join(__dirname, '..'),
       detached: true,
@@ -65,8 +65,7 @@ class NightmareEnvironment extends NodeEnvironment {
         resolve()
       })
     })
-
-    console.log('content server listening!', this.contentServer)
+    console.log(`Content server listening on ${BASE_CONTENT_URL}`)
 
     // visit function used in tests
     this.global.visit = (pathFragment) => {

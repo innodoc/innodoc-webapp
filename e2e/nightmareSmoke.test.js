@@ -11,7 +11,13 @@ describe('When visiting innoDoc webapp', () => {
     const text = await page.evaluate(() => document.body.textContent)
     expect(text).toContain('Preparatory Mathematics')
 
-    const modalText = await page.evaluate(() => document.querySelector('.modal').textContent)
+    const modalText = await page.evaluate(() => {
+      const modal = document.querySelector('.modal')
+      if (modal) {
+        return modal.textContent
+      }
+      return ''
+    })
     expect(modalText.toLowerCase()).not.toContain('error')
   })
 
