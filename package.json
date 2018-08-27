@@ -17,13 +17,13 @@
     "dev": "babel-node server/server.js",
     "lint": "eslint src server",
     "start": "NODE_ENV=production babel-node server/server.js",
-    "start:e2e": "NODE_ENV=test babel-node server/server.js",
-    "test": "npm run test && npm run test:e2e",
+    "start:e2e": "NODE_ENV=test E2E_PORT=7000 babel-node server/server.js",
+    "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:e2e": "jest --config jest.e2e.config.js",
-    "test:ci-e2e": "npm run build && start-server-and-test start:e2e 7000 test:e2e"
+    "test:ci-e2e": "npm run build && start-server-and-test start:e2e 7000 start:serve-content 7001 test:e2e"
   },
   "keywords": [
     "innodoc",
