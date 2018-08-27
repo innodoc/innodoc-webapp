@@ -47,7 +47,9 @@ class NightmareEnvironment extends NodeEnvironment {
     })
     this.serverProcess.on('error', handleError)
     this.serverProcess.stdout.on('data', printProcessOutput('Server STDOUT'))
-    this.serverProcess.stderr.on('data', printProcessOutput('Server STDERR'))
+    this.serverProcess.stderr.on('data', (data) => {
+      throw new Error(`FATAL: Server is printing to STDERR: ${data.toString()}`)
+    })
 
     if (!await waitPort({ ...WAIT_PORT_OPTS, port: TEST_PORT })) {
       throw new Error("Server didn't come up!")
