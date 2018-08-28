@@ -3,8 +3,8 @@ import { cloneableGenerator } from 'redux-saga/utils'
 
 import loadTocSaga from './toc'
 import { loadToc, loadTocSuccess, loadTocFailure } from '../../store/actions/content'
-import { selectors as contentSelectors } from '../../store/reducers/content'
-import { selectors as i18nSelectors } from '../../store/reducers/i18n'
+import contentSelectors from '../../store/selectors/content'
+import i18nSelectors from '../../store/selectors/i18n'
 import { fetchToc } from '../../lib/api'
 
 const language = 'de'

@@ -4,11 +4,12 @@ import { connect } from 'react-redux'
 import { Dimmer, Header, Loader } from 'semantic-ui-react'
 import { translate } from 'react-i18next'
 
-import { selectors as contentSelectors } from '../../../store/reducers/content'
-import { selectors as i18nSelectors } from '../../../store/reducers/i18n'
+import contentSelectors from '../../../store/selectors/content'
+import i18nSelectors from '../../../store/selectors/i18n'
 import withMathJax from '../../hoc/withMathJax'
 import ContentFragment from '../ContentFragment'
 import BreadcrumbWrapper from '../BreadcrumbWrapper'
+import SectionNav from '../SectionNav'
 import Placeholder from './Placeholder'
 import Toc from '../../Toc'
 import { sectionType } from '../../../lib/propTypes'
@@ -52,6 +53,7 @@ class Content extends React.Component {
       ? <Placeholder />
       : (
         <React.Fragment>
+          <SectionNav />
           <BreadcrumbWrapper />
           <Header as="h1">
             <ContentFragment content={section.title} />
@@ -88,7 +90,7 @@ class Content extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const id = contentSelectors.getCurrentSectionId(state)
+  const id = contentSelectors.getCurrentSectionPath(state)
   if (id) {
     const language = i18nSelectors.getLanguage(state)
     const section = contentSelectors.getSection(state, language, id)
