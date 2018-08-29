@@ -31,6 +31,8 @@ module.exports = withBundleAnalyzer(withSass({
   webpack: (config) => {
     config.plugins.push(new Dotenv({
       path: `${__dirname}/.env`,
+      safe: true,
+      systemvars: true,
     }))
     return config
   },
