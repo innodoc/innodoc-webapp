@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import express from 'express'
 import next from 'next'
-import Dotenv from 'dotenv'
+import Dotenv from 'dotenv-safe'
 import i18nextMiddleware, { LanguageDetector } from 'i18next-express-middleware'
 import Backend from 'i18next-node-fs-backend'
 
