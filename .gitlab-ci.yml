@@ -4,6 +4,7 @@ stages:
   - setup
   - build
   - test
+  - deploy
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -34,3 +35,18 @@ jest:
   stage: test
   script: npm run test:coverage
   coverage: '/^Statements\s*:\s*([^%]+)/'
+
+deploy_staging:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$STAGING_PRIVKEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - echo "$STAGING_SERVER_PUBKEY" > ~/.ssh/known_hosts
+  script:
+    - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa $STAGING_SERVER_USER@$STAGING_SERVER "$STAGING_DEPLOY_CMD"
+  environment: staging
+  only:
+    - master
