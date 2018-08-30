@@ -9,7 +9,7 @@ const AboutPage = () => (
   <Layout>
     <p>
       This is the about page
-      COOL! DEPLOY! YEAH!!!
+      COOL! DEPLOY! YEAH!!! TWEI!
     </p>
   </Layout>
 )
