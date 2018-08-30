@@ -46,8 +46,7 @@ deploy_staging:
     - chmod 600 ~/.ssh/id_rsa
     - echo "$STAGING_SERVER_PUBKEY" > ~/.ssh/known_hosts
   script:
-    - cat ~/.ssh/known_hosts
-    - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa $STAGING_SERVER_USER@$STAGING_SERVER "~/veundmint-docker/deploy-staging.sh $STAGING_GIT_REPO $STAGING_CONTENT_ROOT"
+    - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa $STAGING_SERVER_USER@$STAGING_SERVER "$STAGING_DEPLOY_CMD"
   environment: staging
   only:
     - gitlab-cd-deploy
