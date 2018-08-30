@@ -1,6 +1,7 @@
 FROM node:alpine
 
 ARG GIT_REPO=https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp.git
+ARG GIT_BRANCH=master
 ARG CONTENT_ROOT
 
 RUN set -xe && \
@@ -21,7 +22,7 @@ RUN set -xe && \
 USER innodoc
 
 RUN set -xe && \
-    git clone ${GIT_REPO} . && \
+    git clone -b ${GIT_BRANCH} --single-branch ${GIT_REPO} . && \
     git submodule init && \
     git submodule update --remote && \
     npm install && \
