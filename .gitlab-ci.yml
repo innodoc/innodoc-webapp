@@ -44,8 +44,7 @@ deploy_staging:
     - mkdir -p ~/.ssh
     - echo "$STAGING_PRIVKEY" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
-    - echo "$STAGING_SERVER_PUBKEY" > ~/.ssh/known_hosts
-  script:
+    script:
     - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa $STAGING_SERVER_USER@$STAGING_SERVER "$STAGING_DEPLOY_CMD"
   environment: staging
   only:
