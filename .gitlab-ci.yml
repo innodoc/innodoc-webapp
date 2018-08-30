@@ -2,6 +2,9 @@ image: node:latest
 
 stages:
   - deploy
+  - setup
+  - build
+  - test
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
