@@ -1,9 +1,9 @@
 image: node:latest
 
 stages:
-  - setup
-  - build
-  - test
+#  - setup
+#  - build
+#  - test
   - deploy
 
 cache:
