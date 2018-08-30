@@ -47,7 +47,7 @@ deploy_staging:
     - echo "$STAGING_SERVER_PUBKEY" > ~/.ssh/known_hosts
   script:
     - cat ~/.ssh/known_hosts
-    - ssh -tt -o UserKnownHostsFile=~/.ssh/known_hosts -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa $STAGING_SERVER_USER@$STAGING_SERVER "cd ~/veundmint-docker && BRANCH=$STAGING_BRANCH docker-compose build --no-cache --build-arg CONTENT_ROOT=$STAGING_CONTENT_ROOT innodoc-webapp-staging && docker-compose restart innodoc-webapp-staging"
+    - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa $STAGING_SERVER_USER@$STAGING_SERVER "~/veundmint-docker/deploy-staging.sh $STAGING_DOCKER_BUILD_CONTEXT $STAGING_CONTENT_ROOT"
   environment: staging
   only:
     - gitlab-cd-deploy
