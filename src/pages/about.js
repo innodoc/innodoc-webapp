@@ -9,6 +9,7 @@ const AboutPage = () => (
   <Layout>
     <p>
       This is the about page
+      COOL! DEPLOY! YEAH!!!
     </p>
   </Layout>
 )
