@@ -40,15 +40,14 @@ deploy_staging:
   stage: deploy
   image: alpine:latest
   before_script:
-    - echo "BEFORE_SCRIPT RUNNING"
     - apk add --no-cache openssh-client
     - mkdir -p ~/.ssh
     - echo "$STAGING_PRIVKEY" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
-    - echo "$STAGING_SERVER_PUBKEY" >> ~/.ssh/known_hosts
+    - echo "$STAGING_SERVER_PUBKEY" > ~/.ssh/known_hosts
   script:
-    - echo "SCRIPT RUNNING"
-    - ssh -t -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa $STAGING_SERVER_USER@$STAGING_SERVER "cd ~/veundmint-docker && docker-compose build --no-cache --build-arg CONTENT_ROOT=$STAGING_CONTENT_ROOT innodoc-webapp-staging && docker-compose restart innodoc-webapp-staging"
+    - cat ~/.ssh/known_hosts
+    - ssh -tt -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa $STAGING_SERVER_USER@$STAGING_SERVER "cd ~/veundmint-docker && docker-compose build --no-cache --build-arg CONTENT_ROOT=$STAGING_CONTENT_ROOT innodoc-webapp-staging && docker-compose restart innodoc-webapp-staging"
   environment: staging
   only:
     - gitlab-cd-deploy
