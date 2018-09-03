@@ -15,8 +15,9 @@ export default function* loadTocSaga() {
       yield put(loadTocSuccess({ language, content }))
     } else {
       // fetch from remote
+      const contentRoot = yield select(contentSelectors.getContentRoot)
       try {
-        content = yield call(fetchToc, language)
+        content = yield call(fetchToc, contentRoot, language)
         yield put(loadTocSuccess({ language, content }))
       } catch (error) {
         yield put(loadTocFailure({ language, error }))

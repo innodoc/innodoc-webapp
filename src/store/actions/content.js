@@ -5,6 +5,7 @@ export const actionTypes = {
   LOAD_SECTION: 'LOAD_SECTION',
   LOAD_SECTION_SUCCESS: 'LOAD_SECTION_SUCCESS',
   LOAD_SECTION_FAILURE: 'LOAD_SECTION_FAILURE',
+  SET_CONTENT_ROOT: 'SET_CONTENT_ROOT',
 }
 
 export function loadToc() {
@@ -45,5 +46,12 @@ export function loadSectionFailure(error) {
   return {
     type: actionTypes.LOAD_SECTION_FAILURE,
     error,
+  }
+}
+
+export function setContentRoot(contentRoot) {
+  return {
+    type: actionTypes.SET_CONTENT_ROOT,
+    contentRoot,
   }
 }

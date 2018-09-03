@@ -2,6 +2,7 @@ import selectors from './content'
 
 const state = {
   content: {
+    contentRoot: 'https://content.foo.bar.com',
     currentSectionId: 'TEST01/foo/bar',
     data: {
       en: {
@@ -36,6 +37,10 @@ const state = {
 }
 
 describe('contentSelectors', () => {
+  test('getContentRoot', () => {
+    expect(selectors.getContentRoot(state)).toEqual('https://content.foo.bar.com')
+  })
+
   test('getCurrentSectionPath', () => {
     expect(selectors.getCurrentSectionPath(state)).toEqual('TEST01/foo/bar')
   })

@@ -35,6 +35,10 @@ describe('initial state', () => {
   describe('content', () => {
     const { content } = state
 
+    test('content root to be empty string', () => {
+      expect(content.contentRoot).toBe('')
+    })
+
     test('current section null', () => {
       expect(content.currentSectionId).toBe(null)
     })

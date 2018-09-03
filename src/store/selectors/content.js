@@ -67,6 +67,8 @@ const getCurrentAndParentSection = sections => (
 
 // Selectors
 
+const getContentRoot = state => state.content.contentRoot
+
 const getCurrentSectionPath = state => state.content.currentSectionId
 
 const getLanguageContent = (state, language) => state.content.data[language]
@@ -185,6 +187,7 @@ const getNavSections = (state) => {
 }
 
 export default {
+  getContentRoot,
   getCurrentSectionPath,
   getSectionContent,
   getLanguageContent,

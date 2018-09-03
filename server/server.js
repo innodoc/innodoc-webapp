@@ -54,6 +54,12 @@ i18nInstance
         const server = express()
         const handle = app.getRequestHandler()
 
+        // set CONTENT_ROOT
+        server.use((req, res, _next) => {
+          res.locals.contentRoot = process.env.CONTENT_ROOT
+          _next()
+        })
+
         // enable middleware for i18next
         server.use(i18nextMiddleware.handle(i18nInstance))
 
