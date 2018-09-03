@@ -4,47 +4,53 @@
 
 HTML viewer for interactive educational content.
 
-## Setup environment
+## Running
 
-### Requirements
+### Using Docker
+
+You can use the provided `Dockerfile` to run the application.
+
+    $ docker build \
+      --tag innodoc-webapp \
+      --build-arg CONTENT_ROOT=https://example.com/content/ \
+      https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp.git
+    $ docker run -d -p 8000:8000 innodoc-webapp
+
+### Manually
+
+#### Requirements
 
 Please make sure you have a current version of [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your system. Use your package manager of choice or use [nvm](https://github.com/creationix/nvm) for an installation in your home directory.
 
-### Install dependencies
+#### Install dependencies
 
 Install node packages
 ```sh
 $ npm install
 ```
-Install Mathjax submodule
+Install MathJax submodule
 ```sh
 $ git submodule init
 $ git submodule update --remote
 ```
 
-## Deployment
-
-### Configuration
+#### Configuration
 
 Copy example configuration `.env.example` to `.env` and edit to your liking.
+The web app is loading course content from `CONTENT_ROOT`. You may want to
+adjust this built-time variable.
 
-```sh
-$ cp .env.example .env
-```
-
-### Build
+#### Build bundles
 
 ```sh
 $ npm run build
 ```
 
-### Production server
+#### Start production server
 
 ```sh
 $ npm run start
 ```
-
-Find the resulting build in `.next/dist`.
 
 ## Development
 
