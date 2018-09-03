@@ -13,13 +13,13 @@ function fetchJson(url, accept404 = false) {
     })
 }
 
-export function fetchToc(language) {
-  const url = `${process.env.CONTENT_ROOT}${language}/toc.json`
+export function fetchToc(contentRoot, language) {
+  const url = `${contentRoot}${language}/toc.json`
   return fetchJson(url)
 }
 
-export function fetchSection(language, sectionId) {
+export function fetchSection(contentRoot, language, sectionId) {
   // 404 is ok and means section doesn't have any content
-  const url = `${process.env.CONTENT_ROOT}${language}/${sectionId}/content.json`
+  const url = `${contentRoot}${language}/${sectionId}/content.json`
   return fetchJson(url, [])
 }

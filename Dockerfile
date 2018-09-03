@@ -2,7 +2,7 @@ FROM node:alpine
 
 ARG GIT_REPO=https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp.git
 ARG GIT_BRANCH=master
-ARG CONTENT_ROOT
+ENV CONTENT_ROOT
 EXPOSE 8000
 
 RUN set -xe && \
@@ -27,7 +27,7 @@ RUN set -xe && \
     git submodule init && \
     git submodule update --remote && \
     npm install && \
-    cat .env.example | sed '/CONTENT_ROOT=/c\CONTENT_ROOT='${CONTENT_ROOT} > .env && \
+    cp .env.example .env && \
     npm run build
 
 USER root

@@ -56,6 +56,12 @@ function content(state = defaultInitialState.content, action) {
         error: action.error,
       }
 
+    case contentActionTypes.SET_CONTENT_ROOT:
+      return {
+        ...state,
+        contentRoot: action.contentRoot,
+      }
+
     // initialize language data if necessary
     case i18nActionTypes.CHANGE_LANGUAGE:
       return {

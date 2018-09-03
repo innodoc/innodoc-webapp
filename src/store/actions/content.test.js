@@ -5,6 +5,7 @@ import {
   loadSection,
   loadSectionSuccess,
   loadSectionFailure,
+  setContentRoot,
 } from './content'
 
 it('should dispatch LOAD_TOC action', () => {
@@ -49,5 +50,12 @@ it('should dispatch LOAD_SECTION_FAILURE action', () => {
   expect(loadSectionFailure(error)).toEqual({
     type: 'LOAD_SECTION_FAILURE',
     error,
+  })
+})
+
+it('should dispatch SET_CONTENT_ROOT action', () => {
+  expect(setContentRoot('https://content.example.com/')).toEqual({
+    type: 'SET_CONTENT_ROOT',
+    contentRoot: 'https://content.example.com/',
   })
 })

@@ -5,18 +5,20 @@ import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 
 import configureStore from '../store'
-import { loadToc } from '../store/actions/content'
+import { setContentRoot, loadToc } from '../store/actions/content'
 
 class InnoDocApp extends App {
   static async getInitialProps({ Component, ctx }) {
-    // initially load TOC
-    ctx.store.dispatch(loadToc())
-
+    if (ctx.isServer) {
+      // set initial content URL
+      ctx.store.dispatch(setContentRoot(ctx.res.locals.contentRoot))
+      // initially load TOC
+      ctx.store.dispatch(loadToc())
+    }
     // call getInitialProps from page
     const pageProps = Component.getInitialProps
       ? await Component.getInitialProps(ctx)
       : {}
-
     return { pageProps }
   }
 

@@ -1,5 +1,5 @@
 import contentReducer from './content'
-import { loadSection, loadSectionSuccess } from '../actions/content'
+import { loadSection, loadSectionSuccess, setContentRoot } from '../actions/content'
 import { changeLanguage } from '../actions/i18n'
 import defaultInitialState, { defaultContentData } from '../defaultInitialState'
 
@@ -61,6 +61,11 @@ describe('contentReducer', () => {
       'TEST01/foo/bar': [{ t: 'Para', c: 'Lorem ipsum.' }],
       'welcome/bar': [{ t: 'p', c: 'bar' }],
     })
+  })
+
+  test('SET_CONTENT_ROOT', () => {
+    const newState = contentReducer(initialContentState, setContentRoot('https://content.foo.bar'))
+    expect(newState.contentRoot).toEqual('https://content.foo.bar')
   })
 
   test('CHANGE_LANGUAGE', () => {

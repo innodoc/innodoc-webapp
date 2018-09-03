@@ -8,6 +8,7 @@ import i18nSelectors from '../../store/selectors/i18n'
 import { fetchToc } from '../../lib/api'
 
 const language = 'de'
+const contentRoot = 'https://foo.com/content'
 
 describe('loadTocSaga', () => {
   const content = ['toccontent']
@@ -23,7 +24,8 @@ describe('loadTocSaga', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
     expect(clone.next(language).value).toEqual(select(contentSelectors.getToc, language))
-    expect(clone.next().value).toEqual(call(fetchToc, language))
+    expect(clone.next().value).toEqual(select(contentSelectors.getContentRoot))
+    expect(clone.next(contentRoot).value).toEqual(call(fetchToc, contentRoot, language))
     expect(clone.next(content).value).toEqual(put(loadTocSuccess({ language, content })))
     expect(clone.next().done).toEqual(true)
   })
@@ -40,7 +42,8 @@ describe('loadTocSaga', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
     expect(clone.next(language).value).toEqual(select(contentSelectors.getToc, language))
-    expect(clone.next().value).toEqual(call(fetchToc, language))
+    expect(clone.next().value).toEqual(select(contentSelectors.getContentRoot))
+    expect(clone.next(contentRoot).value).toEqual(call(fetchToc, contentRoot, language))
     const error = new Error('error')
     expect(clone.throw(error).value).toEqual(put(loadTocFailure({ language, error })))
   })
