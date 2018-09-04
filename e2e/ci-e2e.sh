@@ -17,4 +17,4 @@ while ! nc -z localhost $PROD_PORT; do sleep 0.1; done
 
 # Xvfb -ac -screen scrn 1280x2000x24 :99.0 &
 # export DISPLAY=:99.0
-xvfb-run --server-args="-screen 0 1024x768x24" npm run test:e2e
+xvfb-run --server-args="-screen 0 1024x768x24" npm run test:e2e -- --runInBand
