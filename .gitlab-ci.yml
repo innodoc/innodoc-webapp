@@ -36,6 +36,10 @@ jest:
   script: npm run test:coverage
   coverage: '/^Statements\s*:\s*([^%]+)/'
 
+e2e:
+  stage: test
+  script: npm run test:e2e:ci
+
 deploy_staging:
   stage: deploy
   image: alpine:latest
