@@ -33,8 +33,14 @@ lint:
 
 jest:
   stage: test
-  script: npm run test:coverage
+  script: npm run test:unit:coverage
   coverage: '/^Statements\s*:\s*([^%]+)/'
+
+e2e:
+  stage: test
+  script:
+    - apk add --no-cache netcat-openbsd
+    - npm run test:e2e:ci
 
 deploy_staging:
   stage: deploy
