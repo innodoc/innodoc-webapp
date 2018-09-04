@@ -17,10 +17,10 @@ const defaultHeaders = { 'Accept-Language': 'en' }
 
 const nightmareOptions = {
   show: process.env.NIGHTMARE_SHOW || false,
-  gotoTimeout: 2000,
-  loadTimeout: 2000,
-  waitTimeout: 2000,
-  executionTimeout: 2000,
+  gotoTimeout: 30000,
+  loadTimeout: 30000,
+  waitTimeout: 30000,
+  executionTimeout: 30000,
 }
 
 // Nightmare actions
