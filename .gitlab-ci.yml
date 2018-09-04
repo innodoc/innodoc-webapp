@@ -1,40 +1,35 @@
 image: node:latest
 
 stages:
-  - setup
   - build
   - test
   - deploy
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
+  key: ${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}
   paths:
-  - node_modules/
-  - src/.next/
-  - .env
+    - node_modules/
+    - src/.next/
+    - .env
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
+  DEBIAN_FRONTEND: noninteractive
 
-install_node_modules:
-  stage: setup
-  script:
-    - npm install
-
-build_next:
+build-app:
   stage: build
   script:
     - cp .env.example .env
+    - npm install
     - npm run build
 
-lint:
+e2e-tests:
   stage: test
-  script: npm run lint
-
-jest:
-  stage: test
-  script: npm run test:coverage
-  coverage: '/^Statements\s*:\s*([^%]+)/'
+  script:
+    - apt-get update
+    - apt-get install -y netcat lsof xvfb libgtk2.0-0 libx11-xcb1 libxtst6 libxss1 libgconf-2-4 libnss3 libasound2
+    - rm -rf /var/lib/apt/lists/*
+    - npm run test:e2e:ci
 
 deploy_staging:
   stage: deploy
@@ -50,3 +45,4 @@ deploy_staging:
   environment: staging
   only:
     - master
+  cache: {}
