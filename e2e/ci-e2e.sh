@@ -15,6 +15,6 @@ npm run start >/dev/null &
 while ! nc -z localhost $CONTENT_PORT; do sleep 0.1; echo waitA; done
 while ! nc -z localhost $PROD_PORT; do sleep 0.1; echo waitB; done
 
-echo START npm run test:e2e
+Xvfb -ac -screen scrn 1280x2000x24 :99.0 &
+export DISPLAY=:99.0
 npm run test:e2e
-echo END npm run test:e2e
