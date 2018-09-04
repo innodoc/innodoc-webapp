@@ -8,10 +8,6 @@ stages:
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}${CI_JOB_ID}
-  paths:
-  - node_modules/
-  - src/.next/
-  - .env
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -20,27 +16,46 @@ install_node_modules:
   stage: setup
   script:
     - npm install
+  cache:
+    paths:
+    - node_modules/
 
 build_next:
   stage: build
   script:
     - cp .env.example .env
     - npm run build
+  cache:
+    paths:
+    - node_modules/
+    - src/.next/
+    - .env
 
 lint:
   stage: test
   script: npm run lint
+  cache:
+    paths:
+    - node_modules/
 
 jest:
   stage: test
   script: npm run test:unit:coverage
   coverage: '/^Statements\s*:\s*([^%]+)/'
+  cache:
+    paths:
+    - node_modules/
 
 e2e:
   stage: test
   script:
     - apk add --no-cache netcat-openbsd
     - npm run test:e2e:ci
+  cache:
+    paths:
+    - node_modules/
+    - src/.next/
+    - .env
 
 deploy_staging:
   stage: deploy
@@ -56,3 +71,4 @@ deploy_staging:
   environment: staging
   only:
     - master
+  cache: {}
