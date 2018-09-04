@@ -1,61 +1,41 @@
 image: node:alpine
 
 stages:
-  - setup
   - build
   - test
   - deploy
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}${CI_PIPELINE_ID}
-
-variables:
-  GIT_SUBMODULE_STRATEGY: recursive
-
-install_node_modules:
-  stage: setup
-  script:
-    - npm install
-  cache:
-    paths:
-    - node_modules/
-
-build_next:
-  stage: build
-  script:
-    - cp .env.example .env
-    - npm run build
-  cache:
-    paths:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
     - node_modules/
     - src/.next/
     - .env
 
-lint:
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+build-app:
+  stage: build
+  script:
+    - cp .env.example .env
+    - npm install
+    - npm run build
+
+linter:
   stage: test
   script: npm run lint
-  cache:
-    paths:
-    - node_modules/
 
-jest:
+unit-test:
   stage: test
   script: npm run test:unit:coverage
   coverage: '/^Statements\s*:\s*([^%]+)/'
-  cache:
-    paths:
-    - node_modules/
 
 e2e:
   stage: test
   script:
     - apk add --no-cache netcat-openbsd bash
     - npm run test:e2e:ci
-  cache:
-    paths:
-    - node_modules/
-    - src/.next/
-    - .env
 
 deploy_staging:
   stage: deploy
