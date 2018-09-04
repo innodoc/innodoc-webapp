@@ -12,9 +12,9 @@ npm run test:e2e:content >/dev/null &
 npm run start >/dev/null &
 
 # wait for app and content server
-while ! nc -z localhost $CONTENT_PORT; do sleep 0.1; echo waitA; done
-while ! nc -z localhost $PROD_PORT; do sleep 0.1; echo waitB; done
+while ! nc -z localhost $CONTENT_PORT; do sleep 0.1; done
+while ! nc -z localhost $PROD_PORT; do sleep 0.1; done
 
-Xvfb -ac -screen scrn 1280x2000x24 :99.0 &
-export DISPLAY=:99.0
-npm run test:e2e
+# Xvfb -ac -screen scrn 1280x2000x24 :99.0 &
+# export DISPLAY=:99.0
+xvfb-run npm run test:e2e
