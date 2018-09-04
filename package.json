@@ -21,8 +21,10 @@
     "test:unit": "jest",
     "test:unit:watch": "npm run test:unit -- --watch",
     "test:unit:coverage": "npm run test:unit -- --coverage",
-    "test:e2e": "jest --config jest.e2e.config.js --runInBand",
-    "test:e2e:show": "NIGHTMARE_SHOW=true npm run test:e2e"
+    "test:e2e": "jest --config jest.e2e.config.js",
+    "test:e2e:show": "NIGHTMARE_SHOW=true npm run test:e2e",
+    "test:e2e:ci": "e2e/ci-e2e.sh",
+    "test:e2e:content": "http-server e2e/content -a localhost -p $CONTENT_PORT --cors"
   },
   "keywords": [
     "innodoc",
@@ -76,6 +78,7 @@
     "eslint-plugin-jest": "^21.22.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
+    "http-server": "^0.11.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.5.0",
     "jest-environment-enzyme": "^6.0.3",
