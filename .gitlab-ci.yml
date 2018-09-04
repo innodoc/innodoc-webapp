@@ -15,22 +15,6 @@ cache:
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
-build-app:
-  stage: build
-  script:
-    - cp .env.example .env
-    - npm install
-    - npm run build
-
-linter:
-  stage: test
-  script: npm run lint
-
-unit-test:
-  stage: test
-  script: npm run test:unit:coverage
-  coverage: '/^Statements\s*:\s*([^%]+)/'
-
 e2e:
   stage: test
   script:
