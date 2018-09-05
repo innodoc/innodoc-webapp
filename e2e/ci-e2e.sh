@@ -24,7 +24,7 @@ while ! nc -z localhost $PROD_PORT; do sleep 0.1; done
 cmd="npm run test:e2e"
 if [[ ! $DISPLAY ]]; then
   echo "Running in headless mode (using Xvfb)"
-  cmd="xvfb-run --server-args="-screen 0 1920x1080x24" $cmd"
+  cmd="xvfb-run --server-args=\"-screen 0 1920x1080x24\" $cmd"
 fi
 
 $cmd
