@@ -22,9 +22,9 @@ export CONTENT_ROOT="http://localhost:${CONTENT_PORT}/"
 
 # start app and content server
 npm run test:e2e:content &
-pid_content=$?
+pid_content=$!
 npm run start &
-pid_app=$?
+pid_app=$!
 
 # wait for app and content server
 while ! nc -z localhost $CONTENT_PORT; do sleep 0.1; done
@@ -39,6 +39,4 @@ fi
 
 # run tests
 $cmd
-return_value=$?
-
-exit $return_value
+exit $?
