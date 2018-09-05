@@ -8,6 +8,7 @@ export CONTENT_ROOT="http://localhost:${CONTENT_PORT}/"
 # start app and content server
 npm run test:e2e:content &
 pid_content=$!
+
 npm run start &
 pid_app=$!
 
@@ -15,7 +16,7 @@ pid_app=$!
 while ! nc -z localhost $CONTENT_PORT; do sleep 0.1; done
 while ! nc -z localhost $PROD_PORT; do sleep 0.1; done
 
-# check $DISPLAY
+# check for display
 cmd="npm run test:e2e"
 if [[ ! $DISPLAY ]]; then
   echo "Running in headless mode (using Xvfb)"
@@ -25,14 +26,17 @@ fi
 # run tests
 $cmd
 
-# kill content server
-kill -INT $(ps --ppid ${pid_content} -o pid=)
-wait $pid_content
+echo Wait for content server
+kill -TERM $(ps --ppid ${pid_content} -o pid=)
+wait $pid_content >/dev/null
+echo Killed content server
 
-# kill app server
+echo Wait for app server
 pid_app_babelnode=$(ps --ppid ${pid_app} -o pid=)
 pid_app_babelnode_server=$(ps --ppid ${pid_app_babelnode} -o pid=)
-kill -INT ${pid_app_babelnode_server}
-wait $pid_app
+echo killing PID ${pid_app_babelnode_server}
+kill -TERM ${pid_app_babelnode_server}
+wait $pid_app >/dev/null
+echo Killed app server
 
 exit $?
