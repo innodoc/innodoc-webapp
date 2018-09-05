@@ -1,20 +1,5 @@
 #!/usr/bin/env bash
 
-trap killServers EXIT
-
-killServers() {
-  echo TRAP running
-  if [[ $pid_content ]]; then
-    echo Killing pid_content=$pid_content
-    kill -INT $pid_content
-  fi
-  if [[ $pid_app ]]; then
-    echo Killing pid_app=$pid_app
-    kill -INT $pid_app
-  fi
-  wait
-}
-
 export NIGHTMARE_SHOW
 export PROD_PORT=7000
 export CONTENT_PORT=7001
@@ -30,7 +15,7 @@ pid_app=$!
 while ! nc -z localhost $CONTENT_PORT; do sleep 0.1; done
 while ! nc -z localhost $PROD_PORT; do sleep 0.1; done
 
-# check for display
+# check $DISPLAY
 cmd="npm run test:e2e"
 if [[ ! $DISPLAY ]]; then
   echo "Running in headless mode (using Xvfb)"
@@ -39,4 +24,15 @@ fi
 
 # run tests
 $cmd
+
+# kill content server
+kill -INT $(ps --ppid ${pid_content} -o pid=)
+wait $pid_content
+
+# kill app server
+pid_app_babelnode=$(ps --ppid ${pid_app} -o pid=)
+pid_app_babelnode_server=$(ps --ppid ${pid_app_babelnode} -o pid=)
+kill -INT ${pid_app_babelnode_server}
+wait $pid_app
+
 exit $?
