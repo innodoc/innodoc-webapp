@@ -21,11 +21,11 @@ while ! nc -z localhost $CONTENT_PORT; do sleep 0.1; done
 while ! nc -z localhost $PROD_PORT; do sleep 0.1; done
 
 # check for display
-cmd="npm run test:e2e"
-if [[ ! $DISPLAY ]]; then
+if [[ $DISPLAY ]]; then
+  npm run test:e2e
+  exit $?
+else
   echo "Running in headless mode (using Xvfb)"
-  cmd="xvfb-run --server-args=\"-screen 0 1920x1080x24\" $cmd"
+  xvfb-run npm run test:e2e
+  exit $?
 fi
-
-$cmd
-exit $?
