@@ -25,12 +25,14 @@ fi
 # run tests
 $cmd
 
-# kill -INT $(ps --ppid ${pid_content} -o pid=)
-# wait $pid_content >/dev/null
-#
-# pid_app_babelnode=$(ps --ppid ${pid_app} -o pid=)
-# pid_app_babelnode_server=$(ps --ppid ${pid_app_babelnode} -o pid=)
-# kill -INT ${pid_app_babelnode_server}
-# wait $pid_app >/dev/null
+echo killing content server
+kill $(lsof -ti tcp:${CONTENT_PORT})
+wait $pid_content
+echo content server killed
+
+echo killing app server
+kill $(lsof -ti tcp:${PROD_PORT})
+wait $pid_app
+echo app server killed
 
 exit $?
