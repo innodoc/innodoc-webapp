@@ -6,7 +6,7 @@ stages:
   - deploy
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}${CI_PIPELINE_ID}
+  key: ${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}
   paths:
     - node_modules/
     - src/.next/
