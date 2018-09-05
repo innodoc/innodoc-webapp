@@ -1,22 +1,5 @@
 #!/usr/bin/env bash
 
-function killServers {
-  echo Killing app and content server
-  echo "pid_content=$pid_content"
-  echo "pid_app=$pid_app"
-  if [[ $pid_content ]]; then
-    echo Killing content server
-    kill -TERM $pid_content
-  fi
-  echo "pid_app=$pid_app"
-  if [[ $pid_app ]]; then
-    echo Killing app server
-    kill -TERM $pid_app
-  fi
-  trap "exit ${return_value}" EXIT
-}
-trap killServers EXIT
-
 export NIGHTMARE_SHOW
 export PROD_PORT=7000
 export CONTENT_PORT=7001
