@@ -1,49 +1,77 @@
-image: node:latest
+image: docker:latest
 
 stages:
-  - setup
   - build
   - test
+  - release
   - deploy
 
-cache:
-  key: ${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}
-  paths:
-    - node_modules/
-    - src/.next/
-    - .env
-
 variables:
-  GIT_SUBMODULE_STRATEGY: recursive
-  DEBIAN_FRONTEND: noninteractive
+  IMAGE_STAGING_TAG: $CI_REGISTRY_IMAGE/staging:latest
+  IMAGE_RELEASE_TAG: $CI_REGISTRY_IMAGE:latest
 
-build app:
+.docker-base: &docker-base
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY || true
+  variables:
+    GIT_STRATEGY: fetch
+    GIT_SUBMODULE_STRATEGY: recursive
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+    IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
+    IMAGE_E2E_CACHE_TAG: $CI_REGISTRY_IMAGE/e2e:cache
+    IMAGE_E2E_TAG: $CI_REGISTRY_IMAGE/e2e:$CI_COMMIT_REF_SLUG
+
+build image:
+  <<: *docker-base
   stage: build
   script:
-      - cp .env.example .env
-      - npm install
-      - npm run build
+    - docker pull $IMAGE_RELEASE_TAG || true
+    - docker pull $IMAGE_TAG || true
+    - docker build --pull --cache-from $IMAGE_RELEASE_TAG --cache-from $IMAGE_TAG --tag $IMAGE_TAG .
+    - docker push $IMAGE_TAG
 
 linting:
+  <<: *docker-base
   stage: test
-  script: npm run lint
+  script:
+    - docker pull $IMAGE_TAG
+    - docker run $IMAGE_TAG npm run lint
 
 unit tests:
+  <<: *docker-base
   stage: test
-  script: npm run test:coverage
+  script:
+    - docker pull $IMAGE_TAG
+    - docker run $IMAGE_TAG npm run test:unit:coverage
   coverage: '/^Statements\s*:\s*([^%]+)/'
 
 e2e tests:
+  <<: *docker-base
   stage: test
   script:
-    - apt-get update
-    - apt-get install -y netcat lsof xvfb libgtk2.0-0 libx11-xcb1 libxtst6 libxss1 libgconf-2-4 libnss3 libasound2
-    - rm -rf /var/lib/apt/lists/*
-    - npm run test:e2e:ci
+    - docker pull $IMAGE_E2E_CACHE_TAG || true
+    - docker build --pull --cache-from $IMAGE_E2E_CACHE_TAG --tag $IMAGE_E2E_TAG -f Dockerfile.e2e .
+    - docker tag $IMAGE_E2E_TAG $IMAGE_E2E_CACHE_TAG
+    - docker push $IMAGE_E2E_CACHE_TAG
+    - docker run $IMAGE_E2E_TAG
 
-deploy_staging:
+release staging:
+  <<: *docker-base
+  stage: release
+  script:
+    - docker pull $IMAGE_TAG
+    - docker tag $IMAGE_TAG $IMAGE_STAGING_TAG
+    - docker push $IMAGE_STAGING_TAG
+  only:
+    - master
+
+deploy staging:
   stage: deploy
-  image: alpine:latest
+  image: alpine
+  environment: staging
   before_script:
     - apk add --no-cache openssh-client
     - mkdir -p ~/.ssh
@@ -52,7 +80,7 @@ deploy_staging:
     - echo "$STAGING_SERVER_PUBKEY" > ~/.ssh/known_hosts
   script:
     - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa $STAGING_SERVER_USER@$STAGING_SERVER "$STAGING_DEPLOY_CMD"
-  environment: staging
+  variables:
+    GIT_STRATEGY: none
   only:
     - master
-  cache: {}
