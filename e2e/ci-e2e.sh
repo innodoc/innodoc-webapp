@@ -1,5 +1,20 @@
 #!/usr/bin/env bash
 
+trap killServers EXIT
+
+killServers() {
+  echo TRAP running
+  if [[ $pid_content ]]; then
+    echo Killing pid_content=$pid_content
+    kill -INT $pid_content
+  fi
+  if [[ $pid_app ]]; then
+    echo Killing pid_app=$pid_app
+    kill -INT $pid_app
+  fi
+  wait
+}
+
 export NIGHTMARE_SHOW
 export PROD_PORT=7000
 export CONTENT_PORT=7001
@@ -19,19 +34,11 @@ while ! nc -z localhost $PROD_PORT; do sleep 0.1; done
 cmd="npm run test:e2e"
 if [[ ! $DISPLAY ]]; then
   echo "Running in headless mode (using Xvfb)"
-  cmd="xvfb-run --auto-servernum -e /dev/stdout $cmd"
+  cmd="xvfb-run --auto-servernum $cmd"
 fi
 
 # run tests
 $cmd
 return_value=$?
-
-# kill app and content servers
-# Note: We could use trap function to kill server processes but this proved
-# to be problematic with GitLab CI as return value was never passed through
-# correctly.
-kill -INT $pid_content && echo Killed content server
-kill -INT $pid_app && echo Killed app server
-wait
 
 exit $return_value
