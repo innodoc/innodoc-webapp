@@ -1,13 +1,12 @@
 image: node:latest
 
 stages:
-  - setup
   - build
   - test
   - deploy
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}${CI_PIPELINE_ID}
+  key: ${CI_COMMIT_REF_SLUG}
   paths:
     - node_modules/
     - src/.next/
@@ -17,15 +16,11 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
   DEBIAN_FRONTEND: noninteractive
 
-install-deps:
-  stage: setup
-  script:
-    - npm install
-
 build-app:
   stage: build
   script:
     - cp .env.example .env
+    - npm install
     - npm run build
 
 linter:
