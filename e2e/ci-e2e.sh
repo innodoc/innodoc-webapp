@@ -4,11 +4,8 @@ function finish {
   trap '' INT TERM # ignore INT and TERM while shutting down
   echo Killing app and content server
   kill -TERM 0 # kill process group
-  wait
-  echo exiting, return_value=$return_value
-  exit $return_value
 }
-trap finish INT TERM EXIT
+trap finish EXIT
 
 export NIGHTMARE_SHOW
 export PROD_PORT=7000
@@ -31,4 +28,7 @@ else
   echo "Running in headless mode (using Xvfb)"
   xvfb-run --auto-servernum -e /dev/stdout npm run test:e2e
   return_value=$?
+  echo "Tests were running, received return value ${return_value}"
 fi
+
+exit $return_value
