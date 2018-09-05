@@ -24,7 +24,7 @@ build-app:
 
 e2e-tests:
   stage: test
-  image: https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp.git#e2e:e2e
+  image: https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp.git#e2e
   script:
     - npm run test:e2e:ci
 
