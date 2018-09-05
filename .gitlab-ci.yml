@@ -1,6 +1,7 @@
 image: node:latest
 
 stages:
+  - setup
   - build
   - test
   - deploy
@@ -14,12 +15,17 @@ cache:
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
+  DEBIAN_FRONTEND: noninteractive
+
+install-deps:
+  stage: setup
+  script:
+    - npm install
 
 build-app:
   stage: build
   script:
     - cp .env.example .env
-    - npm install
     - npm run build
 
 linter:
