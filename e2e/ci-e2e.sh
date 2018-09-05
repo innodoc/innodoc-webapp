@@ -29,5 +29,6 @@ if [[ ! $DISPLAY ]]; then
   export DISPLAY=:99
 fi
 
+
 npm run test:e2e
 exit $?
