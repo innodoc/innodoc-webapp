@@ -8,7 +8,6 @@ export CONTENT_ROOT="http://localhost:${CONTENT_PORT}/"
 # start app and content server
 npm run test:e2e:content 2>&1 >/dev/null &
 pid_content=$!
-
 npm run start 2>&1 >/dev/null &
 pid_app=$!
 
@@ -16,7 +15,7 @@ pid_app=$!
 while ! nc -z localhost $CONTENT_PORT; do sleep 0.1; done
 while ! nc -z localhost $PROD_PORT; do sleep 0.1; done
 
-# check for display
+# check for DISPLAY
 cmd="npm run test:e2e"
 if [[ ! $DISPLAY ]]; then
   echo "Running in headless mode (using Xvfb)"
