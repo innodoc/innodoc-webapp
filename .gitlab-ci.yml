@@ -23,15 +23,6 @@ build-app:
     - npm install
     - npm run build
 
-linter:
-  stage: test
-  script: npm run lint
-
-unit-tests:
-  stage: test
-  script: npm run test:unit:coverage
-  coverage: '/^Statements\s*:\s*([^%]+)/'
-
 e2e-tests:
   stage: test
   script:
