@@ -26,12 +26,12 @@ linter:
   stage: test
   script: npm run lint
 
-unit-test:
+unit-tests:
   stage: test
   script: npm run test:unit:coverage
   coverage: '/^Statements\s*:\s*([^%]+)/'
 
-e2e:
+e2e-tests:
   stage: test
   script:
     - apt-get update

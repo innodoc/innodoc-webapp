@@ -17,7 +17,7 @@ while ! nc -z localhost $CONTENT_PORT; do sleep 0.1; done
 while ! nc -z localhost $PROD_PORT; do sleep 0.1; done
 
 # e2e test command
-cmd="npm run test:e2e -- --runInBand"
+cmd="npm run test:e2e"
 
 # check for display
 if [[ $DISPLAY ]]; then
