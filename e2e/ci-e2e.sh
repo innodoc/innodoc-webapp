@@ -26,12 +26,12 @@ fi
 $cmd
 
 echo killing content server
-kill $(lsof -ti tcp:${CONTENT_PORT})
+kill -INT $(lsof -ti tcp:${CONTENT_PORT})
 wait $pid_content
 echo content server killed
 
 echo killing app server
-kill $(lsof -ti tcp:${PROD_PORT})
+kill -INT $(lsof -ti tcp:${PROD_PORT})
 wait $pid_app
 echo app server killed
 
