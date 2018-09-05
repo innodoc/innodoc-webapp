@@ -30,8 +30,8 @@ return_value=$?
 # Note: We could use trap function to kill server processes but this proved
 # to be problematic with GitLab CI as return value was never passed through
 # correctly.
-kill -TERM $pid_content && echo Killed content server
-kill -TERM $pid_app && echo Killed app server
+kill -INT $pid_content && echo Killed content server
+kill -INT $pid_app && echo Killed app server
 wait
 
 exit $return_value
