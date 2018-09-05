@@ -8,6 +8,7 @@ export PROD_PORT=7000
 export CONTENT_PORT=7002
 export CONTENT_ROOT="http://localhost:${CONTENT_PORT}/"
 
+# start app and content server
 npm run test:e2e:content >/dev/null &
 npm run start >/dev/null &
 
@@ -15,6 +16,14 @@ npm run start >/dev/null &
 while ! nc -z localhost $CONTENT_PORT; do sleep 0.1; done
 while ! nc -z localhost $PROD_PORT; do sleep 0.1; done
 
-# Xvfb -ac -screen scrn 1280x2000x24 :99.0 &
-# export DISPLAY=:99.0
-xvfb-run --server-args="-screen 0 1024x768x24" npm run test:e2e -- --runInBand
+# e2e test command
+cmd="npm run test:e2e -- --runInBand"
+
+# check for display
+if [[ $DISPLAY ]]; then
+  $cmd
+else
+  echo "Running in headless mode (using Xvfb)"
+  # headless mode (CI)
+  xvfb-run --server-args="-screen 0 1024x768x24" $cmd
+fi
