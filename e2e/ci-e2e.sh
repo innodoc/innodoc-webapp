@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
 function finish {
+  exit_code=$?
   trap '' INT TERM # ignore INT and TERM while shutting down
   kill -TERM 0 # kill process group
   wait
+  exit $exit_code
 }
 trap finish EXIT
 
@@ -21,11 +23,11 @@ while ! nc -z localhost $CONTENT_PORT; do sleep 0.1; done
 while ! nc -z localhost $PROD_PORT; do sleep 0.1; done
 
 # check for display
-if [[ $DISPLAY ]]; then
-  npm run test:e2e
-  exit $?
-else
+cmd="npm run test:e2e"
+if [[ ! $DISPLAY ]]; then
   echo "Running in headless mode (using Xvfb)"
-  xvfb-run npm run test:e2e
-  exit $?
+  cmd="xvfb-run --auto-servernum -e /dev/stdout $cmd"
 fi
+
+$cmd
+exit $?
