@@ -28,7 +28,7 @@ else
   echo "Running in headless mode (using Xvfb)"
   xvfb-run --auto-servernum -e /dev/stdout npm run test:e2e
   return_value=$?
-  echo "Tests were running, received return value ${return_value}"
 fi
 
+echo "Tests were running, received return value ${return_value}"
 exit $return_value
