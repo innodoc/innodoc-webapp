@@ -15,7 +15,6 @@ cache:
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  DEBIAN_FRONTEND: noninteractive
 
 build app:
   stage: build
@@ -35,10 +34,8 @@ unit tests:
 
 e2e tests:
   stage: test
+  image: https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp/tree/master/e2e#e2e-CI
   script:
-    - apt-get update
-    - apt-get install -y netcat lsof xvfb libgtk2.0-0 libx11-xcb1 libxtst6 libxss1 libgconf-2-4 libnss3 libasound2
-    - rm -rf /var/lib/apt/lists/*
     - npm run test:e2e:ci
 
 deploy_staging:
