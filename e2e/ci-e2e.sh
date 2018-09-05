@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 
-function finish {
-  trap '' INT TERM # ignore INT and TERM while shutting down
+function killServers {
   echo Killing app and content server
-  kill -TERM 0 # kill process group
+  if [[ $pid_content ]]; then
+    echo Killing content server
+    kill -TERM $pid_content
+  fi
+  if [[ $pid_app ]]; then
+    echo Killing app server
+    kill -TERM $pid_app
+  fi
 }
-trap finish EXIT
+trap killServers EXIT
 
 export NIGHTMARE_SHOW
 export PROD_PORT=7000
@@ -14,7 +20,9 @@ export CONTENT_ROOT="http://localhost:${CONTENT_PORT}/"
 
 # start app and content server
 npm run test:e2e:content &
+pid_content=$?
 npm run start &
+pid_app=$?
 
 # wait for app and content server
 while ! nc -z localhost $CONTENT_PORT; do sleep 0.1; done
@@ -30,5 +38,5 @@ else
   return_value=$?
 fi
 
-echo "Tests were running, received return value ${return_value}"
+echo "E2E tests finished, result=${return_value}"
 exit $return_value
