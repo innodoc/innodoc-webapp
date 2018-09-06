@@ -84,13 +84,13 @@ i18nInstance
 
         // a course section
         server.get(/^\/page\/([A-Za-z0-9_/:-]+)$/, (req, res) => {
-          const sectionId = req.params[0]
-          if (sectionId.endsWith('/')) {
+          const sectionPath = req.params[0]
+          if (sectionPath.endsWith('/')) {
             // remove trailing slash
             res.redirect(req.path.slice(0, -1))
           }
           const actualPage = '/page'
-          const queryParams = { sectionId }
+          const queryParams = { sectionPath }
           app.render(req, res, actualPage, queryParams)
         })
 

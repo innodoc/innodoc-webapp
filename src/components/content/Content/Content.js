@@ -5,10 +5,9 @@ import { Dimmer, Header, Loader } from 'semantic-ui-react'
 import { translate } from 'react-i18next'
 
 import contentSelectors from '../../../store/selectors/content'
-import i18nSelectors from '../../../store/selectors/i18n'
 import withMathJax from '../../hoc/withMathJax'
 import ContentFragment from '../ContentFragment'
-import BreadcrumbWrapper from '../BreadcrumbWrapper'
+import Breadcrumb from '../Breadcrumb'
 import SectionNav from '../SectionNav'
 import Placeholder from './Placeholder'
 import Toc from '../../Toc'
@@ -28,7 +27,7 @@ class Content extends React.Component {
 
   static defaultProps = {
     content: [],
-    section: null,
+    section: { id: '', title: [] },
     sectionLevel: null,
   }
 
@@ -54,7 +53,7 @@ class Content extends React.Component {
       : (
         <React.Fragment>
           <SectionNav />
-          <BreadcrumbWrapper />
+          <Breadcrumb />
           <Header as="h1">
             <ContentFragment content={section.title} />
           </Header>
@@ -90,16 +89,15 @@ class Content extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const id = contentSelectors.getCurrentSectionPath(state)
-  if (id) {
-    const language = i18nSelectors.getLanguage(state)
-    const section = contentSelectors.getSection(state, language, id)
+  const path = contentSelectors.getCurrentSectionPath(state)
+  if (path) {
+    const section = contentSelectors.getSection(state, path)
     if (section) {
       return {
         loading: false,
-        section: contentSelectors.getSection(state, language, id),
-        content: contentSelectors.getSectionContent(state, language, id),
-        sectionLevel: contentSelectors.getSectionLevel(state, id),
+        section,
+        content: contentSelectors.getSectionContent(state, path),
+        sectionLevel: contentSelectors.getSectionLevel(state, path),
       }
     }
   }

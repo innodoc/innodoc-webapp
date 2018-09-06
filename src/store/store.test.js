@@ -40,7 +40,7 @@ describe('initial state', () => {
     })
 
     test('current section null', () => {
-      expect(content.currentSectionId).toBe(null)
+      expect(content.currentSectionPath).toBe(null)
     })
 
     test('data empty', () => {

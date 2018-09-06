@@ -9,11 +9,11 @@ import i18nSelectors from '../../store/selectors/i18n'
 
 describe('loadSectionSaga', () => {
   const language = 'en'
-  const id = 78
+  const sectionPath = 'foo/bar'
   const content = ['sectioncontent']
   const contentRoot = 'https://foo.com/content'
 
-  const gen = cloneableGenerator(loadSectionSaga)(loadSection(id))
+  const gen = cloneableGenerator(loadSectionSaga)(loadSection(sectionPath))
 
   it('should not fetch a section without language', () => {
     const clone = gen.clone()
@@ -25,10 +25,12 @@ describe('loadSectionSaga', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
     expect(clone.next(language).value).toEqual(
-      select(contentSelectors.getSectionContent, language, id))
+      select(contentSelectors.getSectionContent, sectionPath))
     expect(clone.next().value).toEqual(select(contentSelectors.getContentRoot))
-    expect(clone.next(contentRoot).value).toEqual(call(fetchSection, contentRoot, language, id))
-    expect(clone.next(content).value).toEqual(put(loadSectionSuccess({ language, id, content })))
+    expect(clone.next(contentRoot).value).toEqual(
+      call(fetchSection, contentRoot, language, sectionPath))
+    expect(clone.next(content).value).toEqual(
+      put(loadSectionSuccess({ language, sectionPath, content })))
     expect(clone.next().done).toEqual(true)
   })
 
@@ -36,8 +38,9 @@ describe('loadSectionSaga', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
     expect(clone.next(language).value).toEqual(
-      select(contentSelectors.getSectionContent, language, id))
-    expect(clone.next(content).value).toEqual(put(loadSectionSuccess({ language, id, content })))
+      select(contentSelectors.getSectionContent, sectionPath))
+    expect(clone.next(content).value).toEqual(
+      put(loadSectionSuccess({ language, sectionPath, content })))
     expect(clone.next().done).toEqual(true)
   })
 
@@ -45,9 +48,10 @@ describe('loadSectionSaga', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
     expect(clone.next(language).value).toEqual(
-      select(contentSelectors.getSectionContent, language, id))
+      select(contentSelectors.getSectionContent, sectionPath))
     expect(clone.next().value).toEqual(select(contentSelectors.getContentRoot))
-    expect(clone.next(contentRoot).value).toEqual(call(fetchSection, contentRoot, language, id))
+    expect(clone.next(contentRoot).value).toEqual(
+      call(fetchSection, contentRoot, language, sectionPath))
     const error = new Error('error')
     expect(clone.throw(error).value).toEqual(put(loadSectionFailure({ language, error })))
   })

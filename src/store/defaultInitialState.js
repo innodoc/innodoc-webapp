@@ -5,7 +5,7 @@ const defaultInitialState = {
   },
   content: {
     contentRoot: '',
-    currentSectionId: null,
+    currentSectionPath: null,
     data: {},
   },
   exercises: {},

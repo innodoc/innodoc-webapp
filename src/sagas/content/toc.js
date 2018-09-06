@@ -10,7 +10,7 @@ export default function* loadTocSaga() {
   const language = yield select(i18nSelectors.getLanguage)
   if (language) {
     // already in store?
-    let content = yield select(contentSelectors.getToc, language)
+    let content = yield select(contentSelectors.getToc)
     if (content && content.length > 0) {
       yield put(loadTocSuccess({ language, content }))
     } else {

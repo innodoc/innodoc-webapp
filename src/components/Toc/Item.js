@@ -8,14 +8,14 @@ import ContentFragment from '../content/ContentFragment'
 
 const Item = ({
   title,
-  sectionId,
+  sectionPath: sectionPathFragment,
   subSections,
   sectionPrefix,
 }) => {
-  const fullSectionId = `${sectionPrefix}${sectionId}`
+  const sectionPath = `${sectionPrefix}${sectionPathFragment}`
   if (!subSections.length) {
     return (
-      <SectionLink sectionId={fullSectionId}>
+      <SectionLink sectionPath={sectionPath}>
         <Menu.Item as="a">
           <ContentFragment content={title} />
         </Menu.Item>
@@ -24,7 +24,7 @@ const Item = ({
   }
   return (
     <Menu.Item>
-      <SectionLink sectionId={fullSectionId}>
+      <SectionLink sectionPath={sectionPath}>
         <a>
           <ContentFragment content={title} />
         </a>
@@ -35,7 +35,7 @@ const Item = ({
             (subSection, i) => (
               <Item
                 title={subSection.title}
-                sectionId={`${fullSectionId}/${subSection.id}`}
+                sectionPath={`${sectionPath}/${subSection.id}`}
                 subSections={subSection.children}
                 key={i.toString()}
               />
@@ -49,7 +49,7 @@ const Item = ({
 
 Item.propTypes = {
   title: contentType.isRequired,
-  sectionId: PropTypes.string.isRequired,
+  sectionPath: PropTypes.string.isRequired,
   subSections: PropTypes.arrayOf(PropTypes.object),
   sectionPrefix: PropTypes.string,
 }

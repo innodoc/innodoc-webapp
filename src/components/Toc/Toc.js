@@ -16,7 +16,7 @@ const Toc = ({
   const sections = toc.map(
     (section, i) => (
       <TocItem
-        sectionId={section.id}
+        sectionPath={section.id}
         title={section.title}
         subSections={section.children}
         sectionPrefix={sectionPrefix}

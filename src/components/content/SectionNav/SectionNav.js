@@ -11,22 +11,22 @@ import css from './style.sass'
 const SectionNav = ({ prev, next }) => (
   <div>
     {
-      prev.path !== null && (
-        <SectionLink sectionId={prev.path}>
+      prev ? (
+        <SectionLink sectionPath={prev.path}>
           <a title={astToString(prev.title)} className={[css.sbtn, css.prev].join(' ')}>
             <Icon size="huge" name="angle left" />
           </a>
         </SectionLink>
-      )
+      ) : null
     }
     {
-      next.path !== null && (
-        <SectionLink sectionId={next.path}>
+      next ? (
+        <SectionLink sectionPath={next.path}>
           <a title={astToString(next.title)} className={[css.sbtn, css.next].join(' ')}>
             <Icon size="huge" name="angle right" />
           </a>
         </SectionLink>
-      )
+      ) : null
     }
   </div>
 )

@@ -23,7 +23,7 @@ describe('loadTocSaga', () => {
   it('should fetch the TOC', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
-    expect(clone.next(language).value).toEqual(select(contentSelectors.getToc, language))
+    expect(clone.next(language).value).toEqual(select(contentSelectors.getToc))
     expect(clone.next().value).toEqual(select(contentSelectors.getContentRoot))
     expect(clone.next(contentRoot).value).toEqual(call(fetchToc, contentRoot, language))
     expect(clone.next(content).value).toEqual(put(loadTocSuccess({ language, content })))
@@ -33,7 +33,7 @@ describe('loadTocSaga', () => {
   it('should return TOC from store', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
-    expect(clone.next(language).value).toEqual(select(contentSelectors.getToc, language))
+    expect(clone.next(language).value).toEqual(select(contentSelectors.getToc))
     expect(clone.next(content).value).toEqual(put(loadTocSuccess({ language, content })))
     expect(clone.next().done).toEqual(true)
   })
@@ -41,7 +41,7 @@ describe('loadTocSaga', () => {
   it('should put loadTocFailure on error', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
-    expect(clone.next(language).value).toEqual(select(contentSelectors.getToc, language))
+    expect(clone.next(language).value).toEqual(select(contentSelectors.getToc))
     expect(clone.next().value).toEqual(select(contentSelectors.getContentRoot))
     expect(clone.next(contentRoot).value).toEqual(call(fetchToc, contentRoot, language))
     const error = new Error('error')

@@ -9,7 +9,7 @@ import Content from '../components/content/Content'
 
 class CoursePage extends React.Component {
   static getInitialProps({ query, store }) {
-    store.dispatch(loadSection(query.sectionId))
+    store.dispatch(loadSection(query.sectionPath))
   }
 
   render() {

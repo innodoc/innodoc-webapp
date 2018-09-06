@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { tocTreeType } from '../lib/propTypes'
 
 import contentSelectors from '../store/selectors/content'
-import i18nSelectors from '../store/selectors/i18n'
 import withI18next from '../components/hoc/withI18next'
 import withI18nDispatch from '../components/hoc/withI18nDispatch'
 import Layout from '../components/Layout'
@@ -20,7 +19,7 @@ IndexPage.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  toc: contentSelectors.getToc(state, i18nSelectors.getLanguage(state)),
+  toc: contentSelectors.getToc(state),
 })
 
 export default connect(mapStateToProps)(withI18next()(withI18nDispatch(IndexPage)))

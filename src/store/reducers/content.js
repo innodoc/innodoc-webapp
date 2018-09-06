@@ -19,20 +19,20 @@ function content(state = defaultInitialState.content, action) {
     case contentActionTypes.LOAD_SECTION:
       return {
         ...state,
-        currentSectionId: null,
+        currentSectionPath: null,
       }
 
     case contentActionTypes.LOAD_SECTION_SUCCESS:
       return {
         ...state,
-        currentSectionId: action.data.id,
+        currentSectionPath: action.data.sectionPath,
         data: {
           ...state.data,
           [action.data.language]: {
             ...state.data[action.data.language],
             sections: {
               ...state.data[action.data.language].sections,
-              [action.data.id]: action.data.content,
+              [action.data.sectionPath]: action.data.content,
             },
           },
         },

@@ -5,7 +5,7 @@ import defaultInitialState, { defaultContentData } from '../defaultInitialState'
 
 const state = {
   content: {
-    currentSectionId: 'TEST01/foo/bar',
+    currentSectionPath: 'TEST01/foo/bar',
     data: {
       en: {
         sections: {
@@ -47,16 +47,16 @@ describe('contentReducer', () => {
 
   test('LOAD_SECTION', () => {
     const newState = contentReducer(initialContentState, loadSection(78))
-    expect(newState.currentSectionId).toEqual(null)
+    expect(newState.currentSectionPath).toEqual(null)
   })
 
   test('LOAD_SECTION_SUCCESS', () => {
     const newState = contentReducer(state.content, loadSectionSuccess({
       language: 'en',
-      id: 'welcome/bar',
+      sectionPath: 'welcome/bar',
       content: [{ t: 'p', c: 'bar' }],
     }))
-    expect(newState.currentSectionId).toEqual('welcome/bar')
+    expect(newState.currentSectionPath).toEqual('welcome/bar')
     expect(newState.data.en.sections).toEqual({
       'TEST01/foo/bar': [{ t: 'Para', c: 'Lorem ipsum.' }],
       'welcome/bar': [{ t: 'p', c: 'bar' }],

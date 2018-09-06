@@ -6,7 +6,6 @@ import { translate } from 'react-i18next'
 
 import uiSelectors from '../../../store/selectors/ui'
 import contentSelectors from '../../../store/selectors/content'
-import i18nSelectors from '../../../store/selectors/i18n'
 import { childrenType, tocTreeType } from '../../../lib/propTypes'
 import { toggleSidebar } from '../../../store/actions/ui'
 import SidebarToggle from './SidebarToggle'
@@ -68,7 +67,7 @@ Sidebar.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  toc: contentSelectors.getToc(state, i18nSelectors.getLanguage(state)),
+  toc: contentSelectors.getToc(state),
   visible: uiSelectors.getSidebarVisible(state),
 })
 

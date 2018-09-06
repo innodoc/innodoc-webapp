@@ -7,7 +7,7 @@ import SectionLink from './SectionLink'
 describe('<SectionLink />', () => {
   it('renders', () => {
     const wrapper = mount(
-      <SectionLink sectionId="87">
+      <SectionLink sectionPath="foo/bar">
         <a>
           Hello World!
         </a>
@@ -17,6 +17,6 @@ describe('<SectionLink />', () => {
     const a = wrapper.find('a')
     expect(a.exists()).toBe(true)
     expect(a.text()).toBe('Hello World!')
-    expect(a.prop('href')).toBe('/page/87')
+    expect(a.prop('href')).toBe('/page/foo/bar')
   })
 })

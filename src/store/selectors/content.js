@@ -2,10 +2,17 @@ import i18nSelectors from './i18n'
 
 // helpers
 
-const splitSectionPath = path => path.split('/')
+const splitPath = path => path.split('/')
 
+// Cosntructs an array of sections from a virtual root section (idx=-1) up to
+// the section specifified as path. A single section looks like:
+// {
+//    idx: 3,
+//    data: { id: 'section-1.1', children: ..., title: ... },
+//    path: 'section1/secion-1.1',
+// }
 const getSections = (toc, path) => {
-  const idTokens = splitSectionPath(path)
+  const pathFragments = splitPath(path)
   const sections = [{
     idx: -1, // toc doesn't have a child index
     path: '',
@@ -13,9 +20,9 @@ const getSections = (toc, path) => {
       children: toc,
     },
   }]
-  for (let i = 0; i < idTokens.length; i += 1) {
+  for (let i = 0; i < pathFragments.length; i += 1) {
     const { children } = sections[sections.length - 1].data
-    const idx = children.findIndex(s => s.id === idTokens[i])
+    const idx = children.findIndex(s => s.id === pathFragments[i])
     if (idx === -1) {
       return undefined
     }
@@ -67,33 +74,31 @@ const getCurrentAndParentSection = sections => (
 
 // Selectors
 
+const getContent = state => state.content.data[i18nSelectors.getLanguage(state)]
+
 const getContentRoot = state => state.content.contentRoot
 
-const getCurrentSectionPath = state => state.content.currentSectionId
+const getCurrentSectionPath = state => state.content.currentSectionPath
 
-const getLanguageContent = (state, language) => state.content.data[language]
+const getSectionContent = (state, path) => getContent(state).sections[path]
 
-const getSectionContent = (state, lang, path) => (
-  getLanguageContent(state, lang).sections[path]
-)
+const getToc = state => getContent(state).toc
 
-const getToc = (state, language) => getLanguageContent(state, language).toc
-
-const getSection = (state, language, path) => {
-  const sections = getSections(getToc(state, language), path)
+const getSection = (state, path) => {
+  const sections = getSections(getToc(state), path)
   return sections === undefined
     ? undefined
     : sections[sections.length - 1].data
 }
 
-const getSectionLevel = (state, path) => splitSectionPath(path).length
+const getSectionLevel = (state, path) => splitPath(path).length
 
-const getSectionTitle = (state, language, path) => {
+const getSectionTitle = (state, path) => {
   if (path === undefined) {
     return undefined
   }
 
-  const section = getSection(state, language, path)
+  const section = getSection(state, path)
   if (section === undefined) {
     return undefined
   }
@@ -101,18 +106,16 @@ const getSectionTitle = (state, language, path) => {
   return section.title
 }
 
-const getCurrentBreadcrumbSections = (state, language) => {
-  const sections = getSections(
-    getToc(state, language),
-    getCurrentSectionPath(state))
+const getBreadcrumbSections = (state) => {
+  const sections = getSections(getToc(state), getCurrentSectionPath(state))
     .map(s => s.data)
     .slice(1)
 
   const result = []
   sections.forEach((s, idx) => {
     result.push({
-      id: result.length > 0
-        ? `${result[idx - 1].id}/${s.id}`
+      path: result.length > 0
+        ? `${result[idx - 1].path}/${s.id}`
         : s.id,
       title: s.title,
     })
@@ -121,12 +124,12 @@ const getCurrentBreadcrumbSections = (state, language) => {
   return result
 }
 
-const getPrevSectionPath = (state, language, path) => {
+const getPrevSectionPath = (state, path) => {
   if (path === null || path === undefined) {
     return undefined
   }
 
-  const toc = getToc(state, language)
+  const toc = getToc(state)
   const { current, parent } = getCurrentAndParentSection(getSections(toc, path))
 
   // Return parent section if this is the first sub section
@@ -142,12 +145,12 @@ const getPrevSectionPath = (state, language, path) => {
       : `${parent.path}/${parent.data.children[current.idx - 1].id}`)
 }
 
-const getNextSectionPath = (state, language, path, first = true) => {
+const getNextSectionPath = (state, path, first = true) => {
   if (path === null || path === undefined) {
     return undefined
   }
 
-  const { current, parent } = getCurrentAndParentSection(getSections(getToc(state, language), path))
+  const { current, parent } = getCurrentAndParentSection(getSections(getToc(state), path))
 
   // If this section has sub sections and we're not in a recursive call then
   // return first sub section
@@ -159,7 +162,7 @@ const getNextSectionPath = (state, language, path, first = true) => {
   if (current.idx === parent.data.children.length - 1) {
     return parent.path === ''
       ? undefined
-      : getNextSectionPath(state, language, `${parent.path}`, false)
+      : getNextSectionPath(state, `${parent.path}`, false)
   }
 
   // If none of the above is true, then return next sibling
@@ -169,33 +172,35 @@ const getNextSectionPath = (state, language, path, first = true) => {
 }
 
 const getNavSections = (state) => {
-  const lang = i18nSelectors.getLanguage(state)
   const path = getCurrentSectionPath(state)
-  const prev = getPrevSectionPath(state, lang, path)
-  const next = getNextSectionPath(state, lang, path)
-
-  return {
-    prev: {
-      path: prev === undefined ? null : prev,
-      title: getSectionTitle(state, lang, prev),
-    },
-    next: {
-      path: next === undefined ? null : next,
-      title: getSectionTitle(state, lang, next),
-    },
+  const prev = getPrevSectionPath(state, path)
+  const next = getNextSectionPath(state, path)
+  const sections = {}
+  if (prev) {
+    sections.prev = {
+      path: prev,
+      title: getSectionTitle(state, prev),
+    }
   }
+  if (next) {
+    sections.next = {
+      path: next,
+      title: getSectionTitle(state, next),
+    }
+  }
+  return sections
 }
 
 export default {
   getContentRoot,
   getCurrentSectionPath,
   getSectionContent,
-  getLanguageContent,
+  getContent,
   getToc,
   getSection,
   getSectionLevel,
   getSectionTitle,
-  getCurrentBreadcrumbSections,
+  getBreadcrumbSections,
   getPrevSectionPath,
   getNextSectionPath,
   getNavSections,

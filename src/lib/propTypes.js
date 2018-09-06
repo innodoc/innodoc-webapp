@@ -7,7 +7,8 @@ const childrenType = PropTypes.oneOfType([
 const contentType = PropTypes.arrayOf(PropTypes.object)
 const tocTreeType = PropTypes.arrayOf(PropTypes.object)
 const sectionType = PropTypes.shape({
-  path: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  path: PropTypes.string,
   title: contentType.isRequired,
   children: tocTreeType,
 })
