@@ -7,10 +7,6 @@ module.exports = {
     '!src/static/**',
     '!src/.next/**',
   ],
-  coverageReporters: [
-    'text',
-    'text-summary',
-  ],
   moduleNameMapper: {
     '\\.sass$': 'identity-obj-proxy',
   },
