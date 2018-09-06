@@ -24,7 +24,7 @@
     "test:e2e": "jest --config jest.e2e.config.js",
     "test:e2e:show": "NIGHTMARE_SHOW=true npm run test:e2e",
     "test:e2e:ci": "e2e/ci-e2e.sh",
-    "test:e2e:content": "http-server e2e/content -a localhost -p $CONTENT_PORT --cors"
+    "test:e2e:content": "http-server e2e/content -a localhost -p ${CONTENT_PORT:-8001} --cors"
   },
   "keywords": [
     "innodoc",
