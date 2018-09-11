@@ -29,5 +29,5 @@ RUN set -xe && \
 #       libasound2 && \
 #     rm -rf /var/lib/apt/lists/*
 
-USER innodoc
+# USER innodoc
 CMD ["npm", "run", "test:e2e:ci"]
