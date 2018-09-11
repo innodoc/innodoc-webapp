@@ -23,24 +23,9 @@ build app:
       - npm install
       - npm run build
 
-linting:
-  stage: test
-  script: npm run lint
-  cache:
-    <<: *cache
-    policy: pull
-
-unit tests:
-  stage: test
-  script: npm run test:unit:coverage
-  coverage: '/^Statements\s*:\s*([^%]+)/'
-  cache:
-    <<: *cache
-    policy: pull
-
 e2e tests:
   stage: test
-  image: 'https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp.git#e2e:e2e'
+  image: "https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp.git\#e2e:e2e"
   script: npm run test:e2e:ci
   cache:
     <<: *cache
