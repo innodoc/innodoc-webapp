@@ -36,5 +36,5 @@ RUN set -xe && \
 # run web app
 USER innodoc
 EXPOSE 8000
-ENV CONTENT_ROOT
+ENV CONTENT_ROOT=http://localhost:8001/
 CMD ["pm2-runtime", "start", "npm", "--name", "innodoc-webapp", "--", "start"]
