@@ -24,6 +24,7 @@ fi
 
 # run tests
 $cmd
+ret_value=$?
 
 # kill app and content server
 kill -INT $(lsof -ti tcp:${CONTENT_PORT})
@@ -31,4 +32,4 @@ wait $pid_content
 kill -INT $(lsof -ti tcp:${PROD_PORT})
 wait $pid_app
 
-exit $?
+exit $ret_value
