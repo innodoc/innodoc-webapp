@@ -1,4 +1,4 @@
-FROM ..
+FROM gitlab-registry.tubit.tu-berlin.de/innodoc/innodoc-webapp/staging
 
 RUN set -xe && \
     apk update && \
