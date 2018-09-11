@@ -15,6 +15,7 @@ stages:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_DRIVER: overlay2
     IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
+    IMAGE_E2E_TAG: $CI_REGISTRY_IMAGE/e2e:$CI_COMMIT_REF_SLUG
     IMAGE_RELEASE_TAG: $CI_REGISTRY_IMAGE/release:latest
 
 build image:
@@ -38,10 +39,17 @@ unit tests:
   script: docker run $IMAGE_TAG npm run test:unit:coverage
   coverage: '/^Statements\s*:\s*([^%]+)/'
 
+build e2e image:
+  <<: *docker-base
+  stage: test
+  script:
+    - docker pull $IMAGE_RELEASE_TAG || true
+    - docker build --pull --cache-from $IMAGE_RELEASE_TAG --tag $IMAGE_E2E_TAG e2e
+
 e2e tests:
   <<: *docker-base
   stage: test
-  script: docker run $IMAGE_TAG npm run test:e2e:ci
+  script: docker run $IMAGE_E2E_TAG
 
 release image:
   <<: *docker-base
