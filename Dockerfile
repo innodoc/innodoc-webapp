@@ -15,7 +15,7 @@ COPY . /innodoc-webapp
 RUN set -xe && \
     addgroup -S innodoc && \
     adduser -S -G innodoc innodoc && \
-    chown innodoc.innodoc /innodoc-webapp
+    chown -R innodoc.innodoc /innodoc-webapp
 
 # install deps
 USER innodoc
