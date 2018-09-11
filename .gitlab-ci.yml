@@ -10,34 +10,27 @@ services:
 
 build image:
   stage: build
-  before_script: docker login $CI_REGISTRY
+  before_script: docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY || true
   script:
-      - cp .env.example .env
-      - npm install
-      - npm run build
+    - >
+      docker build .
+      --tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF
+      --tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF_SLUG
+    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF
+    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF_SLUG
 
 linting:
   stage: test
-  script: npm run lint
-  cache:
-    <<: *cache
-    policy: pull
+  script: docker run $CI_REGISTRY_IMAGE:$CI_BUILD_REF npm run lint
 
 unit tests:
   stage: test
-  script: npm run test:unit:coverage
+  script: docker run $CI_REGISTRY_IMAGE:$CI_BUILD_REF npm run test:unit:coverage
   coverage: '/^Statements\s*:\s*([^%]+)/'
-  cache:
-    <<: *cache
-    policy: pull
 
 e2e tests:
   stage: test
-  image: "https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp.git\\#e2e\\:e2e"
-  script: npm run test:e2e:ci
-  cache:
-    <<: *cache
-    policy: pull
+  script: docker run $CI_REGISTRY_IMAGE:$CI_BUILD_REF npm run test:e2e:ci
 
 deploy staging:
   stage: deploy
@@ -53,4 +46,3 @@ deploy staging:
   environment: staging
   only:
     - master
-  cache: {}
