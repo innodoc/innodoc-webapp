@@ -6,8 +6,8 @@ stages:
   - test
   - deploy
 
-cache:
-  key: ${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}
+cache: &cache
+  key: buildcache
   paths:
     - node_modules/
     - src/.next/
@@ -27,6 +27,7 @@ linting:
   stage: test
   script: npm run lint
   cache:
+    <<: *cache
     policy: pull
 
 unit tests:
@@ -34,6 +35,7 @@ unit tests:
   script: npm run test:unit:coverage
   coverage: '/^Statements\s*:\s*([^%]+)/'
   cache:
+    <<: *cache
     policy: pull
 
 e2e tests:
@@ -41,6 +43,7 @@ e2e tests:
   image: 'https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp.git#e2e:e2e'
   script: npm run test:e2e:ci
   cache:
+    <<: *cache
     policy: pull
 
 deploy staging:
