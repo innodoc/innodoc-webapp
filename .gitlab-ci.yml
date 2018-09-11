@@ -3,35 +3,55 @@ image: docker:latest
 stages:
   - build
   - test
+  - release
   - deploy
 
-services:
-  - docker:dind
+.docker-base: &docker-base
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY || true
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+    IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
+    IMAGE_RELEASE_TAG: $CI_REGISTRY_IMAGE/release:latest
 
 build image:
+  <<: *docker-base
   stage: build
-  before_script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY || true
   script:
-    - >
-      docker build .
-      --tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF
-      --tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF_SLUG
-    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF
-    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF_SLUG
+    - docker pull $IMAGE_RELEASE_TAG || true
+    - docker build --pull --cache-from $IMAGE_RELEASE_TAG --tag $IMAGE_TAG .
+    - docker push $IMAGE_TAG
 
 linting:
+  <<: *docker-base
   stage: test
-  script: docker run $CI_REGISTRY_IMAGE:$CI_BUILD_REF npm run lint
+  script:
+    - docker pull $IMAGE_TAG
+    - docker run $IMAGE_TAG npm run lint
 
 unit tests:
+  <<: *docker-base
   stage: test
-  script: docker run $CI_REGISTRY_IMAGE:$CI_BUILD_REF npm run test:unit:coverage
+  script: docker run $IMAGE_TAG npm run test:unit:coverage
   coverage: '/^Statements\s*:\s*([^%]+)/'
 
 e2e tests:
+  <<: *docker-base
   stage: test
-  script: docker run $CI_REGISTRY_IMAGE:$CI_BUILD_REF npm run test:e2e:ci
+  script: docker run $IMAGE_TAG npm run test:e2e:ci
+
+release image:
+  <<: *docker-base
+  stage: release
+  script:
+    - docker pull $IMAGE_TAG
+    - docker tag $IMAGE_TAG $IMAGE_RELEASE_TAG
+    - docker push $IMAGE_RELEASE_TAG
+  only:
+    - master
 
 deploy staging:
   stage: deploy
