@@ -29,5 +29,4 @@ RUN set -xe && \
 #     rm -rf /var/lib/apt/lists/*
 
 USER innodoc
-WORKDIR /innodoc-webapp
 CMD ["npm", "run", "test:e2e:ci"]

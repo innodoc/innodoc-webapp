@@ -26,19 +26,6 @@ build image:
     - docker build --pull --cache-from $IMAGE_RELEASE_TAG --tag $IMAGE_TAG .
     - docker push $IMAGE_TAG
 
-linting:
-  <<: *docker-base
-  stage: test
-  script:
-    - docker pull $IMAGE_TAG
-    - docker run $IMAGE_TAG npm run lint
-
-unit tests:
-  <<: *docker-base
-  stage: test
-  script: docker run $IMAGE_TAG npm run test:unit:coverage
-  coverage: '/^Statements\s*:\s*([^%]+)/'
-
 e2e tests:
   <<: *docker-base
   stage: test
