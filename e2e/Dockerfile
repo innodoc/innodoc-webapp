@@ -7,6 +7,7 @@ RUN set -xe && \
     apk update && \
     apk upgrade && \
     apk add \
+      bash \
       netcat-openbsd \
       lsof \
       xvfb && \
