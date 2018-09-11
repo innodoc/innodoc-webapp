@@ -16,25 +16,19 @@ while ! nc -z localhost $CONTENT_PORT; do sleep 0.1; done
 while ! nc -z localhost $PROD_PORT; do sleep 0.1; done
 
 # check for DISPLAY
+cmd="npm run test:e2e"
 if [[ ! $DISPLAY ]]; then
   echo "Running in headless mode (using Xvfb)"
-  export DISPLAY=:99
-  Xvfb $DISPLAY &
-  pid_xvfb=$!
+  cmd="e2e/xvfb-run --auto-servernum $cmd"
 fi
 
 # run tests
-npm run test:e2e
-ret_value=$?
+$cmd
 
-# kill processes
+# kill app and content server
 kill -INT $(lsof -ti tcp:${CONTENT_PORT})
 wait $pid_content
 kill -INT $(lsof -ti tcp:${PROD_PORT})
 wait $pid_app
-if [[ $pid_xvfb ]]; then
-  kill -INT $pid_xvfb
-  wait $pid_app
-fi
 
-exit $ret_value
+exit $?
