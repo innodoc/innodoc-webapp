@@ -1,41 +1,40 @@
 FROM node:alpine
 
-ARG GIT_REPO=https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp.git
-ARG GIT_BRANCH=master
-ENV CONTENT_ROOT
-EXPOSE 8000
-
 RUN set -xe && \
     apk update && \
     apk upgrade && \
-    apk add tzdata git && \
+    apk add tzdata && \
     cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
 RUN npm install pm2 -g
 
 WORKDIR /innodoc-webapp
+COPY . /innodoc-webapp
 
+# add user/group to run as
 RUN set -xe && \
     addgroup -S innodoc && \
     adduser -S -G innodoc innodoc && \
     chown innodoc.innodoc /innodoc-webapp
 
+# install deps
 USER innodoc
-
 RUN set -xe && \
-    git clone -b ${GIT_BRANCH} --single-branch ${GIT_REPO} . && \
-    git submodule init && \
-    git submodule update --remote && \
-    npm install && \
+    npm install
+
+# build app
+RUN set -xe && \
     cp .env.example .env && \
     npm run build
 
+# clean up
 USER root
-
 RUN set -xe && \
-    apk del git tzdata && \
+    apk del tzdata && \
     rm -rf /var/cache/apk/*
 
+# run web app
 USER innodoc
-
+EXPOSE 8000
+ENV CONTENT_ROOT
 CMD ["pm2-runtime", "start", "npm", "--name", "innodoc-webapp", "--", "start"]

@@ -1,31 +1,39 @@
-image: node:latest
+image: docker:latest
 
 stages:
-  - setup
   - build
   - test
   - deploy
 
-cache: &cache
-  key: buildcache
-  paths:
-    - node_modules/
-    - src/.next/
-    - .env
+services:
+  - docker:dind
 
-variables:
-  GIT_SUBMODULE_STRATEGY: recursive
-
-build app:
+build image:
   stage: build
+  before_script: docker login $CI_REGISTRY
   script:
       - cp .env.example .env
       - npm install
       - npm run build
 
+linting:
+  stage: test
+  script: npm run lint
+  cache:
+    <<: *cache
+    policy: pull
+
+unit tests:
+  stage: test
+  script: npm run test:unit:coverage
+  coverage: '/^Statements\s*:\s*([^%]+)/'
+  cache:
+    <<: *cache
+    policy: pull
+
 e2e tests:
   stage: test
-  image: "https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp.git\\#e2e:e2e"
+  image: "https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp.git\\#e2e\\:e2e"
   script: npm run test:e2e:ci
   cache:
     <<: *cache
