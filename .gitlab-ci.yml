@@ -34,11 +34,10 @@ unit tests:
 
 e2e tests:
   stage: test
-  image: https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp/tree/master/e2e#e2e-CI
-  script:
-    - npm run test:e2e:ci
+  image: 'https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp.git#e2e:e2e'
+  script: npm run test:e2e:ci
 
-deploy_staging:
+deploy staging:
   stage: deploy
   image: alpine:latest
   before_script:
