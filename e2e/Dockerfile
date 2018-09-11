@@ -1,4 +1,4 @@
-ARG image gitlab-registry.tubit.tu-berlin.de/innodoc/innodoc-webapp:latest
+ARG image=gitlab-registry.tubit.tu-berlin.de/innodoc/innodoc-webapp:latest
 FROM $image
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
