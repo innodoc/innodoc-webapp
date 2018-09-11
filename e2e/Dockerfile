@@ -7,7 +7,7 @@ RUN set -xe && \
     apk update && \
     apk upgrade && \
     apk add \
-      netcat \
+      netcat-openbsd \
       lsof \
       xvfb && \
     rm -rf /var/cache/apk/*
