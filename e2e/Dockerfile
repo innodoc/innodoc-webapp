@@ -2,6 +2,7 @@ ARG image=gitlab-registry.tubit.tu-berlin.de/innodoc/innodoc-webapp:latest
 FROM $image
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
+USER root
 RUN set -xe && \
     apk update && \
     apk upgrade && \
