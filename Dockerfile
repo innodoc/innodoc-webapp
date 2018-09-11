@@ -1,4 +1,5 @@
 FROM node:alpine
+LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
 RUN set -xe && \
     apk update && \
