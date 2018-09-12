@@ -28,23 +28,20 @@ COPY --chown=innodoc:innodoc \
   /innodoc-webapp/
 RUN npm install
 
-# create .env
+# copy files/create .env
 COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/.env
 COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/
-
-# build
-COPY --chown=innodoc:innodoc e2e /innodoc-webapp/e2e/
-COPY --chown=innodoc:innodoc src /innodoc-webapp/src/
-COPY --chown=innodoc:innodoc server /innodoc-webapp/server/
 COPY --chown=innodoc:innodoc \
   .babelrc \
   next.config.js \
   jest.config.js \
   .eslintignore \
   /innodoc-webapp/
+COPY --chown=innodoc:innodoc e2e /innodoc-webapp/e2e/
+COPY --chown=innodoc:innodoc src /innodoc-webapp/src/
+COPY --chown=innodoc:innodoc server /innodoc-webapp/server/
 
-RUN ls -la /innodoc-webapp/
-
+# build app
 RUN npm run build
 
 # run web app

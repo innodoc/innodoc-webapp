@@ -91,8 +91,6 @@
     "jest-environment-enzyme": "^6.0.3",
     "jest-environment-node": "^23.4.0",
     "jest-enzyme": "^6.0.3",
-    "nightmare": "^3.0.1",
-    "redux-devtools-extension": "^2.13.5",
-    "wait-port": "^0.2.2"
+    "redux-devtools-extension": "^2.13.5"
   }
 }

@@ -28,20 +28,21 @@ COPY --chown=innodoc:innodoc \
   package-lock.json \
   /innodoc-webapp/
 RUN npm install
+RUN npm install nightmare
 
-# create .env
+# copy files/create .env
 COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/.env
 COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/
-
-# build
-COPY --chown=innodoc:innodoc e2e /innodoc-webapp/e2e/
-COPY --chown=innodoc:innodoc src /innodoc-webapp/src/
-COPY --chown=innodoc:innodoc server /innodoc-webapp/server/
 COPY --chown=innodoc:innodoc \
   .babelrc \
   next.config.js \
   jest.e2e.config.js \
   /innodoc-webapp/
+COPY --chown=innodoc:innodoc e2e /innodoc-webapp/e2e/
+COPY --chown=innodoc:innodoc src /innodoc-webapp/src/
+COPY --chown=innodoc:innodoc server /innodoc-webapp/server/
+
+# build app
 RUN npm run build
 
 # run e2e script
