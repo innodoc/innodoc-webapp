@@ -15,6 +15,7 @@ stages:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_DRIVER: overlay2
     IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
+    IMAGE_E2E_CACHE_TAG: $CI_REGISTRY_IMAGE/e2e:cache
     IMAGE_E2E_TAG: $CI_REGISTRY_IMAGE/e2e:$CI_COMMIT_REF_SLUG
     IMAGE_RELEASE_TAG: $CI_REGISTRY_IMAGE:latest
 
@@ -30,8 +31,10 @@ e2e tests:
   <<: *docker-base
   stage: test
   script:
-    - docker pull $IMAGE_TAG || true
-    - docker build --pull --cache-from $IMAGE_TAG --tag $IMAGE_E2E_TAG --build-arg image=$IMAGE_TAG e2e
+    - docker pull $IMAGE_E2E_CACHE_TAG || true
+    - docker build --pull --cache-from $IMAGE_E2E_CACHE_TAG --tag $IMAGE_E2E_TAG e2e
+    - docker tag $IMAGE_E2E_TAG $IMAGE_E2E_CACHE_TAG
+    - docker push $IMAGE_E2E_CACHE_TAG
     - docker run $IMAGE_E2E_TAG
 
 release image:

@@ -12,7 +12,6 @@ RUN set -xe && \
 RUN npm install pm2 -g
 
 WORKDIR /innodoc-webapp
-COPY . /innodoc-webapp
 
 # add user/group to run as
 RUN set -xe && \
@@ -20,15 +19,31 @@ RUN set -xe && \
     adduser -S -G innodoc innodoc && \
     chown -R innodoc.innodoc /innodoc-webapp
 
-# install deps
 USER innodoc
-RUN set -xe && \
-    npm install
 
-# build app
-RUN set -xe && \
-    cp .env.example .env && \
-    npm run build
+# install deps and build
+COPY --chown=innodoc:innodoc \
+  package.json \
+  package-lock.json \
+  /innodoc-webapp
+RUN npm install
+
+# create .env
+COPY --chown=innodoc:innodoc \
+  .env.example \
+  /innodoc-webapp/.env
+
+# build
+COPY --chown=innodoc:innodoc \
+  e2e \
+  src \
+  server \
+  .babelrc \
+  next.config.js \
+  .eslintignore \
+  .jest.config.js \
+  /innodoc-webapp
+RUN npm run build
 
 # run web app
 EXPOSE 8000
