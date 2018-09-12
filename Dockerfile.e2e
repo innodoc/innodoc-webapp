@@ -13,18 +13,17 @@ RUN set -xe && \
       xfonts-scalable \
       xfonts-cyrillic \
       x11-apps \
-      clang \
-      libdbus-1-dev \
-      libgtk2.0-dev \
-      libnotify-dev \
-      libgnome-keyring-dev \
-      libgconf2-dev \
-      libasound2-dev \
-      libcap-dev \
-      libcups2-dev \
-      libxtst-dev \
+      libdbus-1 \
+      libgtk2.0 \
+      libnotify \
+      libgnome-keyring \
+      libgconf2 \
+      libasound2 \
+      libcap \
+      libcups2 \
+      libxtst \
       libxss1 \
-      libnss3-dev && \
+      libnss3 && \
     rm -rf /var/lib/{apt,dpkg,cache,log}/*
 
       # xvfb \
@@ -49,8 +48,8 @@ COPY --chown=innodoc:innodoc \
   package.json \
   package-lock.json \
   /innodoc-webapp/
-RUN npm install
 RUN npm install nightmare
+RUN npm install
 
 # copy files/create .env
 COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/.env
