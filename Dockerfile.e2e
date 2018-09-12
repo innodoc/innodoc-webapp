@@ -1,26 +1,33 @@
-FROM node:alpine
+FROM node:slim
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
-RUN echo "http://dl-4.alpinelinux.org/alpine/latest-stable/main" >> /etc/apk/repositories && \
-    echo "http://dl-4.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
+RUN apt-get update
 
-RUN set -xe && \
-    apk update && \
-    apk upgrade && \
-    apk add bash xvfb x11vnc chromium chromium-chromedriver imagemagick xterm && \
-    rm -rf /var/cache/apk/*
-
-ENV DISPLAY :99
-EXPOSE 5900
-VOLUME /images
+RUN apt-get install -y \
+  xvfb \
+  x11-xkb-utils \
+  xfonts-100dpi \
+  xfonts-75dpi \
+  xfonts-scalable \
+  xfonts-cyrillic \
+  x11-apps \
+  clang \
+  libdbus-1-dev \
+  libgtk2.0-dev \
+  libnotify-dev \
+  libgnome-keyring-dev \
+  libgconf2-dev \
+  libasound2-dev \
+  libcap-dev \
+  libcups2-dev \
+  libxtst-dev \
+  libxss1 \
+  libnss3-dev \
+  gcc-multilib \
+  g++-multilib
 
 WORKDIR /innodoc-webapp
 COPY . /innodoc-webapp
-
-RUN echo 'echo "starting Xvfb and x11vnc"' >> /innodoc-webapp/init.sh && \
-    echo "`which Xvfb` $DISPLAY -dpi 100 -screen 0 1024x768x24 &" >> /innodoc-webapp/init.sh && \
-    echo "`which x11vnc` -display $DISPLAY -forever >&2 &" >> /innodoc-webapp/init.sh && \
-    echo 'echo "done."' >> /innodoc-webapp/init.sh
 
 # add user/group to run as
 RUN set -xe && \
@@ -28,8 +35,9 @@ RUN set -xe && \
     adduser -S -G innodoc innodoc && \
     chown -R innodoc.innodoc /innodoc-webapp
 
-# install deps
 USER innodoc
+
+# install deps
 RUN set -xe && \
     npm install
 
@@ -38,7 +46,5 @@ RUN set -xe && \
     cp .env.example .env && \
     npm run build
 
-CMD ["/bin/sh","-c","sh init.sh && /bin/sh"]
-
 # run web app
-# CMD ["npm", "run", "test:e2e:ci"]
+ CMD ["npm", "run", "test:e2e:ci"]

@@ -19,7 +19,7 @@ while ! nc -z localhost $PROD_PORT; do sleep 0.1; done
 cmd="npm run test:e2e"
 if [[ ! $DISPLAY ]]; then
   echo "Running in headless mode (using Xvfb)"
-  cmd="e2e/xvfb-run --auto-servernum --error-file=/dev/stderr $cmd"
+  cmd="xvfb-run --auto-servernum --error-file=/dev/stderr $cmd"
 fi
 
 # run tests
