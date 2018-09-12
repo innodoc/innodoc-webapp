@@ -1,51 +1,26 @@
-FROM node:10-alpine
+FROM node:alpine
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
+RUN echo "http://dl-4.alpinelinux.org/alpine/latest-stable/main" >> /etc/apk/repositories && \
+    echo "http://dl-4.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
+
 RUN set -xe && \
-    echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
-    echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
     apk update && \
     apk upgrade && \
-    apk add \
-      tzdata \
-      bash \
-      coreutils \
-      netcat-openbsd \
-      lsof \
-      gtk+2.0 \
-      libxtst \
-      libxscrnsaver \
-      gconf \
-      nss \
-      alsa-lib \
-      clang \
-      dbus \
-      dbus-libs \
-      font-misc-cyrillic \
-      font-screen-cyrillic \
-      font-winitzki-cyrillic \
-      font-adobe-utopia-type1 \
-      font-xfree86-type1 \
-      font-bitstream-type1 \
-      font-bh-type1 \
-      font-ibm-type1 \
-      font-adobe-utopia-75dpi \
-      font-bitstream-75dpi \
-      font-bh-lucidatypewriter-75dpi \
-      font-bh-75dpi \
-      font-adobe-75dpi \
-      font-bitstream-100dpi \
-	    font-adobe-100dpi \
-      font-adobe-utopia-100dpi \
-      font-bh-lucidatypewriter-100dpi \
-      font-bh-100dpi \
-      xvfb && \
-    cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime && \
-    apk del tzdata && \
+    apk add bash xvfb x11vnc chromium chromium-chromedriver imagemagick xterm && \
     rm -rf /var/cache/apk/*
+
+ENV DISPLAY :99
+EXPOSE 5900
+VOLUME /images
 
 WORKDIR /innodoc-webapp
 COPY . /innodoc-webapp
+
+RUN echo 'echo "starting Xvfb and x11vnc"' >> /innodoc-webapp/init.sh && \
+    echo "`which Xvfb` $DISPLAY -dpi 100 -screen 0 1024x768x24 &" >> /innodoc-webapp/init.sh && \
+    echo "`which x11vnc` -display $DISPLAY -forever >&2 &" >> /innodoc-webapp/init.sh && \
+    echo 'echo "done."' >> /innodoc-webapp/init.sh
 
 # add user/group to run as
 RUN set -xe && \
@@ -63,6 +38,7 @@ RUN set -xe && \
     cp .env.example .env && \
     npm run build
 
-USER root
+CMD ["/bin/sh","-c","sh init.sh && /bin/sh"]
+
 # run web app
-CMD ["npm", "run", "test:e2e:ci"]
+# CMD ["npm", "run", "test:e2e:ci"]
