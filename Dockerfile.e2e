@@ -6,7 +6,7 @@ RUN set -xe && \
     echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
     apk update && \
     apk upgrade && \
-    apk add
+    apk add \
       tzdata \
       bash \
       coreutils \
@@ -18,6 +18,27 @@ RUN set -xe && \
       gconf \
       nss \
       alsa-lib \
+      clang \
+      dbus \
+      dbus-libs \
+      font-misc-cyrillic \
+      font-screen-cyrillic \
+      font-winitzki-cyrillic \
+      font-adobe-utopia-type1 \
+      font-xfree86-type1 \
+      font-bitstream-type1 \
+      font-bh-type1 \
+      font-ibm-type1 \
+      font-adobe-utopia-75dpi \
+      font-bitstream-75dpi \
+      font-bh-lucidatypewriter-75dpi \
+      font-bh-75dpi \
+      font-adobe-75dpi \
+      font-bitstream-100dpi \
+	    font-adobe-100dpi \
+      font-adobe-utopia-100dpi \
+      font-bh-lucidatypewriter-100dpi \
+      font-bh-100dpi \
       xvfb && \
     cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime && \
     apk del tzdata && \
@@ -41,7 +62,6 @@ RUN set -xe && \
 RUN set -xe && \
     cp .env.example .env && \
     npm run build
-
 
 USER root
 # run web app
