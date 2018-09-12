@@ -4,6 +4,8 @@ LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 RUN apt-get update
 
 RUN apt-get install -y \
+  lsof \
+  netcat \
   xvfb \
   x11-xkb-utils \
   xfonts-100dpi \
@@ -29,7 +31,7 @@ RUN apt-get install -y \
 WORKDIR /innodoc-webapp
 COPY . /innodoc-webapp
 
-# add user/group to run as
+# add user/group
 RUN set -xe && \
     useradd -U -s /bin/bash -d /innodoc-webapp innodoc && \
     chown -R innodoc.innodoc /innodoc-webapp
@@ -42,5 +44,5 @@ RUN set -xe && \
     npm install && \
     npm run build
 
-# run web app
+# run e2e script
 CMD ["npm", "run", "test:e2e:ci"]
