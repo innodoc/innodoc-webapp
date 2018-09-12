@@ -3,11 +3,27 @@ LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
 WORKDIR /innodoc-webapp
 
+RUN set -xe && \
+    apt-get update -yq && \
+    apt-get upgrade -yq && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -yq \
+      lsof \
+      netcat \
+      xvfb \
+      libnotify4 \
+      libgtk2.0 \
+      libxss1 \
+      libnss3 \
+      libgconf-2-4 && \
+    apt-get clean autoclean -yq && \
+    apt-get autoremove -yq && \
+    rm -rf /var/cache/* && \
+    rm -rf /var/lib/{apt,dpkg,cache,log}/*
+
 # add user/group
 RUN set -xe && \
     useradd -U -s /bin/bash -d /innodoc-webapp innodoc && \
     chown -R innodoc.innodoc /innodoc-webapp
-
 USER innodoc
 
 # install deps and build
@@ -32,38 +48,6 @@ COPY --chown=innodoc:innodoc server /innodoc-webapp/server/
 
 # build app
 RUN npm run build
-
-USER root
-RUN set -xe && \
-    apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -yq \
-      lsof \
-      netcat \
-      xvfb \
-      xfonts-100dpi \
-      xfonts-75dpi \
-      xfonts-scalable \
-      xfonts-cyrillic
-
-RUN set -xe && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -yq \
-      x11-xkb-utils \
-      x11-apps \
-      libdbus-1-3 \
-      libgtk2.0 \
-      libnotify4 \
-      libgnome-keyring0 \
-      libgconf-2-4 \
-      libasound2 \
-      libcap2 \
-      libcups2 \
-      libxtst6 \
-      libxss1 \
-      libnss3
-
-#rm -rf /var/lib/{apt,dpkg,cache,log}/*
-
-USER innodoc
 
 # run e2e script
 CMD ["npm", "run", "test:e2e:ci"]
