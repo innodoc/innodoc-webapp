@@ -41,7 +41,7 @@ COPY --chown=innodoc:innodoc \
   server \
   .babelrc \
   next.config.js \
-  .jest.e2e.config.js \
+  jest.e2e.config.js \
   /innodoc-webapp/
 RUN npm run build
 

@@ -40,8 +40,8 @@ COPY --chown=innodoc:innodoc \
   server \
   .babelrc \
   next.config.js \
+  jest.config.js \
   .eslintignore \
-  .jest.config.js \
   /innodoc-webapp/
 RUN npm run build
 
