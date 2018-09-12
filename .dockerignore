@@ -4,3 +4,6 @@ README.md
 LICENSE.txt
 coverage
 Dockerfile
+node_modules
+.DS_Store
+src/.next
