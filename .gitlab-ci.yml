@@ -24,7 +24,9 @@ build image:
   stage: build
   script:
     - docker pull $IMAGE_RELEASE_TAG || true
-    - docker build --pull --cache-from $IMAGE_RELEASE_TAG --tag $IMAGE_TAG .
+    - docker pull $IMAGE_TAG || true
+    - docker build --pull --cache-from $IMAGE_RELEASE_TAG --cache-from $IMAGE_TAG --tag $IMAGE_TAG .
+    - docker tag $IMAGE_TAG $IMAGE_CACHE_TAG
     - docker push $IMAGE_TAG
 
 e2e tests:

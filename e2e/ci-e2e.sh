@@ -15,16 +15,17 @@ pid_app=$!
 while ! nc -z localhost $CONTENT_PORT; do sleep 0.1; done
 while ! nc -z localhost $PROD_PORT; do sleep 0.1; done
 
-# check for DISPLAY
 cmd="npm run test:e2e"
-if [[ ! $DISPLAY ]]; then
-  echo "Running in headless mode (using Xvfb)"
-  cmd="xvfb-run --auto-servernum --server-args=\\\"-screen 0 1280x1024x24 -dpi 100 -ac\\\" $cmd"
-fi
 
 # run tests
-$cmd
-ret_value=$?
+if [[ ! $DISPLAY ]]; then
+  echo "Running in headless mode (using Xvfb)"
+  xvfb-run --auto-servernum --server-args="-screen 0 1280x1024x24 -dpi 100 -ac" $cmd
+  ret_value=$?
+else
+  $cmd
+  ret_value=$?
+fi
 
 # kill app and content server
 kill -INT $(lsof -ti tcp:${CONTENT_PORT})
