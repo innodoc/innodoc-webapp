@@ -11,6 +11,12 @@ RUN set -xe && \
       coreutils \
       netcat-openbsd \
       lsof \
+      gtk+2.0 \
+      libxtst \
+      libxscrnsaver \
+      gconf \
+      nss \
+      alsa-lib \
       xvfb && \
     rm -rf /var/cache/apk/*
 
