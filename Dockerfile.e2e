@@ -30,9 +30,8 @@ COPY --chown=innodoc:innodoc \
 RUN npm install
 
 # create .env
-COPY --chown=innodoc:innodoc \
-  .env.example \
-  /innodoc-webapp/.env
+COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/.env
+COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/
 
 # build
 COPY --chown=innodoc:innodoc e2e /innodoc-webapp/e2e/
