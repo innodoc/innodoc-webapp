@@ -1,5 +1,11 @@
 import contentReducer from './content'
-import { loadSection, loadSectionSuccess, setContentRoot } from '../actions/content'
+import {
+  loadTocSuccess,
+  loadSection,
+  loadSectionFailure,
+  loadSectionSuccess,
+  setContentRoot,
+} from '../actions/content'
 import { changeLanguage } from '../actions/i18n'
 import defaultInitialState, { defaultContentData } from '../defaultInitialState'
 
@@ -45,6 +51,14 @@ describe('contentReducer', () => {
     expect(contentReducer(undefined, {})).toEqual(initialContentState)
   })
 
+  test('LOAD_TOC_SUCCESS', () => {
+    const newState = contentReducer(initialContentState, loadTocSuccess({
+      language: 'en',
+      content: ['toccontent'],
+    }))
+    expect(newState.data.en.toc).toEqual(['toccontent'])
+  })
+
   test('LOAD_SECTION', () => {
     const newState = contentReducer(initialContentState, loadSection(78))
     expect(newState.currentSectionPath).toEqual(null)
@@ -63,13 +77,26 @@ describe('contentReducer', () => {
     })
   })
 
+  test('LOAD_SECTION_FAILURE', () => {
+    const error = { msg: 'Mighty Errror!' }
+    const newState = contentReducer(state.content, loadSectionFailure(error))
+    expect(newState.error).toEqual(error)
+  })
+
   test('SET_CONTENT_ROOT', () => {
     const newState = contentReducer(initialContentState, setContentRoot('https://content.foo.bar'))
     expect(newState.contentRoot).toEqual('https://content.foo.bar')
   })
 
-  test('CHANGE_LANGUAGE', () => {
-    const newState = contentReducer(initialContentState, changeLanguage('de'))
+  test('CHANGE_LANGUAGE (en -> de)', () => {
+    const newState = contentReducer(state.content, changeLanguage('de'))
+    expect(newState.data.en).toEqual(state.content.data.en)
     expect(newState.data.de).toEqual(defaultContentData)
+  })
+
+  test('CHANGE_LANGUAGE (en -> en)', () => {
+    const newState = contentReducer(state.content, changeLanguage('en'))
+    expect(newState.data.en).toEqual(state.content.data.en)
+    expect(newState.data.de).not.toBeDefined()
   })
 })
