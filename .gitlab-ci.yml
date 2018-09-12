@@ -60,7 +60,7 @@ e2e tests:
 
 staging release image:
   <<: *docker-base
-  stage: deploy
+  stage: release
   script:
     - docker pull $IMAGE_TAG
     - docker tag $IMAGE_TAG $IMAGE_STAGING_TAG
