@@ -1,0 +1,48 @@
+FROM node:10-alpine
+LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
+
+RUN set -xe && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
+    apk update && \
+    apk upgrade && \
+    apk add
+      tzdata \
+      bash \
+      coreutils \
+      netcat-openbsd \
+      lsof \
+      gtk+2.0 \
+      libxtst \
+      libxscrnsaver \
+      gconf \
+      nss \
+      alsa-lib \
+      xvfb && \
+    cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime && \
+    apk del tzdata && \
+    rm -rf /var/cache/apk/*
+
+WORKDIR /innodoc-webapp
+COPY . /innodoc-webapp
+
+# add user/group to run as
+RUN set -xe && \
+    addgroup -S innodoc && \
+    adduser -S -G innodoc innodoc && \
+    chown -R innodoc.innodoc /innodoc-webapp
+
+# install deps
+USER innodoc
+RUN set -xe && \
+    npm install
+
+# build app
+RUN set -xe && \
+    cp .env.example .env && \
+    npm run build
+
+
+USER root
+# run web app
+CMD ["npm", "run", "test:e2e:ci"]
