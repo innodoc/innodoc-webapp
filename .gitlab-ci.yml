@@ -46,7 +46,7 @@ unit tests:
   script:
     - docker pull $IMAGE_TAG
     - docker run $IMAGE_TAG npm run test:unit:coverage
-  coverage: '/^Statements\s*:\s*([^%]+)/'
+  coverage: '/^All files\s+\|\s+([0-9.]+)\s+\|\s+/'
 
 e2e tests:
   <<: *docker-base
