@@ -34,15 +34,18 @@ COPY --chown=innodoc:innodoc \
   /innodoc-webapp/.env
 
 # build
+COPY --chown=innodoc:innodoc e2e /innodoc-webapp/e2e/
+COPY --chown=innodoc:innodoc src /innodoc-webapp/src/
+COPY --chown=innodoc:innodoc server /innodoc-webapp/server/
 COPY --chown=innodoc:innodoc \
-  e2e \
-  src \
-  server \
   .babelrc \
   next.config.js \
   jest.config.js \
   .eslintignore \
   /innodoc-webapp/
+
+RUN ls -la /innodoc-webapp/
+
 RUN npm run build
 
 # run web app
