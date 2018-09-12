@@ -25,7 +25,7 @@ USER innodoc
 COPY --chown=innodoc:innodoc \
   package.json \
   package-lock.json \
-  /innodoc-webapp
+  /innodoc-webapp/
 RUN npm install
 
 # create .env
@@ -42,7 +42,7 @@ COPY --chown=innodoc:innodoc \
   next.config.js \
   .eslintignore \
   .jest.config.js \
-  /innodoc-webapp
+  /innodoc-webapp/
 RUN npm run build
 
 # run web app
