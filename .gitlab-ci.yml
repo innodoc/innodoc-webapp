@@ -58,7 +58,7 @@ e2e tests:
     - docker push $IMAGE_E2E_CACHE_TAG
     - docker run $IMAGE_E2E_TAG
 
-release staging image:
+staging release image:
   <<: *docker-base
   stage: deploy
   script:
@@ -68,7 +68,7 @@ release staging image:
   only:
     - e2e-docker
 
-deploy staging:
+staging deploy image:
   stage: deploy
   image: alpine
   environment: staging

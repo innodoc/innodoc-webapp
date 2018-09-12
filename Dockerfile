@@ -36,6 +36,7 @@ COPY --chown=innodoc:innodoc \
   next.config.js \
   jest.config.js \
   .eslintignore \
+  .eslintrc.json \
   /innodoc-webapp/
 COPY --chown=innodoc:innodoc e2e /innodoc-webapp/e2e/
 COPY --chown=innodoc:innodoc src /innodoc-webapp/src/
