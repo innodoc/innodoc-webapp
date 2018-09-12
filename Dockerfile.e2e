@@ -39,7 +39,7 @@ USER innodoc
 # install deps
 RUN set -xe && \
     cp .env.example .env && \
-    npm install
+    npm install && \
     npm run build
 
 # run web app
