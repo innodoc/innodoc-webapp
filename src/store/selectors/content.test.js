@@ -1,4 +1,4 @@
-import selectors from './content'
+import selectors, { findLastSubSectionPath } from './content'
 
 jest.mock('./i18n.js', () => ({ getLanguage: () => 'en' }))
 
@@ -37,6 +37,16 @@ const state = {
     },
   },
 }
+
+describe('contentSelectors helpers', () => {
+  test('findLastSubSectionPath', () => {
+    const { toc } = state.content.data.en
+    expect(findLastSubSectionPath(toc, 'TEST01')).toEqual('TEST01/foo/bar')
+    expect(findLastSubSectionPath(toc, 'TEST01/foo')).toEqual('TEST01/foo/bar')
+    expect(findLastSubSectionPath(toc, 'TEST01/foo/foo-test')).toEqual('TEST01/foo/foo-test')
+    expect(findLastSubSectionPath(toc, 'TEST01/foo/bar')).toEqual('TEST01/foo/bar')
+  })
+})
 
 describe('contentSelectors', () => {
   test('getContentRoot', () => {
@@ -107,25 +117,19 @@ describe('contentSelectors', () => {
 
   describe('prev/next section path', () => {
     test('getPrevSectionPath', () => {
-      expect(selectors.getPrevSectionPath(state, 'TEST01/foo/bar'))
-        .toEqual('TEST01/foo/foo-test')
-      expect(selectors.getPrevSectionPath(state, 'TEST01/foo/foo-test'))
-        .toEqual('TEST01/foo')
-      expect(selectors.getPrevSectionPath(state, 'TEST01/foo'))
-        .toEqual('TEST01')
-      expect(selectors.getPrevSectionPath(state, 'TEST01'))
-        .toEqual(undefined)
+      expect(selectors.getPrevSectionPath(state, 'TEST01/foo/bar')).toEqual('TEST01/foo/foo-test')
+      expect(selectors.getPrevSectionPath(state, 'TEST01/foo/foo-test')).toEqual('TEST01/foo')
+      expect(selectors.getPrevSectionPath(state, 'TEST01/foo')).toEqual('TEST01')
+      expect(selectors.getPrevSectionPath(state, 'TEST01')).toEqual(undefined)
+      expect(selectors.getPrevSectionPath(state, null)).toEqual(undefined)
     })
 
     test('getNextSectionPath', () => {
-      expect(selectors.getNextSectionPath(state, 'TEST01'))
-        .toEqual('TEST01/foo')
-      expect(selectors.getNextSectionPath(state, 'TEST01/foo'))
-        .toEqual('TEST01/foo/foo-test')
-      expect(selectors.getNextSectionPath(state, 'TEST01/foo/foo-test'))
-        .toEqual('TEST01/foo/bar')
-      expect(selectors.getNextSectionPath(state, 'TEST01/foo/bar'))
-        .toEqual(undefined)
+      expect(selectors.getNextSectionPath(state, 'TEST01')).toEqual('TEST01/foo')
+      expect(selectors.getNextSectionPath(state, 'TEST01/foo')).toEqual('TEST01/foo/foo-test')
+      expect(selectors.getNextSectionPath(state, 'TEST01/foo/foo-test')).toEqual('TEST01/foo/bar')
+      expect(selectors.getNextSectionPath(state, 'TEST01/foo/bar')).toEqual(undefined)
+      expect(selectors.getNextSectionPath(state, null)).toEqual(undefined)
     })
   })
 

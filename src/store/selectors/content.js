@@ -45,19 +45,13 @@ const getSections = (toc, path) => {
   return sections
 }
 
-const findLastSubSectionPath = (toc, path) => {
-  let sections = getSections(toc, path)
-  if (sections === undefined) {
-    return path
-  }
-  sections = sections.map(s => s.data)
-
+export const findLastSubSectionPath = (toc, path) => {
+  const sections = getSections(toc, path).map(s => s.data)
   let current = sections[sections.length - 1]
   while (current.children !== undefined) {
     current = current.children[current.children.length - 1]
     sections.push({ id: current.id })
   }
-
   return sections.slice(1).map(s => s.id).join('/')
 }
 
@@ -94,15 +88,9 @@ const getSection = (state, path) => {
 const getSectionLevel = (state, path) => splitPath(path).length
 
 const getSectionTitle = (state, path) => {
-  if (path === undefined) {
-    return undefined
-  }
-
+  if (!path) { return undefined }
   const section = getSection(state, path)
-  if (section === undefined) {
-    return undefined
-  }
-
+  if (!section) { return undefined }
   return section.title
 }
 
@@ -125,9 +113,7 @@ const getBreadcrumbSections = (state) => {
 }
 
 const getPrevSectionPath = (state, path) => {
-  if (path === null || path === undefined) {
-    return undefined
-  }
+  if (!path) { return undefined }
 
   const toc = getToc(state)
   const { current, parent } = getCurrentAndParentSection(getSections(toc, path))
@@ -138,17 +124,12 @@ const getPrevSectionPath = (state, path) => {
   }
 
   // Otherwise find the last sub section of previous sibling
-  return findLastSubSectionPath(
-    toc,
-    parent.path === ''
-      ? parent.data.children[current.idx - 1].id
-      : `${parent.path}/${parent.data.children[current.idx - 1].id}`)
+  const parentPath = parent.path === '' ? parent.path : `${parent.path}/`
+  return findLastSubSectionPath(toc, `${parentPath}${parent.data.children[current.idx - 1].id}`)
 }
 
 const getNextSectionPath = (state, path, first = true) => {
-  if (path === null || path === undefined) {
-    return undefined
-  }
+  if (!path) { return undefined }
 
   const { current, parent } = getCurrentAndParentSection(getSections(getToc(state), path))
 
