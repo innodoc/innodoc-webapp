@@ -13,7 +13,7 @@ const Item = ({
   sectionPrefix,
 }) => {
   const sectionPath = `${sectionPrefix}${sectionPathFragment}`
-  if (!subSections.length) {
+  if (subSections.length < 1) {
     return (
       <SectionLink sectionPath={sectionPath}>
         <Menu.Item as="a">
