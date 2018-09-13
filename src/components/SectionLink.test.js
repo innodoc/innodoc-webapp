@@ -1,22 +1,25 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import Link from 'next/link'
 
 import SectionLink from './SectionLink'
 
 describe('<SectionLink />', () => {
   it('renders', () => {
-    const wrapper = mount(
+    const wrapper = shallow(
       <SectionLink sectionPath="foo/bar">
         <a>
           Hello World!
         </a>
       </SectionLink>
     )
-    expect(wrapper.find(Link).exists()).toBe(true)
-    const a = wrapper.find('a')
-    expect(a.exists()).toBe(true)
-    expect(a.text()).toBe('Hello World!')
-    expect(a.prop('href')).toBe('/page/foo/bar')
+    const link = wrapper.find(Link)
+    expect(link).toExist()
+    expect(link.prop('href')).toEqual({
+      pathname: '/page',
+      query: { sectionPath: 'foo/bar' },
+    })
+    expect(link.prop('as')).toBe('/page/foo/bar')
+    expect(wrapper.find('a')).toExist()
   })
 })
