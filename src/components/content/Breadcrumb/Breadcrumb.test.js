@@ -8,15 +8,15 @@ import SectionLink from '../../SectionLink'
 describe('<Breadcrumb />', () => {
   const sections = [
     {
-      id: 'section1',
+      path: 'section1',
       title: [{ t: 'Str', c: 'Section 1' }],
     },
     {
-      id: 'section1/section11',
+      path: 'section1/section11',
       title: [{ t: 'Str', c: 'Subsection 1.1' }],
     },
     {
-      id: 'section1/section11/section111',
+      path: 'section1/section11/section111',
       title: [{ t: 'Str', c: 'Subsection 1.1.1' }],
     },
   ]
