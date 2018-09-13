@@ -8,13 +8,14 @@ import rootSaga from '../sagas'
 const sagaMiddleware = createSagaMiddleware()
 
 const bindMiddleware = (middleware) => {
+  let boundMiddleware = applyMiddleware(...middleware)
   // add redux devtools
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line global-require, import/no-extraneous-dependencies
     const { composeWithDevTools } = require('redux-devtools-extension')
-    return composeWithDevTools(applyMiddleware(...middleware))
+    boundMiddleware = composeWithDevTools(boundMiddleware)
   }
-  return applyMiddleware(...middleware)
+  return boundMiddleware
 }
 
 export default function configureStore(initialState = defaultInitialState) {
