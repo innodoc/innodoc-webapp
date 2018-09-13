@@ -105,25 +105,72 @@ describe('contentSelectors', () => {
       )
   })
 
-  test('getPrevSectionPath', () => {
-    expect(selectors.getPrevSectionPath(state, 'TEST01/foo/bar'))
-      .toEqual('TEST01/foo/foo-test')
-    expect(selectors.getPrevSectionPath(state, 'TEST01/foo/foo-test'))
-      .toEqual('TEST01/foo')
-    expect(selectors.getPrevSectionPath(state, 'TEST01/foo'))
-      .toEqual('TEST01')
-    expect(selectors.getPrevSectionPath(state, 'TEST01'))
-      .toEqual(undefined)
+  describe('prev/next section path', () => {
+    test('getPrevSectionPath', () => {
+      expect(selectors.getPrevSectionPath(state, 'TEST01/foo/bar'))
+        .toEqual('TEST01/foo/foo-test')
+      expect(selectors.getPrevSectionPath(state, 'TEST01/foo/foo-test'))
+        .toEqual('TEST01/foo')
+      expect(selectors.getPrevSectionPath(state, 'TEST01/foo'))
+        .toEqual('TEST01')
+      expect(selectors.getPrevSectionPath(state, 'TEST01'))
+        .toEqual(undefined)
+    })
+
+    test('getNextSectionPath', () => {
+      expect(selectors.getNextSectionPath(state, 'TEST01'))
+        .toEqual('TEST01/foo')
+      expect(selectors.getNextSectionPath(state, 'TEST01/foo'))
+        .toEqual('TEST01/foo/foo-test')
+      expect(selectors.getNextSectionPath(state, 'TEST01/foo/foo-test'))
+        .toEqual('TEST01/foo/bar')
+      expect(selectors.getNextSectionPath(state, 'TEST01/foo/bar'))
+        .toEqual(undefined)
+    })
   })
 
-  test('getNextSectionPath', () => {
-    expect(selectors.getNextSectionPath(state, 'TEST01'))
-      .toEqual('TEST01/foo')
-    expect(selectors.getNextSectionPath(state, 'TEST01/foo'))
-      .toEqual('TEST01/foo/foo-test')
-    expect(selectors.getNextSectionPath(state, 'TEST01/foo/foo-test'))
-      .toEqual('TEST01/foo/bar')
-    expect(selectors.getNextSectionPath(state, 'TEST01/foo/bar'))
-      .toEqual(undefined)
+  describe('getNavSections', () => {
+    test('only prev', () => {
+      expect(selectors.getNavSections(state)).toEqual({
+        prev: {
+          title: 'foo test section',
+          path: 'TEST01/foo/foo-test',
+        },
+      })
+    })
+
+    test('only next', () => {
+      const testState = {
+        content: {
+          ...state.content,
+          currentSectionPath: 'TEST01',
+        },
+      }
+      expect(selectors.getNavSections(testState)).toEqual({
+        next: {
+          title: 'foo section',
+          path: 'TEST01/foo',
+        },
+      })
+    })
+
+    test('both prev and next', () => {
+      const testState = {
+        content: {
+          ...state.content,
+          currentSectionPath: 'TEST01/foo',
+        },
+      }
+      expect(selectors.getNavSections(testState)).toEqual({
+        prev: {
+          title: 'TEST01 section',
+          path: 'TEST01',
+        },
+        next: {
+          title: 'foo test section',
+          path: 'TEST01/foo/foo-test',
+        },
+      })
+    })
   })
 })
