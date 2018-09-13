@@ -43,4 +43,5 @@ MessageModal.defaultProps = {
   onClose: () => {},
 }
 
+export { MessageModal } // for testing
 export default translate()(MessageModal)
