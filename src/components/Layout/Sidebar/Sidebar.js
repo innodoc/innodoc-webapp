@@ -75,4 +75,5 @@ const mapDispatchToProps = {
   onSidebarToggleClick: toggleSidebar,
 }
 
+export { Sidebar } // for testing
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(Sidebar))
