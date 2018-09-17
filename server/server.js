@@ -36,6 +36,11 @@ if (!port) {
   throw new Error(`You need to configure ${portVarName} in your .env file!`)
 }
 
+// ensure trailing slash
+const contentRoot = process.env.CONTENT_ROOT.substr(-1) === '/'
+  ? process.env.CONTENT_ROOT
+  : `${process.env.CONTENT_ROOT}/`
+
 // create next.js app
 const app = next({
   dir: srcDir,
@@ -63,13 +68,11 @@ i18nInstance
     app.prepare()
       .then(() => {
         const server = express()
-        const handle = app.getRequestHandler()
+        const appHandler = app.getRequestHandler()
 
         // set CONTENT_ROOT
         server.use((req, res, _next) => {
-          res.locals.contentRoot = process.env.CONTENT_ROOT.substr(-1) === '/'
-            ? process.env.CONTENT_ROOT
-            : `${process.env.CONTENT_ROOT}/` // add trailing slash
+          res.locals.contentRoot = contentRoot
           _next()
         })
 
@@ -80,7 +83,9 @@ i18nInstance
         server.use('/locales', express.static(localesDir))
 
         // missing keys
-        server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18nInstance))
+        if (nodeEnv !== 'production') {
+          server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18nInstance))
+        }
 
         // a course section
         server.get(/^\/page\/([A-Za-z0-9_/:-]+)$/, (req, res) => {
@@ -94,12 +99,12 @@ i18nInstance
           app.render(req, res, actualPage, queryParams)
         })
 
-        server.get('*', (req, res) => handle(req, res))
-
-        console.info(`Starting ${nodeEnv} server on port ${port}.`)
+        // everything else handled by next.js app
+        server.get('*', (req, res) => appHandler(req, res))
 
         server.listen(port, (err) => {
           if (err) { throw err }
+          console.info(`Started ${nodeEnv} server on port ${port}.`)
         })
       })
       .catch((ex) => {
