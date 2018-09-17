@@ -8,6 +8,16 @@
     "subsections": "Subsections",
     "test": "Test"
   },
+  "errorPage": {
+    "404": {
+      "title": "404 Not found",
+      "msg": "Ooops… This page could not be found."
+    },
+    "unspecific": {
+      "title": "Ooops…",
+      "msg": "Something went wrong."
+    }
+  },
   "footer": {
     "aboutThisProject": "About this project",
     "authors": "List of authors",

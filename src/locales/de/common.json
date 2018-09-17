@@ -8,6 +8,16 @@
     "subsections": "Unterabschnitte",
     "test": "Test"
   },
+  "errorPage": {
+    "404": {
+      "title": "404 Not found",
+      "msg": "Hoppla… Diese Seite konnte nicht gefunden werden."
+    },
+    "unspecific": {
+      "title": "Hoppla…",
+      "msg": "Leider ist etwas schief gelaufen."
+    }
+  },
   "footer": {
     "aboutThisProject": "Über dieses Projekt",
     "authors": "List der Autor*innen",
