@@ -68,7 +68,6 @@ const withMathJax = (WrappedComponent) => {
       loadScript(
         '/static/vendor/MathJax/unpacked/MathJax.js',
         { attrs: { id: MATHJAX_SCRIPT_ID } },
-        (err) => { if (err) { throw new Error(err) } }
       )
     }
 
