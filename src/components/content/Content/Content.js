@@ -36,13 +36,6 @@ class Content extends React.Component {
     typesetMathJax()
   }
 
-  componentDidUpdate(prevProps) {
-    const { content, typesetMathJax } = this.props
-    if (prevProps.content !== content) {
-      typesetMathJax()
-    }
-  }
-
   render() {
     const {
       section,
@@ -81,11 +74,12 @@ class Content extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  let ret = { loading: true }
   const path = contentSelectors.getCurrentSectionPath(state)
   if (path) {
     const section = contentSelectors.getSection(state, path)
     if (section) {
-      return {
+      ret = {
         loading: false,
         section,
         content: contentSelectors.getSectionContent(state, path),
@@ -93,9 +87,10 @@ const mapStateToProps = (state) => {
       }
     }
   }
-  return { loading: true }
+  return ret
 }
 
+export { Content, mapStateToProps } // for testing
 export default connect(mapStateToProps)(
   withMathJax(
     translate()(
