@@ -14,9 +14,10 @@
   ],
   "scripts": {
     "build": "next build src",
-    "dev": "babel-node server/server.js",
+    "server": "babel-node server/server.js",
+    "dev": "NODE_ENV=development npm run server",
+    "start": "NODE_ENV=production npm run server",
     "lint": "eslint src server",
-    "start": "NODE_ENV=production babel-node server/server.js",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "jest",
     "test:unit:watch": "npm run test:unit -- --watch",
