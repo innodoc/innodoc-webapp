@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { List } from 'semantic-ui-react'
 
-import ContentFragment from '.'
+import ContentFragment from '..'
 
 const BulletList = ({ data }) => {
   const listItems = data.map(

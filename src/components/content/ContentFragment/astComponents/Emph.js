@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { contentType } from '../../../lib/propTypes'
-import ContentFragment from '.'
+import { contentType } from '../../../../lib/propTypes'
+import ContentFragment from '..'
 
 const Emph = ({ data }) => (
   <em>

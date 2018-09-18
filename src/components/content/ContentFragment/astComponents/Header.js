@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import ContentFragment from '.'
+import ContentFragment from '..'
 
 const Header = ({ data }) => {
   const [level, [id, classes, content]] = data

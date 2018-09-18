@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ContentFragment from '.'
+import ContentFragment from '..'
 
 const ExternalLink = ({ data }) => {
   const [, content, [href, title]] = data

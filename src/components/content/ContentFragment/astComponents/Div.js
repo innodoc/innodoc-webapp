@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ExerciseCard from './cards/ExerciseCard'
-import InfoCard from './cards/InfoCard'
-import ExampleCard from './cards/ExampleCard'
-import SolutionHint from './messages/SolutionHint'
-import InputHint from './messages/InputHint'
-import TestCard from './cards/TestCard'
-import QuestionGroup from './questions/QuestionGroup'
-import VerifyInfoButton from './questions/VerifyInfoButton'
+import ExerciseCard from '../cards/ExerciseCard'
+import InfoCard from '../cards/InfoCard'
+import ExampleCard from '../cards/ExampleCard'
+import SolutionHint from '../messages/SolutionHint'
+import InputHint from '../messages/InputHint'
+import TestCard from '../cards/TestCard'
+import QuestionGroup from '../questions/QuestionGroup'
+import VerifyInfoButton from '../questions/VerifyInfoButton'
 import UnknownType from './UnknownType'
 
 const classNameComponentMap = {

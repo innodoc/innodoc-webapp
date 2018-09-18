@@ -6,27 +6,26 @@
 import React from 'react'
 
 import { contentType } from '../../../lib/propTypes'
-import UnknownType from './UnknownType'
-import Str from './Str'
-import Header from './Header'
-import Para from './Para'
-import Div from './Div'
-import Span from './Span'
-import Emph from './Emph'
-import Strong from './Strong'
-import Code from './Code'
-import BulletList from './BulletList'
-import OrderedList from './OrderedList'
-import Math from './Math'
-import Link from './Link'
-import Table from './Table'
-import Plain from './Plain'
-
-const Space = () => ' '
-const LineBreak = () => <br />
-
-// Marks soft breaks between sentences. <wbr> or &shy; wouldn't make sense here.
-const SoftBreak = () => ' '
+import {
+  UnknownType,
+  Space,
+  SoftBreak,
+  LineBreak,
+  Str,
+  Header,
+  Para,
+  Div,
+  Span,
+  Emph,
+  Strong,
+  Code,
+  BulletList,
+  OrderedList,
+  Math,
+  Link,
+  Table,
+  Plain,
+} from './astComponents'
 
 const contentTypeComponentMap = {
   Header,
@@ -53,6 +52,8 @@ const mapContentTypeToComponent = (name) => {
   return Component || UnknownType
 }
 
+// ContentFragment parses Pandoc-like AST document stuctures by mapping
+// AST element types to Component implementations.
 export default class ContentFragment extends React.Component {
   static propTypes = {
     content: contentType.isRequired,

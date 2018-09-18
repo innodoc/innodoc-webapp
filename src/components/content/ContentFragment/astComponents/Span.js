@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 
-import { contentType } from '../../../lib/propTypes'
-import ContentFragment from '.'
-import InputHint from './messages/InputHint'
-import debugCSS from './debug-style.sass'
+import { contentType } from '../../../../lib/propTypes'
+import ContentFragment from '..'
+import InputHint from '../messages/InputHint'
+import css from './debug-style.sass'
 
 const IndexSpan = ({ indexConcept, content }) => (
   <span className="index-concept" data-index-concept={indexConcept}>
@@ -17,7 +17,7 @@ IndexSpan.propTypes = {
   content: contentType.isRequired,
 }
 
-// TODO: use components/SectionLink
+// TODO: use components/SectionLink (#14)
 const SectionLink = ({ section }) => (
   // insert proper href and section Title as text
   <Link href={section}>
@@ -26,7 +26,6 @@ const SectionLink = ({ section }) => (
     </a>
   </Link>
 )
-
 
 SectionLink.propTypes = { section: PropTypes.string.isRequired }
 
@@ -66,7 +65,7 @@ const Span = ({ data }) => {
     const msg = `Strange span: classes=${classNames} attrs=${attributes} content-length=${content.length}`
     return (
       <span>
-        <span className={debugCSS.errorBGColor}>
+        <span className={css.errorBGColor}>
           {msg}
         </span>
         <ContentFragment content={content} />
