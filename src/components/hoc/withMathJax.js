@@ -50,11 +50,17 @@ const withMathJax = (WrappedComponent) => {
         && window.MathJax.isReady
     }
 
+    // Reference to the DOM element that typeset is called on
     mathJaxContentRef = React.createRef()
+
+    // The wrapped component might trigger typesetting during initialization
+    // we need to remember this and trigger it once MathJax is ready.
+    typesetOnReady = false
 
     constructor() {
       super()
       this.typesetMathJax = this.typesetMathJax.bind(this)
+      this.onMathJaxReady = this.onMathJaxReady.bind(this)
     }
 
     componentDidMount() {
@@ -63,8 +69,15 @@ const withMathJax = (WrappedComponent) => {
       }
     }
 
+    onMathJaxReady() {
+      if (this.typesetOnReady) {
+        this.typesetOnReady = false
+        this.typesetMathJax()
+      }
+    }
+
     injectMathJax() {
-      window.MathJax = mathJaxOptions(this.typesetMathJax)
+      window.MathJax = mathJaxOptions(this.onMathJaxReady)
       loadScript(
         '/static/vendor/MathJax/unpacked/MathJax.js',
         { attrs: { id: MATHJAX_SCRIPT_ID } },
@@ -81,6 +94,8 @@ const withMathJax = (WrappedComponent) => {
             elem,
           ])
         }
+      } else {
+        this.typesetOnReady = true
       }
     }
 

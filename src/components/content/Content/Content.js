@@ -36,6 +36,13 @@ class Content extends React.Component {
     typesetMathJax()
   }
 
+  componentDidUpdate(prevProps) {
+    const { content, typesetMathJax } = this.props
+    if (content !== prevProps.content) {
+      typesetMathJax()
+    }
+  }
+
   render() {
     const {
       section,
