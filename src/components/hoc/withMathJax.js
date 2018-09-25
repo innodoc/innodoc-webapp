@@ -17,7 +17,7 @@ const mathJaxOptions = cb => ({
   showMathMenu: debug,
   showProcessingMessages: debug,
   messageStyle: debug ? 'none' : 'normal',
-  jax: ['input/TeX', 'output/CommonHTML'],
+  jax: ['input/TeX', 'output/HTML-CSS'],
   tex2jax: {
     inlineMath: [['\\(', '\\)']],
     displayMath: [['\\[', '\\]']],
