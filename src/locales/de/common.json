@@ -37,12 +37,14 @@
   "header": {
     "aboutTheCourse": "Über den Kurs",
     "downloadPDF": "PDF",
+    "downloadPDFTitle": "PDF herunterladen",
     "linkEN": "Englisch",
     "linkDE": "Deutsch",
     "login": "Login",
     "createAccount": "Konto erstellen",
     "language": "Sprache",
     "searchPlaceholder": "Suche…",
+    "showTOC": "Kursinhalt",
     "preparatoryMathematicsCourse": "Onlinebrückenkurs<1></1>Mathematik"
   },
   "message": {
@@ -54,7 +56,6 @@
   },
   "sidebar": {
     "close": "Menü ausblenden",
-    "courseContent": "Kursinhalt",
-    "showMenu": "Menü einblenden"
+    "courseContent": "Kursinhalt"
   }
 }

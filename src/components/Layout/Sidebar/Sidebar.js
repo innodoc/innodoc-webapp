@@ -8,7 +8,6 @@ import uiSelectors from '../../../store/selectors/ui'
 import contentSelectors from '../../../store/selectors/content'
 import { childrenType, tocTreeType } from '../../../lib/propTypes'
 import { toggleSidebar } from '../../../store/actions/ui'
-import SidebarToggle from './SidebarToggle'
 import Main from '../Main'
 import Toc from '../../Toc'
 import css from './style.sass'
@@ -32,13 +31,10 @@ const Sidebar = (props) => {
           .${css.sidebar}.transition { display: flex !important }
         `}
       </style>
-      <Transition visible={!visible} animation="fade right">
-        <SidebarToggle onClick={onSidebarToggleClick} title={t('sidebar.showMenu')} />
-      </Transition>
-      <Transition visible={visible} animation="fade right">
+      <Transition visible={visible} animation="fade left">
         <Menu
           vertical
-          fixed="left"
+          fixed="right"
           size="massive"
           className={css.sidebar}
         >

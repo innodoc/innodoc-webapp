@@ -28,7 +28,7 @@ class CoursePage extends React.Component {
       )
     }
     return (
-      <Layout sidebar>
+      <Layout>
         <Content />
       </Layout>
     )

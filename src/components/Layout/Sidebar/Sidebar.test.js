@@ -16,8 +16,8 @@ describe('<Sidebar />', () => {
   it('should render children', () => {
     expect(wrapper.find('p').exists()).toBe(true)
   })
-  it('should have 2 transitions', () => {
-    expect(wrapper.find(Transition)).toHaveLength(2)
+  it('should have 1 transition', () => {
+    expect(wrapper.find(Transition)).toHaveLength(1)
   })
   it('should have 1 menu', () => {
     expect(wrapper.find(Menu)).toHaveLength(1)

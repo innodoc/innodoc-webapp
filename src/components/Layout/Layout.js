@@ -6,27 +6,24 @@ import { childrenType, messageType } from '../../lib/propTypes'
 import { clearMessage } from '../../store/actions/ui'
 import uiSelectors from '../../store/selectors/ui'
 import Header from './Header'
-import Main from './Main'
 import Sidebar from './Sidebar'
 import Footer from './Footer'
 import MessageModal from '../MessageModal'
 
 const Layout = ({
   children,
-  sidebar,
   message,
   onMessageModalClosed,
 }) => {
-  const ContentWrapper = sidebar ? Sidebar : Main
   const modal = message
     ? <MessageModal message={message} onClose={onMessageModalClosed} />
     : null
   return (
     <React.Fragment>
       <Header />
-      <ContentWrapper>
+      <Sidebar>
         {children}
-      </ContentWrapper>
+      </Sidebar>
       <Footer />
       {modal}
     </React.Fragment>
@@ -35,14 +32,12 @@ const Layout = ({
 
 Layout.propTypes = {
   children: childrenType.isRequired,
-  sidebar: PropTypes.bool.isRequired,
   message: messageType,
   onMessageModalClosed: PropTypes.func.isRequired,
 }
 
 Layout.defaultProps = {
   ...React.Component.defaultProps,
-  sidebar: false,
 }
 
 const mapStateToProps = state => ({

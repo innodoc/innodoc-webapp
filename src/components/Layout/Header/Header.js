@@ -14,8 +14,9 @@ import { translate, Trans } from 'react-i18next'
 
 import css from './style.sass'
 import { changeLanguage } from '../../../store/actions/i18n'
+import { toggleSidebar } from '../../../store/actions/ui'
 
-const Header = ({ t, dispatchChangeLanguage }) => (
+const Header = ({ t, dispatchChangeLanguage, dispatchToggleSidebar }) => (
   <Menu stackable className={css.menu}>
     <Container>
       <Link href="/">
@@ -38,12 +39,12 @@ const Header = ({ t, dispatchChangeLanguage }) => (
           {t('header.aboutTheCourse')}
         </Menu.Item>
       </Link>
-      <Menu.Item as="a" header>
+      <Menu.Item as="a" title={t('header.downloadPDFTitle')} header>
         <Icon name="file pdf outline" size="large" />
         {t('header.downloadPDF')}
       </Menu.Item>
 
-      <Menu.Menu position="right">
+      <Menu.Menu position="right" className={css.rightMenu}>
         <Dropdown item simple text={t('header.login')}>
           <Dropdown.Menu>
             <Dropdown.Item icon="user" text={t('header.login')} />
@@ -71,6 +72,9 @@ const Header = ({ t, dispatchChangeLanguage }) => (
           </div>
           <div className="results" />
         </div>
+        <Menu.Item as="a" header icon title={t('header.showTOC')} onClick={dispatchToggleSidebar}>
+          <Icon name="content" size="large" />
+        </Menu.Item>
       </Menu.Menu>
     </Container>
   </Menu>
@@ -79,9 +83,13 @@ const Header = ({ t, dispatchChangeLanguage }) => (
 Header.propTypes = {
   t: PropTypes.func.isRequired,
   dispatchChangeLanguage: PropTypes.func.isRequired,
+  dispatchToggleSidebar: PropTypes.func.isRequired,
 }
 
-const mapDispatchToProps = { dispatchChangeLanguage: changeLanguage }
+const mapDispatchToProps = {
+  dispatchChangeLanguage: changeLanguage,
+  dispatchToggleSidebar: toggleSidebar,
+}
 
 export { Header } // for testing
 export default connect(null, mapDispatchToProps)(translate()(Header))

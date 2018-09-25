@@ -37,12 +37,14 @@
   "header": {
     "aboutTheCourse": "About the course",
     "downloadPDF": "PDF",
+    "downloadPDFTitle": "Download PDF",
     "linkEN": "English",
     "linkDE": "German",
     "login": "Login",
     "createAccount": "Create Account",
     "language": "Language",
     "searchPlaceholder": "Search…",
+    "showTOC": "Table of contents",
     "preparatoryMathematicsCourse": "Preparatory Mathematics<1></1>Course"
   },
   "message": {
@@ -54,7 +56,6 @@
   },
   "sidebar": {
     "close": "Close menu",
-    "courseContent": "Course content",
-    "showMenu": "Show menu"
+    "courseContent": "Course content"
   }
 }
