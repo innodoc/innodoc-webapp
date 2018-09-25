@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Dimmer, Loader } from 'semantic-ui-react'
 
-import { getHocDisplayName } from '../../lib/util'
+import { getHocDisplayName } from '../../../lib/util'
+import css from './style.sass'
 
 const withLoadingPlaceholder = PlaceholderComponent => (WrappedComponent) => {
   const WithLoadingPlaceholder = ({ loading, ...otherProps }) => {
@@ -11,7 +12,7 @@ const withLoadingPlaceholder = PlaceholderComponent => (WrappedComponent) => {
       : <WrappedComponent {...otherProps} />
     return (
       <Dimmer.Dimmable dimmed={loading}>
-        <Dimmer active={loading} inverted>
+        <Dimmer active={loading} inverted className={css.dimmer}>
           <Loader active={loading} size="huge" />
         </Dimmer>
         {content}
