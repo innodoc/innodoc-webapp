@@ -58,7 +58,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-i18next": "^7.11.0",
+    "react-i18next": "^7.13.0",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-saga": "^0.16.0",
@@ -77,15 +77,15 @@
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jest": "^21.22.0",
+    "eslint-plugin-jest": "^21.22.1",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
     "http-server": "^0.11.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.5.0",
-    "jest-environment-enzyme": "^6.0.3",
+    "jest-environment-enzyme": "^6.1.2",
     "jest-environment-node": "^23.4.0",
-    "jest-enzyme": "^6.0.3",
+    "jest-enzyme": "^6.1.2",
     "redux-devtools-extension": "^2.13.5"
   }
 }
