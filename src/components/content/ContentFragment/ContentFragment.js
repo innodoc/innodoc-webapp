@@ -25,6 +25,7 @@ import {
   Link,
   Table,
   Plain,
+  Quoted,
 } from './astComponents'
 
 const contentTypeComponentMap = {
@@ -45,6 +46,7 @@ const contentTypeComponentMap = {
   Link,
   Table,
   Plain,
+  Quoted,
 }
 
 const mapContentTypeToComponent = (name) => {
