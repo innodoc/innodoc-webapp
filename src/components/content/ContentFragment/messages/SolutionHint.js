@@ -1,53 +1,35 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Divider, Message } from 'semantic-ui-react'
+import { Accordion, Message } from 'semantic-ui-react'
 import { translate } from 'react-i18next'
 
 import { contentType } from '../../../../lib/propTypes'
 import ContentFragment from '..'
 
-class SolutionHint extends React.Component {
-  static propTypes = {
-    content: contentType.isRequired,
-    t: PropTypes.func.isRequired,
-  }
+const SolutionHint = ({ content, t }) => {
+  const contentFragment = <ContentFragment content={content} />
+  const panels = [
+    {
+      key: 'solution',
+      title: t('content.solution'),
+      content: {
+        content: (
+          <Message
+            className="exercise-hint"
+            color="green"
+            icon="lightbulb"
+            content={contentFragment}
+          />
+        ),
+      },
+    },
+  ]
+  return <Accordion panels={panels} fluid />
+}
 
-  constructor(props) {
-    super(props)
-    this.state = { visible: false }
-  }
-
-  handleToggle = () => this.setState(prevState => ({ visible: !prevState.visible }))
-
-  render() {
-    const { content, t } = this.props
-    const { visible } = this.state
-    const button = !visible
-      ? (
-        <Button
-          content={t('content.solution')}
-          onClick={this.handleToggle}
-          color="blue"
-        />
-      ) : null
-    const contentFragment = <ContentFragment content={content} />
-
-    return (
-      <React.Fragment>
-        <Divider />
-        {button}
-        <Message
-          className="exercise-hint"
-          hidden={!visible}
-          color="green"
-          icon="lightbulb"
-          header={t('content.solution')}
-          onDismiss={this.handleToggle}
-          content={contentFragment}
-        />
-      </React.Fragment>
-    )
-  }
+SolutionHint.propTypes = {
+  content: contentType.isRequired,
+  t: PropTypes.func.isRequired,
 }
 
 export default translate()(SolutionHint)
