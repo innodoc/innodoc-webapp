@@ -1,23 +1,15 @@
-import { actionTypes } from '../actions/exercises'
+import { actionTypes } from '../actions/exercise'
 import defaultInitialState from '../defaultInitialState'
 
 function exercises(state = defaultInitialState.exercises, action) {
   // https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns
   switch (action.type) {
-    case actionTypes.EXERCISE_INPUT_CHANGED:
+    case actionTypes.EXERCISE_INPUT_COMPLETED:
       return {
         ...state,
-        [action.data.uuid]: {
-          ...state[action.data.uuid],
+        [action.data.id]: {
+          ...state[action.data.id],
           inputValue: action.data.inputValue,
-        },
-      }
-
-    case actionTypes.EXERCISE_TOGGLE_SOLVED:
-      return {
-        ...state,
-        [action.data.uuid]: {
-          ...state[action.data.uuid],
           solved: action.data.solved,
         },
       }

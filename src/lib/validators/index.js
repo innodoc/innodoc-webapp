@@ -1,3 +1,9 @@
-export { default as QuestionValidator } from './QuestionValidator'
-export { default as StringEqualityValidator } from './StringEqualityValidator'
-export { default as MathExpressionEqualityValidator } from './MathExpressionEqualityValidator'
+import StringEqualityValidator from './StringEqualityValidator'
+import MathExpressionEqualityValidator from './MathExpressionEqualityValidator'
+import MathFormulaValidator from './MathFormulaValidator'
+
+export default {
+  exact: StringEqualityValidator,
+  mathExpression: MathExpressionEqualityValidator,
+  mathFormula: MathFormulaValidator,
+}
