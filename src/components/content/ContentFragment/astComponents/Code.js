@@ -1,13 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import md5 from 'md5'
 
 import InputQuestion from '../questions/InputQuestion'
-import questionTypes from '../../../../lib/questionTypes'
-
-import StringEqualityValidator from '../../../../lib/validators/StringEqualityValidator'
-import MathExpressionEqualityValidator from '../../../../lib/validators/MathExpressionEqualityValidator'
-import MathFormulaValidator from '../../../../lib/validators/MathFormulaValidator'
 
 export default class Code extends React.Component {
   static attrsToObj(attrs) {
@@ -17,13 +11,11 @@ export default class Code extends React.Component {
     return a
   }
 
-  static propTypes = {
-    data: PropTypes.node.isRequired,
-  }
-
   constructor(props) {
     super(props)
     const [[id, classNames, attrs], content] = props.data
+    // NOTE: Not sure whether the field 'id' is supposed to be the exercise UID
+    // or something else
     this.id = id
     this.classNames = classNames
     this.attrs = Code.attrsToObj(attrs)
@@ -32,51 +24,16 @@ export default class Code extends React.Component {
   }
 
   getQuestionComponent(classNames, attrs) {
-    const validator = this.getValidator()
-    const uuid = md5(`${this.solution}${this.questionType}`)
+    // NOTE: This is only temporary. Use legacy IDs until the compiler will generate its own.
+    const id = this.id !== '' ? this.id : attrs.uxid
 
     return (
       <InputQuestion
-        uuid={uuid}
+        id={id}
         solution={this.solution}
         attrs={attrs}
-        validator={validator}
       />
     )
-  }
-
-  getValidator() {
-    let validator
-
-    switch (this.attrs.questionType) {
-      case questionTypes.MATH_EXPRESSION:
-        validator = {
-          validate: MathExpressionEqualityValidator.validate,
-          args: {
-            precision: this.attrs.precision,
-          },
-        }
-        break
-
-      case questionTypes.MATH_FORMULA:
-        validator = {
-          validate: MathFormulaValidator.validate,
-          args: {
-            precision: this.attrs.precision,
-          },
-        }
-        break
-
-      case questionTypes.EXACT:
-        validator = {
-          validate: StringEqualityValidator.validate,
-        }
-        break
-
-      default:
-        validator = { validate: StringEqualityValidator.validate }
-    }
-    return validator
   }
 
   render() {
@@ -89,4 +46,8 @@ export default class Code extends React.Component {
       </code>
     )
   }
+}
+
+Code.propTypes = {
+  data: PropTypes.node.isRequired,
 }

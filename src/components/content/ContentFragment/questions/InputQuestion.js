@@ -5,8 +5,10 @@ import PropTypes from 'prop-types'
 import { Input, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
+import { exValidatorArgType } from '../../../../lib/propTypes'
+import { exerciseCompleted } from '../../../../store/actions/exercise'
+import exerciseSelectors from '../../../../store/selectors/exercise'
 import css from './style.sass'
-import { exerciseInputChanged } from '../../../../store/actions/exercises'
 
 class InputQuestion extends React.Component {
   constructor(props) {
@@ -28,16 +30,16 @@ class InputQuestion extends React.Component {
   handleChange(event) {
     const {
       onInputChanged,
-      uuid,
+      id,
       solved,
       solution,
-      validator,
+      attrs,
     } = this.props
     onInputChanged({
-      uuid,
+      id,
       solved,
       solution,
-      validator,
+      attrs,
       inputValue: event.target.value,
     })
   }
@@ -63,38 +65,21 @@ class InputQuestion extends React.Component {
 }
 
 InputQuestion.propTypes = {
-  uuid: PropTypes.string.isRequired,
+  attrs: exValidatorArgType.isRequired,
+  id: PropTypes.string.isRequired,
   inputValue: PropTypes.string.isRequired,
   solution: PropTypes.string.isRequired,
-  validator: PropTypes.shape({
-    validate: PropTypes.func.isRequired,
-    args: PropTypes.any,
-  }).isRequired,
   solved: PropTypes.bool.isRequired,
   onInputChanged: PropTypes.func.isRequired,
 }
 
-const getInputValueFromState = (state, uuid) => {
-  if (state.exercises[uuid] !== undefined) {
-    return state.exercises[uuid].inputValue
-  }
-  return ''
-}
-
-const getSolvedFromState = (state, uuid) => {
-  if (state.exercises[uuid] !== undefined) {
-    return state.exercises[uuid].solved
-  }
-  return false
-}
-
 const mapStateToProps = (state, ownProps) => ({
-  inputValue: getInputValueFromState(state, ownProps.uuid),
-  solved: getSolvedFromState(state, ownProps.uuid),
+  inputValue: exerciseSelectors.getQuestionInputValue(state, ownProps.id),
+  solved: exerciseSelectors.getQuestionState(state, ownProps.id),
 })
 
 const mapDispatchToProps = {
-  onInputChanged: exerciseInputChanged,
+  onInputChanged: exerciseCompleted,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InputQuestion)
