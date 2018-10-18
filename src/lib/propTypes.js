@@ -17,10 +17,15 @@ const messageType = PropTypes.shape({
   msg: PropTypes.string.isRequired,
   level: PropTypes.string.isRequired,
 })
+const exValidatorArgType = PropTypes.oneOfType([
+  PropTypes.shape({}),
+  PropTypes.shape({ precision: PropTypes.number }),
+])
 
 export {
   childrenType,
   contentType,
+  exValidatorArgType,
   messageType,
   sectionType,
   tocTreeType,

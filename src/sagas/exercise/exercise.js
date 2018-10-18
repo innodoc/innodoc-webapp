@@ -6,27 +6,30 @@ import {
 } from 'redux-saga/effects'
 
 import {
-  exerciseToggleSolved,
+  exerciseInputCompleted,
   actionTypes as exerciseActionTypes,
 } from '../../store/actions/exercises'
+import validators from '../../lib/validators'
 
 function* exerciseInputChanged(payload) {
   const {
-    uuid, inputValue, solved: isSolved, solution, validator,
+    attrs, id, inputValue, solved: isSolved, solution, // validator,
   } = payload.data
 
+  // Get validator
+  const validator = validators[attrs.questionType]
   const solved = yield call(
-    validator.validate, inputValue, solution, validator.args
+    validator.validate, inputValue, solution, attrs
   )
 
   if (solved !== isSolved) {
-    yield put(exerciseToggleSolved({ uuid, solved }))
+    yield put(exerciseInputCompleted({ id, inputValue, solved }))
   }
 }
 
 export default function* watchExerciseChange() {
   while (true) {
-    const data = yield take(exerciseActionTypes.EXERCISE_INPUT_CHANGED)
+    const data = yield take(exerciseActionTypes.EXERCISE_INPUT_COMPLETED)
     yield fork(exerciseInputChanged, data)
   }
 }
