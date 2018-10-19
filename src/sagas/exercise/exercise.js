@@ -11,12 +11,12 @@ import {
 } from '../../store/actions/exercises'
 import validators from '../../lib/validators'
 
-function* exerciseInputChanged(payload) {
+// TODO: Rename exerciseInputCompleted action to exerciseCompleted
+export function* exerciseInputChanged(payload) {
   const {
-    attrs, id, inputValue, solved: isSolved, solution, // validator,
+    attrs, id, inputValue, solved: isSolved, solution,
   } = payload.data
 
-  // Get validator
   const validator = validators[attrs.questionType]
   const solved = yield call(
     validator.validate, inputValue, solution, attrs
