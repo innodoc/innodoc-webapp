@@ -10,7 +10,7 @@ import {
   Menu,
 } from 'semantic-ui-react'
 import Link from 'next/link'
-import { translate, Trans } from 'react-i18next'
+import { withNamespaces, Trans } from 'react-i18next'
 
 import css from './style.sass'
 import { changeLanguage } from '../../../store/actions/i18n'
@@ -92,4 +92,4 @@ const mapDispatchToProps = {
 }
 
 export { Header } // for testing
-export default connect(null, mapDispatchToProps)(translate()(Header))
+export default connect(null, mapDispatchToProps)(withNamespaces()(Header))

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon, Menu, Transition } from 'semantic-ui-react'
-import { translate } from 'react-i18next'
+import { withNamespaces } from 'react-i18next'
 
 import uiSelectors from '../../../store/selectors/ui'
 import contentSelectors from '../../../store/selectors/content'
@@ -72,4 +72,4 @@ const mapDispatchToProps = {
 }
 
 export { Sidebar } // for testing
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Sidebar))
+export default connect(mapStateToProps, mapDispatchToProps)(withNamespaces()(Sidebar))

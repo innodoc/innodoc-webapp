@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Header } from 'semantic-ui-react'
-import { translate } from 'react-i18next'
+import { withNamespaces } from 'react-i18next'
 
 import contentSelectors from '../../../store/selectors/content'
 import withLoadingPlaceholder from '../../hoc/withLoadingPlaceholder'
@@ -100,7 +100,7 @@ const mapStateToProps = (state) => {
 export { Content, mapStateToProps } // for testing
 export default connect(mapStateToProps)(
   withMathJax(
-    translate()(
+    withNamespaces()(
       withLoadingPlaceholder(Placeholder)(
         Content
       )

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Header, Modal } from 'semantic-ui-react'
-import { translate } from 'react-i18next'
+import { withNamespaces } from 'react-i18next'
 
 import { messageType } from '../../lib/propTypes'
 
@@ -44,4 +44,4 @@ MessageModal.defaultProps = {
 }
 
 export { MessageModal } // for testing
-export default translate()(MessageModal)
+export default withNamespaces()(MessageModal)

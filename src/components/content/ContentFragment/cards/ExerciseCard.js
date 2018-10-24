@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Card } from 'semantic-ui-react'
-import { translate } from 'react-i18next'
+import { withNamespaces } from 'react-i18next'
 
 import { contentType } from '../../../../lib/propTypes'
 import ContentFragment from '..'
@@ -24,4 +24,4 @@ ExerciseCard.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
-export default translate()(ExerciseCard)
+export default withNamespaces()(ExerciseCard)

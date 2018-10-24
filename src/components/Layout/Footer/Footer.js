@@ -8,7 +8,7 @@ import {
   List,
   Header,
 } from 'semantic-ui-react'
-import { translate, Trans } from 'react-i18next'
+import { withNamespaces, Trans } from 'react-i18next'
 
 import css from './style.sass'
 
@@ -82,4 +82,4 @@ Footer.propTypes = {
 }
 
 export { Footer } // for testing
-export default translate()(Footer)
+export default withNamespaces()(Footer)

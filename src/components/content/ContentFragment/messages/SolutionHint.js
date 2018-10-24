@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Accordion, Message } from 'semantic-ui-react'
-import { translate } from 'react-i18next'
+import { withNamespaces } from 'react-i18next'
 
 import { contentType } from '../../../../lib/propTypes'
 import ContentFragment from '..'
@@ -32,4 +32,4 @@ SolutionHint.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
-export default translate()(SolutionHint)
+export default withNamespaces()(SolutionHint)
