@@ -11,7 +11,7 @@ class InnodocDocument extends Document {
       <html lang={language}>
         <Head>
           <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
-          <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css" key="semantic-style" />
+          <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.0/semantic.min.css" key="semantic-style" />
         </Head>
         <body>
           <Main />
