@@ -1,5 +1,6 @@
 import React from 'react'
-import Document, { Head, Main, NextScript } from 'next/document'
+import Document, { Main, NextScript } from 'next/document'
+import Head from 'next/head'
 
 import withI18next from '../components/hoc/withI18next'
 
@@ -9,11 +10,8 @@ class InnodocDocument extends Document {
     return (
       <html lang={language}>
         <Head>
-          <title key="title">
-            innoDoc web app
-          </title>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-          <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css" />
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
+          <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css" key="semantic-style" />
         </Head>
         <body>
           <Main />

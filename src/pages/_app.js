@@ -1,5 +1,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
+import Head from 'next/head'
 import App, { Container } from 'next/app'
 import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
@@ -26,6 +27,11 @@ class InnoDocApp extends App {
     const { Component, pageProps, store } = this.props
     return (
       <Container>
+        <Head>
+          <title key="title">
+            innoDoc web app
+          </title>
+        </Head>
         <Provider store={store}>
           <Component {...pageProps} />
         </Provider>
