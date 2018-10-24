@@ -22,4 +22,8 @@ const mapStateToProps = state => ({
   toc: contentSelectors.getToc(state),
 })
 
-export default connect(mapStateToProps)(withI18next()(withI18nDispatch(IndexPage)))
+export default connect(mapStateToProps)(
+  withI18next()(
+    withI18nDispatch(IndexPage)
+  )
+)

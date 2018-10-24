@@ -14,7 +14,7 @@ const withI18nDispatch = (WrappedComponent) => {
 
     static async getInitialProps(ctx) {
       if (ctx.req) {
-        // make i18n instance available to sagas (SERVER)
+        // make i18n instance available to sagas (on server)
         ctx.store.dispatch(i18nInstanceAvailable(ctx.req.i18n))
       }
 
@@ -23,7 +23,7 @@ const withI18nDispatch = (WrappedComponent) => {
         : {}
     }
 
-    // make i18n instance available to sagas (CLIENT)
+    // make i18n instance available to sagas (on client)
     dispatchI18nInstance() {
       const { i18n, dispatchI18nInstance } = this.props
       dispatchI18nInstance(i18n)

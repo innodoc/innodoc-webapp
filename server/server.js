@@ -3,10 +3,11 @@ import path from 'path'
 import express from 'express'
 import next from 'next'
 import Dotenv from 'dotenv-safe'
-import i18nextMiddleware, { LanguageDetector } from 'i18next-express-middleware'
-import Backend from 'i18next-node-fs-backend'
+import i18nextMiddleware from 'i18next-express-middleware'
+import i18nNodeFsBackend from 'i18next-node-fs-backend'
 
-import { i18nInstance } from '../src/lib/i18n'
+import i18n from '../src/lib/i18n/instance'
+import i18nOptions from '../src/lib/i18n/options'
 
 // directories
 const rootDir = `${__dirname}/..`
@@ -47,24 +48,26 @@ const app = next({
   dev: nodeEnv === 'development',
 })
 
+const i18nServerOptions = {
+  ...i18nOptions,
+  preload: ['en', 'de'],
+  detection: {
+    order: ['cookie', 'header'],
+    caches: ['cookie'],
+  },
+  backend: {
+    loadPath: `${localesDir}/{{lng}}/{{ns}}.json`,
+    addPath: `${localesDir}/{{lng}}/{{ns}}.missing.json`,
+  },
+}
+
 // init i18next with serverside settings
 // using i18next-express-middleware
-i18nInstance
-  .use(Backend)
-  .use(LanguageDetector)
-  .init({
-    detection: {
-      order: ['cookie', 'header'],
-    },
-    fallbackLng: 'en',
-    preload: ['en', 'de'], // preload all langages
-    ns: ['common'], // need to preload all the namespaces
-    backend: {
-      loadPath: `${localesDir}/{{lng}}/{{ns}}.json`,
-      addPath: `${localesDir}/{{lng}}/{{ns}}.missing.json`,
-    },
-  }, () => {
-    // loaded translations we can bootstrap our routes
+i18n
+  .use(i18nNodeFsBackend)
+  .use(i18nextMiddleware.LanguageDetector)
+  .init(i18nServerOptions, () => {
+    // loaded translations -> bootstrap routes
     app.prepare()
       .then(() => {
         const server = express()
@@ -77,17 +80,17 @@ i18nInstance
         })
 
         // enable middleware for i18next
-        server.use(i18nextMiddleware.handle(i18nInstance))
+        server.use(i18nextMiddleware.handle(i18n))
 
-        // serve locales for client
-        server.use('/locales', express.static(localesDir))
+        // serve locales to client
+        server.use('/static/locales', express.static(localesDir))
 
-        // missing keys
+        // auto-create missing translation keys in dev
         if (nodeEnv !== 'production') {
-          server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18nInstance))
+          server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18n))
         }
 
-        // a course section
+        // serve a course section
         server.get(/^\/page\/([A-Za-z0-9_/:-]+)$/, (req, res) => {
           const sectionPath = req.params[0]
           if (sectionPath.endsWith('/')) {

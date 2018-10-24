@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Message } from 'semantic-ui-react'
 
-import Layout from '../components/Layout'
 import withI18next from '../components/hoc/withI18next'
 import withI18nDispatch from '../components/hoc/withI18nDispatch'
+import Layout from '../components/Layout'
 
 class ErrorPage extends React.Component {
   static getInitialProps({ res, err }) {
@@ -52,4 +52,6 @@ ErrorPage.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
-export default withI18next()(withI18nDispatch(ErrorPage))
+export default withI18next()(
+  withI18nDispatch(ErrorPage)
+)

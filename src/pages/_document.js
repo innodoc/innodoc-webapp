@@ -1,17 +1,19 @@
 import React from 'react'
-import Document, { Main, NextScript } from 'next/document'
-import Head from 'next/head'
-
-import withI18next from '../components/hoc/withI18next'
+import Document, { Head, Main, NextScript } from 'next/document'
 
 class InnodocDocument extends Document {
+  static getInitialProps({ req }) {
+    // render correct lang attribute (only SSR)
+    return { language: req.i18n.language }
+  }
+
   render() {
-    const { language } = this.props.i18n
+    const { language } = this.props
     return (
       <html lang={language}>
         <Head>
           <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
-          <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.0/semantic.min.css" key="semantic-style" />
+          <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.0/dist/semantic.min.css" key="semantic-style" />
         </Head>
         <body>
           <Main />
@@ -22,4 +24,4 @@ class InnodocDocument extends Document {
   }
 }
 
-export default withI18next()(InnodocDocument)
+export default InnodocDocument

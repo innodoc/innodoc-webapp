@@ -7,7 +7,7 @@ import {
 
 import watchI18nInstanceAvailable, { notifyI18next } from './i18n'
 import { actionTypes, changeLanguage, i18nInstanceAvailable } from '../../store/actions/i18n'
-import { toTwoLetterCode } from '../../lib/i18n'
+import toTwoLetterCode from '../../lib/i18n/toTwoLetterCode'
 
 const language = 'de'
 const i18nMock = {
