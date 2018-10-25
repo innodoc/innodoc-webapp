@@ -6,30 +6,31 @@ import {
 } from 'redux-saga/effects'
 
 import {
-  exerciseInputCompleted,
+  exerciseCompleted,
   actionTypes as exerciseActionTypes,
 } from '../../store/actions/exercises'
 import validators from '../../lib/validators'
 
-// TODO: Rename exerciseInputCompleted action to exerciseCompleted
-export function* exerciseInputChanged(payload) {
+export function* handleExerciseCompleted(payload) {
   const {
-    attrs, id, inputValue, solved: isSolved, solution,
+    attrs, inputValue, solved: isSolved, solution,
   } = payload.data
 
-  const validator = validators[attrs.questionType]
   const solved = yield call(
-    validator.validate, inputValue, solution, attrs
+    validators[attrs.questionType], inputValue, solution, attrs
   )
 
   if (solved !== isSolved) {
-    yield put(exerciseInputCompleted({ id, inputValue, solved }))
+    yield put(exerciseCompleted({
+      solved,
+      ...payload.data,
+    }))
   }
 }
 
 export default function* watchExerciseChange() {
   while (true) {
     const data = yield take(exerciseActionTypes.EXERCISE_INPUT_COMPLETED)
-    yield fork(exerciseInputChanged, data)
+    yield fork(handleExerciseCompleted, data)
   }
 }
