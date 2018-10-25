@@ -8,7 +8,7 @@ import {
 import {
   exerciseCompleted,
   actionTypes as exerciseActionTypes,
-} from '../../store/actions/exercises'
+} from '../../store/actions/exercise'
 import validators from '../../lib/validators'
 
 export function* handleExerciseCompleted(payload) {
@@ -30,7 +30,7 @@ export function* handleExerciseCompleted(payload) {
 
 export default function* watchExerciseChange() {
   while (true) {
-    const data = yield take(exerciseActionTypes.EXERCISE_INPUT_COMPLETED)
+    const data = yield take(exerciseActionTypes.EXERCISE_COMPLETED)
     yield fork(handleExerciseCompleted, data)
   }
 }

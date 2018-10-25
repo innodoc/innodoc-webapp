@@ -6,7 +6,7 @@ import { Input, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import { exValidatorArgType } from '../../../../lib/propTypes'
-import { exerciseInputCompleted } from '../../../../store/actions/exercises'
+import { exerciseCompleted } from '../../../../store/actions/exercise'
 import exerciseSelectors from '../../../../store/selectors/exercise'
 import css from './style.sass'
 
@@ -79,7 +79,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = {
-  onInputChanged: exerciseInputCompleted,
+  onInputChanged: exerciseCompleted,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InputQuestion)

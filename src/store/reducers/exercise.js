@@ -1,4 +1,4 @@
-import { actionTypes } from '../actions/exercises'
+import { actionTypes } from '../actions/exercise'
 import defaultInitialState from '../defaultInitialState'
 
 function exercises(state = defaultInitialState.exercises, action) {

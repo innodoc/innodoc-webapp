@@ -6,7 +6,7 @@ import {
 } from 'redux-saga/effects'
 
 import watchExerciseChange, { handleExerciseCompleted } from './exercise'
-import { exerciseCompleted, actionTypes as exerciseActionTypes } from '../../store/actions/exercises'
+import { exerciseCompleted, actionTypes as exerciseActionTypes } from '../../store/actions/exercise'
 import validators from '../../lib/validators'
 
 const wrongAnswer = exerciseCompleted({
@@ -53,7 +53,7 @@ describe('exerciseCompleted', () => {
 describe('watchExerciseChange', () => {
   test('exercise input change', () => {
     const gen = watchExerciseChange()
-    expect(gen.next().value).toEqual(take(exerciseActionTypes.EXERCISE_INPUT_COMPLETED))
+    expect(gen.next().value).toEqual(take(exerciseActionTypes.EXERCISE_COMPLETED))
     expect(gen.next(wrongAnswer).value)
       .toEqual(fork(handleExerciseCompleted, wrongAnswer))
   })

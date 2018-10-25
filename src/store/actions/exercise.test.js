@@ -1,6 +1,6 @@
-import { exerciseCompleted } from './exercises'
+import { exerciseCompleted } from './exercise'
 
-test('dispatch EXERCISE_INPUT_COMPLETED', () => {
+test('dispatch EXERCISE_COMPLETED', () => {
   const data = [
     {
       id: 'xyz',
@@ -11,7 +11,7 @@ test('dispatch EXERCISE_INPUT_COMPLETED', () => {
   ]
 
   expect(exerciseCompleted(data)).toEqual({
-    type: 'EXERCISE_INPUT_COMPLETED',
+    type: 'EXERCISE_COMPLETED',
     data,
   })
 })
