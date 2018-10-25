@@ -1,18 +1,40 @@
 import React from 'react'
-import { Header, Image } from 'semantic-ui-react'
+import { Header, Placeholder } from 'semantic-ui-react'
 
-const Placeholder = () => (
+import BreadcrumbPlaceholder from '../Breadcrumb/Placeholder'
+import css from './style.sass'
+
+const ContentPlaceholder = () => (
   <React.Fragment>
-    <Header as="h1">
-      &nbsp;
+    <BreadcrumbPlaceholder />
+    <Header>
+      <Placeholder fluid>
+        <Placeholder.Header>
+          <Placeholder.Line />
+        </Placeholder.Header>
+      </Placeholder>
     </Header>
-    <p>
-      <Image src="/static/img/paragraph.png" />
-    </p>
-    <p>
-      <Image src="/static/img/paragraph.png" />
-    </p>
+    <div className={css.content}>
+      <Placeholder fluid>
+        <Placeholder.Paragraph>
+          <Placeholder.Line />
+          <Placeholder.Line />
+          <Placeholder.Line />
+          <Placeholder.Line />
+        </Placeholder.Paragraph>
+      </Placeholder>
+      <Placeholder style={{ height: 200, width: 250 }}>
+        <Placeholder.Image />
+      </Placeholder>
+      <Placeholder fluid>
+        <Placeholder.Paragraph>
+          <Placeholder.Line />
+          <Placeholder.Line />
+          <Placeholder.Line />
+        </Placeholder.Paragraph>
+      </Placeholder>
+    </div>
   </React.Fragment>
 )
 
-export default Placeholder
+export default ContentPlaceholder
