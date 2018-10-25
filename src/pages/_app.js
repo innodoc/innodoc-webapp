@@ -5,6 +5,9 @@ import App, { Container } from 'next/app'
 import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 
+// This includes SUI from node_modules using custom theme (see webpack config)
+import 'semantic-ui-less/semantic.less'
+
 import configureStore from '../store'
 import { setContentRoot, loadToc } from '../store/actions/content'
 
