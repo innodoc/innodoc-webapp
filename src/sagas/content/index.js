@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga/effects'
 
-import loadManifestSaga from './toc'
+import loadManifestSaga from './manifest'
 import loadSectionSaga from './section'
 import changeLanguage from './changeLanguage'
 import { actionTypes as contentActionTypes } from '../../store/actions/content'

@@ -6,7 +6,9 @@ const defaultInitialState = {
   content: {
     contentRoot: '',
     currentSectionPath: null,
-    data: {},
+    toc: [],
+    sections: {},
+    title: {},
   },
   exercises: {},
   i18n: {

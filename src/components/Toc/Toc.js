@@ -7,6 +7,7 @@ import TocItem from './Item'
 
 const Toc = ({
   toc,
+  language,
   as: ElementType,
   dispatch,
   header,
@@ -17,9 +18,10 @@ const Toc = ({
     (section, i) => (
       <TocItem
         sectionPath={section.id}
-        title={section.title}
+        title={section.title[language]}
         subSections={section.children}
         sectionPrefix={sectionPrefix}
+        language={language}
         key={i.toString()}
       />
     )
@@ -43,6 +45,7 @@ const Toc = ({
 
 Toc.propTypes = {
   toc: tocTreeType.isRequired,
+  language: PropTypes.string.isRequired,
   as: PropTypes.func,
   dispatch: PropTypes.func,
   header: PropTypes.string,

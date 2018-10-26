@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Icon, Menu, Transition } from 'semantic-ui-react'
 import { withNamespaces } from 'react-i18next'
 
+import i18nSelectors from '../../../store/selectors/i18n'
 import uiSelectors from '../../../store/selectors/ui'
 import contentSelectors from '../../../store/selectors/content'
 import { childrenType, tocTreeType } from '../../../lib/propTypes'
@@ -18,11 +19,15 @@ const Sidebar = (props) => {
     visible,
     onSidebarToggleClick,
     toc,
+    language,
     t,
   } = props
 
   // The ugly <style> tag creates a more specific CSS class to override
   // semantic-ui styles that use !important everywhere
+
+  console.log(toc)
+  console.log(language)
 
   return (
     <React.Fragment>
@@ -43,7 +48,7 @@ const Sidebar = (props) => {
             <Icon name="close" />
           </Menu.Item>
           <Menu.Item className={css.sidebarContent}>
-            <Toc as={Menu.Menu} toc={toc} header={t('sidebar.courseContent')} />
+            <Toc as={Menu.Menu} toc={toc} language={language} header={t('sidebar.courseContent')} />
           </Menu.Item>
         </Menu>
       </Transition>
@@ -60,10 +65,12 @@ Sidebar.propTypes = {
   visible: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
   toc: tocTreeType.isRequired,
+  language: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = state => ({
   toc: contentSelectors.getToc(state),
+  language: i18nSelectors.getLanguage(state),
   visible: uiSelectors.getSidebarVisible(state),
 })
 

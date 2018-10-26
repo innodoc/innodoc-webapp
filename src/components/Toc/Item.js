@@ -8,6 +8,7 @@ import ContentFragment from '../content/ContentFragment'
 
 const Item = ({
   title,
+  language,
   sectionPath: sectionPathFragment,
   subSections,
   sectionPrefix,
@@ -34,7 +35,7 @@ const Item = ({
           subSections.map(
             (subSection, i) => (
               <Item
-                title={subSection.title}
+                title={subSection.title[language]}
                 sectionPath={`${sectionPath}/${subSection.id}`}
                 subSections={subSection.children}
                 key={i.toString()}
@@ -49,6 +50,7 @@ const Item = ({
 
 Item.propTypes = {
   title: contentType.isRequired,
+  language: PropTypes.string.isRequired,
   sectionPath: PropTypes.string.isRequired,
   subSections: PropTypes.arrayOf(PropTypes.object),
   sectionPrefix: PropTypes.string,

@@ -76,7 +76,7 @@ const getCurrentSectionPath = state => state.content.currentSectionPath
 
 const getSectionContent = (state, path) => getContent(state).sections[path]
 
-const getToc = state => getContent(state).toc
+const getToc = state => state.content.toc
 
 const getSection = (state, path) => {
   const sections = getSections(getToc(state), path)

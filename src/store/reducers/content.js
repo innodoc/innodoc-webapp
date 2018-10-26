@@ -7,13 +7,16 @@ function content(state = defaultInitialState.content, action) {
     case contentActionTypes.LOAD_MANIFEST_SUCCESS:
       return {
         ...state,
-        data: {
-          ...state.data,
-          [action.data.language]: {
-            ...state.data[action.data.language],
-            toc: action.data.content,
-          },
-        },
+        availableLanguages: action.data.languages,
+        title: action.data.title,
+        toc: action.data.toc,
+        // data: {
+        //   ...state.data,
+        //   [action.data.language]: {
+        //     ...state.data[action.data.language],
+        //     toc: action.data.content,
+        //   },
+        // },
       }
 
     case contentActionTypes.LOAD_SECTION:
@@ -26,15 +29,17 @@ function content(state = defaultInitialState.content, action) {
       return {
         ...state,
         currentSectionPath: action.data.sectionPath,
-        data: {
-          ...state.data,
-          [action.data.language]: {
-            ...state.data[action.data.language],
-            sections: {
-              ...state.data[action.data.language].sections,
-              [action.data.sectionPath]: action.data.content,
-            },
+        sections: {
+          ...state.sections,
+          [action.data.sectionPath]: {
+            [action.data.language]: action.data.content,
           },
+          // [action.data.language]: {
+          //   ...state.data[action.data.language],
+          //   sections: {
+          //     ...state.data[action.data.language].sections,
+          //   },
+          // },
         },
       }
 
@@ -54,11 +59,11 @@ function content(state = defaultInitialState.content, action) {
     case i18nActionTypes.CHANGE_LANGUAGE:
       return {
         ...state,
-        data: {
-          ...state.data,
-          [action.language]: state.data[action.language]
-            ? state.data[action.language]
-            : defaultContentData,
+        sections: {
+          ...state.sections,
+          [action.language]: state.sections[action.language]
+            ? state.sections[action.language]
+            : {},
         },
       }
 
