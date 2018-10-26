@@ -101,7 +101,7 @@ module.exports = withBundleAnalyzer(
           })
           // Hack to make SUI find our custom theme
           config.resolve.alias['../../theme.config$'] = path.join(
-            __dirname, 'src', 'semantic', 'theme.config')
+            __dirname, 'src', 'semantic-ui', 'theme.config')
 
           return config
         },

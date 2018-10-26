@@ -1,0 +1,7 @@
+/*******************************
+     User Global Variables
+*******************************/
+
+@importGoogleFonts : false;
+@importOutlineIcons : false;
+@importBrandIcons : false;
