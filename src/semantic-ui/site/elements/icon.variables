@@ -1,3 +1,2 @@
-/*******************************
-    User Variable Overrides
-*******************************/
+@importOutlineIcons : false;
+@importBrandIcons : false;
