@@ -1,8 +1,8 @@
 import { call, put, select } from 'redux-saga/effects'
 import { cloneableGenerator } from 'redux-saga/utils'
 
-import loadTocSaga from './toc'
-import { loadToc, loadTocSuccess, loadTocFailure } from '../../store/actions/content'
+import loadManifestSaga from './toc'
+import { loadManifest, loadManifestSuccess, loadManifestFailure } from '../../store/actions/content'
 import contentSelectors from '../../store/selectors/content'
 import i18nSelectors from '../../store/selectors/i18n'
 import { fetchToc } from '../../lib/api'
@@ -10,9 +10,9 @@ import { fetchToc } from '../../lib/api'
 const language = 'de'
 const contentRoot = 'https://foo.com/content'
 
-describe('loadTocSaga', () => {
+describe('loadManifestSaga', () => {
   const content = ['toccontent']
-  const gen = cloneableGenerator(loadTocSaga)(loadToc())
+  const gen = cloneableGenerator(loadManifestSaga)(loadManifest())
 
   it('should not fetch the TOC without language', () => {
     const clone = gen.clone()
@@ -26,7 +26,7 @@ describe('loadTocSaga', () => {
     expect(clone.next(language).value).toEqual(select(contentSelectors.getToc))
     expect(clone.next().value).toEqual(select(contentSelectors.getContentRoot))
     expect(clone.next(contentRoot).value).toEqual(call(fetchToc, contentRoot, language))
-    expect(clone.next(content).value).toEqual(put(loadTocSuccess({ language, content })))
+    expect(clone.next(content).value).toEqual(put(loadManifestSuccess({ language, content })))
     expect(clone.next().done).toEqual(true)
   })
 
@@ -34,17 +34,17 @@ describe('loadTocSaga', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
     expect(clone.next(language).value).toEqual(select(contentSelectors.getToc))
-    expect(clone.next(content).value).toEqual(put(loadTocSuccess({ language, content })))
+    expect(clone.next(content).value).toEqual(put(loadManifestSuccess({ language, content })))
     expect(clone.next().done).toEqual(true)
   })
 
-  it('should put loadTocFailure on error', () => {
+  it('should put loadManifestFailure on error', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(i18nSelectors.getLanguage))
     expect(clone.next(language).value).toEqual(select(contentSelectors.getToc))
     expect(clone.next().value).toEqual(select(contentSelectors.getContentRoot))
     expect(clone.next(contentRoot).value).toEqual(call(fetchToc, contentRoot, language))
     const error = new Error('error')
-    expect(clone.throw(error).value).toEqual(put(loadTocFailure({ language, error })))
+    expect(clone.throw(error).value).toEqual(put(loadManifestFailure({ language, error })))
   })
 })

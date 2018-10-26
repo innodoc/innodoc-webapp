@@ -1,0 +1,189 @@
+{
+  "languages": ["de", "en"],
+  "title": {
+    "de": [{
+      "t": "Str",
+      "c": "Showcase-Modul"
+    }, {
+      "t": "Space"
+    }, {
+      "t": "Str",
+      "c": "f\u00fcr"
+    }, {
+      "t": "Space"
+    }, {
+      "t": "Str",
+      "c": "innoDoc"
+    }],
+    "en": [{
+      "t": "Str",
+      "c": "Showcase module"
+    }, {
+      "t": "Space"
+    }, {
+      "t": "Str",
+      "c": "for"
+    }, {
+      "t": "Space"
+    }, {
+      "t": "Str",
+      "c": "innoDoc"
+    }]
+  },
+  "toc": [{
+    "id": "01-project",
+    "title": {
+      "de": [{
+        "t": "Str",
+        "c": "Projektstruktur"
+      }],
+      "en": [{
+        "t": "Str",
+        "c": "Project structure"
+      }]
+    },
+    "children": [{
+      "id": "01-folders",
+      "title": {
+        "de": [{
+          "t": "Str",
+          "c": "Verzeichnisse"
+        }],
+        "en": [{
+          "t": "Str",
+          "c": "Folders"
+        }]
+      }
+    }, {
+      "id": "02-language",
+      "title": {
+        "de": [{
+          "t": "Str",
+          "c": "Sprache"
+        }],
+        "en": [{
+          "t": "Str",
+          "c": "Language"
+        }]
+      }
+    }]
+  }, {
+    "id": "02-elements",
+    "title": {
+      "de": [{
+        "t": "Str",
+        "c": "Elemente"
+      }],
+      "en": [{
+        "t": "Str",
+        "c": "Elements"
+      }]
+    },
+    "children": [{
+      "id": "01-headers",
+      "title": {
+        "de": [{
+          "t": "Str",
+          "c": "\u00dcberschriften"
+        }],
+        "en": [{
+          "t": "Str",
+          "c": "Headers"
+        }]
+      }
+    }, {
+      "id": "02-lists",
+      "title": {
+        "de": [{
+          "t": "Str",
+          "c": "Listen"
+        }, {
+          "t": "Space"
+        }, {
+          "t": "Str",
+          "c": "und"
+        }, {
+          "t": "Space"
+        }, {
+          "t": "Str",
+          "c": "Aufz\u00e4hlungen"
+        }],
+        "en": [{
+          "t": "Str",
+          "c": "Lists"
+        }]
+      }
+    }, {
+      "id": "03-links-and-formatting",
+      "title": {
+        "de": [{
+          "t": "Str",
+          "c": "Links"
+        }, {
+          "t": "Space"
+        }, {
+          "t": "Str",
+          "c": "und"
+        }, {
+          "t": "Space"
+        }, {
+          "t": "Str",
+          "c": "Textformatierung"
+        }],
+        "en": [{
+          "t": "Str",
+          "c": "Links"
+        }, {
+          "t": "Space"
+        }, {
+          "t": "Str",
+          "c": "and"
+        }, {
+          "t": "Space"
+        }, {
+          "t": "Str",
+          "c": "text"
+        }, {
+          "t": "Space"
+        }, {
+          "t": "Str",
+          "c": "formatting"
+        }]
+      }
+    }, {
+      "id": "04-quotes",
+      "title": {
+        "de": [{
+          "t": "Str",
+          "c": "Zitate"
+        }],
+        "en": [{
+          "t": "Str",
+          "c": "Quotes"
+        }]
+      }
+    }, {
+      "id": "10-interactive-exercises",
+      "title": {
+        "de": [{
+          "t": "Str",
+          "c": "Interaktive"
+        }, {
+          "t": "Space"
+        }, {
+          "t": "Str",
+          "c": "Aufgaben"
+        }],
+        "en": [{
+          "t": "Str",
+          "c": "Interactive"
+        }, {
+          "t": "Space"
+        }, {
+          "t": "Str",
+          "c": "exercises"
+        }]
+      }
+    }]
+  }]
+}

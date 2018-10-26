@@ -2,27 +2,27 @@ import { call, put, select } from 'redux-saga/effects'
 
 import contentSelectors from '../../store/selectors/content'
 import i18nSelectors from '../../store/selectors/i18n'
-import { loadTocSuccess, loadTocFailure } from '../../store/actions/content'
+import { loadManifestSuccess, loadManifestFailure } from '../../store/actions/content'
 import { showMessage } from '../../store/actions/ui'
-import { fetchToc } from '../../lib/api'
+import { fetchManifest } from '../../lib/api'
 
-export default function* loadTocSaga() {
+export default function* loadManifestSaga() {
   const language = yield select(i18nSelectors.getLanguage)
   if (language) {
     // already in store?
-    let content = yield select(contentSelectors.getToc)
+    let content = yield select(contentSelectors.getManifest)
     if (content && content.length > 0) {
-      yield put(loadTocSuccess({ language, content }))
+      yield put(loadManifestSuccess({ language, content }))
     } else {
       // fetch from remote
       const contentRoot = yield select(contentSelectors.getContentRoot)
       try {
-        content = yield call(fetchToc, contentRoot, language)
-        yield put(loadTocSuccess({ language, content }))
+        content = yield call(fetchManifest, contentRoot, language)
+        yield put(loadManifestSuccess({ language, content }))
       } catch (error) {
-        yield put(loadTocFailure({ language, error }))
+        yield put(loadManifestFailure({ language, error }))
         yield put(showMessage({
-          title: 'Loading TOC failed!',
+          title: 'Loading manifest failed!',
           msg: error.message,
           level: 'fatal',
         }))

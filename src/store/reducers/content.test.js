@@ -1,6 +1,6 @@
 import contentReducer from './content'
 import {
-  loadTocSuccess,
+  loadManifestSuccess,
   loadSection,
   loadSectionFailure,
   loadSectionSuccess,
@@ -51,8 +51,8 @@ describe('contentReducer', () => {
     expect(contentReducer(undefined, {})).toEqual(initialContentState)
   })
 
-  test('LOAD_TOC_SUCCESS', () => {
-    const newState = contentReducer(initialContentState, loadTocSuccess({
+  test('LOAD_MANIFEST_SUCCESS', () => {
+    const newState = contentReducer(initialContentState, loadManifestSuccess({
       language: 'en',
       content: ['toccontent'],
     }))

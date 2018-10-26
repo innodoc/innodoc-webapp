@@ -4,7 +4,7 @@ import defaultInitialState, { defaultContentData } from '../defaultInitialState'
 
 function content(state = defaultInitialState.content, action) {
   switch (action.type) {
-    case contentActionTypes.LOAD_TOC_SUCCESS:
+    case contentActionTypes.LOAD_MANIFEST_SUCCESS:
       return {
         ...state,
         data: {
