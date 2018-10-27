@@ -2,11 +2,29 @@
   "env": {
     "development": {
       "presets": ["next/babel"],
-      "plugins": ["@babel/plugin-proposal-export-default-from"]
+      "plugins": [
+        "@babel/plugin-proposal-export-default-from",
+        [
+          "import",
+          {
+            "libraryName": "antd",
+            "style": true
+          }
+        ]
+      ]
     },
     "production": {
       "presets": ["next/babel"],
-      "plugins": ["@babel/plugin-proposal-export-default-from"]
+      "plugins": [
+        "@babel/plugin-proposal-export-default-from",
+        [
+          "import",
+          {
+            "libraryName": "antd",
+            "style": true
+          }
+        ]
+      ]
     },
     "test": {
       "presets": [
@@ -17,7 +35,16 @@
           }
         ]
       ],
-      "plugins": ["@babel/plugin-proposal-export-default-from"]
+      "plugins": [
+        "@babel/plugin-proposal-export-default-from",
+        [
+          "import",
+          {
+            "libraryName": "antd",
+            "style": true
+          }
+        ]
+      ]
     }
   }
 }

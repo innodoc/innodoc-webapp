@@ -1,10 +1,15 @@
+const withLess = require('@zeit/next-less')
 const withSass = require('@zeit/next-sass')
 const Dotenv = require('dotenv-webpack')
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer')
 
-module.exports = withBundleAnalyzer(withSass({
+module.exports = withBundleAnalyzer(withLess(withSass({
   // only use .js (not .jsx)
   pageExtensions: ['js'],
+
+  lessLoaderOptions: {
+    javascriptEnabled: true,
+  },
 
   // css modules with local scope
   cssModules: true,
@@ -36,4 +41,4 @@ module.exports = withBundleAnalyzer(withSass({
     }))
     return config
   },
-}))
+})))
