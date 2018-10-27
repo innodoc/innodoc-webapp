@@ -5,6 +5,10 @@ import App, { Container } from 'next/app'
 import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 
+import 'antd/lib/style/index.less'
+import 'antd/lib/layout/style/index.less'
+import 'antd/lib/menu/style/index.less'
+
 import configureStore from '../store'
 import { setContentRoot, loadToc } from '../store/actions/content'
 

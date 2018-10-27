@@ -1,9 +1,55 @@
-const withLess = require('@zeit/next-less')
+const path = require('path')
+const cssLoaderConfig = require('@zeit/next-css/css-loader-config')
+// const withLess = require('@zeit/next-less')
 const withSass = require('@zeit/next-sass')
 const Dotenv = require('dotenv-webpack')
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer')
 
-module.exports = withBundleAnalyzer(withLess(withSass({
+/* eslint no-param-reassign: ["error", { "props": false }] */
+
+// modified version of @zeit/next-less without CSS modules
+const withLessWithoutCssModules = (nextConfig = {}) => ({
+  ...nextConfig,
+  webpack(config, options) {
+    const { dev, isServer } = options
+    const {
+      postcssLoaderOptions,
+      lessLoaderOptions = {},
+    } = nextConfig
+
+    // no modules!
+    const cssModules = false
+    const cssLoaderOptions = {}
+
+    options.defaultLoaders.less = cssLoaderConfig(config, {
+      extensions: ['less'],
+      cssModules,
+      cssLoaderOptions,
+      postcssLoaderOptions,
+      dev,
+      isServer,
+      loaders: [
+        {
+          loader: 'less-loader',
+          options: lessLoaderOptions,
+        },
+      ],
+    })
+
+    config.module.rules.push({
+      test: /\.less$/,
+      use: options.defaultLoaders.less,
+    })
+
+    if (typeof nextConfig.webpack === 'function') {
+      return nextConfig.webpack(config, options)
+    }
+
+    return config
+  },
+})
+
+module.exports = withBundleAnalyzer(withLessWithoutCssModules(withSass({
   // only use .js (not .jsx)
   pageExtensions: ['js'],
 

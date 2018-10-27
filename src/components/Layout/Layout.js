@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Layout as AntLayout } from 'antd'
+import AntLayout from 'antd/lib/layout'
 
 import { childrenType, messageType } from '../../lib/propTypes'
 import { clearMessage } from '../../store/actions/ui'
