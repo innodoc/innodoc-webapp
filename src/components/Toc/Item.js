@@ -36,6 +36,7 @@ const Item = ({
             (subSection, i) => (
               <Item
                 title={subSection.title[language]}
+                language={language}
                 sectionPath={`${sectionPath}/${subSection.id}`}
                 subSections={subSection.children}
                 key={i.toString()}

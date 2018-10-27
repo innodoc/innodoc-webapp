@@ -26,9 +26,6 @@ const Sidebar = (props) => {
   // The ugly <style> tag creates a more specific CSS class to override
   // semantic-ui styles that use !important everywhere
 
-  console.log(toc)
-  console.log(language)
-
   return (
     <React.Fragment>
       <style>

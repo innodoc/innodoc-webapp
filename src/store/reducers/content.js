@@ -31,8 +31,9 @@ function content(state = defaultInitialState.content, action) {
         currentSectionPath: action.data.sectionPath,
         sections: {
           ...state.sections,
-          [action.data.sectionPath]: {
-            [action.data.language]: action.data.content,
+          [action.data.language]: {
+            ...state.sections[action.data.language],
+            [action.data.sectionPath]: action.data.content,
           },
           // [action.data.language]: {
           //   ...state.data[action.data.language],

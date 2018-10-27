@@ -64,10 +64,10 @@ class Content extends React.Component {
         />
       ) : null
 
+    // <SectionNav />
+    // <Breadcrumb />
     return (
       <React.Fragment>
-        <SectionNav />
-        <Breadcrumb />
         <Header as="h1">
           <ContentFragment content={section.title} />
         </Header>

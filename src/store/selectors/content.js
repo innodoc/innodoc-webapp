@@ -74,7 +74,9 @@ const getContentRoot = state => state.content.contentRoot
 
 const getCurrentSectionPath = state => state.content.currentSectionPath
 
-const getSectionContent = (state, path) => getContent(state).sections[path]
+const getSectionContent = (state, path) => (
+  state.content.sections[i18nSelectors.getLanguage(state)][path] || undefined
+)
 
 const getToc = state => state.content.toc
 
