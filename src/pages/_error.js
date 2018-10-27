@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Message } from 'semantic-ui-react'
+import { Alert } from 'antd'
 
 import withI18next from '../components/hoc/withI18next'
 import withI18nDispatch from '../components/hoc/withI18nDispatch'
@@ -22,23 +22,14 @@ class ErrorPage extends React.Component {
     const { t, statusCode } = this.props
     const title = t([`errorPage.${statusCode}.title`, 'errorPage.unspecific.title'])
     const msg = t([`errorPage.${statusCode}.msg`, 'errorPage.unspecific.msg'])
-    const messageProps = statusCode === 404
-      ? {
-        warning: true,
-        icon: 'exclamation circle',
-      }
-      : {
-        error: true,
-        icon: 'bug',
-      }
 
     return (
       <Layout>
-        <Message
-          size="huge"
-          header={title}
-          content={msg}
-          {...messageProps}
+        <Alert
+          message={title}
+          description={msg}
+          type={statusCode === 404 ? 'info' : 'error'}
+          showIcon
         />
       </Layout>
     )

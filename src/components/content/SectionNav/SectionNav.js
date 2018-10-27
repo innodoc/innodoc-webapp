@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Icon } from 'semantic-ui-react'
+import Icon from 'antd/lib/icon'
 
 import { sectionType } from '../../../lib/propTypes'
 import { astToString } from '../../../lib/util'
@@ -14,7 +14,7 @@ const SectionNav = ({ prev, next }) => (
       prev ? (
         <SectionLink sectionPath={prev.path}>
           <a title={astToString(prev.title)} className={css.prev}>
-            <Icon size="huge" name="angle left" />
+            <Icon type="left" />
           </a>
         </SectionLink>
       ) : null
@@ -23,7 +23,7 @@ const SectionNav = ({ prev, next }) => (
       next ? (
         <SectionLink sectionPath={next.path}>
           <a title={astToString(next.title)} className={css.next}>
-            <Icon size="huge" name="angle right" />
+            <Icon type="right" />
           </a>
         </SectionLink>
       ) : null

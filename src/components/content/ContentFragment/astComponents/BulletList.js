@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { List } from 'semantic-ui-react'
+import List from 'antd/lib/list'
 
 import ContentFragment from '..'
 
@@ -13,7 +13,7 @@ const BulletList = ({ data }) => {
     )
   )
   return (
-    <List bulleted verticalAlign="middle">
+    <List>
       {listItems}
     </List>
   )
