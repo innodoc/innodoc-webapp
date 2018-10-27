@@ -83,6 +83,12 @@ module.exports = withBundleAnalyzer(withLessWithoutCssModules(withSass({
       safe: true,
       systemvars: true,
     }))
+
+    // debug print webpack config
+    /* eslint-disable-next-line no-extend-native */
+    // Object.defineProperty(RegExp.prototype, 'toJSON', { value: RegExp.prototype.toString })
+    // console.log(JSON.stringify(config, null, 2))
+
     return config
   },
 })))
