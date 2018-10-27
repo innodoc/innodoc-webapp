@@ -24,6 +24,8 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps)(
   withI18next()(
-    withI18nDispatch(IndexPage)
+    withI18nDispatch(
+      IndexPage
+    )
   )
 )

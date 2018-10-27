@@ -53,5 +53,7 @@ ErrorPage.propTypes = {
 }
 
 export default withI18next()(
-  withI18nDispatch(ErrorPage)
+  withI18nDispatch(
+    ErrorPage
+  )
 )

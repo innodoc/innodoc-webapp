@@ -45,6 +45,8 @@ CoursePage.propTypes = {
 
 export default connect()(
   withI18next()(
-    withI18nDispatch(CoursePage)
+    withI18nDispatch(
+      CoursePage
+    )
   )
 )

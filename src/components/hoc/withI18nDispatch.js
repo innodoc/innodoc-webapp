@@ -7,7 +7,7 @@ import { i18nInstanceAvailable } from '../../store/actions/i18n'
 
 // Make i18next instance available in sagas
 const withI18nDispatch = (WrappedComponent) => {
-  class WithReduxI18nextSync extends React.Component {
+  class WithI18nDispatch extends React.Component {
     componentDidMount() {
       this.dispatchI18nInstance()
     }
@@ -34,7 +34,7 @@ const withI18nDispatch = (WrappedComponent) => {
     }
   }
 
-  WithReduxI18nextSync.propTypes = {
+  WithI18nDispatch.propTypes = {
     i18n: PropTypes.shape({
       on: PropTypes.func.isRequired,
       off: PropTypes.func.isRequired,
@@ -42,10 +42,10 @@ const withI18nDispatch = (WrappedComponent) => {
     dispatchI18nInstance: PropTypes.func.isRequired,
   }
 
-  WithReduxI18nextSync.displayName = getHocDisplayName('WithReduxI18nextSync', WrappedComponent)
+  WithI18nDispatch.displayName = getHocDisplayName('WithI18nDispatch', WrappedComponent)
 
   const mapDispatchToProps = { dispatchI18nInstance: i18nInstanceAvailable }
-  return connect(null, mapDispatchToProps)(WithReduxI18nextSync)
+  return connect(null, mapDispatchToProps)(WithI18nDispatch)
 }
 
 withI18nDispatch.propTypes = {

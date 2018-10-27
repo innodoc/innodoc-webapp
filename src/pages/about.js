@@ -14,7 +14,9 @@ const AboutPage = () => (
 )
 
 export default connect()(
-  withI18nDispatch(
-    withI18next()(AboutPage)
+  withI18next()(
+    withI18nDispatch(
+      AboutPage
+    )
   )
 )
