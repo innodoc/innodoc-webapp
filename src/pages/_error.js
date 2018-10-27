@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Message } from 'semantic-ui-react'
+import { Alert } from 'antd'
 
 import withI18next from '../components/hoc/withI18next'
 import withI18nDispatch from '../components/hoc/withI18nDispatch'
@@ -34,10 +34,10 @@ class ErrorPage extends React.Component {
 
     return (
       <Layout>
-        <Message
-          size="huge"
-          header={title}
-          content={msg}
+        <Alert
+          message={title}
+          description={msg}
+          type="error"
           {...messageProps}
         />
       </Layout>

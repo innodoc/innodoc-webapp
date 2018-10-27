@@ -37,6 +37,7 @@
     "@babel/node": "^7.0.0",
     "@zeit/next-bundle-analyzer": "^0.1.2",
     "@zeit/next-sass": "^1.0.1",
+    "antd": "^3.10.3",
     "classnames": "^2.2.6",
     "dotenv-safe": "^6.1.0",
     "dotenv-webpack": "^1.5.7",
@@ -61,8 +62,7 @@
     "react-i18next": "^8.1.1",
     "react-redux": "^5.0.7",
     "redux": "^4.0.1",
-    "redux-saga": "^0.16.2",
-    "semantic-ui-react": "^0.83.0"
+    "redux-saga": "^0.16.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",

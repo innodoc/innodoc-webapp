@@ -1,34 +1,35 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Layout as AntLayout } from 'antd'
 
 import { childrenType, messageType } from '../../lib/propTypes'
 import { clearMessage } from '../../store/actions/ui'
 import uiSelectors from '../../store/selectors/ui'
 import Header from './Header'
-import Sidebar from './Sidebar'
-import Footer from './Footer'
-import MessageModal from '../MessageModal'
+// import Sidebar from './Sidebar'
+// import Footer from './Footer'
+// import MessageModal from '../MessageModal'
 
 const Layout = ({
   children,
   message,
   onMessageModalClosed,
 }) => {
-  const modal = message
-    ? <MessageModal message={message} onClose={onMessageModalClosed} />
-    : null
+  // const modal = message
+  //   ? <MessageModal message={message} onClose={onMessageModalClosed} />
+  //   : null
   return (
-    <React.Fragment>
+    <AntLayout>
       <Header />
-      <Sidebar>
-        {children}
-      </Sidebar>
-      <Footer />
-      {modal}
-    </React.Fragment>
+    </AntLayout>
   )
 }
+// {modal}
+// <Sidebar>
+//   {children}
+// </Sidebar>
+// <Footer />
 
 Layout.propTypes = {
   children: childrenType.isRequired,
