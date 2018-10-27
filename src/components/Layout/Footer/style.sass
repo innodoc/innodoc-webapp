@@ -1,2 +1,32 @@
+@import '../../../style/antd-theme.sass'
+
+.footer
+  color: $text-color-dark
+  padding-top: 2 * $padding-lg
+  padding-bottom: 2 * $padding-lg
+
+  a
+    color: $blue-5
+    &:hover, &:active
+      color: $blue-3
+
+  h4
+    font-weight: bold
+    color: $heading-color-dark
+
+  \:global(.ant-list-item)
+    padding-top: 0
+    padding-bottom: 0
+    border-bottom: 0
+
+.licenseIcon
+  width: 62.5px
+  height: 62.5px
+  margin-right: $padding-xs
+
 .footerSegment
-  padding: 5rem 0 !important
+  padding-bottom: $padding-lg
+
+@media (min-width: $screen-md)
+  .footerCol
+    padding-right: $padding-lg

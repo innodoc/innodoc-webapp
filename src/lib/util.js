@@ -1,5 +1,6 @@
 const getDisplayName = Component => Component.displayName || Component.name || 'Component'
 const getHocDisplayName = (HocName, ComposedComponent) => `${HocName}(${getDisplayName(ComposedComponent)})`
+
 const astToString = (ast) => {
   if (typeof ast === 'string') {
     return ast
@@ -17,4 +18,14 @@ const astToString = (ast) => {
   }).join('')
 }
 
-export { astToString, getDisplayName, getHocDisplayName }
+const getSectionHref = sectionPath => ({
+  href: { pathname: '/page', query: { sectionPath } },
+  as: `/page/${sectionPath}`,
+})
+
+export {
+  astToString,
+  getDisplayName,
+  getHocDisplayName,
+  getSectionHref,
+}

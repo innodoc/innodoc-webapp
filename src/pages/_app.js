@@ -5,6 +5,21 @@ import App, { Container } from 'next/app'
 import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 
+import '../style/lato-font.sass'
+
+import 'antd/lib/style/index.less'
+import 'antd/lib/grid/style/index.less'
+import 'antd/lib/layout/style/index.less'
+import 'antd/lib/menu/style/index.less'
+import 'antd/lib/tree/style/index.less'
+import 'antd/lib/input/style/index.less'
+import 'antd/lib/button/style/index.less'
+import 'antd/lib/modal/style/index.less'
+import 'antd/lib/alert/style/index.less'
+import 'antd/lib/breadcrumb/style/index.less'
+import 'antd/lib/skeleton/style/index.less'
+import 'antd/lib/list/style/index.less'
+
 import configureStore from '../store'
 import { setContentRoot, loadToc } from '../store/actions/content'
 

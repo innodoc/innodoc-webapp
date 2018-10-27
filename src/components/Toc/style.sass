@@ -1,0 +1,21 @@
+@import '../../style/antd-theme.sass'
+
+.tocWrapper
+  margin-bottom: 2 * $padding-lg
+
+  [role=treeitem]
+
+    \:global(.ant-tree-node-content-wrapper:hover)
+      background-color: transparent
+      color: $heading-color
+
+    &:global(.active > span > .ant-tree-title)
+      color: $heading-color
+      font-weight: bold
+
+    & :global(.ant-tree-node-selected)
+      background-color: transparent !important
+
+.disableExpand
+  \:global(.ant-tree-switcher)
+    display: none !important

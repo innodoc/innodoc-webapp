@@ -5,6 +5,7 @@
     "exercises": "Aufgaben",
     "info": "Info",
     "inputHint": "Eingabe",
+    "home": "Start",
     "solution": "Lösung",
     "subsections": "Unterabschnitte",
     "test": "Test"
@@ -36,6 +37,7 @@
     "viewIndex": "Stichwortliste"
   },
   "header": {
+    "about": "Kursinfo",
     "aboutTheCourse": "Über den Kurs",
     "downloadPDF": "PDF",
     "downloadPDFTitle": "PDF herunterladen",
@@ -43,10 +45,16 @@
     "linkDE": "Deutsch",
     "login": "Login",
     "createAccount": "Konto erstellen",
+    "hideTocLong": "Inhaltsverzeichnis ausblenden",
     "language": "Sprache",
     "searchPlaceholder": "Suche…",
-    "showTOC": "Kursinhalt",
-    "preparatoryMathematicsCourse": "Onlinebrückenkurs<1></1>Mathematik"
+    "showToc": "Inhalt",
+    "showTocLong": "Inhaltsverzeichnis",
+    "tmpTitle": "Onlinebrückenkurs Mathematik"
+  },
+  "languages": {
+    "de": "Deutsch",
+    "en": "English"
   },
   "message": {
     "title": {
@@ -56,7 +64,6 @@
     }
   },
   "sidebar": {
-    "close": "Menü ausblenden",
     "courseContent": "Kursinhalt"
   }
 }

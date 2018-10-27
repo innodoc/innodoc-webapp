@@ -1,7 +1,26 @@
-.sidebar
-  z-index: 1000 !important
-  font-size: 1.48rem !important
+@import '../../../style/antd-theme.sass'
 
-.sidebarContent
-  flex: 1 0 !important
+.sidebar
+  overflow-x: hidden
   overflow-y: auto
+
+  > div
+    padding: $padding-lg 0
+
+    > div
+      height: 100%
+      border-right: $border-width-base $border-style-base $border-color-split
+
+      > div
+        padding: 0 $padding-md
+
+  \:global(.ant-tree-node-content-wrapper)
+    margin-bottom: 4px !important
+    height: auto !important
+    line-height: $line-height-base * 5/6 !important
+    white-space: normal !important
+    margin-right: $padding-lg !important
+
+  \:global(.ant-tree-switcher-icon)
+    font-size: $font-size-lg !important
+    vertical-align: 0 !important

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Header } from 'semantic-ui-react'
 import { withNamespaces } from 'react-i18next'
 
 import contentSelectors from '../../../store/selectors/content'
@@ -52,15 +51,15 @@ class Content extends React.Component {
       t,
     } = this.props
 
+    // TODO: Show flat list of sub-sections, no tree needed
     const subToc = section.children && section.children.length && sectionLevel < 3
       ? (
         <Toc
-          vertical
-          borderless
-          size="large"
           toc={section.children}
           header={t('content.subsections')}
-          sectionPrefix={`${section.id}/`}
+          sectionPrefix={`${section.id}`}
+          defaultExpandAll
+          disableExpand
         />
       ) : null
 
@@ -68,9 +67,9 @@ class Content extends React.Component {
       <React.Fragment>
         <SectionNav />
         <Breadcrumb />
-        <Header as="h1">
+        <h1>
           <ContentFragment content={section.title} />
-        </Header>
+        </h1>
         {subToc}
         <div className={css.content} ref={mathJaxContentRef}>
           <ContentFragment content={sectionContent} />

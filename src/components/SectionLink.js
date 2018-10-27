@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 
 import { childrenType } from '../lib/propTypes'
+import { getSectionHref } from '../lib/util'
 
 const SectionLink = ({ sectionPath, children }) => {
-  const href = { pathname: '/page', query: { sectionPath } }
-  const as = `/page/${sectionPath}`
+  const { href, as } = getSectionHref(sectionPath)
   return (
     <Link href={href} as={as}>
       {children}

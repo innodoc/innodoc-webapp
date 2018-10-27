@@ -1,13 +1,16 @@
-.sbtn
+@import '../../../style/antd-theme.sass'
+
+=sbtn
   position: fixed
   top: 50%
   transform: translate(0, -50%)
   z-index: 900
+  font-size: $font-size-base * 3
 
 .next
-  @extend .sbtn
+  +sbtn
   right: 0
 
 .prev
-  @extend .sbtn
+  +sbtn
   left: 0
