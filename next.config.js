@@ -1,11 +1,8 @@
-const path = require('path')
 const cssLoaderConfig = require('@zeit/next-css/css-loader-config')
 // const withLess = require('@zeit/next-less')
 const withSass = require('@zeit/next-sass')
 const Dotenv = require('dotenv-webpack')
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer')
-
-/* eslint no-param-reassign: ["error", { "props": false }] */
 
 // modified version of @zeit/next-less without CSS modules
 const withLessWithoutCssModules = (nextConfig = {}) => ({
@@ -21,6 +18,7 @@ const withLessWithoutCssModules = (nextConfig = {}) => ({
     const cssModules = false
     const cssLoaderOptions = {}
 
+    /* eslint-disable-next-line no-param-reassign */
     options.defaultLoaders.less = cssLoaderConfig(config, {
       extensions: ['less'],
       cssModules,
