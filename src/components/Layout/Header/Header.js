@@ -15,7 +15,6 @@ const Header = ({ t, dispatchChangeLanguage, dispatchToggleSidebar }) => (
     <Menu
       mode="horizontal"
       defaultSelectedKeys={['2']}
-      style={{ lineHeight: '64px' }}
       className={css.header}
     >
       <Menu.Item key="1">

@@ -143,7 +143,20 @@ const nextConfig = {
       systemvars: true,
     }))
 
-    config.plugins.push(new AntdScssThemePlugin(path.join(__dirname, './src/antd-theme.sass')))
+    config.plugins.push(new AntdScssThemePlugin(path.join(__dirname, './src/style/antd-theme.sass')))
+
+    // web fonts
+    config.module.rules.push({
+      test: /\.woff2$/,
+      use: {
+        loader: 'file-loader',
+        options: {
+          publicPath: '../',
+          outputPath: 'static/',
+          name: '[name].[hash:8].[ext]',
+        },
+      },
+    })
 
     // debug print webpack config
     /* eslint-disable-next-line no-extend-native */
