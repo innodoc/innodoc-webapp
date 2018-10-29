@@ -11,22 +11,29 @@ import { changeLanguage } from '../../../store/actions/i18n'
 import { toggleSidebar } from '../../../store/actions/ui'
 
 const Header = ({ t, dispatchChangeLanguage, dispatchToggleSidebar }) => (
-  <AntLayout.Header className="header">
-    <div className="logo" />
+  <AntLayout.Header>
     <Menu
       mode="horizontal"
       defaultSelectedKeys={['2']}
       style={{ lineHeight: '64px' }}
+      className={css.header}
     >
       <Menu.Item key="1">
+        <Link href="/">
+          <img
+            className={css.headerLogo}
+            alt="Logo"
+            src="/static/img/m4r-logo-simple.png"
+          />
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="2">
         <Link href="/about">
           <Menu.Item as="a" header>
             {t('header.aboutTheCourse')}
           </Menu.Item>
         </Link>
       </Menu.Item>
-      <Menu.Item key="2">nav 2</Menu.Item>
-      <Menu.Item key="3">nav 3</Menu.Item>
     </Menu>
   </AntLayout.Header>
 )
