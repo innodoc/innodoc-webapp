@@ -1,11 +1,58 @@
 const path = require('path')
+const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
+const withPlugins = require('next-compose-plugins')
 const cssLoaderConfig = require('@zeit/next-css/css-loader-config')
 const Dotenv = require('dotenv-webpack')
 const AntdScssThemePlugin = require('antd-scss-theme-plugin')
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer')
 
+// modified version of @zeit/next-less
+// - withSassWithAntdScss
+// - disable CSS modules
+const withLessAntdScssNoCssModules = (nextConfig = {}) => ({
+  ...nextConfig,
+  webpack(config, options) {
+    const { dev, isServer } = options
+    const {
+      postcssLoaderOptions,
+      lessLoaderOptions = {},
+    } = nextConfig
+
+    // no modules!
+    const cssModules = false
+    const cssLoaderOptions = {}
+
+    /* eslint-disable-next-line no-param-reassign */
+    options.defaultLoaders.less = cssLoaderConfig(config, {
+      extensions: ['less'],
+      cssModules,
+      cssLoaderOptions,
+      postcssLoaderOptions,
+      dev,
+      isServer,
+      loaders: [
+        AntdScssThemePlugin.themify({
+          loader: 'less-loader',
+          options: lessLoaderOptions,
+        }),
+      ],
+    })
+
+    config.module.rules.push({
+      test: /\.less$/,
+      use: options.defaultLoaders.less,
+    })
+
+    if (typeof nextConfig.webpack === 'function') {
+      return nextConfig.webpack(config, options)
+    }
+
+    return config
+  },
+})
+
 // modified version of @zeit/next-sass that adds AntdScssThemePlugin
-const withSassWithAntdScss = (nextConfig = {}) => ({
+const withSassAntdScss = (nextConfig = {}) => ({
   ...nextConfig,
   webpack(config, options) {
     const { dev, isServer } = options
@@ -51,67 +98,30 @@ const withSassWithAntdScss = (nextConfig = {}) => ({
   },
 })
 
-// modified version of @zeit/next-less
-// - withSassWithAntdScss
-// - disable without CSS modules
-const withLessWithoutCssModules = (nextConfig = {}) => ({
-  ...nextConfig,
-  webpack(config, options) {
-    const { dev, isServer } = options
-    const {
-      postcssLoaderOptions,
-      lessLoaderOptions = {},
-    } = nextConfig
+// next.js configuration plugins
+const plugins = [
+  [withBundleAnalyzer, [PHASE_DEVELOPMENT_SERVER]],
+  withLessAntdScssNoCssModules,
+  withSassAntdScss,
+]
 
-    // no modules!
-    const cssModules = false
-    const cssLoaderOptions = {}
-
-    /* eslint-disable-next-line no-param-reassign */
-    options.defaultLoaders.less = cssLoaderConfig(config, {
-      extensions: ['less'],
-      cssModules,
-      cssLoaderOptions,
-      postcssLoaderOptions,
-      dev,
-      isServer,
-      loaders: [
-        AntdScssThemePlugin.themify({
-          loader: 'less-loader',
-          options: lessLoaderOptions,
-        }),
-      ],
-    })
-
-    config.module.rules.push({
-      test: /\.less$/,
-      use: options.defaultLoaders.less,
-    })
-
-    if (typeof nextConfig.webpack === 'function') {
-      return nextConfig.webpack(config, options)
-    }
-
-    return config
-  },
-})
-
-module.exports = withBundleAnalyzer(withLessWithoutCssModules(withSassWithAntdScss({
+// next.js configuration
+const nextConfig = {
   // only use .js (not .jsx)
   pageExtensions: ['js'],
 
   lessLoaderOptions: {
-    javascriptEnabled: true,
+    javascriptEnabled: true, // needed by antd less code
   },
 
-  // css modules with local scope
+  // css modules with local scope (for component sass styles)
   cssModules: true,
   cssLoaderOptions: {
     importLoaders: 1,
     localIdentName: '[local]___[hash:base64:5]',
   },
 
-  // bundle analyzer
+  // bundle analyzer (set BUNDLE_ANALYZE to enable!)
   analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
   analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
   bundleAnalyzerConfig: {
@@ -142,4 +152,6 @@ module.exports = withBundleAnalyzer(withLessWithoutCssModules(withSassWithAntdSc
 
     return config
   },
-})))
+}
+
+module.exports = withPlugins(plugins, nextConfig)
