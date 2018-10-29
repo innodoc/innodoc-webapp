@@ -1,5 +1,4 @@
 const cssLoaderConfig = require('@zeit/next-css/css-loader-config')
-// const withLess = require('@zeit/next-less')
 const withSass = require('@zeit/next-sass')
 const Dotenv = require('dotenv-webpack')
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer')
