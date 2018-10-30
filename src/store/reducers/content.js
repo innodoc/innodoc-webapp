@@ -50,7 +50,7 @@ function content(state = defaultInitialState.content, action) {
         contentRoot: action.contentRoot,
       }
 
-    // initialize language data if necessary
+      // initialize language data if necessary
     case i18nActionTypes.CHANGE_LANGUAGE:
       return {
         ...state,

@@ -55,4 +55,18 @@ describe('initial state', () => {
       expect(exercises).toEqual({})
     })
   })
+
+  describe('db', () => {
+    const { db } = state
+
+    test('db empty', () => {
+      expect(db).toEqual({
+        Section: {
+          items: [],
+          itemsById: {},
+          meta: {},
+        },
+      })
+    })
+  })
 })
