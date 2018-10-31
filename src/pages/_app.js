@@ -14,6 +14,7 @@ import 'antd/lib/menu/style/index.less'
 import 'antd/lib/tree/style/index.less'
 import 'antd/lib/input/style/index.less'
 import 'antd/lib/button/style/index.less'
+import 'antd/lib/modal/style/index.less'
 
 import configureStore from '../store'
 import { setContentRoot, loadToc } from '../store/actions/content'

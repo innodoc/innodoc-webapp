@@ -1,34 +1,40 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Header, Modal } from 'semantic-ui-react'
+import Button from 'antd/lib/button'
+import Modal from 'antd/lib/modal'
+import Icon from 'antd/lib/icon'
 import { withNamespaces } from 'react-i18next'
 
+import css from './style.sass'
 import { messageType } from '../../lib/propTypes'
 
 const MessageModal = ({ t, message, onClose }) => {
   const { level, title, msg } = message
   const closable = level !== 'fatal'
   const isError = ['error', 'fatal'].includes(level)
-  const color = isError ? 'red' : 'black'
-  const icon = isError ? 'bug' : 'info'
+  const iconType = isError ? 'warning' : 'info'
+  const footer = closable
+    ? [<Button key="back" onClick={onClose}>OK</Button>]
+    : null
+
   return (
     <Modal
-      onClose={onClose}
-      closeIcon={closable}
-      centered={false}
-      closeOnDimmerClick={closable}
-      closeOnEscape={closable}
-      defaultOpen
+      title={t(`message.title.${level}`)}
+      closable={closable}
+      footer={footer}
+      onCancel={onClose}
+      maskClosable={false}
+      destroyOnClose
+      centered
+      visible
     >
-      <Header color={color} icon={icon} content={t(`message.title.${level}`)} />
-      <Modal.Content>
-        <Modal.Description>
-          <Header content={title} />
-          <p>
-            {msg}
-          </p>
-        </Modal.Description>
-      </Modal.Content>
+      <Icon type={iconType} className={css.icon} />
+      <h4>
+        {title}
+      </h4>
+      <p>
+        {msg}
+      </p>
     </Modal>
   )
 }

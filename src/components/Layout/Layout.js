@@ -9,7 +9,7 @@ import uiSelectors from '../../store/selectors/ui'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import Footer from './Footer'
-// import MessageModal from '../MessageModal'
+import MessageModal from '../MessageModal'
 
 const Layout = ({
   children,
@@ -17,24 +17,26 @@ const Layout = ({
   onMessageModalClosed,
   disableSidebar,
 }) => {
-  // const modal = message
-  //   ? <MessageModal message={message} onClose={onMessageModalClosed} />
-  //   : null
+  const modal = message
+    ? <MessageModal message={message} onClose={onMessageModalClosed} />
+    : null
 
   return (
-    <AntLayout>
-      <Header disableSidebar={disableSidebar} />
+    <React.Fragment>
       <AntLayout>
-        {disableSidebar ? null : <Sidebar />}
+        <Header disableSidebar={disableSidebar} />
         <AntLayout>
-          {children}
+          {disableSidebar ? null : <Sidebar />}
+          <AntLayout>
+            {children}
+          </AntLayout>
         </AntLayout>
+        <Footer />
       </AntLayout>
-      <Footer />
-    </AntLayout>
+      {modal}
+    </React.Fragment>
   )
 }
-// {modal}
 
 Layout.propTypes = {
   children: childrenType.isRequired,
