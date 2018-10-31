@@ -1,59 +1,56 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu } from 'semantic-ui-react'
+import Tree from 'antd/lib/tree'
 
 import { tocTreeType } from '../../lib/propTypes'
-import TocItem from './Item'
+// import TocItem from './Item'
+import ContentFragment from '../content/ContentFragment'
 
 const Toc = ({
   toc,
-  as: ElementType,
-  dispatch,
   header,
   sectionPrefix,
-  ...otherProps
+  defaultExpandAll,
 }) => {
-  const sections = toc.map(
-    (section, i) => (
-      <TocItem
-        sectionPath={section.id}
-        title={section.title}
-        subSections={section.children}
-        sectionPrefix={sectionPrefix}
-        key={i.toString()}
-      />
+  const sectionNode = (section) => {
+    const {
+      title,
+      id,
+      children = [],
+    } = section
+    const prefix = this ? `${this}/` : ''
+    const sectionPath = `${prefix}${id}`
+    return (
+      <Tree.TreeNode title={<ContentFragment content={title} />} key={sectionPath}>
+        {children.map(sectionNode, sectionPath)}
+      </Tree.TreeNode>
     )
-  )
-
-  const headerItem = header
-    ? (
-      <Menu.Item header>
-        {header}
-      </Menu.Item>
-    )
-    : null
+  }
 
   return (
-    <ElementType {...otherProps}>
-      {headerItem}
-      {sections}
-    </ElementType>
+    <React.Fragment>
+      <h2>
+        {header}
+      </h2>
+      <Tree defaultExpandAll={defaultExpandAll} autoExpandParent={false}>
+        {toc.map(sectionNode, sectionPrefix)}
+      </Tree>
+    </React.Fragment>
   )
 }
 
 Toc.propTypes = {
   toc: tocTreeType.isRequired,
-  as: PropTypes.func,
-  dispatch: PropTypes.func,
   header: PropTypes.string,
   sectionPrefix: PropTypes.string,
+  defaultExpandAll: PropTypes.bool,
 }
 
 Toc.defaultProps = {
   ...React.Component.defaultProps,
-  as: Menu,
   sectionPrefix: '',
   header: null,
+  defaultExpandAll: false,
 }
 
 export default Toc

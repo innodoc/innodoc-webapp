@@ -9,8 +9,8 @@ import Layout from '../components/Layout'
 import Toc from '../components/Toc'
 
 const IndexPage = ({ toc }) => (
-  <Layout>
-    <Toc vertical fluid secondary size="massive" toc={toc} header="TODO: fill in course title" />
+  <Layout disableSidebar>
+    <Toc toc={toc} header="TODO: fill in course title" defaultExpandAll />
   </Layout>
 )
 

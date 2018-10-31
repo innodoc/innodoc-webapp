@@ -44,9 +44,11 @@
     "linkDE": "German",
     "login": "Login",
     "createAccount": "Create Account",
+    "hideTocLong": "Hide Table of Contents",
     "language": "Language",
     "searchPlaceholder": "Search…",
-    "showTOC": "Table of contents",
+    "showToc": "Contents",
+    "showTocLong": "Show Table of Contents",
     "tmpTitle": "Preparatory Mathematics Course",
     "preparatoryMathematicsCourse": "Preparatory Mathematics<1></1>Course"
   },
@@ -62,7 +64,6 @@
     }
   },
   "sidebar": {
-    "close": "Close menu",
     "courseContent": "Course content"
   }
 }

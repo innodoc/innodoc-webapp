@@ -11,6 +11,7 @@ import 'antd/lib/style/index.less'
 import 'antd/lib/grid/style/index.less'
 import 'antd/lib/layout/style/index.less'
 import 'antd/lib/menu/style/index.less'
+import 'antd/lib/tree/style/index.less'
 import 'antd/lib/input/style/index.less'
 import 'antd/lib/button/style/index.less'
 

@@ -7,7 +7,7 @@ import { childrenType, messageType } from '../../lib/propTypes'
 import { clearMessage } from '../../store/actions/ui'
 import uiSelectors from '../../store/selectors/ui'
 import Header from './Header'
-// import Sidebar from './Sidebar'
+import Sidebar from './Sidebar'
 import Footer from './Footer'
 // import MessageModal from '../MessageModal'
 
@@ -15,30 +15,37 @@ const Layout = ({
   children,
   message,
   onMessageModalClosed,
+  disableSidebar,
 }) => {
   // const modal = message
   //   ? <MessageModal message={message} onClose={onMessageModalClosed} />
   //   : null
+
   return (
     <AntLayout>
-      <Header />
+      <Header disableSidebar={disableSidebar} />
+      <AntLayout>
+        {disableSidebar ? null : <Sidebar />}
+        <AntLayout>
+          {children}
+        </AntLayout>
+      </AntLayout>
       <Footer />
     </AntLayout>
   )
 }
 // {modal}
-// <Sidebar>
-//   {children}
-// </Sidebar>
 
 Layout.propTypes = {
   children: childrenType.isRequired,
   message: messageType,
   onMessageModalClosed: PropTypes.func.isRequired,
+  disableSidebar: PropTypes.bool,
 }
 
 Layout.defaultProps = {
   ...React.Component.defaultProps,
+  disableSidebar: false,
 }
 
 const mapStateToProps = state => ({

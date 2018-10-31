@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import classNames from 'classnames'
 import Link from 'next/link'
 import { withNamespaces } from 'react-i18next'
 import Row from 'antd/lib/row'
@@ -12,10 +13,17 @@ import Input from 'antd/lib/input'
 import Icon from 'antd/lib/icon'
 
 import css from './style.sass'
+import uiSelectors from '../../../store/selectors/ui'
 import { changeLanguage } from '../../../store/actions/i18n'
 import { toggleSidebar } from '../../../store/actions/ui'
 
-const Header = ({ t, dispatchChangeLanguage, dispatchToggleSidebar }) => {
+const Header = ({
+  t,
+  dispatchChangeLanguage,
+  dispatchToggleSidebar,
+  sidebarVisible,
+  disableSidebar,
+}) => {
   const logo = (
     <Link href="/">
       <a className={css.logoLink}>
@@ -73,7 +81,7 @@ const Header = ({ t, dispatchChangeLanguage, dispatchToggleSidebar }) => {
 
   // TODO: get languages from store
   const languageOptions = ['de', 'en'].map(lang => (
-    <Menu.Item key={`language-${lang}`}>
+    <Menu.Item key={`language-${lang}`} onClick={() => dispatchChangeLanguage(lang)}>
       {t(`languages.${lang}`)}
     </Menu.Item>
   ))
@@ -84,14 +92,22 @@ const Header = ({ t, dispatchChangeLanguage, dispatchToggleSidebar }) => {
     </Menu.SubMenu>
   )
 
+  const sidebarToggle = disableSidebar
+    ? null
+    : (
+      <Button
+        ghost
+        icon="read"
+        className={classNames(css.menuButton, sidebarVisible ? 'active' : null)}
+        onClick={dispatchToggleSidebar}
+        title={t(sidebarVisible ? 'header.hideTocLong' : 'header.showTocLong')}
+      >
+        {t('header.showToc')}
+      </Button>
+    )
+
   const nav = (
-    <Menu mode="horizontal" className={css.nav}>
-      <Menu.Item>
-        <a title={t('header.showTOC')}>
-          <Icon type="read" />
-          {t('header.showTOC')}
-        </a>
-      </Menu.Item>
+    <Menu mode="horizontal" selectable={false} className={css.nav}>
       <Menu.Item key="about">
         <Link href="/about">
           <a title={t('header.aboutTheCourse')}>
@@ -114,16 +130,32 @@ const Header = ({ t, dispatchChangeLanguage, dispatchToggleSidebar }) => {
   return (
     <AntLayout.Header className={css.header}>
       <Row>
-        <Col xs={2} sm={1} md={0} lg={0} xl={0}>
+        <Col xs={2} sm={2} md={0} lg={0} xl={0}>
           <Button icon="menu" className={css.menuButton} />
         </Col>
-        <Col xs={22} sm={23} md={8} lg={7} xl={5}>
+        <Col
+          xs={{ span: 20, push: 2 }}
+          sm={{ span: 13, push: 2 }}
+          md={{ span: 8, push: 0 }}
+          lg={{ span: 7, push: 0 }}
+          xl={{ span: 5, push: 0 }}
+        >
           {logo}
         </Col>
-        <Col xs={0} sm={0} md={11} lg={13} xl={14}>
+        <Col
+          xs={{ span: 2, pull: 20 }}
+          sm={{ span: 2, pull: 13 }}
+          md={{ span: 4, pull: 0 }}
+          lg={{ span: 4, pull: 0 }}
+          xl={{ span: 3, pull: 0 }}
+          className={css.sidebarToggle}
+        >
+          {sidebarToggle}
+        </Col>
+        <Col xs={0} sm={0} md={8} lg={9} xl={12}>
           {nav}
         </Col>
-        <Col xs={0} sm={0} md={5} lg={4} xl={5}>
+        <Col xs={0} sm={7} md={4} lg={4} xl={4}>
           <Input.Search placeholder={t('header.searchPlaceholder')} className={css.searchInput} />
         </Col>
       </Row>
@@ -135,7 +167,13 @@ Header.propTypes = {
   t: PropTypes.func.isRequired,
   dispatchChangeLanguage: PropTypes.func.isRequired,
   dispatchToggleSidebar: PropTypes.func.isRequired,
+  sidebarVisible: PropTypes.bool.isRequired,
+  disableSidebar: PropTypes.bool.isRequired,
 }
+
+const mapStateToProps = state => ({
+  sidebarVisible: uiSelectors.getSidebarVisible(state),
+})
 
 const mapDispatchToProps = {
   dispatchChangeLanguage: changeLanguage,
@@ -143,4 +181,4 @@ const mapDispatchToProps = {
 }
 
 export { Header } // for testing
-export default connect(null, mapDispatchToProps)(withNamespaces()(Header))
+export default connect(mapStateToProps, mapDispatchToProps)(withNamespaces()(Header))

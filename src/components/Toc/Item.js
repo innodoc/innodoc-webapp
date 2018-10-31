@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu } from 'semantic-ui-react'
+import Tree from 'antd/lib/tree'
 
 import { contentType } from '../../lib/propTypes'
 import SectionLink from '../SectionLink'
@@ -14,36 +14,34 @@ const Item = ({
 }) => {
   const sectionPath = `${sectionPrefix}${sectionPathFragment}`
   if (subSections.length < 1) {
-    return (
-      <SectionLink sectionPath={sectionPath}>
-        <Menu.Item as="a">
-          <ContentFragment content={title} />
-        </Menu.Item>
-      </SectionLink>
-    )
+    return <Tree.TreeNode title={title} />
+    // <SectionLink sectionPath={sectionPath}>
+    //   <ContentFragment content={title} />
+    // </SectionLink>
   }
+  const titleElem = (
+    <SectionLink sectionPath={sectionPath}>
+      <ContentFragment content={title} />
+    </SectionLink>
+  )
   return (
-    <Menu.Item>
-      <SectionLink sectionPath={sectionPath}>
-        <a>
-          <ContentFragment content={title} />
-        </a>
-      </SectionLink>
-      <Menu.Menu>
-        {
-          subSections.map(
-            (subSection, i) => (
+    <Tree.TreeNode title={titleElem} key={sectionPath}>
+      {
+        subSections.map(
+          (subSection) => {
+            const subSectionPath = `${sectionPath}/${subSection.id}`
+            return (
               <Item
                 title={subSection.title}
-                sectionPath={`${sectionPath}/${subSection.id}`}
+                sectionPath={subSectionPath}
                 subSections={subSection.children}
-                key={i.toString()}
+                key={subSectionPath}
               />
             )
-          )
-        }
-      </Menu.Menu>
-    </Menu.Item>
+          }
+        )
+      }
+    </Tree.TreeNode>
   )
 }
 

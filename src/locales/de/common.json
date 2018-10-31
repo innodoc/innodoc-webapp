@@ -36,7 +36,7 @@
     "viewIndex": "Stichwortliste"
   },
   "header": {
-    "about": "Über",
+    "about": "Kursinfo",
     "aboutTheCourse": "Über den Kurs",
     "downloadPDF": "PDF",
     "downloadPDFTitle": "PDF herunterladen",
@@ -44,9 +44,11 @@
     "linkDE": "Deutsch",
     "login": "Login",
     "createAccount": "Konto erstellen",
+    "hideTocLong": "Inhaltsverzeichnis ausblenden",
     "language": "Sprache",
     "searchPlaceholder": "Suche…",
-    "showTOC": "Kursinhalt",
+    "showToc": "Inhalt",
+    "showTocLong": "Inhaltsverzeichnis",
     "tmpTitle": "Onlinebrückenkurs Mathematik"
   },
   "languages": {
@@ -61,7 +63,6 @@
     }
   },
   "sidebar": {
-    "close": "Menü ausblenden",
     "courseContent": "Kursinhalt"
   }
 }
