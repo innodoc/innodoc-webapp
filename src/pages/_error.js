@@ -22,23 +22,14 @@ class ErrorPage extends React.Component {
     const { t, statusCode } = this.props
     const title = t([`errorPage.${statusCode}.title`, 'errorPage.unspecific.title'])
     const msg = t([`errorPage.${statusCode}.msg`, 'errorPage.unspecific.msg'])
-    const messageProps = statusCode === 404
-      ? {
-        warning: true,
-        icon: 'exclamation circle',
-      }
-      : {
-        error: true,
-        icon: 'bug',
-      }
 
     return (
       <Layout>
         <Alert
           message={title}
           description={msg}
-          type="error"
-          {...messageProps}
+          type={statusCode === 404 ? 'info' : 'error'}
+          showIcon
         />
       </Layout>
     )
