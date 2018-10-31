@@ -1,0 +1,23 @@
+@import '../../style/antd-theme.sass'
+
+.content
+  margin: $padding-lg auto 2 * $padding-lg
+  padding: 0 $padding-sm
+  min-height: 600px
+  font-size: $font-size-lg
+
+  @media (max-width: $screen-sm-max)
+    &
+      width: 480px
+
+  @media (min-width: $screen-sm)
+    &
+      width: 574px
+
+  @media (min-width: $screen-md)
+    &
+      width: 756px
+
+  @media (min-width: $screen-lg)
+    &
+      width: 980px

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import AntLayout from 'antd/lib/layout'
 
+import css from './style.sass'
 import { childrenType, messageType } from '../../lib/propTypes'
 import { clearMessage } from '../../store/actions/ui'
 import uiSelectors from '../../store/selectors/ui'
@@ -28,7 +29,9 @@ const Layout = ({
         <AntLayout>
           {disableSidebar ? null : <Sidebar />}
           <AntLayout>
-            {children}
+            <div className={css.content}>
+              {children}
+            </div>
           </AntLayout>
         </AntLayout>
         <Footer />
