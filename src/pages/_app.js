@@ -5,12 +5,14 @@ import App, { Container } from 'next/app'
 import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 
-// Lato font
 import '../style/lato-font.sass'
 
 import 'antd/lib/style/index.less'
+import 'antd/lib/grid/style/index.less'
 import 'antd/lib/layout/style/index.less'
 import 'antd/lib/menu/style/index.less'
+import 'antd/lib/input/style/index.less'
+import 'antd/lib/button/style/index.less'
 
 import configureStore from '../store'
 import { setContentRoot, loadToc } from '../store/actions/content'

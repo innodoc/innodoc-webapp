@@ -143,14 +143,15 @@ const nextConfig = {
       systemvars: true,
     }))
 
-    config.plugins.push(new AntdScssThemePlugin(path.join(__dirname, './src/style/antd-theme.sass')))
+    config.plugins.push(new AntdScssThemePlugin(path.join(__dirname, 'src', 'style', 'antd-theme.sass')))
 
-    // web fonts
+    // images
     config.module.rules.push({
-      test: /\.woff2$/,
+      test: /\.(png|woff2)$/,
       use: {
-        loader: 'file-loader',
+        loader: 'url-loader',
         options: {
+          limit: 32 * 1024,
           publicPath: '../',
           outputPath: 'static/',
           name: '[name].[hash:8].[ext]',

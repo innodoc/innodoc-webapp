@@ -36,6 +36,7 @@
     "viewIndex": "View index"
   },
   "header": {
+    "about": "About",
     "aboutTheCourse": "About the course",
     "downloadPDF": "PDF",
     "downloadPDFTitle": "Download PDF",
@@ -46,7 +47,12 @@
     "language": "Language",
     "searchPlaceholder": "Search…",
     "showTOC": "Table of contents",
+    "tmpTitle": "Preparatory Mathematics Course",
     "preparatoryMathematicsCourse": "Preparatory Mathematics<1></1>Course"
+  },
+  "languages": {
+    "de": "Deutsch",
+    "en": "English"
   },
   "message": {
     "title": {

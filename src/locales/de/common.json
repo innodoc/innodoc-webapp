@@ -36,6 +36,7 @@
     "viewIndex": "Stichwortliste"
   },
   "header": {
+    "about": "Über",
     "aboutTheCourse": "Über den Kurs",
     "downloadPDF": "PDF",
     "downloadPDFTitle": "PDF herunterladen",
@@ -46,7 +47,11 @@
     "language": "Sprache",
     "searchPlaceholder": "Suche…",
     "showTOC": "Kursinhalt",
-    "preparatoryMathematicsCourse": "Onlinebrückenkurs<1></1>Mathematik"
+    "tmpTitle": "Onlinebrückenkurs Mathematik"
+  },
+  "languages": {
+    "de": "Deutsch",
+    "en": "English"
   },
   "message": {
     "title": {
