@@ -8,7 +8,7 @@ import { clearMessage } from '../../store/actions/ui'
 import uiSelectors from '../../store/selectors/ui'
 import Header from './Header'
 // import Sidebar from './Sidebar'
-// import Footer from './Footer'
+import Footer from './Footer'
 // import MessageModal from '../MessageModal'
 
 const Layout = ({
@@ -22,6 +22,7 @@ const Layout = ({
   return (
     <AntLayout>
       <Header />
+      <Footer />
     </AntLayout>
   )
 }
@@ -29,7 +30,6 @@ const Layout = ({
 // <Sidebar>
 //   {children}
 // </Sidebar>
-// <Footer />
 
 Layout.propTypes = {
   children: childrenType.isRequired,
