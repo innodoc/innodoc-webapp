@@ -24,6 +24,7 @@ const Header = ({
   sidebarVisible,
   disableSidebar,
 }) => {
+  // TODO: use home link (#54)
   const logo = (
     <Link href="/">
       <a className={css.logoLink}>
