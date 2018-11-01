@@ -1,55 +1,46 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Breadcrumb as SemanticBreadcrumb, Segment } from 'semantic-ui-react'
+import { withNamespaces } from 'react-i18next'
+import AntBreadcrumb from 'antd/lib/breadcrumb'
+import Icon from 'antd/lib/icon'
 
 import contentSelectors from '../../../store/selectors/content'
 import ContentFragment from '../ContentFragment'
 import SectionLink from '../../SectionLink'
 import css from './style.sass'
 
-const Breadcrumb = ({ sections }) => {
-  const breadcrumbSections = []
-    .concat(...sections.map(e => [-1, e])) // put dividers between sections
-    .slice(1)
-    .map((section, idx, arr) => {
-      const key = idx.toString()
-
-      if (section === -1) { // -1 means add a divider
-        return (<SemanticBreadcrumb.Divider key={key} icon="right angle" />)
-      }
-
-      const isLastSection = idx === arr.length - 1
-      let content = <ContentFragment content={section.title} />
-
-      if (!isLastSection) {
-        content = (
-          <SectionLink sectionPath={section.path}>
-            <a>
-              {content}
-            </a>
-          </SectionLink>
-        )
-      }
-
-      return (
-        <SemanticBreadcrumb.Section key={key} active={isLastSection}>
-          {content}
-        </SemanticBreadcrumb.Section>
-      )
-    })
-
+const Breadcrumb = ({ sections, t }) => {
+  // TODO: use home link (#54)
+  const breadcrumbItems = [(
+    <AntBreadcrumb.Item key="root">
+      <SectionLink sectionPath="">
+        <a title={t('content.home')}>
+          <Icon type="home" />
+        </a>
+      </SectionLink>
+    </AntBreadcrumb.Item>
+  )].concat(
+    sections.map(section => (
+      <AntBreadcrumb.Item key={section.path}>
+        <SectionLink sectionPath={section.path}>
+          <a>
+            <ContentFragment content={section.title} />
+          </a>
+        </SectionLink>
+      </AntBreadcrumb.Item>
+    ))
+  )
   return (
-    <Segment basic className={css.breadcrumbSegment}>
-      <SemanticBreadcrumb size="large">
-        {breadcrumbSections}
-      </SemanticBreadcrumb>
-    </Segment>
+    <AntBreadcrumb separator=">" className={css.breadcrumb}>
+      {breadcrumbItems}
+    </AntBreadcrumb>
   )
 }
 
 Breadcrumb.propTypes = {
   sections: PropTypes.arrayOf(PropTypes.any).isRequired,
+  t: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -57,4 +48,6 @@ const mapStateToProps = state => ({
 })
 
 export { Breadcrumb } // for testing
-export default connect(mapStateToProps)(Breadcrumb)
+export default connect(mapStateToProps)(
+  withNamespaces()(Breadcrumb)
+)
