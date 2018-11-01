@@ -10,14 +10,17 @@ import { tocTreeType } from '../../../lib/propTypes'
 import Toc from '../../Toc'
 import css from './style.sass'
 
+// TODO: sticky sidebar content?
+
 // width change on breakpoint
 const WIDTHS = [300, 400]
 
 class Sidebar extends React.Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
-    t: PropTypes.func.isRequired,
     toc: tocTreeType.isRequired,
+    currentSectionPath: PropTypes.string.isRequired,
+    t: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -37,6 +40,7 @@ class Sidebar extends React.Component {
     const {
       visible,
       toc,
+      currentSectionPath,
       t,
     } = this.props
     const { width } = this.state
@@ -53,8 +57,10 @@ class Sidebar extends React.Component {
         breakpoint="xl"
       >
         <div style={{ minWidth: width }}>
-          <div className={css.tocWrapper}>
-            <Toc toc={toc} header={t('sidebar.courseContent')} />
+          <div>
+            <div>
+              <Toc toc={toc} header={t('sidebar.courseContent')} currentSectionPath={currentSectionPath} />
+            </div>
           </div>
         </div>
       </AntLayout.Sider>
@@ -63,8 +69,9 @@ class Sidebar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  toc: contentSelectors.getToc(state),
   visible: uiSelectors.getSidebarVisible(state),
+  toc: contentSelectors.getToc(state),
+  currentSectionPath: contentSelectors.getCurrentSectionPath(state),
 })
 
 export { Sidebar } // for testing

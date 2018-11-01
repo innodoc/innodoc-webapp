@@ -51,6 +51,7 @@ class Content extends React.Component {
       t,
     } = this.props
 
+    // TODO: Show flat list of sub-sections, no tree needed
     const subToc = section.children && section.children.length && sectionLevel < 3
       ? (
         <Toc

@@ -7,6 +7,13 @@
   > div
     padding: $padding-lg 0
 
+    > div
+      height: 100%
+      border-right: $border-width-base $border-style-base $border-color-split
+
+      > div
+        padding: 0 $padding-md
+
   \:global(.ant-tree-node-content-wrapper)
     margin-bottom: 4px !important
     height: auto !important
@@ -17,7 +24,3 @@
   \:global(.ant-tree-switcher-icon)
     font-size: $font-size-lg !important
     vertical-align: 0 !important
-
-.tocWrapper
-  padding: 0 $padding-md
-  border-right: $border-width-base $border-style-base $border-color-split
