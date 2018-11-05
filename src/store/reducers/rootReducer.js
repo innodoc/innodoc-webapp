@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   exercises: exerciseReducer,
   ui: uiReducer,
   i18n: i18nReducer,
-  orm: createReducer(orm),
+  db: createReducer(orm),
 })
 
 export default rootReducer

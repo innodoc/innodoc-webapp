@@ -1,3 +1,5 @@
+import orm from './orm'
+
 const defaultInitialState = {
   ui: {
     sidebarVisible: false,
@@ -12,6 +14,7 @@ const defaultInitialState = {
   i18n: {
     language: null,
   },
+  db: orm.getDefaultState(),
 }
 
 // empty content (resides in state.content.data[lang])

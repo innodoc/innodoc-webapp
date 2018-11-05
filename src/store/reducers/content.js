@@ -1,5 +1,6 @@
 import { actionTypes as contentActionTypes } from '../actions/content'
-import defaultInitialState from '../defaultInitialState'
+import { actionTypes as i18nActionTypes } from '../actions/i18n'
+import defaultInitialState, { defaultContentData } from '../defaultInitialState'
 
 function content(state = defaultInitialState.content, action) {
   switch (action.type) {
@@ -49,19 +50,17 @@ function content(state = defaultInitialState.content, action) {
         contentRoot: action.contentRoot,
       }
 
-      // This is probably not necessary anymore since we are using redux-orm now
-      //
       // initialize language data if necessary
-      // case i18nActionTypes.CHANGE_LANGUAGE:
-      //   return {
-      //     ...state,
-      //     data: {
-      //       ...state.data,
-      //       [action.language]: state.data[action.language]
-      //         ? state.data[action.language]
-      //         : defaultContentData,
-      //     },
-      //   }
+    case i18nActionTypes.CHANGE_LANGUAGE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [action.language]: state.data[action.language]
+            ? state.data[action.language]
+            : defaultContentData,
+        },
+      }
 
     default:
       return state

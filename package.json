@@ -63,6 +63,7 @@
     "redux": "^4.0.1",
     "redux-orm": "^0.12.1",
     "redux-saga": "^0.16.2",
+    "reselect": "^4.0.0",
     "semantic-ui-react": "^0.83.0"
   },
   "devDependencies": {

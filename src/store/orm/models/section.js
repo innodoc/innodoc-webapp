@@ -1,6 +1,6 @@
 import { attr, fk, Model } from 'redux-orm'
 
-import { actionTypes } from '../actions/content'
+import { actionTypes } from '../../actions/content'
 
 class Section extends Model {
   static get modelName() {
@@ -10,24 +10,28 @@ class Section extends Model {
   static get fields() {
     return {
       id: attr(),
+      ord: attr(),
       title: attr(),
       content: attr(),
-      parent_id: fk('Section', 'children'),
+      parentId: fk('Section', 'children'),
     }
   }
 
-  static parseTOC(lang, path, node, sectionModel) {
+  static parseTOC(lang, path, ord, node, sectionModel) {
     const currentPath = [...path, node.id]
     if (node.children !== undefined) {
-      node.children.forEach(child => this.parseTOC(lang, currentPath, child, sectionModel))
+      node.children.forEach(
+        (child, idx) => this.parseTOC(lang, currentPath, [...ord, idx], child, sectionModel)
+      )
     }
 
     sectionModel.upsert({
       id: currentPath.join('/'),
+      ord: ord.join(''),
       title: {
         [lang]: node.title,
       },
-      parent_id: path.join('/') === '' ? null : path.join('/'),
+      parentId: path.join('/') === '' ? null : path.join('/'),
     })
   }
 
@@ -35,7 +39,7 @@ class Section extends Model {
     switch (action.type) {
       case actionTypes.LOAD_TOC_SUCCESS:
         action.data.content.forEach(
-          node => this.parseTOC(action.data.language, [], node, sectionModel))
+          (node, idx) => this.parseTOC(action.data.language, [], [idx], node, sectionModel))
         break
       case actionTypes.LOAD_SECTION_SUCCESS:
         sectionModel.upsert({
