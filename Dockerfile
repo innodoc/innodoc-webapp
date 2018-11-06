@@ -4,7 +4,11 @@ LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 RUN set -xe && \
     apk update && \
     apk upgrade && \
-    apk add tzdata && \
+    apk add \
+      tzdata \
+      python \
+      make \
+      g++ && \
     cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime && \
     apk del tzdata && \
     rm -rf /var/cache/apk/*
