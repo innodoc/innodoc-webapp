@@ -6,7 +6,7 @@ import { withNamespaces } from 'react-i18next'
 
 import uiSelectors from '../../../store/selectors/ui'
 import contentSelectors from '../../../store/selectors/content'
-import { tocTreeType } from '../../../lib/propTypes'
+
 import Toc from '../../Toc'
 import css from './style.sass'
 
@@ -18,7 +18,6 @@ const WIDTHS = [300, 400]
 class Sidebar extends React.Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
-    toc: tocTreeType.isRequired,
     currentSectionPath: PropTypes.string.isRequired,
     t: PropTypes.func.isRequired,
   }
@@ -39,7 +38,6 @@ class Sidebar extends React.Component {
   render() {
     const {
       visible,
-      toc,
       currentSectionPath,
       t,
     } = this.props
@@ -59,7 +57,10 @@ class Sidebar extends React.Component {
         <div style={{ minWidth: width }}>
           <div>
             <div>
-              <Toc toc={toc} header={t('sidebar.courseContent')} currentSectionPath={currentSectionPath} />
+              <Toc
+                header={t('sidebar.courseContent')}
+                currentSectionPath={currentSectionPath}
+              />
             </div>
           </div>
         </div>
@@ -70,7 +71,6 @@ class Sidebar extends React.Component {
 
 const mapStateToProps = state => ({
   visible: uiSelectors.getSidebarVisible(state),
-  toc: contentSelectors.getToc(state),
   currentSectionPath: contentSelectors.getCurrentSectionPath(state),
 })
 

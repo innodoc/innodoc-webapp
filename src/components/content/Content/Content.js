@@ -52,16 +52,17 @@ class Content extends React.Component {
     } = this.props
 
     // TODO: Show flat list of sub-sections, no tree needed
-    const subToc = section.children && section.children.length && sectionLevel < 3
-      ? (
-        <Toc
-          toc={section.children}
-          header={t('content.subsections')}
-          sectionPrefix={`${section.id}`}
-          defaultExpandAll
-          disableExpand
-        />
-      ) : null
+    const subToc = null
+    // const subToc = section.children && section.children.length && sectionLevel < 3
+    //   ? (
+    //     <Toc
+    //       toc={section.children}
+    //       header={t('content.subsections')}
+    //       sectionPrefix={`${section.id}`}
+    //       defaultExpandAll
+    //       disableExpand
+    //     />
+    //   ) : null
 
     return (
       <React.Fragment>
