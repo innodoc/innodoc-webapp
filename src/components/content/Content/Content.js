@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withNamespaces } from 'react-i18next'
 
 import contentSelectors from '../../../store/selectors/content'
 import withLoadingPlaceholder from '../../hoc/withLoadingPlaceholder'
@@ -10,7 +9,6 @@ import ContentFragment from '../ContentFragment'
 import Breadcrumb from '../Breadcrumb'
 import SectionNav from '../SectionNav'
 import Placeholder from './Placeholder'
-import Toc from '../../Toc'
 import { sectionType } from '../../../lib/propTypes'
 import css from './style.sass'
 
@@ -18,16 +16,13 @@ class Content extends React.Component {
   static propTypes = {
     content: PropTypes.arrayOf(PropTypes.object),
     section: sectionType,
-    sectionLevel: PropTypes.number,
     mathJaxContentRef: PropTypes.objectOf(PropTypes.any).isRequired,
     typesetMathJax: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     content: [],
     section: { id: '', title: [] },
-    sectionLevel: null,
   }
 
   componentDidMount() {
@@ -46,22 +41,10 @@ class Content extends React.Component {
     const {
       section,
       content: sectionContent,
-      sectionLevel,
       mathJaxContentRef,
-      t,
     } = this.props
 
     // TODO: Show flat list of sub-sections, no tree needed
-    const subToc = section.children && section.children.length && sectionLevel < 3
-      ? (
-        <Toc
-          toc={section.children}
-          header={t('content.subsections')}
-          sectionPrefix={`${section.id}`}
-          defaultExpandAll
-          disableExpand
-        />
-      ) : null
 
     return (
       <React.Fragment>
@@ -70,7 +53,6 @@ class Content extends React.Component {
         <h1>
           <ContentFragment content={section.title} />
         </h1>
-        {subToc}
         <div className={css.content} ref={mathJaxContentRef}>
           <ContentFragment content={sectionContent} />
         </div>
@@ -89,7 +71,6 @@ const mapStateToProps = (state) => {
         loading: false,
         section,
         content: contentSelectors.getSectionContent(state, path),
-        sectionLevel: contentSelectors.getSectionLevel(state, path),
       }
     }
   }
@@ -99,10 +80,8 @@ const mapStateToProps = (state) => {
 export { Content, mapStateToProps } // for testing
 export default connect(mapStateToProps)(
   withMathJax(
-    withNamespaces()(
-      withLoadingPlaceholder(Placeholder)(
-        Content
-      )
+    withLoadingPlaceholder(Placeholder)(
+      Content
     )
   )
 )
