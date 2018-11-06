@@ -1,10 +1,9 @@
-import orm from '../../../orm'
-
+import orm from '..'
 import selectors from './section'
 
 // Mock other selectors
-jest.mock('../../i18n.js', () => ({ getLanguage: () => 'en' }))
-jest.mock('../../content.js', () => ({ getCurrentSectionPath: () => 'test/child1' }))
+jest.mock('../../selectors/i18n.js', () => ({ getLanguage: () => 'en' }))
+jest.mock('../../selectors/content.js', () => ({ getCurrentSectionPath: () => 'test/child1' }))
 
 // Create/Mock state
 const dummyState = () => {
@@ -92,5 +91,12 @@ describe('section selectors', () => {
       prev: state.db.Section.itemsById.test,
       next: state.db.Section.itemsById['test/child2'],
     })
+  })
+
+  test('getToc', () => {
+    const toc = selectors.getToc(state)
+    expect(toc[0].id).toEqual('test')
+    expect(toc[0].children[0].id).toEqual('test/child1')
+    expect(toc[0].children[1].id).toEqual('test/child2')
   })
 })

@@ -1,10 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
 import Tree from 'antd/lib/tree'
 import Router from 'next/router'
 
 import css from './style.sass'
+import i18nSelectors from '../../store/selectors/i18n'
+import contentSelectors from '../../store/orm/selectors/section'
 import { tocTreeType } from '../../lib/propTypes'
 import { getSectionHref } from '../../lib/util'
 import ContentFragment from '../content/ContentFragment'
@@ -15,8 +18,8 @@ class Toc extends React.Component {
   static propTypes = {
     toc: tocTreeType.isRequired,
     currentSectionPath: PropTypes.string,
+    currentLanguage: PropTypes.string.isRequired,
     header: PropTypes.string,
-    sectionPrefix: PropTypes.string,
     defaultExpandAll: PropTypes.bool,
     disableExpand: PropTypes.bool,
   }
@@ -25,7 +28,6 @@ class Toc extends React.Component {
     ...React.Component.defaultProps,
     currentSectionPath: null,
     header: null,
-    sectionPrefix: '',
     defaultExpandAll: false,
     disableExpand: false,
   }
@@ -39,23 +41,21 @@ class Toc extends React.Component {
     const {
       toc,
       currentSectionPath,
+      currentLanguage,
       header,
-      sectionPrefix,
       defaultExpandAll,
       disableExpand,
     } = this.props
 
-    const renderTreeNodes = (section, parentPrefix) => {
+    const renderTreeNodes = (section) => {
       const {
         title,
-        id,
+        id: sectionPath,
         children = [],
       } = section
-      const prefix = parentPrefix ? `${parentPrefix}/` : ''
-      const sectionPath = `${prefix}${id}`
       return (
         <Tree.TreeNode
-          title={<ContentFragment content={title} />}
+          title={<ContentFragment content={title[currentLanguage]} />}
           key={sectionPath}
           className={classNames({ active: sectionPath === currentSectionPath })}
         >
@@ -64,12 +64,9 @@ class Toc extends React.Component {
       )
     }
 
-    const expandProps = {}
-    if (defaultExpandAll) {
-      expandProps.defaultExpandAll = true
-    } else {
-      expandProps.defaultExpandedKeys = [currentSectionPath]
-    }
+    const expandProps = defaultExpandAll
+      ? { defaultExpandAll: true }
+      : { defaultExpandedKeys: [currentSectionPath] }
 
     return (
       <div className={css.tocWrapper}>
@@ -81,11 +78,17 @@ class Toc extends React.Component {
           className={classNames({ [css.disableExpand]: disableExpand })}
           {...expandProps}
         >
-          {toc.map(s => renderTreeNodes(s, sectionPrefix))}
+          {toc.map(s => renderTreeNodes(s))}
         </Tree>
       </div>
     )
   }
 }
 
-export default Toc
+const mapStateToProps = state => ({
+  toc: contentSelectors.getToc(state),
+  currentLanguage: i18nSelectors.getLanguage(state),
+})
+
+export { Toc } // for testing
+export default connect(mapStateToProps)(Toc)

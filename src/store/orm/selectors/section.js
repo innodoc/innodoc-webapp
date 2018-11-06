@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect'
 
-import contentSelectors from '../../content'
-import i18nSelectors from '../../i18n'
-import ormSelectors from '../orm'
+import contentSelectors from '../../selectors/content'
+import i18nSelectors from '../../selectors/i18n'
+import ormSelectors from './orm'
 
 // Simply returns the state as is
 const getState = state => state
@@ -100,7 +100,23 @@ const getNavSections = (state, id) => {
   return { prev, next }
 }
 
-// NOTE: There is currently not equivalent for getToc yet
+// Create tree structure for TOC
+const getToc = (state) => {
+  const sections = getSectionTable(state).items
+  const getSectionLevel = (level, parentOrd = null) => sections
+    .map(item => getSection(state, item))
+    .filter(section => (
+      // by section level
+      section.ord.length === level + 1
+      // by parent
+      && (level < 1 || section.ord[level - 1] === parentOrd)
+    ))
+    .map(section => ({
+      ...section,
+      children: getSectionLevel(level + 1, section.ord[level]),
+    }))
+  return getSectionLevel(0)
+}
 
 export default {
   getSectionTable,
@@ -109,4 +125,5 @@ export default {
   getSectionContent,
   getBreadcrumbSections,
   getNavSections,
+  getToc,
 }
