@@ -5,7 +5,7 @@ import { withNamespaces } from 'react-i18next'
 import AntBreadcrumb from 'antd/lib/breadcrumb'
 import Icon from 'antd/lib/icon'
 
-import contentSelectors from '../../../store/selectors/content'
+import sectionSelectors from '../../../store/orm/selectors/section'
 import ContentFragment from '../ContentFragment'
 import SectionLink from '../../SectionLink'
 import css from './style.sass'
@@ -22,8 +22,8 @@ const Breadcrumb = ({ sections, t }) => {
     </AntBreadcrumb.Item>
   )].concat(
     sections.map(section => (
-      <AntBreadcrumb.Item key={section.path}>
-        <SectionLink sectionPath={section.path}>
+      <AntBreadcrumb.Item key={section.id}>
+        <SectionLink sectionPath={section.id}>
           <a>
             <ContentFragment content={section.title} />
           </a>
@@ -44,7 +44,7 @@ Breadcrumb.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  sections: contentSelectors.getBreadcrumbSections(state),
+  sections: sectionSelectors.getBreadcrumbSections(state),
 })
 
 export { Breadcrumb } // for testing
