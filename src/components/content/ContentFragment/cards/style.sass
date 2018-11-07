@@ -12,8 +12,14 @@
     > :global(.ant-card-head)
       background-color: $color-head
 
+    > :global(.ant-card-body)
+
+      p:last-child
+        margin-bottom: 0
+
 @include card(example, $orange-1, $orange-2)
 @include card(exercise, $gold-1, $gold-2)
 @include card(exercises, $volcano-1, $volcano-2)
 @include card(info, $blue-1, $blue-2)
 @include card(test, $yellow-1, $yellow-2)
+@include card(inputHint, $green-1, $green-2)

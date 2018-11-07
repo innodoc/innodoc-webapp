@@ -35,6 +35,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@babel/node": "^7.0.0",
+    "@svgr/webpack": "^4.0.0",
     "@zeit/next-bundle-analyzer": "^0.1.2",
     "@zeit/next-css": "^1.0.1",
     "antd": "^3.10.3",
