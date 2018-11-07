@@ -9,7 +9,7 @@ const TestCard = ({ t, content }) => (
   <Card
     title={t('content.test')}
     cardType="test"
-    iconType="edit"
+    icon="edit"
     content={content}
   />
 )

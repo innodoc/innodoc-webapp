@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { contentType } from '../../../../lib/propTypes'
 import ContentFragment from '..'
-import InputHint from '../messages/InputHint'
+import InputHint from '../cards/InputHint'
 import css from './debug-style.sass'
 
 const IndexSpan = ({ indexConcept, content }) => (
