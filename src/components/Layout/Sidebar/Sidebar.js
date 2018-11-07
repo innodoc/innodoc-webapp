@@ -57,8 +57,7 @@ class Sidebar extends React.Component {
                 title={t('sidebar.collapseButton')}
                 onClick={dispatchToggleSidebar}
                 className={css.collapseButton}
-                icon="close"
-                shape="circle"
+                icon="double-left"
                 size="small"
               />
               <Toc header={t('sidebar.courseContent')} />
