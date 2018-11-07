@@ -1,22 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card } from 'semantic-ui-react'
 import { withNamespaces } from 'react-i18next'
 
 import { contentType } from '../../../../lib/propTypes'
-import ContentFragment from '..'
+import Card from './Card'
 
 const ExercisesCard = ({ t, content }) => (
-  <Card className="exercises" color="orange" fluid>
-    <Card.Content>
-      <Card.Header>
-        {t('content.exercises')}
-      </Card.Header>
-      <Card.Description color="orange">
-        <ContentFragment content={content} />
-      </Card.Description>
-    </Card.Content>
-  </Card>
+  <Card
+    title={t('content.exercises')}
+    cardType="exercises"
+    iconType="copy"
+    content={content}
+  />
 )
 
 ExercisesCard.propTypes = {
