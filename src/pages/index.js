@@ -9,9 +9,9 @@ import Toc from '../components/Toc'
 const IndexPage = () => (
   <Layout disableSidebar>
     <Toc
-      header="TODO: fill in course title"
       defaultExpandAll
       disableExpand
+      showActive={false}
     />
   </Layout>
 )

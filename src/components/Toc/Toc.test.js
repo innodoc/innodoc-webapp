@@ -28,6 +28,7 @@ describe('<Toc />', () => {
     )
     const menu = wrapper.find(Menu)
     expect(menu).toExist()
+    // TODO
     // const tocItems = menu.find(TocItem)
     // expect(tocItems).toHaveLength(2)
     // const firstTocItem = tocItems.at(0)
@@ -49,6 +50,7 @@ describe('<Toc />', () => {
   })
 
   it('renders with section prefix', () => {
+    // TODO
     // const wrapper = shallow(
     //   <Toc toc={toc} sectionPrefix="section-prefix/" />
     // )

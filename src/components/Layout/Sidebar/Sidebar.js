@@ -5,8 +5,6 @@ import AntLayout from 'antd/lib/layout'
 import { withNamespaces } from 'react-i18next'
 
 import uiSelectors from '../../../store/selectors/ui'
-import contentSelectors from '../../../store/selectors/content'
-
 import Toc from '../../Toc'
 import css from './style.sass'
 
@@ -18,7 +16,6 @@ const WIDTHS = [300, 400]
 class Sidebar extends React.Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
-    currentSectionPath: PropTypes.string.isRequired,
     t: PropTypes.func.isRequired,
   }
 
@@ -36,11 +33,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const {
-      visible,
-      currentSectionPath,
-      t,
-    } = this.props
+    const { visible, t } = this.props
     const { width } = this.state
 
     return (
@@ -57,10 +50,7 @@ class Sidebar extends React.Component {
         <div style={{ minWidth: width }}>
           <div>
             <div>
-              <Toc
-                header={t('sidebar.courseContent')}
-                currentSectionPath={currentSectionPath}
-              />
+              <Toc header={t('sidebar.courseContent')} />
             </div>
           </div>
         </div>
@@ -71,7 +61,6 @@ class Sidebar extends React.Component {
 
 const mapStateToProps = state => ({
   visible: uiSelectors.getSidebarVisible(state),
-  currentSectionPath: contentSelectors.getCurrentSectionPath(state),
 })
 
 export { Sidebar } // for testing

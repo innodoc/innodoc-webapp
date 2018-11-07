@@ -7,7 +7,8 @@ import Router from 'next/router'
 
 import css from './style.sass'
 import i18nSelectors from '../../store/selectors/i18n'
-import contentSelectors from '../../store/orm/selectors/section'
+import contentSelectors from '../../store/selectors/content'
+import sectionSelectors from '../../store/orm/selectors/section'
 import { tocTreeType } from '../../lib/propTypes'
 import { getSectionHref } from '../../lib/util'
 import ContentFragment from '../content/ContentFragment'
@@ -22,6 +23,7 @@ class Toc extends React.Component {
     header: PropTypes.string,
     defaultExpandAll: PropTypes.bool,
     disableExpand: PropTypes.bool,
+    showActive: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -30,6 +32,7 @@ class Toc extends React.Component {
     header: null,
     defaultExpandAll: false,
     disableExpand: false,
+    showActive: true,
   }
 
   static onSelect(sectionPath) {
@@ -45,6 +48,7 @@ class Toc extends React.Component {
       header,
       defaultExpandAll,
       disableExpand,
+      showActive,
     } = this.props
 
     const renderTreeNodes = (section) => {
@@ -53,11 +57,16 @@ class Toc extends React.Component {
         id: sectionPath,
         children = [],
       } = section
+
+      const className = classNames({
+        active: showActive && sectionPath === currentSectionPath,
+      })
+
       return (
         <Tree.TreeNode
           title={<ContentFragment content={title[currentLanguage]} />}
           key={sectionPath}
-          className={classNames({ active: sectionPath === currentSectionPath })}
+          className={className}
         >
           {children.map(s => renderTreeNodes(s, sectionPath))}
         </Tree.TreeNode>
@@ -71,7 +80,7 @@ class Toc extends React.Component {
     return (
       <div className={css.tocWrapper}>
         <h2>
-          {header}
+          {header || 'TODO: fill in course title'}
         </h2>
         <Tree
           onSelect={Toc.onSelect}
@@ -86,8 +95,9 @@ class Toc extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  toc: contentSelectors.getToc(state),
+  toc: sectionSelectors.getToc(state),
   currentLanguage: i18nSelectors.getLanguage(state),
+  currentSectionPath: contentSelectors.getCurrentSectionPath(state),
 })
 
 export { Toc } // for testing
