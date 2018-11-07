@@ -1,9 +1,11 @@
-import orm from '..'
+import orm from '../orm'
 import selectors from './section'
 
 // Mock other selectors
-jest.mock('../../selectors/i18n.js', () => ({ getLanguage: () => 'en' }))
-jest.mock('../../selectors/content.js', () => ({ getCurrentSectionPath: () => 'test/child1' }))
+jest.mock('./app.js', () => ({
+  getCurrentSectionId: () => 'test/child1',
+  getLanguage: () => 'en',
+}))
 
 // Create/Mock state
 const dummyState = () => {
@@ -13,7 +15,7 @@ const dummyState = () => {
 
   Section.create({
     id: 'test',
-    ord: '0',
+    ord: [0],
     title: {
       en: 'test title',
     },
@@ -25,7 +27,7 @@ const dummyState = () => {
 
   Section.create({
     id: 'test/child1',
-    ord: '00',
+    ord: [0, 0],
     title: {
       en: 'test child1 title',
     },
@@ -37,7 +39,7 @@ const dummyState = () => {
 
   Section.create({
     id: 'test/child2',
-    ord: '01',
+    ord: [0, 1],
     title: {
       en: 'test child2 title',
     },
@@ -87,6 +89,14 @@ describe('section selectors', () => {
   })
 
   test('getNavSections', () => {
+    expect(selectors.getNavSections(state, 'test')).toEqual({
+      prev: null,
+      next: state.db.Section.itemsById['test/child1'],
+    })
+    expect(selectors.getNavSections(state, 'test/child2')).toEqual({
+      prev: state.db.Section.itemsById['test/child1'],
+      next: null,
+    })
     expect(selectors.getNavSections(state, 'test/child1')).toEqual({
       prev: state.db.Section.itemsById.test,
       next: state.db.Section.itemsById['test/child2'],

@@ -12,6 +12,7 @@ let mockyGetCurrentSectionPath
 let mockyGetSection
 let mockyGetSectionContent
 let mockyGetSectionLevel
+// TODO: Use new selectors instead
 jest.mock('../../../store/selectors/content.js', () => ({
   getCurrentSectionPath: () => mockyGetCurrentSectionPath(),
   getSection: () => mockyGetSection(),
