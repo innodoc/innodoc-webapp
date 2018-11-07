@@ -9,7 +9,7 @@ const tocTreeType = PropTypes.arrayOf(PropTypes.object)
 const sectionType = PropTypes.shape({
   id: PropTypes.string,
   path: PropTypes.string,
-  title: contentType.isRequired,
+  title: PropTypes.object,
   children: tocTreeType,
 })
 const messageType = PropTypes.shape({
