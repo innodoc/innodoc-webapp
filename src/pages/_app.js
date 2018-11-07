@@ -20,6 +20,7 @@ import 'antd/lib/breadcrumb/style/index.less'
 import 'antd/lib/skeleton/style/index.less'
 import 'antd/lib/list/style/index.less'
 import 'antd/lib/table/style/index.less'
+import 'antd/lib/card/style/index.less'
 
 import configureStore from '../store'
 import { setContentRoot, loadToc } from '../store/actions/content'
