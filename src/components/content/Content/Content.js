@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import contentSelectors from '../../../store/selectors/content'
+import sectionSelectors from '../../../store/orm/selectors/section'
+import i18nSelectors from '../../../store/selectors/i18n'
 import withLoadingPlaceholder from '../../hoc/withLoadingPlaceholder'
 import withMathJax from '../../hoc/withMathJax'
 import ContentFragment from '../ContentFragment'
@@ -14,14 +16,13 @@ import css from './style.sass'
 
 class Content extends React.Component {
   static propTypes = {
-    content: PropTypes.arrayOf(PropTypes.object),
     section: sectionType,
+    currentLanguage: PropTypes.string.isRequired,
     mathJaxContentRef: PropTypes.objectOf(PropTypes.any).isRequired,
     typesetMathJax: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
-    content: [],
     section: { id: '', title: [] },
   }
 
@@ -31,8 +32,8 @@ class Content extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { content, typesetMathJax } = this.props
-    if (content !== prevProps.content) {
+    const { section, typesetMathJax } = this.props
+    if (section !== prevProps.section) {
       typesetMathJax()
     }
   }
@@ -40,7 +41,7 @@ class Content extends React.Component {
   render() {
     const {
       section,
-      content: sectionContent,
+      currentLanguage,
       mathJaxContentRef,
     } = this.props
 
@@ -51,10 +52,10 @@ class Content extends React.Component {
         <SectionNav />
         <Breadcrumb />
         <h1>
-          <ContentFragment content={section.title} />
+          <ContentFragment content={section.title[currentLanguage]} />
         </h1>
         <div className={css.content} ref={mathJaxContentRef}>
-          <ContentFragment content={sectionContent} />
+          <ContentFragment content={section.content[currentLanguage]} />
         </div>
       </React.Fragment>
     )
@@ -63,14 +64,14 @@ class Content extends React.Component {
 
 const mapStateToProps = (state) => {
   let ret = { loading: true }
-  const path = contentSelectors.getCurrentSectionPath(state)
-  if (path) {
-    const section = contentSelectors.getSection(state, path)
+  const id = contentSelectors.getCurrentSectionPath(state)
+  if (id) {
+    const section = sectionSelectors.getSection(state, id)
     if (section) {
       ret = {
         loading: false,
         section,
-        content: contentSelectors.getSectionContent(state, path),
+        currentLanguage: i18nSelectors.getLanguage(state),
       }
     }
   }
