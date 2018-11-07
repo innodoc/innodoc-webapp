@@ -10,17 +10,22 @@ import ContentFragment from '..'
 
 const Card = ({
   title,
-  iconType,
+  icon,
   cardType,
   content,
 }) => {
-  const icon = iconType
-    ? <Icon type={iconType} className={css.icon} />
-    : null
+  let iconElem = null
+  if (icon) {
+    if (typeof icon === 'string') {
+      iconElem = <Icon type={icon} className={css.icon} />
+    } else {
+      iconElem = <Icon component={icon} className={css.icon} />
+    }
+  }
 
   const titleFragment = (
     <React.Fragment>
-      {icon}
+      {iconElem}
       {title}
     </React.Fragment>
   )
@@ -37,12 +42,12 @@ const Card = ({
 Card.propTypes = {
   title: PropTypes.string.isRequired,
   cardType: PropTypes.string.isRequired,
-  iconType: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   content: contentType.isRequired,
 }
 
 Card.defaultProps = {
-  iconType: null,
+  icon: null,
 }
 
 export default Card

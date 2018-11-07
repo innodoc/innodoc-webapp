@@ -8,7 +8,7 @@ module.exports = {
     '!src/.next/**',
   ],
   moduleNameMapper: {
-    '\\.sass$': 'identity-obj-proxy',
+    '\\.(sass|svg)$': 'identity-obj-proxy',
   },
   verbose: true,
 }

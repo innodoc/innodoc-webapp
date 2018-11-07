@@ -145,7 +145,7 @@ const nextConfig = {
 
     config.plugins.push(new AntdScssThemePlugin(path.join(__dirname, 'src', 'style', 'antd-theme.sass')))
 
-    // images
+    // images, fonts
     config.module.rules.push({
       test: /\.(png|woff2)$/,
       use: {
@@ -157,6 +157,23 @@ const nextConfig = {
           name: '[name].[hash:8].[ext]',
         },
       },
+    })
+
+    // svg icons
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: 'babel-loader',
+        },
+        {
+          loader: '@svgr/webpack',
+          options: {
+            babel: false,
+            icon: true,
+          },
+        },
+      ],
     })
 
     // debug print webpack config
