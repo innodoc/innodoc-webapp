@@ -3,16 +3,13 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import Tree from 'antd/lib/tree'
-import Router from 'next/router'
 
 import css from './style.sass'
 import appSelectors from '../../store/selectors/app'
 import sectionSelectors from '../../store/selectors/section'
 import { tocTreeType } from '../../lib/propTypes'
-import { getSectionHref } from '../../lib/util'
-import ContentFragment from '../content/ContentFragment'
-
-// TODO: auto-expand sub-tree for active sections
+import { astToString } from '../../lib/util'
+import SectionLink from '../SectionLink'
 
 class Toc extends React.Component {
   static propTypes = {
@@ -20,61 +17,106 @@ class Toc extends React.Component {
     currentSectionPath: PropTypes.string,
     currentLanguage: PropTypes.string.isRequired,
     header: PropTypes.string,
-    defaultExpandAll: PropTypes.bool,
-    disableExpand: PropTypes.bool,
-    showActive: PropTypes.bool,
+    expandAll: PropTypes.bool,
   }
 
   static defaultProps = {
     ...React.Component.defaultProps,
     currentSectionPath: null,
     header: null,
-    defaultExpandAll: false,
-    disableExpand: false,
-    showActive: true,
+    expandAll: false,
   }
 
-  static onSelect(sectionPath) {
-    const { href, as } = getSectionHref(sectionPath)
-    Router.push(href, as)
+  constructor(props) {
+    super(props)
+    this.state = {
+      expandedKeys: props.currentSectionPath ? [props.currentSectionPath] : [],
+    }
+    this.onExpand = this.onExpand.bind(this)
+  }
+
+  componentDidUpdate({ currentSectionPath: prevSectionPath }, { expandedKeys }) {
+    const { currentSectionPath, expandAll } = this.props
+    if (!expandAll && currentSectionPath && currentSectionPath !== prevSectionPath) {
+      this.expandCurrentSection(expandedKeys)
+    }
+  }
+
+  onExpand(keys) {
+    this.setState(prevState => ({
+      ...prevState,
+      expandedKeys: keys,
+    }))
+  }
+
+  // auto-expand tree nodes when section changes
+  expandCurrentSection(expandedKeys) {
+    const { currentSectionPath } = this.props
+
+    // current key and all parent keys
+    const allKeys = currentSectionPath
+      .split('/')
+      .reduce((acc, id, idx) => [
+        ...acc,
+        idx > 0 ? `${acc[idx - 1]}/${id}` : id,
+      ], [])
+
+    // add all keys
+    let newExpandedKeys = [...expandedKeys]
+    allKeys.forEach((key) => {
+      if (!expandedKeys.includes(key)) {
+        newExpandedKeys = [...newExpandedKeys, key]
+      }
+    })
+    this.setState(prevState => ({
+      ...prevState,
+      expandedKeys: newExpandedKeys,
+    }))
+  }
+
+  renderTreeNodes(section) {
+    const { currentSectionPath, currentLanguage } = this.props
+    const {
+      title,
+      id: sectionPath,
+      children = [],
+    } = section
+
+    const className = classNames({
+      active: sectionPath === currentSectionPath,
+    })
+
+    const sectionNode = (
+      <SectionLink sectionPath={sectionPath}>
+        <a>
+          {astToString(title[currentLanguage])}
+        </a>
+      </SectionLink>
+    )
+
+    return (
+      <Tree.TreeNode
+        title={sectionNode}
+        key={sectionPath}
+        className={className}
+      >
+        {children.map(s => this.renderTreeNodes(s))}
+      </Tree.TreeNode>
+    )
   }
 
   render() {
     const {
       toc,
-      currentSectionPath,
-      currentLanguage,
       header,
-      defaultExpandAll,
-      disableExpand,
-      showActive,
+      expandAll,
     } = this.props
 
-    const renderTreeNodes = (section) => {
-      const {
-        title,
-        id: sectionPath,
-        children = [],
-      } = section
+    const { expandedKeys } = this.state
 
-      const className = classNames({
-        active: showActive && sectionPath === currentSectionPath,
-      })
-
-      return (
-        <Tree.TreeNode
-          title={<ContentFragment content={title[currentLanguage]} />}
-          key={sectionPath}
-          className={className}
-        >
-          {children.map(s => renderTreeNodes(s, sectionPath))}
-        </Tree.TreeNode>
-      )
-    }
-
-    const expandProps = defaultExpandAll
+    const expandProps = expandAll
       ? { defaultExpandAll: true }
-      : { defaultExpandedKeys: [currentSectionPath] }
+      : { expandedKeys }
 
     return (
       <div className={css.tocWrapper}>
@@ -82,11 +124,11 @@ class Toc extends React.Component {
           {header || 'TODO: fill in course title'}
         </h2>
         <Tree
-          onSelect={Toc.onSelect}
-          className={classNames({ [css.disableExpand]: disableExpand })}
+          className={classNames({ [css.disableExpand]: expandAll })}
+          onExpand={this.onExpand}
           {...expandProps}
         >
-          {toc.map(s => renderTreeNodes(s))}
+          {toc.map(s => this.renderTreeNodes(s))}
         </Tree>
       </div>
     )

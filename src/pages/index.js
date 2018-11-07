@@ -8,11 +8,7 @@ import Toc from '../components/Toc'
 
 const IndexPage = () => (
   <Layout disableSidebar>
-    <Toc
-      defaultExpandAll
-      disableExpand
-      showActive={false}
-    />
+    <Toc expandAll />
   </Layout>
 )
 
