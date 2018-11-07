@@ -5,7 +5,7 @@ import { withNamespaces } from 'react-i18next'
 import AntBreadcrumb from 'antd/lib/breadcrumb'
 import Icon from 'antd/lib/icon'
 
-import sectionSelectors from '../../../store/orm/selectors/section'
+import sectionSelectors from '../../../store/selectors/section'
 import ContentFragment from '../ContentFragment'
 import SectionLink from '../../SectionLink'
 import css from './style.sass'

@@ -1,8 +1,8 @@
 import { attr, fk, Model } from 'redux-orm'
 
-import { actionTypes } from '../../actions/content'
+import { actionTypes } from '../actions/content'
 
-class Section extends Model {
+export default class Section extends Model {
   static get modelName() {
     return 'Section'
   }
@@ -38,8 +38,11 @@ class Section extends Model {
   static reducer(action, sectionModel) {
     switch (action.type) {
       case actionTypes.LOAD_TOC_SUCCESS:
-        action.data.content.forEach(
-          (node, idx) => this.parseTOC(action.data.language, [], [idx], node, sectionModel))
+        // Don't parse already parsed content
+        if (!action.data.parsed) {
+          action.data.content.forEach(
+            (node, idx) => this.parseTOC(action.data.language, [], [idx], node, sectionModel))
+        }
         break
       case actionTypes.LOAD_SECTION_SUCCESS:
         sectionModel.upsert({
@@ -54,5 +57,3 @@ class Section extends Model {
     }
   }
 }
-
-export default Section

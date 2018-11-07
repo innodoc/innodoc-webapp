@@ -1,27 +1,22 @@
 import orm from './orm'
 
+const createEmptyState = () => {
+  const state = orm.getEmptyState()
+  const session = orm.mutableSession(state)
+  const { App } = session
+
+  // Creating default app state
+  App.create({
+    id: 0,
+    currentSectionId: null,
+  })
+
+  return state
+}
+
 const defaultInitialState = {
-  ui: {
-    sidebarVisible: false,
-    message: null,
-  },
-  content: {
-    contentRoot: '',
-    currentSectionPath: null,
-    data: {},
-  },
   exercises: {},
-  i18n: {
-    language: null,
-  },
-  db: orm.getDefaultState(),
+  db: createEmptyState(),
 }
 
-// empty content (resides in state.content.data[lang])
-const defaultContentData = {
-  sections: {},
-  toc: [],
-}
-
-export { defaultContentData }
 export default defaultInitialState

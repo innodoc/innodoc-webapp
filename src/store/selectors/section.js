@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect'
 
-import contentSelectors from '../../selectors/content'
-import i18nSelectors from '../../selectors/i18n'
+import appSelectors from './app'
 import ormSelectors from './orm'
 
 // Simply returns the state as is
@@ -11,16 +10,16 @@ const getSectionTable = state => ormSelectors.getDB(state).Section
 
 const getSection = (state, id) => getSectionTable(state).itemsById[id]
 
-const getSectionTitle = (state, id) => getSection(state, id).title[i18nSelectors.getLanguage(state)]
+const getSectionTitle = (state, id) => getSection(state, id).title[appSelectors.getLanguage(state)]
 
 const getSectionContent = (state, id) => (
-  getSection(state, id).content[i18nSelectors.getLanguage(state)]
+  getSection(state, id).content[appSelectors.getLanguage(state)]
 )
 
 // Gets all sub section IDs from the given one, e.g.: ['test', 'test/child1'] for 'test/child1'
 const getAllSectionsIdsFromCurrentSectionId = (
   createSelector(
-    [contentSelectors.getCurrentSectionPath],
+    [appSelectors.getCurrentSectionId],
     id => id
       // Get the ID fragments from the given ID
       .split('/')
@@ -59,45 +58,22 @@ const getAllSectionsFromCurrentSectionId = (
 //  },
 // ]
 const getBreadcrumbSections = createSelector(
-  [i18nSelectors.getLanguage, getAllSectionsFromCurrentSectionId],
+  [appSelectors.getLanguage, getAllSectionsFromCurrentSectionId],
   (lang, sections) => sections.map(({ id, title }) => ({ id, title: title[lang] })))
-
-// Gets the previous section for the given section
-const getPreviousSection = (state, id) => {
-  const currentSection = getSection(state, id)
-  const prev = getSectionTable(state).items
-    // Get the section
-    .map(item => getSection(state, item))
-    // Filter everything out that has higher 'ord'
-    .filter(item => item.ord.localeCompare(currentSection.ord) < 0)
-    // Sort lexicographically
-    .sort((a, b) => a.ord.localeCompare(b.ord))
-    // Get last element
-    .pop()
-
-  return prev
-}
-
-// Gets the next seciton for the given section
-const getNextSection = (state, id) => {
-  const currentSection = getSection(state, id)
-  const next = getSectionTable(state).items
-    // Get the section
-    .map(item => getSection(state, item))
-    // Filter everything out that has higher 'ord'
-    .filter(item => item.ord.localeCompare(currentSection.ord) > 0)
-    // Sort lexicographically and get first element
-    .sort((a, b) => a.ord.localeCompare(b.ord))[0]
-
-  return next
-}
 
 // Gets the next and previous sections based on the given one
 const getNavSections = (state, id) => {
-  const prev = getPreviousSection(state, id)
-  const next = getNextSection(state, id)
+  const sortedSections = getSectionTable(state).items
+    // Get the section
+    .map(item => getSection(state, item))
+    // Sort lexicographically
+    .sort((a, b) => a.ord.localeCompare(b.ord))
+  const idx = sortedSections.findIndex(section => section.id === id)
 
-  return { prev, next }
+  return {
+    prev: idx > 0 ? sortedSections[idx - 1] : null,
+    next: idx < sortedSections.length - 1 ? sortedSections[idx + 1] : null,
+  }
 }
 
 // Create tree structure for TOC
