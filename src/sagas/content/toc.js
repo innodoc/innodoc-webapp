@@ -1,24 +1,24 @@
 import { call, put, select } from 'redux-saga/effects'
 
-import contentSelectors from '../../store/selectors/content'
-import i18nSelectors from '../../store/selectors/i18n'
+import appSelectors from '../../store/selectors/app'
+import sectionSelectors from '../../store/selectors/section'
 import { loadTocSuccess, loadTocFailure } from '../../store/actions/content'
 import { showMessage } from '../../store/actions/ui'
 import { fetchToc } from '../../lib/api'
 
 export default function* loadTocSaga() {
-  const language = yield select(i18nSelectors.getLanguage)
+  const language = yield select(appSelectors.getLanguage)
   if (language) {
     // already in store?
-    let content = yield select(contentSelectors.getToc)
+    let content = yield select(sectionSelectors.getToc)
     if (content && content.length > 0) {
-      yield put(loadTocSuccess({ language, content }))
+      yield put(loadTocSuccess({ language, parsed: true }))
     } else {
       // fetch from remote
-      const contentRoot = yield select(contentSelectors.getContentRoot)
+      const contentRoot = yield select(appSelectors.getContentRoot)
       try {
         content = yield call(fetchToc, contentRoot, language)
-        yield put(loadTocSuccess({ language, content }))
+        yield put(loadTocSuccess({ language, content, parsed: false }))
       } catch (error) {
         yield put(loadTocFailure({ language, error }))
         yield put(showMessage({

@@ -1,23 +1,23 @@
 import { call, put, select } from 'redux-saga/effects'
 
-import contentSelectors from '../../store/selectors/content'
-import i18nSelectors from '../../store/selectors/i18n'
+import appSelectors from '../../store/selectors/app'
+import sectionSelectors from '../../store/selectors/section'
 import { loadSectionSuccess, loadSectionFailure } from '../../store/actions/content'
 import { fetchSection } from '../../lib/api'
 import { showMessage } from '../../store/actions/ui'
 
 export default function* loadSectionSaga({ sectionPath }) {
-  const language = yield select(i18nSelectors.getLanguage)
+  const language = yield select(appSelectors.getLanguage)
   if (language) {
     // already in store?
-    let content = yield select(contentSelectors.getSectionContent, sectionPath)
-    if (content) {
-      yield put(loadSectionSuccess({ language, sectionPath, content }))
+    const section = yield select(sectionSelectors.getSection, sectionPath)
+    if (section && section.content && section.content[language]) {
+      yield put(loadSectionSuccess({ language, sectionPath, content: section.content[language] }))
     } else {
       // fetch from remote
-      const contentRoot = yield select(contentSelectors.getContentRoot)
+      const contentRoot = yield select(appSelectors.getContentRoot)
       try {
-        content = yield call(fetchSection, contentRoot, language, sectionPath)
+        const content = yield call(fetchSection, contentRoot, language, sectionPath)
         yield put(loadSectionSuccess({ language, sectionPath, content }))
       } catch (error) {
         yield put(loadSectionFailure({ language, error }))

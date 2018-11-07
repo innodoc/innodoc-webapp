@@ -2,9 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import contentSelectors from '../../../store/selectors/content'
-import sectionSelectors from '../../../store/orm/selectors/section'
-import i18nSelectors from '../../../store/selectors/i18n'
+import appSelectors from '../../../store/selectors/app'
+import sectionSelectors from '../../../store/selectors/section'
 import withLoadingPlaceholder from '../../hoc/withLoadingPlaceholder'
 import withMathJax from '../../hoc/withMathJax'
 import ContentFragment from '../ContentFragment'
@@ -64,14 +63,14 @@ class Content extends React.Component {
 
 const mapStateToProps = (state) => {
   let ret = { loading: true }
-  const id = contentSelectors.getCurrentSectionPath(state)
+  const id = appSelectors.getCurrentSectionId(state)
   if (id) {
     const section = sectionSelectors.getSection(state, id)
     if (section) {
       ret = {
         loading: false,
         section,
-        currentLanguage: i18nSelectors.getLanguage(state),
+        currentLanguage: appSelectors.getLanguage(state),
       }
     }
   }

@@ -6,9 +6,8 @@ import Tree from 'antd/lib/tree'
 import Router from 'next/router'
 
 import css from './style.sass'
-import i18nSelectors from '../../store/selectors/i18n'
-import contentSelectors from '../../store/selectors/content'
-import sectionSelectors from '../../store/orm/selectors/section'
+import appSelectors from '../../store/selectors/app'
+import sectionSelectors from '../../store/selectors/section'
 import { tocTreeType } from '../../lib/propTypes'
 import { getSectionHref } from '../../lib/util'
 import ContentFragment from '../content/ContentFragment'
@@ -96,8 +95,8 @@ class Toc extends React.Component {
 
 const mapStateToProps = state => ({
   toc: sectionSelectors.getToc(state),
-  currentLanguage: i18nSelectors.getLanguage(state),
-  currentSectionPath: contentSelectors.getCurrentSectionPath(state),
+  currentLanguage: appSelectors.getLanguage(state),
+  currentSectionPath: appSelectors.getCurrentSectionId(state),
 })
 
 export { Toc } // for testing

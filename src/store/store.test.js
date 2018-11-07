@@ -11,40 +11,31 @@ it('smoke test', () => {
 describe('initial state', () => {
   const store = configureStore()
   const state = store.getState()
+  const App = state.db.App.itemsById[0]
 
   describe('i18n', () => {
-    const { i18n } = state
-
     test('have language', () => {
-      expect(i18n.language).toBe(null)
+      expect(App.language).toBe(null)
     })
   })
 
   describe('ui', () => {
-    const { ui } = state
-
     test('hidden sidebar', () => {
-      expect(ui.sidebarVisible).toBe(false)
+      expect(App.sidebarVisible).toBe(false)
     })
 
     test('no message', () => {
-      expect(ui.message).toBe(null)
+      expect(App.message).toBe(null)
     })
   })
 
   describe('content', () => {
-    const { content } = state
-
     test('content root to be empty string', () => {
-      expect(content.contentRoot).toBe('')
+      expect(App.contentRoot).toBe('')
     })
 
     test('current section null', () => {
-      expect(content.currentSectionPath).toBe(null)
-    })
-
-    test('data empty', () => {
-      expect(content.data).toEqual({})
+      expect(App.currentSectionId).toBe(null)
     })
   })
 
@@ -53,20 +44,6 @@ describe('initial state', () => {
 
     test('exercises empty', () => {
       expect(exercises).toEqual({})
-    })
-  })
-
-  describe('db', () => {
-    const { db } = state
-
-    test('db empty', () => {
-      expect(db).toEqual({
-        Section: {
-          items: [],
-          itemsById: {},
-          meta: {},
-        },
-      })
     })
   })
 })

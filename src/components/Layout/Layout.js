@@ -6,7 +6,7 @@ import AntLayout from 'antd/lib/layout'
 import css from './style.sass'
 import { childrenType, messageType } from '../../lib/propTypes'
 import { clearMessage } from '../../store/actions/ui'
-import uiSelectors from '../../store/selectors/ui'
+import appSelectors from '../../store/selectors/app'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import Footer from './Footer'
@@ -54,7 +54,7 @@ Layout.defaultProps = {
 }
 
 const mapStateToProps = state => ({
-  message: uiSelectors.getMessage(state),
+  message: appSelectors.getMessage(state),
 })
 
 const mapDispatchToProps = {

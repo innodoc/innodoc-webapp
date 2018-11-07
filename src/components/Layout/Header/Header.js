@@ -13,7 +13,7 @@ import Input from 'antd/lib/input'
 import Icon from 'antd/lib/icon'
 
 import css from './style.sass'
-import uiSelectors from '../../../store/selectors/ui'
+import appSelectors from '../../../store/selectors/app'
 import { changeLanguage } from '../../../store/actions/i18n'
 import { toggleSidebar } from '../../../store/actions/ui'
 
@@ -173,7 +173,7 @@ Header.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  sidebarVisible: uiSelectors.getSidebarVisible(state),
+  sidebarVisible: appSelectors.getSidebarVisible(state),
 })
 
 const mapDispatchToProps = {
