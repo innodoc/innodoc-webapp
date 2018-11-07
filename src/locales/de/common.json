@@ -64,6 +64,7 @@
     }
   },
   "sidebar": {
-    "courseContent": "Kursinhalt"
+    "courseContent": "Kursinhalt",
+    "collapseButton": "Inhaltsverzeichnis schließen"
   }
 }

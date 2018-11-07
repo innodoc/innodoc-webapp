@@ -2,9 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import AntLayout from 'antd/lib/layout'
+import Button from 'antd/lib/button'
 import { withNamespaces } from 'react-i18next'
 
 import uiSelectors from '../../../store/selectors/ui'
+import { toggleSidebar } from '../../../store/actions/ui'
 import Toc from '../../Toc'
 import css from './style.sass'
 
@@ -17,6 +19,7 @@ class Sidebar extends React.Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
     t: PropTypes.func.isRequired,
+    dispatchToggleSidebar: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -33,7 +36,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const { visible, t } = this.props
+    const { visible, t, dispatchToggleSidebar } = this.props
     const { width } = this.state
 
     return (
@@ -50,6 +53,14 @@ class Sidebar extends React.Component {
         <div style={{ minWidth: width }}>
           <div>
             <div>
+              <Button
+                title={t('sidebar.collapseButton')}
+                onClick={dispatchToggleSidebar}
+                className={css.collapseButton}
+                icon="close"
+                shape="circle"
+                size="small"
+              />
               <Toc header={t('sidebar.courseContent')} />
             </div>
           </div>
@@ -63,5 +74,9 @@ const mapStateToProps = state => ({
   visible: uiSelectors.getSidebarVisible(state),
 })
 
+const mapDispatchToProps = {
+  dispatchToggleSidebar: toggleSidebar,
+}
+
 export { Sidebar } // for testing
-export default connect(mapStateToProps)(withNamespaces()(Sidebar))
+export default connect(mapStateToProps, mapDispatchToProps)(withNamespaces()(Sidebar))

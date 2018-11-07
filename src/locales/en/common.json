@@ -65,6 +65,7 @@
     }
   },
   "sidebar": {
-    "courseContent": "Course content"
+    "courseContent": "Course content",
+    "collapseButton": "Close table of contents"
   }
 }
