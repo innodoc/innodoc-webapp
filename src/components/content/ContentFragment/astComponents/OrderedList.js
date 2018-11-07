@@ -13,12 +13,14 @@ const OrderedList = ({ data }) => {
         <span className={css.listnumber}>
           {`${i + 1}.`}
         </span>
-        <ContentFragment content={item} />
+        <div>
+          <ContentFragment content={item} />
+        </div>
       </List.Item>
     )
   )
   return (
-    <List>
+    <List itemLayout="vertical" className={css.orderedList}>
       {listItems}
     </List>
   )

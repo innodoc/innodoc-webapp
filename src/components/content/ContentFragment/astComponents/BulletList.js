@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import List from 'antd/lib/list'
 
+import css from './style.sass'
 import ContentFragment from '..'
 
 const BulletList = ({ data }) => {
@@ -13,7 +14,7 @@ const BulletList = ({ data }) => {
     )
   )
   return (
-    <List>
+    <List itemLayout="vertical" className={css.bulletList}>
       {listItems}
     </List>
   )
