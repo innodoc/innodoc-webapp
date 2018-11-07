@@ -16,7 +16,7 @@ const SectionNav = ({ currentLanguage, prev, next }) => (
       prev ? (
         <SectionLink sectionPath={prev.id}>
           <a title={astToString(prev.title[currentLanguage])} className={css.prev}>
-            <Icon type="left" />
+            <Icon type="arrow-left" />
           </a>
         </SectionLink>
       ) : null
@@ -25,7 +25,7 @@ const SectionNav = ({ currentLanguage, prev, next }) => (
       next ? (
         <SectionLink sectionPath={next.id}>
           <a title={astToString(next.title[currentLanguage])} className={css.next}>
-            <Icon type="right" />
+            <Icon type="arrow-right" />
           </a>
         </SectionLink>
       ) : null

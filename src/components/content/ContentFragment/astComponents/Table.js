@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table } from 'semantic-ui-react'
+import AntTable from 'antd/lib/table'
 
+import css from './style.sass'
 import ContentFragment from '..'
 
 const alignMap = {
@@ -10,57 +11,41 @@ const alignMap = {
   AlignCenter: 'center',
 }
 
-const InnoTable = ({ data }) => {
+const Table = ({ data }) => {
   const [, alignment, , headerData, rowData] = data
+  const tableProps = {}
+  let columnArr
 
-  // thead
-  let thead
+  // show header?
   if (headerData.some(tr => tr.length > 0)) {
-    const ths = headerData.map(
-      (th, i) => (
-        <Table.HeaderCell key={i.toString()} textAlign={alignMap[alignment[i].t]}>
-          <ContentFragment content={th} />
-        </Table.HeaderCell>
-      )
-    )
-    thead = (
-      <Table.Header>
-        <Table.Row>
-          {ths}
-        </Table.Row>
-      </Table.Header>
-    )
+    columnArr = headerData
+  } else {
+    [columnArr] = rowData
+    tableProps.showHeader = false
   }
 
-  // tbody
-  const trs = rowData.map((tr, i) => {
-    const tds = tr.map(
-      (td, j) => (
-        <Table.Cell key={j.toString()} textAlign={alignMap[alignment[j].t]}>
-          <ContentFragment content={td} />
-        </Table.Cell>
-      )
-    )
-    return (
-      <Table.Row key={i.toString()}>
-        {tds}
-      </Table.Row>
-    )
-  })
-  const tbody = (
-    <Table.Body>
-      {trs}
-    </Table.Body>
-  )
+  tableProps.columns = columnArr.map((content, i) => ({
+    title: <ContentFragment content={content} />,
+    render: c => <ContentFragment content={c} />,
+    key: i,
+    dataIndex: i,
+    align: alignMap[alignment[i].t],
+  }))
+
+  tableProps.dataSource = rowData.map((row, i) => ({
+    ...row,
+    key: i,
+  }))
 
   return (
-    <Table>
-      {thead}
-      {tbody}
-    </Table>
+    <AntTable
+      className={css.table}
+      pagination={false}
+      {...tableProps}
+    />
   )
 }
 
-InnoTable.propTypes = { data: PropTypes.arrayOf(PropTypes.array).isRequired }
+Table.propTypes = { data: PropTypes.arrayOf(PropTypes.array).isRequired }
 
-export default InnoTable
+export default Table

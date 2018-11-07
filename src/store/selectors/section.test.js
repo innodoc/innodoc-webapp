@@ -49,6 +49,30 @@ const dummyState = () => {
     parentId: 'test',
   })
 
+  Section.create({
+    id: 'test/child1/child11',
+    ord: '000',
+    title: {
+      en: 'test child11 title',
+    },
+    content: {
+      en: 'test child11 content',
+    },
+    parentId: 'test/child1',
+  })
+
+  Section.create({
+    id: 'test/child1/child12',
+    ord: '001',
+    title: {
+      en: 'test child12 title',
+    },
+    content: {
+      en: 'test child12 content',
+    },
+    parentId: 'test/child1',
+  })
+
   return {
     db: state,
   }
@@ -99,7 +123,7 @@ describe('section selectors', () => {
     })
     expect(selectors.getNavSections(state, 'test/child1')).toEqual({
       prev: state.db.Section.itemsById.test,
-      next: state.db.Section.itemsById['test/child2'],
+      next: state.db.Section.itemsById['test/child1/child11'],
     })
   })
 
@@ -107,6 +131,8 @@ describe('section selectors', () => {
     const toc = selectors.getToc(state)
     expect(toc[0].id).toEqual('test')
     expect(toc[0].children[0].id).toEqual('test/child1')
+    expect(toc[0].children[0].children[0].id).toEqual('test/child1/child11')
+    expect(toc[0].children[0].children[1].id).toEqual('test/child1/child12')
     expect(toc[0].children[1].id).toEqual('test/child2')
   })
 })

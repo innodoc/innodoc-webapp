@@ -1,4 +1,24 @@
 @import '../../../../style/antd-theme.sass'
 
-.listnumber
-  margin-right: $padding-md
+.bulletList
+  margin-left: $padding-lg
+
+  \:global(.ant-list-item-content)
+    margin-bottom: 0
+
+.orderedList
+
+  \:global(.ant-list-item-content)
+    display: flex
+    margin-bottom: 0
+
+    .listnumber
+      margin-right: $padding-md
+      font-weight: bold
+
+.table
+  margin-bottom: $padding-sm
+  overflow-x: auto
+
+  tr:hover > td
+    background-color: transparent

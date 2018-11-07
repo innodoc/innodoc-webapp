@@ -6,6 +6,7 @@ import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 
 import '../style/lato-font.sass'
+import '../style/overrides.sass'
 
 import 'antd/lib/style/index.less'
 import 'antd/lib/grid/style/index.less'
@@ -19,6 +20,9 @@ import 'antd/lib/alert/style/index.less'
 import 'antd/lib/breadcrumb/style/index.less'
 import 'antd/lib/skeleton/style/index.less'
 import 'antd/lib/list/style/index.less'
+import 'antd/lib/table/style/index.less'
+import 'antd/lib/card/style/index.less'
+import 'antd/lib/collapse/style/index.less'
 
 import configureStore from '../store'
 import { setContentRoot, loadToc } from '../store/actions/content'

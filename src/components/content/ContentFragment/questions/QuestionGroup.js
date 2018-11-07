@@ -1,13 +1,12 @@
 import React from 'react'
-import { Container } from 'semantic-ui-react'
 
 import ContentFragment from '..'
 import { contentType } from '../../../../lib/propTypes'
 
+// TODO: Remove this?
+
 const QuestionGroup = ({ content }) => (
-  <Container>
-    <ContentFragment content={content} />
-  </Container>
+  <ContentFragment content={content} />
 )
 
 QuestionGroup.propTypes = {

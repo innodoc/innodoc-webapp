@@ -35,6 +35,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@babel/node": "^7.0.0",
+    "@svgr/webpack": "^4.0.0",
     "@zeit/next-bundle-analyzer": "^0.1.2",
     "@zeit/next-css": "^1.0.1",
     "antd": "^3.10.3",
@@ -71,7 +72,6 @@
     "redux-saga": "^0.16.2",
     "reselect": "^4.0.0",
     "sass-loader": "^7.1.0",
-    "semantic-ui-react": "^0.83.0",
     "url-loader": "^1.1.2"
   },
   "devDependencies": {

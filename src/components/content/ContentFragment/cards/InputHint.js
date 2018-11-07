@@ -2,21 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withNamespaces } from 'react-i18next'
 
+import KeyboardSvg from '../../../../static/img/keyboard-o.svg'
 import { contentType } from '../../../../lib/propTypes'
 import Card from './Card'
 
-const InfoCard = ({ t, content }) => (
+const InputHintCard = ({ t, content }) => (
   <Card
-    title={t('content.info')}
-    cardType="info"
-    icon="info-circle"
+    title={t('content.inputHint')}
+    cardType="inputHint"
+    icon={KeyboardSvg}
     content={content}
   />
 )
 
-InfoCard.propTypes = {
+InputHintCard.propTypes = {
   content: contentType.isRequired,
   t: PropTypes.func.isRequired,
 }
 
-export default withNamespaces()(InfoCard)
+export default withNamespaces()(InputHintCard)

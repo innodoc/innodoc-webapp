@@ -98,19 +98,21 @@ const getNavSections = (state, id) => {
 // Create tree structure for TOC
 const getToc = (state) => {
   const sections = getSectionTable(state).items
-  const getSectionLevel = (level, parentOrd = null) => sections
+  const getSectionChildren = (level, parentId) => sections
     .map(item => getSection(state, item))
     .filter(section => (
       // by section level
       section.ord.length === level + 1
       // by parent
-      && (level < 1 || section.ord.slice(0, -1).join('/') === parentOrd.join('/'))
-    ))
+      && section.parentId === parentId)
+    )
+    // add children key
     .map(section => ({
       ...section,
-      children: getSectionLevel(level + 1, section.ord),
+      children: getSectionChildren(level + 1, section.id),
     }))
-  return getSectionLevel(0)
+    .sort((a, b) => a.ord[level] > b.ord[level])
+  return getSectionChildren(0, null)
 }
 
 export default {
