@@ -1,7 +1,16 @@
 @import '../../../../style/antd-theme.sass'
 
-.listnumber
-  margin-right: $padding-md
+.bulletList
+  margin-left: $padding-lg
+
+.orderedList
+
+  \:global(.ant-list-item-content)
+    display: flex
+
+    .listnumber
+      margin-right: $padding-md
+      font-weight: bold
 
 .table
   margin-bottom: $padding-sm
