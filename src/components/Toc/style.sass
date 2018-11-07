@@ -5,13 +5,20 @@
 
   [role=treeitem]
 
+    \:global(.ant-tree-title) > a:focus
+      text-decoration: none
+
     \:global(.ant-tree-node-content-wrapper:hover)
       background-color: transparent
-      color: $heading-color
+      color: $primary-5
 
-    &:global(.active > span > .ant-tree-title)
+    &:global(.active > span > .ant-tree-title > a)
       color: $heading-color
       font-weight: bold
+      transition-property: all
+
+      &:hover
+        color: $primary-5
 
     & :global(.ant-tree-node-selected)
       background-color: transparent !important

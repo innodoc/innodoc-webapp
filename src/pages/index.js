@@ -8,11 +8,7 @@ import Toc from '../components/Toc'
 
 const IndexPage = () => (
   <Layout disableSidebar>
-    <Toc
-      header="TODO: fill in course title"
-      defaultExpandAll
-      disableExpand
-    />
+    <Toc expandAll />
   </Layout>
 )
 

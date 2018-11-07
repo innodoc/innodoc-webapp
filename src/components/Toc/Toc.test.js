@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Menu } from 'semantic-ui-react'
+import Tree from 'antd/lib/tree'
 
 import { Toc } from './Toc'
 
@@ -8,54 +8,109 @@ describe('<Toc />', () => {
   const toc = [
     {
       id: 'section-1',
-      title: [{ t: 'Str', c: 'Section 1' }],
+      title: { en: [{ t: 'Str', c: 'Section 1' }] },
       children: [
         {
-          id: 'section-1-1',
-          title: [{ t: 'Str', c: 'Section 1-1' }],
+          id: 'section-1/section-1-1',
+          title: { en: [{ t: 'Str', c: 'Section 1-1' }] },
+          children: [
+            {
+              id: 'section-1/section-1-1/section-1-1-1',
+              title: { en: [{ t: 'Str', c: 'Section 1-1-1' }] },
+            },
+          ],
         },
       ],
     },
     {
       id: 'section-2',
-      title: [{ t: 'Str', c: 'Section 2' }],
+      title: { en: [{ t: 'Str', c: 'Section 2' }] },
     },
   ]
 
-  it('renders', () => {
+  it('renders tree nodes', () => {
     const wrapper = shallow(
-      <Toc toc={toc} />
+      <Toc
+        toc={toc}
+        currentLanguage="en"
+        header="Foobar"
+      />
     )
-    const menu = wrapper.find(Menu)
-    expect(menu).toExist()
-    // const tocItems = menu.find(TocItem)
-    // expect(tocItems).toHaveLength(2)
-    // const firstTocItem = tocItems.at(0)
-    // expect(firstTocItem.prop('title')).toEqual(toc[0].title)
-    // expect(firstTocItem.prop('sectionPath')).toBe('section-1')
-    // expect(firstTocItem.prop('subSections')).toEqual(toc[0].children)
-    // const secondTocItem = tocItems.at(1)
-    // expect(secondTocItem.prop('title')).toEqual(toc[1].title)
-    // expect(secondTocItem.prop('sectionPath')).toBe('section-2')
+    expect(wrapper.find(Tree)).toExist()
+    expect(wrapper.find(Tree.TreeNode)).toHaveLength(4)
   })
 
   it('renders with header', () => {
     const wrapper = shallow(
-      <Toc toc={toc} header="Header title" />
+      <Toc
+        toc={toc}
+        currentLanguage="en"
+        header="Foobar"
+      />
     )
-    const headerItem = wrapper.find(Menu.Item).first()
-    expect(headerItem.prop('header')).toBe(true)
-    expect(headerItem.dive().text()).toBe('Header title')
+    expect(wrapper.find('h2').text()).toBe('Foobar')
   })
 
-  it('renders with section prefix', () => {
-    // const wrapper = shallow(
-    //   <Toc toc={toc} sectionPrefix="section-prefix/" />
-    // )
-    // const tocItems = wrapper.find(TocItem)
-    // expect(tocItems.at(0).prop('sectionPath')).toBe('section-1')
-    // expect(tocItems.at(0).prop('sectionPrefix')).toBe('section-prefix/')
-    // expect(tocItems.at(1).prop('sectionPath')).toBe('section-2')
-    // expect(tocItems.at(1).prop('sectionPrefix')).toBe('section-prefix/')
+  it('renders with active section', () => {
+    const wrapper = shallow(
+      <Toc
+        toc={toc}
+        currentLanguage="en"
+        currentSectionPath="section-1/section-1-1"
+      />
+    )
+    expect(wrapper.find(Tree.TreeNode).filter('.active')).toHaveLength(1)
+  })
+
+  it('renders without active section', () => {
+    const wrapper = shallow(
+      <Toc
+        toc={toc}
+        currentLanguage="en"
+      />
+    )
+    expect(wrapper.find(Tree.TreeNode).filter('.active')).toHaveLength(0)
+  })
+
+  it('can expand all', () => {
+    const wrapper = shallow(
+      <Toc
+        toc={toc}
+        currentLanguage="en"
+        expandAll
+      />
+    )
+    expect(wrapper.find(Tree).prop('defaultExpandAll')).toBe(true)
+  })
+
+  it('expands current section from within tree component', () => {
+    const wrapper = shallow(
+      <Toc
+        toc={toc}
+        currentLanguage="en"
+      />
+    )
+    expect(wrapper.state('expandedKeys')).toHaveLength(0)
+    wrapper.instance().onExpand(['section-1/section-1-1'])
+    expect(wrapper.state('expandedKeys')).toEqual(['section-1/section-1-1'])
+  })
+
+  it('expands current section from outside tree component', () => {
+    const wrapper = shallow(
+      <Toc
+        toc={toc}
+        currentLanguage="en"
+      />
+    )
+    expect(wrapper.state('expandedKeys')).toHaveLength(0)
+    expect(wrapper.find(Tree.TreeNode).filter('.active')).toHaveLength(0)
+    wrapper.setProps({ currentSectionPath: 'section-1/section-1-1/section-1-1-1' })
+    expect(wrapper.find(Tree.TreeNode).filter('.active')).toHaveLength(1)
+    expect(wrapper.state('expandedKeys')).toHaveLength(3)
+    expect(wrapper.state('expandedKeys')).toEqual(expect.arrayContaining(
+      ['section-1'],
+      ['section-1/section-1-1'],
+      ['section-1/section-1-1-1'],
+    ))
   })
 })
