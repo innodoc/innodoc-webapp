@@ -1,10 +1,15 @@
+// this is only rendered server-side
+
 import React from 'react'
 import Document, { Head, Main, NextScript } from 'next/document'
 
 class InnodocDocument extends Document {
-  static getInitialProps({ req }) {
-    // render correct lang attribute (only SSR)
-    return { language: req.i18n.language }
+  static async getInitialProps(ctx) {
+    const initialProps = await Document.getInitialProps(ctx)
+    return {
+      ...initialProps,
+      language: ctx.req.i18n.language,
+    }
   }
 
   render() {
