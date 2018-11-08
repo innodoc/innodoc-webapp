@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Menu } from 'semantic-ui-react'
+import Tree from 'antd/lib/tree'
 
 import { Toc } from './Toc'
 
@@ -8,26 +8,36 @@ describe('<Toc />', () => {
   const toc = [
     {
       id: 'section-1',
-      title: [{ t: 'Str', c: 'Section 1' }],
+      title: { en: [{ t: 'Str', c: 'Section 1' }] },
       children: [
         {
-          id: 'section-1-1',
-          title: [{ t: 'Str', c: 'Section 1-1' }],
+          id: 'section-1/section-1-1',
+          title: { en: [{ t: 'Str', c: 'Section 1-1' }] },
+          children: [
+            {
+              id: 'section-1/section-1-1/section-1-1-1',
+              title: { en: [{ t: 'Str', c: 'Section 1-1-1' }] },
+            },
+          ],
         },
       ],
     },
     {
       id: 'section-2',
-      title: [{ t: 'Str', c: 'Section 2' }],
+      title: { en: [{ t: 'Str', c: 'Section 2' }] },
     },
   ]
 
   it('renders', () => {
     const wrapper = shallow(
-      <Toc toc={toc} />
+      <Toc
+        toc={toc}
+        currentLanguage="en"
+        currentSectionPath="section-1/section-1-1"
+      />
     )
-    const menu = wrapper.find(Menu)
-    expect(menu).toExist()
+    const tree = wrapper.find(Tree)
+    expect(tree).toExist()
     // TODO
     // const tocItems = menu.find(TocItem)
     // expect(tocItems).toHaveLength(2)
