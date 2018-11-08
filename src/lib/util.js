@@ -23,9 +23,16 @@ const getSectionHref = sectionPath => ({
   as: `/page/${sectionPath}`,
 })
 
+const unwrapPara = content => (
+  content && content[0].t === 'Para'
+    ? content[0].c
+    : content
+)
+
 export {
   astToString,
   getDisplayName,
   getHocDisplayName,
   getSectionHref,
+  unwrapPara,
 }
