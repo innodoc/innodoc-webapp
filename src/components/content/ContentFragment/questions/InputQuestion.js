@@ -1,9 +1,9 @@
 import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-
-import { Input, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import Icon from 'antd/lib/icon'
+import Input from 'antd/lib/input'
 
 import { exValidatorArgType } from '../../../../lib/propTypes'
 import { exerciseCompleted } from '../../../../store/actions/exercise'
@@ -19,12 +19,12 @@ class InputQuestion extends React.Component {
   getIcon() {
     const { inputValue, solved } = this.props
     if (inputValue === '') {
-      return <Icon name="question" />
+      return <Icon type="dash" />
     }
     if (solved) {
-      return <Icon name="check" color="green" />
+      return <Icon name="check-circle" />
     }
-    return <Icon name="close" color="red" />
+    return <Icon name="close-circle" />
   }
 
   handleChange(event) {
@@ -54,10 +54,9 @@ class InputQuestion extends React.Component {
 
     return (
       <Input
-        type="text"
         className={inputClass}
         value={inputValue}
-        icon={this.getIcon()}
+        addonAfter={this.getIcon()}
         onChange={this.handleChange}
       />
     )
