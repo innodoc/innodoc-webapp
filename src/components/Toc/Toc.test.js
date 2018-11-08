@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Menu } from 'semantic-ui-react'
+import Tree from 'antd/lib/tree'
 
 import { Toc } from './Toc'
 
@@ -26,8 +26,8 @@ describe('<Toc />', () => {
     const wrapper = shallow(
       <Toc toc={toc} />
     )
-    const menu = wrapper.find(Menu)
-    expect(menu).toExist()
+    const tree = wrapper.find(Tree)
+    expect(tree).toExist()
     // TODO
     // const tocItems = menu.find(TocItem)
     // expect(tocItems).toHaveLength(2)
