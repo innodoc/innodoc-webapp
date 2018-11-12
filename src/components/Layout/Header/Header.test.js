@@ -1,52 +1,71 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Menu, Dropdown } from 'semantic-ui-react'
+import AntLayout from 'antd/lib/layout'
+import Menu from 'antd/lib/menu'
+import Button from 'antd/lib/button'
 
 import { Header } from './Header'
 
 describe('<Header />', () => {
   const mockDispatchChangeLanguage = jest.fn()
+  const mockDispatchToggleSidebar = jest.fn()
   const wrapper = shallow(
-    <Header t={() => {}} dispatchChangeLanguage={mockDispatchChangeLanguage} />
+    <Header
+      dispatchChangeLanguage={mockDispatchChangeLanguage}
+      dispatchToggleSidebar={mockDispatchToggleSidebar}
+      disableSidebar={false}
+      t={() => {}}
+      sidebarVisible
+    />
   )
+
+  it('should render Header', () => {
+    expect(wrapper.find(AntLayout.Header).exists()).toBe(true)
+  })
 
   it('should render menu', () => {
     expect(wrapper.find(Menu).exists()).toBe(true)
   })
 
+  it('should toggle sidebar', () => {
+    wrapper.find(Button).at(1).simulate('click')
+    expect(mockDispatchToggleSidebar.mock.calls).toHaveLength(1)
+  })
+
   describe('user menu', () => {
-    const dropdown = wrapper.find(Dropdown).at(0)
+    const dropdown = wrapper.find(Menu.SubMenu).at(0)
 
     it('should render dropdown', () => {
       expect(dropdown.exists()).toBe(true)
     })
     it('should have 2 items', () => {
-      expect(dropdown.find(Dropdown.Item)).toHaveLength(2)
+      expect(dropdown.find(Menu.Item)).toHaveLength(2)
     })
   })
 
   describe('language menu', () => {
-    const dropdown = wrapper.find(Dropdown).at(1)
+    // TODO: dynamic list of languages
+    const dropdown = wrapper.find(Menu.SubMenu).at(1)
 
     it('should render dropdown', () => {
       expect(dropdown.exists()).toBe(true)
     })
 
     it('should have 2 items', () => {
-      expect(dropdown.find(Dropdown.Item)).toHaveLength(2)
+      expect(dropdown.find(Menu.Item)).toHaveLength(2)
     })
 
     describe('switch language', () => {
-      it('should switch language to EN', () => {
-        dropdown.find(Dropdown.Item).at(0).simulate('click')
+      it('should switch language to DE', () => {
+        dropdown.find(Menu.Item).at(0).simulate('click')
         expect(mockDispatchChangeLanguage.mock.calls).toHaveLength(1)
-        expect(mockDispatchChangeLanguage.mock.calls[0][0]).toBe('en')
+        expect(mockDispatchChangeLanguage.mock.calls[0][0]).toBe('de')
       })
 
-      it('should switch language to DE', () => {
-        dropdown.find(Dropdown.Item).at(1).simulate('click')
+      it('should switch language to EN', () => {
+        dropdown.find(Menu.Item).at(1).simulate('click')
         expect(mockDispatchChangeLanguage.mock.calls).toHaveLength(2)
-        expect(mockDispatchChangeLanguage.mock.calls[1][0]).toBe('de')
+        expect(mockDispatchChangeLanguage.mock.calls[1][0]).toBe('en')
       })
     })
   })
