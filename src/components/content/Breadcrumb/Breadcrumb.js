@@ -14,7 +14,7 @@ const Breadcrumb = ({ sections, t }) => {
   // TODO: use home link (#54)
   const breadcrumbItems = [(
     <AntBreadcrumb.Item key="root">
-      <SectionLink sectionPath="">
+      <SectionLink sectionId="">
         <a title={t('content.home')}>
           <Icon type="home" />
         </a>
@@ -23,7 +23,7 @@ const Breadcrumb = ({ sections, t }) => {
   )].concat(
     sections.map(section => (
       <AntBreadcrumb.Item key={section.id}>
-        <SectionLink sectionPath={section.id}>
+        <SectionLink sectionId={section.id}>
           <a>
             <ContentFragment content={section.title} />
           </a>

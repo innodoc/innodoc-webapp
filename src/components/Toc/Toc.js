@@ -14,7 +14,7 @@ import SectionLink from '../SectionLink'
 class Toc extends React.Component {
   static propTypes = {
     toc: tocTreeType.isRequired,
-    currentSectionPath: PropTypes.string,
+    currentSectionId: PropTypes.string,
     currentLanguage: PropTypes.string.isRequired,
     header: PropTypes.string,
     expandAll: PropTypes.bool,
@@ -22,7 +22,7 @@ class Toc extends React.Component {
 
   static defaultProps = {
     ...React.Component.defaultProps,
-    currentSectionPath: null,
+    currentSectionId: null,
     header: null,
     expandAll: false,
   }
@@ -30,14 +30,14 @@ class Toc extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      expandedKeys: props.currentSectionPath ? [props.currentSectionPath] : [],
+      expandedKeys: props.currentSectionId ? [props.currentSectionId] : [],
     }
     this.onExpand = this.onExpand.bind(this)
   }
 
-  componentDidUpdate({ currentSectionPath: prevSectionPath }, { expandedKeys }) {
-    const { currentSectionPath, expandAll } = this.props
-    if (!expandAll && currentSectionPath && currentSectionPath !== prevSectionPath) {
+  componentDidUpdate({ currentSectionId: prevSectionId }, { expandedKeys }) {
+    const { currentSectionId, expandAll } = this.props
+    if (!expandAll && currentSectionId && currentSectionId !== prevSectionId) {
       this.expandCurrentSection(expandedKeys)
     }
   }
@@ -51,10 +51,10 @@ class Toc extends React.Component {
 
   // auto-expand tree nodes when section changes
   expandCurrentSection(expandedKeys) {
-    const { currentSectionPath } = this.props
+    const { currentSectionId } = this.props
 
     // current key and all parent keys
-    const allKeys = currentSectionPath
+    const allKeys = currentSectionId
       .split('/')
       .reduce((acc, id, idx) => [
         ...acc,
@@ -75,19 +75,19 @@ class Toc extends React.Component {
   }
 
   renderTreeNodes(section) {
-    const { currentSectionPath, currentLanguage } = this.props
+    const { currentSectionId, currentLanguage } = this.props
     const {
       title,
-      id: sectionPath,
+      id: sectionId,
       children = [],
     } = section
 
     const className = classNames({
-      active: sectionPath === currentSectionPath,
+      active: sectionId === currentSectionId,
     })
 
     const sectionNode = (
-      <SectionLink sectionPath={sectionPath}>
+      <SectionLink sectionId={sectionId}>
         <a>
           {astToString(title[currentLanguage])}
         </a>
@@ -97,7 +97,7 @@ class Toc extends React.Component {
     return (
       <Tree.TreeNode
         title={sectionNode}
-        key={sectionPath}
+        key={sectionId}
         className={className}
       >
         {children.map(s => this.renderTreeNodes(s))}
@@ -138,7 +138,7 @@ class Toc extends React.Component {
 const mapStateToProps = state => ({
   toc: sectionSelectors.getToc(state),
   currentLanguage: appSelectors.getLanguage(state),
-  currentSectionPath: appSelectors.getCurrentSectionId(state),
+  currentSectionId: appSelectors.getCurrentSectionId(state),
 })
 
 export { Toc } // for testing

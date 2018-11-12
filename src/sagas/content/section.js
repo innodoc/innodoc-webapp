@@ -6,19 +6,19 @@ import { loadSectionSuccess, loadSectionFailure } from '../../store/actions/cont
 import { fetchSection } from '../../lib/api'
 import { showMessage } from '../../store/actions/ui'
 
-export default function* loadSectionSaga({ sectionPath }) {
+export default function* loadSectionSaga({ sectionId }) {
   const language = yield select(appSelectors.getLanguage)
   if (language) {
     // already in store?
-    const section = yield select(sectionSelectors.getSection, sectionPath)
+    const section = yield select(sectionSelectors.getSection, sectionId)
     if (section && section.content && section.content[language]) {
-      yield put(loadSectionSuccess({ language, sectionPath, content: section.content[language] }))
+      yield put(loadSectionSuccess({ language, sectionId, content: section.content[language] }))
     } else {
       // fetch from remote
       const contentRoot = yield select(appSelectors.getContentRoot)
       try {
-        const content = yield call(fetchSection, contentRoot, language, sectionPath)
-        yield put(loadSectionSuccess({ language, sectionPath, content }))
+        const content = yield call(fetchSection, contentRoot, language, sectionId)
+        yield put(loadSectionSuccess({ language, sectionId, content }))
       } catch (error) {
         yield put(loadSectionFailure({ language, error }))
         yield put(showMessage({

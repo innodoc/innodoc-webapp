@@ -32,7 +32,7 @@ export default class App extends Model {
         app.set('error', action.error)
         break
       case contentActionTypes.LOAD_SECTION_SUCCESS:
-        app.set('currentSectionId', action.data.sectionPath)
+        app.set('currentSectionId', action.data.sectionId)
         break
       case contentActionTypes.SET_CONTENT_ROOT:
         app.set('contentRoot', action.contentRoot)

@@ -28,10 +28,10 @@ export function loadTocFailure(error) {
   }
 }
 
-export function loadSection(sectionPath) {
+export function loadSection(sectionId) {
   return {
     type: actionTypes.LOAD_SECTION,
-    sectionPath,
+    sectionId,
   }
 }
 

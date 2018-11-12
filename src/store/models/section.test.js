@@ -78,7 +78,7 @@ describe('reducer', () => {
 
     const session = orm.session(state)
     SectionModel.reducer(
-      loadSectionSuccess({ language: 'en', sectionPath: 'test/child1', content: 'test child1 content' }),
+      loadSectionSuccess({ language: 'en', sectionId: 'test/child1', content: 'test child1 content' }),
       session.Section)
 
     expect(session.state).toEqual(resultState)

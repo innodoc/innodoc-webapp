@@ -5,8 +5,8 @@ import Link from 'next/link'
 import { childrenType } from '../lib/propTypes'
 import { getSectionHref } from '../lib/util'
 
-const SectionLink = ({ sectionPath, children }) => {
-  const { href, as } = getSectionHref(sectionPath)
+const SectionLink = ({ sectionId, children }) => {
+  const { href, as } = getSectionHref(sectionId)
   return (
     <Link href={href} as={as}>
       {children}
@@ -14,7 +14,7 @@ const SectionLink = ({ sectionPath, children }) => {
   )
 }
 SectionLink.propTypes = {
-  sectionPath: PropTypes.string.isRequired,
+  sectionId: PropTypes.string.isRequired,
   children: childrenType.isRequired,
 }
 

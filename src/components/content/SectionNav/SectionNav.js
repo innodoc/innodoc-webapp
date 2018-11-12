@@ -14,7 +14,7 @@ const SectionNav = ({ currentLanguage, prev, next }) => (
   <React.Fragment>
     {
       prev ? (
-        <SectionLink sectionPath={prev.id}>
+        <SectionLink sectionId={prev.id}>
           <a title={astToString(prev.title[currentLanguage])} className={css.prev}>
             <Icon type="arrow-left" />
           </a>
@@ -23,7 +23,7 @@ const SectionNav = ({ currentLanguage, prev, next }) => (
     }
     {
       next ? (
-        <SectionLink sectionPath={next.id}>
+        <SectionLink sectionId={next.id}>
           <a title={astToString(next.title[currentLanguage])} className={css.next}>
             <Icon type="arrow-right" />
           </a>

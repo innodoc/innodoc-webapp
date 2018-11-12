@@ -6,8 +6,8 @@ import selectors from '../../store/selectors/app'
 // When the language changes we may need to (re-)load content.
 export default function* changeLanguage() {
   yield put(loadToc())
-  const sectionPath = yield select(selectors.getCurrentSectionId)
-  if (sectionPath) {
-    yield put(loadSection(sectionPath))
+  const sectionId = yield select(selectors.getCurrentSectionId)
+  if (sectionId) {
+    yield put(loadSection(sectionId))
   }
 }

@@ -12,8 +12,8 @@ import ErrorPage from './_error'
 class CoursePage extends React.Component {
   static getInitialProps({ query, store }) {
     const props = {}
-    if (query.sectionPath) {
-      store.dispatch(loadSection(query.sectionPath))
+    if (query.sectionId) {
+      store.dispatch(loadSection(query.sectionId))
     } else {
       props.err = { statusCode: 404 }
     }

@@ -18,9 +18,9 @@ const astToString = (ast) => {
   }).join('')
 }
 
-const getSectionHref = sectionPath => ({
-  href: { pathname: '/page', query: { sectionPath } },
-  as: `/page/${sectionPath}`,
+const getSectionHref = sectionId => ({
+  href: { pathname: '/page', query: { sectionId } },
+  as: `/page/${sectionId}`,
 })
 
 const unwrapPara = content => (

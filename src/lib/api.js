@@ -18,8 +18,8 @@ export function fetchToc(contentRoot, language) {
   return fetchJson(url)
 }
 
-export function fetchSection(contentRoot, language, sectionPath) {
+export function fetchSection(contentRoot, language, sectionId) {
   // 404 is ok and means section doesn't have any content
-  const url = `${contentRoot}${language}/${sectionPath}/content.json`
+  const url = `${contentRoot}${language}/${sectionId}/content.json`
   return fetchJson(url, [])
 }

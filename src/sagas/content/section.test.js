@@ -9,7 +9,7 @@ import sectionSelectors from '../../store/selectors/section'
 
 describe('loadSectionSaga', () => {
   const language = 'en'
-  const sectionPath = 'foo/bar'
+  const sectionId = 'foo/bar'
   const section = {
     content: {
       en: ['sectioncontent'],
@@ -17,7 +17,7 @@ describe('loadSectionSaga', () => {
   }
   const contentRoot = 'https://foo.com/content'
 
-  const gen = cloneableGenerator(loadSectionSaga)(loadSection(sectionPath))
+  const gen = cloneableGenerator(loadSectionSaga)(loadSection(sectionId))
 
   it('should not fetch a section without language', () => {
     const clone = gen.clone()
@@ -29,12 +29,12 @@ describe('loadSectionSaga', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(appSelectors.getLanguage))
     expect(clone.next(language).value).toEqual(
-      select(sectionSelectors.getSection, sectionPath))
+      select(sectionSelectors.getSection, sectionId))
     expect(clone.next().value).toEqual(select(appSelectors.getContentRoot))
     expect(clone.next(contentRoot).value).toEqual(
-      call(fetchSection, contentRoot, language, sectionPath))
+      call(fetchSection, contentRoot, language, sectionId))
     expect(clone.next(section.content[language]).value).toEqual(
-      put(loadSectionSuccess({ language, sectionPath, content: section.content[language] })))
+      put(loadSectionSuccess({ language, sectionId, content: section.content[language] })))
     expect(clone.next().done).toEqual(true)
   })
 
@@ -42,9 +42,9 @@ describe('loadSectionSaga', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(appSelectors.getLanguage))
     expect(clone.next(language).value).toEqual(
-      select(sectionSelectors.getSection, sectionPath))
+      select(sectionSelectors.getSection, sectionId))
     expect(clone.next(section).value).toEqual(
-      put(loadSectionSuccess({ language, sectionPath, content: section.content[language] })))
+      put(loadSectionSuccess({ language, sectionId, content: section.content[language] })))
     expect(clone.next().done).toEqual(true)
   })
 
@@ -52,10 +52,10 @@ describe('loadSectionSaga', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(appSelectors.getLanguage))
     expect(clone.next(language).value).toEqual(
-      select(sectionSelectors.getSection, sectionPath))
+      select(sectionSelectors.getSection, sectionId))
     expect(clone.next().value).toEqual(select(appSelectors.getContentRoot))
     expect(clone.next(contentRoot).value).toEqual(
-      call(fetchSection, contentRoot, language, sectionPath))
+      call(fetchSection, contentRoot, language, sectionId))
     const error = new Error('error')
     expect(clone.throw(error).value).toEqual(put(loadSectionFailure({ language, error })))
   })

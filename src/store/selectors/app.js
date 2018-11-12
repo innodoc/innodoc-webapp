@@ -12,7 +12,7 @@ const getError = state => getAppState(state).error
 
 const getContentRoot = state => getAppState(state).contentRoot
 
-// Used to be getCurrentSectionPath
+// Used to be getCurrentSectionId
 const getCurrentSectionId = state => getAppState(state).currentSectionId
 
 export default {

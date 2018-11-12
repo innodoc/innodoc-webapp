@@ -46,7 +46,7 @@ export default class Section extends Model {
         break
       case actionTypes.LOAD_SECTION_SUCCESS:
         sectionModel.upsert({
-          id: action.data.sectionPath,
+          id: action.data.sectionId,
           content: {
             [action.data.language]: action.data.content,
           },

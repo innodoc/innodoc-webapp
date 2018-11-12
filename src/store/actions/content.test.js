@@ -34,7 +34,7 @@ it('should dispatch LOAD_TOC_FAILURE action', () => {
 })
 
 it('should dispatch LOAD_SECTION action', () => {
-  expect(loadSection('foo/bar')).toEqual({ type: 'LOAD_SECTION', sectionPath: 'foo/bar' })
+  expect(loadSection('foo/bar')).toEqual({ type: 'LOAD_SECTION', sectionId: 'foo/bar' })
 })
 
 it('should dispatch LOAD_SECTION_SUCCESS action', () => {

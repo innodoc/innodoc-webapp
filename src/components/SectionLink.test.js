@@ -7,7 +7,7 @@ import SectionLink from './SectionLink'
 describe('<SectionLink />', () => {
   it('renders', () => {
     const wrapper = shallow(
-      <SectionLink sectionPath="foo/bar">
+      <SectionLink sectionId="foo/bar">
         <a>
           Hello World!
         </a>
@@ -17,7 +17,7 @@ describe('<SectionLink />', () => {
     expect(link).toExist()
     expect(link.prop('href')).toEqual({
       pathname: '/page',
-      query: { sectionPath: 'foo/bar' },
+      query: { sectionId: 'foo/bar' },
     })
     expect(link.prop('as')).toBe('/page/foo/bar')
     expect(wrapper.find('a')).toExist()
