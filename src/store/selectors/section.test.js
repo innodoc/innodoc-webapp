@@ -51,7 +51,7 @@ const dummyState = () => {
 
   Section.create({
     id: 'test/child1/child11',
-    ord: '000',
+    ord: [0, 0, 0],
     title: {
       en: 'test child11 title',
     },
@@ -63,7 +63,7 @@ const dummyState = () => {
 
   Section.create({
     id: 'test/child1/child12',
-    ord: '001',
+    ord: [0, 0, 1],
     title: {
       en: 'test child12 title',
     },
@@ -118,7 +118,7 @@ describe('section selectors', () => {
       next: state.db.Section.itemsById['test/child1'],
     })
     expect(selectors.getNavSections(state, 'test/child2')).toEqual({
-      prev: state.db.Section.itemsById['test/child1'],
+      prev: state.db.Section.itemsById['test/child1/child12'],
       next: null,
     })
     expect(selectors.getNavSections(state, 'test/child1')).toEqual({

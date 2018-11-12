@@ -29,12 +29,8 @@ const MessageModal = ({ t, message, onClose }) => {
       visible
     >
       <Icon type={iconType} className={css.icon} />
-      <h4>
-        {title}
-      </h4>
-      <p>
-        {msg}
-      </p>
+      <h4>{title}</h4>
+      <p>{msg}</p>
     </Modal>
   )
 }
