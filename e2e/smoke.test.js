@@ -8,11 +8,10 @@ describe('Initial smoke test', () => {
 
   it('should have a menu, footer and toc', async () => {
     const title = await page.title()
-
     expect(title).toContain('innoDoc')
-    expect(await page.exists('.header.item')).toEqual(true)
-
-    const menuText = await page.extractText('.ui.stackable.menu .header.item:first-child')
-    expect(menuText).toContain('Preparatory Mathematics')
+    expect(await page.exists('.ant-menu')).toEqual(true)
+    expect(await page.exists('[class^=header]')).toEqual(true)
+    expect(await page.exists('[class^=footer]')).toEqual(true)
+    expect(await page.exists('[class^=content]')).toEqual(true)
   })
 })
