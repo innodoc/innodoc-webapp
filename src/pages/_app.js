@@ -25,15 +25,15 @@ import 'antd/lib/card/style/index.less'
 import 'antd/lib/collapse/style/index.less'
 
 import configureStore from '../store'
-import { setContentRoot, loadToc } from '../store/actions/content'
+import { setContentRoot, loadManifest } from '../store/actions/content'
 
 class InnoDocApp extends App {
   static async getInitialProps({ Component, ctx }) {
     if (ctx.isServer) {
       // set initial content URL
       ctx.store.dispatch(setContentRoot(ctx.res.locals.contentRoot))
-      // initially load TOC
-      ctx.store.dispatch(loadToc())
+      // load content manifest on start-up
+      ctx.store.dispatch(loadManifest())
     }
     // call getInitialProps from page
     const pageProps = Component.getInitialProps

@@ -28,19 +28,17 @@ export default class Section extends Model {
     sectionModel.upsert({
       id: currentPath.join('/'),
       ord,
-      title: {
-        [lang]: node.title,
-      },
+      title: node.title,
       parentId: path.join('/') === '' ? null : path.join('/'),
     })
   }
 
   static reducer(action, sectionModel) {
     switch (action.type) {
-      case actionTypes.LOAD_TOC_SUCCESS:
+      case actionTypes.LOAD_MANIFEST_SUCCESS:
         // Don't parse already parsed content
         if (!action.data.parsed) {
-          action.data.content.forEach(
+          action.data.content.toc.forEach(
             (node, idx) => this.parseTOC(action.data.language, [], [idx], node, sectionModel))
         }
         break
