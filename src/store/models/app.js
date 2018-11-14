@@ -17,14 +17,20 @@ export default class App extends Model {
       currentSectionId: fk('Section'),
       error: attr({ getDefault: () => undefined }),
       language: attr({ getDefault: () => null }),
+      languages: attr({ getDefault: () => null }),
       message: attr({ getDefault: () => null }),
       sidebarVisible: attr({ getDefault: () => false }),
+      title: attr({ getDefault: () => null }),
     }
   }
 
   static reducer(action, appModel) {
     const app = appModel.withId(0)
     switch (action.type) {
+      case contentActionTypes.LOAD_MANIFEST_SUCCESS:
+        app.set('title', action.data.content.title)
+        app.set('languages', action.data.content.languages)
+        break
       case contentActionTypes.LOAD_SECTION:
         app.set('currentSectionId', null)
         break

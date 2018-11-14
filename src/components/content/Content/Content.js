@@ -65,12 +65,13 @@ const mapStateToProps = (state) => {
   let ret = { loading: true }
   const id = appSelectors.getCurrentSectionId(state)
   if (id) {
+    const language = appSelectors.getLanguage(state)
     const section = sectionSelectors.getSection(state, id)
-    if (section) {
+    if (section && section.content[language]) {
       ret = {
         loading: false,
         section,
-        currentLanguage: appSelectors.getLanguage(state),
+        currentLanguage: language,
       }
     }
   }

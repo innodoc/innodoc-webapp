@@ -1,29 +1,29 @@
 export const actionTypes = {
-  LOAD_TOC: 'LOAD_TOC',
-  LOAD_TOC_SUCCESS: 'LOAD_TOC_SUCCESS',
-  LOAD_TOC_FAILURE: 'LOAD_TOC_FAILURE',
+  LOAD_MANIFEST: 'LOAD_MANIFEST',
+  LOAD_MANIFEST_SUCCESS: 'LOAD_MANIFEST_SUCCESS',
+  LOAD_MANIFEST_FAILURE: 'LOAD_MANIFEST_FAILURE',
   LOAD_SECTION: 'LOAD_SECTION',
   LOAD_SECTION_SUCCESS: 'LOAD_SECTION_SUCCESS',
   LOAD_SECTION_FAILURE: 'LOAD_SECTION_FAILURE',
   SET_CONTENT_ROOT: 'SET_CONTENT_ROOT',
 }
 
-export function loadToc() {
+export function loadManifest() {
   return {
-    type: actionTypes.LOAD_TOC,
+    type: actionTypes.LOAD_MANIFEST,
   }
 }
 
-export function loadTocSuccess(data) {
+export function loadManifestSuccess(data) {
   return {
-    type: actionTypes.LOAD_TOC_SUCCESS,
+    type: actionTypes.LOAD_MANIFEST_SUCCESS,
     data,
   }
 }
 
-export function loadTocFailure(error) {
+export function loadManifestFailure(error) {
   return {
-    type: actionTypes.LOAD_TOC_FAILURE,
+    type: actionTypes.LOAD_MANIFEST_FAILURE,
     error,
   }
 }

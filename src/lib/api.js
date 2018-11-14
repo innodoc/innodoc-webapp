@@ -13,8 +13,8 @@ function fetchJson(url, accept404 = false) {
     })
 }
 
-export function fetchToc(contentRoot, language) {
-  const url = `${contentRoot}${language}/toc.json`
+export function fetchManifest(contentRoot) {
+  const url = `${contentRoot}/manifest.json`
   return fetchJson(url)
 }
 
