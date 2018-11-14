@@ -1,19 +1,25 @@
 import orm from '../orm'
 import SectionModel from './section'
-import { loadSectionSuccess, loadTocSuccess } from '../actions/content'
+import { loadSectionSuccess, loadManifestSuccess } from '../actions/content'
 
 const toc = [
   {
     id: 'test',
-    title: 'test title',
+    title: {
+      en: 'test title',
+    },
     children: [
       {
         id: 'child1',
-        title: 'test child1 title',
+        title: {
+          en: 'test child1 title',
+        },
       },
       {
         id: 'child2',
-        title: 'test child2 title',
+        title: {
+          en: 'test child2 title',
+        },
       },
     ],
   },
@@ -67,7 +73,7 @@ describe('reducer', () => {
     const resultState = loadToc(state)
 
     const session = orm.session(state)
-    SectionModel.reducer(loadTocSuccess({ language: 'en', content: toc }), session.Section)
+    SectionModel.reducer(loadManifestSuccess({ language: 'en', content: { toc } }), session.Section)
 
     expect(session.state).toEqual(resultState)
   })
