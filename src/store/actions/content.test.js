@@ -1,34 +1,34 @@
 import {
-  loadToc,
-  loadTocSuccess,
-  loadTocFailure,
+  loadManifest,
+  loadManifestSuccess,
+  loadManifestFailure,
   loadSection,
   loadSectionSuccess,
   loadSectionFailure,
   setContentRoot,
 } from './content'
 
-it('should dispatch LOAD_TOC action', () => {
-  expect(loadToc()).toEqual({ type: 'LOAD_TOC' })
+it('should dispatch LOAD_MANIFEST action', () => {
+  expect(loadManifest()).toEqual({ type: 'LOAD_MANIFEST' })
 })
 
-it('should dispatch LOAD_TOC_SUCCESS action', () => {
+it('should dispatch LOAD_MANIFEST_SUCCESS action', () => {
   const data = [
     {
       title: [{ t: 'Str', c: 'Foo section' }],
       id: 'foo-section',
     },
   ]
-  expect(loadTocSuccess(data)).toEqual({
-    type: 'LOAD_TOC_SUCCESS',
+  expect(loadManifestSuccess(data)).toEqual({
+    type: 'LOAD_MANIFEST_SUCCESS',
     data,
   })
 })
 
-it('should dispatch LOAD_TOC_FAILURE action', () => {
+it('should dispatch LOAD_MANIFEST_FAILURE action', () => {
   const error = { msg: 'Something went wrong!' }
-  expect(loadTocFailure(error)).toEqual({
-    type: 'LOAD_TOC_FAILURE',
+  expect(loadManifestFailure(error)).toEqual({
+    type: 'LOAD_MANIFEST_FAILURE',
     error,
   })
 })
