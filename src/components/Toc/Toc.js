@@ -9,21 +9,22 @@ import appSelectors from '../../store/selectors/app'
 import sectionSelectors from '../../store/selectors/section'
 import { tocTreeType } from '../../lib/propTypes'
 import { astToString } from '../../lib/util'
+import ContentFragment from '../content/ContentFragment'
+import Placeholder from '../content/Content/Placeholder'
 import SectionLink from '../SectionLink'
 
 class Toc extends React.Component {
   static propTypes = {
-    toc: tocTreeType.isRequired,
     currentSectionId: PropTypes.string,
     currentLanguage: PropTypes.string.isRequired,
-    header: PropTypes.string,
+    title: PropTypes.shape({}),
+    toc: tocTreeType.isRequired,
     expandAll: PropTypes.bool,
   }
 
   static defaultProps = {
     ...React.Component.defaultProps,
     currentSectionId: null,
-    header: null,
     expandAll: false,
   }
 
@@ -107,8 +108,9 @@ class Toc extends React.Component {
 
   render() {
     const {
+      currentLanguage,
       toc,
-      header,
+      title,
       expandAll,
     } = this.props
 
@@ -118,10 +120,14 @@ class Toc extends React.Component {
       ? { defaultExpandAll: true }
       : { expandedKeys }
 
+    const header = title && title[currentLanguage]
+      ? <ContentFragment content={title[currentLanguage]} />
+      : null
+
     return (
       <div className={css.tocWrapper}>
         <h2>
-          {header || 'TODO: fill in course title'}
+          {header}
         </h2>
         <Tree
           className={classNames({ [css.disableExpand]: expandAll })}
@@ -136,9 +142,10 @@ class Toc extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  toc: sectionSelectors.getToc(state),
   currentLanguage: appSelectors.getLanguage(state),
   currentSectionId: appSelectors.getCurrentSectionId(state),
+  title: appSelectors.getTitle(state),
+  toc: sectionSelectors.getToc(state),
 })
 
 export { Toc } // for testing
