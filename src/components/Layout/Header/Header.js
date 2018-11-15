@@ -16,34 +16,42 @@ import css from './style.sass'
 import appSelectors from '../../../store/selectors/app'
 import { changeLanguage } from '../../../store/actions/i18n'
 import { toggleSidebar } from '../../../store/actions/ui'
+import SectionLink from '../../SectionLink'
 
 const Header = ({
+  homeLink,
+  languages,
   t,
   dispatchChangeLanguage,
   dispatchToggleSidebar,
   sidebarVisible,
   disableSidebar,
 }) => {
-  // TODO: use home link (#54)
   const logo = (
-    <Link href="/">
-      <a className={css.logoLink}>
-        <Row>
-          <Col xs={6} sm={6} md={8} lg={8} xl={8} className={css.headerLogoWrapper}>
-            <img
-              alt={t('header.tmpTitle')}
-              src="/static/img/m4r-logo-simple.png"
-            />
-          </Col>
-          <Col xs={18} sm={18} md={16} lg={16} xl={16}>
-            <span className={css.headerTitle}>
-              {t('header.tmpTitle')}
-            </span>
-          </Col>
-        </Row>
-      </a>
-    </Link>
+    <a className={css.logoLink}>
+      <Row>
+        <Col xs={6} sm={6} md={8} lg={8} xl={8} className={css.headerLogoWrapper}>
+          <img
+            alt={t('header.tmpTitle')}
+            src="/static/img/m4r-logo-simple.png"
+          />
+        </Col>
+        <Col xs={18} sm={18} md={16} lg={16} xl={16}>
+          <span className={css.headerTitle}>
+            {t('header.tmpTitle')}
+          </span>
+        </Col>
+      </Row>
+    </a>
   )
+
+  const logoWrapper = homeLink
+    ? (
+      <SectionLink sectionId={homeLink}>
+        {logo}
+      </SectionLink>
+    )
+    : logo
 
   const userMenuTitle = (
     <span>
@@ -80,8 +88,7 @@ const Header = ({
     </span>
   )
 
-  // TODO: get languages from store
-  const languageOptions = ['de', 'en'].map(lang => (
+  const languageOptions = languages.map(lang => (
     <Menu.Item key={`language-${lang}`} onClick={() => dispatchChangeLanguage(lang)}>
       {t(`languages.${lang}`)}
     </Menu.Item>
@@ -141,7 +148,7 @@ const Header = ({
           lg={{ span: 7, push: 0 }}
           xl={{ span: 5, push: 0 }}
         >
-          {logo}
+          {logoWrapper}
         </Col>
         <Col
           xs={{ span: 2, pull: 20 }}
@@ -165,6 +172,8 @@ const Header = ({
 }
 
 Header.propTypes = {
+  homeLink: PropTypes.string,
+  languages: PropTypes.arrayOf(PropTypes.string).isRequired,
   t: PropTypes.func.isRequired,
   dispatchChangeLanguage: PropTypes.func.isRequired,
   dispatchToggleSidebar: PropTypes.func.isRequired,
@@ -172,7 +181,13 @@ Header.propTypes = {
   disableSidebar: PropTypes.bool.isRequired,
 }
 
+Header.defaultProps = {
+  homeLink: null,
+}
+
 const mapStateToProps = state => ({
+  homeLink: appSelectors.getHomeLink(state),
+  languages: appSelectors.getLanguages(state),
   sidebarVisible: appSelectors.getSidebarVisible(state),
 })
 

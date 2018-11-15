@@ -10,7 +10,6 @@ import sectionSelectors from '../../store/selectors/section'
 import { tocTreeType } from '../../lib/propTypes'
 import { astToString } from '../../lib/util'
 import ContentFragment from '../content/ContentFragment'
-import Placeholder from '../content/Content/Placeholder'
 import SectionLink from '../SectionLink'
 
 class Toc extends React.Component {

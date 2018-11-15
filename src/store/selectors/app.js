@@ -2,6 +2,8 @@ import ormSelectors from './orm'
 
 const getAppState = state => ormSelectors.getDB(state).App.itemsById[0]
 
+const getHomeLink = state => getAppState(state).homeLink
+
 const getLanguage = state => getAppState(state).language
 
 const getLanguages = state => getAppState(state).languages
@@ -24,6 +26,7 @@ export default {
   getContentRoot,
   getCurrentSectionId,
   getError,
+  getHomeLink,
   getLanguage,
   getLanguages,
   getMessage,
