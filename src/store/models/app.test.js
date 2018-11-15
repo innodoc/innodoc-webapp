@@ -30,7 +30,15 @@ describe('reducer', () => {
     const session = orm.session(state)
     session.App.withId(0).set('language', 'foo')
     AppModel.reducer(loadManifestSuccess({
-      content: { languages: ['foo'], title: { foo: ['bar'] } },
+      content: {
+        languages: ['foo'],
+        title: { foo: ['bar'] },
+        toc: [
+          {
+            id: 'test',
+          },
+        ],
+      },
       parsed: false,
     }), session.App)
 
@@ -57,6 +65,44 @@ describe('reducer', () => {
       content: { languages: ['foobar'], title: [] },
       parsed: false,
     }), session.App)).toThrow()
+  })
+
+  test('load manifest with homeLink', () => {
+    const state = createEmptyState()
+
+    const session = orm.session(state)
+    session.App.withId(0).set('language', 'foo')
+    AppModel.reducer(loadManifestSuccess({
+      content: {
+        homeLink: 'test/child1',
+        languages: ['foo'],
+        title: { foo: ['bar'] },
+      },
+      parsed: false,
+    }), session.App)
+
+    expect(session.state.App.itemsById[0].homeLink).toEqual('test/child1')
+  })
+
+  test('load manifest without homeLink', () => {
+    const state = createEmptyState()
+
+    const session = orm.session(state)
+    session.App.withId(0).set('language', 'foo')
+    AppModel.reducer(loadManifestSuccess({
+      content: {
+        languages: ['foo'],
+        title: { foo: ['bar'] },
+        toc: [
+          {
+            id: 'blub',
+          },
+        ],
+      },
+      parsed: false,
+    }), session.App)
+
+    expect(session.state.App.itemsById[0].homeLink).toEqual('blub')
   })
 
   test('load section', () => {
