@@ -1,6 +1,11 @@
 import orm from '../orm'
 import AppModel from './app'
-import { loadSection, loadSectionFailure, setContentRoot } from '../actions/content'
+import {
+  loadManifestSuccess,
+  loadSection,
+  loadSectionFailure,
+  setContentRoot,
+} from '../actions/content'
 import { changeLanguage } from '../actions/i18n'
 import { clearMessage, showMessage, toggleSidebar } from '../actions/ui'
 
@@ -19,6 +24,41 @@ const createEmptyState = () => {
 }
 
 describe('reducer', () => {
+  test('load manifest', () => {
+    const state = createEmptyState()
+
+    const session = orm.session(state)
+    session.App.withId(0).set('language', 'foo')
+    AppModel.reducer(loadManifestSuccess({
+      content: { languages: ['foo'], title: { foo: ['bar'] } },
+      parsed: false,
+    }), session.App)
+
+    expect(session.state.App.itemsById[0].languages).toEqual(['foo'])
+    expect(session.state.App.itemsById[0].title).toEqual({ foo: ['bar'] })
+  })
+
+  test('load manifest should throw error', () => {
+    const state = createEmptyState()
+
+    const session = orm.session(state)
+    expect(() => AppModel.reducer(loadManifestSuccess({ parsed: false }), session.App)).toThrow()
+    expect(() => AppModel.reducer(loadManifestSuccess({ content: {}, parsed: false }), session.App))
+      .toThrow()
+    expect(() => AppModel.reducer(loadManifestSuccess({
+      content: { languages: [] },
+      parsed: false,
+    }), session.App)).toThrow()
+    expect(() => AppModel.reducer(loadManifestSuccess({
+      content: { languages: ['foobar'] },
+      parsed: false,
+    }), session.App)).toThrow()
+    expect(() => AppModel.reducer(loadManifestSuccess({
+      content: { languages: ['foobar'], title: [] },
+      parsed: false,
+    }), session.App)).toThrow()
+  })
+
   test('load section', () => {
     const state = createEmptyState()
 

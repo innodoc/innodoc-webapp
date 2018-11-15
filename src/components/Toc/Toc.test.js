@@ -33,7 +33,7 @@ describe('<Toc />', () => {
       <Toc
         toc={toc}
         currentLanguage="en"
-        header="Foobar"
+        title={{ en: ['Foobar'] }}
       />
     )
     expect(wrapper.find(Tree)).toExist()
@@ -45,10 +45,11 @@ describe('<Toc />', () => {
       <Toc
         toc={toc}
         currentLanguage="en"
-        header="Foobar"
+        title={{ en: ['Foobar'] }}
       />
     )
-    expect(wrapper.find('h2').text()).toBe('Foobar')
+    expect(wrapper.find('h2').find('ContentFragment')).toHaveLength(1)
+    expect(wrapper.find('h2').find('ContentFragment').prop('content')).toEqual(['Foobar'])
   })
 
   it('renders with active section', () => {
