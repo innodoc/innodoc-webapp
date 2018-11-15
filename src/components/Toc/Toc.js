@@ -9,21 +9,22 @@ import appSelectors from '../../store/selectors/app'
 import sectionSelectors from '../../store/selectors/section'
 import { tocTreeType } from '../../lib/propTypes'
 import { astToString } from '../../lib/util'
+import ContentFragment from '../content/ContentFragment'
+import Placeholder from '../content/Content/Placeholder'
 import SectionLink from '../SectionLink'
 
 class Toc extends React.Component {
   static propTypes = {
-    toc: tocTreeType.isRequired,
     currentSectionId: PropTypes.string,
     currentLanguage: PropTypes.string.isRequired,
-    header: PropTypes.string,
+    header: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    toc: tocTreeType.isRequired,
     expandAll: PropTypes.bool,
   }
 
   static defaultProps = {
     ...React.Component.defaultProps,
     currentSectionId: null,
-    header: null,
     expandAll: false,
   }
 
@@ -121,7 +122,7 @@ class Toc extends React.Component {
     return (
       <div className={css.tocWrapper}>
         <h2>
-          {header || 'TODO: fill in course title'}
+          {header}
         </h2>
         <Tree
           className={classNames({ [css.disableExpand]: expandAll })}
@@ -135,11 +136,24 @@ class Toc extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  toc: sectionSelectors.getToc(state),
-  currentLanguage: appSelectors.getLanguage(state),
-  currentSectionId: appSelectors.getCurrentSectionId(state),
-})
+const mapStateToProps = (state) => {
+  const language = appSelectors.getLanguage(state)
+
+  let title = appSelectors.getTitle(state)
+  if (title && title[language]) {
+    title = title[language]
+  }
+
+  const header = title === null
+    ? (<Placeholder />)
+    : (<ContentFragment content={title} />)
+  return {
+    currentLanguage: language,
+    currentSectionId: appSelectors.getCurrentSectionId(state),
+    header,
+    toc: sectionSelectors.getToc(state),
+  }
+}
 
 export { Toc } // for testing
 export default connect(mapStateToProps)(Toc)

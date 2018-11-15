@@ -24,12 +24,31 @@ export default class App extends Model {
     }
   }
 
+  static parseManifest(app, manifest) {
+    if (manifest === undefined || manifest === null) {
+      throw new Error('empty manifest!')
+    }
+
+    if (manifest.languages && manifest.languages.length > 0) {
+      app.set('languages', manifest.languages)
+    } else {
+      throw new Error('no or empty language array in manifest!')
+    }
+
+    if (manifest.title
+      && manifest.title[app.language]
+      && manifest.title[app.language].length > 0) {
+      app.set('title', manifest.title)
+    } else {
+      throw new Error('no or empty course title in manifest!')
+    }
+  }
+
   static reducer(action, appModel) {
     const app = appModel.withId(0)
     switch (action.type) {
       case contentActionTypes.LOAD_MANIFEST_SUCCESS:
-        app.set('title', action.data.content.title)
-        app.set('languages', action.data.content.languages)
+        this.parseManifest(app, action.data.content)
         break
       case contentActionTypes.LOAD_SECTION:
         app.set('currentSectionId', null)

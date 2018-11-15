@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 import Tree from 'antd/lib/tree'
 
 import { Toc } from './Toc'
+import ContentFragment from '../content/ContentFragment'
 
 describe('<Toc />', () => {
   const toc = [
@@ -33,7 +34,7 @@ describe('<Toc />', () => {
       <Toc
         toc={toc}
         currentLanguage="en"
-        header="Foobar"
+        header={['Foobar']}
       />
     )
     expect(wrapper.find(Tree)).toExist()
@@ -45,10 +46,11 @@ describe('<Toc />', () => {
       <Toc
         toc={toc}
         currentLanguage="en"
-        header="Foobar"
+        header={(<ContentFragment content={['Foobar']} />)}
       />
     )
-    expect(wrapper.find('h2').text()).toBe('Foobar')
+    expect(wrapper.find('h2').find('ContentFragment')).toHaveLength(1)
+    expect(wrapper.find('h2').find('ContentFragment').prop('content')).toEqual(['Foobar'])
   })
 
   it('renders with active section', () => {
