@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Link from 'next/link'
 
 import { contentType } from '../../../../lib/propTypes'
 import ContentFragment from '..'
 import InputHint from '../cards/InputHint'
+import SectionLink from '../../../SectionLink'
 import css from './debug-style.sass'
 
 const IndexSpan = ({ indexConcept, content }) => (
@@ -16,18 +16,6 @@ IndexSpan.propTypes = {
   indexConcept: PropTypes.string.isRequired,
   content: contentType.isRequired,
 }
-
-// TODO: use components/SectionLink (#14)
-const SectionLink = ({ section }) => (
-  // insert proper href and section Title as text
-  <Link href={section}>
-    <a>
-      {section}
-    </a>
-  </Link>
-)
-
-SectionLink.propTypes = { section: PropTypes.string.isRequired }
 
 const HintText = ({ content }) => (
   <span className="hint-text">
@@ -43,7 +31,15 @@ const Span = ({ data }) => {
     const attr = attributes[0][0]
     const val = attributes[0][1]
     if (attr === 'data-index-concept') { return <IndexSpan indexConcept={val} content={content} /> }
-    if (attr === 'data-link-section') { return <SectionLink section={val} /> }
+    if (attr === 'data-link-section') {
+      return (
+        <SectionLink sectionId={val}>
+          <a>
+            <ContentFragment content={content} />
+          </a>
+        </SectionLink>
+      )
+    }
   }
 
   if (classNames.includes('hint-text')) {
