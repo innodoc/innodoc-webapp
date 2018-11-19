@@ -5,20 +5,30 @@ import { withNamespaces } from 'react-i18next'
 import AntBreadcrumb from 'antd/lib/breadcrumb'
 import Icon from 'antd/lib/icon'
 
+import appSelectors from '../../../store/selectors/app'
 import sectionSelectors from '../../../store/selectors/section'
 import ContentFragment from '../ContentFragment'
 import SectionLink from '../../SectionLink'
 import css from './style.sass'
 
-const Breadcrumb = ({ sections, t }) => {
-  // TODO: use home link (#54)
+const Breadcrumb = ({ homeLink, sections, t }) => {
   const breadcrumbItems = [(
     <AntBreadcrumb.Item key="root">
-      <SectionLink sectionId="">
-        <a title={t('content.home')}>
-          <Icon type="home" />
-        </a>
-      </SectionLink>
+      {
+        homeLink
+          ? (
+            <SectionLink sectionId={homeLink}>
+              <a title={t('content.home')}>
+                <Icon type="home" />
+              </a>
+            </SectionLink>
+          )
+          : (
+            <a title={t('content.home')}>
+              <Icon type="home" />
+            </a>
+          )
+      }
     </AntBreadcrumb.Item>
   )].concat(
     sections.map(section => (
@@ -39,11 +49,17 @@ const Breadcrumb = ({ sections, t }) => {
 }
 
 Breadcrumb.propTypes = {
+  homeLink: PropTypes.string,
   sections: PropTypes.arrayOf(PropTypes.any).isRequired,
   t: PropTypes.func.isRequired,
 }
 
+Breadcrumb.defaultProps = {
+  homeLink: null,
+}
+
 const mapStateToProps = state => ({
+  homeLink: appSelectors.getHomeLink(state),
   sections: sectionSelectors.getBreadcrumbSections(state),
 })
 

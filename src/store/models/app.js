@@ -16,6 +16,7 @@ export default class App extends Model {
       contentRoot: attr({ getDefault: () => '' }),
       currentSectionId: fk('Section'),
       error: attr({ getDefault: () => undefined }),
+      homeLink: attr({ getDefault: () => null }),
       language: attr({ getDefault: () => null }),
       languages: attr({ getDefault: () => null }),
       message: attr({ getDefault: () => null }),
@@ -27,6 +28,15 @@ export default class App extends Model {
   static parseManifest(app, manifest) {
     if (manifest === undefined || manifest === null) {
       throw new Error('empty manifest!')
+    }
+
+    if (manifest.homeLink) {
+      // TODO: Check if homeLink is a valid sectionID
+      app.set('homeLink', manifest.homeLink)
+    } else {
+      // NOTE: This assumes that the TOC is not empty!
+      // Use first section as homeLink
+      app.set('homeLink', manifest.toc[0].id)
     }
 
     if (manifest.languages && manifest.languages.length > 0) {

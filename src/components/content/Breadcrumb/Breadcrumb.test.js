@@ -23,7 +23,7 @@ describe('<Breadcrumb />', () => {
 
   it('renders', () => {
     const wrapper = shallow(
-      <Breadcrumb sections={sections} t={() => {}} />
+      <Breadcrumb homeLink="section1" sections={sections} t={() => {}} />
     )
     expect(wrapper.find(AntBreadcrumb)).toExist()
     expect(wrapper.find(AntBreadcrumb.Item)).toHaveLength(4)

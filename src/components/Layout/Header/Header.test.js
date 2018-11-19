@@ -11,6 +11,7 @@ describe('<Header />', () => {
   const mockDispatchToggleSidebar = jest.fn()
   const wrapper = shallow(
     <Header
+      languages={['de', 'en']}
       dispatchChangeLanguage={mockDispatchChangeLanguage}
       dispatchToggleSidebar={mockDispatchToggleSidebar}
       disableSidebar={false}
