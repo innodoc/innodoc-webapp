@@ -14,13 +14,14 @@ import Icon from 'antd/lib/icon'
 
 import css from './style.sass'
 import appSelectors from '../../../store/selectors/app'
+import courseSelectors from '../../../store/selectors/course'
 import { changeLanguage } from '../../../store/actions/i18n'
 import { toggleSidebar } from '../../../store/actions/ui'
 import SectionLink from '../../SectionLink'
+import { courseType } from '../../../lib/propTypes'
 
 const Header = ({
-  homeLink,
-  languages,
+  course,
   t,
   dispatchChangeLanguage,
   dispatchToggleSidebar,
@@ -45,9 +46,9 @@ const Header = ({
     </a>
   )
 
-  const logoWrapper = homeLink
+  const logoWrapper = course && course.homeLink
     ? (
-      <SectionLink sectionId={homeLink}>
+      <SectionLink sectionId={course.homeLink}>
         {logo}
       </SectionLink>
     )
@@ -88,7 +89,7 @@ const Header = ({
     </span>
   )
 
-  const languageOptions = languages.map(lang => (
+  const languageOptions = (course && course.languages ? course.languages : []).map(lang => (
     <Menu.Item key={`language-${lang}`} onClick={() => dispatchChangeLanguage(lang)}>
       {t(`languages.${lang}`)}
     </Menu.Item>
@@ -172,8 +173,7 @@ const Header = ({
 }
 
 Header.propTypes = {
-  homeLink: PropTypes.string,
-  languages: PropTypes.arrayOf(PropTypes.string).isRequired,
+  course: courseType,
   t: PropTypes.func.isRequired,
   dispatchChangeLanguage: PropTypes.func.isRequired,
   dispatchToggleSidebar: PropTypes.func.isRequired,
@@ -182,12 +182,11 @@ Header.propTypes = {
 }
 
 Header.defaultProps = {
-  homeLink: null,
+  course: null,
 }
 
 const mapStateToProps = state => ({
-  homeLink: appSelectors.getHomeLink(state),
-  languages: appSelectors.getLanguages(state),
+  course: courseSelectors.getCurrentCourse(state),
   sidebarVisible: appSelectors.getSidebarVisible(state),
 })
 

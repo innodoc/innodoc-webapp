@@ -21,9 +21,16 @@ const exValidatorArgType = PropTypes.oneOfType([
   PropTypes.shape({}),
   PropTypes.shape({ precision: PropTypes.number }),
 ])
+const courseType = PropTypes.shape({
+  currentSectionId: PropTypes.string,
+  homeLink: PropTypes.string,
+  languages: PropTypes.arrayOf(PropTypes.string),
+  title: PropTypes.shape({}),
+})
 
 export {
   childrenType,
+  courseType,
   contentType,
   exValidatorArgType,
   messageType,

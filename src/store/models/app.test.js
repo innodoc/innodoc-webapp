@@ -1,8 +1,7 @@
 import orm from '../orm'
 import AppModel from './app'
 import {
-  loadManifestSuccess,
-  loadSection,
+  changeCourse,
   loadSectionFailure,
   setContentRoot,
 } from '../actions/content'
@@ -17,96 +16,12 @@ const createEmptyState = () => {
   // Creating default app state
   App.create({
     id: 0,
-    currentSectionId: null,
   })
 
   return state
 }
 
 describe('reducer', () => {
-  test('load manifest', () => {
-    const state = createEmptyState()
-
-    const session = orm.session(state)
-    session.App.withId(0).set('language', 'foo')
-    AppModel.reducer(loadManifestSuccess({
-      content: {
-        languages: ['foo'],
-        title: { foo: ['bar'] },
-        toc: [{ id: 'test' }],
-      },
-      parsed: false,
-    }), session.App)
-
-    expect(session.state.App.itemsById[0].languages).toEqual(['foo'])
-    expect(session.state.App.itemsById[0].title).toEqual({ foo: ['bar'] })
-  })
-
-  test('load manifest should throw error', () => {
-    const state = createEmptyState()
-
-    const session = orm.session(state)
-    expect(() => AppModel.reducer(loadManifestSuccess({ parsed: false }), session.App)).toThrow()
-    expect(() => AppModel.reducer(loadManifestSuccess({ content: {}, parsed: false }), session.App))
-      .toThrow()
-    expect(() => AppModel.reducer(loadManifestSuccess({
-      content: { languages: [] },
-      parsed: false,
-    }), session.App)).toThrow()
-    expect(() => AppModel.reducer(loadManifestSuccess({
-      content: { languages: ['foobar'] },
-      parsed: false,
-    }), session.App)).toThrow()
-    expect(() => AppModel.reducer(loadManifestSuccess({
-      content: { languages: ['foobar'], title: [] },
-      parsed: false,
-    }), session.App)).toThrow()
-  })
-
-  test('load manifest with homeLink', () => {
-    const state = createEmptyState()
-
-    const session = orm.session(state)
-    session.App.withId(0).set('language', 'foo')
-    AppModel.reducer(loadManifestSuccess({
-      content: {
-        homeLink: 'test/child1',
-        languages: ['foo'],
-        title: { foo: ['bar'] },
-      },
-      parsed: false,
-    }), session.App)
-
-    expect(session.state.App.itemsById[0].homeLink).toEqual('test/child1')
-  })
-
-  test('load manifest without homeLink', () => {
-    const state = createEmptyState()
-
-    const session = orm.session(state)
-    session.App.withId(0).set('language', 'foo')
-    AppModel.reducer(loadManifestSuccess({
-      content: {
-        languages: ['foo'],
-        title: { foo: ['bar'] },
-        toc: [{ id: 'blub' }],
-      },
-      parsed: false,
-    }), session.App)
-
-    expect(session.state.App.itemsById[0].homeLink).toEqual('blub')
-  })
-
-  test('load section', () => {
-    const state = createEmptyState()
-
-    const session = orm.session(state)
-    session.App.withId(0).set('currentSectionId', 'bla')
-    AppModel.reducer(loadSection(), session.App)
-
-    expect(session.state.App.itemsById[0].currentSectionId).toEqual(null)
-  })
-
   test('load section failure', () => {
     const state = createEmptyState()
 
@@ -123,6 +38,15 @@ describe('reducer', () => {
     AppModel.reducer(setContentRoot('nowhere'), session.App)
 
     expect(session.state.App.itemsById[0].contentRoot).toEqual('nowhere')
+  })
+
+  test('change course', () => {
+    const state = createEmptyState()
+
+    const session = orm.session(state)
+    AppModel.reducer(changeCourse(0), session.App)
+
+    expect(session.state.App.itemsById[0].currentCourseId).toEqual(0)
   })
 
   test('change language', () => {

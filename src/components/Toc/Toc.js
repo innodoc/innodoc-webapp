@@ -6,38 +6,42 @@ import Tree from 'antd/lib/tree'
 
 import css from './style.sass'
 import appSelectors from '../../store/selectors/app'
+import courseSelectors from '../../store/selectors/course'
 import sectionSelectors from '../../store/selectors/section'
-import { tocTreeType } from '../../lib/propTypes'
+import { courseType, tocTreeType } from '../../lib/propTypes'
 import { astToString } from '../../lib/util'
 import ContentFragment from '../content/ContentFragment'
 import SectionLink from '../SectionLink'
 
 class Toc extends React.Component {
   static propTypes = {
-    currentSectionId: PropTypes.string,
+    course: courseType,
     currentLanguage: PropTypes.string.isRequired,
-    title: PropTypes.shape({}),
     toc: tocTreeType.isRequired,
     expandAll: PropTypes.bool,
   }
 
   static defaultProps = {
     ...React.Component.defaultProps,
-    currentSectionId: null,
+    course: null,
     expandAll: false,
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      expandedKeys: props.currentSectionId ? [props.currentSectionId] : [],
+      expandedKeys: props.course && props.course.currentSectionId
+        ? [props.course.currentSectionId]
+        : [],
     }
     this.onExpand = this.onExpand.bind(this)
   }
 
-  componentDidUpdate({ currentSectionId: prevSectionId }, { expandedKeys }) {
-    const { currentSectionId, expandAll } = this.props
-    if (!expandAll && currentSectionId && currentSectionId !== prevSectionId) {
+  componentDidUpdate({ course: prevCourse }, { expandedKeys }) {
+    const { course, expandAll } = this.props
+    if (!expandAll
+      && course.currentSectionId
+      && course.currentSectionId !== prevCourse.currentSectionId) {
       this.expandCurrentSection(expandedKeys)
     }
   }
@@ -51,10 +55,10 @@ class Toc extends React.Component {
 
   // auto-expand tree nodes when section changes
   expandCurrentSection(expandedKeys) {
-    const { currentSectionId } = this.props
+    const { course } = this.props
 
     // current key and all parent keys
-    const allKeys = currentSectionId
+    const allKeys = (course ? course.currentSectionId : null)
       .split('/')
       .reduce((acc, id, idx) => [
         ...acc,
@@ -75,7 +79,7 @@ class Toc extends React.Component {
   }
 
   renderTreeNodes(section) {
-    const { currentSectionId, currentLanguage } = this.props
+    const { course, currentLanguage } = this.props
     const {
       title,
       id: sectionId,
@@ -83,7 +87,7 @@ class Toc extends React.Component {
     } = section
 
     const className = classNames({
-      active: sectionId === currentSectionId,
+      active: sectionId === (course ? course.currentSectionId : null),
     })
 
     const sectionNode = (
@@ -142,8 +146,7 @@ class Toc extends React.Component {
 
 const mapStateToProps = state => ({
   currentLanguage: appSelectors.getLanguage(state),
-  currentSectionId: appSelectors.getCurrentSectionId(state),
-  title: appSelectors.getTitle(state),
+  course: courseSelectors.getCurrentCourse(state),
   toc: sectionSelectors.getToc(state),
 })
 

@@ -6,6 +6,7 @@ export const actionTypes = {
   LOAD_SECTION_SUCCESS: 'LOAD_SECTION_SUCCESS',
   LOAD_SECTION_FAILURE: 'LOAD_SECTION_FAILURE',
   SET_CONTENT_ROOT: 'SET_CONTENT_ROOT',
+  CHANGE_COURSE: 'CHANGE_COURSE',
 }
 
 export function loadManifest() {
@@ -53,5 +54,12 @@ export function setContentRoot(contentRoot) {
   return {
     type: actionTypes.SET_CONTENT_ROOT,
     contentRoot,
+  }
+}
+
+export function changeCourse(courseId) {
+  return {
+    type: actionTypes.CHANGE_COURSE,
+    courseId,
   }
 }
