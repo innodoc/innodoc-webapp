@@ -11,7 +11,7 @@ const dummyState = (() => {
   App.create({
     id: 0,
     contentRoot: 'root/to/conent',
-    currentSectionId: 'current/section/id',
+    currentCourseId: 5,
     error: 'error',
     language: 'en',
     message: 'custom message',
@@ -48,7 +48,7 @@ describe('app selectors', () => {
     expect(selectors.getContentRoot(dummyState)).toEqual('root/to/conent')
   })
 
-  test('get current section id', () => {
-    expect(selectors.getCurrentSectionId(dummyState)).toEqual('current/section/id')
+  test('get current course id', () => {
+    expect(selectors.getCurrentCourseId(dummyState)).toEqual(5)
   })
 })

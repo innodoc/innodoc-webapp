@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 
 import appSelectors from './app'
+import courseSelectors from './course'
 import ormSelectors from './orm'
 
 // Simply returns the state as is
@@ -16,10 +17,14 @@ const getSectionContent = (state, id) => (
   getSection(state, id).content[appSelectors.getLanguage(state)]
 )
 
+const getCurrentSectionId = createSelector(
+  [courseSelectors.getCurrentCourse], course => course.currentSectionId
+)
+
 // Gets all sub section IDs from the given one, e.g.: ['test', 'test/child1'] for 'test/child1'
 const getAllSectionsIdsFromCurrentSectionId = (
   createSelector(
-    [appSelectors.getCurrentSectionId],
+    [getCurrentSectionId],
     id => id
       // Get the ID fragments from the given ID
       .split('/')

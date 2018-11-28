@@ -7,11 +7,17 @@ import Button from 'antd/lib/button'
 import { Header } from './Header'
 
 describe('<Header />', () => {
+  const course = {
+    currentSectionId: 'foo',
+    homeLink: 'foo',
+    languages: ['de', 'en'],
+    title: { en: ['Foobar'] },
+  }
   const mockDispatchChangeLanguage = jest.fn()
   const mockDispatchToggleSidebar = jest.fn()
   const wrapper = shallow(
     <Header
-      languages={['de', 'en']}
+      course={course}
       dispatchChangeLanguage={mockDispatchChangeLanguage}
       dispatchToggleSidebar={mockDispatchToggleSidebar}
       disableSidebar={false}
