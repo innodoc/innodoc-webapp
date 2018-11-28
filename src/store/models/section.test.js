@@ -73,7 +73,7 @@ describe('reducer', () => {
     const resultState = loadToc(state)
 
     const session = orm.session(state)
-    SectionModel.reducer(loadManifestSuccess({ language: 'en', content: { toc } }), session.Section)
+    SectionModel.reducer(loadManifestSuccess({ content: { toc }, parsed: false }), session.Section)
 
     expect(session.state).toEqual(resultState)
   })

@@ -6,12 +6,14 @@ import Breadcrumb from '../Breadcrumb'
 import ContentFragment from '../ContentFragment'
 import SectionNav from '../SectionNav'
 
-let mockyGetCurrentSectionId
+let mockyGetCurrentCourse
 let mockyGetSection
 
 jest.mock('../../../store/selectors/app.js', () => ({
-  getCurrentSectionId: () => mockyGetCurrentSectionId(),
   getLanguage: () => 'en',
+}))
+jest.mock('../../../store/selectors/course.js', () => ({
+  getCurrentCourse: () => mockyGetCurrentCourse(),
 }))
 jest.mock('../../../store/selectors/section.js', () => ({
   getSection: () => mockyGetSection(),
@@ -88,20 +90,35 @@ describe('<Content />', () => {
 
 describe('mapStateToProps', () => {
   it("returns loading=true if there's no current section id", () => {
-    mockyGetCurrentSectionId = () => undefined
+    mockyGetCurrentCourse = () => ({
+      currentSectionId: null,
+      homeLink: 'foo',
+      languages: ['en'],
+      title: ['Foobar'],
+    })
     mockyGetSection = () => undefined
     expect(mapStateToProps().loading).toEqual(true)
   })
 
   it("returns loading=true if there's no section returned", () => {
-    mockyGetCurrentSectionId = () => 'foo'
+    mockyGetCurrentCourse = () => ({
+      currentSectionId: 'foo',
+      homeLink: 'foo',
+      languages: ['en'],
+      title: ['Foobar'],
+    })
     mockyGetSection = () => undefined
     expect(mapStateToProps().loading).toEqual(true)
   })
 
   it("returns loading=false if there's a current section", () => {
     const section = { id: 'foo', title: { en: ['title'] }, content: { en: ['foocontent'] } }
-    mockyGetCurrentSectionId = () => 'foo'
+    mockyGetCurrentCourse = () => ({
+      currentSectionId: 'foo',
+      homeLink: 'foo',
+      languages: ['en'],
+      title: ['Foobar'],
+    })
     mockyGetSection = () => section
     expect(mapStateToProps()).toEqual({
       section,

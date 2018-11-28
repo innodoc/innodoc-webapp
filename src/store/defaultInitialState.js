@@ -7,7 +7,7 @@ const createEmptyState = () => {
 
   // Creating default app state
   App.create({
-    id: 0,
+    currentCourseId: null,
     currentSectionId: null,
   })
 

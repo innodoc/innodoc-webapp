@@ -5,6 +5,12 @@ import Tree from 'antd/lib/tree'
 import { Toc } from './Toc'
 
 describe('<Toc />', () => {
+  const course = {
+    currentSectionId: null,
+    homeLink: 'section-1',
+    languages: ['en'],
+    title: ['Foobar'],
+  }
   const toc = [
     {
       id: 'section-1',
@@ -53,11 +59,16 @@ describe('<Toc />', () => {
   })
 
   it('renders with active section', () => {
+    const newCourse = {
+      ...course,
+      currentSectionId: 'section-1/section-1-1',
+    }
+
     const wrapper = shallow(
       <Toc
+        course={newCourse}
         toc={toc}
         currentLanguage="en"
-        currentSectionId="section-1/section-1-1"
       />
     )
     expect(wrapper.find(Tree.TreeNode).filter('.active')).toHaveLength(1)
@@ -66,6 +77,7 @@ describe('<Toc />', () => {
   it('renders without active section', () => {
     const wrapper = shallow(
       <Toc
+        course={course}
         toc={toc}
         currentLanguage="en"
       />
@@ -76,6 +88,7 @@ describe('<Toc />', () => {
   it('can expand all', () => {
     const wrapper = shallow(
       <Toc
+        course={course}
         toc={toc}
         currentLanguage="en"
         expandAll
@@ -85,8 +98,14 @@ describe('<Toc />', () => {
   })
 
   it('expands current section from within tree component', () => {
+    const newCourse = {
+      ...course,
+      currentSectionId: null,
+    }
+
     const wrapper = shallow(
       <Toc
+        course={newCourse}
         toc={toc}
         currentLanguage="en"
       />
@@ -97,15 +116,27 @@ describe('<Toc />', () => {
   })
 
   it('expands current section from outside tree component', () => {
+    const newCourse = {
+      ...course,
+      currentSectionId: null,
+    }
+
     const wrapper = shallow(
       <Toc
+        course={newCourse}
         toc={toc}
         currentLanguage="en"
       />
     )
     expect(wrapper.state('expandedKeys')).toHaveLength(0)
     expect(wrapper.find(Tree.TreeNode).filter('.active')).toHaveLength(0)
-    wrapper.setProps({ currentSectionId: 'section-1/section-1-1/section-1-1-1' })
+    wrapper.setProps(
+      {
+        course: {
+          ...course,
+          currentSectionId: 'section-1/section-1-1/section-1-1-1',
+        },
+      })
     expect(wrapper.find(Tree.TreeNode).filter('.active')).toHaveLength(1)
     expect(wrapper.state('expandedKeys')).toHaveLength(3)
     expect(wrapper.state('expandedKeys')).toEqual(expect.arrayContaining(

@@ -3,7 +3,7 @@ import selectors from './section'
 
 // Mock other selectors
 jest.mock('./app.js', () => ({
-  getCurrentSectionId: () => 'test/child1',
+  getCurrentCourseId: () => 0,
   getLanguage: () => 'en',
 }))
 
@@ -11,7 +11,14 @@ jest.mock('./app.js', () => ({
 const dummyState = () => {
   const state = orm.getEmptyState()
   const session = orm.mutableSession(state)
-  const { Section } = session
+  const { Course, Section } = session
+
+  Course.create({
+    currentSectionId: 'test/child1',
+    homeLink: 'test',
+    languages: ['en'],
+    title: 'courseTitle',
+  })
 
   Section.create({
     id: 'test',
