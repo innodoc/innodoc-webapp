@@ -5,7 +5,7 @@ import { withNamespaces } from 'react-i18next'
 import AntBreadcrumb from 'antd/lib/breadcrumb'
 import Icon from 'antd/lib/icon'
 
-import appSelectors from '../../../store/selectors/app'
+import courseSelectors from '../../../store/selectors/course'
 import sectionSelectors from '../../../store/selectors/section'
 import ContentFragment from '../ContentFragment'
 import SectionLink from '../../SectionLink'
@@ -59,7 +59,7 @@ Breadcrumb.defaultProps = {
 }
 
 const mapStateToProps = state => ({
-  homeLink: appSelectors.getHomeLink(state),
+  homeLink: courseSelectors.getCurrentCourse(state).homeLink,
   sections: sectionSelectors.getBreadcrumbSections(state),
 })
 

@@ -1,6 +1,7 @@
 import { attr, fk, Model } from 'redux-orm'
 
 import { actionTypes } from '../actions/content'
+// import { actionTypes as exerciseActionTypes } from '../actions/exercise'
 
 export default class Section extends Model {
   static get modelName() {
@@ -17,11 +18,11 @@ export default class Section extends Model {
     }
   }
 
-  static parseTOC(lang, path, ord, node, sectionModel) {
+  static parseTOC(path, ord, node, sectionModel) {
     const currentPath = [...path, node.id]
     if (node.children !== undefined) {
       node.children.forEach(
-        (child, idx) => this.parseTOC(lang, currentPath, [...ord, idx], child, sectionModel)
+        (child, idx) => this.parseTOC(currentPath, [...ord, idx], child, sectionModel)
       )
     }
 
@@ -39,7 +40,7 @@ export default class Section extends Model {
         // Don't parse already parsed content
         if (!action.data.parsed) {
           action.data.content.toc.forEach(
-            (node, idx) => this.parseTOC(action.data.language, [], [idx], node, sectionModel))
+            (node, idx) => this.parseTOC([], [idx], node, sectionModel))
         }
         break
       case actionTypes.LOAD_SECTION_SUCCESS:
@@ -50,6 +51,7 @@ export default class Section extends Model {
           },
         })
         break
+      // TODO: Add cases for exercise actions...
       default:
         break
     }

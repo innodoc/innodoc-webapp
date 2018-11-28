@@ -5,8 +5,9 @@ import Icon from 'antd/lib/icon'
 
 import { sectionType } from '../../../lib/propTypes'
 import { astToString } from '../../../lib/util'
-import sectionSelectors from '../../../store/selectors/section'
 import appSelectors from '../../../store/selectors/app'
+import courseSelectors from '../../../store/selectors/course'
+import sectionSelectors from '../../../store/selectors/section'
 import SectionLink from '../../SectionLink'
 import css from './style.sass'
 
@@ -45,8 +46,8 @@ SectionNav.defaultProps = {
 }
 
 const mapStateToProps = (state) => {
-  const navSections = sectionSelectors.getNavSections(
-    state, appSelectors.getCurrentSectionId(state))
+  const course = courseSelectors.getCurrentCourse(state)
+  const navSections = sectionSelectors.getNavSections(state, course.currentSectionId)
   return {
     ...navSections,
     currentLanguage: appSelectors.getLanguage(state),

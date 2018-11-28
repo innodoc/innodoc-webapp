@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import appSelectors from '../../../store/selectors/app'
+import courseSelectors from '../../../store/selectors/course'
 import sectionSelectors from '../../../store/selectors/section'
 import withLoadingPlaceholder from '../../hoc/withLoadingPlaceholder'
 import withMathJax from '../../hoc/withMathJax'
@@ -63,10 +64,10 @@ class Content extends React.Component {
 
 const mapStateToProps = (state) => {
   let ret = { loading: true }
-  const id = appSelectors.getCurrentSectionId(state)
-  if (id) {
+  const course = courseSelectors.getCurrentCourse(state)
+  if (course && course.currentSectionId) {
     const language = appSelectors.getLanguage(state)
-    const section = sectionSelectors.getSection(state, id)
+    const section = sectionSelectors.getSection(state, course.currentSectionId)
     if (section && section.content[language]) {
       ret = {
         loading: false,
