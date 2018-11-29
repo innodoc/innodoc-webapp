@@ -14,7 +14,7 @@ function fetchJson(url, accept404 = false) {
 }
 
 export function fetchManifest(contentRoot) {
-  const url = `${contentRoot}/manifest.json`
+  const url = `${contentRoot}manifest.json`
   return fetchJson(url)
 }
 

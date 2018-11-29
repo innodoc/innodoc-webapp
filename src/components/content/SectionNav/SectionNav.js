@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import Icon from 'antd/lib/icon'
 
 import { sectionType } from '../../../lib/propTypes'
-import { astToString } from '../../../lib/util'
 import appSelectors from '../../../store/selectors/app'
 import courseSelectors from '../../../store/selectors/course'
 import sectionSelectors from '../../../store/selectors/section'
@@ -16,7 +15,7 @@ const SectionNav = ({ currentLanguage, prev, next }) => (
     {
       prev ? (
         <SectionLink sectionId={prev.id}>
-          <a title={astToString(prev.title[currentLanguage])} className={css.prev}>
+          <a title={prev.title[currentLanguage]} className={css.prev}>
             <Icon type="arrow-left" />
           </a>
         </SectionLink>
@@ -25,7 +24,7 @@ const SectionNav = ({ currentLanguage, prev, next }) => (
     {
       next ? (
         <SectionLink sectionId={next.id}>
-          <a title={astToString(next.title[currentLanguage])} className={css.next}>
+          <a title={next.title[currentLanguage]} className={css.next}>
             <Icon type="arrow-right" />
           </a>
         </SectionLink>

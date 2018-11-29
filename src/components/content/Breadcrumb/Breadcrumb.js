@@ -7,7 +7,6 @@ import Icon from 'antd/lib/icon'
 
 import courseSelectors from '../../../store/selectors/course'
 import sectionSelectors from '../../../store/selectors/section'
-import ContentFragment from '../ContentFragment'
 import SectionLink from '../../SectionLink'
 import css from './style.sass'
 
@@ -35,7 +34,7 @@ const Breadcrumb = ({ homeLink, sections, t }) => {
       <AntBreadcrumb.Item key={section.id}>
         <SectionLink sectionId={section.id}>
           <a>
-            <ContentFragment content={section.title} />
+            {section.title}
           </a>
         </SectionLink>
       </AntBreadcrumb.Item>

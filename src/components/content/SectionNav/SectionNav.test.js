@@ -7,11 +7,11 @@ import SectionLink from '../../SectionLink'
 describe('<SectionNav />', () => {
   const prevSection = {
     id: 'section1',
-    title: { en: [{ t: 'Str', c: 'Section 1' }] },
+    title: { en: 'Section 1' },
   }
   const nextSection = {
     id: 'section2',
-    title: { en: [{ t: 'Str', c: 'Section 2' }] },
+    title: { en: 'Section 2' },
   }
 
   it('renders', () => {
