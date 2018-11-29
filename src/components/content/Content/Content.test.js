@@ -25,13 +25,13 @@ describe('<Content />', () => {
     mockT: jest.fn(),
     section: {
       id: 'foo',
-      title: { en: [{ t: 'Str', c: 'Foo section' }] },
-      content: { en: [{ t: 'Str', c: 'A nice string' }] },
+      title: { en: 'Foo section' },
+      content: { en: 'A nice string' },
     },
     otherSection: {
       id: 'bar',
-      title: { en: [{ t: 'Str', c: 'Bar section' }] },
-      content: { en: [{ t: 'Str', c: 'An awesome string' }] },
+      title: { en: 'Bar section' },
+      content: { en: 'An awesome string' },
     },
     contentRef: React.createRef(),
   })
@@ -54,8 +54,8 @@ describe('<Content />', () => {
     expect(wrapper.find('h1')).toHaveLength(1)
     const contentDiv = wrapper.find('div')
     expect(contentDiv).toHaveLength(1)
-    expect(wrapper.find(ContentFragment).at(0).prop('content')).toEqual(data.section.title.en)
-    expect(wrapper.find(ContentFragment).at(1).prop('content')).toEqual(data.section.content.en)
+    expect(wrapper.find('h1').text()).toEqual(data.section.title.en)
+    expect(wrapper.find(ContentFragment).at(0).prop('content')).toEqual(data.section.content.en)
   })
 
   it('renders and updates', () => {
@@ -83,8 +83,8 @@ describe('<Content />', () => {
     expect(wrapper.find('h1')).toHaveLength(1)
     const contentDiv = wrapper.find('div')
     expect(contentDiv).toHaveLength(1)
-    expect(wrapper.find(ContentFragment).at(0).prop('content')).toEqual(data.otherSection.title.en)
-    expect(wrapper.find(ContentFragment).at(1).prop('content')).toEqual(data.otherSection.content.en)
+    expect(wrapper.find('h1').text()).toEqual(data.otherSection.title.en)
+    expect(wrapper.find(ContentFragment).at(0).prop('content')).toEqual(data.otherSection.content.en)
   })
 })
 

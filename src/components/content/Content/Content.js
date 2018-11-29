@@ -23,7 +23,7 @@ class Content extends React.Component {
   }
 
   static defaultProps = {
-    section: { id: '', title: [] },
+    section: { id: '', title: '' },
   }
 
   componentDidMount() {
@@ -52,7 +52,7 @@ class Content extends React.Component {
         <SectionNav />
         <Breadcrumb />
         <h1>
-          <ContentFragment content={section.title[currentLanguage]} />
+          {section.title[currentLanguage]}
         </h1>
         <div className={css.content} ref={mathJaxContentRef}>
           <ContentFragment content={section.content[currentLanguage]} />

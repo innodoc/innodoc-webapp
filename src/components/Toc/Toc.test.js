@@ -9,20 +9,20 @@ describe('<Toc />', () => {
     currentSectionId: null,
     homeLink: 'section-1',
     languages: ['en'],
-    title: ['Foobar'],
+    title: { en: 'Foobar' },
   }
   const toc = [
     {
       id: 'section-1',
-      title: { en: [{ t: 'Str', c: 'Section 1' }] },
+      title: { en: 'Section 1' },
       children: [
         {
           id: 'section-1/section-1-1',
-          title: { en: [{ t: 'Str', c: 'Section 1-1' }] },
+          title: { en: 'Section 1-1' },
           children: [
             {
               id: 'section-1/section-1-1/section-1-1-1',
-              title: { en: [{ t: 'Str', c: 'Section 1-1-1' }] },
+              title: { en: 'Section 1-1-1' },
             },
           ],
         },
@@ -30,7 +30,7 @@ describe('<Toc />', () => {
     },
     {
       id: 'section-2',
-      title: { en: [{ t: 'Str', c: 'Section 2' }] },
+      title: { en: 'Section 2' },
     },
   ]
 
@@ -39,7 +39,7 @@ describe('<Toc />', () => {
       <Toc
         toc={toc}
         currentLanguage="en"
-        title={{ en: ['Foobar'] }}
+        title={{ en: 'Foobar' }}
       />
     )
     expect(wrapper.find(Tree)).toExist()
@@ -51,11 +51,11 @@ describe('<Toc />', () => {
       <Toc
         toc={toc}
         currentLanguage="en"
-        title={{ en: ['Foobar'] }}
+        title={{ en: 'Foobar' }}
       />
     )
-    expect(wrapper.find('h2').find('ContentFragment')).toHaveLength(1)
-    expect(wrapper.find('h2').find('ContentFragment').prop('content')).toEqual(['Foobar'])
+    expect(wrapper.find('h2')).toHaveLength(1)
+    expect(wrapper.find('h2').text()).toEqual('Foobar')
   })
 
   it('renders with active section', () => {

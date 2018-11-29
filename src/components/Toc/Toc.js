@@ -93,7 +93,7 @@ class Toc extends React.Component {
     const sectionNode = (
       <SectionLink sectionId={sectionId}>
         <a>
-          {astToString(title[currentLanguage])}
+          {title[currentLanguage]}
         </a>
       </SectionLink>
     )
@@ -124,7 +124,7 @@ class Toc extends React.Component {
       : { expandedKeys }
 
     const header = title && title[currentLanguage]
-      ? <ContentFragment content={title[currentLanguage]} />
+      ? title[currentLanguage]
       : null
 
     return (
