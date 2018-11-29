@@ -35,7 +35,7 @@ const Breadcrumb = ({ homeLink, sections, t }) => {
       <AntBreadcrumb.Item key={section.id}>
         <SectionLink sectionId={section.id}>
           <a>
-            <ContentFragment content={section.title} />
+            {section.title}
           </a>
         </SectionLink>
       </AntBreadcrumb.Item>

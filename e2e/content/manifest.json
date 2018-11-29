@@ -1,188 +1,63 @@
 {
   "languages": ["de", "en"],
   "title": {
-    "de": [{
-      "t": "Str",
-      "c": "Showcase-Modul"
-    }, {
-      "t": "Space"
-    }, {
-      "t": "Str",
-      "c": "f\u00fcr"
-    }, {
-      "t": "Space"
-    }, {
-      "t": "Str",
-      "c": "innoDoc"
-    }],
-    "en": [{
-      "t": "Str",
-      "c": "Showcase module"
-    }, {
-      "t": "Space"
-    }, {
-      "t": "Str",
-      "c": "for"
-    }, {
-      "t": "Space"
-    }, {
-      "t": "Str",
-      "c": "innoDoc"
-    }]
+    "de": "Showcase-Modul f\u00fcr innoDoc",
+    "en": "Showcase module for innoDoc"
   },
   "toc": [{
     "id": "01-project",
     "title": {
-      "de": [{
-        "t": "Str",
-        "c": "Projektstruktur"
-      }],
-      "en": [{
-        "t": "Str",
-        "c": "Project structure"
-      }]
+      "de": "Projektstruktur",
+      "en": "Project structure"
     },
     "children": [{
       "id": "01-folders",
       "title": {
-        "de": [{
-          "t": "Str",
-          "c": "Verzeichnisse"
-        }],
-        "en": [{
-          "t": "Str",
-          "c": "Folders"
-        }]
+        "de": "Verzeichnisse",
+        "en": "Folders"
       }
     }, {
       "id": "02-language",
       "title": {
-        "de": [{
-          "t": "Str",
-          "c": "Sprache"
-        }],
-        "en": [{
-          "t": "Str",
-          "c": "Language"
-        }]
+        "de": "Sprache",
+        "en": "Language"
       }
     }]
   }, {
     "id": "02-elements",
     "title": {
-      "de": [{
-        "t": "Str",
-        "c": "Elemente"
-      }],
-      "en": [{
-        "t": "Str",
-        "c": "Elements"
-      }]
+      "de": "Elemente",
+      "en": "Elements"
     },
     "children": [{
       "id": "01-headers",
       "title": {
-        "de": [{
-          "t": "Str",
-          "c": "\u00dcberschriften"
-        }],
-        "en": [{
-          "t": "Str",
-          "c": "Headers"
-        }]
+        "de": "\u00dcberschriften",
+        "en": "Headers"
       }
     }, {
       "id": "02-lists",
       "title": {
-        "de": [{
-          "t": "Str",
-          "c": "Listen"
-        }, {
-          "t": "Space"
-        }, {
-          "t": "Str",
-          "c": "und"
-        }, {
-          "t": "Space"
-        }, {
-          "t": "Str",
-          "c": "Aufz\u00e4hlungen"
-        }],
-        "en": [{
-          "t": "Str",
-          "c": "Lists"
-        }]
+        "de": "Listen und Aufz\u00e4hlungen",
+        "en": "Lists"
       }
     }, {
       "id": "03-links-and-formatting",
       "title": {
-        "de": [{
-          "t": "Str",
-          "c": "Links"
-        }, {
-          "t": "Space"
-        }, {
-          "t": "Str",
-          "c": "und"
-        }, {
-          "t": "Space"
-        }, {
-          "t": "Str",
-          "c": "Textformatierung"
-        }],
-        "en": [{
-          "t": "Str",
-          "c": "Links"
-        }, {
-          "t": "Space"
-        }, {
-          "t": "Str",
-          "c": "and"
-        }, {
-          "t": "Space"
-        }, {
-          "t": "Str",
-          "c": "text"
-        }, {
-          "t": "Space"
-        }, {
-          "t": "Str",
-          "c": "formatting"
-        }]
+        "de": "Links und Textformatierung",
+        "en": "Links and text formatting"
       }
     }, {
       "id": "04-quotes",
       "title": {
-        "de": [{
-          "t": "Str",
-          "c": "Zitate"
-        }],
-        "en": [{
-          "t": "Str",
-          "c": "Quotes"
-        }]
+        "de": "Zitate",
+        "en": "Quotes"
       }
     }, {
       "id": "10-interactive-exercises",
       "title": {
-        "de": [{
-          "t": "Str",
-          "c": "Interaktive"
-        }, {
-          "t": "Space"
-        }, {
-          "t": "Str",
-          "c": "Aufgaben"
-        }],
-        "en": [{
-          "t": "Str",
-          "c": "Interactive"
-        }, {
-          "t": "Space"
-        }, {
-          "t": "Str",
-          "c": "exercises"
-        }]
+        "de": "Interaktive Aufgaben",
+        "en": "Interactive exercises"
       }
     }]
   }]
