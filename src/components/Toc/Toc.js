@@ -9,8 +9,6 @@ import appSelectors from '../../store/selectors/app'
 import courseSelectors from '../../store/selectors/course'
 import sectionSelectors from '../../store/selectors/section'
 import { courseType, tocTreeType } from '../../lib/propTypes'
-import { astToString } from '../../lib/util'
-import ContentFragment from '../content/ContentFragment'
 import SectionLink from '../SectionLink'
 
 class Toc extends React.Component {
@@ -93,7 +91,7 @@ class Toc extends React.Component {
     const sectionNode = (
       <SectionLink sectionId={sectionId}>
         <a>
-          {astToString(title[currentLanguage])}
+          {title[currentLanguage]}
         </a>
       </SectionLink>
     )
@@ -124,7 +122,7 @@ class Toc extends React.Component {
       : { expandedKeys }
 
     const header = title && title[currentLanguage]
-      ? <ContentFragment content={title[currentLanguage]} />
+      ? title[currentLanguage]
       : null
 
     return (
