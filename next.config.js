@@ -1,109 +1,96 @@
 const path = require('path')
 const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
 const withPlugins = require('next-compose-plugins')
-const cssLoaderConfig = require('@zeit/next-css/css-loader-config')
 const Dotenv = require('dotenv-webpack')
 const AntdScssThemePlugin = require('antd-scss-theme-plugin')
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer')
+const withLess = require('@zeit/next-less')
+const withSass = require('@zeit/next-sass')
 
-// modified version of @zeit/next-less
-// - withSassWithAntdScss
-// - disable CSS modules
-const withLessAntdScssNoCssModules = (nextConfig = {}) => ({
-  ...nextConfig,
-  webpack(config, options) {
-    const { dev, isServer } = options
-    const {
-      postcssLoaderOptions,
-      lessLoaderOptions = {},
-    } = nextConfig
+const addAntdScssThemePlugin = (config) => {
+  const patchLoader = (type) => {
+    config.module.rules
+      .filter(rule => Array.isArray(rule.use))
+      .map(rule => rule.use.find(loader => loader.loader === `${type}-loader`))
+      .filter(use => use)
+      .forEach((use) => {
+        const antdScss = AntdScssThemePlugin.themify({
+          loader: `${type}-loader`,
+          options: use.options,
+        })
+        /* eslint-disable no-param-reassign */
+        use.loader = antdScss.loader
+        use.options = antdScss.options
+      })
+  }
 
-    // no modules!
-    const cssModules = false
-    const cssLoaderOptions = {}
+  // no CSS module for less
+  config.module.rules
+    .filter(rule => Array.isArray(rule.use))
+    .map(rule => rule.use)
+    .filter(use => use.some(loader => loader.loader === 'less-loader'))
+    .map(use => use
+      .filter(loader => typeof loader === 'object')
+      .find(loader => loader.loader.startsWith('css-loader')))
+    .forEach((loader) => { loader.options.modules = false })
 
-    /* eslint-disable-next-line no-param-reassign */
-    options.defaultLoaders.less = cssLoaderConfig(config, {
-      extensions: ['less'],
-      cssModules,
-      cssLoaderOptions,
-      postcssLoaderOptions,
-      dev,
-      isServer,
-      loaders: [
-        AntdScssThemePlugin.themify({
-          loader: 'less-loader',
-          options: lessLoaderOptions,
-        }),
-      ],
-    })
+  // replace sass/less-loaders with AntdScssThemePlugin
+  patchLoader('sass')
+  patchLoader('less')
 
-    config.module.rules.push({
-      test: /\.less$/,
-      use: options.defaultLoaders.less,
-    })
+  const antdThemeFile = path.join(__dirname, 'src', 'style', 'antd-theme.sass')
+  config.plugins.push(new AntdScssThemePlugin(antdThemeFile))
+}
 
-    if (typeof nextConfig.webpack === 'function') {
-      return nextConfig.webpack(config, options)
-    }
+// update next.js webpack config
+const patchWebpackConfig = (config) => {
+  config.plugins.push(new Dotenv({
+    path: path.join(__dirname, '.env'),
+    safe: true,
+    systemvars: true,
+  }))
 
-    return config
-  },
-})
+  // images, fonts
+  config.module.rules.push({
+    test: /\.(png|woff2)$/,
+    use: {
+      loader: 'url-loader',
+      options: {
+        limit: 32 * 1024,
+        publicPath: '../',
+        outputPath: 'static/',
+        name: '[name].[hash:8].[ext]',
+      },
+    },
+  })
 
-// modified version of @zeit/next-sass that adds AntdScssThemePlugin
-const withSassAntdScss = (nextConfig = {}) => ({
-  ...nextConfig,
-  webpack(config, options) {
-    const { dev, isServer } = options
-    const {
-      cssModules,
-      cssLoaderOptions,
-      postcssLoaderOptions,
-      sassLoaderOptions = {},
-    } = nextConfig
-
-    /* eslint-disable-next-line no-param-reassign */
-    options.defaultLoaders.sass = cssLoaderConfig(config, {
-      extensions: ['scss', 'sass'],
-      cssModules,
-      cssLoaderOptions,
-      postcssLoaderOptions,
-      dev,
-      isServer,
-      loaders: [
-        AntdScssThemePlugin.themify({
-          loader: 'sass-loader',
-          options: sassLoaderOptions,
-        }),
-      ],
-    })
-
-    config.module.rules.push(
+  // svg icons
+  config.module.rules.push({
+    test: /\.svg$/,
+    use: [
       {
-        test: /\.scss$/,
-        use: options.defaultLoaders.sass,
+        loader: 'babel-loader',
       },
       {
-        test: /\.sass$/,
-        use: options.defaultLoaders.sass,
-      }
-    )
+        loader: '@svgr/webpack',
+        options: {
+          babel: false,
+          icon: true,
+        },
+      },
+    ],
+  })
 
-    if (typeof nextConfig.webpack === 'function') {
-      return nextConfig.webpack(config, options)
-    }
 
-    return config
-  },
-})
+  addAntdScssThemePlugin(config)
 
-// next.js configuration plugins
-const plugins = [
-  [withBundleAnalyzer, [PHASE_DEVELOPMENT_SERVER]],
-  withLessAntdScssNoCssModules,
-  withSassAntdScss,
-]
+  // debug print webpack config
+  /* eslint-disable-next-line no-extend-native */
+  // Object.defineProperty(RegExp.prototype, 'toJSON', { value: RegExp.prototype.toString })
+  // console.log(JSON.stringify(config.module.rules, null, 2))
+
+  return config
+}
 
 // next.js configuration
 const nextConfig = {
@@ -135,54 +122,14 @@ const nextConfig = {
     },
   },
 
-  // webpack
-  webpack: (config) => {
-    config.plugins.push(new Dotenv({
-      path: path.join(__dirname, '.env'),
-      safe: true,
-      systemvars: true,
-    }))
-
-    config.plugins.push(new AntdScssThemePlugin(path.join(__dirname, 'src', 'style', 'antd-theme.sass')))
-
-    // images, fonts
-    config.module.rules.push({
-      test: /\.(png|woff2)$/,
-      use: {
-        loader: 'url-loader',
-        options: {
-          limit: 32 * 1024,
-          publicPath: '../',
-          outputPath: 'static/',
-          name: '[name].[hash:8].[ext]',
-        },
-      },
-    })
-
-    // svg icons
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: [
-        {
-          loader: 'babel-loader',
-        },
-        {
-          loader: '@svgr/webpack',
-          options: {
-            babel: false,
-            icon: true,
-          },
-        },
-      ],
-    })
-
-    // debug print webpack config
-    /* eslint-disable-next-line no-extend-native */
-    // Object.defineProperty(RegExp.prototype, 'toJSON', { value: RegExp.prototype.toString })
-    // console.log(JSON.stringify(config, null, 2))
-
-    return config
-  },
+  webpack: patchWebpackConfig,
 }
+
+// next.js configuration plugins
+const plugins = [
+  [withBundleAnalyzer, [PHASE_DEVELOPMENT_SERVER]],
+  withLess,
+  withSass,
+]
 
 module.exports = withPlugins(plugins, nextConfig)
