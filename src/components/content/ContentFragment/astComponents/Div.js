@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import ExerciseCard from '../cards/ExerciseCard'
-import ExercisesCard from '../cards/ExercisesCard'
 import InfoCard from '../cards/InfoCard'
 import ExampleCard from '../cards/ExampleCard'
 import SolutionHint from '../SolutionHint'
@@ -13,7 +12,6 @@ import VerifyInfoButton from '../questions/VerifyInfoButton'
 import UnknownType from './UnknownType'
 
 const classNameComponentMap = {
-  exercises: ExercisesCard,
   exercise: ExerciseCard,
   info: InfoCard,
   example: ExampleCard,
