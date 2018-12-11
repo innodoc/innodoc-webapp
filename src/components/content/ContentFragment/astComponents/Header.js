@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import ContentFragment from '..'
 
 const Header = ({ data }) => {
-  const [level, [id, classes, content]] = data
+  const [level, [id, classes], content] = data
   const HeaderTag = `h${level}`
   return (
     <HeaderTag id={id} className={classNames(classes)}>
