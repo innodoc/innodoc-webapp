@@ -9,12 +9,14 @@ import InputHint from '../cards/InputHint'
 import TestCard from '../cards/TestCard'
 import QuestionGroup from '../questions/QuestionGroup'
 import VerifyInfoButton from '../questions/VerifyInfoButton'
+import Figure from './Figure'
 import UnknownType from './UnknownType'
 
 const classNameComponentMap = {
   exercise: ExerciseCard,
   info: InfoCard,
   example: ExampleCard,
+  figure: Figure,
   hint: SolutionHint,
   'hint-text': InputHint,
   test: TestCard,
