@@ -12,7 +12,6 @@ import Breadcrumb from '../Breadcrumb'
 import SectionNav from '../SectionNav'
 import Placeholder from './Placeholder'
 import { sectionType } from '../../../lib/propTypes'
-import css from './style.sass'
 
 class Content extends React.Component {
   static propTypes = {
@@ -54,7 +53,7 @@ class Content extends React.Component {
         <h1>
           {section.title[currentLanguage]}
         </h1>
-        <div className={css.content} ref={mathJaxContentRef}>
+        <div ref={mathJaxContentRef}>
           <ContentFragment content={section.content[currentLanguage]} />
         </div>
       </React.Fragment>
