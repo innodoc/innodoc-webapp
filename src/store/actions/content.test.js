@@ -6,6 +6,7 @@ import {
   loadSectionSuccess,
   loadSectionFailure,
   setContentRoot,
+  setStaticRoot,
 } from './content'
 
 it('should dispatch LOAD_MANIFEST action', () => {
@@ -57,5 +58,12 @@ it('should dispatch SET_CONTENT_ROOT action', () => {
   expect(setContentRoot('https://content.example.com/')).toEqual({
     type: 'SET_CONTENT_ROOT',
     contentRoot: 'https://content.example.com/',
+  })
+})
+
+it('should dispatch SET_STATIC_ROOT action', () => {
+  expect(setStaticRoot('https://cdn.example.com/')).toEqual({
+    type: 'SET_STATIC_ROOT',
+    staticRoot: 'https://cdn.example.com/',
   })
 })

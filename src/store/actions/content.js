@@ -6,6 +6,7 @@ export const actionTypes = {
   LOAD_SECTION_SUCCESS: 'LOAD_SECTION_SUCCESS',
   LOAD_SECTION_FAILURE: 'LOAD_SECTION_FAILURE',
   SET_CONTENT_ROOT: 'SET_CONTENT_ROOT',
+  SET_STATIC_ROOT: 'SET_STATIC_ROOT',
   CHANGE_COURSE: 'CHANGE_COURSE',
 }
 
@@ -54,6 +55,13 @@ export function setContentRoot(contentRoot) {
   return {
     type: actionTypes.SET_CONTENT_ROOT,
     contentRoot,
+  }
+}
+
+export function setStaticRoot(staticRoot) {
+  return {
+    type: actionTypes.SET_STATIC_ROOT,
+    staticRoot,
   }
 }
 

@@ -5,13 +5,13 @@ import { connect } from 'react-redux'
 import appSelectors from '../../../../store/selectors/app'
 import { astToString } from '../../../../lib/util'
 
-const Image = ({ contentRoot, data }) => {
+const Image = ({ staticRoot, data }) => {
   const [, content, [src, alt]] = data
 
   // TODO: introduce staticRoot
   const imgSrc = /^https?:\/\//i.test(src)
     ? src
-    : `${contentRoot}_static/${src}`
+    : `${staticRoot}${src}`
   const imgAlt = alt || astToString(content)
 
   return <img src={imgSrc} alt={imgAlt} />
@@ -19,11 +19,11 @@ const Image = ({ contentRoot, data }) => {
 
 Image.propTypes = {
   data: PropTypes.arrayOf(PropTypes.array).isRequired,
-  contentRoot: PropTypes.string.isRequired,
+  staticRoot: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = state => ({
-  contentRoot: appSelectors.getContentRoot(state),
+  staticRoot: appSelectors.getStaticRoot(state),
 })
 
 export { Image } // for testing

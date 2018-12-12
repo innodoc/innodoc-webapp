@@ -53,6 +53,13 @@ take it as a base URL for all content files.
 
 **Example:** `https://example.com/content/`
 
+#### `STATIC_ROOT`
+
+Static files location. Can be used to deploy static data to a CDN or similar.
+
+**Example:** `https://example.com/content/`
+**Default:** `${CONTENT_ROOT}_static/`
+
 #### `PROD_PORT`
 
 The port the web app is listening on in production.

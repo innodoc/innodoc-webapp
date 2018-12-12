@@ -14,6 +14,8 @@ const getError = state => getAppState(state).error
 
 const getContentRoot = state => getAppState(state).contentRoot
 
+const getStaticRoot = state => getAppState(state).staticRoot
+
 export default {
   getAppState,
   getCurrentCourseId,
@@ -22,4 +24,5 @@ export default {
   getLanguage,
   getMessage,
   getSidebarVisible,
+  getStaticRoot,
 }

@@ -42,6 +42,13 @@ const contentRoot = process.env.CONTENT_ROOT.substr(-1) === '/'
   ? process.env.CONTENT_ROOT
   : `${process.env.CONTENT_ROOT}/`
 
+let staticRoot = process.env.STATIC_ROOT
+  ? process.env.STATIC_ROOT
+  : `${contentRoot}_static/`
+staticRoot = staticRoot.substr(-1) === '/'
+  ? staticRoot
+  : `${staticRoot}/`
+
 // create next.js app
 const app = next({
   dir: srcDir,
@@ -76,6 +83,7 @@ i18n
         // set CONTENT_ROOT
         server.use((req, res, _next) => {
           res.locals.contentRoot = contentRoot
+          res.locals.staticRoot = staticRoot
           _next()
         })
 

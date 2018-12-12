@@ -18,6 +18,7 @@ export default class App extends Model {
       language: attr({ getDefault: () => null }),
       message: attr({ getDefault: () => null }),
       sidebarVisible: attr({ getDefault: () => false }),
+      staticRoot: attr({ getDefault: () => '' }),
     }
   }
 
@@ -29,6 +30,9 @@ export default class App extends Model {
         break
       case contentActionTypes.SET_CONTENT_ROOT:
         app.set('contentRoot', action.contentRoot)
+        break
+      case contentActionTypes.SET_STATIC_ROOT:
+        app.set('staticRoot', action.staticRoot)
         break
       case contentActionTypes.CHANGE_COURSE:
         app.set('currentCourseId', action.courseId)

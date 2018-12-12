@@ -10,12 +10,13 @@ const dummyState = (() => {
   // Creating default app state
   App.create({
     id: 0,
-    contentRoot: 'root/to/conent',
+    contentRoot: 'http://root/to/conent',
     currentCourseId: 5,
     error: 'error',
     language: 'en',
     message: 'custom message',
     sidebarVisible: true,
+    staticRoot: 'https://cdn.example.com/',
   })
 
   return {
@@ -45,7 +46,11 @@ describe('app selectors', () => {
   })
 
   test('get content root', () => {
-    expect(selectors.getContentRoot(dummyState)).toEqual('root/to/conent')
+    expect(selectors.getContentRoot(dummyState)).toEqual('http://root/to/conent')
+  })
+
+  test('get static root', () => {
+    expect(selectors.getStaticRoot(dummyState)).toEqual('https://cdn.example.com/')
   })
 
   test('get current course id', () => {
