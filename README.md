@@ -57,7 +57,8 @@ take it as a base URL for all content files.
 
 Static files location. Can be used to deploy static data to a CDN or similar.
 
-**Example:** `https://example.com/content/`
+**Example:** `https://cdn.example.com/`
+
 **Default:** `${CONTENT_ROOT}_static/`
 
 #### `PROD_PORT`
