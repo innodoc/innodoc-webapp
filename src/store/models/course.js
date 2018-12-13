@@ -17,9 +17,9 @@ export default class Course extends Model {
     }
   }
 
-  static parseManifest(app, courseModel, manifest) {
+  static parseManifest(courseModel, manifest) {
     if (manifest === undefined || manifest === null) {
-      throw new Error('empty manifest!')
+      throw new Error('Empty manifest!')
     }
 
     // TODO: Check if homeLink is a valid sectionID
@@ -27,17 +27,17 @@ export default class Course extends Model {
     // Use first section as homeLink if homeLink is not given
     const homeLink = manifest.homeLink ? manifest.homeLink : manifest.toc[0].id
 
-    // courseModel.set('languages', manifest.languages)
     if (manifest.languages && manifest.languages.length <= 0) {
-      throw new Error('no or empty language array in manifest!')
+      throw new Error('No or empty language array in manifest!')
     }
-
-    // app.set('title', manifest.title)
-    if (!manifest.title
-      || !manifest.title[app.language]
-      || manifest.title[app.language].length <= 0) {
-      throw new Error('no or empty course title in manifest!')
+    if (!manifest.title) {
+      throw new Error('No course title in manifest!')
     }
+    manifest.languages.forEach((language) => {
+      if (!manifest.title[language] || manifest.title[language].length <= 0) {
+        throw new Error(`Could not find title (${language}) in manifest!`)
+      }
+    })
 
     // Check if course already exists
     courseModel.create({
@@ -61,7 +61,7 @@ export default class Course extends Model {
     switch (action.type) {
       case contentActionTypes.LOAD_MANIFEST_SUCCESS:
         if (!action.data.parsed) {
-          this.parseManifest(app, courseModel, action.data.content)
+          this.parseManifest(courseModel, action.data.content)
         }
         break
       case contentActionTypes.LOAD_SECTION:
