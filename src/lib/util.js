@@ -1,3 +1,5 @@
+import Router from 'next/router'
+
 const getDisplayName = Component => Component.displayName || Component.name || 'Component'
 const getHocDisplayName = (HocName, ComposedComponent) => `${HocName}(${getDisplayName(ComposedComponent)})`
 
@@ -18,21 +20,22 @@ const astToString = (ast) => {
   }).join('')
 }
 
-const getSectionHref = sectionId => ({
-  href: { pathname: '/page', query: { sectionId } },
-  as: `/page/${sectionId}`,
-})
-
 const unwrapPara = content => (
   content && content[0].t === 'Para'
     ? content[0].c
     : content
 )
 
+const scrollToHash = () => {
+  if (process.browser) {
+    Router.router.scrollToHash(Router.router.asPath)
+  }
+}
+
 export {
   astToString,
   getDisplayName,
   getHocDisplayName,
-  getSectionHref,
   unwrapPara,
+  scrollToHash,
 }

@@ -8,7 +8,6 @@ import { astToString } from '../../../../lib/util'
 const Image = ({ staticRoot, data }) => {
   const [, content, [src, alt]] = data
 
-  // TODO: introduce staticRoot
   const imgSrc = /^https?:\/\//i.test(src)
     ? src
     : `${staticRoot}${src}`

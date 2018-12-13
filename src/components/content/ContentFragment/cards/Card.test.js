@@ -15,11 +15,14 @@ describe('<Card />', () => {
         icon="file"
         cardType="info"
         content={content}
+        id="foo-id"
       />
     )
-    expect(wrapper.find(AntCard)).toHaveLength(1)
+    const antCard = wrapper.find(AntCard)
+    expect(antCard).toHaveLength(1)
+    expect(antCard.prop('id')).toBe('foo-id')
     expect(wrapper.find(ContentFragment)).toHaveLength(1)
-    const icon = wrapper.find(AntCard).dive().find(Icon)
+    const icon = antCard.dive().find(Icon)
     expect(icon).toHaveLength(1)
     expect(icon.prop('type')).toBe('file')
   })

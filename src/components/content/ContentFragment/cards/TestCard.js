@@ -5,18 +5,24 @@ import { withNamespaces } from 'react-i18next'
 import { contentType } from '../../../../lib/propTypes'
 import Card from './Card'
 
-const TestCard = ({ t, content }) => (
+const TestCard = ({ t, content, id }) => (
   <Card
     title={t('content.test')}
     cardType="test"
     icon="edit"
     content={content}
+    id={id}
   />
 )
 
 TestCard.propTypes = {
   content: contentType.isRequired,
   t: PropTypes.func.isRequired,
+  id: PropTypes.string,
+}
+
+TestCard.defaultProps = {
+  id: null,
 }
 
 export default withNamespaces()(TestCard)

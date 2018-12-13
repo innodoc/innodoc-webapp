@@ -3,16 +3,26 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 
 import { childrenType } from '../lib/propTypes'
-import { getSectionHref } from '../lib/util'
 
-const SectionLink = ({ sectionId, children }) => {
-  const { href, as } = getSectionHref(sectionId)
+const SectionLink = ({ sectionId: sectionIdHash, children }) => {
+  const [sectionId, hash] = sectionIdHash.split('#')
+  const linkProps = {
+    href: {
+      pathname: '/page',
+      query: { sectionId },
+    },
+    as: {
+      pathname: `/page/${sectionId}`,
+      hash: hash ? `#${hash}` : undefined,
+    },
+  }
   return (
-    <Link href={href} as={as}>
+    <Link {...linkProps}>
       {children}
     </Link>
   )
 }
+
 SectionLink.propTypes = {
   sectionId: PropTypes.string.isRequired,
   children: childrenType.isRequired,

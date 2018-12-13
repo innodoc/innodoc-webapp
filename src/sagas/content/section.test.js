@@ -4,6 +4,7 @@ import { cloneableGenerator } from 'redux-saga/utils'
 import loadSectionSaga from './section'
 import { loadSection, loadSectionSuccess, loadSectionFailure } from '../../store/actions/content'
 import { fetchSection } from '../../lib/api'
+import { scrollToHash } from '../../lib/util'
 import appSelectors from '../../store/selectors/app'
 import sectionSelectors from '../../store/selectors/section'
 
@@ -35,6 +36,7 @@ describe('loadSectionSaga', () => {
       call(fetchSection, contentRoot, language, sectionId))
     expect(clone.next(section.content[language]).value).toEqual(
       put(loadSectionSuccess({ language, sectionId, content: section.content[language] })))
+    expect(clone.next().value).toEqual(call(scrollToHash))
     expect(clone.next().done).toEqual(true)
   })
 

@@ -4,6 +4,7 @@ import appSelectors from '../../store/selectors/app'
 import sectionSelectors from '../../store/selectors/section'
 import { loadSectionSuccess, loadSectionFailure } from '../../store/actions/content'
 import { fetchSection } from '../../lib/api'
+import { scrollToHash } from '../../lib/util'
 import { showMessage } from '../../store/actions/ui'
 
 export default function* loadSectionSaga({ sectionId }) {
@@ -19,6 +20,7 @@ export default function* loadSectionSaga({ sectionId }) {
       try {
         const content = yield call(fetchSection, contentRoot, language, sectionId)
         yield put(loadSectionSuccess({ language, sectionId, content }))
+        yield call(scrollToHash) // need to run scrollToHash manually!
       } catch (error) {
         yield put(loadSectionFailure({ language, error }))
         yield put(showMessage({
