@@ -13,6 +13,7 @@ const Card = ({
   icon,
   cardType,
   content,
+  id,
 }) => {
   let iconElem = null
   if (icon) {
@@ -31,7 +32,11 @@ const Card = ({
   )
 
   return (
-    <AntCard className={classNames(cardType, css[cardType])} title={titleFragment}>
+    <AntCard
+      id={id}
+      className={classNames(cardType, css[cardType])}
+      title={titleFragment}
+    >
       <div>
         <ContentFragment content={content} />
       </div>
@@ -44,10 +49,12 @@ Card.propTypes = {
   cardType: PropTypes.string.isRequired,
   icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   content: contentType.isRequired,
+  id: PropTypes.string,
 }
 
 Card.defaultProps = {
   icon: null,
+  id: null,
 }
 
 export default Card

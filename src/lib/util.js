@@ -18,11 +18,6 @@ const astToString = (ast) => {
   }).join('')
 }
 
-const getSectionHref = sectionId => ({
-  href: { pathname: '/page', query: { sectionId } },
-  as: `/page/${sectionId}`,
-})
-
 const unwrapPara = content => (
   content && content[0].t === 'Para'
     ? content[0].c
@@ -33,6 +28,5 @@ export {
   astToString,
   getDisplayName,
   getHocDisplayName,
-  getSectionHref,
   unwrapPara,
 }

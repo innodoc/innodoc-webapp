@@ -17,7 +17,17 @@ class CoursePage extends React.Component {
     } else {
       props.err = { statusCode: 404 }
     }
+    if (query.hash) {
+      props.hash = query.hash
+    }
     return props
+  }
+
+  componentDidMount() {
+    const hash = this.props
+    if (hash) {
+      scrollToComponent(this.Blue, { duration: 500 })
+    }
   }
 
   render() {
@@ -35,12 +45,16 @@ class CoursePage extends React.Component {
   }
 }
 
-CoursePage.defaultProps = { err: null }
+CoursePage.defaultProps = {
+  err: null,
+  hash: null,
+}
 
 CoursePage.propTypes = {
   err: PropTypes.shape({
     statusCode: PropTypes.number.isRequired,
   }),
+  hash: PropTypes.string,
 }
 
 export default connect()(
