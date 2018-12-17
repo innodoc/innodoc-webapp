@@ -14,19 +14,38 @@ class CoursePage extends React.Component {
     const props = {}
     if (query.sectionId) {
       store.dispatch(loadSection(query.sectionId))
+      if (query.hash) {
+        props.hash = query.hash
+      }
     } else {
       props.err = { statusCode: 404 }
-    }
-    if (query.hash) {
-      props.hash = query.hash
     }
     return props
   }
 
   componentDidMount() {
-    const hash = this.props
+    const { hash } = this.props
+    console.log('componentDidMount')
     if (hash) {
-      scrollToComponent(this.Blue, { duration: 500 })
+      console.log('mount, hash', hash)
+      // scrollToComponent(this.Blue, { duration: 500 })
+    }
+  }
+
+  componentDidUpdate() {
+    if (document) {
+      const { hash } = this.props
+      console.log('componentDidUpdate')
+      if (hash) {
+        console.log('mount, hash', hash)
+        // scrollToComponent(this.Blue, { duration: 500 })
+        var el = document.getElementById(hash.slice(1))
+        if (el)
+          el.scrollIntoView()
+      }
+    }
+    else {
+      console.log('ON SERVER!')
     }
   }
 
