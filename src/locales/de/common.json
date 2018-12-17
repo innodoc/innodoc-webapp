@@ -7,7 +7,8 @@
     "home": "Start",
     "solution": "Lösung",
     "subsections": "Unterabschnitte",
-    "test": "Test"
+    "test": "Test",
+    "ytIdError": "Konnte YouTube-Video-ID nicht extrahieren: {{src}}"
   },
   "errorPage": {
     "404": {

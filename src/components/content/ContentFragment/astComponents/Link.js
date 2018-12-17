@@ -2,14 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import ContentFragment from '..'
+import Video from './Video'
 
 const ExternalLink = ({ data }) => {
-  const [, content, [href, title]] = data
-  return (
-    <a href={href} title={title}>
-      <ContentFragment content={content} />
-    </a>
-  )
+  const [[, classes], content, [href, title]] = data
+
+  return classes.includes('video')
+    ? (<Video data={data} />)
+    : (
+      <a href={href} title={title}>
+        <ContentFragment content={content} />
+      </a>
+    )
 }
 
 ExternalLink.propTypes = {

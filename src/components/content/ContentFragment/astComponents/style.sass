@@ -41,3 +41,33 @@
     padding-top: $padding-sm
     font-style: italic
     text-align: center
+
+.video
+  width: 100%
+
+.ytVideoWrapper
+  display: block
+  overflow: hidden
+  padding-top: 56.25%
+  position: relative
+
+  .ytVideo
+    position: absolute
+    top: 0
+    left: 0
+    border: 0
+    width: 100%
+    height: 100%
+
+.errorBGColor
+  background-color: $color-error
+
+.unknownComponent
+  @extend .errorBGColor
+
+  .toggler
+    float: left
+
+  .componentData
+    margin: 0
+    padding: 0.1rem

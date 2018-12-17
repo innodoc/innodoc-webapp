@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import css from './debug-style.sass'
+import css from './style.sass'
 
 const UnknownTypeData = ({ data }) => (
   <pre className={css.componentData}>

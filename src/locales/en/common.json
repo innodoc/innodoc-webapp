@@ -7,7 +7,8 @@
     "home": "Home",
     "solution": "Solution",
     "subsections": "Subsections",
-    "test": "Test"
+    "test": "Test",
+    "ytIdError": "Could not extract YouTube Video ID: {{src}}"
   },
   "errorPage": {
     "404": {

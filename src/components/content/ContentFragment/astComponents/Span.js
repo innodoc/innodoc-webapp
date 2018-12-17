@@ -5,7 +5,7 @@ import { contentType } from '../../../../lib/propTypes'
 import ContentFragment from '..'
 import InputHint from '../cards/InputHint'
 import SectionLink from '../../../SectionLink'
-import css from './debug-style.sass'
+import css from './style.sass'
 
 const IndexSpan = ({ indexConcept, content }) => (
   <span className="index-concept" data-index-concept={indexConcept}>
