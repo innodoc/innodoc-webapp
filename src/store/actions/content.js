@@ -8,6 +8,7 @@ export const actionTypes = {
   SET_CONTENT_ROOT: 'SET_CONTENT_ROOT',
   SET_STATIC_ROOT: 'SET_STATIC_ROOT',
   CHANGE_COURSE: 'CHANGE_COURSE',
+  CLEAR_ERROR: 'CLEAR_ERROR',
 }
 
 export function loadManifest() {
@@ -69,5 +70,11 @@ export function changeCourse(courseId) {
   return {
     type: actionTypes.CHANGE_COURSE,
     courseId,
+  }
+}
+
+export function clearError() {
+  return {
+    type: actionTypes.CLEAR_ERROR,
   }
 }

@@ -12,7 +12,7 @@ const Quoted = ({ data: [, content] }) => (
 )
 
 Quoted.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.array).isRequired,
+  data: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])).isRequired,
 }
 
 export default Quoted
