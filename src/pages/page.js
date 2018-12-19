@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { loadSection } from '../store/actions/content'
+import { loadSection, loadSectionFailure } from '../store/actions/content'
+import appSelectors from '../store/selectors/app'
 import withI18next from '../components/hoc/withI18next'
 import withI18nDispatch from '../components/hoc/withI18nDispatch'
 import Layout from '../components/Layout'
@@ -15,7 +16,7 @@ class CoursePage extends React.Component {
     if (query.sectionId) {
       store.dispatch(loadSection(query.sectionId))
     } else {
-      props.err = { statusCode: 404 }
+      store.dispatch(loadSectionFailure({ error: { statusCode: 404 } }))
     }
     return props
   }
@@ -43,7 +44,11 @@ CoursePage.propTypes = {
   }),
 }
 
-export default connect()(
+const mapStateToProps = state => ({
+  err: appSelectors.getError(state),
+})
+
+export default connect(mapStateToProps)(
   withI18next()(
     withI18nDispatch(
       CoursePage

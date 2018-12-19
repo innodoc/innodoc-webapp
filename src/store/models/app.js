@@ -14,7 +14,7 @@ export default class App extends Model {
       id: attr({ getDefault: () => 0 }),
       contentRoot: attr({ getDefault: () => '' }),
       currentCourseId: fk('Course'),
-      error: attr({ getDefault: () => undefined }),
+      error: attr({ getDefault: () => null }),
       language: attr({ getDefault: () => null }),
       message: attr({ getDefault: () => null }),
       sidebarVisible: attr({ getDefault: () => false }),
@@ -25,6 +25,9 @@ export default class App extends Model {
   static reducer(action, appModel) {
     const app = appModel.withId(0)
     switch (action.type) {
+      case contentActionTypes.CLEAR_ERROR:
+        app.set('error', null)
+        break
       case contentActionTypes.LOAD_SECTION_FAILURE:
         app.set('error', action.error)
         break
