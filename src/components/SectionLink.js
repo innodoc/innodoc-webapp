@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 
 import { childrenType } from '../lib/propTypes'
+import { parseSectionId } from '../lib/util'
 
 const SectionLink = ({ sectionId: sectionIdHash, children }) => {
-  const [sectionId, hash] = sectionIdHash.split('#')
+  const [sectionId, hash] = parseSectionId(sectionIdHash)
   const linkProps = {
     href: {
       pathname: '/page',

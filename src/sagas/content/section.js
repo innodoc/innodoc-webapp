@@ -4,10 +4,11 @@ import appSelectors from '../../store/selectors/app'
 import sectionSelectors from '../../store/selectors/section'
 import { loadSectionSuccess, loadSectionFailure } from '../../store/actions/content'
 import { fetchSection } from '../../lib/api'
-import { scrollToHash } from '../../lib/util'
+import { scrollToHash, parseSectionId } from '../../lib/util'
 import { showMessage } from '../../store/actions/ui'
 
-export default function* loadSectionSaga({ sectionId }) {
+export default function* loadSectionSaga({ sectionId: sectionIdHash }) {
+  const [sectionId] = yield call(parseSectionId, sectionIdHash)
   const language = yield select(appSelectors.getLanguage)
   if (language) {
     // already in store?

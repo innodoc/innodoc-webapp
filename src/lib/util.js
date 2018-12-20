@@ -32,10 +32,13 @@ const scrollToHash = () => {
   }
 }
 
+const parseSectionId = sectionId => sectionId.split('#')
+
 export {
   astToString,
   getDisplayName,
   getHocDisplayName,
   unwrapPara,
   scrollToHash,
+  parseSectionId,
 }
