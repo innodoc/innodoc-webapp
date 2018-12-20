@@ -23,11 +23,20 @@ class CoursePage extends React.Component {
 
   render() {
     const { err } = this.props
+
     if (err) {
-      return (
-        <ErrorPage statusCode={err.statusCode} />
-      )
+      // workaround for setting the status code (client and server)
+      // https://github.com/zeit/next.js/issues/4451#issuecomment-438096614
+      if (process.browser) {
+        return (
+          <ErrorPage statusCode={err.statusCode} />
+        )
+      }
+      const e = new Error()
+      e.code = 'ENOENT'
+      throw e
     }
+
     return (
       <Layout>
         <Content />
@@ -39,9 +48,7 @@ class CoursePage extends React.Component {
 CoursePage.defaultProps = { err: null }
 
 CoursePage.propTypes = {
-  err: PropTypes.shape({
-    statusCode: PropTypes.number.isRequired,
-  }),
+  err: PropTypes.shape({ statusCode: PropTypes.number }),
 }
 
 const mapStateToProps = state => ({
