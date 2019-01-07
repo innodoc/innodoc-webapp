@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { unwrapPara } from '../../../../lib/util'
 import ContentFragment from '..'
 import ImageTag from './Image'
 import css from './style.sass'
 
 const Figure = ({ content }) => {
-  // unwrap Para
-  const { c: imgData } = content[0].t === 'Para' ? content[0].c[0] : content[0]
+  const imgData = unwrapPara(content)[0].c
   const [, captionContent] = imgData
   const caption = captionContent.length
     ? <figcaption><ContentFragment content={captionContent} /></figcaption>

@@ -6,14 +6,14 @@ import appSelectors from '../../../../store/selectors/app'
 import { astToString } from '../../../../lib/util'
 
 const Image = ({ staticRoot, data }) => {
-  const [, content, [src, alt]] = data
+  const [[id], content, [src, alt]] = data
 
   const imgSrc = /^https?:\/\//i.test(src)
     ? src
     : `${staticRoot}${src}`
   const imgAlt = alt || astToString(content)
 
-  return <img src={imgSrc} alt={imgAlt} />
+  return <img id={id} src={imgSrc} alt={imgAlt} />
 }
 
 Image.propTypes = {
