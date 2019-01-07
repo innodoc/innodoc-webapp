@@ -48,8 +48,4 @@ const withI18nDispatch = (WrappedComponent) => {
   return connect(null, mapDispatchToProps)(WithI18nDispatch)
 }
 
-withI18nDispatch.propTypes = {
-  WrappedComponent: PropTypes.element,
-}
-
 export default withI18nDispatch

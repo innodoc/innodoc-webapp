@@ -12,6 +12,4 @@ const withLoadingPlaceholder = PlaceholderComponent => (WrappedComponent) => {
   return WithLoadingPlaceholder
 }
 
-withLoadingPlaceholder.propTypes = { WrappedComponent: PropTypes.element }
-
 export default withLoadingPlaceholder

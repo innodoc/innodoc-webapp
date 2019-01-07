@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import loadScript from 'load-script'
 
 import { getHocDisplayName } from '../../lib/util'
@@ -112,10 +111,6 @@ const withMathJax = (WrappedComponent) => {
 
   WithMathJax.displayName = getHocDisplayName('WithMathJax', WrappedComponent)
   return WithMathJax
-}
-
-withMathJax.propTypes = {
-  WrappedComponent: PropTypes.element,
 }
 
 export default withMathJax

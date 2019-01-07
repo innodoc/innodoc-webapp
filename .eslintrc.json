@@ -16,6 +16,7 @@
   "plugins": ["jest"],
   "rules": {
     "react/jsx-filename-extension": ["error", { "extensions": [".js"] }],
+    "react/forbid-prop-types": ["off"],
     "semi": ["error", "never"],
     "function-paren-newline": ["off"],
     "comma-dangle": ["error", {

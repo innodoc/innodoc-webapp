@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { NamespacesConsumer } from 'react-i18next'
 import i18nInstance from '../../lib/i18n/instance'
 
@@ -40,6 +41,10 @@ const withI18next = (namespaces = ['common']) => (WrappedComponent) => {
       ...composedInitialProps,
       ...i18nInitialProps,
     }
+  }
+
+  WithI18next.propTypes = {
+    i18n: PropTypes.object.isRequired,
   }
 
   WithI18next.displayName = getHocDisplayName('WithI18next', WrappedComponent)
