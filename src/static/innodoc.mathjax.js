@@ -49,7 +49,7 @@ MathJax.Hub.Register.StartupHook("TeX Jax Ready", function() {
       }
       this.Push(
         MML.mn(match[1]),
-        MML.mrow(decimalMarker).With({class: 'MJX-TeXAtom-ORD'}),
+        MML.TeXAtom(decimalMarker),
         MML.mn(match[2])
       );
     },
