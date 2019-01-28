@@ -27,6 +27,6 @@ describe('<Breadcrumb />', () => {
     )
     expect(wrapper.find(AntBreadcrumb)).toExist()
     expect(wrapper.find(AntBreadcrumb.Item)).toHaveLength(4)
-    expect(wrapper.find(SectionLink)).toHaveLength(4)
+    expect(wrapper.find(SectionLink)).toHaveLength(3)
   })
 })
