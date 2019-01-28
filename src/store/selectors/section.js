@@ -100,6 +100,11 @@ const getNavSections = (state, id) => {
   }
 }
 
+// Return direct sub-sections for a section
+const getSubsections = (state, id) => getSectionTable(state).items
+  .map(item => getSection(state, item))
+  .filter(section => section.parentId === id)
+
 // Create tree structure for TOC
 const getToc = (state) => {
   const sections = getSectionTable(state).items
@@ -127,5 +132,6 @@ export default {
   getSectionContent,
   getBreadcrumbSections,
   getNavSections,
+  getSubsections,
   getToc,
 }

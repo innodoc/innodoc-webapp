@@ -17,6 +17,7 @@ jest.mock('../../../store/selectors/course.js', () => ({
 }))
 jest.mock('../../../store/selectors/section.js', () => ({
   getSection: () => mockyGetSection(),
+  getSubsections: () => [],
 }))
 
 describe('<Content />', () => {
@@ -26,12 +27,24 @@ describe('<Content />', () => {
     section: {
       id: 'foo',
       title: { en: 'Foo section' },
-      content: { en: 'A nice string' },
+      content: { en: [{ t: 'Str', c: 'A nice string' }] },
     },
+    subsections: [
+      {
+        id: 'bar-1',
+        title: { en: 'Bar section 1' },
+        content: { en: [] },
+      },
+      {
+        id: 'bar-2',
+        title: { en: 'Bar section 2' },
+        content: { en: [] },
+      },
+    ],
     otherSection: {
       id: 'bar',
       title: { en: 'Bar section' },
-      content: { en: 'An awesome string' },
+      content: { en: [{ t: 'Str', c: 'An awesome string' }] },
     },
     contentRef: React.createRef(),
   })
@@ -41,6 +54,7 @@ describe('<Content />', () => {
     const wrapper = shallow(
       <Content
         section={data.section}
+        subsections={data.subsections}
         sectionLevel={1}
         typesetMathJax={data.mockTypesetMathJax}
         mathJaxContentRef={data.contentRef}
@@ -51,11 +65,18 @@ describe('<Content />', () => {
     expect(data.mockTypesetMathJax).toBeCalledTimes(1)
     expect(wrapper.find(SectionNav)).toHaveLength(1)
     expect(wrapper.find(Breadcrumb)).toHaveLength(1)
-    expect(wrapper.find('h1')).toHaveLength(1)
     const contentDiv = wrapper.find('div')
     expect(contentDiv).toHaveLength(1)
-    expect(wrapper.find('h1').text()).toEqual(data.section.title.en)
+    const h1 = wrapper.find('h1')
+    expect(h1).toHaveLength(1)
+    expect(h1.text()).toEqual(data.section.title.en)
     expect(wrapper.find(ContentFragment).at(0).prop('content')).toEqual(data.section.content.en)
+    expect(wrapper.find('h2')).toHaveLength(1)
+    expect(wrapper.find('ul')).toHaveLength(1)
+    const subsections = wrapper.find('ul > li')
+    expect(subsections).toHaveLength(2)
+    expect(subsections.at(0).find('a').text()).toEqual(data.subsections[0].title.en)
+    expect(subsections.at(1).find('a').text()).toEqual(data.subsections[1].title.en)
   })
 
   it('renders and updates', () => {
@@ -63,6 +84,7 @@ describe('<Content />', () => {
     const wrapper = shallow(
       <Content
         section={data.section}
+        subsections={data.subsections}
         sectionLevel={1}
         typesetMathJax={data.mockTypesetMathJax}
         mathJaxContentRef={data.contentRef}
@@ -122,6 +144,7 @@ describe('mapStateToProps', () => {
     mockyGetSection = () => section
     expect(mapStateToProps()).toEqual({
       section,
+      subsections: [],
       currentLanguage: 'en',
       loading: false,
     })

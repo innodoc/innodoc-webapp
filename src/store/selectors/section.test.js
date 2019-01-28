@@ -134,6 +134,18 @@ describe('section selectors', () => {
     })
   })
 
+  test('getSubsections', () => {
+    expect(selectors.getSubsections(state, 'test')).toEqual([
+      state.db.Section.itemsById['test/child1'],
+      state.db.Section.itemsById['test/child2'],
+    ])
+    expect(selectors.getSubsections(state, 'test/child1')).toEqual([
+      state.db.Section.itemsById['test/child1/child11'],
+      state.db.Section.itemsById['test/child1/child12'],
+    ])
+    expect(selectors.getSubsections(state, 'test/child2')).toEqual([])
+  })
+
   test('getToc', () => {
     const toc = selectors.getToc(state)
     expect(toc[0].id).toEqual('test')
