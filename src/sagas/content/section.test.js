@@ -11,7 +11,7 @@ import {
 } from '../../store/actions/content'
 import { fetchSection } from '../../lib/api'
 import { parseSectionId, scrollToHash } from '../../lib/util'
-import appSelectors from '../../store/selectors/app'
+import appSelectors from '../../store/selectors'
 import courseSelectors from '../../store/selectors/course'
 import sectionSelectors from '../../store/selectors/section'
 
@@ -44,7 +44,7 @@ describe('loadSectionSaga', () => {
     expect(clone.next(['foo/bar']).value).toEqual(select(courseSelectors.getCurrentCourse))
     expect(clone.next(true).value).toEqual(put(clearError()))
     expect(clone.next().value).toEqual(select(sectionSelectors.getSectionTable))
-    expect(clone.next(sectionTable).value).toEqual(select(appSelectors.getLanguage))
+    expect(clone.next(sectionTable).value).toEqual(select(appSelectors.getApp).language)
     expect(clone.next().done).toEqual(true)
   })
 
@@ -54,10 +54,10 @@ describe('loadSectionSaga', () => {
     expect(clone.next(['foo/bar']).value).toEqual(select(courseSelectors.getCurrentCourse))
     expect(clone.next(true).value).toEqual(put(clearError()))
     expect(clone.next().value).toEqual(select(sectionSelectors.getSectionTable))
-    expect(clone.next(sectionTable).value).toEqual(select(appSelectors.getLanguage))
+    expect(clone.next(sectionTable).value).toEqual(select(appSelectors.getApp).language)
     expect(clone.next(language).value).toEqual(
       select(sectionSelectors.getSection, sectionId))
-    expect(clone.next().value).toEqual(select(appSelectors.getContentRoot))
+    expect(clone.next().value).toEqual(select(appSelectors.getApp).contentRoot)
     expect(clone.next(contentRoot).value).toEqual(
       call(fetchSection, contentRoot, language, sectionId))
     expect(clone.next(section.content[language]).value).toEqual(
@@ -72,7 +72,7 @@ describe('loadSectionSaga', () => {
     expect(clone.next(['foo/bar']).value).toEqual(select(courseSelectors.getCurrentCourse))
     expect(clone.next(true).value).toEqual(put(clearError()))
     expect(clone.next().value).toEqual(select(sectionSelectors.getSectionTable))
-    expect(clone.next(sectionTable).value).toEqual(select(appSelectors.getLanguage))
+    expect(clone.next(sectionTable).value).toEqual(select(appSelectors.getApp).language)
     expect(clone.next(language).value).toEqual(
       select(sectionSelectors.getSection, sectionId))
     expect(clone.next(section).value).toEqual(
@@ -86,7 +86,7 @@ describe('loadSectionSaga', () => {
     expect(clone.next(['foo/bar']).value).toEqual(select(courseSelectors.getCurrentCourse))
     expect(clone.next(true).value).toEqual(put(clearError()))
     expect(clone.next().value).toEqual(select(sectionSelectors.getSectionTable))
-    expect(clone.next({ items: [] }).value).toEqual(select(appSelectors.getLanguage))
+    expect(clone.next({ items: [] }).value).toEqual(select(appSelectors.getApp).language)
     expect(clone.next(language).value).toEqual(
       put(loadSectionFailure({ language, statusCode: 404 })))
     expect(clone.next().done).toEqual(true)
@@ -98,10 +98,10 @@ describe('loadSectionSaga', () => {
     expect(clone.next(['foo/bar']).value).toEqual(select(courseSelectors.getCurrentCourse))
     expect(clone.next(true).value).toEqual(put(clearError()))
     expect(clone.next().value).toEqual(select(sectionSelectors.getSectionTable))
-    expect(clone.next(sectionTable).value).toEqual(select(appSelectors.getLanguage))
+    expect(clone.next(sectionTable).value).toEqual(select(appSelectors.getApp).language)
     expect(clone.next(language).value).toEqual(
       select(sectionSelectors.getSection, sectionId))
-    expect(clone.next().value).toEqual(select(appSelectors.getContentRoot))
+    expect(clone.next().value).toEqual(select(appSelectors.getApp).contentRoot)
     expect(clone.next(contentRoot).value).toEqual(
       call(fetchSection, contentRoot, language, sectionId))
     const error = new Error('error')

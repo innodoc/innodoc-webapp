@@ -1,17 +1,23 @@
-import ormSelectors from './orm'
+import { createSelector } from 'redux-orm'
 
-import appSelectors from './app'
+import orm from '../orm'
+import appSelectors from '.'
 
-const getCourseTable = state => ormSelectors.getDB(state).Course
+const getCourses = createSelector(
+  orm, appSelectors.getOrmState,
+  session => session.Course.all().toRefArray()
+)
 
-const getCourses = state => getCourseTable(state).items
-
-const getCurrentCourse = state => (
-  getCourseTable(state).itemsById[appSelectors.getCurrentCourseId(state)]
+// Currently we support one course at the time
+const getCurrentCourse = createSelector(
+  orm, appSelectors.getOrmState, appSelectors.getApp,
+  (session, app) => {
+    const firstCourse = session.Course.withId(app.currentCourseId)
+    return firstCourse ? firstCourse.ref : null
+  }
 )
 
 export default {
-  getCourseTable,
   getCourses,
   getCurrentCourse,
 }

@@ -38,7 +38,7 @@ export default class App extends Model {
         app.set('staticRoot', action.staticRoot)
         break
       case contentActionTypes.CHANGE_COURSE:
-        app.set('currentCourseId', action.courseId)
+        app.set('currentCourseId', action.course.id)
         break
       case i18nActionTypes.CHANGE_LANGUAGE:
         app.set('language', action.language)

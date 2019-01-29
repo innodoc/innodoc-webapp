@@ -66,10 +66,10 @@ export function setStaticRoot(staticRoot) {
   }
 }
 
-export function changeCourse(courseId) {
+export function changeCourse(course) {
   return {
     type: actionTypes.CHANGE_COURSE,
-    courseId,
+    course,
   }
 }
 

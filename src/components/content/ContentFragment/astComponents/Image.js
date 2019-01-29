@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import appSelectors from '../../../../store/selectors/app'
+import appSelectors from '../../../../store/selectors'
 import { astToString } from '../../../../lib/util'
 
 const Image = ({ staticRoot, data }) => {
@@ -22,7 +22,7 @@ Image.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  staticRoot: appSelectors.getStaticRoot(state),
+  staticRoot: appSelectors.getApp(state).staticRoot,
 })
 
 export { Image } // for testing

@@ -49,13 +49,10 @@ export default class Course extends Model {
   }
 
   static reducer(action, courseModel, session) {
-    const { App: appModel } = session
-
-    let app = appModel.withId(0)
+    const app = session.App.first()
     let course
     if (app && app.currentCourseId) {
-      app = app.ref
-      course = courseModel.withId(app.currentCourseId)
+      course = courseModel.withId(app.ref.currentCourseId)
     }
 
     switch (action.type) {

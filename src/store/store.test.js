@@ -1,3 +1,4 @@
+import orm from './orm'
 import configureStore from './store'
 
 it('smoke test', () => {
@@ -11,31 +12,32 @@ it('smoke test', () => {
 describe('initial state', () => {
   const store = configureStore()
   const state = store.getState()
-  const App = state.db.App.itemsById[0]
+  const session = orm.mutableSession(state)
+  const app = session.App.first().ref
 
   describe('i18n', () => {
     test('have language', () => {
-      expect(App.language).toBe(null)
+      expect(app.language).toBe(null)
     })
   })
 
   describe('ui', () => {
     test('hidden sidebar', () => {
-      expect(App.sidebarVisible).toBe(false)
+      expect(app.sidebarVisible).toBe(false)
     })
 
     test('no message', () => {
-      expect(App.message).toBe(null)
+      expect(app.message).toBe(null)
     })
   })
 
   describe('content', () => {
     test('content root to be empty string', () => {
-      expect(App.contentRoot).toBe('')
+      expect(app.contentRoot).toBe('')
     })
 
     test('current section null', () => {
-      expect(App.currentSectionId).toBe(null)
+      expect(app.currentSectionId).toBe(null)
     })
   })
 

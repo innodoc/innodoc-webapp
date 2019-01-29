@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 import Icon from 'antd/lib/icon'
 
 import { sectionType } from '../../../lib/propTypes'
-import appSelectors from '../../../store/selectors/app'
-import courseSelectors from '../../../store/selectors/course'
+import appSelectors from '../../../store/selectors'
 import sectionSelectors from '../../../store/selectors/section'
 import SectionLink from '../../SectionLink'
 import css from './style.sass'
@@ -45,11 +44,10 @@ SectionNav.defaultProps = {
 }
 
 const mapStateToProps = (state) => {
-  const course = courseSelectors.getCurrentCourse(state)
-  const navSections = sectionSelectors.getNavSections(state, course.currentSectionId)
+  const navSections = sectionSelectors.getNextPrevSections(state)
   return {
     ...navSections,
-    currentLanguage: appSelectors.getLanguage(state),
+    currentLanguage: appSelectors.getApp(state).language,
   }
 }
 

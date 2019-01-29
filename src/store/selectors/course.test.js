@@ -1,40 +1,42 @@
 import orm from '../orm'
-import selectors from './course'
+import courseSelectors from './course'
+
+const dummyCourse = {
+  id: 0,
+  homeLink: 'foo',
+  languages: ['en'],
+  title: { en: ['foobar'] },
+}
 
 // Create/Mock state
-const dummyState = (() => {
+const dummyState = (course = dummyCourse) => {
   const state = orm.getEmptyState()
   const session = orm.mutableSession(state)
-  const { App, Course } = session
-
-  // Create course
-  Course.create({
-    homeLink: 'foo',
-    languages: ['en'],
-    title: { en: ['foobar'] },
-  })
-
-  // Creating default app state
-  App.create({
-    id: 0,
-    currentCourseId: 0,
-  })
-
-  return {
-    db: state,
+  if (course) {
+    session.Course.create(course)
   }
-})()
-
-describe('course selectors', () => {
-  test('getCourseTable', () => {
-    expect(selectors.getCourseTable(dummyState)).toBe(dummyState.db.Course)
+  session.App.create({
+    id: 0,
+    currentCourseId: session.Course.first(),
   })
+  return { orm: state }
+}
 
+describe('courseSelectors', () => {
   test('getCourses', () => {
-    expect(selectors.getCourses(dummyState)).toBe(dummyState.db.Course.items)
+    const state = dummyState()
+    expect(courseSelectors.getCourses(state)).toEqual([dummyCourse])
   })
 
-  test('getCurrentCourse', () => {
-    expect(selectors.getCurrentCourse(dummyState)).toBe(dummyState.db.Course.itemsById[0])
+  describe('getCurrentCourse', () => {
+    test('course exists', () => {
+      const state = dummyState()
+      expect(courseSelectors.getCurrentCourse(state)).toEqual(dummyCourse)
+    })
+
+    test("course doesn't exist", () => {
+      const state = dummyState(null)
+      expect(courseSelectors.getCurrentCourse(state)).toBe(null)
+    })
   })
 })

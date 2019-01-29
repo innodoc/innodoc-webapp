@@ -5,7 +5,7 @@ import AntLayout from 'antd/lib/layout'
 import Button from 'antd/lib/button'
 import { withNamespaces } from 'react-i18next'
 
-import appSelectors from '../../../store/selectors/app'
+import appSelectors from '../../../store/selectors'
 import { toggleSidebar } from '../../../store/actions/ui'
 import Toc from '../../Toc'
 import css from './style.sass'
@@ -70,7 +70,7 @@ class Sidebar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  visible: appSelectors.getSidebarVisible(state),
+  visible: appSelectors.getApp(state).sidebarVisible,
 })
 
 const mapDispatchToProps = {

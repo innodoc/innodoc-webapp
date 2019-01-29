@@ -4,7 +4,7 @@ import {
   select,
 } from 'redux-saga/effects'
 
-import appSelectors from '../../store/selectors/app'
+import appSelectors from '../../store/selectors'
 import courseSelectors from '../../store/selectors/course'
 import sectionSelectors from '../../store/selectors/section'
 import {
@@ -18,6 +18,7 @@ import { showMessage } from '../../store/actions/ui'
 import loadManifestSaga from './manifest'
 
 export default function* loadSectionSaga({ sectionId: sectionIdHash }) {
+  const { language, contentRoot } = yield select(appSelectors.getApp)
   const [sectionId] = yield call(parseSectionId, sectionIdHash)
 
   // Load manifest if course does not exist
@@ -28,30 +29,29 @@ export default function* loadSectionSaga({ sectionId: sectionIdHash }) {
   // Clear error
   yield put(clearError())
 
-  // Check if sectionId is valid
-  const sectionTable = yield select(sectionSelectors.getSectionTable)
-  const language = yield select(appSelectors.getLanguage)
-  if (sectionTable.items.includes(sectionId)) {
-    if (language) {
-      // already in store?
-      const section = yield select(sectionSelectors.getSection, sectionId)
-      if (section && section.content && section.content[language]) {
-        yield put(loadSectionSuccess({ language, sectionId, content: section.content[language] }))
-      } else {
-        // fetch from remote
-        const contentRoot = yield select(appSelectors.getContentRoot)
-        try {
-          const content = yield call(fetchSection, contentRoot, language, sectionId)
-          yield put(loadSectionSuccess({ language, sectionId, content }))
-          yield call(scrollToHash) // need to run scrollToHash manually!
-        } catch (error) {
-          yield put(loadSectionFailure({ language, error }))
-          yield put(showMessage({
-            title: 'Loading section failed!',
-            msg: error.message,
-            level: 'error',
-          }))
-        }
+  // Check if sectionId is exists
+  if (yield select(sectionSelectors.sectionExists, sectionId)) {
+    // Check if content is fetched already
+    const section = yield select(sectionSelectors.getSection, sectionId)
+    if (section.content && section.content[language]) {
+      yield put(loadSectionSuccess({
+        language,
+        sectionId,
+        content: section.content[language],
+      }))
+    } else {
+      // Fetch from remote
+      try {
+        const content = yield call(fetchSection, contentRoot, language, sectionId)
+        yield put(loadSectionSuccess({ language, sectionId, content }))
+        yield call(scrollToHash) // need to run scrollToHash manually!
+      } catch (error) {
+        yield put(loadSectionFailure({ language, error }))
+        yield put(showMessage({
+          title: 'Loading section failed!',
+          msg: error.message,
+          level: 'error',
+        }))
       }
     }
   } else {

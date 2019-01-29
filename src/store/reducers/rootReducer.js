@@ -6,7 +6,7 @@ import orm from '../orm'
 
 const rootReducer = combineReducers({
   exercises: exerciseReducer,
-  db: createReducer(orm),
+  orm: createReducer(orm),
 })
 
 export default rootReducer

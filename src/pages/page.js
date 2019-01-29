@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { loadSection, loadSectionFailure } from '../store/actions/content'
-import appSelectors from '../store/selectors/app'
+import appSelectors from '../store/selectors'
 import withI18next from '../components/hoc/withI18next'
 import withI18nDispatch from '../components/hoc/withI18nDispatch'
 import Layout from '../components/Layout'
@@ -52,7 +52,7 @@ CoursePage.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  err: appSelectors.getError(state),
+  err: appSelectors.getApp(state).error,
 })
 
 export default connect(mapStateToProps)(

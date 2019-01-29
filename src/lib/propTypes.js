@@ -10,7 +10,6 @@ const sectionType = PropTypes.shape({
   id: PropTypes.string,
   path: PropTypes.string,
   title: PropTypes.object,
-  children: tocTreeType,
 })
 const messageType = PropTypes.shape({
   title: PropTypes.string.isRequired,

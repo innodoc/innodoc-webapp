@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import Tree from 'antd/lib/tree'
 
 import css from './style.sass'
-import appSelectors from '../../store/selectors/app'
+import appSelectors from '../../store/selectors'
 import courseSelectors from '../../store/selectors/course'
 import sectionSelectors from '../../store/selectors/section'
 import { courseType, tocTreeType } from '../../lib/propTypes'
@@ -145,7 +145,7 @@ class Toc extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  currentLanguage: appSelectors.getLanguage(state),
+  currentLanguage: appSelectors.getApp(state).language,
   course: courseSelectors.getCurrentCourse(state),
   toc: sectionSelectors.getToc(state),
 })

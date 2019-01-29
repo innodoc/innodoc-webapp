@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import withI18next from '../../../hoc/withI18next'
 import ContentFragment from '..'
-import appSelectors from '../../../../store/selectors/app'
+import appSelectors from '../../../../store/selectors'
 import { astToString } from '../../../../lib/util'
 import css from './style.sass'
 
@@ -69,10 +69,13 @@ Video.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = state => ({
-  currentLanguage: appSelectors.getLanguage(state),
-  staticRoot: appSelectors.getStaticRoot(state),
-})
+const mapStateToProps = (state) => {
+  const app = appSelectors.getApp(state)
+  return {
+    currentLanguage: app.language,
+    staticRoot: app.staticRoot,
+  }
+}
 
 export default connect(mapStateToProps)(
   withI18next()(Video)

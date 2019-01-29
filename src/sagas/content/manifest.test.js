@@ -8,7 +8,7 @@ import {
   loadManifestSuccess,
   loadManifestFailure,
 } from '../../store/actions/content'
-import appSelectors from '../../store/selectors/app'
+import appSelectors from '../../store/selectors'
 import courseSelectors from '../../store/selectors/course'
 import { fetchManifest } from '../../lib/api'
 
@@ -31,7 +31,7 @@ describe('loadManifestSaga', () => {
   it('should fetch the manifest', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(courseSelectors.getCurrentCourse))
-    expect(clone.next().value).toEqual(select(appSelectors.getContentRoot))
+    expect(clone.next().value).toEqual(select(appSelectors.getApp).contentRoot)
     expect(clone.next(contentRoot).value).toEqual(call(fetchManifest, contentRoot))
     expect(clone.next(content).value)
       .toEqual(put(loadManifestSuccess({ content, parsed: false })))
@@ -50,7 +50,7 @@ describe('loadManifestSaga', () => {
   it('should put loadTocFailure on error', () => {
     const clone = gen.clone()
     expect(clone.next().value).toEqual(select(courseSelectors.getCurrentCourse))
-    expect(clone.next().value).toEqual(select(appSelectors.getContentRoot))
+    expect(clone.next().value).toEqual(select(appSelectors.getApp).contentRoot)
     expect(clone.next(contentRoot).value).toEqual(call(fetchManifest, contentRoot))
     const error = new Error('error')
     expect(clone.throw(error).value).toEqual(put(loadManifestFailure({ error })))
