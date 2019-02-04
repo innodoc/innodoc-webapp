@@ -1,38 +1,28 @@
-import {
-  call,
-  put,
-  take,
-  takeLatest,
-} from 'redux-saga/effects'
+import { expectSaga } from 'redux-saga-test-plan'
 
 import watchI18nInstanceAvailable, { notifyI18next } from './i18n'
-import { actionTypes, changeLanguage, i18nInstanceAvailable } from '../../store/actions/i18n'
-import toTwoLetterCode from '../../lib/i18n/toTwoLetterCode'
+import { changeLanguage, i18nInstanceAvailable } from '../../store/actions/i18n'
 
-const language = 'de'
+const language = 'de-DE'
 const i18nMock = {
   changeLanguage: () => {},
   language,
 }
 
 describe('notifyI18next', () => {
-  const gen = notifyI18next(i18nMock, changeLanguage(language))
-
-  it('should notify i18n instance', () => {
-    expect(gen.next().value).toEqual(call([i18nMock, i18nMock.changeLanguage], language))
-    expect(gen.next().done).toEqual(true)
-  })
+  it('should notify i18next', () => expectSaga(notifyI18next, i18nMock, changeLanguage(language))
+    .call([i18nMock, i18nMock.changeLanguage], language)
+    .run()
+  )
 })
 
-describe('watchI18n', () => {
-  const gen = watchI18nInstanceAvailable()
-
-  it('should receive i18n instance, normalize language, put changeLanguage and takeLatest', () => {
-    expect(gen.next().value).toEqual(take(actionTypes.I18N_INSTANCE_AVAILABLE))
-    expect(gen.next(i18nInstanceAvailable(i18nMock)).value).toEqual(call(toTwoLetterCode, language))
-    expect(gen.next(language).value).toEqual(put(changeLanguage(language)))
-    expect(gen.next().value).toEqual(
-      takeLatest(actionTypes.CHANGE_LANGUAGE, notifyI18next, i18nMock))
-    expect(gen.next().done).toEqual(true)
-  })
+describe('watchI18nInstanceAvailable', () => {
+  it('should wait for the i18n instance', () => expectSaga(watchI18nInstanceAvailable)
+    .dispatch(i18nInstanceAvailable(i18nMock))
+    .put(changeLanguage('de'))
+    .dispatch(changeLanguage('en')) // trigger takeLatest once more
+    .silentRun(0)
+    // check takeLatest is working
+    .then(({ effects }) => expect(effects.fork).toHaveLength(3))
+  )
 })

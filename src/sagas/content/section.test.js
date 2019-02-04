@@ -1,14 +1,17 @@
-import { call, put, select } from 'redux-saga/effects'
-import { cloneableGenerator } from 'redux-saga/utils'
+import { expectSaga } from 'redux-saga-test-plan'
+import * as matchers from 'redux-saga-test-plan/matchers'
+import { throwError } from 'redux-saga-test-plan/providers'
+import { call, select } from 'redux-saga/effects'
 
 import loadSectionSaga from './section'
 import loadManifestSaga from './manifest'
 import {
-  clearError,
+  actionTypes as contentActionTypes,
   loadSection,
   loadSectionSuccess,
   loadSectionFailure,
 } from '../../store/actions/content'
+import { actionTypes as uiActionTypes } from '../../store/actions/ui'
 import { fetchSection } from '../../lib/api'
 import { parseSectionId, scrollToHash } from '../../lib/util'
 import appSelectors from '../../store/selectors'
@@ -17,94 +20,81 @@ import sectionSelectors from '../../store/selectors/section'
 
 describe('loadSectionSaga', () => {
   const language = 'en'
-  const sectionTable = {
-    items: ['foo/bar'],
-  }
-  const sectionId = 'foo/bar'
-  const section = {
-    content: {
-      en: ['sectioncontent'],
-    },
-  }
   const contentRoot = 'https://foo.com/content'
+  const sectionIdHash = 'foo/bar#baz'
+  const sectionId = 'foo/bar'
+  const content = { [language]: ['sectioncontent'] }
+  const section = { id: sectionId, content }
 
-  const gen = cloneableGenerator(loadSectionSaga)(loadSection(sectionId))
+  const defaultProvides = [
+    [select(appSelectors.getApp), { language, contentRoot }],
+    [call(parseSectionId, sectionIdHash), [sectionId, 'baz']],
+    [select(courseSelectors.getCurrentCourse), { id: 0 }],
+    [select(sectionSelectors.sectionExists, sectionId), true],
+    [select(sectionSelectors.getSection, sectionId), { id: 0 }],
+    [matchers.call.fn(fetchSection), content[language]],
+  ]
 
-  it('should not fetch without manifest', () => {
-    const clone = gen.clone()
-    expect(clone.next().value).toEqual(call(parseSectionId, 'foo/bar'))
-    expect(clone.next(['foo/bar']).value).toEqual(select(courseSelectors.getCurrentCourse))
-    expect(clone.next().value).toEqual(call(loadManifestSaga))
-    expect(clone.next().value).toEqual(put(clearError()))
+  it('should not loadManifest with currentCourse',
+    () => expectSaga(loadSectionSaga, loadSection(sectionIdHash))
+      .provide(defaultProvides)
+      .not.call(loadManifestSaga)
+      .run()
+  )
+
+  it('should loadManifest without currentCourse',
+    () => expectSaga(loadSectionSaga, loadSection(sectionIdHash))
+      .provide([
+        [select(courseSelectors.getCurrentCourse), null],
+        ...defaultProvides,
+      ])
+      .call(loadManifestSaga)
+      .silentRun(0)
+  )
+
+  it('should produce 404 for non-existant sectionId',
+    () => expectSaga(loadSectionSaga, loadSection(sectionIdHash))
+      .provide([
+        [select(sectionSelectors.sectionExists, sectionId), false],
+        ...defaultProvides,
+      ])
+      .put(loadSectionFailure({ language, statusCode: 404 }))
+      .not.call.fn(fetchSection)
+      .not.put.actionType(uiActionTypes.LOAD_MANIFEST_SUCCESS)
+      .run()
+  )
+
+  it('should fetch a section',
+    () => expectSaga(loadSectionSaga, loadSection(sectionIdHash))
+      .provide(defaultProvides)
+      .call(fetchSection, contentRoot, language, sectionId)
+      .put(loadSectionSuccess({ language, sectionId, content: content[language] }))
+      .call(scrollToHash)
+      .not.put.actionType(contentActionTypes.LOAD_SECTION_FAILURE)
+      .run()
+  )
+
+  it('should fail and show message if fetch fails', () => {
+    const error = new Error('mock error')
+    return expectSaga(loadSectionSaga, loadSection(sectionIdHash))
+      .provide([
+        [matchers.call.fn(fetchSection), throwError(error)],
+        ...defaultProvides,
+      ])
+      .put(loadSectionFailure({ language, error }))
+      .put.actionType(uiActionTypes.SHOW_MESSAGE)
+      .not.put.actionType(contentActionTypes.LOAD_SECTION_SUCCESS)
+      .run()
   })
 
-  it('should not fetch a section without language', () => {
-    const clone = gen.clone()
-    expect(clone.next().value).toEqual(call(parseSectionId, 'foo/bar'))
-    expect(clone.next(['foo/bar']).value).toEqual(select(courseSelectors.getCurrentCourse))
-    expect(clone.next(true).value).toEqual(put(clearError()))
-    expect(clone.next().value).toEqual(select(sectionSelectors.getSectionTable))
-    expect(clone.next(sectionTable).value).toEqual(select(appSelectors.getApp).language)
-    expect(clone.next().done).toEqual(true)
-  })
-
-  it('should fetch a section', () => {
-    const clone = gen.clone()
-    expect(clone.next().value).toEqual(call(parseSectionId, 'foo/bar'))
-    expect(clone.next(['foo/bar']).value).toEqual(select(courseSelectors.getCurrentCourse))
-    expect(clone.next(true).value).toEqual(put(clearError()))
-    expect(clone.next().value).toEqual(select(sectionSelectors.getSectionTable))
-    expect(clone.next(sectionTable).value).toEqual(select(appSelectors.getApp).language)
-    expect(clone.next(language).value).toEqual(
-      select(sectionSelectors.getSection, sectionId))
-    expect(clone.next().value).toEqual(select(appSelectors.getApp).contentRoot)
-    expect(clone.next(contentRoot).value).toEqual(
-      call(fetchSection, contentRoot, language, sectionId))
-    expect(clone.next(section.content[language]).value).toEqual(
-      put(loadSectionSuccess({ language, sectionId, content: section.content[language] })))
-    expect(clone.next().value).toEqual(call(scrollToHash))
-    expect(clone.next().done).toEqual(true)
-  })
-
-  it('should return cached section', () => {
-    const clone = gen.clone()
-    expect(clone.next().value).toEqual(call(parseSectionId, 'foo/bar'))
-    expect(clone.next(['foo/bar']).value).toEqual(select(courseSelectors.getCurrentCourse))
-    expect(clone.next(true).value).toEqual(put(clearError()))
-    expect(clone.next().value).toEqual(select(sectionSelectors.getSectionTable))
-    expect(clone.next(sectionTable).value).toEqual(select(appSelectors.getApp).language)
-    expect(clone.next(language).value).toEqual(
-      select(sectionSelectors.getSection, sectionId))
-    expect(clone.next(section).value).toEqual(
-      put(loadSectionSuccess({ language, sectionId, content: section.content[language] })))
-    expect(clone.next().done).toEqual(true)
-  })
-
-  it('should put loadSectionFailure on invalid sectionId', () => {
-    const clone = gen.clone()
-    expect(clone.next().value).toEqual(call(parseSectionId, 'foo/bar'))
-    expect(clone.next(['foo/bar']).value).toEqual(select(courseSelectors.getCurrentCourse))
-    expect(clone.next(true).value).toEqual(put(clearError()))
-    expect(clone.next().value).toEqual(select(sectionSelectors.getSectionTable))
-    expect(clone.next({ items: [] }).value).toEqual(select(appSelectors.getApp).language)
-    expect(clone.next(language).value).toEqual(
-      put(loadSectionFailure({ language, statusCode: 404 })))
-    expect(clone.next().done).toEqual(true)
-  })
-
-  it('should put loadSectionFailure on error', () => {
-    const clone = gen.clone()
-    expect(clone.next().value).toEqual(call(parseSectionId, 'foo/bar'))
-    expect(clone.next(['foo/bar']).value).toEqual(select(courseSelectors.getCurrentCourse))
-    expect(clone.next(true).value).toEqual(put(clearError()))
-    expect(clone.next().value).toEqual(select(sectionSelectors.getSectionTable))
-    expect(clone.next(sectionTable).value).toEqual(select(appSelectors.getApp).language)
-    expect(clone.next(language).value).toEqual(
-      select(sectionSelectors.getSection, sectionId))
-    expect(clone.next().value).toEqual(select(appSelectors.getApp).contentRoot)
-    expect(clone.next(contentRoot).value).toEqual(
-      call(fetchSection, contentRoot, language, sectionId))
-    const error = new Error('error')
-    expect(clone.throw(error).value).toEqual(put(loadSectionFailure({ language, error })))
-  })
+  it('should get a section from cache',
+    () => expectSaga(loadSectionSaga, loadSection(sectionIdHash))
+      .provide([
+        [select(sectionSelectors.getSection, sectionId), section],
+        ...defaultProvides,
+      ])
+      .put(loadSectionSuccess({ language, sectionId, content: content[language] }))
+      .not.call(scrollToHash)
+      .run()
+  )
 })

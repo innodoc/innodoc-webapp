@@ -1,10 +1,12 @@
-import { call, put, select } from 'redux-saga/effects'
-import { cloneableGenerator } from 'redux-saga/utils'
+import { expectSaga } from 'redux-saga-test-plan'
+import * as matchers from 'redux-saga-test-plan/matchers'
+import { throwError } from 'redux-saga-test-plan/providers'
+import { select } from 'redux-saga/effects'
+import { actionTypes as uiActionTypes } from '../../store/actions/ui'
 
 import loadManifestSaga from './manifest'
 import {
-  changeCourse,
-  loadManifest,
+  actionTypes as contentActionTypes,
   loadManifestSuccess,
   loadManifestFailure,
 } from '../../store/actions/content'
@@ -12,47 +14,47 @@ import appSelectors from '../../store/selectors'
 import courseSelectors from '../../store/selectors/course'
 import { fetchManifest } from '../../lib/api'
 
-const course = {
-  id: 0,
-  currentSectionId: 'foo',
-  homeLink: 'bar',
-  languages: ['de', 'en'],
-  title: {
-    en: ['foobar'],
-    de: ['Foobar'],
-  },
-}
-const contentRoot = 'https://foo.com/content'
-
 describe('loadManifestSaga', () => {
-  const content = ['toccontent']
-  const gen = cloneableGenerator(loadManifestSaga)(loadManifest())
+  const language = 'en'
+  const contentRoot = 'https://foo.com/content'
+  const content = { title: 'course title' }
+  const course = { id: 0 }
+  const defaultProvides = [
+    [select(appSelectors.getApp), { language, contentRoot }],
+    [select(courseSelectors.getCurrentCourse), null],
+    [select(courseSelectors.getCourses), [course]],
+    [matchers.call.fn(fetchManifest), content],
+  ]
 
-  it('should fetch the manifest', () => {
-    const clone = gen.clone()
-    expect(clone.next().value).toEqual(select(courseSelectors.getCurrentCourse))
-    expect(clone.next().value).toEqual(select(appSelectors.getApp).contentRoot)
-    expect(clone.next(contentRoot).value).toEqual(call(fetchManifest, contentRoot))
-    expect(clone.next(content).value)
-      .toEqual(put(loadManifestSuccess({ content, parsed: false })))
-    expect(clone.next().value).toEqual(select(courseSelectors.getCourses))
-    expect(clone.next([0]).value).toEqual(put(changeCourse(0)))
-    expect(clone.next().done).toEqual(true)
-  })
+  it('should fetch manifest and change course', () => expectSaga(loadManifestSaga)
+    .provide(defaultProvides)
+    .call(fetchManifest, contentRoot)
+    .put(loadManifestSuccess({ content }))
+    .put.actionType(contentActionTypes.CHANGE_COURSE)
+    .not.put.actionType(contentActionTypes.LOAD_SECTION_FAILURE)
+    .run()
+  )
 
-  it('should not load manifest if already loaded', () => {
-    const clone = gen.clone()
-    expect(clone.next().value).toEqual(select(courseSelectors.getCurrentCourse))
-    expect(clone.next(course).value).toEqual(put(loadManifestSuccess({ parsed: true })))
-    expect(clone.next().done).toEqual(true)
-  })
+  it('should get manifest from cache', () => expectSaga(loadManifestSaga)
+    .provide([
+      [select(courseSelectors.getCurrentCourse), course],
+      ...defaultProvides,
+    ])
+    .not.put.actionType(contentActionTypes.LOAD_MANIFEST_SUCCESS)
+    .not.put.actionType(contentActionTypes.LOAD_MANIFEST_FAILURE)
+    .run()
+  )
 
-  it('should put loadTocFailure on error', () => {
-    const clone = gen.clone()
-    expect(clone.next().value).toEqual(select(courseSelectors.getCurrentCourse))
-    expect(clone.next().value).toEqual(select(appSelectors.getApp).contentRoot)
-    expect(clone.next(contentRoot).value).toEqual(call(fetchManifest, contentRoot))
-    const error = new Error('error')
-    expect(clone.throw(error).value).toEqual(put(loadManifestFailure({ error })))
+  it('should fail and show message if fetch fails', () => {
+    const error = new Error('mock error')
+    return expectSaga(loadManifestSaga)
+      .provide([
+        [matchers.call.fn(fetchManifest), throwError(error)],
+        ...defaultProvides,
+      ])
+      .put(loadManifestFailure({ error }))
+      .put.actionType(uiActionTypes.SHOW_MESSAGE)
+      .not.put.actionType(contentActionTypes.LOAD_MANIFEST_SUCCESS)
+      .run()
   })
 })

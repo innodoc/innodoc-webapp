@@ -27,9 +27,10 @@ export default function* loadSectionSaga({ sectionId: sectionIdHash }) {
   }
 
   // Clear error
+  // TODO: this is strange, is both error and message really needed?
   yield put(clearError())
 
-  // Check if sectionId is exists
+  // Check if section exists
   if (yield select(sectionSelectors.sectionExists, sectionId)) {
     // Check if content is fetched already
     const section = yield select(sectionSelectors.getSection, sectionId)

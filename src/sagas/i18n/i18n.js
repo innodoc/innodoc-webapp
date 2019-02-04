@@ -21,6 +21,5 @@ export default function* watchI18nInstanceAvailable() {
   // using the two-letter code.
   const language = yield call(toTwoLetterCode, i18n.language)
   yield put(changeLanguage(language))
-  // yield setContext({ i18n })
   yield takeLatest(actionTypes.CHANGE_LANGUAGE, notifyI18next, i18n)
 }
