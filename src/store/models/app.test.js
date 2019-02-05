@@ -1,89 +1,59 @@
 import orm from '../orm'
 import AppModel from './app'
-import {
-  changeCourse,
-  loadSectionFailure,
-  setContentRoot,
-} from '../actions/content'
+import { changeCourse, loadSectionFailure, setContentRoot } from '../actions/content'
 import { changeLanguage } from '../actions/i18n'
 import { clearMessage, showMessage, toggleSidebar } from '../actions/ui'
 
 const createEmptyState = () => {
   const state = orm.getEmptyState()
-  const session = orm.mutableSession(state)
-  const { App } = session
-
-  // Creating default app state
-  App.create({
-    id: 0,
-  })
-
-  return state
+  const session = orm.session(state)
+  session.App.create({ id: 0 })
+  return session
 }
 
 describe('reducer', () => {
   test('load section failure', () => {
-    const state = createEmptyState()
-
-    const session = orm.session(state)
+    const session = createEmptyState()
     AppModel.reducer(loadSectionFailure('no error'), session.App)
-
-    expect(session.state.App.itemsById[0].error).toEqual('no error')
+    expect(session.App.first().ref.error).toEqual('no error')
   })
 
   test('set content root', () => {
-    const state = createEmptyState()
-
-    const session = orm.session(state)
+    const session = createEmptyState()
     AppModel.reducer(setContentRoot('nowhere'), session.App)
-
-    expect(session.state.App.itemsById[0].contentRoot).toEqual('nowhere')
+    expect(session.App.first().ref.contentRoot).toEqual('nowhere')
   })
 
   test('change course', () => {
-    const state = createEmptyState()
-
-    const session = orm.session(state)
-    AppModel.reducer(changeCourse(0), session.App)
-
-    expect(session.state.App.itemsById[0].currentCourseId).toEqual(0)
+    const session = createEmptyState()
+    AppModel.reducer(changeCourse({ id: 0 }), session.App)
+    expect(session.App.first().ref.currentCourseId).toEqual(0)
   })
 
   test('change language', () => {
-    const state = createEmptyState()
-
-    const session = orm.session(state)
+    const session = createEmptyState()
     AppModel.reducer(changeLanguage('en'), session.App)
-
-    expect(session.state.App.itemsById[0].language).toEqual('en')
+    expect(session.App.first().ref.language).toEqual('en')
   })
 
   test('clear message', () => {
-    const state = createEmptyState()
-
-    const session = orm.session(state)
+    const session = createEmptyState()
     session.App.withId(0).set('message', 'blub')
     AppModel.reducer(clearMessage(), session.App)
-
-    expect(session.state.App.itemsById[0].message).toEqual(null)
+    expect(session.App.first().ref.message).toEqual(null)
   })
 
   test('show message', () => {
-    const state = createEmptyState()
-
-    const session = orm.session(state)
+    const session = createEmptyState()
     AppModel.reducer(showMessage('heyho'), session.App)
-
-    expect(session.state.App.itemsById[0].message).toEqual('heyho')
+    expect(session.App.first().ref.message).toEqual('heyho')
   })
 
   test('toggle sidebar', () => {
-    const state = createEmptyState()
-    const isVisible = state.App.itemsById[0].sidebarVisible
-
-    const session = orm.session(state)
+    const session = createEmptyState()
+    const app = session.App.first()
+    const isVisible = app.ref.sidebarVisible
     AppModel.reducer(toggleSidebar(), session.App)
-
-    expect(session.state.App.itemsById[0].sidebarVisible).toEqual(!isVisible)
+    expect(app.ref.sidebarVisible).toEqual(!isVisible)
   })
 })

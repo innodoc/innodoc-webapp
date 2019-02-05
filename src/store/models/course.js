@@ -39,7 +39,6 @@ export default class Course extends Model {
       }
     })
 
-    // Check if course already exists
     courseModel.create({
       currentSectionId: null,
       homeLink,

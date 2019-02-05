@@ -6,14 +6,11 @@ const createEmptyState = () => {
   const state = orm.getEmptyState()
   const session = orm.mutableSession(state)
   const { App } = session
-
-  // Creating default app state
   App.create({
     id: 0,
     language: 'en',
   })
-
-  return state
+  return session
 }
 
 const manifest = {
@@ -31,41 +28,35 @@ const manifest = {
 describe('reducer', () => {
   test('load manifest', () => {
     // TODO: test parseManifest
-    const state = createEmptyState()
-
-    const session = orm.session(state)
+    const session = createEmptyState()
     CourseModel.reducer(
       loadManifestSuccess({ content: manifest, parsed: false }), session.Course, session)
-    expect(session.state.Course.itemsById[0]).toEqual({
+    expect(session.Course.first().ref).toEqual({
       ...manifest,
       id: 0,
       currentSectionId: null,
       toc: undefined,
     })
-
     CourseModel.reducer(
       loadManifestSuccess({ parsed: true }), session.Course, session)
-    expect(session.state.Course.items).toHaveLength(1)
+    expect(session.Course.all().count()).toBe(1)
   })
 
   test('load section', () => {
-    const state = createEmptyState()
-
-    const session = orm.session(state)
+    const session = createEmptyState()
     CourseModel.reducer(
       loadManifestSuccess({ content: manifest, parsed: false }), session.Course, session)
-    expect(session.state.Course.itemsById[0]).toEqual({
+    expect(session.Course.first().ref).toEqual({
       ...manifest,
       id: 0,
       currentSectionId: null,
       toc: undefined,
     })
-    session.App.withId(0).set('currentCourseId', 0)
-
+    session.App.first().set('currentCourseId', 0)
+    const course = session.Course.first()
     CourseModel.reducer(loadSection('/path/'), session.Course, session)
-    expect(session.state.Course.itemsById[0].currentSectionId).toEqual(null)
-
+    expect(course.ref.currentSectionId).toEqual(null)
     CourseModel.reducer(loadSectionSuccess({ sectionId: '/path/' }), session.Course, session)
-    expect(session.state.Course.itemsById[0].currentSectionId).toEqual('/path/')
+    expect(course.ref.currentSectionId).toEqual('/path/')
   })
 })
