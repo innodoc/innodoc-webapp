@@ -1,19 +1,13 @@
 import orm from './orm'
 
-const createEmptyOrmState = () => {
-  const state = orm.getEmptyState()
-  const session = orm.mutableSession(state)
-  // Create initial app object
+const defaultInitialState = () => {
+  const ormState = orm.getEmptyState()
+  const session = orm.mutableSession(ormState)
   session.App.create({
     currentCourseId: null,
     currentSectionId: null,
   })
-  return state
-}
-
-const defaultInitialState = {
-  exercises: {},
-  orm: createEmptyOrmState(),
+  return { orm: ormState }
 }
 
 export default defaultInitialState

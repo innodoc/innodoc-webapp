@@ -1,51 +1,26 @@
+import { Session } from 'redux-orm'
 import orm from './orm'
 import configureStore from './store'
+import defaultInitialState from './defaultInitialState'
 
-it('smoke test', () => {
-  let store
-  expect(() => {
-    store = configureStore()
-  }).not.toThrow()
-  expect(store).toBeDefined()
+describe('configureStore', () => {
+  it('should create a store', () => {
+    const store = configureStore()
+    expect(store).toBeDefined()
+    const state = store.getState()
+    expect(state.orm.App).toBeDefined()
+    expect(state.orm.Course).toBeDefined()
+    expect(state.orm.Section).toBeDefined()
+    expect(orm.session(store.getState())).toBeInstanceOf(Session)
+  })
 })
 
-describe('initial state', () => {
-  const store = configureStore()
-  const state = store.getState()
-  const session = orm.mutableSession(state)
-  const app = session.App.first().ref
-
-  describe('i18n', () => {
-    test('have language', () => {
-      expect(app.language).toBe(null)
-    })
-  })
-
-  describe('ui', () => {
-    test('hidden sidebar', () => {
-      expect(app.sidebarVisible).toBe(false)
-    })
-
-    test('no message', () => {
-      expect(app.message).toBe(null)
-    })
-  })
-
-  describe('content', () => {
-    test('content root to be empty string', () => {
-      expect(app.contentRoot).toBe('')
-    })
-
-    test('current section null', () => {
-      expect(app.currentSectionId).toBe(null)
-    })
-  })
-
-  describe('exercises', () => {
-    const { exercises } = state
-
-    test('exercises empty', () => {
-      expect(exercises).toEqual({})
-    })
+describe('defaultInitialState', () => {
+  it('should return a proper initial state', () => {
+    const state = defaultInitialState()
+    expect(state).toHaveProperty('orm')
+    expect(state.orm).toHaveProperty('App')
+    expect(state.orm).toHaveProperty('Course')
+    expect(state.orm).toHaveProperty('Section')
   })
 })
