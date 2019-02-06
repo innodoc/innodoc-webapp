@@ -1,6 +1,12 @@
 import orm from '../orm'
 import AppModel from './app'
-import { changeCourse, loadSectionFailure, setContentRoot } from '../actions/content'
+import {
+  changeCourse,
+  clearError,
+  loadSectionFailure,
+  setContentRoot,
+  setStaticRoot,
+} from '../actions/content'
 import { changeLanguage } from '../actions/i18n'
 import { clearMessage, showMessage, toggleSidebar } from '../actions/ui'
 
@@ -12,48 +18,62 @@ const createEmptyState = () => {
 }
 
 describe('reducer', () => {
-  test('load section failure', () => {
+  test('loadSectionFailure', () => {
     const session = createEmptyState()
-    AppModel.reducer(loadSectionFailure('no error'), session.App)
-    expect(session.App.first().ref.error).toEqual('no error')
+    AppModel.reducer(loadSectionFailure('error message'), session.App)
+    expect(session.App.first().ref.error).toEqual('error message')
   })
 
-  test('set content root', () => {
+  test('clearError', () => {
     const session = createEmptyState()
-    AppModel.reducer(setContentRoot('nowhere'), session.App)
-    expect(session.App.first().ref.contentRoot).toEqual('nowhere')
+    AppModel.reducer(clearError(), session.App)
+    expect(session.App.first().ref.error).toEqual(null)
   })
 
-  test('change course', () => {
+  test('setContentRoot', () => {
+    const session = createEmptyState()
+    AppModel.reducer(setContentRoot('https://content.example.com'), session.App)
+    expect(session.App.first().ref.contentRoot).toEqual('https://content.example.com')
+  })
+
+  test('setStaticRoot', () => {
+    const session = createEmptyState()
+    AppModel.reducer(setStaticRoot('https://cdn.example.com'), session.App)
+    expect(session.App.first().ref.staticRoot).toEqual('https://cdn.example.com')
+  })
+
+  test('changeCourse', () => {
     const session = createEmptyState()
     AppModel.reducer(changeCourse({ id: 0 }), session.App)
     expect(session.App.first().ref.currentCourse).toEqual(0)
   })
 
-  test('change language', () => {
+  test('changeLanguage', () => {
     const session = createEmptyState()
     AppModel.reducer(changeLanguage('en'), session.App)
     expect(session.App.first().ref.language).toEqual('en')
   })
 
-  test('clear message', () => {
+  test('clearMessage', () => {
     const session = createEmptyState()
-    session.App.withId(0).set('message', 'blub')
+    session.App.withId(0).set('message', 'foo')
     AppModel.reducer(clearMessage(), session.App)
     expect(session.App.first().ref.message).toEqual(null)
   })
 
-  test('show message', () => {
+  test('showMessage', () => {
     const session = createEmptyState()
-    AppModel.reducer(showMessage('heyho'), session.App)
-    expect(session.App.first().ref.message).toEqual('heyho')
+    AppModel.reducer(showMessage('bar'), session.App)
+    expect(session.App.first().ref.message).toEqual('bar')
   })
 
-  test('toggle sidebar', () => {
+  test('toggleSidebar', () => {
     const session = createEmptyState()
     const app = session.App.first()
     const isVisible = app.ref.sidebarVisible
     AppModel.reducer(toggleSidebar(), session.App)
     expect(app.ref.sidebarVisible).toEqual(!isVisible)
+    AppModel.reducer(toggleSidebar(), session.App)
+    expect(app.ref.sidebarVisible).toEqual(isVisible)
   })
 })
