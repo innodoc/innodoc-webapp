@@ -3,7 +3,6 @@ const XHR = require('i18next-xhr-backend')
 const LanguageDetector = require('i18next-browser-languagedetector')
 const i18nOptions = require('./options')
 
-// TODO: need this?
 const i18n = i18next.default ? i18next.default : i18next
 
 // for browser use XHR backend and browser language detector

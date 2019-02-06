@@ -13,10 +13,9 @@ const withI18next = (namespaces = ['common']) => (WrappedComponent) => {
   }
 
   const WithI18next = ({ i18n, ...rest }) => {
-    // on client we only get a serialized i18n instance
-    // as we do not have to use the one on req we just use the one instance
+    // on server we receive the i18n instance as i18n prop
+    // on client we instantiate one
     const finalI18n = i18n || i18nInstance
-
     return (
       <NamespacesConsumer
         i18n={finalI18n}
@@ -43,10 +42,8 @@ const withI18next = (namespaces = ['common']) => (WrappedComponent) => {
     }
   }
 
-  WithI18next.propTypes = {
-    i18n: PropTypes.object.isRequired,
-  }
-
+  WithI18next.defaultProps = { i18n: null }
+  WithI18next.propTypes = { i18n: PropTypes.object }
   WithI18next.displayName = getHocDisplayName('WithI18next', WrappedComponent)
   return WithI18next
 }
