@@ -34,7 +34,7 @@ describe('reducer', () => {
     expect(session.Course.first().ref).toEqual({
       ...manifest,
       id: 0,
-      currentSectionId: null,
+      currentSection: null,
       toc: undefined,
     })
     CourseModel.reducer(
@@ -49,14 +49,14 @@ describe('reducer', () => {
     expect(session.Course.first().ref).toEqual({
       ...manifest,
       id: 0,
-      currentSectionId: null,
+      currentSection: null,
       toc: undefined,
     })
-    session.App.first().set('currentCourseId', 0)
+    session.App.first().set('currentCourse', 0)
     const course = session.Course.first()
     CourseModel.reducer(loadSection('/path/'), session.Course, session)
-    expect(course.ref.currentSectionId).toEqual(null)
+    expect(course.ref.currentSection).toEqual(null)
     CourseModel.reducer(loadSectionSuccess({ sectionId: '/path/' }), session.Course, session)
-    expect(course.ref.currentSectionId).toEqual('/path/')
+    expect(course.ref.currentSection).toEqual('/path/')
   })
 })

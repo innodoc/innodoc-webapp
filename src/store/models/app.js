@@ -13,7 +13,7 @@ export default class App extends Model {
     return {
       id: attr({ getDefault: () => 0 }),
       contentRoot: attr({ getDefault: () => '' }),
-      currentCourseId: fk('Course'),
+      currentCourse: fk('Course'),
       error: attr({ getDefault: () => null }),
       language: attr({ getDefault: () => null }),
       message: attr({ getDefault: () => null }),
@@ -38,7 +38,7 @@ export default class App extends Model {
         app.set('staticRoot', action.staticRoot)
         break
       case contentActionTypes.CHANGE_COURSE:
-        app.set('currentCourseId', action.course.id)
+        app.set('currentCourse', action.course.id)
         break
       case i18nActionTypes.CHANGE_LANGUAGE:
         app.set('language', action.language)

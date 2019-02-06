@@ -12,7 +12,7 @@ import courseSelectors from '../course'
 // ]
 const getBreadcrumbSections = createSelector(
   orm, appSelectors.getOrmState, courseSelectors.getCurrentCourse, appSelectors.getApp,
-  (session, course, { language }) => course.currentSectionId
+  (session, course, { language }) => course.currentSection
     // Calculate array of parent sections, e.g.: current='a/b/c' => ['a', 'a/b', 'a/b/c']
     .split('/')
     .reduce(

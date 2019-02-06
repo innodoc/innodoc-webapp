@@ -7,15 +7,11 @@ import { showMessage } from '../../store/actions/ui'
 import { fetchManifest } from '../../lib/api'
 
 export default function* loadManifestSaga() {
-  const course = yield select(courseSelectors.getCurrentCourse)
-  if (course) {
-    yield put(loadManifestSuccess({ parsed: true }))
-  } else {
-    // fetch from remote
+  if (!(yield select(courseSelectors.getCurrentCourse))) {
     const { contentRoot } = yield select(appSelectors.getApp)
     try {
       const content = yield call(fetchManifest, contentRoot)
-      yield put(loadManifestSuccess({ content, parsed: false }))
+      yield put(loadManifestSuccess({ content }))
       const courses = yield select(courseSelectors.getCourses)
       yield put(changeCourse(courses[0]))
     } catch (error) {

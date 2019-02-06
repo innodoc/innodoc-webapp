@@ -8,7 +8,7 @@ import { Header } from './Header'
 
 describe('<Header />', () => {
   const course = {
-    currentSectionId: 'foo',
+    currentSection: 'foo',
     homeLink: 'foo',
     languages: ['de', 'en'],
     title: { en: ['Foobar'] },

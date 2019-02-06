@@ -10,66 +10,39 @@ export default class Course extends Model {
   static get fields() {
     return {
       id: attr({ getDefault: () => 0 }),
-      currentSectionId: fk('Section'),
+      currentSection: fk('Section'),
       homeLink: attr({ getDefault: () => null }),
       languages: attr({ getDefault: () => [] }),
       title: attr({ getDefault: () => null }),
     }
   }
 
-  static parseManifest(courseModel, manifest) {
-    if (manifest === undefined || manifest === null) {
-      throw new Error('Empty manifest!')
-    }
-
-    // TODO: Check if homeLink is a valid sectionID
-    // NOTE: This assumes that the TOC is not empty!
-    // Use first section as homeLink if homeLink is not given
-    const homeLink = manifest.homeLink ? manifest.homeLink : manifest.toc[0].id
-
-    if (manifest.languages && manifest.languages.length <= 0) {
-      throw new Error('No or empty language array in manifest!')
-    }
-    if (!manifest.title) {
-      throw new Error('No course title in manifest!')
-    }
-    manifest.languages.forEach((language) => {
-      if (!manifest.title[language] || manifest.title[language].length <= 0) {
-        throw new Error(`Could not find title (${language}) in manifest!`)
-      }
-    })
-
-    courseModel.create({
-      currentSectionId: null,
-      homeLink,
-      languages: manifest.languages,
-      title: manifest.title,
-    })
-  }
-
-  static reducer(action, courseModel, session) {
-    const app = session.App.first()
-    let course
-    if (app && app.currentCourseId) {
-      course = courseModel.withId(app.ref.currentCourseId)
-    }
-
+  static reducer(action, courseModel) {
     switch (action.type) {
-      case contentActionTypes.LOAD_MANIFEST_SUCCESS:
-        if (!action.data.parsed) {
-          this.parseManifest(courseModel, action.data.content)
-        }
+      case contentActionTypes.LOAD_MANIFEST_SUCCESS: {
+        const { content } = action.data
+        courseModel.create({
+          currentSection: null,
+          homeLink: content.homeLink || content.toc[0].id,
+          languages: content.languages,
+          title: content.title,
+        })
         break
-      case contentActionTypes.LOAD_SECTION:
+      }
+      case contentActionTypes.LOAD_SECTION: {
+        const course = courseModel.first()
         if (course) {
-          course.set('currentSectionId', null)
+          course.set('currentSection', null)
         }
         break
-      case contentActionTypes.LOAD_SECTION_SUCCESS:
+      }
+      case contentActionTypes.LOAD_SECTION_SUCCESS: {
+        const course = courseModel.first()
         if (course) {
-          course.set('currentSectionId', action.data.sectionId)
+          course.set('currentSection', action.data.sectionId)
         }
         break
+      }
       default:
         break
     }

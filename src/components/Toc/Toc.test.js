@@ -6,7 +6,7 @@ import { Toc } from './Toc'
 
 describe('<Toc />', () => {
   const course = {
-    currentSectionId: null,
+    currentSection: null,
     homeLink: 'section-1',
     languages: ['en'],
     title: { en: 'Foobar' },
@@ -61,7 +61,7 @@ describe('<Toc />', () => {
   it('renders with active section', () => {
     const newCourse = {
       ...course,
-      currentSectionId: 'section-1/section-1-1',
+      currentSection: 'section-1/section-1-1',
     }
 
     const wrapper = shallow(
@@ -100,7 +100,7 @@ describe('<Toc />', () => {
   it('expands current section from within tree component', () => {
     const newCourse = {
       ...course,
-      currentSectionId: null,
+      currentSection: null,
     }
 
     const wrapper = shallow(
@@ -118,7 +118,7 @@ describe('<Toc />', () => {
   it('expands current section from outside tree component', () => {
     const newCourse = {
       ...course,
-      currentSectionId: null,
+      currentSection: null,
     }
 
     const wrapper = shallow(
@@ -134,7 +134,7 @@ describe('<Toc />', () => {
       {
         course: {
           ...course,
-          currentSectionId: 'section-1/section-1-1/section-1-1-1',
+          currentSection: 'section-1/section-1-1/section-1-1-1',
         },
       })
     expect(wrapper.find(Tree.TreeNode).filter('.active')).toHaveLength(1)

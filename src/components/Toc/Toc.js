@@ -30,8 +30,8 @@ class Toc extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      expandedKeys: props.course && props.course.currentSectionId
-        ? [props.course.currentSectionId]
+      expandedKeys: props.course && props.course.currentSection
+        ? [props.course.currentSection]
         : [],
     }
     this.onExpand = this.onExpand.bind(this)
@@ -40,8 +40,8 @@ class Toc extends React.Component {
   componentDidUpdate({ course: prevCourse }, { expandedKeys }) {
     const { course, expandAll } = this.props
     if (!expandAll
-      && course.currentSectionId
-      && course.currentSectionId !== prevCourse.currentSectionId) {
+      && course.currentSection
+      && course.currentSection !== prevCourse.currentSection) {
       this.expandCurrentSection(expandedKeys)
     }
   }
@@ -58,7 +58,7 @@ class Toc extends React.Component {
     const { course } = this.props
 
     // current key and all parent keys
-    const allKeys = (course ? course.currentSectionId : null)
+    const allKeys = (course ? course.currentSection : null)
       .split('/')
       .reduce((acc, id, idx) => [
         ...acc,
@@ -87,7 +87,7 @@ class Toc extends React.Component {
     } = section
 
     const className = classNames({
-      active: sectionId === (course ? course.currentSectionId : null),
+      active: sectionId === (course ? course.currentSection : null),
     })
 
     const sectionNode = (

@@ -17,7 +17,7 @@ const dummyState = (course = dummyCourse) => {
   }
   session.App.create({
     id: 0,
-    currentCourseId: session.Course.first(),
+    currentCourse: session.Course.first(),
   })
   return { orm: state }
 }

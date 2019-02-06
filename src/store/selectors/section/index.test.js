@@ -2,7 +2,7 @@ import orm from '../../orm'
 import sectionSelectors from '.'
 
 const course = {
-  currentSectionId: 'test/child1',
+  currentSection: 'test/child1',
   homeLink: 'test',
   languages: ['en'],
   title: 'courseTitle',
@@ -52,7 +52,7 @@ const dummyState = () => {
   const session = orm.mutableSession(state)
   session.App.create({
     id: 0,
-    currentCourseId: 0,
+    currentCourse: 0,
     language: 'en',
   })
   session.Course.create(course)
@@ -105,7 +105,7 @@ describe('getBreadcrumbSections', () => {
     ]],
   ])('%s', (id, crumbs) => {
     const [state, session] = dummyState()
-    session.Course.first().set('currentSectionId', id)
+    session.Course.first().set('currentSection', id)
     expect(sectionSelectors.getBreadcrumbSections(state)).toEqual(crumbs)
   })
 })
@@ -118,7 +118,7 @@ describe('getNextPrevSections', () => {
     ['test/child2', sections['test/child1/child12'], null],
   ])('%s', (id, prev, next) => {
     const [state, session] = dummyState()
-    session.Course.first().set('currentSectionId', id)
+    session.Course.first().set('currentSection', id)
     expect(sectionSelectors.getNextPrevSections(state)).toEqual({ prev, next })
   })
 })

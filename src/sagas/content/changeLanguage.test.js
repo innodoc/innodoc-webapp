@@ -7,7 +7,7 @@ import courseSelectors from '../../store/selectors/course'
 
 describe('changeLanguageSaga', () => {
   it('should reload content', () => expectSaga(changeLanguageSaga)
-    .provide([[select(courseSelectors.getCurrentCourse), { id: 0, currentSectionId: 'foo' }]])
+    .provide([[select(courseSelectors.getCurrentCourse), { id: 0, currentSection: 'foo' }]])
     .put(loadSection('foo'))
     .run()
   )

@@ -32,7 +32,7 @@ const getSortedSections = createSelector(
 const getNextPrevSections = createSelector(
   orm, appSelectors.getOrmState, courseSelectors.getCurrentCourse, getSortedSections,
   (session, course, sortedSections) => {
-    const idx = sortedSections.findIndex(section => section.id === course.currentSectionId)
+    const idx = sortedSections.findIndex(section => section.id === course.currentSection)
     return {
       prev: idx > 0 ? sortedSections[idx - 1] : null,
       next: idx < sortedSections.length - 1 ? sortedSections[idx + 1] : null,

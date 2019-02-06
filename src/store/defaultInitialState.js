@@ -4,8 +4,8 @@ const defaultInitialState = () => {
   const ormState = orm.getEmptyState()
   const session = orm.mutableSession(ormState)
   session.App.create({
-    currentCourseId: null,
-    currentSectionId: null,
+    currentCourse: null,
+    currentSection: null,
   })
   return { orm: ormState }
 }

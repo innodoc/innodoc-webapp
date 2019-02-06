@@ -27,7 +27,7 @@ describe('reducer', () => {
   test('change course', () => {
     const session = createEmptyState()
     AppModel.reducer(changeCourse({ id: 0 }), session.App)
-    expect(session.App.first().ref.currentCourseId).toEqual(0)
+    expect(session.App.first().ref.currentCourse).toEqual(0)
   })
 
   test('change language', () => {

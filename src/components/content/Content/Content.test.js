@@ -113,7 +113,7 @@ describe('<Content />', () => {
 describe('mapStateToProps', () => {
   it("returns loading=true if there's no current section id", () => {
     mockGetCurrentCourseMock = () => ({
-      currentSectionId: null,
+      currentSection: null,
       homeLink: 'foo',
       languages: ['en'],
       title: ['Foobar'],
@@ -124,7 +124,7 @@ describe('mapStateToProps', () => {
 
   it("returns loading=true if there's no section returned", () => {
     mockGetCurrentCourseMock = () => ({
-      currentSectionId: 'foo',
+      currentSection: 'foo',
       homeLink: 'foo',
       languages: ['en'],
       title: ['Foobar'],
@@ -136,7 +136,7 @@ describe('mapStateToProps', () => {
   it("returns loading=false if there's a current section", () => {
     const section = { id: 'foo', title: { en: ['title'] }, content: { en: ['foocontent'] } }
     mockGetCurrentCourseMock = () => ({
-      currentSectionId: 'foo',
+      currentSection: 'foo',
       homeLink: 'foo',
       languages: ['en'],
       title: ['Foobar'],

@@ -4,7 +4,7 @@ import appSelectors from '.'
 const dummyApp = {
   id: 0,
   contentRoot: 'http://root/to/conent',
-  currentCourseId: 5,
+  currentCourse: 5,
   error: 'error',
   language: 'en',
   message: 'custom message',
