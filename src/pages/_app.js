@@ -67,4 +67,5 @@ const withReduxConfig = { debug: nextReduxWrapperDebug }
 // on every page navigation. (see #36)
 const InnoDocAppWithReduxSaga = withReduxSaga({ async: true })(InnoDocApp)
 
+export { InnoDocApp } // for testing
 export default withRedux(configureStore, withReduxConfig)(InnoDocAppWithReduxSaga)

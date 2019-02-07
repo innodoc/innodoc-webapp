@@ -98,20 +98,22 @@ i18n
           server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18n))
         }
 
+        // Next.js exposes all files under /pages as routes. We need to
+        // mask 'pages/*.test.js' to prevent errors.
+        server.get(/\.test$/, (req, res) => app.render404(req, res))
+
         // serve a course section
         server.get(/^\/page\/([A-Za-z0-9_/:-]+)$/, (req, res) => {
-          const sectionId = req.params[0]
+          const [sectionId] = req.params
           if (sectionId.endsWith('/')) {
             // remove trailing slash
             res.redirect(req.path.slice(0, -1))
           }
-          const actualPage = '/page'
-          const queryParams = { sectionId }
-          app.render(req, res, actualPage, queryParams)
+          app.render(req, res, '/page', { sectionId })
         })
 
         // everything else handled by next.js app
-        server.get('*', (req, res) => appHandler(req, res))
+        server.get('*', appHandler)
 
         server.listen(port, (err) => {
           if (err) { throw err }

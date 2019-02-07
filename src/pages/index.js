@@ -12,6 +12,7 @@ const IndexPage = () => (
   </Layout>
 )
 
+export { IndexPage } // for testing
 export default connect()(
   withI18next()(
     withI18nDispatch(

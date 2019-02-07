@@ -12,13 +12,12 @@ import ErrorPage from './_error'
 
 class CoursePage extends React.Component {
   static getInitialProps({ query, store }) {
-    const props = {}
     if (query.sectionId) {
       store.dispatch(loadSection(query.sectionId))
     } else {
       store.dispatch(loadSectionFailure({ error: { statusCode: 404 } }))
     }
-    return props
+    return {}
   }
 
   render() {
@@ -55,6 +54,7 @@ const mapStateToProps = state => ({
   err: appSelectors.getApp(state).error,
 })
 
+export { CoursePage } // for testing
 export default connect(mapStateToProps)(
   withI18next()(
     withI18nDispatch(

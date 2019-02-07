@@ -13,6 +13,7 @@ const AboutPage = () => (
   </Layout>
 )
 
+export { AboutPage } // for testing
 export default connect()(
   withI18next()(
     withI18nDispatch(
