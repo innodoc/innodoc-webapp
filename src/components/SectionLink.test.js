@@ -14,13 +14,13 @@ describe('<SectionLink />', () => {
       </SectionLink>
     )
     const link = wrapper.find(Link)
-    expect(link).toExist()
+    expect(link).toBeTruthy()
     expect(link.prop('href')).toEqual({
       pathname: '/page',
       query: { sectionId: 'foo/bar' },
     })
     expect(link.prop('as')).toEqual({ pathname: '/page/foo/bar' })
-    expect(wrapper.find('a')).toExist()
+    expect(wrapper.find('a')).toBeTruthy()
   })
 
   it('renders with hash', () => {
@@ -30,7 +30,7 @@ describe('<SectionLink />', () => {
       </SectionLink>
     )
     const link = wrapper.find(Link)
-    expect(link).toExist()
+    expect(link).toBeTruthy()
     expect(link.prop('href')).toEqual({
       pathname: '/page',
       query: { sectionId: 'foo/bar' },

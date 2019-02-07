@@ -17,7 +17,7 @@ class Toc extends React.Component {
     currentLanguage: PropTypes.string.isRequired,
     toc: tocTreeType.isRequired,
     expandAll: PropTypes.bool,
-    title: PropTypes.string,
+    title: PropTypes.object,
   }
 
   static defaultProps = {

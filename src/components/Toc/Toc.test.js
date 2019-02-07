@@ -42,7 +42,7 @@ describe('<Toc />', () => {
         title={{ en: 'Foobar' }}
       />
     )
-    expect(wrapper.find(Tree)).toExist()
+    expect(wrapper.find(Tree)).toBeTruthy()
     expect(wrapper.find(Tree.TreeNode)).toHaveLength(4)
   })
 

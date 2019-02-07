@@ -1,5 +1,4 @@
 module.exports = {
-  setupTestFrameworkScriptFile: 'jest-enzyme',
   testEnvironment: 'enzyme',
   roots: ['src'],
   collectCoverageFrom: [
@@ -10,5 +9,6 @@ module.exports = {
   moduleNameMapper: {
     '\\.(sass|svg)$': 'identity-obj-proxy',
   },
+  setupFiles: ['<rootDir>/enzyme.config.js'],
   verbose: true,
 }

@@ -25,7 +25,7 @@ describe('<Breadcrumb />', () => {
     const wrapper = shallow(
       <Breadcrumb homeLink="section1" sections={sections} t={() => {}} />
     )
-    expect(wrapper.find(AntBreadcrumb)).toExist()
+    expect(wrapper.find(AntBreadcrumb)).toBeTruthy()
     expect(wrapper.find(AntBreadcrumb.Item)).toHaveLength(4)
     expect(wrapper.find(SectionLink)).toHaveLength(3)
   })
