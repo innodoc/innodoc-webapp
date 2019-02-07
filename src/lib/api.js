@@ -16,7 +16,6 @@ export function fetchManifest(contentRoot) {
 }
 
 export function fetchSection(contentRoot, language, sectionId) {
-  // 404 is ok and means section doesn't have any content
   const url = `${contentRoot}${language}/${sectionId}/content.json`
   return fetchJson(url)
 }
