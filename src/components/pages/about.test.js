@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { AboutPage } from './about'
-import Layout from '../components/Layout'
+import Layout from '../Layout'
 
 describe('<AboutPage />', () => {
   it('should render', () => {

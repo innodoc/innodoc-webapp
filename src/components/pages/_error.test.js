@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import { Alert } from 'antd'
 
 import { TestableErrorPage as ErrorPage } from './_error'
-import Layout from '../components/Layout'
+import Layout from '../Layout'
 
 describe('<ErrorPage />', () => {
   it('should render 404 as info', () => {

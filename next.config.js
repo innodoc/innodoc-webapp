@@ -81,6 +81,11 @@ const patchWebpackConfig = (config) => {
     ],
   })
 
+  // We must not include '*.test.js' files in the build
+  config.module.rules.push({
+    test: /\.test\.js$/,
+    loader: 'ignore-loader',
+  })
 
   addAntdScssThemePlugin(config)
 

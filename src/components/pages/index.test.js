@@ -2,8 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { IndexPage } from './index'
-import Layout from '../components/Layout'
-import Toc from '../components/Toc'
+import Layout from '../Layout'
+import Toc from '../Toc'
 
 describe('<IndexPage />', () => {
   it('should render', () => {

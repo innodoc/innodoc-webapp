@@ -52,6 +52,7 @@
     "i18next-express-middleware": "^1.7.1",
     "i18next-node-fs-backend": "^2.1.1",
     "i18next-xhr-backend": "^1.5.1",
+    "ignore-loader": "^0.1.2",
     "isomorphic-unfetch": "^3.0.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",

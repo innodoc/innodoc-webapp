@@ -2,10 +2,10 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { CoursePage } from './page'
-import Layout from '../components/Layout'
-import Content from '../components/content/Content'
 import ErrorPage from './_error'
-import { loadSection, loadSectionFailure } from '../store/actions/content'
+import Layout from '../Layout'
+import Content from '../content/Content'
+import { loadSection, loadSectionFailure } from '../../store/actions/content'
 
 describe('<CoursePage />', () => {
   it('should render', () => {
