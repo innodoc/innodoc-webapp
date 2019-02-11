@@ -43,7 +43,7 @@ ErrorPage.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
-export { ErrorPage } // for testing
+export { ErrorPage as TestableErrorPage } // for testing
 export default withI18next()(
   withI18nDispatch(
     ErrorPage
