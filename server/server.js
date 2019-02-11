@@ -103,13 +103,12 @@ i18n
         server.get(/\.test$/, (req, res) => app.render404(req, res))
 
         // serve a course section
-        server.get(/^\/page\/([A-Za-z0-9_/:-]+)$/, (req, res) => {
-          const [sectionId] = req.params
-          if (sectionId.endsWith('/')) {
-            // remove trailing slash
-            res.redirect(req.path.slice(0, -1))
+        server.get('/page/:sectionId([A-Za-z0-9_/:-]+)', (req, res) => {
+          if (req.params.sectionId.endsWith('/')) {
+            res.redirect(req.path.slice(0, -1)) // remove trailing slash
+          } else {
+            app.render(req, res, '/page', req.params)
           }
-          app.render(req, res, '/page', { sectionId })
         })
 
         // everything else handled by next.js app
