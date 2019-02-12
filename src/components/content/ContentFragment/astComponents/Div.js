@@ -50,4 +50,5 @@ Div.propTypes = {
   data: PropTypes.arrayOf(PropTypes.array).isRequired,
 }
 
+export { classNameComponentMap } // for testing
 export default Div
