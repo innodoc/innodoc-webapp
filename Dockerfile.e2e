@@ -41,7 +41,6 @@ COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/
 COPY --chown=innodoc:innodoc \
   .babelrc \
   next.config.js \
-  jest.e2e.config.js \
   /innodoc-webapp/
 COPY --chown=innodoc:innodoc e2e /innodoc-webapp/e2e/
 COPY --chown=innodoc:innodoc src /innodoc-webapp/src/
