@@ -22,9 +22,8 @@
     "test:unit": "jest",
     "test:unit:watch": "npm run test:unit -- --watch",
     "test:unit:coverage": "npm run test:unit -- --coverage",
-    "test:e2e": "jest --runInBand --config jest.e2e.config.js",
-    "test:e2e:show": "NIGHTMARE_SHOW=true npm run test:e2e",
-    "test:e2e:ci": "e2e/ci-e2e.sh",
+    "test:e2e": "PROD_PORT=${PROD_PORT:-8000} CONTENT_PORT=${CONTENT_PORT:-8001} jest --runInBand --forceExit --detectOpenHandles --config e2e/jest.e2e.config.js",
+    "test:e2e:show": "PUPPETEER_HEADLESS=true npm run test:e2e",
     "test:e2e:content": "http-server e2e/content -a localhost -p ${CONTENT_PORT:-8001} --cors"
   },
   "keywords": [
@@ -63,7 +62,6 @@
     "next-compose-plugins": "^2.1.1",
     "next-redux-saga": "^3.0.0",
     "next-redux-wrapper": "^2.1.0",
-    "nightmare": "^3.0.1",
     "node-sass": "^4.11.0",
     "prop-types": "^15.6.2",
     "react": "^16.8.0",
@@ -97,8 +95,9 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.1.0",
     "jest-environment-enzyme": "^7.0.1",
-    "jest-environment-node": "^24.0.0",
     "jest-enzyme": "^7.0.1",
+    "jest-puppeteer": "^3.9.0",
+    "puppeteer": "1.9.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-saga-test-plan": "^3.7.0"
   }

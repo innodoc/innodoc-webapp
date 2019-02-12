@@ -10,61 +10,71 @@ variables:
   IMAGE_STAGING_TAG: $CI_REGISTRY_IMAGE/staging:latest
   IMAGE_RELEASE_TAG: $CI_REGISTRY_IMAGE:latest
 
+.docker-default-vars: &docker-default-vars
+  GIT_STRATEGY: none
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+  IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
+  IMAGE_E2E_CACHE_TAG: $CI_REGISTRY_IMAGE/e2e:cache
+  IMAGE_E2E_TAG: $CI_REGISTRY_IMAGE/e2e:$CI_COMMIT_REF_SLUG
+
 .docker-base: &docker-base
   services:
     - docker:dind
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY || true
+    - echo "$CI_JOB_TOKEN" | docker login --username gitlab-ci-token --password-stdin "$CI_REGISTRY"
   variables:
-    GIT_STRATEGY: fetch
-    GIT_SUBMODULE_STRATEGY: recursive
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_DRIVER: overlay2
-    IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
-    IMAGE_E2E_CACHE_TAG: $CI_REGISTRY_IMAGE/e2e:cache
-    IMAGE_E2E_TAG: $CI_REGISTRY_IMAGE/e2e:$CI_COMMIT_REF_SLUG
+    <<: *docker-default-vars
 
 build image:
   <<: *docker-base
   stage: build
   script:
-    - docker pull $IMAGE_RELEASE_TAG || true
-    - docker pull $IMAGE_TAG || true
-    - docker build --pull --cache-from $IMAGE_RELEASE_TAG --cache-from $IMAGE_TAG --tag $IMAGE_TAG .
-    - docker push $IMAGE_TAG
+    - docker pull "$IMAGE_TAG" || true
+    - docker build --pull --cache-from "$IMAGE_RELEASE_TAG" --cache-from "$IMAGE_TAG" --tag "$IMAGE_TAG" .
+    - docker push "$IMAGE_TAG"
+  variables:
+    <<: *docker-default-vars
+    GIT_STRATEGY: fetch
+    GIT_SUBMODULE_STRATEGY: recursive
 
 linting:
   <<: *docker-base
   stage: test
   script:
-    - docker pull $IMAGE_TAG
-    - docker run $IMAGE_TAG npm run lint
+    - docker pull "$IMAGE_TAG"
+    - docker run "$IMAGE_TAG" npm run lint
 
 unit tests:
   <<: *docker-base
   stage: test
   script:
-    - docker pull $IMAGE_TAG
-    - docker run $IMAGE_TAG npm run test:unit:coverage
+    - docker pull "$IMAGE_TAG"
+    - docker run "$IMAGE_TAG" npm run test:unit:coverage
   coverage: '/^All files\s+\|\s+([0-9.]+)\s+\|\s+/'
 
 e2e tests:
   <<: *docker-base
   stage: test
   script:
-    - docker pull $IMAGE_E2E_CACHE_TAG || true
-    - docker build --pull --cache-from $IMAGE_E2E_CACHE_TAG --tag $IMAGE_E2E_TAG -f Dockerfile.e2e .
-    - docker tag $IMAGE_E2E_TAG $IMAGE_E2E_CACHE_TAG
-    - docker push $IMAGE_E2E_CACHE_TAG
-    - docker run $IMAGE_E2E_TAG
+    - docker pull "$IMAGE_TAG"
+    - docker pull "$IMAGE_E2E_CACHE_TAG" || true
+    - docker build --pull --cache-from "$IMAGE_TAG" --cache-from "$IMAGE_E2E_CACHE_TAG" --tag "$IMAGE_E2E_TAG" --build-arg BUILD_IMAGE="$IMAGE_TAG" -f Dockerfile.e2e .
+    - docker tag "$IMAGE_E2E_TAG" "$IMAGE_E2E_CACHE_TAG"
+    - docker push "$IMAGE_E2E_CACHE_TAG"
+    - docker run "$IMAGE_E2E_TAG"
+  variables:
+    <<: *docker-default-vars
+    GIT_STRATEGY: fetch
+    GIT_SUBMODULE_STRATEGY: none
 
 release staging:
   <<: *docker-base
   stage: release
   script:
-    - docker pull $IMAGE_TAG
-    - docker tag $IMAGE_TAG $IMAGE_STAGING_TAG
-    - docker push $IMAGE_STAGING_TAG
+    - docker pull "$IMAGE_TAG"
+    - docker tag "$IMAGE_TAG" "$IMAGE_STAGING_TAG"
+    - docker push "$IMAGE_STAGING_TAG"
   only:
     - master
 
@@ -79,8 +89,6 @@ deploy staging:
     - chmod 600 ~/.ssh/id_rsa
     - echo "$STAGING_SERVER_PUBKEY" > ~/.ssh/known_hosts
   script:
-    - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa $STAGING_SERVER_USER@$STAGING_SERVER "$STAGING_DEPLOY_CMD"
-  variables:
-    GIT_STRATEGY: none
+    - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa "$STAGING_SERVER_USER"@"$STAGING_SERVER" "$STAGING_DEPLOY_CMD"
   only:
     - master

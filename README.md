@@ -120,19 +120,13 @@ $ npm run test:watch
 
 ### E2E tests
 
-[Nightmare](http://www.nightmarejs.org/) is used for E2E testing.
+[Puppeteer](https://pptr.dev/) is used for E2E testing.
 
-Run E2E tests (needs app and content servers to be running in order to work).
+Run E2E tests. (This will spawn app and content servers automatically before
+running E2E tests. After running the tests both servers are shut down.)
 
 ```sh
 $ npm run test:e2e
-```
-
-This will spawn app and content servers automatically before running E2E tests.
-After running the tests both servers are shut down.
-
-```sh
-$ npm run test:e2e:ci
 ```
 
 E2E tests can also be looked at while running.
@@ -152,7 +146,8 @@ $ npm run test:e2e:content
 
 ### Linting
 
-Based on [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript). Most notable difference: We're not using semicolons at the end of a statement.
+Based on [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript).
+Most notable difference: We're not using semicolons at the end of a statement.
 
 ```sh
 $ npm run lint
