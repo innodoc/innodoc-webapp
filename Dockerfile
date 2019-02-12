@@ -39,6 +39,7 @@ COPY --chown=innodoc:innodoc \
   .babelrc \
   next.config.js \
   jest.config.js \
+  enzyme.config.js \
   .eslintignore \
   .eslintrc.json \
   /innodoc-webapp/
