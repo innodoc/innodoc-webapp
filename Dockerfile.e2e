@@ -1,4 +1,4 @@
-FROM node:slim
+FROM node:11-slim
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
 WORKDIR /innodoc-webapp
