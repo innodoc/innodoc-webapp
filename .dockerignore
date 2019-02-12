@@ -8,3 +8,4 @@ Dockerfile.e2e
 node_modules
 .DS_Store
 src/.next
+e2e/screenshots

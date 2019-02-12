@@ -1,6 +1,13 @@
 {
+  "env": {
+    "jest": true
+  },
   "globals": {
-    "visit": true,
+    "page": true,
+    "browser": true,
+    "context": true,
+    "jestPuppeteer": true,
+    "getUrl": true
   },
   "rules": {
     "import/no-extraneous-dependencies": 0
