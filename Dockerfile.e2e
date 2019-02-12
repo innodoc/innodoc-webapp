@@ -1,54 +1,55 @@
-FROM node:11-slim
-LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
+FROM node:10-alpine
 
-WORKDIR /innodoc-webapp
+# Installs latest Chromium (71) package.
+RUN apk update && apk upgrade && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
+    apk add --no-cache \
+      dumb-init \
+      chromium@edge \
+      harfbuzz@edge \
+      nss@edge
 
-RUN set -xe && \
-    apt-get update -yq && \
-    apt-get upgrade -yq && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -yq \
-      lsof \
-      netcat \
-      xvfb \
-      libasound2 \
-      libnotify4 \
-      libgtk2.0 \
-      libxss1 \
-      libnss3 \
-      libgconf-2-4 && \
-    apt-get clean autoclean -yq && \
-    apt-get autoremove -yq && \
-    rm -rf /var/cache/* && \
-    rm -rf /var/lib/{apt,dpkg,cache,log}/*
+# Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
-# add user/group
-RUN set -xe && \
-    useradd -U -s /bin/bash -d /innodoc-webapp innodoc && \
-    chown -R innodoc.innodoc /innodoc-webapp
-USER innodoc
+# Puppeteer v1.9.0 works with Chromium 71.
+# RUN yarn add puppeteer@1.9.0
+
+# Add user so we don't need --no-sandbox.
+RUN addgroup -S innodocuser && adduser -S -g innodocuser innodocuser \
+    && mkdir -p /home/innodocuser/Downloads /innodoc-webapp \
+    && chown -R innodocuser:innodocuser /home/innodocuser \
+    && chown -R innodocuser:innodocuser /innodoc-webapp
+
+# Run everything after as non-privileged user.
+USER innodocuser
+WORKDIR /innodoc-webapp/
 
 # install deps and build
-COPY --chown=innodoc:innodoc \
+COPY --chown=innodocuser:innodocuser \
   package.json \
   package-lock.json \
   /innodoc-webapp/
-RUN npm install nightmare
 RUN npm install
 
 # copy files/create .env
-COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/.env
-COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/
-COPY --chown=innodoc:innodoc \
+COPY --chown=innodocuser:innodocuser .env.example /innodoc-webapp/.env
+COPY --chown=innodocuser:innodocuser \
+  .env.example \
   .babelrc \
   next.config.js \
-  jest.e2e.config.js \
+  jest-puppeteer.config.js \
   /innodoc-webapp/
-COPY --chown=innodoc:innodoc e2e /innodoc-webapp/e2e/
-COPY --chown=innodoc:innodoc src /innodoc-webapp/src/
-COPY --chown=innodoc:innodoc server /innodoc-webapp/server/
+COPY --chown=innodocuser:innodocuser e2e /innodoc-webapp/e2e/
+COPY --chown=innodocuser:innodocuser src /innodoc-webapp/src/
+COPY --chown=innodocuser:innodocuser server /innodoc-webapp/server/
 
 # build app
 RUN npm run build
 
+# TODO: cleanup
+
 # run e2e script
-CMD ["npm", "run", "test:e2e:ci"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["npm", "run", "test:e2e"]
