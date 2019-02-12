@@ -1,2 +1,2 @@
-// Increase timeout for a single test, default of 5s is too low
-jest.setTimeout(30000)
+// E2E tests might take long
+jest.setTimeout(120000)
