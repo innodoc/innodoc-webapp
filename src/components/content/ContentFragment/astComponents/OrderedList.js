@@ -7,7 +7,6 @@ import ContentFragment from '..'
 import { unwrapPara } from '../../../../lib/util'
 
 const OrderedList = ({ data }) => {
-  // TODO: unwrap paragraphs
   const listItems = data[1].map(
     (item, i) => (
       <List.Item key={i.toString()}>
