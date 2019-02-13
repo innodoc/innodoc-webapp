@@ -42,8 +42,7 @@ COPY --chown=innodoc:innodoc \
   package.json \
   package-lock.json \
   /innodoc-webapp/
-RUN sed -i '/"puppeteer"/d' ./package.json \
-  && npm install
+RUN npm install
 
 # copy files/create .env
 COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/.env
