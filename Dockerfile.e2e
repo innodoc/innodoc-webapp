@@ -21,7 +21,7 @@ RUN chmod +x /usr/local/bin/dumb-init
 # add user/group
 RUN addgroup -S innodoc && adduser -S -g innodoc innodoc \
     && mkdir -p /home/innodoc/Downloads \
-    && chown -R innodoc:innodoc /home/innodoc
+    && chown -R innodoc:innodoc /home/innodoc /innodoc-webapp/
 USER innodoc
 
 # install deps and build
