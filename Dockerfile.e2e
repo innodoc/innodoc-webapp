@@ -24,6 +24,7 @@ RUN apk update \
   && echo @edge http://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
   && echo @edge http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
   && apk add --no-cache \
+    dumb-init \
     chromium@edge \
     harfbuzz@edge \
     nss@edge \
