@@ -28,9 +28,8 @@ RUN apk update \
     chromium@edge \
     harfbuzz@edge \
     nss@edge \
-  && npm install puppeteer@1.9.0 \
   && rm -rf /usr/include \
-  && rm -rf /var/cache/apk/* /root/.node-gyp /usr/share/man /tmp/*
+  && rm -rf /var/cache/apk/* /usr/share/man /tmp/*
 
 # add user/group
 RUN addgroup -S innodoc && adduser -S -g innodoc innodoc \
@@ -58,6 +57,9 @@ COPY --chown=innodoc:innodoc server /innodoc-webapp/server/
 
 # build app
 RUN npm run build
+
+# clean up
+RUN rm -rf /home/innodoc/.node-gyp
 
 # run e2e script
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
