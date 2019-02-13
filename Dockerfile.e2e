@@ -1,6 +1,9 @@
 FROM node:11-alpine
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
+ENV CHROME_BIN="/usr/bin/chromium-browser" \
+    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true"
+
 # RUN apk update && apk upgrade && \
 #     echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
 #     echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
@@ -15,8 +18,18 @@ LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
 WORKDIR /innodoc-webapp
 
-RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64
-RUN chmod +x /usr/local/bin/dumb-init
+# Installs latest Chromium (71) package.
+RUN apk update \
+  && apk upgrade \
+  && echo @edge http://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
+  && echo @edge http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
+  && apk add --no-cache \
+    chromium@edge \
+    harfbuzz@edge \
+    nss@edge \
+  && npm install puppeteer@1.9.0 \
+  && rm -rf /usr/include \
+  && rm -rf /var/cache/apk/* /root/.node-gyp /usr/share/man /tmp/*
 
 # add user/group
 RUN addgroup -S innodoc && adduser -S -g innodoc innodoc \
@@ -29,7 +42,8 @@ COPY --chown=innodoc:innodoc \
   package.json \
   package-lock.json \
   /innodoc-webapp/
-RUN npm install
+RUN sed -i '/"puppeteer"/d' ./package.json \
+  && npm install
 
 # copy files/create .env
 COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/.env
@@ -46,5 +60,5 @@ COPY --chown=innodoc:innodoc server /innodoc-webapp/server/
 RUN npm run build
 
 # run e2e script
-ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["npm", "run", "test:e2e"]
