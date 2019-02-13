@@ -46,5 +46,5 @@ COPY --chown=innodoc:innodoc server /innodoc-webapp/server/
 RUN npm run build
 
 # run e2e script
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
 CMD ["npm", "run", "test:e2e"]
