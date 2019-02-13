@@ -1,30 +1,27 @@
-FROM node:11-slim
+FROM node:11-alpine
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
-WORKDIR /innodoc-webapp
+# RUN apk update && apk upgrade && \
+#     echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+#     echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
+#     apk add --no-cache \
+#       chromium@edge \
+#       harfbuzz@edge \
+#       nss@edge
+#
+# ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+# # Puppeteer v1.9.0 works with Chromium 71.
+# RUN yarn add puppeteer@1.9.0
 
-RUN set -xe && \
-    apt-get update -yq && \
-    apt-get upgrade -yq && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -yq \
-      lsof \
-      netcat \
-      xvfb \
-      libasound2 \
-      libnotify4 \
-      libgtk2.0 \
-      libxss1 \
-      libnss3 \
-      libgconf-2-4 && \
-    apt-get clean autoclean -yq && \
-    apt-get autoremove -yq && \
-    rm -rf /var/cache/* && \
-    rm -rf /var/lib/{apt,dpkg,cache,log}/*
+WORKDIR /home/innodoc/innodoc-webapp
+
+RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64
+RUN chmod +x /usr/local/bin/dumb-init
 
 # add user/group
-RUN set -xe && \
-    useradd -U -s /bin/bash -d /innodoc-webapp innodoc && \
-    chown -R innodoc.innodoc /innodoc-webapp
+RUN addgroup -S innodoc && adduser -S -g innodoc innodoc \
+    && mkdir -p /home/innodoc/Downloads \
+    && chown -R innodoc:innodoc /home/innodoc
 USER innodoc
 
 # install deps and build
@@ -32,13 +29,12 @@ COPY --chown=innodoc:innodoc \
   package.json \
   package-lock.json \
   /innodoc-webapp/
-RUN npm install nightmare
 RUN npm install
 
 # copy files/create .env
 COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/.env
-COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/
 COPY --chown=innodoc:innodoc \
+  .env.example \
   .babelrc \
   next.config.js \
   /innodoc-webapp/
@@ -50,4 +46,5 @@ COPY --chown=innodoc:innodoc server /innodoc-webapp/server/
 RUN npm run build
 
 # run e2e script
-CMD ["npm", "run", "test:e2e:ci"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["npm", "run", "test:e2e"]

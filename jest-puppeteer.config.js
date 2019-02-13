@@ -7,6 +7,7 @@ module.exports = {
   launch: {
     headless,
     slowMo: headless ? 0 : 250,
+    args: ['--disable-dev-shm-usage'],
   },
   server: [
     {
