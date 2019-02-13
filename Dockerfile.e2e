@@ -13,7 +13,7 @@ LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 # # Puppeteer v1.9.0 works with Chromium 71.
 # RUN yarn add puppeteer@1.9.0
 
-WORKDIR /home/innodoc/innodoc-webapp
+WORKDIR /innodoc-webapp
 
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64
 RUN chmod +x /usr/local/bin/dumb-init
