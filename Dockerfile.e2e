@@ -43,7 +43,6 @@ COPY --chown=pptruser:pptruser \
 COPY --chown=pptruser:pptruser e2e /innodoc-webapp/e2e/
 COPY --chown=pptruser:pptruser src /innodoc-webapp/src/
 COPY --chown=pptruser:pptruser server /innodoc-webapp/server/
-RUN chown -R pptruser:pptruser /innodoc-webapp/
 
 # build app
 RUN npm run build
