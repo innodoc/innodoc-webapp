@@ -1,65 +1,52 @@
-FROM node:11-alpine
-LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
-
-ENV CHROME_BIN="/usr/bin/chromium-browser" \
-    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true"
-
-# RUN apk update && apk upgrade && \
-#     echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
-#     echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
-#     apk add --no-cache \
-#       chromium@edge \
-#       harfbuzz@edge \
-#       nss@edge
-#
-# ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-# # Puppeteer v1.9.0 works with Chromium 71.
-# RUN yarn add puppeteer@1.9.0
-
-WORKDIR /innodoc-webapp
+FROM node:10-alpine
 
 # Installs latest Chromium (71) package.
-RUN apk update \
-  && apk upgrade \
-  && echo @edge http://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
-  && echo @edge http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
-  && apk add --no-cache \
-    dumb-init \
-    chromium@edge \
-    harfbuzz@edge \
-    nss@edge \
-  && rm -rf /usr/include \
-  && rm -rf /var/cache/apk/* /usr/share/man /tmp/*
+RUN apk update && apk upgrade && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
+    apk add --no-cache \
+      dumb-init \
+      chromium@edge \
+      harfbuzz@edge \
+      nss@edge
 
-# add user/group
-RUN addgroup -S innodoc && adduser -S -g innodoc innodoc \
-    && mkdir -p /home/innodoc/Downloads \
-    && chown -R innodoc:innodoc /home/innodoc /innodoc-webapp/
-USER innodoc
+# Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+
+# Puppeteer v1.9.0 works with Chromium 71.
+RUN yarn add puppeteer@1.9.0
+
+# Add user so we don't need --no-sandbox.
+RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
+    && mkdir -p /home/pptruser/Downloads /innodoc-webapp \
+    && chown -R pptruser:pptruser /home/pptruser \
+    && chown -R pptruser:pptruser /innodoc-webapp
+
+# Run everything after as non-privileged user.
+USER pptruser
+WORKDIR /innodoc-webapp/
 
 # install deps and build
-COPY --chown=innodoc:innodoc \
+COPY --chown=pptruser:pptruser \
   package.json \
   package-lock.json \
   /innodoc-webapp/
 RUN npm install
 
 # copy files/create .env
-COPY --chown=innodoc:innodoc .env.example /innodoc-webapp/.env
-COPY --chown=innodoc:innodoc \
+COPY --chown=pptruser:pptruser .env.example /innodoc-webapp/.env
+COPY --chown=pptruser:pptruser \
   .env.example \
   .babelrc \
   next.config.js \
   /innodoc-webapp/
-COPY --chown=innodoc:innodoc e2e /innodoc-webapp/e2e/
-COPY --chown=innodoc:innodoc src /innodoc-webapp/src/
-COPY --chown=innodoc:innodoc server /innodoc-webapp/server/
+COPY --chown=pptruser:pptruser e2e /innodoc-webapp/e2e/
+COPY --chown=pptruser:pptruser src /innodoc-webapp/src/
+COPY --chown=pptruser:pptruser server /innodoc-webapp/server/
+RUN chown -R pptruser:pptruser /innodoc-webapp/
 
 # build app
 RUN npm run build
-
-# clean up
-RUN rm -rf /home/innodoc/.node-gyp
 
 # run e2e script
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
