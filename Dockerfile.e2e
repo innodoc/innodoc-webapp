@@ -53,12 +53,9 @@ RUN npm run build
 
 # TODO: cleanup
 RUN ls -la /home/innodocuser
-RUN du -hs /home/innodocuser/.node-gyp
 RUN du -hs /home/innodocuser/.npm
 RUN find /home/innodocuser
-RUN rm -rf \
-  /home/innodocuser/.node-gyp \
-  /home/innodocuser/.npm
+RUN rm -rf /home/innodocuser/.npm
 
 # run e2e script
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
