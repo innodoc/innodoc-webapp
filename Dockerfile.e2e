@@ -17,32 +17,33 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 RUN yarn add puppeteer@1.9.0
 
 # Add user so we don't need --no-sandbox.
-RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
-    && mkdir -p /home/pptruser/Downloads /innodoc-webapp \
-    && chown -R pptruser:pptruser /home/pptruser \
-    && chown -R pptruser:pptruser /innodoc-webapp
+RUN addgroup -S innodocuser && adduser -S -g innodocuser innodocuser \
+    && mkdir -p /home/innodocuser/Downloads /innodoc-webapp \
+    && chown -R innodocuser:innodocuser /home/innodocuser \
+    && chown -R innodocuser:innodocuser /innodoc-webapp
 
 # Run everything after as non-privileged user.
-USER pptruser
+USER innodocuser
 WORKDIR /innodoc-webapp/
 
 # install deps and build
-COPY --chown=pptruser:pptruser \
+COPY --chown=innodocuser:innodocuser \
   package.json \
   package-lock.json \
   /innodoc-webapp/
 RUN npm install
 
 # copy files/create .env
-COPY --chown=pptruser:pptruser .env.example /innodoc-webapp/.env
-COPY --chown=pptruser:pptruser \
+COPY --chown=innodocuser:innodocuser .env.example /innodoc-webapp/.env
+COPY --chown=innodocuser:innodocuser \
+  .env.example \
   .babelrc \
   next.config.js \
   jest-puppeteer.config.js \
   /innodoc-webapp/
-COPY --chown=pptruser:pptruser e2e /innodoc-webapp/e2e/
-COPY --chown=pptruser:pptruser src /innodoc-webapp/src/
-COPY --chown=pptruser:pptruser server /innodoc-webapp/server/
+COPY --chown=innodocuser:innodocuser e2e /innodoc-webapp/e2e/
+COPY --chown=innodocuser:innodocuser src /innodoc-webapp/src/
+COPY --chown=innodocuser:innodocuser server /innodoc-webapp/server/
 
 # build app
 RUN npm run build
