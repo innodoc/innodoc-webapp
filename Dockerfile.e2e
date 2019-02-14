@@ -36,7 +36,6 @@ RUN npm install
 # copy files/create .env
 COPY --chown=pptruser:pptruser .env.example /innodoc-webapp/.env
 COPY --chown=pptruser:pptruser \
-  .env.example \
   .babelrc \
   next.config.js \
   jest-puppeteer.config.js \
@@ -47,6 +46,8 @@ COPY --chown=pptruser:pptruser server /innodoc-webapp/server/
 
 # build app
 RUN npm run build
+
+# TODO: cleanup
 
 # run e2e script
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
