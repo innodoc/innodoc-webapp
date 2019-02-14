@@ -23,9 +23,6 @@ variables:
     IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
     IMAGE_E2E_CACHE_TAG: $CI_REGISTRY_IMAGE/e2e:cache
     IMAGE_E2E_TAG: $CI_REGISTRY_IMAGE/e2e:$CI_COMMIT_REF_SLUG
-  # TODO: except temporary!!!
-  except:
-    - puppeteer
 
 build image:
   <<: *docker-base

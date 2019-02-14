@@ -51,10 +51,7 @@ COPY --chown=innodocuser:innodocuser server /innodoc-webapp/server/
 # build app
 RUN npm run build
 
-# TODO: cleanup
-RUN ls -la /home/innodocuser
-RUN du -hs /home/innodocuser/.npm
-RUN find /home/innodocuser
+# cleanup
 RUN rm -rf /home/innodocuser/.npm
 
 # run e2e script
