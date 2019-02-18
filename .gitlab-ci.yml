@@ -10,18 +10,21 @@ variables:
   IMAGE_STAGING_TAG: $CI_REGISTRY_IMAGE/staging:latest
   IMAGE_RELEASE_TAG: $CI_REGISTRY_IMAGE:latest
 
+.docker-default-vars: $docker-default-vars
+  GIT_STRATEGY: none
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+  IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
+  IMAGE_E2E_CACHE_TAG: $CI_REGISTRY_IMAGE/e2e:cache
+  IMAGE_E2E_TAG: $CI_REGISTRY_IMAGE/e2e:$CI_COMMIT_REF_SLUG
+
 .docker-base: &docker-base
   services:
     - docker:dind
   before_script:
     - echo "$CI_JOB_TOKEN" | docker login --username gitlab-ci-token --password-stdin "$CI_REGISTRY"
   variables:
-    GIT_STRATEGY: none
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_DRIVER: overlay2
-    IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
-    IMAGE_E2E_CACHE_TAG: $CI_REGISTRY_IMAGE/e2e:cache
-    IMAGE_E2E_TAG: $CI_REGISTRY_IMAGE/e2e:$CI_COMMIT_REF_SLUG
+    <<: *docker-default-vars
 
 build image:
   <<: *docker-base
@@ -32,6 +35,7 @@ build image:
     - docker build --pull --cache-from "$IMAGE_RELEASE_TAG" --cache-from "$IMAGE_TAG" --tag "$IMAGE_TAG" .
     - docker push "$IMAGE_TAG"
   variables:
+    <<: *docker-default-vars
     GIT_STRATEGY: fetch
     GIT_SUBMODULE_STRATEGY: recursive
 
