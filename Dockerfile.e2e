@@ -1,7 +1,8 @@
+ARG BUILD_IMAGE
+FROM $BUILD_IMAGE AS build
+
 FROM node:alpine
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
-
-ARG BUILD_IMAGE
 
 # install chromium
 RUN set -xe && \
@@ -30,7 +31,7 @@ RUN set -xe && \
 
 WORKDIR /innodoc-webapp
 
-COPY --from=$BUILD_IMAGE --chown=innodocuser:innodocuser /innodoc-webapp .
+COPY --from=build --chown=innodocuser:innodocuser /innodoc-webapp .
 
 # run e2e script
 USER innodocuser
