@@ -52,8 +52,9 @@ e2e tests:
   <<: *docker-base
   stage: test
   script:
+    - docker pull $IMAGE_TAG
     - docker pull $IMAGE_E2E_CACHE_TAG || true
-    - docker build --pull --cache-from $IMAGE_E2E_CACHE_TAG --tag $IMAGE_E2E_TAG -f Dockerfile.e2e .
+    - docker build --pull --cache-from $IMAGE_TAG --cache-from $IMAGE_E2E_CACHE_TAG --tag $IMAGE_E2E_TAG --build-arg BASE_IMAGE="$IMAGE_TAG" -f Dockerfile.e2e .
     - docker tag $IMAGE_E2E_TAG $IMAGE_E2E_CACHE_TAG
     - docker push $IMAGE_E2E_CACHE_TAG
     - docker run $IMAGE_E2E_TAG

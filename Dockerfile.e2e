@@ -1,58 +1,30 @@
-FROM node:11-alpine
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
-# Installs latest Chromium (71) package.
-RUN apk update \
-  && apk upgrade \
-  && echo @edge http://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
-  && echo @edge http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
-  && apk add --no-cache \
-    dumb-init \
-    chromium@edge \
-    harfbuzz@edge \
-    nss@edge \
-  && rm -rf \
-    /usr/include \
-    /var/cache/apk/* \
-    /usr/share/man \
-    /tmp/*
+RUN set -xe && \
+    apk update && \
+    apk upgrade && \
+    echo @edge http://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+    echo @edge http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
+    apk add --no-cache \
+      dumb-init \
+      chromium@edge \
+      harfbuzz@edge \
+      nss@edge && \
+    cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime && \
+    rm -rf \
+      /usr/include \
+      /var/cache/apk/* \
+      /usr/share/man \
+      /tmp/*
 
-# tell Puppeteer to skip installing Chrome. We'll be using the installed package.
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-
-# add user
-RUN addgroup -S innodocuser && adduser -S -g innodocuser innodocuser \
-    && mkdir -p /home/innodocuser/Downloads /innodoc-webapp \
-    && chown -R innodocuser:innodocuser /home/innodocuser \
-    && chown -R innodocuser:innodocuser /innodoc-webapp
+# setup dirs
+RUN set -xe && \
+    mkdir -p /home/innodocuser/Downloads /innodoc-webapp && \
+    chown -R innodocuser:innodocuser /home/innodocuser
 
 USER innodocuser
-WORKDIR /innodoc-webapp/
-
-# install deps
-COPY --chown=innodocuser:innodocuser \
-  package.json \
-  package-lock.json \
-  /innodoc-webapp/
-RUN npm install
-
-# copy app files
-COPY --chown=innodocuser:innodocuser .env.example /innodoc-webapp/.env
-COPY --chown=innodocuser:innodocuser \
-  .env.example \
-  .babelrc \
-  next.config.js \
-  jest-puppeteer.config.js \
-  /innodoc-webapp/
-COPY --chown=innodocuser:innodocuser e2e /innodoc-webapp/e2e/
-COPY --chown=innodocuser:innodocuser src /innodoc-webapp/src/
-COPY --chown=innodocuser:innodocuser server /innodoc-webapp/server/
-
-# build app
-RUN npm run build
-
-# cleanup
-RUN rm -rf /home/innodocuser/.npm
 
 # run e2e script
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
