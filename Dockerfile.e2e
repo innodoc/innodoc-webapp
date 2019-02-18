@@ -1,7 +1,9 @@
-ARG BASE_IMAGE
-FROM $BASE_IMAGE
+FROM node:alpine
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
+ARG BUILD_IMAGE
+
+# install chromium
 RUN set -xe && \
     apk update && \
     apk upgrade && \
@@ -24,8 +26,11 @@ RUN set -xe && \
     mkdir -p /home/innodocuser/Downloads /innodoc-webapp && \
     chown -R innodocuser:innodocuser /home/innodocuser
 
-USER innodocuser
+WORKDIR /innodoc-webapp
+
+COPY --from=$BUILD_IMAGE --chown=innodocuser:innodocuser /innodoc-webapp .
 
 # run e2e script
+USER innodocuser
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["npm", "run", "test:e2e"]

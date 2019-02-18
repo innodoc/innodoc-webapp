@@ -34,6 +34,8 @@ COPY --chown=innodocuser:innodocuser \
   package.json \
   package-lock.json \
   /innodoc-webapp/
+
+# e2e will use distro chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 RUN npm install
 

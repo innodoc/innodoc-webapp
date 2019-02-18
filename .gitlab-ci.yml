@@ -14,10 +14,9 @@ variables:
   services:
     - docker:dind
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY || true
+    - echo "$CI_JOB_TOKEN" | docker login --username gitlab-ci-token --password-stdin "$CI_REGISTRY"
   variables:
-    GIT_STRATEGY: fetch
-    GIT_SUBMODULE_STRATEGY: recursive
+    GIT_STRATEGY: none
     DOCKER_HOST: tcp://docker:2375
     DOCKER_DRIVER: overlay2
     IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
@@ -28,24 +27,27 @@ build image:
   <<: *docker-base
   stage: build
   script:
-    - docker pull $IMAGE_RELEASE_TAG || true
-    - docker pull $IMAGE_TAG || true
-    - docker build --pull --cache-from $IMAGE_RELEASE_TAG --cache-from $IMAGE_TAG --tag $IMAGE_TAG .
-    - docker push $IMAGE_TAG
+    - docker pull "$IMAGE_RELEASE_TAG" || true
+    - docker pull "$IMAGE_TAG" || true
+    - docker build --pull --cache-from "$IMAGE_RELEASE_TAG" --cache-from "$IMAGE_TAG" --tag "$IMAGE_TAG" .
+    - docker push "$IMAGE_TAG"
+  variables:
+    GIT_STRATEGY: fetch
+    GIT_SUBMODULE_STRATEGY: recursive
 
 linting:
   <<: *docker-base
   stage: test
   script:
-    - docker pull $IMAGE_TAG
-    - docker run $IMAGE_TAG npm run lint
+    - docker pull "$IMAGE_TAG"
+    - docker run "$IMAGE_TAG" npm run lint
 
 unit tests:
   <<: *docker-base
   stage: test
   script:
-    - docker pull $IMAGE_TAG
-    - docker run $IMAGE_TAG npm run test:unit:coverage
+    - docker pull "$IMAGE_TAG"
+    - docker run "$IMAGE_TAG" npm run test:unit:coverage
   coverage: '/^All files\s+\|\s+([0-9.]+)\s+\|\s+/'
 
 e2e tests:
@@ -81,7 +83,5 @@ deploy staging:
     - echo "$STAGING_SERVER_PUBKEY" > ~/.ssh/known_hosts
   script:
     - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa $STAGING_SERVER_USER@$STAGING_SERVER "$STAGING_DEPLOY_CMD"
-  variables:
-    GIT_STRATEGY: none
   only:
     - master
