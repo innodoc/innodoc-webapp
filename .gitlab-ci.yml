@@ -10,7 +10,7 @@ variables:
   IMAGE_STAGING_TAG: $CI_REGISTRY_IMAGE/staging:latest
   IMAGE_RELEASE_TAG: $CI_REGISTRY_IMAGE:latest
 
-.docker-default-vars: $docker-default-vars
+.docker-default-vars: &docker-default-vars
   GIT_STRATEGY: none
   DOCKER_HOST: tcp://docker:2375
   DOCKER_DRIVER: overlay2
