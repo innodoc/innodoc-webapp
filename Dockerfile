@@ -39,6 +39,9 @@ COPY --chown=innodocuser:innodocuser \
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 RUN npm install
 
+# cleanup
+RUN rm -rf /home/innodocuser/.npm
+
 # copy files/create .env
 COPY --chown=innodocuser:innodocuser .env.example /innodoc-webapp/.env
 COPY --chown=innodocuser:innodocuser \
@@ -57,9 +60,6 @@ COPY --chown=innodocuser:innodocuser server /innodoc-webapp/server/
 
 # build app
 RUN npm run build
-
-# cleanup
-RUN rm -rf /home/innodocuser/.npm
 
 # run web app
 EXPOSE 8000

@@ -14,7 +14,6 @@ RUN set -xe && \
       chromium@edge \
       harfbuzz@edge \
       nss@edge && \
-    cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime && \
     rm -rf \
       /usr/include \
       /var/cache/apk/* \
