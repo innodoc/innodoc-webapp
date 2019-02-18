@@ -20,10 +20,13 @@ RUN set -xe && \
       /usr/share/man \
       /tmp/*
 
-# setup dirs
+# add user/group to run as
 RUN set -xe && \
+    addgroup -S innodocuser && \
+    adduser -S -g innodocuser innodocuser && \
     mkdir -p /home/innodocuser/Downloads /innodoc-webapp && \
-    chown -R innodocuser:innodocuser /home/innodocuser
+    chown -R innodocuser:innodocuser /home/innodocuser && \
+    chown -R innodocuser.innodocuser /innodoc-webapp
 
 WORKDIR /innodoc-webapp
 
