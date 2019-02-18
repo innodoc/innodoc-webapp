@@ -1,22 +1,6 @@
 FROM node:alpine
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
-RUN set -xe && \
-    apk update && \
-    apk upgrade && \
-    apk add --no-cache \
-      tzdata \
-      python \
-      make \
-      g++ && \
-    cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime && \
-    apk del tzdata && \
-    rm -rf \
-      /usr/include \
-      /var/cache/apk/* \
-      /usr/share/man \
-      /tmp/*
-
 RUN npm install pm2 -g
 
 WORKDIR /innodoc-webapp
