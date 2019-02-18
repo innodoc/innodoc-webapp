@@ -57,12 +57,12 @@ e2e tests:
   <<: *docker-base
   stage: test
   script:
-    - docker pull $IMAGE_TAG
-    - docker pull $IMAGE_E2E_CACHE_TAG || true
-    - docker build --pull --cache-from $IMAGE_TAG --cache-from $IMAGE_E2E_CACHE_TAG --tag $IMAGE_E2E_TAG --build-arg BASE_IMAGE="$IMAGE_TAG" -f Dockerfile.e2e .
-    - docker tag $IMAGE_E2E_TAG $IMAGE_E2E_CACHE_TAG
-    - docker push $IMAGE_E2E_CACHE_TAG
-    - docker run $IMAGE_E2E_TAG
+    - docker pull "$IMAGE_TAG"
+    - docker pull "$IMAGE_E2E_CACHE_TAG" || true
+    - docker build --pull --cache-from "$IMAGE_TAG" --cache-from "$IMAGE_E2E_CACHE_TAG" --tag "$IMAGE_E2E_TAG" --build-arg BUILD_IMAGE="$IMAGE_TAG" -f Dockerfile.e2e .
+    - docker tag "$IMAGE_E2E_TAG" "$IMAGE_E2E_CACHE_TAG"
+    - docker push "$IMAGE_E2E_CACHE_TAG"
+    - docker run "$IMAGE_E2E_TAG"
   variables:
     <<: *docker-default-vars
     GIT_STRATEGY: fetch
@@ -72,9 +72,9 @@ release staging:
   <<: *docker-base
   stage: release
   script:
-    - docker pull $IMAGE_TAG
-    - docker tag $IMAGE_TAG $IMAGE_STAGING_TAG
-    - docker push $IMAGE_STAGING_TAG
+    - docker pull "$IMAGE_TAG"
+    - docker tag "$IMAGE_TAG" "$IMAGE_STAGING_TAG"
+    - docker push "$IMAGE_STAGING_TAG"
   only:
     - master
 
@@ -89,6 +89,6 @@ deploy staging:
     - chmod 600 ~/.ssh/id_rsa
     - echo "$STAGING_SERVER_PUBKEY" > ~/.ssh/known_hosts
   script:
-    - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa $STAGING_SERVER_USER@$STAGING_SERVER "$STAGING_DEPLOY_CMD"
+    - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa "$STAGING_SERVER_USER"@"$STAGING_SERVER" "$STAGING_DEPLOY_CMD"
   only:
     - master
