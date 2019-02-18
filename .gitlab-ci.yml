@@ -30,7 +30,6 @@ build image:
   <<: *docker-base
   stage: build
   script:
-    - docker pull "$IMAGE_RELEASE_TAG" || true
     - docker pull "$IMAGE_TAG" || true
     - docker build --pull --cache-from "$IMAGE_RELEASE_TAG" --cache-from "$IMAGE_TAG" --tag "$IMAGE_TAG" .
     - docker push "$IMAGE_TAG"
@@ -64,6 +63,10 @@ e2e tests:
     - docker tag $IMAGE_E2E_TAG $IMAGE_E2E_CACHE_TAG
     - docker push $IMAGE_E2E_CACHE_TAG
     - docker run $IMAGE_E2E_TAG
+  variables:
+    <<: *docker-default-vars
+    GIT_STRATEGY: fetch
+    GIT_SUBMODULE_STRATEGY: none
 
 release staging:
   <<: *docker-base
