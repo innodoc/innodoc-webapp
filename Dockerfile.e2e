@@ -1,4 +1,6 @@
-ARG BUILD_IMAGE
+# This image is used for E2E testing.
+
+ARG BUILD_IMAGE innodoc/innodoc-webapp
 FROM $BUILD_IMAGE AS build
 
 FROM node:alpine
