@@ -17,35 +17,41 @@ variables:
   IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
   IMAGE_E2E_CACHE_TAG: $CI_REGISTRY_IMAGE/e2e:cache
   IMAGE_E2E_TAG: $CI_REGISTRY_IMAGE/e2e:$CI_COMMIT_REF_SLUG
+  VERSION_REGEXP: "^v\\d+\\.\\d+\\.\\d+$"
 
 .docker-base: &docker-base
   services:
     - docker:dind
   before_script:
     - echo "$CI_JOB_TOKEN" | docker login --username gitlab-ci-token --password-stdin "$CI_REGISTRY"
+  after_script:
+    - docker logout "$CI_REGISTRY" || true
+    - docker logout "$DOCKER_HUB_REGISTRY" || true
   variables:
     <<: *docker-default-vars
 
-build image:
+Build image:
   <<: *docker-base
   stage: build
   script:
     - docker pull "$IMAGE_TAG" || true
-    - docker build --pull --cache-from "$IMAGE_RELEASE_TAG" --cache-from "$IMAGE_TAG" --tag "$IMAGE_TAG" .
+    - docker pull "$IMAGE_STAGING_TAG" || true
+    - docker pull "$IMAGE_RELEASE_TAG" || true
+    - docker build --pull --cache-from "$IMAGE_TAG" --cache-from "$IMAGE_STAGING_TAG" --cache-from "$IMAGE_RELEASE_TAG" --tag "$IMAGE_TAG" .
     - docker push "$IMAGE_TAG"
   variables:
     <<: *docker-default-vars
     GIT_STRATEGY: fetch
     GIT_SUBMODULE_STRATEGY: recursive
 
-linting:
+Linting:
   <<: *docker-base
   stage: test
   script:
     - docker pull "$IMAGE_TAG"
     - docker run "$IMAGE_TAG" npm run lint
 
-unit tests:
+Unit tests:
   <<: *docker-base
   stage: test
   script:
@@ -53,7 +59,7 @@ unit tests:
     - docker run "$IMAGE_TAG" npm run test:unit:coverage
   coverage: '/^All files\s+\|\s+([0-9.]+)\s+\|\s+/'
 
-e2e tests:
+E2E tests:
   <<: *docker-base
   stage: test
   script:
@@ -68,17 +74,34 @@ e2e tests:
     GIT_STRATEGY: fetch
     GIT_SUBMODULE_STRATEGY: none
 
-release staging:
+Release (staging):
   <<: *docker-base
   stage: release
   script:
     - docker pull "$IMAGE_TAG"
     - docker tag "$IMAGE_TAG" "$IMAGE_STAGING_TAG"
     - docker push "$IMAGE_STAGING_TAG"
+    - if echo "$CI_COMMIT_TAG" | grep -qE "$VERSION_REGEXP"; then echo docker push "$CI_REGISTRY_IMAGE":"${CI_COMMIT_TAG#v}"; else echo no version; fi
+  only:
+    - dev
+
+Release (production):
+  <<: *docker-base
+  stage: release
+  script:
+    - docker pull "$IMAGE_TAG"
+    - docker tag "$IMAGE_TAG" "$IMAGE_RELEASE_TAG"
+    - docker push "$IMAGE_RELEASE_TAG"
+    - if echo "$CI_COMMIT_TAG" | grep -qE "$VERSION_REGEXP"; then echo docker push "$CI_REGISTRY_IMAGE":"${CI_COMMIT_TAG#v}"; fi
+    - docker logout "$CI_REGISTRY"
+    - echo "$DOCKER_HUB_PWD" | docker login --username "$DOCKER_HUB_USER" --password-stdin "$DOCKER_HUB_REGISTRY"
+    - docker tag "$IMAGE_TAG" "$DOCKER_HUB_REGISTRY_IMAGE"
+    - docker push "$DOCKER_HUB_REGISTRY_IMAGE"
+    - if echo "$CI_COMMIT_TAG" | grep -qE "$VERSION_REGEXP"; then echo docker push "$DOCKER_HUB_REGISTRY_IMAGE":"${CI_COMMIT_TAG#v}"; fi
   only:
     - master
 
-deploy staging:
+Deploy (staging):
   stage: deploy
   image: alpine
   environment: staging
@@ -91,4 +114,4 @@ deploy staging:
   script:
     - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa "$STAGING_SERVER_USER"@"$STAGING_SERVER" "$STAGING_DEPLOY_CMD"
   only:
-    - master
+    - dev
