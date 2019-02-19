@@ -6,9 +6,28 @@ HTML viewer for interactive educational content.
 
 ## Running
 
+The easiest way to get up and running is to use Docker.
+
+**Note:** For the application to do anything useful, you need to tell it where
+to load content from. Content is static data served from ordinary HTTPS. To do
+so, point `CONTENT_ROOT` to a content server that provides a `manifest.json`
+file. Check the [innoConv project](innodoc/innoconv) for details.
+
 ### Using Docker
 
-You can use the provided `Dockerfile` to run the application.
+```sh
+$ docker run \
+  --detach \
+  --pull \
+  --publish 8000:8000 \
+  --env CONTENT_ROOT="https://example.com/content/" \
+  innodoc/innodoc-webapp
+```
+
+#### Building the image yourself
+
+You can also use the provided `Dockerfile` to build and run the application.
+First checkout this repository locally.
 
 ```sh
 $ docker build --tag innodoc-webapp .
@@ -23,7 +42,10 @@ $ docker run \
 
 #### Requirements
 
-Please make sure you have a current version of [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your system. Use your package manager of choice. [nvm](https://github.com/creationix/nvm) can be used to install Node.js in your home directory.
+Please make sure you have a current version of [Node.js](https://nodejs.org/)
+and [npm](https://www.npmjs.com/) installed on your system. Use the package
+manager of choice. [nvm](https://github.com/creationix/nvm) is a great
+alternative to install a current version of Node.js in your home directory.
 
 #### Install dependencies
 
