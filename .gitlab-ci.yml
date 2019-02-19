@@ -31,7 +31,9 @@ build image:
   stage: build
   script:
     - docker pull "$IMAGE_TAG" || true
-    - docker build --pull --cache-from "$IMAGE_RELEASE_TAG" --cache-from "$IMAGE_TAG" --tag "$IMAGE_TAG" .
+    - docker pull "$IMAGE_STAGING_TAG" || true
+    - docker pull "$IMAGE_RELEASE_TAG" || true
+    - docker build --pull --cache-from "$IMAGE_TAG" --cache-from "$IMAGE_STAGING_TAG" --cache-from "$IMAGE_RELEASE_TAG" --tag "$IMAGE_TAG" .
     - docker push "$IMAGE_TAG"
   variables:
     <<: *docker-default-vars
@@ -76,6 +78,22 @@ release staging:
     - docker tag "$IMAGE_TAG" "$IMAGE_STAGING_TAG"
     - docker push "$IMAGE_STAGING_TAG"
   only:
+    - dev
+
+release production:
+  <<: *docker-base
+  stage: release
+  script:
+    - docker pull "$IMAGE_TAG"
+    - docker tag "$IMAGE_TAG" "$IMAGE_RELEASE_TAG"
+    - docker push "$IMAGE_RELEASE_TAG"
+    - [[ "$CI_COMMIT_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] && docker push "$CI_REGISTRY_IMAGE":${CI_COMMIT_TAG#v}
+    - docker logout
+    - echo "$DOCKER_HUB_PWD" | docker login --username "$DOCKER_HUB_USER" --token --password-stdin "$DOCKER_HUB_REGISTRY"
+    - docker tag "$IMAGE_TAG" "$DOCKER_HUB_REGISTRY_IMAGE"
+    - docker push "$DOCKER_HUB_REGISTRY_IMAGE"
+    - [[ "$CI_COMMIT_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] && docker push "$DOCKER_HUB_REGISTRY_IMAGE":${CI_COMMIT_TAG#v}
+  only:
     - master
 
 deploy staging:
@@ -91,4 +109,4 @@ deploy staging:
   script:
     - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa "$STAGING_SERVER_USER"@"$STAGING_SERVER" "$STAGING_DEPLOY_CMD"
   only:
-    - master
+    - dev
