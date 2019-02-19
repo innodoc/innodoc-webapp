@@ -1,3 +1,5 @@
+# Official Alpine-based Dockerfile for innodoc-webapp
+
 FROM node:alpine
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
