@@ -22,7 +22,7 @@ USER innodocuser
 COPY --chown=innodocuser:innodocuser \
   package.json \
   package-lock.json \
-  .
+  ./
 RUN npm install && rm -r /home/innodocuser/.npm /tmp/npm-*
 
 # copy files/create .env
@@ -39,7 +39,7 @@ COPY --chown=innodocuser:innodocuser \
   e2e \
   src \
   server \
-  .
+  ./
 #COPY --chown=innodocuser:innodocuser e2e src server .
 #COPY --chown=innodocuser:innodocuser e2e e2e
 #COPY --chown=innodocuser:innodocuser src src
