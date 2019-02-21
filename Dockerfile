@@ -8,13 +8,13 @@ WORKDIR /innodoc-webapp
 # no need to bundle full-fledged chomium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
-RUN npm install pm2 -g && npm cache clear --force
+RUN npm install pm2 -g && rm -r /root/.npm /tmp/npm-*
 
 # add user/group to run as
 RUN set -xe && \
     addgroup -S innodocuser && \
     adduser -S -g innodocuser innodocuser && \
-    chown -R innodocuser.innodocuser /innodoc-webapp
+    chown -R innodocuser.innodocuser .
 
 USER innodocuser
 
@@ -22,11 +22,11 @@ USER innodocuser
 COPY --chown=innodocuser:innodocuser \
   package.json \
   package-lock.json \
-  /innodoc-webapp/
-RUN npm install && rm -rf /home/innodocuser/.npm
+  .
+RUN npm install && rm -r /home/innodocuser/.npm /tmp/npm-*
 
 # copy files/create .env
-COPY --chown=innodocuser:innodocuser .env.example /innodoc-webapp/.env
+COPY --chown=innodocuser:innodocuser .env.example ./.env
 COPY --chown=innodocuser:innodocuser \
   .env.example \
   .babelrc \
@@ -36,10 +36,14 @@ COPY --chown=innodocuser:innodocuser \
   enzyme.config.js \
   .eslintignore \
   .eslintrc.json \
-  /innodoc-webapp/
-COPY --chown=innodocuser:innodocuser e2e /innodoc-webapp/e2e/
-COPY --chown=innodocuser:innodocuser src /innodoc-webapp/src/
-COPY --chown=innodocuser:innodocuser server /innodoc-webapp/server/
+  e2e \
+  src \
+  server \
+  .
+#COPY --chown=innodocuser:innodocuser e2e src server .
+#COPY --chown=innodocuser:innodocuser e2e e2e
+#COPY --chown=innodocuser:innodocuser src src
+#COPY --chown=innodocuser:innodocuser server server
 
 # build app
 RUN npm run build
