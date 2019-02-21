@@ -17,14 +17,18 @@ RUN set -xe && \
       chromium@edge \
       harfbuzz@edge \
       nss@edge && \
-    rm -rf \
-      /var/cache/apk/* && \
     # add user/group to run as
     addgroup -S innodocuser && \
     adduser -S -g innodocuser innodocuser && \
     mkdir -p /home/innodocuser/Downloads /innodoc-webapp && \
     chown -R innodocuser:innodocuser /home/innodocuser && \
-    chown -R innodocuser.innodocuser /innodoc-webapp
+    chown -R innodocuser.innodocuser /innodoc-webapp && \
+    # clean up
+    rm -rf \
+      /usr/include \
+      /var/cache/apk/* \
+      /usr/share/man \
+      /tmp/*
 
 COPY --from=build --chown=innodocuser:innodocuser /innodoc-webapp .
 
