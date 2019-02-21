@@ -3,9 +3,12 @@
 FROM node:alpine
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
-RUN npm install pm2 -g
-
 WORKDIR /innodoc-webapp
+
+# no need to bundle full-fledged chomium
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+
+RUN npm install pm2 -g && npm cache clear --force
 
 # add user/group to run as
 RUN set -xe && \
@@ -15,18 +18,12 @@ RUN set -xe && \
 
 USER innodocuser
 
-# install deps and build
+# install npm packages
 COPY --chown=innodocuser:innodocuser \
   package.json \
   package-lock.json \
   /innodoc-webapp/
-
-# e2e will use distro chromium
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-RUN npm install
-
-# cleanup
-RUN rm -rf /home/innodocuser/.npm
+RUN npm install && rm -rf /home/innodocuser/.npm
 
 # copy files/create .env
 COPY --chown=innodocuser:innodocuser .env.example /innodoc-webapp/.env
