@@ -1,5 +1,10 @@
 .git
 .gitignore
+.editorconfig
+.dockerignore
+.env
+.gitlab-ci.yml
+.gitmodules
 README.md
 LICENSE.txt
 coverage

@@ -1,48 +1,33 @@
 # Official Alpine-based Dockerfile for innodoc-webapp
-
 FROM node:alpine
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
-RUN npm install pm2 -g
-
 WORKDIR /innodoc-webapp
+
+# install pm2
+RUN npm install pm2 -g && rm -rf /root/.npm /tmp/npm-*
 
 # add user/group to run as
 RUN set -xe && \
     addgroup -S innodocuser && \
     adduser -S -g innodocuser innodocuser && \
-    chown -R innodocuser.innodocuser /innodoc-webapp
+    chown -R innodocuser.innodocuser .
 
 USER innodocuser
 
-# install deps and build
+# install npm packages
 COPY --chown=innodocuser:innodocuser \
   package.json \
   package-lock.json \
-  /innodoc-webapp/
-
-# e2e will use distro chromium
+  ./
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-RUN npm install
+RUN npm install && rm -rf /home/innodocuser/.npm /tmp/npm-*
 
-# cleanup
-RUN rm -rf /home/innodocuser/.npm
+# copy files
+COPY --chown=innodocuser:innodocuser . .
 
-# copy files/create .env
-COPY --chown=innodocuser:innodocuser .env.example /innodoc-webapp/.env
-COPY --chown=innodocuser:innodocuser \
-  .env.example \
-  .babelrc \
-  next.config.js \
-  jest.config.js \
-  jest-puppeteer.config.js \
-  enzyme.config.js \
-  .eslintignore \
-  .eslintrc.json \
-  /innodoc-webapp/
-COPY --chown=innodocuser:innodocuser e2e /innodoc-webapp/e2e/
-COPY --chown=innodocuser:innodocuser src /innodoc-webapp/src/
-COPY --chown=innodocuser:innodocuser server /innodoc-webapp/server/
+# create .env
+RUN ln -s .env.example .env
 
 # build app
 RUN npm run build
