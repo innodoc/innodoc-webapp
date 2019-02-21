@@ -8,7 +8,7 @@ WORKDIR /innodoc-webapp
 # no need to bundle full-fledged chomium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
-RUN npm install pm2 -g && rm -r /root/.npm /tmp/npm-*
+RUN npm install pm2 -g && rm -rf /root/.npm /tmp/npm-*
 
 # add user/group to run as
 RUN set -xe && \
@@ -23,7 +23,7 @@ COPY --chown=innodocuser:innodocuser \
   package.json \
   package-lock.json \
   ./
-RUN npm install && rm -r /home/innodocuser/.npm /tmp/npm-*
+RUN npm install && rm -rf /home/innodocuser/.npm /tmp/npm-*
 
 # copy files/create .env
 COPY --chown=innodocuser:innodocuser .env.example ./.env
