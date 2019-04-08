@@ -1,13 +1,14 @@
-import fs from 'fs'
-import path from 'path'
-import express from 'express'
-import next from 'next'
-import Dotenv from 'dotenv-safe'
-import i18nextMiddleware from 'i18next-express-middleware'
-import i18nNodeFsBackend from 'i18next-node-fs-backend'
+const fs = require('fs')
 
-import i18n from '../src/lib/i18n/instance'
-import i18nOptions from '../src/lib/i18n/options'
+const path = require('path')
+const express = require('express')
+const next = require('next')
+const Dotenv = require('dotenv-safe')
+const i18nextMiddleware = require('i18next-express-middleware')
+const i18nNodeFsBackend = require('i18next-node-fs-backend')
+
+const i18n = require('../src/lib/i18n/instance')
+const i18nOptions = require('../src/lib/i18n/options')
 
 // directories
 const rootDir = `${__dirname}/..`

@@ -63,9 +63,7 @@ class InnoDocApp extends App {
 const nextReduxWrapperDebug = process.env.NODE_ENV !== 'production' && process.env.NEXT_REDUX_WRAPPER_DEBUG === 'true'
 const withReduxConfig = { debug: nextReduxWrapperDebug }
 
-// async here is important, otherwise next-redux-saga runs store.runSagaTask
-// on every page navigation. (see #36)
-const InnoDocAppWithReduxSaga = withReduxSaga({ async: true })(InnoDocApp)
+const InnoDocAppWithReduxSaga = withReduxSaga(InnoDocApp)
 
 export { InnoDocApp } // for testing
 export default withRedux(configureStore, withReduxConfig)(InnoDocAppWithReduxSaga)

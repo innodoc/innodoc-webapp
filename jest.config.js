@@ -9,7 +9,7 @@ module.exports = {
   moduleNameMapper: {
     '\\.(less|sass|svg)$': 'identity-obj-proxy',
   },
-  setupFiles: ['<rootDir>/enzyme.config.js'],
+  setupFilesAfterEnv: ['<rootDir>/enzyme.config.js'],
   testPathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/src/.next/',

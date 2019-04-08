@@ -3,8 +3,8 @@
 import React from 'react'
 import Document, { Head as NextHead, Main, NextScript } from 'next/document'
 
-// CSS links are in wrong order in production build. This fix should be
-// removed once the issue is resolved.
+// TODO: remove this workaround if possible
+// CSS links are in wrong order in production build.
 // https://github.com/zeit/next.js/issues/3575
 class Head extends NextHead {
   getCssLinks() {
