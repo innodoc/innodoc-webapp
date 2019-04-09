@@ -10,7 +10,14 @@ import { setContentRoot, setStaticRoot, loadManifest } from '../../store/actions
 describe('<InnoDocApp />', () => {
   it('should render', () => {
     const mockStore = { dispatch: () => {}, getState: () => {}, subscribe: () => {} }
-    const wrapper = shallow(<InnoDocApp Component={() => {}} pageProps={{}} store={mockStore} />)
+    const wrapper = shallow(
+      <InnoDocApp
+        Component={() => {}}
+        pageProps={{}}
+        store={mockStore}
+        router={{}}
+      />
+    )
     expect(wrapper.find(Container).exists()).toBe(true)
     expect(wrapper.find(Head).exists()).toBe(true)
     expect(wrapper.find(Provider).exists()).toBe(true)
