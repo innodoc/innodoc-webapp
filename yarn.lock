@@ -8167,9 +8167,9 @@ redux-orm@^0.13.2:
     lodash "^4.17.11"
     reselect "^3.0.1"
 
-redux-saga-test-plan@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/redux-saga-test-plan/-/redux-saga-test-plan-3.7.0.tgz#c8f513b1c6e13eef526a6b8a2e9076b6f26f5698"
+redux-saga-test-plan@4.0.0-beta.2:
+  version "4.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/redux-saga-test-plan/-/redux-saga-test-plan-4.0.0-beta.2.tgz#51717b4819df798c252fbe38171edddb4ef6e76e"
   dependencies:
     core-js "^2.4.1"
     fsm-iterator "^1.1.0"

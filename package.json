@@ -100,6 +100,6 @@
     "jest-puppeteer": "^4.1.0",
     "puppeteer": "^1.14.0",
     "redux-devtools-extension": "^2.13.8",
-    "redux-saga-test-plan": "^3.7.0"
+    "redux-saga-test-plan": "4.0.0-beta.2"
   }
 }
