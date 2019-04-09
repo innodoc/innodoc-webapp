@@ -1,12 +1,6 @@
+import defaultInitialState from '../../defaultInitialState'
 import orm from '../../orm'
 import sectionSelectors from '.'
-
-const course = {
-  currentSection: 'test/child1',
-  homeLink: 'test',
-  languages: ['en'],
-  title: 'courseTitle',
-}
 
 const sections = {
   test: {
@@ -46,22 +40,31 @@ const sections = {
   },
 }
 
-// Create ORM state
-const dummyState = () => {
-  const state = orm.getEmptyState()
-  const session = orm.mutableSession(state)
-  session.App.create({
-    id: 0,
-    currentCourse: 0,
-    language: 'en',
+let state
+beforeEach(() => {
+  const session = orm.session(defaultInitialState().orm)
+  const app = session.App.first()
+  const course = session.Course.create({
+    homeLink: 'test',
+    languages: ['en'],
+    title: 'courseTitle',
   })
-  session.Course.create(course)
   Object.values(sections).forEach(section => session.Section.create(section))
-  return [{ orm: state }, session]
+  app.set('language', 'en')
+  app.set('currentCourse', course.id)
+  state = { orm: session.state }
+})
+
+const setSectionId = (localState, sectionId) => {
+  const session = orm.session(localState.orm)
+  session.Course.first().set('currentSection', sectionId)
+  return { orm: session.state }
 }
 
 describe('sectionSelectors', () => {
-  const [state] = dummyState()
+  beforeEach(() => {
+    state = setSectionId(state, 'test/child1')
+  })
 
   test.each([
     ['test/child1/child11', true],
@@ -103,9 +106,8 @@ describe('getBreadcrumbSections', () => {
       { id: 'test/child1', title: 'test child1 title' },
       { id: 'test/child1/child12', title: 'test child12 title' },
     ]],
-  ])('%s', (id, crumbs) => {
-    const [state, session] = dummyState()
-    session.Course.first().set('currentSection', id)
+  ])('%s', (sectionId, crumbs) => {
+    state = setSectionId(state, sectionId)
     expect(sectionSelectors.getBreadcrumbSections(state)).toEqual(crumbs)
   })
 })
@@ -116,15 +118,13 @@ describe('getNextPrevSections', () => {
     ['test/child1', sections.test, sections['test/child1/child11']],
     ['test/child1/child12', sections['test/child1/child11'], sections['test/child2']],
     ['test/child2', sections['test/child1/child12'], null],
-  ])('%s', (id, prev, next) => {
-    const [state, session] = dummyState()
-    session.Course.first().set('currentSection', id)
+  ])('%s', (sectionId, prev, next) => {
+    state = setSectionId(state, sectionId)
     expect(sectionSelectors.getNextPrevSections(state)).toEqual({ prev, next })
   })
 })
 
 describe('getToc', () => {
-  const [state] = dummyState()
   test('getToc', () => {
     const toc = sectionSelectors.getToc(state)
     expect(toc[0].id).toEqual('test')
