@@ -51,9 +51,11 @@ Another way is to install and run the application locally on your machine.
 #### Requirements
 
 Please make sure you have a current version of [Node.js](https://nodejs.org/)
-and [npm](https://www.npmjs.com/) installed on your system. Use your package
-manager of choice. [nvm](https://github.com/creationix/nvm) is a great
-alternative to install a current version of Node.js in your home directory.
+and [Yarn](https://yarnpkg.com/) installed on your system.
+
+For Node.js use your package manager of choice.
+[nvm](https://github.com/creationix/nvm) is a great alternative to install a
+current version of Node.js into your home directory.
 
 The software is built and tested on Linux systems. Using it on other operating
 systems might work, but your mileage may vary.
@@ -63,7 +65,7 @@ systems might work, but your mileage may vary.
 Install node packages.
 
 ```sh
-$ npm install
+$ yarn install
 ```
 
 Install MathJax submodule.
@@ -109,13 +111,13 @@ The port the web app is listening on in development.
 #### Build application
 
 ```sh
-$ npm run build
+$ yarn build
 ```
 
 #### Start production server
 
 ```sh
-$ npm run start
+$ yarn start
 ```
 
 ### Deployment
@@ -136,7 +138,7 @@ Currently the application should be served directly from a domain (like
 ### Development server
 
 ```sh
-$ npm run dev
+$ yarn dev
 ```
 
 ### Unit tests
@@ -145,7 +147,7 @@ $ npm run dev
 testing.
 
 ```sh
-$ npm run test
+$ yarn test:unit
 ```
 
 ##### Coverage
@@ -154,7 +156,7 @@ Shows detailed coverage report and also produces `./coverage/lcov-report` that
 can be viewed in a web browser.
 
 ```sh
-$ npm run test:coverage
+$ yarn test:unit:coverage
 ```
 
 ##### Watch tests
@@ -162,34 +164,37 @@ $ npm run test:coverage
 Run tests while editing files.
 
 ```sh
-$ npm run test:watch
+$ yarn test:watch
 ```
 
 ### E2E tests
 
 [Puppeteer](https://pptr.dev/) is used for E2E testing.
 
-Run E2E tests. (This will spawn the app and content servers automatically
-before running E2E tests. Afterwards both servers are shut down.)
+Run E2E tests.
+
+This will spawn the app and content servers automatically before running E2E
+tests. Afterwards both servers are shut down. You will need to build the app
+before this.
 
 ```sh
-$ npm run test:e2e
+$ yarn test:e2e
 ```
 
 E2E tests can also be looked at while running.
 
 ```sh
-$ npm run test:e2e:show
+$ yarn test:e2e:show
 ```
 
 #### Serve test content
 
-Serves content for use as `CONTENT_ROOT`. That comes in handy for development
+Serve content for use as `CONTENT_ROOT`. That comes in handy for development
 and testing (port 8001 or configure using `CONTENT_PORT`). For production
-you should set up a proper webserver to handle serving static content.
+you should set up a proper web server to handle static content.
 
 ```sh
-$ npm run test:e2e:content
+$ yarn test:e2e:content
 ```
 
 ### Linting
@@ -198,7 +203,7 @@ Based on [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript).
 Most notable difference: We're not using semicolons at the end of a statement.
 
 ```sh
-$ npm run lint
+$ yarn lint
 ```
 
 ### Bundle analyzer
@@ -206,5 +211,5 @@ $ npm run lint
 Visualize bundles using `webpack-bundle-analyzer`.
 
 ```sh
-$ BUNDLE_ANALYZE=both npm run build
+$ BUNDLE_ANALYZE=both yarn build
 ```

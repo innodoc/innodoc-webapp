@@ -15,15 +15,15 @@
   "scripts": {
     "build": "next build src",
     "server": "node server/server.js",
-    "dev": "NODE_ENV=development npm run server",
-    "start": "NODE_ENV=production npm run server",
+    "dev": "NODE_ENV=development yarn run server",
+    "start": "NODE_ENV=production yarn run server",
     "lint": "eslint src server",
-    "test": "npm run test:unit && npm run test:e2e",
+    "test": "yarn run test:unit && yarn run test:e2e",
     "test:unit": "jest",
-    "test:unit:watch": "npm run test:unit -- --watch",
-    "test:unit:coverage": "npm run test:unit -- --coverage",
+    "test:unit:watch": "yarn run test:unit --watch",
+    "test:unit:coverage": "yarn run test:unit --coverage",
     "test:e2e": "PROD_PORT=${PROD_PORT:-8000} CONTENT_PORT=${CONTENT_PORT:-8001} jest --runInBand --forceExit --detectOpenHandles --config e2e/jest.e2e.config.js",
-    "test:e2e:show": "PUPPETEER_HEADLESS=true npm run test:e2e",
+    "test:e2e:show": "PUPPETEER_HEADLESS=false yarn run test:e2e",
     "test:e2e:content": "http-server e2e/content -a localhost -p ${CONTENT_PORT:-8001} --cors"
   },
   "keywords": [
