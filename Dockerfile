@@ -35,4 +35,4 @@ RUN yarn build
 # run web app
 EXPOSE 8000
 ENV CONTENT_ROOT=http://localhost:8001/
-CMD ["pm2-runtime", "start", "yarn", "--name", "innodoc-webapp", "--", "start"]
+CMD ["pm2-runtime", "start", "yarn", "--interpreter", "/bin/sh", "--name", "innodoc-webapp", "--", "start"]
