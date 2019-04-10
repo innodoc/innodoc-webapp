@@ -1,14 +1,10 @@
 import orm from './orm'
 
+// create the initial (and only) instance of App
 const defaultInitialState = () => {
-  const ormState = orm.getEmptyState()
-  // TODO: better to create app object somewhere in a reducer?
-  const session = orm.mutableSession(ormState)
-  session.App.create({
-    currentCourse: null,
-    currentSection: null,
-  })
-  return { orm: ormState }
+  const session = orm.session(orm.getEmptyState())
+  session.App.create({ currentCourse: null })
+  return { orm: session.state }
 }
 
 export default defaultInitialState

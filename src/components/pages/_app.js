@@ -24,7 +24,7 @@ import 'antd/lib/table/style/index.less'
 import 'antd/lib/card/style/index.less'
 import 'antd/lib/collapse/style/index.less'
 
-import configureStore from '../../store'
+import makeStore from '../../store'
 import { setContentRoot, setStaticRoot, loadManifest } from '../../store/actions/content'
 
 class InnoDocApp extends App {
@@ -66,4 +66,4 @@ const withReduxConfig = { debug: nextReduxWrapperDebug }
 const InnoDocAppWithReduxSaga = withReduxSaga(InnoDocApp)
 
 export { InnoDocApp } // for testing
-export default withRedux(configureStore, withReduxConfig)(InnoDocAppWithReduxSaga)
+export default withRedux(makeStore, withReduxConfig)(InnoDocAppWithReduxSaga)

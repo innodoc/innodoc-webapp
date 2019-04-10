@@ -1,11 +1,11 @@
 import { Session } from 'redux-orm'
 import orm from './orm'
-import configureStore from './store'
+import makeStore from './store'
 import defaultInitialState from './defaultInitialState'
 
-describe('configureStore', () => {
+describe('makeStore', () => {
   it('should create a store', () => {
-    const store = configureStore()
+    const store = makeStore()
     expect(store).toBeDefined()
     const state = store.getState()
     expect(state.orm.App).toBeDefined()
@@ -22,5 +22,6 @@ describe('defaultInitialState', () => {
     expect(state.orm).toHaveProperty('App')
     expect(state.orm).toHaveProperty('Course')
     expect(state.orm).toHaveProperty('Section')
+    expect(orm.session(state.orm).App.first()).toBeDefined()
   })
 })

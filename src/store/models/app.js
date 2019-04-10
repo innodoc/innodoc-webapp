@@ -23,38 +23,40 @@ export default class App extends Model {
   }
 
   static reducer(action, appModel) {
-    const app = appModel.withId(0)
-    switch (action.type) {
-      case contentActionTypes.CLEAR_ERROR:
-        app.set('error', null)
-        break
-      case contentActionTypes.LOAD_SECTION_FAILURE:
-        app.set('error', action.error)
-        break
-      case contentActionTypes.SET_CONTENT_ROOT:
-        app.set('contentRoot', action.contentRoot)
-        break
-      case contentActionTypes.SET_STATIC_ROOT:
-        app.set('staticRoot', action.staticRoot)
-        break
-      case contentActionTypes.CHANGE_COURSE:
-        app.set('currentCourse', action.course.id)
-        break
-      case i18nActionTypes.CHANGE_LANGUAGE:
-        app.set('language', action.language)
-        break
-      case uiActionTypes.CLEAR_MESSAGE:
-        app.set('message', null)
-        break
-      case uiActionTypes.SHOW_MESSAGE:
-        app.set('message', action.data)
-        break
-      case uiActionTypes.TOGGLE_SIDEBAR: {
-        app.set('sidebarVisible', !app.sidebarVisible)
-        break
+    const app = appModel.first()
+    if (app) {
+      switch (action.type) {
+        case contentActionTypes.CLEAR_ERROR:
+          app.set('error', null)
+          break
+        case contentActionTypes.LOAD_SECTION_FAILURE:
+          app.set('error', action.error)
+          break
+        case contentActionTypes.SET_CONTENT_ROOT:
+          app.set('contentRoot', action.contentRoot)
+          break
+        case contentActionTypes.SET_STATIC_ROOT:
+          app.set('staticRoot', action.staticRoot)
+          break
+        case contentActionTypes.CHANGE_COURSE:
+          app.set('currentCourse', action.course.id)
+          break
+        case i18nActionTypes.CHANGE_LANGUAGE:
+          app.set('language', action.language)
+          break
+        case uiActionTypes.CLEAR_MESSAGE:
+          app.set('message', null)
+          break
+        case uiActionTypes.SHOW_MESSAGE:
+          app.set('message', action.data)
+          break
+        case uiActionTypes.TOGGLE_SIDEBAR: {
+          app.set('sidebarVisible', !app.sidebarVisible)
+          break
+        }
+        default:
+          break
       }
-      default:
-        break
     }
   }
 }
