@@ -5,7 +5,7 @@ LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 WORKDIR /innodoc-webapp
 
 # install pm2
-RUN npm install pm2 -g && rm -rf /root/.npm /tmp/npm-*
+RUN yarn global add pm2 && yarn cache clean
 
 # add user/group to run as
 RUN set -xe && \
@@ -15,13 +15,13 @@ RUN set -xe && \
 
 USER innodocuser
 
-# install npm packages
+# install packages
 COPY --chown=innodocuser:innodocuser \
   package.json \
-  package-lock.json \
+  yarn.lock \
   ./
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-RUN npm install && rm -rf /home/innodocuser/.npm /tmp/npm-*
+RUN yarn install --pure-lockfile && yarn cache clean
 
 # copy files
 COPY --chown=innodocuser:innodocuser . .
@@ -30,9 +30,9 @@ COPY --chown=innodocuser:innodocuser . .
 RUN ln -s .env.example .env
 
 # build app
-RUN npm run build
+RUN yarn build
 
 # run web app
 EXPOSE 8000
 ENV CONTENT_ROOT=http://localhost:8001/
-CMD ["pm2-runtime", "start", "npm", "--name", "innodoc-webapp", "--", "start"]
+CMD ["pm2-runtime", "start", "yarn", "--name", "innodoc-webapp", "--", "start"]

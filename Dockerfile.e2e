@@ -35,4 +35,4 @@ COPY --from=build --chown=innodocuser:innodocuser /innodoc-webapp .
 # run e2e script
 USER innodocuser
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["npm", "run", "test:e2e"]
+CMD ["yarn", "run", "test:e2e"]
