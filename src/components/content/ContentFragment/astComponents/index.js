@@ -1,11 +1,4 @@
-import React from 'react'
-
-const Space = () => ' '
-const LineBreak = () => <br />
-// Marks soft breaks between sentences. <wbr> or &shy; wouldn't make sense here.
-const SoftBreak = () => ' '
-
-export { Space, LineBreak, SoftBreak }
+export { Space, LineBreak, SoftBreak } from './whitespace'
 export { default as UnknownType } from './UnknownType'
 export { default as Str } from './Str'
 export { default as Header } from './Header'

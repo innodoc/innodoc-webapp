@@ -10,7 +10,11 @@ const Figure = ({ content }) => {
   const imgData = unwrapPara(content)[0].c
   const [, captionContent] = imgData
   const caption = captionContent.length
-    ? <figcaption><ContentFragment content={captionContent} /></figcaption>
+    ? (
+      <figcaption>
+        <ContentFragment content={captionContent} />
+      </figcaption>
+    )
     : null
 
   return (
