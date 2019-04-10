@@ -17,7 +17,7 @@
     "server": "node server/server.js",
     "dev": "NODE_ENV=development yarn run server",
     "start": "NODE_ENV=production yarn run server",
-    "lint": "eslint src server",
+    "lint": "eslint src server e2e",
     "test": "yarn run test:unit && yarn run test:e2e",
     "test:unit": "jest",
     "test:unit:watch": "yarn run test:unit --watch",
