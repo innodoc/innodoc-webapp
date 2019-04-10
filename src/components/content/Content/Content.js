@@ -85,14 +85,16 @@ class Content extends React.Component {
 const mapStateToProps = (state) => {
   let ret = { loading: true }
   const { language } = appSelectors.getApp(state)
-  const section = sectionSelectors.getCurrentSection(state)
-  if (section && section.content[language]) {
-    const subsections = sectionSelectors.getCurrentSubsections(state)
-    ret = {
-      loading: false,
-      section,
-      subsections,
-      currentLanguage: language,
+  if (language) {
+    const section = sectionSelectors.getCurrentSection(state)
+    if (section && section.content[language]) {
+      const subsections = sectionSelectors.getCurrentSubsections(state)
+      ret = {
+        loading: false,
+        section,
+        subsections,
+        currentLanguage: language,
+      }
     }
   }
   return ret

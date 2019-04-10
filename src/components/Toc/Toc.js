@@ -14,14 +14,14 @@ import SectionLink from '../SectionLink'
 class Toc extends React.Component {
   static propTypes = {
     course: courseType,
-    currentLanguage: PropTypes.string.isRequired,
+    currentLanguage: PropTypes.string,
     toc: tocTreeType.isRequired,
     expandAll: PropTypes.bool,
     title: PropTypes.object,
   }
 
   static defaultProps = {
-    ...React.Component.defaultProps,
+    currentLanguage: undefined,
     course: null,
     expandAll: false,
     title: null,
@@ -93,7 +93,7 @@ class Toc extends React.Component {
     const sectionNode = (
       <SectionLink sectionId={sectionId}>
         <a>
-          {title[currentLanguage]}
+          {currentLanguage ? title[currentLanguage] : ''}
         </a>
       </SectionLink>
     )
@@ -123,7 +123,7 @@ class Toc extends React.Component {
       ? { defaultExpandAll: true }
       : { expandedKeys }
 
-    const header = title && title[currentLanguage]
+    const header = currentLanguage && title && title[currentLanguage]
       ? title[currentLanguage]
       : null
 

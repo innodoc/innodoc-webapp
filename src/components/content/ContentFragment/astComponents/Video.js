@@ -32,7 +32,10 @@ const Video = ({
     const ytId = match[5]
     const videoTitle = title || astToString(content)
 
-    const iframeSrc = `https://www.youtube.com/embed/${ytId}?hl=${currentLanguage}&cc_lang_pref=${currentLanguage}&rel=0&modestbranding=1`
+    let iframeSrc = `https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1`
+    if (currentLanguage) {
+      iframeSrc += `&hl=${currentLanguage}&cc_lang_pref=${currentLanguage}`
+    }
 
     return (
       <span className={css.ytVideoWrapper}>
@@ -65,8 +68,12 @@ const Video = ({
 Video.propTypes = {
   data: PropTypes.arrayOf(PropTypes.array).isRequired,
   staticRoot: PropTypes.string.isRequired,
-  currentLanguage: PropTypes.string.isRequired,
+  currentLanguage: PropTypes.string,
   t: PropTypes.func.isRequired,
+}
+
+Video.defaultProps = {
+  currentLanguage: undefined,
 }
 
 const mapStateToProps = (state) => {

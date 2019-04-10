@@ -12,7 +12,7 @@ import css from './style.sass'
 const SectionNav = ({ currentLanguage, prev, next }) => (
   <React.Fragment>
     {
-      prev ? (
+      currentLanguage && prev ? (
         <SectionLink sectionId={prev.id}>
           <a title={prev.title[currentLanguage]} className={css.prev}>
             <Icon type="arrow-left" />
@@ -21,7 +21,7 @@ const SectionNav = ({ currentLanguage, prev, next }) => (
       ) : null
     }
     {
-      next ? (
+      currentLanguage && next ? (
         <SectionLink sectionId={next.id}>
           <a title={next.title[currentLanguage]} className={css.next}>
             <Icon type="arrow-right" />
@@ -33,12 +33,13 @@ const SectionNav = ({ currentLanguage, prev, next }) => (
 )
 
 SectionNav.propTypes = {
-  currentLanguage: PropTypes.string.isRequired,
+  currentLanguage: PropTypes.string,
   prev: sectionType,
   next: sectionType,
 }
 
 SectionNav.defaultProps = {
+  currentLanguage: undefined,
   prev: undefined,
   next: undefined,
 }
