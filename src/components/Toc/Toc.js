@@ -39,7 +39,8 @@ class Toc extends React.Component {
 
   componentDidUpdate({ course: prevCourse }, { expandedKeys }) {
     const { course, expandAll } = this.props
-    if (!expandAll
+    if (course
+      && !expandAll
       && course.currentSection
       && course.currentSection !== prevCourse.currentSection) {
       this.expandCurrentSection(expandedKeys)
