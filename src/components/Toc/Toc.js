@@ -111,28 +111,14 @@ class Toc extends React.Component {
   }
 
   render() {
-    const {
-      currentLanguage,
-      toc,
-      title,
-      expandAll,
-    } = this.props
-
+    const { toc, expandAll } = this.props
     const { expandedKeys } = this.state
-
     const expandProps = expandAll
       ? { defaultExpandAll: true }
       : { expandedKeys }
 
-    const header = currentLanguage && title && title[currentLanguage]
-      ? title[currentLanguage]
-      : null
-
     return (
       <div className={css.tocWrapper}>
-        <h2>
-          {header}
-        </h2>
         <Tree
           className={classNames({ [css.disableExpand]: expandAll })}
           onExpand={this.onExpand}

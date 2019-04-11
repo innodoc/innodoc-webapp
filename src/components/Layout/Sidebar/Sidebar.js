@@ -60,7 +60,7 @@ class Sidebar extends React.Component {
                 icon="double-left"
                 size="small"
               />
-              <Toc header={t('sidebar.courseContent')} />
+              <Toc />
             </div>
           </div>
         </div>
