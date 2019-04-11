@@ -7,6 +7,7 @@ import React from 'react'
 
 import { contentType } from '../../../lib/propTypes'
 import {
+  BlockQuote,
   BulletList,
   Code,
   CodeBlock,
@@ -32,6 +33,7 @@ import {
 } from './astComponents'
 
 const contentTypeComponentMap = {
+  BlockQuote,
   BulletList,
   Code,
   CodeBlock,

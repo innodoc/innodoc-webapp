@@ -1,3 +1,4 @@
+export { default as BlockQuote } from './BlockQuote'
 export { default as BulletList } from './BulletList'
 export { default as Code } from './Code'
 export { default as CodeBlock } from './CodeBlock'
