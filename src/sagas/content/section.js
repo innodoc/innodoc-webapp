@@ -9,11 +9,11 @@ import courseSelectors from '../../store/selectors/course'
 import sectionSelectors from '../../store/selectors/section'
 import {
   clearError,
-  loadSectionSuccess,
   loadSectionFailure,
+  loadSectionSuccess,
 } from '../../store/actions/content'
 import { fetchSection } from '../../lib/api'
-import { scrollToHash, parseSectionId } from '../../lib/util'
+import { parseSectionId, scrollToHash } from '../../lib/util'
 import { showMessage } from '../../store/actions/ui'
 import loadManifestSaga from './manifest'
 

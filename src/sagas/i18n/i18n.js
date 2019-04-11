@@ -1,8 +1,8 @@
 import {
   call,
+  put,
   take,
   takeLatest,
-  put,
 } from 'redux-saga/effects'
 import { actionTypes, changeLanguage } from '../../store/actions/i18n'
 import toTwoLetterCode from '../../lib/i18n/toTwoLetterCode'

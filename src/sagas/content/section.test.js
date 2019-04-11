@@ -8,8 +8,8 @@ import loadManifestSaga from './manifest'
 import {
   actionTypes as contentActionTypes,
   loadSection,
-  loadSectionSuccess,
   loadSectionFailure,
+  loadSectionSuccess,
 } from '../../store/actions/content'
 import { actionTypes as uiActionTypes } from '../../store/actions/ui'
 import { fetchSection } from '../../lib/api'

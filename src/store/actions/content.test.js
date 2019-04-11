@@ -1,10 +1,10 @@
 import {
   loadManifest,
-  loadManifestSuccess,
   loadManifestFailure,
+  loadManifestSuccess,
   loadSection,
-  loadSectionSuccess,
   loadSectionFailure,
+  loadSectionSuccess,
   setContentRoot,
   setStaticRoot,
 } from './content'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'enzyme'
 
-import { Space, LineBreak, SoftBreak } from './whitespace'
+import { LineBreak, SoftBreak, Space } from './whitespace'
 
 describe('<Space />', () => {
   it('should render', () => {

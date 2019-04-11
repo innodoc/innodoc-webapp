@@ -2,7 +2,7 @@ import { call, put, select } from 'redux-saga/effects'
 
 import appSelectors from '../../store/selectors'
 import courseSelectors from '../../store/selectors/course'
-import { changeCourse, loadManifestSuccess, loadManifestFailure } from '../../store/actions/content'
+import { changeCourse, loadManifestFailure, loadManifestSuccess } from '../../store/actions/content'
 import { showMessage } from '../../store/actions/ui'
 import { fetchManifest } from '../../lib/api'
 

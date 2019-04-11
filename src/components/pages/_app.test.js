@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { Container } from 'next/app'
 
 import { InnoDocApp } from './_app'
-import { setContentRoot, setStaticRoot, loadManifest } from '../../store/actions/content'
+import { loadManifest, setContentRoot, setStaticRoot } from '../../store/actions/content'
 
 describe('<InnoDocApp />', () => {
   it('should render', () => {

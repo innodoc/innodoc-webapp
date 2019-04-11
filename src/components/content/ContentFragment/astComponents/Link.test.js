@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import ContentFragment from '../ContentFragment'
 import Link from './Link'
 import SectionLink from '../../../SectionLink'
-import ContentFragment from '../ContentFragment'
 import Video from './Video'
 
 describe('<Link />', () => {

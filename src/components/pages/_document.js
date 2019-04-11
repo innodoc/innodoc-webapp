@@ -1,7 +1,7 @@
 // this is only rendered server-side
 
 import React from 'react'
-import Document, { Head as NextHead, Main, NextScript } from 'next/document'
+import Document, { Main, Head as NextHead, NextScript } from 'next/document'
 
 // TODO: remove this workaround if possible
 // CSS links are in wrong order in production build.

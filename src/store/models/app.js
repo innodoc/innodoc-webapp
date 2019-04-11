@@ -1,4 +1,4 @@
-import { attr, fk, Model } from 'redux-orm'
+import { Model, attr, fk } from 'redux-orm'
 
 import { actionTypes as contentActionTypes } from '../actions/content'
 import { actionTypes as i18nActionTypes } from '../actions/i18n'

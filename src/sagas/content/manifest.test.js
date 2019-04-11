@@ -7,8 +7,8 @@ import { actionTypes as uiActionTypes } from '../../store/actions/ui'
 import loadManifestSaga from './manifest'
 import {
   actionTypes as contentActionTypes,
-  loadManifestSuccess,
   loadManifestFailure,
+  loadManifestSuccess,
 } from '../../store/actions/content'
 import appSelectors from '../../store/selectors'
 import courseSelectors from '../../store/selectors/course'

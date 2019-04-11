@@ -1,13 +1,13 @@
 import {
+  call,
   fork,
   put,
   take,
-  call,
 } from 'redux-saga/effects'
 
 import {
-  exerciseCompleted,
   actionTypes as exerciseActionTypes,
+  exerciseCompleted,
 } from '../../store/actions/exercise'
 import validators from '../../lib/validators'
 

@@ -1,12 +1,12 @@
 import {
   call,
+  fork,
   put,
   take,
-  fork,
 } from 'redux-saga/effects'
 
 import watchExerciseChange, { handleExerciseCompleted } from './exercise'
-import { exerciseCompleted, actionTypes as exerciseActionTypes } from '../../store/actions/exercise'
+import { actionTypes as exerciseActionTypes, exerciseCompleted } from '../../store/actions/exercise'
 import validators from '../../lib/validators'
 
 const wrongAnswer = exerciseCompleted({

@@ -25,7 +25,7 @@ import 'antd/lib/card/style/index.less'
 import 'antd/lib/collapse/style/index.less'
 
 import makeStore from '../../store'
-import { setContentRoot, setStaticRoot, loadManifest } from '../../store/actions/content'
+import { loadManifest, setContentRoot, setStaticRoot } from '../../store/actions/content'
 
 class InnoDocApp extends App {
   static async getInitialProps({ Component, ctx }) {

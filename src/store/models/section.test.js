@@ -1,6 +1,6 @@
 import orm from '../orm'
 import SectionModel from './section'
-import { loadSectionSuccess, loadManifestSuccess } from '../actions/content'
+import { loadManifestSuccess, loadSectionSuccess } from '../actions/content'
 
 const toc = [
   {

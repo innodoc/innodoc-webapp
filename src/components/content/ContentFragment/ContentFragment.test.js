@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import ContentFragment from './ContentFragment'
-import { Para, BulletList, UnknownType } from './astComponents'
+import { BulletList, Para, UnknownType } from './astComponents'
 
 describe('<ContentFragment />', () => {
   it('renders', () => {
