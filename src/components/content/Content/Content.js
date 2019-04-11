@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withNamespaces } from 'react-i18next'
 
+import css from '../header.sass'
 import appSelectors from '../../../store/selectors'
 import sectionSelectors from '../../../store/selectors/section'
 import withLoadingPlaceholder from '../../hoc/withLoadingPlaceholder'
@@ -10,10 +10,9 @@ import withMathJax from '../../hoc/withMathJax'
 import ContentFragment from '../ContentFragment'
 import Breadcrumb from '../Breadcrumb'
 import SectionNav from '../SectionNav'
-import SectionLink from '../../SectionLink'
 import Placeholder from './Placeholder'
+import SubsectionList from './SubsectionList'
 import { sectionType } from '../../../lib/propTypes'
-import css from '../header.sass'
 
 class Content extends React.Component {
   static propTypes = {
@@ -22,7 +21,6 @@ class Content extends React.Component {
     currentLanguage: PropTypes.string.isRequired,
     mathJaxContentRef: PropTypes.objectOf(PropTypes.any).isRequired,
     typesetMathJax: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -47,25 +45,11 @@ class Content extends React.Component {
       subsections,
       currentLanguage,
       mathJaxContentRef,
-      t,
     } = this.props
 
-    const subsectionList = subsections.length ? (
-      <React.Fragment>
-        <h2 className={css.header}>{t('content.subsections')}</h2>
-        <ul>
-          {
-            subsections.map(subsection => (
-              <li key={subsection.id}>
-                <SectionLink sectionId={subsection.id}>
-                  <a>{subsection.title[currentLanguage]}</a>
-                </SectionLink>
-              </li>
-            ))
-          }
-        </ul>
-      </React.Fragment>
-    ) : null
+    const subsectionList = subsections.length
+      ? <SubsectionList subsections={subsections} currentLanguage={currentLanguage} />
+      : null
 
     return (
       <React.Fragment>
@@ -105,9 +89,7 @@ export { Content, mapStateToProps } // for testing
 export default connect(mapStateToProps)(
   withMathJax(
     withLoadingPlaceholder(Placeholder)(
-      withNamespaces()(
-        Content
-      )
+      Content
     )
   )
 )

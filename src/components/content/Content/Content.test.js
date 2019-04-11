@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { Content, mapStateToProps } from './Content'
+import SubsectionList from './SubsectionList'
 import Breadcrumb from '../Breadcrumb'
 import ContentFragment from '../ContentFragment'
 import SectionNav from '../SectionNav'
@@ -71,12 +72,7 @@ describe('<Content />', () => {
     expect(h1).toHaveLength(1)
     expect(h1.text()).toEqual(data.section.title.en)
     expect(wrapper.find(ContentFragment).at(0).prop('content')).toEqual(data.section.content.en)
-    expect(wrapper.find('h2')).toHaveLength(1)
-    expect(wrapper.find('ul')).toHaveLength(1)
-    const subsections = wrapper.find('ul > li')
-    expect(subsections).toHaveLength(2)
-    expect(subsections.at(0).find('a').text()).toEqual(data.subsections[0].title.en)
-    expect(subsections.at(1).find('a').text()).toEqual(data.subsections[1].title.en)
+    expect(wrapper.exists(SubsectionList)).toBe(true)
   })
 
   it('renders and updates', () => {
@@ -84,7 +80,7 @@ describe('<Content />', () => {
     const wrapper = shallow(
       <Content
         section={data.section}
-        subsections={data.subsections}
+        subsections={[]}
         sectionLevel={1}
         typesetMathJax={data.mockTypesetMathJax}
         mathJaxContentRef={data.contentRef}
@@ -100,12 +96,14 @@ describe('<Content />', () => {
     })
     expect(spyComponentDidUpdate).toBeCalledTimes(1)
     expect(data.mockTypesetMathJax).toBeCalledTimes(2)
-    expect(wrapper.find(SectionNav)).toHaveLength(1)
-    expect(wrapper.find(Breadcrumb)).toHaveLength(1)
-    expect(wrapper.find('h1')).toHaveLength(1)
+    expect(wrapper.exists(SectionNav)).toBe(true)
+    expect(wrapper.exists(Breadcrumb)).toBe(true)
+    expect(wrapper.exists(SubsectionList)).toBe(false)
     const contentDiv = wrapper.find('div')
     expect(contentDiv).toHaveLength(1)
-    expect(wrapper.find('h1').text()).toEqual(data.otherSection.title.en)
+    const h1 = wrapper.find('h1')
+    expect(h1).toHaveLength(1)
+    expect(h1.text()).toEqual(data.otherSection.title.en)
     expect(wrapper.find(ContentFragment).at(0).prop('content')).toEqual(data.otherSection.content.en)
   })
 })
