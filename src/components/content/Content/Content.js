@@ -13,6 +13,7 @@ import SectionNav from '../SectionNav'
 import SectionLink from '../../SectionLink'
 import Placeholder from './Placeholder'
 import { sectionType } from '../../../lib/propTypes'
+import css from '../header.sass'
 
 class Content extends React.Component {
   static propTypes = {
@@ -51,7 +52,7 @@ class Content extends React.Component {
 
     const subsectionList = subsections.length ? (
       <React.Fragment>
-        <h2>{t('content.subsections')}</h2>
+        <h2 className={css.header}>{t('content.subsections')}</h2>
         <ul>
           {
             subsections.map(subsection => (
@@ -70,7 +71,7 @@ class Content extends React.Component {
       <React.Fragment>
         <SectionNav />
         <Breadcrumb />
-        <h1>
+        <h1 className={css.header}>
           {section.title[currentLanguage]}
         </h1>
         {subsectionList}
