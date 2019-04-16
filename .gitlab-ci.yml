@@ -49,14 +49,14 @@ Linting:
   stage: test
   script:
     - docker pull "$IMAGE_TAG"
-    - docker run "$IMAGE_TAG" npm run lint
+    - docker run "$IMAGE_TAG" yarn lint
 
 Unit tests:
   <<: *docker-base
   stage: test
   script:
     - docker pull "$IMAGE_TAG"
-    - docker run "$IMAGE_TAG" npm run test:unit:coverage
+    - docker run "$IMAGE_TAG" yarn test:unit:coverage
   coverage: '/^All files\s+\|\s+([0-9.]+)\s+\|\s+/'
 
 E2E tests:
