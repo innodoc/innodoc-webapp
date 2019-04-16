@@ -17,14 +17,12 @@ class Toc extends React.Component {
     currentLanguage: PropTypes.string,
     toc: tocTreeType.isRequired,
     expandAll: PropTypes.bool,
-    title: PropTypes.object,
   }
 
   static defaultProps = {
     currentLanguage: undefined,
     course: null,
     expandAll: false,
-    title: null,
   }
 
   constructor(props) {

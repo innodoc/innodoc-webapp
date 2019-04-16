@@ -36,26 +36,10 @@ describe('<Toc />', () => {
 
   it('renders tree nodes', () => {
     const wrapper = shallow(
-      <Toc
-        toc={toc}
-        currentLanguage="en"
-        title={{ en: 'Foobar' }}
-      />
+      <Toc toc={toc} currentLanguage="en" />
     )
     expect(wrapper.find(Tree)).toBeTruthy()
     expect(wrapper.find(Tree.TreeNode)).toHaveLength(4)
-  })
-
-  it('renders with header', () => {
-    const wrapper = shallow(
-      <Toc
-        toc={toc}
-        currentLanguage="en"
-        title={{ en: 'Foobar' }}
-      />
-    )
-    expect(wrapper.find('h2')).toHaveLength(1)
-    expect(wrapper.find('h2').text()).toEqual('Foobar')
   })
 
   it('renders with active section', () => {
