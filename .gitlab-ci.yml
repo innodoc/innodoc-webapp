@@ -123,5 +123,7 @@ Deploy (staging):
     - echo "$STAGING_SERVER_PUBKEY" > ~/.ssh/known_hosts
   script:
     - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa "$STAGING_SERVER_USER"@"$STAGING_SERVER" "$STAGING_DEPLOY_CMD"
+  after_script:
+    - rm -f ~/.ssh/id_rsa
   only:
     - dev
