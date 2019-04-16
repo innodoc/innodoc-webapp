@@ -10,9 +10,9 @@ const OrderedList = ({ data }) => {
   const listItems = data[1].map(
     (item, i) => (
       <List.Item key={i.toString()}>
-        <span className={css.listnumber}>
+        <div className={css.listnumber}>
           {`${i + 1}.`}
-        </span>
+        </div>
         <div>
           <ContentFragment content={unwrapPara(item)} />
         </div>
