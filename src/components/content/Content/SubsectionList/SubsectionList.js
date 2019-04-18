@@ -7,16 +7,15 @@ import css from './style.sass'
 import SectionLink from '../../../SectionLink'
 import { sectionType } from '../../../../lib/propTypes'
 
-const SubsectionList = ({ subsections, currentLanguage, t }) => {
-  const renderSubsection = subsection => (
-    <List.Item>
-      <SectionLink sectionId={subsection.id}>
-        <a style={{ display: 'block' }}>
-          {subsection.title[currentLanguage]}
-        </a>
-      </SectionLink>
-    </List.Item>
-  )
+const Subsection = subSection => (
+  <List.Item>
+    <SectionLink sectionId={subSection.id} />
+  </List.Item>
+)
+
+Subsection.propTypes = sectionType.isRequired
+
+const SubsectionList = ({ subsections, t }) => {
   const header = <h2 className={css.listheader}>{t('content.subsections')}</h2>
   return (
     <List
@@ -25,16 +24,15 @@ const SubsectionList = ({ subsections, currentLanguage, t }) => {
       bordered
       className={css.list}
       dataSource={subsections}
-      renderItem={renderSubsection}
+      renderItem={Subsection}
     />
   )
 }
 
 SubsectionList.propTypes = {
   subsections: PropTypes.arrayOf(sectionType).isRequired,
-  currentLanguage: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
 }
 
-export { SubsectionList } // for testing
+export { Subsection, SubsectionList } // for testing
 export default withNamespaces()(SubsectionList)

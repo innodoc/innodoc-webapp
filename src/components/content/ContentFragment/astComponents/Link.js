@@ -12,8 +12,11 @@ const Link = ({ data }) => {
     return <Video data={data} />
   }
 
-  if (/^https?:\/\//i.test(href)) {
-    // External link
+  // TODO: add external link icon
+  if (
+    /^https?:\/\//i.test(href) // External link
+    || href.startsWith('#') // Hash reference on same page
+  ) {
     return (
       <a href={href} title={title}>
         <ContentFragment content={content} />

@@ -32,13 +32,18 @@ const Span = ({ data }) => {
     const val = attributes[0][1]
     if (attr === 'data-index-concept') { return <IndexSpan indexConcept={val} content={content} /> }
     if (attr === 'data-link-section') {
-      return (
-        <SectionLink sectionId={val}>
-          <a>
-            <ContentFragment content={content} />
-          </a>
-        </SectionLink>
-      )
+      if (content.length) {
+        // custom link text
+        return (
+          <SectionLink sectionId={val}>
+            <a>
+              <ContentFragment content={content} />
+            </a>
+          </SectionLink>
+        )
+      }
+      // uses section title as link text
+      return <SectionLink sectionId={val} />
     }
   }
 

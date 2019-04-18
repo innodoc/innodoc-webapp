@@ -48,7 +48,7 @@ class Content extends React.Component {
     } = this.props
 
     const subsectionList = subsections.length
-      ? <SubsectionList subsections={subsections} currentLanguage={currentLanguage} />
+      ? <SubsectionList subsections={subsections} />
       : null
 
     return (
