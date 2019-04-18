@@ -56,6 +56,16 @@ describe('<Link />', () => {
     expect(wrapper.exists(ContentFragment)).toBe(false)
   })
 
+  it('should render link with only hash', () => {
+    const data = [
+      [null, [], null],
+      [{ t: 'Str', c: 'Foo bar' }],
+      ['#my-id', 'link title'],
+    ]
+    const wrapper = shallow(<Link data={data} />)
+    expect(wrapper.find('a').prop('href')).toBe('#my-id')
+  })
+
   it('should render video component', () => {
     const data = [
       [null, ['video', 'video-youtube'], null],

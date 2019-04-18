@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Icon from 'antd/lib/icon'
 
 import ContentFragment from '..'
 import SectionLink from '../../../SectionLink'
@@ -12,11 +13,18 @@ const Link = ({ data }) => {
     return <Video data={data} />
   }
 
-  // TODO: add external link icon
-  if (
-    /^https?:\/\//i.test(href) // External link
-    || href.startsWith('#') // Hash reference on same page
-  ) {
+  // External link
+  if (/^https?:\/\//i.test(href)) {
+    return (
+      <a href={href} title={title}>
+        <ContentFragment content={content} />
+        <sup><Icon type="link" /></sup>
+      </a>
+    )
+  }
+
+  // Hash reference on same page
+  if (href.startsWith('#')) {
     return (
       <a href={href} title={title}>
         <ContentFragment content={content} />
