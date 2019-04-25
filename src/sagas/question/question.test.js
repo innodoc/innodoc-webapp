@@ -6,17 +6,17 @@ import {
 } from 'redux-saga/effects'
 
 import watchExerciseChange, { handleExerciseCompleted } from './exercise'
-import { actionTypes as exerciseActionTypes, exerciseCompleted } from '../../store/actions/exercise'
+import { actionTypes as questionActionTypes, questionAnswered } from '../../store/actions/exercise'
 import validators from '../../lib/validators'
 
-const wrongAnswer = exerciseCompleted({
+const wrongAnswer = questionAnswered({
   attrs: { questionType: 'exact' },
   id: 'testExercise',
   inputValue: 'tes',
   solved: false,
   solution: 'test',
 })
-const correctAnswer = exerciseCompleted({
+const correctAnswer = questionAnswered({
   attrs: { questionType: 'exact' },
   id: 'testExercise',
   inputValue: 'test',
@@ -24,7 +24,7 @@ const correctAnswer = exerciseCompleted({
   solution: 'test',
 })
 
-describe('exerciseCompleted', () => {
+describe('questionAnswered', () => {
   test('wrong input', () => {
     const gen = handleExerciseCompleted(wrongAnswer)
     expect(gen.next().value).toEqual(call(
@@ -42,7 +42,7 @@ describe('exerciseCompleted', () => {
       correctAnswer.data.inputValue,
       correctAnswer.data.solution,
       correctAnswer.data.attrs))
-    expect(gen.next().value).toEqual(put(exerciseCompleted({
+    expect(gen.next().value).toEqual(put(questionAnswered({
       solved: true,
       ...correctAnswer.data,
     })))
@@ -53,7 +53,7 @@ describe('exerciseCompleted', () => {
 describe('watchExerciseChange', () => {
   test('exercise input change', () => {
     const gen = watchExerciseChange()
-    expect(gen.next().value).toEqual(take(exerciseActionTypes.EXERCISE_COMPLETED))
+    expect(gen.next().value).toEqual(take(questionActionTypes.QUESTION_ANSWERED))
     expect(gen.next(wrongAnswer).value)
       .toEqual(fork(handleExerciseCompleted, wrongAnswer))
   })

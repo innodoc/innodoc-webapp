@@ -1,13 +1,48 @@
-.inputquestion
-  input
-    background-color: #f5f5f5 !important
-    border: 2px solid #ddd !important
-    margin: 0.2em 0.2em 0.2em 0 !important
-  &.solved
-    input
-      background-color: #c3f7c3 !important
-      border: 2px solid #6d6 !important
-  &.wrong
-    input
-      background-color: #ffc8c8 !important
-      border: 2px solid #f66 !important
+@import '../../../../style/antd-theme.sass'
+
+$color-correct: $green-6
+$color-incorrect: $red-6
+$color-correct-bg: fade-out($color-correct, 0.9)
+$color-incorrect-bg: fade-out($color-incorrect, 0.9)
+
+\:export
+  color-correct: $color-correct
+  color-incorrect: $color-incorrect
+
+.inputQuestion
+  margin-right: $padding-xs
+  margin-left: $padding-xs
+
+  input[type=text]
+    font-family: $code-family
+    background-color: $background-color-light
+
+.checkbox
+  margin-right: $padding-xs
+
+.correct
+
+  input[type=text]
+    border-color: $color-correct
+    background-color: $color-correct-bg
+  //
+  // \:global(.ant-checkbox-inner)
+  //   background-color: $color-correct-bg
+  //
+  //   &::after
+  //     border-color: $color-correct
+
+.incorrect
+
+  input[type=text]
+    border-color: $color-incorrect
+    background-color: $color-incorrect-bg
+  //
+  // \:global(.ant-checkbox-inner)
+  //   background-color: $color-incorrect-bg
+  //
+  //   &::after
+  //     border-color: $color-incorrect
+
+.unknownQuestion
+  background-color: $color-error

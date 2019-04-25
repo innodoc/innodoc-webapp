@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { getClassNameToComponentMapper } from '../../../../lib/util'
 import ExerciseCard from '../cards/ExerciseCard'
 import InfoCard from '../cards/InfoCard'
 import ExampleCard from '../cards/ExampleCard'
@@ -12,7 +13,7 @@ import VerifyInfoButton from '../questions/VerifyInfoButton'
 import Figure from './Figure'
 import UnknownType from './UnknownType'
 
-const classNameComponentMap = {
+const mapClassNameToComponent = getClassNameToComponentMapper({
   exercise: ExerciseCard,
   info: InfoCard,
   example: ExampleCard,
@@ -20,35 +21,24 @@ const classNameComponentMap = {
   hint: SolutionHint,
   'hint-text': InputHint,
   test: TestCard,
-  'question-group': QuestionGroup,
+  'question-group': QuestionGroup, // TODO: remove?
   'verify-input-button': VerifyInfoButton,
-}
-
-const classNameComponentMapNames = Object.keys(classNameComponentMap)
-
-const mapClassNameToComponent = (divClasses) => {
-  for (let i = 0; i < classNameComponentMapNames.length; i += 1) {
-    const className = classNameComponentMapNames[i]
-    if (divClasses.includes(className)) {
-      return classNameComponentMap[className]
-    }
-  }
-  return null
-}
+})
 
 const Div = ({ data }) => {
-  const [[id, classes], content] = data
-
-  const Component = mapClassNameToComponent(classes)
-
-  return Component
-    ? <Component id={id} content={content} />
-    : <UnknownType name="Div" data={data} />
+  const [[id, classNames], content] = data
+  const Component = mapClassNameToComponent(classNames)
+  if (Component) {
+    return <Component id={id} content={content} />
+  }
+  if (process.env.NODE_ENV !== 'production') {
+    return <UnknownType name="Div" data={data} />
+  }
+  return null
 }
 
 Div.propTypes = {
   data: PropTypes.arrayOf(PropTypes.array).isRequired,
 }
 
-export { classNameComponentMap } // for testing
 export default Div

@@ -3,7 +3,7 @@
 const questionTypes = {
   EXACT: 'exact',
   MATH_EXPRESSION: 'mathExpression',
-  MATH_FORMULA: 'mathFormula',
+  mathFunction: 'mathFunction',
   MATH_SIMPLIFY: 'mathSimplify',
   SPECIAL: 'special',
   BOOLEAN: 'boolean',

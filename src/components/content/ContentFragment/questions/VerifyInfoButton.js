@@ -12,7 +12,9 @@ const VerifyInfoButton = ({ content }) => (
   <React.Fragment>
     <Divider />
     <Button icon="check">
-      <ContentFragment content={unwrapPara(content)} />
+      <span>
+        <ContentFragment content={unwrapPara(content)} />
+      </span>
     </Button>
   </React.Fragment>
 )
