@@ -1,13 +1,13 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Div, { classNameComponentMap } from './Div'
+import ExerciseCard from '../cards/ExerciseCard'
+import Figure from './Figure'
+import Div from './Div'
 import UnknownType from './UnknownType'
 
 describe('<Div />', () => {
-  const args = Object.keys(classNameComponentMap)
-    .map(clsName => [clsName, classNameComponentMap[clsName]])
-  it.each(args)(
+  it.each([['figure', Figure], ['exercise', ExerciseCard], ['does-not-exist']])(
     'should map className "%s" to correct Component', (className, Component) => {
       const wrapper = shallow(<Div data={[[null, [className]], []]} />)
       expect(wrapper.is(Component)).toBe(true)

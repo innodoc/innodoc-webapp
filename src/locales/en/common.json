@@ -10,6 +10,13 @@
     "test": "Test",
     "ytIdError": "Could not extract YouTube Video ID: {{src}}"
   },
+  "questions": {
+    "feedback": {
+      "correct": "Input correct",
+      "incorrect": "Input incorrect",
+      "indeterminate": "No result yet"
+    }
+  },
   "errorPage": {
     "404": {
       "title": "404 Not found",
