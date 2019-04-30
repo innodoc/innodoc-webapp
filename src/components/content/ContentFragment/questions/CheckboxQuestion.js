@@ -4,37 +4,42 @@ import classNames from 'classnames'
 import Checkbox from 'antd/lib/checkbox'
 
 import css from './style.sass'
-import FeedbackIcon from './FeedbackIcon'
 
-const CheckboxQuestion = ({ correct, onChange, value }) => {
-  const checkboxProps = { onChange: ev => onChange(ev.target.checked ? '1' : '0') }
+const CheckboxQuestion = ({
+  className,
+  onChange,
+  icon,
+  value,
+}) => {
+  const valueProp = {}
   if (value === '1') {
-    checkboxProps.checked = true
+    valueProp.checked = true
   } else if (value === '0') {
-    checkboxProps.checked = false
+    valueProp.checked = false
   } else {
-    checkboxProps.indeterminate = true
+    valueProp.indeterminate = true
   }
-  checkboxProps.className = classNames(
-    css.checkbox,
-    correct === null ? {} : { [css.correct]: correct, [css.incorrect]: !correct },
-  )
   return (
     <React.Fragment>
-      <Checkbox {...checkboxProps} />
-      <FeedbackIcon correct={correct} />
+      <Checkbox
+        className={classNames(css.checkbox, className)}
+        onChange={ev => onChange(ev.target.checked ? '1' : '0')}
+        {...valueProp}
+      />
+      {icon}
     </React.Fragment>
   )
 }
 
 CheckboxQuestion.propTypes = {
-  correct: PropTypes.bool,
+  className: PropTypes.string,
+  icon: PropTypes.element.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
 }
 
 CheckboxQuestion.defaultProps = {
-  correct: null,
+  className: '',
   value: null,
 }
 

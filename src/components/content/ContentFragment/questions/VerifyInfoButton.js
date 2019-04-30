@@ -1,23 +1,35 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Button from 'antd/lib/button'
 import Divider from 'antd/lib/divider'
 
 import ContentFragment from '..'
 import { contentType } from '../../../../lib/propTypes'
 import { unwrapPara } from '../../../../lib/util'
+import ExerciseContext from '../cards/ExerciseCard/ExerciseContext'
 
-// TODO: make button verify Exercise
-
-const VerifyInfoButton = ({ content }) => (
-  <React.Fragment>
-    <Divider />
-    <Button icon="check">
-      <span>
-        <ContentFragment content={unwrapPara(content)} />
-      </span>
-    </Button>
-  </React.Fragment>
-)
+const VerifyInfoButton = ({ content }) => {
+  const {
+    allAnswered,
+    setAutoVerify,
+    setUserTriggeredVerify,
+    userTriggeredVerify,
+  } = useContext(ExerciseContext)
+  setAutoVerify(false)
+  return (
+    <React.Fragment>
+      <Divider />
+      <Button
+        disabled={!allAnswered() || userTriggeredVerify}
+        icon="check"
+        onClick={() => setUserTriggeredVerify(true)}
+      >
+        <span>
+          <ContentFragment content={unwrapPara(content)} />
+        </span>
+      </Button>
+    </React.Fragment>
+  )
+}
 
 VerifyInfoButton.propTypes = {
   content: contentType.isRequired,
