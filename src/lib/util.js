@@ -1,8 +1,5 @@
 import Router from 'next/router'
 
-const getDisplayName = Component => Component.displayName || Component.name || 'Component'
-const getHocDisplayName = (HocName, ComposedComponent) => `${HocName}(${getDisplayName(ComposedComponent)})`
-
 const astToString = (ast) => {
   if (typeof ast === 'string') {
     return ast
@@ -20,20 +17,6 @@ const astToString = (ast) => {
   }).join('')
 }
 
-const unwrapPara = content => (
-  content && content[0].t === 'Para'
-    ? content[0].c
-    : content
-)
-
-const scrollToHash = () => {
-  if (process.browser) {
-    Router.router.scrollToHash(Router.router.asPath)
-  }
-}
-
-const parseSectionId = sectionId => sectionId.split('#')
-
 // Return a function that maps classNames to Components, used by AST components
 // like Div that render different components according to the className.
 const getClassNameToComponentMapper = (classNameComponentMap) => {
@@ -48,6 +31,24 @@ const getClassNameToComponentMapper = (classNameComponentMap) => {
     return null
   }
 }
+
+const getDisplayName = Component => Component.displayName || Component.name || 'Component'
+
+const getHocDisplayName = (HocName, ComposedComponent) => `${HocName}(${getDisplayName(ComposedComponent)})`
+
+const parseSectionId = sectionId => sectionId.split('#')
+
+const scrollToHash = () => {
+  if (process.browser) {
+    Router.router.scrollToHash(Router.router.asPath)
+  }
+}
+
+const unwrapPara = content => (
+  content && content[0].t === 'Para'
+    ? content[0].c
+    : content
+)
 
 export {
   astToString,
