@@ -1,21 +1,17 @@
-import { questionAnswered } from './question'
+import { actionTypes, questionAnswered, questionSolved } from './question'
 
 test('dispatch QUESTION_ANSWERED', () => {
-  const data = [
-    {
-      id: 'xyz',
-      solved: true,
-      solution: 'a',
-      inputValue: 'a',
-    },
-  ]
-
+  const data = { foo: 'bar' }
   expect(questionAnswered(data)).toEqual({
-    type: 'QUESTION_ANSWERED',
+    type: actionTypes.QUESTION_ANSWERED,
     data,
   })
 })
 
-xtest('dispatch QUESTION_SOLVED', () => {
-
+test('dispatch QUESTION_SOLVED', () => {
+  const data = { foo: 'bar' }
+  expect(questionSolved(data)).toEqual({
+    type: actionTypes.QUESTION_SOLVED,
+    data,
+  })
 })
