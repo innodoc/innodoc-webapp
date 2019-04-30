@@ -1,4 +1,5 @@
 import {
+  actionTypes,
   loadManifest,
   loadManifestFailure,
   loadManifestSuccess,
@@ -10,7 +11,7 @@ import {
 } from './content'
 
 it('should dispatch LOAD_MANIFEST action', () => {
-  expect(loadManifest()).toEqual({ type: 'LOAD_MANIFEST' })
+  expect(loadManifest()).toEqual({ type: actionTypes.LOAD_MANIFEST })
 })
 
 it('should dispatch LOAD_MANIFEST_SUCCESS action', () => {
@@ -21,7 +22,7 @@ it('should dispatch LOAD_MANIFEST_SUCCESS action', () => {
     },
   ]
   expect(loadManifestSuccess(data)).toEqual({
-    type: 'LOAD_MANIFEST_SUCCESS',
+    type: actionTypes.LOAD_MANIFEST_SUCCESS,
     data,
   })
 })
@@ -29,19 +30,22 @@ it('should dispatch LOAD_MANIFEST_SUCCESS action', () => {
 it('should dispatch LOAD_MANIFEST_FAILURE action', () => {
   const error = { msg: 'Something went wrong!' }
   expect(loadManifestFailure(error)).toEqual({
-    type: 'LOAD_MANIFEST_FAILURE',
+    type: actionTypes.LOAD_MANIFEST_FAILURE,
     error,
   })
 })
 
 it('should dispatch LOAD_SECTION action', () => {
-  expect(loadSection('foo/bar')).toEqual({ type: 'LOAD_SECTION', sectionId: 'foo/bar' })
+  expect(loadSection('foo/bar')).toEqual({
+    type: actionTypes.LOAD_SECTION,
+    sectionId: 'foo/bar',
+  })
 })
 
 it('should dispatch LOAD_SECTION_SUCCESS action', () => {
   const data = [{ t: 'Str', c: 'Foo string' }]
   expect(loadSectionSuccess(data)).toEqual({
-    type: 'LOAD_SECTION_SUCCESS',
+    type: actionTypes.LOAD_SECTION_SUCCESS,
     data,
   })
 })
@@ -49,21 +53,21 @@ it('should dispatch LOAD_SECTION_SUCCESS action', () => {
 it('should dispatch LOAD_SECTION_FAILURE action', () => {
   const error = { msg: 'Something went wrong!' }
   expect(loadSectionFailure(error)).toEqual({
-    type: 'LOAD_SECTION_FAILURE',
+    type: actionTypes.LOAD_SECTION_FAILURE,
     error,
   })
 })
 
 it('should dispatch SET_CONTENT_ROOT action', () => {
   expect(setContentRoot('https://content.example.com/')).toEqual({
-    type: 'SET_CONTENT_ROOT',
+    type: actionTypes.SET_CONTENT_ROOT,
     contentRoot: 'https://content.example.com/',
   })
 })
 
 it('should dispatch SET_STATIC_ROOT action', () => {
   expect(setStaticRoot('https://cdn.example.com/')).toEqual({
-    type: 'SET_STATIC_ROOT',
+    type: actionTypes.SET_STATIC_ROOT,
     staticRoot: 'https://cdn.example.com/',
   })
 })
