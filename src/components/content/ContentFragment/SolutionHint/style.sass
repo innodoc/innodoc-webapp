@@ -1,18 +1,13 @@
 @import '../../../../style/antd-theme.sass'
 
-$base-color: black
-
-.collapsePanel
+.collapse
   background-color: transparent
 
-  \:global(.ant-collapse-header)
-    background-color: transparentize($base-color, 0.95)
+  \:global(.ant-collapse-item)
+    border-bottom: none
 
-    &:hover
-      background-color: transparentize($base-color, 0.92)
-
-  \:global(.ant-collapse-content)
-    background-color: transparentize($base-color, 0.98)
+.collapseContent
+  padding-left: $padding-lg
 
 .icon
   padding-right: $padding-xs

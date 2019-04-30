@@ -16,9 +16,11 @@ const SolutionHint = ({ content, t }) => {
     </React.Fragment>
   )
   return (
-    <Collapse className={css.collapsePanel}>
+    <Collapse bordered={false} className={css.collapse}>
       <Collapse.Panel header={header} forceRender>
-        <ContentFragment content={content} />
+        <div className={css.collapseContent}>
+          <ContentFragment content={content} />
+        </div>
       </Collapse.Panel>
     </Collapse>
   )
