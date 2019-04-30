@@ -4,43 +4,36 @@ import classNames from 'classnames'
 import Input from 'antd/lib/input'
 
 import css from './style.sass'
-import FeedbackIcon from './FeedbackIcon'
 
-const DEFAULT_INPUT_LENGTH = 14
+const DEFAULT_INPUT_LENGTH = 10
 
 const InputQuestion = ({
   attributes,
-  correct,
+  className,
+  icon,
   onChange,
   value,
-}) => {
-  const length = Object.prototype.hasOwnProperty.call(attributes, 'length')
-    ? attributes.length
-    : DEFAULT_INPUT_LENGTH
-  const inputClassNames = classNames(
-    css.inputQuestion,
-    value === '' ? {} : { [css.correct]: correct, [css.incorrect]: !correct },
-  )
-  return (
-    <Input
-      value={value}
-      style={{ width: `${length}em` }}
-      className={inputClassNames}
-      onChange={ev => onChange(ev.target.value)}
-      suffix={<FeedbackIcon correct={value === '' ? null : correct} />}
-    />
-  )
-}
+}) => (
+  <Input
+    value={value || ''}
+    style={{ width: `${(2 / 3 * attributes.length) || DEFAULT_INPUT_LENGTH}em` }}
+    className={classNames(css.inputQuestion, className)}
+    onChange={ev => onChange(ev.target.value)}
+    suffix={icon}
+  />
+)
 
 InputQuestion.propTypes = {
   attributes: PropTypes.object.isRequired,
-  correct: PropTypes.bool,
+  className: PropTypes.string,
+  icon: PropTypes.element.isRequired,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
 }
 
 InputQuestion.defaultProps = {
-  correct: null,
+  className: '',
+  value: null,
 }
 
 export default InputQuestion

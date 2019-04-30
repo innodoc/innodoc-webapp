@@ -2,17 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withNamespaces } from 'react-i18next'
 
-import { contentType } from '../../../../lib/propTypes'
-import Card from './Card'
+import { contentType } from '../../../../../lib/propTypes'
+import Card from '../Card'
+import ExerciseProvider from './ExerciseProvider'
 
 const ExerciseCard = ({ t, content, id }) => (
-  <Card
-    title={t('content.exercise')}
-    cardType="exercise"
-    icon="form"
-    content={content}
-    id={id}
-  />
+  <ExerciseProvider>
+    <Card
+      title={t('content.exercise')}
+      cardType="exercise"
+      icon="form"
+      content={content}
+      id={id}
+    />
+  </ExerciseProvider>
 )
 
 ExerciseCard.propTypes = {
