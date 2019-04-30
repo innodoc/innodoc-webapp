@@ -5,9 +5,9 @@ import {
   take,
 } from 'redux-saga/effects'
 
-import watchExerciseChange, { handleExerciseCompleted } from './exercise'
-import { actionTypes as questionActionTypes, questionAnswered } from '../../store/actions/exercise'
-import validators from '../../lib/validators'
+import watchQuestionChange, { handleQuestionAnswered } from './question'
+import { actionTypes as questionActionTypes, questionAnswered } from '../../store/actions/question'
+import checkers from '../../lib/questionCheckers'
 
 const wrongAnswer = questionAnswered({
   attrs: { questionType: 'exact' },
@@ -24,11 +24,11 @@ const correctAnswer = questionAnswered({
   solution: 'test',
 })
 
-describe('questionAnswered', () => {
+describe('handleQuestionAnswered', () => {
   test('wrong input', () => {
-    const gen = handleExerciseCompleted(wrongAnswer)
+    const gen = handleQuestionAnswered(wrongAnswer)
     expect(gen.next().value).toEqual(call(
-      validators[wrongAnswer.data.attrs.questionType],
+      checkers[wrongAnswer.data.attrs.questionType],
       wrongAnswer.data.inputValue,
       wrongAnswer.data.solution,
       wrongAnswer.data.attrs))
@@ -36,9 +36,9 @@ describe('questionAnswered', () => {
   })
 
   test('right input', () => {
-    const gen = handleExerciseCompleted(correctAnswer)
+    const gen = handleQuestionAnswered(correctAnswer)
     expect(gen.next().value).toEqual(call(
-      validators[correctAnswer.data.attrs.questionType],
+      checkers[correctAnswer.data.attrs.questionType],
       correctAnswer.data.inputValue,
       correctAnswer.data.solution,
       correctAnswer.data.attrs))
@@ -50,11 +50,11 @@ describe('questionAnswered', () => {
   })
 })
 
-describe('watchExerciseChange', () => {
+describe('watchQuestionChange', () => {
   test('exercise input change', () => {
-    const gen = watchExerciseChange()
+    const gen = watchQuestionChange()
     expect(gen.next().value).toEqual(take(questionActionTypes.QUESTION_ANSWERED))
     expect(gen.next(wrongAnswer).value)
-      .toEqual(fork(handleExerciseCompleted, wrongAnswer))
+      .toEqual(fork(handleQuestionAnswered, wrongAnswer))
   })
 })

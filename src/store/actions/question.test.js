@@ -15,3 +15,7 @@ test('dispatch QUESTION_ANSWERED', () => {
     data,
   })
 })
+
+xtest('dispatch QUESTION_SOLVED', () => {
+
+})

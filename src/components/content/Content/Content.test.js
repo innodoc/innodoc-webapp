@@ -12,6 +12,7 @@ let mockGetCurrentSectionMock
 
 jest.mock('../../../store/selectors/index.js', () => ({
   getApp: () => ({ language: 'en' }),
+  getOrmState: () => ({ orm: {} }),
 }))
 jest.mock('../../../store/selectors/course.js', () => ({
   getCurrentCourse: () => mockGetCurrentCourseMock(),
