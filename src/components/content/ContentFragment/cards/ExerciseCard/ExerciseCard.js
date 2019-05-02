@@ -28,4 +28,5 @@ ExerciseCard.defaultProps = {
   id: null,
 }
 
+export { ExerciseCard } // for testing
 export default withNamespaces()(ExerciseCard)
