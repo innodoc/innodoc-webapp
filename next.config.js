@@ -1,9 +1,7 @@
 const path = require('path')
-const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
 const withPlugins = require('next-compose-plugins')
 const Dotenv = require('dotenv-webpack')
 const AntdScssThemePlugin = require('antd-scss-theme-plugin')
-const withBundleAnalyzer = require('@zeit/next-bundle-analyzer')
 const withLess = require('@zeit/next-less')
 const withSass = require('@zeit/next-sass')
 
@@ -99,8 +97,7 @@ const patchWebpackConfig = (config) => {
 
 // next.js configuration
 const nextConfig = {
-  // only use .js (not .jsx)
-  pageExtensions: ['js'],
+  pageExtensions: ['js'], // only use .js (not .jsx)
 
   lessLoaderOptions: {
     javascriptEnabled: true, // needed by antd less code
@@ -113,10 +110,22 @@ const nextConfig = {
     localIdentName: '[local]___[hash:base64:5]',
   },
 
-  // bundle analyzer (set BUNDLE_ANALYZE to enable!)
-  analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
-  analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
-  bundleAnalyzerConfig: {
+  // custom webpack config
+  webpack: patchWebpackConfig,
+}
+
+// next.js configuration plugins
+const plugins = [
+  withLess,
+  withSass,
+]
+
+// bundle analyzer (set BUNDLE_ANALYZE=both to enable!)
+if (process.env.BUNDLE_ANALYZE) {
+  plugins.push(require('@zeit/next-bundle-analyzer')) // eslint-disable-line global-require
+  nextConfig.analyzeServer = ['server', 'both'].includes(process.env.BUNDLE_ANALYZE)
+  nextConfig.analyzeBrowser = ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE)
+  nextConfig.bundleAnalyzerConfig = {
     server: {
       analyzerMode: 'static',
       reportFilename: '../../bundles/server.html',
@@ -125,16 +134,7 @@ const nextConfig = {
       analyzerMode: 'static',
       reportFilename: '../bundles/client.html',
     },
-  },
-
-  webpack: patchWebpackConfig,
+  }
 }
-
-// next.js configuration plugins
-const plugins = [
-  [withBundleAnalyzer, [PHASE_DEVELOPMENT_SERVER]],
-  withLess,
-  withSass,
-]
 
 module.exports = withPlugins(plugins, nextConfig)

@@ -211,5 +211,5 @@ $ yarn lint
 Visualize bundles using `webpack-bundle-analyzer`.
 
 ```sh
-$ BUNDLE_ANALYZE=both yarn build
+$ yarn build:bundle-analyze
 ```

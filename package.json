@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "build": "next build src",
+    "build:bundle-analyze": "BUNDLE_ANALYZE=both yarn build",
     "server": "node server/server.js",
     "dev": "NODE_ENV=development yarn run server",
     "start": "NODE_ENV=production yarn run server",
