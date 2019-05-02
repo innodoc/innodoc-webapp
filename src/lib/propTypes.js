@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types'
 
+const attributeType = PropTypes.PropTypes.arrayOf(PropTypes.array)
+
 const childrenType = PropTypes.oneOfType([
   PropTypes.arrayOf(PropTypes.node),
   PropTypes.node,
@@ -29,6 +31,7 @@ const courseType = PropTypes.shape({
 })
 
 export {
+  attributeType,
   childrenType,
   courseType,
   contentType,

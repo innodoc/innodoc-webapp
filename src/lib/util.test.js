@@ -1,5 +1,6 @@
 import {
   astToString,
+  attributesToObject,
   getClassNameToComponentMapper,
   getDisplayName,
   getHocDisplayName,
@@ -19,6 +20,36 @@ describe('astToString', () => {
       { t: 'Str', c: 'World' },
     ]
     expect(astToString(ast)).toBe('Hello World')
+  })
+})
+
+describe('attributesToObject', () => {
+  it('should convert null', () => {
+    const input = null
+    const output = attributesToObject(input)
+    expect(output).toBeInstanceOf(Object)
+    expect(Object.getOwnPropertyNames(output)).toHaveLength(0)
+  })
+
+  it('should convert empty array', () => {
+    const input = []
+    const output = attributesToObject(input)
+    expect(output).toBeInstanceOf(Object)
+    expect(Object.getOwnPropertyNames(output)).toHaveLength(0)
+  })
+
+  it('should convert array with 3 keys', () => {
+    const input = [
+      ['key1', 'val1'],
+      ['key2', 'val2'],
+      ['key3', 'val3'],
+    ]
+    const output = attributesToObject(input)
+    expect(output).toBeInstanceOf(Object)
+    expect(Object.getOwnPropertyNames(output)).toHaveLength(3)
+    expect(output.key1).toBe('val1')
+    expect(output.key2).toBe('val2')
+    expect(output.key3).toBe('val3')
   })
 })
 
