@@ -17,6 +17,13 @@ const astToString = (ast) => {
   }).join('')
 }
 
+// Convert [[key, val], [key, val], ...] style attribute list to object.
+const attributesToObject = attrs => (
+  attrs
+    ? attrs.reduce((obj, [key, val]) => ({ ...obj, [key]: val }), {})
+    : {}
+)
+
 // Return a function that maps classNames to Components, used by AST components
 // like Div that render different components according to the className.
 const getClassNameToComponentMapper = (classNameComponentMap) => {
@@ -52,6 +59,7 @@ const unwrapPara = content => (
 
 export {
   astToString,
+  attributesToObject,
   getClassNameToComponentMapper,
   getDisplayName,
   getHocDisplayName,

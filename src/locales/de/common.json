@@ -2,10 +2,10 @@
   "content": {
     "example": "Beispiel",
     "exercise": "Aufgabe",
+    "hint": "Hinweis",
+    "home": "Start",
     "info": "Info",
     "inputHint": "Hilfe zur Eingabe",
-    "home": "Start",
-    "solution": "Lösung",
     "subsections": "Unterabschnitte",
     "test": "Test",
     "ytIdError": "Konnte YouTube-Video-ID nicht extrahieren: {{src}}"

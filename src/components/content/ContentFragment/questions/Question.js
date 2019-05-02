@@ -5,11 +5,12 @@ import { connect } from 'react-redux'
 import sectionSelectors from '../../../../store/selectors/section'
 import { questionAnswered } from '../../../../store/actions/question'
 import questionSelectors from '../../../../store/selectors/question'
-import { getClassNameToComponentMapper } from '../../../../lib/util'
+import { attributesToObject, getClassNameToComponentMapper } from '../../../../lib/util'
 import ExerciseContext from '../cards/ExerciseCard/ExerciseContext'
 import CheckboxQuestion from './CheckboxQuestion'
 import InputQuestion from './InputQuestion'
 import FeedbackIcon from './FeedbackIcon'
+import { attributeType } from '../../../../lib/propTypes'
 import css from './style.sass'
 
 const mapClassNameToComponent = getClassNameToComponentMapper({
@@ -39,8 +40,7 @@ const Question = ({
 
   const QuestionComponent = mapClassNameToComponent(questionClasses)
   if (QuestionComponent) {
-    // convert attribute array to obj
-    const attrsObj = attributes.reduce((obj, [key, val]) => ({ ...obj, [key]: val }), {})
+    const attrsObj = attributesToObject(attributes)
     const showResult = getShowResult() && correct !== null
     const feedbackIcon = <FeedbackIcon correct={showResult ? correct : null} />
     const className = showResult
@@ -73,7 +73,7 @@ const Question = ({
 
 Question.propTypes = {
   answer: PropTypes.string,
-  attributes: PropTypes.arrayOf(PropTypes.array).isRequired,
+  attributes: attributeType.isRequired,
   correct: PropTypes.bool,
   questionId: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,

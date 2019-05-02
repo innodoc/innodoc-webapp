@@ -5,14 +5,17 @@ import Icon from 'antd/lib/icon'
 import { withNamespaces } from 'react-i18next'
 
 import css from './style.sass'
-import { contentType } from '../../../../lib/propTypes'
+import { attributesToObject } from '../../../../lib/util'
+import { attributeType, contentType } from '../../../../lib/propTypes'
 import ContentFragment from '..'
 
-const SolutionHint = ({ content, t }) => {
+const Hint = ({ attributes, content, t }) => {
+  const attrsObj = attributesToObject(attributes)
+  const caption = attrsObj.caption || t('content.hint')
   const header = (
     <React.Fragment>
       <Icon type="bulb" className={css.icon} />
-      {t('content.solution')}
+      {caption}
     </React.Fragment>
   )
   return (
@@ -26,10 +29,11 @@ const SolutionHint = ({ content, t }) => {
   )
 }
 
-SolutionHint.propTypes = {
+Hint.propTypes = {
+  attributes: attributeType.isRequired,
   content: contentType.isRequired,
   t: PropTypes.func.isRequired,
 }
 
-export { SolutionHint } // for testing
-export default withNamespaces()(SolutionHint)
+export { Hint } // for testing
+export default withNamespaces()(Hint)

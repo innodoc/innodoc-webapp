@@ -2,10 +2,10 @@
   "content": {
     "example": "Example",
     "exercise": "Exercise",
+    "hint": "Hint",
+    "home": "Home",
     "info": "Info",
     "inputHint": "Input",
-    "home": "Home",
-    "solution": "Solution",
     "subsections": "Subsections",
     "test": "Test",
     "ytIdError": "Could not extract YouTube Video ID: {{src}}"
