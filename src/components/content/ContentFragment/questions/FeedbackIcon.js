@@ -31,4 +31,5 @@ FeedbackIcon.defaultProps = {
   correct: null,
 }
 
+export { FeedbackIcon as BareFeedbackIcon } // for testing
 export default withNamespaces()(FeedbackIcon)
