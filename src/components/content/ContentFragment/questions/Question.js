@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import classNames from 'classnames'
 
 import sectionSelectors from '../../../../store/selectors/section'
 import { questionAnswered } from '../../../../store/actions/question'
@@ -44,10 +45,10 @@ const Question = ({
     const showResult = getShowResult() && correct !== null
     const feedbackIcon = <FeedbackIcon correct={showResult ? correct : null} />
     const className = showResult
-      ? {
+      ? classNames({
         [css.correct]: correct,
         [css.incorrect]: !correct,
-      }
+      })
       : null
     return (
       <QuestionComponent
