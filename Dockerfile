@@ -1,36 +1,33 @@
 # Official Alpine-based Dockerfile for innodoc-webapp
-FROM node:alpine
+ARG BUILD_IMAGE=node:alpine
+FROM $BUILD_IMAGE AS build
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
+# build
 WORKDIR /innodoc-webapp
+COPY . .
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+RUN set -xe && \
+  apk add \
+    build-base \
+    python2 && \
+  ln -s .env.example .env && \
+  yarn install --pure-lockfile && \
+  yarn build
 
-# install pm2
-RUN yarn global add pm2 && yarn cache clean
+FROM $BUILD_IMAGE
 
 # add user/group to run as
 RUN set -xe && \
     addgroup -S innodocuser && \
-    adduser -S -g innodocuser innodocuser && \
-    chown -R innodocuser.innodocuser .
+    adduser -S -g innodocuser innodocuser
 
+# copy app
+COPY --from=build --chown=innodocuser:innodocuser /innodoc-webapp /innodoc-webapp
 USER innodocuser
-
-# install packages
-COPY --chown=innodocuser:innodocuser \
-  package.json \
-  yarn.lock \
-  ./
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-RUN yarn install --pure-lockfile && yarn cache clean
-
-# copy files
-COPY --chown=innodocuser:innodocuser . .
-
-# create .env
-RUN ln -s .env.example .env
-
-# build app
-RUN yarn build
+RUN set -xe && \
+  yarn global add pm2 && \
+  yarn cache clean
 
 # run web app
 EXPOSE 8000
