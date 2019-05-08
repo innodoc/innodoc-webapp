@@ -58,7 +58,7 @@ const app = next({
 
 const i18nServerOptions = {
   ...i18nOptions,
-  preload: ['en', 'de'],
+  preload: ['en'],
   detection: {
     order: ['cookie', 'header'],
     caches: ['cookie'],
@@ -70,54 +70,41 @@ const i18nServerOptions = {
 }
 
 // init i18next with serverside settings
-// using i18next-express-middleware
 i18n
   .use(i18nNodeFsBackend)
-  .use(i18nextMiddleware.LanguageDetector)
-  .init(i18nServerOptions, () => {
-    // loaded translations -> bootstrap routes
-    app.prepare()
-      .then(() => {
-        const server = express()
-        const appHandler = app.getRequestHandler()
+  .use(i18nextMiddleware.LanguageDetector);
 
-        // set CONTENT_ROOT
-        server.use((req, res, _next) => {
-          res.locals.contentRoot = contentRoot
-          res.locals.staticRoot = staticRoot
-          _next()
-        })
+(async () => {
+  await i18n.init(i18nServerOptions)
+  await app.prepare()
+  const server = express()
 
-        // enable middleware for i18next
-        server.use(i18nextMiddleware.handle(i18n))
-
-        // serve locales to client
-        server.use('/static/locales', express.static(localesDir))
-
-        // auto-create missing translation keys in dev
-        if (nodeEnv !== 'production') {
-          server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18n))
-        }
-
-        // serve a course section
-        server.get('/page/:sectionId([A-Za-z0-9_/:-]+)', (req, res) => {
-          if (req.params.sectionId.endsWith('/')) {
-            res.redirect(req.path.slice(0, -1)) // remove trailing slash
-          } else {
-            app.render(req, res, '/page', req.params)
-          }
-        })
-
-        // everything else handled by next.js app
-        server.get('*', appHandler)
-
-        server.listen(port, (err) => {
-          if (err) { throw err }
-          console.info(`Started ${nodeEnv} server on port ${port}.`)
-        })
-      })
-      .catch((ex) => {
-        console.error(ex.stack)
-        process.exit(1)
-      })
+  // pass env config into app
+  server.use((req, res, _next) => {
+    res.locals.contentRoot = contentRoot
+    res.locals.staticRoot = staticRoot
+    _next()
   })
+
+  // enable middleware for i18next
+  server.use(i18nextMiddleware.handle(i18n))
+  if (nodeEnv !== 'production') {
+    // auto-create missing translation keys in dev
+    server.post('/static/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18n))
+  }
+
+  // serve a course section
+  server.get('/page/:sectionId([A-Za-z0-9_/:-]+)', (req, res) => {
+    if (req.params.sectionId.endsWith('/')) {
+      res.redirect(req.path.slice(0, -1)) // remove trailing slash
+    } else {
+      app.render(req, res, '/page', req.params)
+    }
+  })
+
+  // everything else handled by next.js app
+  server.get('*', app.getRequestHandler())
+
+  await server.listen(port)
+  console.info(`Started ${nodeEnv} server on port ${port}.`)
+})()
