@@ -13,15 +13,19 @@ const InputQuestion = ({
   icon,
   onChange,
   value,
-}) => (
-  <Input
-    value={value || ''}
-    style={{ width: `${(2 / 3 * attributes.length) || DEFAULT_INPUT_LENGTH}em` }}
-    className={classNames(css.inputQuestion, className)}
-    onChange={ev => onChange(ev.target.value)}
-    suffix={icon}
-  />
-)
+}) => {
+  const length = parseInt(attributes.length, 10) || DEFAULT_INPUT_LENGTH
+  return (
+    <Input
+      className={classNames(css.inputQuestion, className)}
+      maxLength={length}
+      onChange={ev => onChange(ev.target.value)}
+      style={{ width: `${length + 6}ch` }}
+      suffix={icon}
+      value={value || ''}
+    />
+  )
+}
 
 InputQuestion.propTypes = {
   attributes: PropTypes.object.isRequired,

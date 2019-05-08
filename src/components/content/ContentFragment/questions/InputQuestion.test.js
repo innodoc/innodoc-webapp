@@ -5,7 +5,7 @@ import Input from 'antd/lib/input'
 
 import InputQuestion from './InputQuestion'
 
-describe('<FeedbackIcon />', () => {
+describe('<InputQuestion />', () => {
   it.each([
     [null, ''],
     ['test1', 'test1'],
@@ -29,8 +29,8 @@ describe('<FeedbackIcon />', () => {
   })
 
   it.each([
-    ['10em', {}],
-    ['20em', { length: '30' }],
+    ['16ch', {}],
+    ['36ch', { length: '30' }],
   ])('should add width style (expecting %s)', (expWidth, attrs) => {
     const wrapper = shallow(
       <InputQuestion
