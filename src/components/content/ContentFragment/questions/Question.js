@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
+import objectHash from 'object-hash'
 
 import sectionSelectors from '../../../../store/selectors/section'
 import { questionAnswered } from '../../../../store/actions/question'
@@ -18,6 +19,19 @@ const mapClassNameToComponent = getClassNameToComponentMapper({
   text: InputQuestion,
   checkbox: CheckboxQuestion,
 })
+
+const getQuestionId = (sectionId, id, attributes) => {
+  const questionId = id && id.length
+    // The easy case: An ID was specified.
+    ? id
+    // Question should always carry an ID attribute. BUT: If they don't, things
+    // shouldn't break. So we generate an internal ID from the question's
+    // content.
+    : objectHash(attributes)
+  // As IDs are unique to a single page, for the global app state we need to
+  // prefix them with the section ID.
+  return `${sectionId}#${questionId}`
+}
 
 const Question = ({
   answer,
@@ -86,10 +100,9 @@ Question.defaultProps = {
   correct: null,
 }
 
-const mapStateToProps = (state, { id }) => {
+const mapStateToProps = (state, { attributes, id }) => {
   const sectionId = sectionSelectors.getCurrentSection(state).id
-  // As IDs are unique to one page, internally we prefix it with the sectionID.
-  const questionId = `${sectionId}#${id}`
+  const questionId = getQuestionId(sectionId, id, attributes)
   const question = questionSelectors.getQuestion(state, questionId)
   const ret = { questionId }
   if (question) {

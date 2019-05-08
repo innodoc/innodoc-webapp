@@ -73,8 +73,16 @@ jest.mock('../../../../store/selectors/question.js', () => ({
 }))
 
 describe('mapStateToProps', () => {
-  it('should prefix id', () => {
-    expect(mapStateToProps(null, { id: 'EX0' }).questionId).toBe('foo/bar#EX0')
+  describe('questionId', () => {
+    it('should generate question ID from attributes if no ID given', () => {
+      const attributes = { solution: '42', foo: 'bar' }
+      const { questionId } = mapStateToProps(null, { id: '', attributes })
+      expect(questionId).toBe('foo/bar#0052874d4e0981ed5ff58e85e8bb1522e5ef6290')
+    })
+
+    it('should prefix ID', () => {
+      expect(mapStateToProps(null, { id: 'EX0' }).questionId).toBe('foo/bar#EX0')
+    })
   })
 
   it('should return question details', () => {
