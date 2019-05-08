@@ -5,7 +5,7 @@ import {
   takeLatest,
 } from 'redux-saga/effects'
 import { actionTypes, changeLanguage } from '../../store/actions/i18n'
-import toTwoLetterCode from '../../lib/i18n/toTwoLetterCode'
+import { toTwoLetterCode } from '../../lib/util'
 
 // Notify i18next about language changes
 export function* notifyI18next(i18n, { language }) {

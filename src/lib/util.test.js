@@ -5,6 +5,7 @@ import {
   getDisplayName,
   getHocDisplayName,
   parseSectionId,
+  toTwoLetterCode,
   unwrapPara,
 } from './util'
 
@@ -96,6 +97,13 @@ describe('parseSectionId', () => {
 
   it('should parse a section ID without hash', () => {
     expect(parseSectionId('foo/bar')).toEqual(['foo/bar'])
+  })
+})
+
+describe('toTwoLetterCode', () => {
+  it('should normalize language codes', () => {
+    expect(toTwoLetterCode('en-US')).toEqual('en')
+    expect(toTwoLetterCode('de')).toEqual('de')
   })
 })
 
