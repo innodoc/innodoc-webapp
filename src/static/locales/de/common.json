@@ -15,7 +15,8 @@
       "correct": "Eingabe richtig",
       "incorrect": "Eingabe falsch",
       "indeterminate": "Noch kein Ergebnis"
-    }
+    },
+    "inputFeedback": "Eingabe"
   },
   "errorPage": {
     "404": {

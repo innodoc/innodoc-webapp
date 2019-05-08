@@ -7,9 +7,9 @@ const MATHJAX_SCRIPT_ID = '__MATHJAX_SCRIPT__'
 
 const debug = process.env.NODE_ENV !== 'production'
 
-// TODO: this currently works with just one MathJax component per page.
-// test if it's possible to have several components (or even call typeset
-// manually on every span)
+// TODO
+// - this.typesetOnReady should be an array of callbacks?
+// - this hoc can be converted to custom hook?
 
 const mathJaxOptions = cb => ({
   skipStartupTypeset: true,
@@ -70,8 +70,9 @@ const withMathJax = (WrappedComponent) => {
 
     onMathJaxReady() {
       if (this.typesetOnReady) {
+        const cb = this.typesetOnReady
         this.typesetOnReady = false
-        this.typesetMathJax()
+        this.typesetMathJax(cb)
       }
     }
 
@@ -83,7 +84,7 @@ const withMathJax = (WrappedComponent) => {
       )
     }
 
-    typesetMathJax() {
+    typesetMathJax(cb) {
       if (WithMathJax.isMathJaxLoaded()) {
         const elem = this.mathJaxContentRef.current
         if (elem) {
@@ -91,10 +92,11 @@ const withMathJax = (WrappedComponent) => {
             'Typeset',
             window.MathJax.Hub,
             elem,
+            cb,
           ])
         }
       } else {
-        this.typesetOnReady = true
+        this.typesetOnReady = cb
       }
     }
 

@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import Input from 'antd/lib/input'
 
 import css from './style.sass'
+import InputPopover from './InputPopover'
 
 const DEFAULT_INPUT_LENGTH = 10
 
@@ -15,15 +16,21 @@ const InputQuestion = ({
   value,
 }) => {
   const length = parseInt(attributes.length, 10) || DEFAULT_INPUT_LENGTH
+  const messages = ['Das funktioniert so leider nicht.', 'Du hast alles falsch gemacht!']
   return (
-    <Input
-      className={classNames(css.inputQuestion, className)}
-      maxLength={length}
-      onChange={ev => onChange(ev.target.value)}
-      style={{ width: `${length + 6}ch` }}
-      suffix={icon}
-      value={value || ''}
-    />
+    <InputPopover
+      userInput={value}
+      messages={messages}
+    >
+      <Input
+        className={classNames(css.inputQuestion, className)}
+        maxLength={length}
+        onChange={ev => onChange(ev.target.value)}
+        style={{ width: `${length + 6}ch` }}
+        suffix={icon}
+        value={value || ''}
+      />
+    </InputPopover>
   )
 }
 
@@ -37,7 +44,7 @@ InputQuestion.propTypes = {
 
 InputQuestion.defaultProps = {
   className: '',
-  value: null,
+  value: '',
 }
 
 export default InputQuestion
