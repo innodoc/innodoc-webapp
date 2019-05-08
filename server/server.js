@@ -7,13 +7,13 @@ const Dotenv = require('dotenv-safe')
 const i18nextMiddleware = require('i18next-express-middleware')
 const i18nNodeFsBackend = require('i18next-node-fs-backend')
 
-const i18n = require('../src/lib/i18n/instance')
+const i18n = require('../src/lib/i18n')
 const i18nOptions = require('../src/lib/i18n/options')
 
 // directories
 const rootDir = `${__dirname}/..`
 const srcDir = `${rootDir}/src`
-const localesDir = `${srcDir}/locales`
+const localesDir = `${srcDir}/static/locales`
 
 // load configuration
 const dotEnvFile = path.normalize(`${rootDir}/.env`)

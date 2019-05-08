@@ -10,10 +10,7 @@ const i18nOptions = {
   interpolation: {
     escapeValue: false, // not needed for react!!
     formatSeparator: ',',
-    format: (value, format) => {
-      if (format === 'uppercase') return value.toUpperCase()
-      return value
-    },
+    format: (value, format) => (format === 'uppercase' ? value.toUpperCase() : value),
   },
   detection: {
     order: ['cookie', 'navigator'],

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { NamespacesConsumer } from 'react-i18next'
-import i18nInstance from '../../lib/i18n/instance'
+import i18nInstance from '../../lib/i18n/index'
 
 import { getHocDisplayName } from '../../lib/util'
 
