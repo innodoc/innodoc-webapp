@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import List from 'antd/lib/list'
-import SectionLink from '../../../SectionLink'
+import SectionLink from '../../SectionLink'
 
 import { Subsection, SubsectionList } from './SubsectionList'
 
@@ -10,11 +10,13 @@ const subsections = [
     id: 'bar-1',
     title: { en: 'Bar section 1' },
     content: { en: [] },
+    ord: [0],
   },
   {
     id: 'bar-2',
     title: { en: 'Bar section 2' },
     content: { en: [] },
+    ord: [1],
   },
 ]
 

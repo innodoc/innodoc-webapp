@@ -1,23 +1,24 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { Content, mapStateToProps } from './Content'
+import { BareContent as Content, mapStateToProps } from './Content'
 import SubsectionList from './SubsectionList'
-import Breadcrumb from '../Breadcrumb'
-import ContentFragment from '../ContentFragment'
-import SectionNav from '../SectionNav'
+import Breadcrumb from './Breadcrumb'
+import ContentFragment from './ContentFragment'
+import SectionNav from './SectionNav'
+import { typesettingStates } from '../hoc/withMathJax'
 
 let mockGetCurrentCourseMock
 let mockGetCurrentSectionMock
 
-jest.mock('../../../store/selectors/index.js', () => ({
+jest.mock('../../store/selectors/index.js', () => ({
   getApp: () => ({ language: 'en' }),
   getOrmState: () => ({ orm: {} }),
 }))
-jest.mock('../../../store/selectors/course.js', () => ({
+jest.mock('../../store/selectors/course.js', () => ({
   getCurrentCourse: () => mockGetCurrentCourseMock(),
 }))
-jest.mock('../../../store/selectors/section/index.js', () => ({
+jest.mock('../../store/selectors/section/index.js', () => ({
   getCurrentSection: () => mockGetCurrentSectionMock(),
   getCurrentSubsections: () => [],
 }))
@@ -27,84 +28,92 @@ describe('<Content />', () => {
     mockTypesetMathJax: jest.fn(),
     mockT: jest.fn(),
     section: {
-      id: 'foo',
-      title: { en: 'Foo section' },
       content: { en: [{ t: 'Str', c: 'A nice string' }] },
+      id: 'foo',
+      ord: [0],
+      title: { en: 'Foo section' },
     },
     subsections: [
       {
-        id: 'bar-1',
-        title: { en: 'Bar section 1' },
         content: { en: [] },
+        id: 'bar-1',
+        ord: [0, 0],
+        title: { en: 'Bar section 1' },
       },
       {
-        id: 'bar-2',
-        title: { en: 'Bar section 2' },
         content: { en: [] },
+        id: 'bar-2',
+        ord: [0, 1],
+        title: { en: 'Bar section 2' },
       },
     ],
     otherSection: {
-      id: 'bar',
-      title: { en: 'Bar section' },
       content: { en: [{ t: 'Str', c: 'An awesome string' }] },
+      id: 'bar',
+      ord: [1],
+      title: { en: 'Bar section' },
     },
     contentRef: React.createRef(),
+  })
+
+  it('renders without section and currentLanguage', () => {
+    const data = getData()
+    const wrapper = shallow(
+      <Content
+        loading={false}
+        mathJaxContentRef={data.contentRef}
+        t={data.mockT}
+        typesetMathJax={data.mockTypesetMathJax}
+        typesettingStatus={typesettingStates.PENDING}
+      />
+    )
+    expect(wrapper.exists(SubsectionList)).toBe(false)
+    expect(wrapper.exists(ContentFragment)).toBe(false)
   })
 
   it('renders', () => {
     const data = getData()
     const wrapper = shallow(
       <Content
+        currentLanguage="en"
+        loading={false}
+        mathJaxContentRef={data.contentRef}
         section={data.section}
         subsections={data.subsections}
-        sectionLevel={1}
-        typesetMathJax={data.mockTypesetMathJax}
-        mathJaxContentRef={data.contentRef}
-        currentLanguage="en"
         t={data.mockT}
+        typesetMathJax={data.mockTypesetMathJax}
+        typesettingStatus={typesettingStates.PENDING}
       />
     )
-    expect(data.mockTypesetMathJax).toBeCalledTimes(1)
     expect(wrapper.find(SectionNav)).toHaveLength(1)
     expect(wrapper.find(Breadcrumb)).toHaveLength(1)
-    const contentDiv = wrapper.find('div')
-    expect(contentDiv).toHaveLength(1)
     const h1 = wrapper.find('h1')
     expect(h1).toHaveLength(1)
     expect(h1.text()).toEqual(data.section.title.en)
     expect(wrapper.find(ContentFragment).at(0).prop('content')).toEqual(data.section.content.en)
     expect(wrapper.exists(SubsectionList)).toBe(true)
+    expect(data.mockTypesetMathJax).toBeCalledTimes(0)
   })
 
   it('renders and updates', () => {
     const data = getData()
     const wrapper = shallow(
       <Content
-        section={data.section}
-        subsections={[]}
-        sectionLevel={1}
-        typesetMathJax={data.mockTypesetMathJax}
-        mathJaxContentRef={data.contentRef}
         currentLanguage="en"
+        loading={false}
+        mathJaxContentRef={data.contentRef}
+        section={data.section}
+        subsections={data.subsections}
         t={data.mockT}
+        typesetMathJax={data.mockTypesetMathJax}
+        typesettingStatus={typesettingStates.PENDING}
       />
     )
     const spyComponentDidUpdate = jest.spyOn(wrapper.instance(), 'componentDidUpdate')
-    expect(data.mockTypesetMathJax).toBeCalledTimes(1)
-    wrapper.setProps({
-      section: data.otherSection,
-      sectionLevel: 2,
-    })
+    expect(data.mockTypesetMathJax).toBeCalledTimes(0)
+    wrapper.setProps({ section: data.otherSection })
     expect(spyComponentDidUpdate).toBeCalledTimes(1)
-    expect(data.mockTypesetMathJax).toBeCalledTimes(2)
-    expect(wrapper.exists(SectionNav)).toBe(true)
-    expect(wrapper.exists(Breadcrumb)).toBe(true)
-    expect(wrapper.exists(SubsectionList)).toBe(false)
-    const contentDiv = wrapper.find('div')
-    expect(contentDiv).toHaveLength(1)
-    const h1 = wrapper.find('h1')
-    expect(h1).toHaveLength(1)
-    expect(h1.text()).toEqual(data.otherSection.title.en)
+    expect(data.mockTypesetMathJax).toBeCalledTimes(1)
     expect(wrapper.find(ContentFragment).at(0).prop('content')).toEqual(data.otherSection.content.en)
   })
 })

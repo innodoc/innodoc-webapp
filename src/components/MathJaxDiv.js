@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import withMathJax from './hoc/withMathJax'
-
-const mathInlineOpen = '\\('
-const mathInlineClose = '\\)'
+import fadeInCss from '../style/fadeIn.sass'
+import withMathJax, { mathDelimiter, typesettingStates, typesettingStatusType } from './hoc/withMathJax'
+import { refType } from '../lib/propTypes'
 
 class MathJaxDiv extends React.Component {
   static propTypes = {
+    mathJaxContentRef: refType.isRequired,
+    typesettingStatus: typesettingStatusType.isRequired,
+    updateMathJax: PropTypes.func.isRequired,
     userInput: PropTypes.string,
-    mathJaxContentRef: PropTypes.objectOf(PropTypes.any).isRequired,
-    typesetMathJax: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -18,45 +18,27 @@ class MathJaxDiv extends React.Component {
   }
 
   componentDidMount() {
-    this.initialTypeset()
+    // As this is using a third-party lib, DOM manipulation is not done by
+    // React. We have an empty div that is pre-filled with content and later
+    // managed by MathJax.
+    const { mathJaxContentRef, userInput } = this.props
+    const [delimOpen, delimClose] = mathDelimiter.inline
+    mathJaxContentRef.current.innerHTML = `${delimOpen}${userInput || ''}${delimClose}`
   }
 
   componentDidUpdate(prevProps) {
-    const { mathJaxContentRef, userInput } = this.props
+    const { updateMathJax, userInput } = this.props
     if (userInput !== prevProps.userInput) {
-      const elementJax = window.MathJax.Hub.getAllJax(mathJaxContentRef.current)[0]
-      if (elementJax) {
-        window.MathJax.Hub.Queue(['Text', elementJax, userInput, (a,b,c) => {
-          console.log('Text, rerender DONE! Error=', elementJax.texError)
-        }])
-      } else {
-        this.initialTypeset()
-      }
+      updateMathJax(0, userInput)
     }
-  }
-
-  componentWillUnmount() {
-    const { mathJaxContentRef } = this.props
-    const elementJax = window.MathJax.Hub.getAllJax(mathJaxContentRef.current)[0]
-    if (elementJax) {
-      window.MathJax.Hub.Queue(['Remove', elementJax])
-    }
-  }
-
-  initialTypeset() {
-    const { mathJaxContentRef, typesetMathJax, userInput } = this.props
-    const contentEl = mathJaxContentRef.current
-    contentEl.innerHTML = userInput && userInput.length
-      ? `${mathInlineOpen}${userInput}${mathInlineClose}`
-      : ''
-    typesetMathJax()
   }
 
   render() {
-    const { mathJaxContentRef } = this.props
-    return (
-      <div ref={mathJaxContentRef} />
-    )
+    const { mathJaxContentRef, typesettingStatus } = this.props
+    const className = typesettingStatus === typesettingStates.SUCCESS
+      ? fadeInCss.show
+      : fadeInCss.hide
+    return <div className={className} ref={mathJaxContentRef} />
   }
 }
 

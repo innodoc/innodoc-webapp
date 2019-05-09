@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import ContentFragment from '..'
-import css from '../../header.sass'
+import css from '../../style.sass'
 
 const Header = ({ data }) => {
   const [level, [id, classes], content] = data

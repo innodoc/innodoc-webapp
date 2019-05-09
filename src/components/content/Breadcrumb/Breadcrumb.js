@@ -46,7 +46,7 @@ const Breadcrumb = ({ homeLink, sections, t }) => {
 
 Breadcrumb.propTypes = {
   homeLink: PropTypes.string,
-  sections: PropTypes.arrayOf(PropTypes.any).isRequired,
+  sections: PropTypes.arrayOf(PropTypes.object).isRequired,
   t: PropTypes.func.isRequired,
 }
 

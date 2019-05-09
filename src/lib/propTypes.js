@@ -9,12 +9,11 @@ const childrenType = PropTypes.oneOfType([
 
 const contentType = PropTypes.arrayOf(PropTypes.object)
 
-const tocTreeType = PropTypes.arrayOf(PropTypes.object)
-
-const sectionType = PropTypes.shape({
-  id: PropTypes.string,
-  path: PropTypes.string,
-  title: PropTypes.object,
+const courseType = PropTypes.shape({
+  currentSection: PropTypes.string,
+  homeLink: PropTypes.string,
+  languages: PropTypes.arrayOf(PropTypes.string),
+  title: PropTypes.shape({}),
 })
 
 const messageType = PropTypes.shape({
@@ -23,19 +22,31 @@ const messageType = PropTypes.shape({
   level: PropTypes.string.isRequired,
 })
 
-const courseType = PropTypes.shape({
-  currentSection: PropTypes.string,
-  homeLink: PropTypes.string,
-  languages: PropTypes.arrayOf(PropTypes.string),
-  title: PropTypes.shape({}),
+if (!process.browser) {
+  global.Element = () => {} // shim for Node.js
+}
+const refType = PropTypes.oneOfType([
+  PropTypes.func,
+  PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+])
+
+const sectionType = PropTypes.shape({
+  content: PropTypes.objectOf(contentType),
+  id: PropTypes.string.isRequired,
+  ord: PropTypes.arrayOf(PropTypes.number).isRequired,
+  parentId: PropTypes.string,
+  title: PropTypes.objectOf(PropTypes.string).isRequired,
 })
+
+const tocTreeType = PropTypes.arrayOf(PropTypes.object)
 
 export {
   attributeType,
   childrenType,
-  courseType,
   contentType,
+  courseType,
   messageType,
+  refType,
   sectionType,
   tocTreeType,
 }

@@ -4,8 +4,8 @@ import List from 'antd/lib/list'
 import { withNamespaces } from 'react-i18next'
 
 import css from './style.sass'
-import SectionLink from '../../../SectionLink'
-import { sectionType } from '../../../../lib/propTypes'
+import SectionLink from '../../SectionLink'
+import { sectionType } from '../../../lib/propTypes'
 
 const Subsection = subSection => (
   <List.Item>

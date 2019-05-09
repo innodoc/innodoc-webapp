@@ -7,7 +7,7 @@ import appSelectors from '../../store/selectors'
 import withI18next from '../hoc/withI18next'
 import withI18nDispatch from '../hoc/withI18nDispatch'
 import Layout from '../Layout'
-import Content from '../content/Content'
+import Content from '../content'
 import ErrorPage from './_error'
 
 class CoursePage extends React.Component {
