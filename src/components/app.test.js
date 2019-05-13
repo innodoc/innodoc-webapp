@@ -4,8 +4,8 @@ import { Provider } from 'react-redux'
 import Head from 'next/head'
 import { Container } from 'next/app'
 
-import { InnoDocApp } from './_app'
-import { loadManifest, setContentRoot, setStaticRoot } from '../../store/actions/content'
+import { InnoDocApp } from './app'
+import { loadManifest, setContentRoot, setStaticRoot } from '../store/actions/content'
 
 describe('<InnoDocApp />', () => {
   it('should render', () => {

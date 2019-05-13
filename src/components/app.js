@@ -5,8 +5,8 @@ import App, { Container } from 'next/app'
 import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 
-import '../../style/lato-font.sass'
-import '../../style/overrides.sass'
+import '../style/lato-font.sass'
+import '../style/overrides.sass'
 
 import 'antd/lib/style/index.less'
 import 'antd/lib/alert/style/index.less'
@@ -26,8 +26,8 @@ import 'antd/lib/skeleton/style/index.less'
 import 'antd/lib/table/style/index.less'
 import 'antd/lib/tree/style/index.less'
 
-import makeStore from '../../store'
-import { loadManifest, setContentRoot, setStaticRoot } from '../../store/actions/content'
+import makeStore from '../store'
+import { loadManifest, setContentRoot, setStaticRoot } from '../store/actions/content'
 
 class InnoDocApp extends App {
   static async getInitialProps({ Component, ctx }) {

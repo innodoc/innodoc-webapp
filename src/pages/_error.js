@@ -1,1 +1,1 @@
-export default from '../components/pages/_error'
+export default from '../components/pages/error'

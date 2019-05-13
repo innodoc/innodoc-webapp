@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import Document, { Main, NextScript } from 'next/document'
 
-import InnodocDocument from './_document'
+import InnodocDocument from './document'
 
 describe('<InnoDocDocument />', () => {
   it('should render', () => {

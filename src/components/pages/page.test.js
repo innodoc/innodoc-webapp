@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { CoursePage } from './page'
-import ErrorPage from './_error'
+import ErrorPage from './error'
 import Layout from '../Layout'
 import Content from '../content/Content'
 import { loadSection, loadSectionFailure } from '../../store/actions/content'
