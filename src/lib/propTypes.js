@@ -27,7 +27,12 @@ if (!process.browser) {
 }
 const refType = PropTypes.oneOfType([
   PropTypes.func,
-  PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  PropTypes.shape({
+    current: PropTypes.oneOfType([
+      PropTypes.instanceOf(Element),
+      PropTypes.object,
+    ]),
+  }),
 ])
 
 const sectionType = PropTypes.shape({

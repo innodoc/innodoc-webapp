@@ -42,4 +42,5 @@ class MathJaxDiv extends React.Component {
   }
 }
 
+export { MathJaxDiv as BareMathJaxDiv }
 export default withMathJax(MathJaxDiv)
