@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import AntBreadcrumb from 'antd/lib/breadcrumb'
 
-import { Breadcrumb } from './Breadcrumb'
+import { BareBreadcrumb as Breadcrumb, mapStateToProps } from './Breadcrumb'
 import SectionLink from '../../SectionLink'
 
 describe('<Breadcrumb />', () => {
@@ -28,5 +28,20 @@ describe('<Breadcrumb />', () => {
     expect(wrapper.find(AntBreadcrumb)).toBeTruthy()
     expect(wrapper.find(AntBreadcrumb.Item)).toHaveLength(4)
     expect(wrapper.find(SectionLink)).toHaveLength(3)
+  })
+})
+
+jest.mock('../../../store/selectors/course.js', () => ({
+  getCurrentCourse: () => ({ homeLink: 'homeLink' }),
+}))
+jest.mock('../../../store/selectors/section/index.js', () => ({
+  getBreadcrumbSections: () => ['a', 'b', 'c'],
+}))
+
+describe('mapStateToProps', () => {
+  it('returns homeLink and sections', () => {
+    const props = mapStateToProps()
+    expect(props.homeLink).toBe('homeLink')
+    expect(props.sections).toEqual(['a', 'b', 'c'])
   })
 })

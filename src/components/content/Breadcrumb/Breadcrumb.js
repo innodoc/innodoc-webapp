@@ -59,7 +59,7 @@ const mapStateToProps = state => ({
   sections: sectionSelectors.getBreadcrumbSections(state),
 })
 
-export { Breadcrumb } // for testing
+export { Breadcrumb as BareBreadcrumb, mapStateToProps } // for testing
 export default connect(mapStateToProps)(
   withNamespaces()(Breadcrumb)
 )
