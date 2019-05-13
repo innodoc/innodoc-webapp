@@ -8,10 +8,12 @@ describe('<SectionNav />', () => {
   const prevSection = {
     id: 'section1',
     title: { en: 'Section 1' },
+    ord: [0],
   }
   const nextSection = {
-    id: 'section2',
-    title: { en: 'Section 2' },
+    id: 'section3',
+    title: { en: 'Section 3' },
+    ord: [2],
   }
 
   it('renders', () => {
@@ -29,6 +31,6 @@ describe('<SectionNav />', () => {
     const prevSectionInnerLink = prevSectionLink.find('a')
     const nextSectionInnerLink = nextSectionLink.find('a')
     expect(prevSectionInnerLink.prop('title')).toBe('Section 1')
-    expect(nextSectionInnerLink.prop('title')).toBe('Section 2')
+    expect(nextSectionInnerLink.prop('title')).toBe('Section 3')
   })
 })
