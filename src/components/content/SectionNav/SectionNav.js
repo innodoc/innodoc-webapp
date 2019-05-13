@@ -12,22 +12,26 @@ import css from './style.sass'
 const SectionNav = ({ currentLanguage, prev, next }) => (
   <React.Fragment>
     {
-      currentLanguage && prev ? (
-        <SectionLink sectionId={prev.id}>
-          <a title={prev.title[currentLanguage]} className={css.prev}>
-            <Icon type="arrow-left" />
-          </a>
-        </SectionLink>
-      ) : null
+      currentLanguage && prev
+        ? (
+          <SectionLink sectionId={prev.id}>
+            <a title={prev.title[currentLanguage]} className={css.prev}>
+              <Icon type="arrow-left" />
+            </a>
+          </SectionLink>
+        )
+        : null
     }
     {
-      currentLanguage && next ? (
-        <SectionLink sectionId={next.id}>
-          <a title={next.title[currentLanguage]} className={css.next}>
-            <Icon type="arrow-right" />
-          </a>
-        </SectionLink>
-      ) : null
+      currentLanguage && next
+        ? (
+          <SectionLink sectionId={next.id}>
+            <a title={next.title[currentLanguage]} className={css.next}>
+              <Icon type="arrow-right" />
+            </a>
+          </SectionLink>
+        )
+        : null
     }
   </React.Fragment>
 )
@@ -52,5 +56,5 @@ const mapStateToProps = (state) => {
   }
 }
 
-export { SectionNav } // for testing
+export { SectionNav as BareSectionNav, mapStateToProps } // for testing
 export default connect(mapStateToProps)(SectionNav)

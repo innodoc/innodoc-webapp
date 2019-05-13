@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { SectionNav } from './SectionNav'
+import { BareSectionNav as SectionNav, mapStateToProps } from './SectionNav'
 import SectionLink from '../../SectionLink'
 
 describe('<SectionNav />', () => {
@@ -32,5 +32,50 @@ describe('<SectionNav />', () => {
     const nextSectionInnerLink = nextSectionLink.find('a')
     expect(prevSectionInnerLink.prop('title')).toBe('Section 1')
     expect(nextSectionInnerLink.prop('title')).toBe('Section 3')
+  })
+
+  it('renders only next', () => {
+    const wrapper = shallow(
+      <SectionNav currentLanguage="en" next={nextSection} />
+    )
+    const sectionLinks = wrapper.find(SectionLink)
+    expect(sectionLinks).toHaveLength(1)
+    const nextSectionLink = sectionLinks.at(0)
+    expect(nextSectionLink.prop('sectionId')).toBe(nextSection.id)
+    expect(nextSectionLink.find('a')).toBeTruthy()
+    const nextSectionInnerLink = nextSectionLink.find('a')
+    expect(nextSectionInnerLink.prop('title')).toBe('Section 3')
+  })
+
+  it('renders only prev', () => {
+    const wrapper = shallow(
+      <SectionNav currentLanguage="en" prev={prevSection} />
+    )
+    const sectionLinks = wrapper.find(SectionLink)
+    expect(sectionLinks).toHaveLength(1)
+    const prevSectionLink = sectionLinks.at(0)
+    expect(prevSectionLink.prop('sectionId')).toBe(prevSection.id)
+    expect(prevSectionLink.find('a')).toBeTruthy()
+    const prevSectionInnerLink = prevSectionLink.find('a')
+    expect(prevSectionInnerLink.prop('title')).toBe('Section 1')
+  })
+})
+
+jest.mock('../../../store/selectors/index.js', () => ({
+  getApp: () => ({ language: 'en' }),
+}))
+jest.mock('../../../store/selectors/section/index.js', () => ({
+  getNextPrevSections: () => ({
+    next: 'next',
+    prev: 'prev',
+  }),
+}))
+
+describe('mapStateToProps', () => {
+  it('returns next and prev section', () => {
+    const props = mapStateToProps(null)
+    expect(props.next).toEqual('next')
+    expect(props.prev).toEqual('prev')
+    expect(props.currentLanguage).toEqual('en')
   })
 })
