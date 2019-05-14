@@ -1,6 +1,6 @@
 # Official Alpine-based Dockerfile for innodoc-webapp
-ARG BUILD_IMAGE=node:alpine
-FROM $BUILD_IMAGE AS build
+ARG BASE_IMAGE=node:alpine
+FROM $BASE_IMAGE AS build
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
 # build
@@ -13,9 +13,10 @@ RUN set -xe && \
     python2 && \
   ln -s .env.example .env && \
   yarn install --pure-lockfile && \
-  yarn build
+  yarn build && \
+  yarn add --no-lockfile pm2
 
-FROM $BUILD_IMAGE
+FROM $BASE_IMAGE
 
 # add user/group to run as
 RUN set -xe && \
@@ -26,11 +27,8 @@ RUN set -xe && \
 WORKDIR /innodoc-webapp
 COPY --from=build --chown=innodocuser:innodocuser /innodoc-webapp .
 USER innodocuser
-RUN set -xe && \
-  yarn global add pm2 && \
-  yarn cache clean
 
 # run web app
 EXPOSE 8000
 ENV CONTENT_ROOT=http://localhost:8001/
-CMD ["pm2-runtime", "start", "yarn", "--interpreter", "/bin/sh", "--name", "innodoc-webapp", "--", "start"]
+CMD ["node_modules/.bin/pm2-runtime", "start", "yarn", "--interpreter", "/bin/sh", "--name", "innodoc-webapp", "--", "start"]
