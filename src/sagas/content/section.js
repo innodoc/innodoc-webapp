@@ -45,7 +45,9 @@ export default function* loadSectionSaga({ sectionId: sectionIdHash }) {
       try {
         const content = yield call(fetchSection, contentRoot, language, sectionId)
         yield put(loadSectionSuccess({ language, sectionId, content }))
-        yield call(scrollToHash) // need to run scrollToHash manually!
+        // TODO: scrollToHash needs to happen *after* mathJax rendering!
+        //       Maybe move this to Content component.
+        yield call(scrollToHash)
       } catch (error) {
         yield put(loadSectionFailure({ language, error }))
         yield put(showMessage({
