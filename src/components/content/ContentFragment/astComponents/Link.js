@@ -32,12 +32,18 @@ const Link = ({ data }) => {
     )
   }
 
-  const children = content ? <ContentFragment content={content} /> : null
-  return (
-    <SectionLink sectionId={href}>
-      <a>{children}</a>
-    </SectionLink>
-  )
+  const sectionId = href.startsWith('/') ? href.slice(1) : href
+
+  if (content && content.length) {
+    return (
+      <SectionLink sectionId={sectionId}>
+        <a>
+          <ContentFragment content={content} />
+        </a>
+      </SectionLink>
+    )
+  }
+  return <SectionLink sectionId={sectionId} />
 }
 
 Link.propTypes = {

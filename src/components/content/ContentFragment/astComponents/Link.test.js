@@ -28,7 +28,7 @@ describe('<Link />', () => {
     const data = [
       [null, [], null],
       [{ t: 'Str', c: 'Foo bar' }],
-      ['foo/bar', 'link title'],
+      ['/foo/bar', 'link title'],
     ]
     const wrapper = shallow(<Link data={data} />)
     const sectionLink = wrapper.find(SectionLink)
@@ -45,14 +45,13 @@ describe('<Link />', () => {
     const data = [
       [null, [], null],
       null,
-      ['foo/bar', 'link title'],
+      ['/foo/bar', 'link title'],
     ]
     const wrapper = shallow(<Link data={data} />)
     const sectionLink = wrapper.find(SectionLink)
     expect(sectionLink).toHaveLength(1)
     expect(sectionLink.prop('sectionId')).toEqual('foo/bar')
-    const a = wrapper.find('a')
-    expect(a).toHaveLength(1)
+    expect(wrapper.find('a')).toHaveLength(0)
     expect(wrapper.exists(ContentFragment)).toBe(false)
   })
 
