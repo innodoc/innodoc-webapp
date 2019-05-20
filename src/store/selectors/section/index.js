@@ -5,6 +5,7 @@ import appSelectors from '..'
 import courseSelectors from '../course'
 import getBreadcrumbSections from './breadcrumb'
 import getNextPrevSections from './next-prev'
+import makeGetSectionLink from './link'
 import getToc from './toc'
 
 const selectSectionId = (state, id) => id
@@ -38,12 +39,24 @@ const getCurrentSubsections = createSelector(
     .toRefArray()
 )
 
+const getCurrentTitle = createSelector(
+  orm, appSelectors.getOrmState,
+  appSelectors.getApp,
+  courseSelectors.getCurrentCourse,
+  (session, { language }, course) => {
+    const section = session.Section.withId(course.currentSection)
+    return section ? section.getDisplayTitle(language) : null
+  }
+)
+
 export default {
   getBreadcrumbSections,
   getCurrentSection,
   getCurrentSubsections,
+  getCurrentTitle,
   getNextPrevSections,
   getSection,
   getToc,
+  makeGetSectionLink,
   sectionExists,
 }

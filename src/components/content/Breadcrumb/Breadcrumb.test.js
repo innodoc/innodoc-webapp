@@ -9,31 +9,40 @@ describe('<Breadcrumb />', () => {
   const sections = [
     {
       id: 'section1',
-      title: [{ t: 'Str', c: 'Section 1' }],
+      title: '1 Section',
     },
     {
       id: 'section1/section11',
-      title: [{ t: 'Str', c: 'Subsection 1.1' }],
+      title: '1.1 Subsection',
     },
     {
       id: 'section1/section11/section111',
-      title: [{ t: 'Str', c: 'Subsection 1.1.1' }],
+      title: '1.1.1 Subsection',
     },
   ]
 
   it('renders', () => {
     const wrapper = shallow(
-      <Breadcrumb homeLink="section1" sections={sections} t={() => {}} />
+      <Breadcrumb
+        homeLink="home"
+        sections={sections}
+        t={() => {}}
+      />
     )
-    expect(wrapper.find(AntBreadcrumb)).toBeTruthy()
-    expect(wrapper.find(AntBreadcrumb.Item)).toHaveLength(4)
+    expect(wrapper.find(AntBreadcrumb)).toHaveLength(1)
+    const items = wrapper.find(AntBreadcrumb.Item)
+    expect(items).toHaveLength(4)
     expect(wrapper.find(SectionLink)).toHaveLength(3)
+    expect(items.at(0).find(SectionLink).prop('sectionId')).toBe('home')
+    expect(items.at(1).find(SectionLink).prop('sectionId')).toBe('section1')
+    expect(items.at(2).find(SectionLink).prop('sectionId')).toBe('section1/section11')
   })
 })
 
 jest.mock('../../../store/selectors/course.js', () => ({
   getCurrentCourse: () => ({ homeLink: 'homeLink' }),
 }))
+
 jest.mock('../../../store/selectors/section/index.js', () => ({
   getBreadcrumbSections: () => ['a', 'b', 'c'],
 }))

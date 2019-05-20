@@ -5,7 +5,6 @@ import classNames from 'classnames'
 import Tree from 'antd/lib/tree'
 
 import css from './style.sass'
-import appSelectors from '../../store/selectors'
 import courseSelectors from '../../store/selectors/course'
 import sectionSelectors from '../../store/selectors/section'
 import { courseType, tocTreeType } from '../../lib/propTypes'
@@ -14,13 +13,11 @@ import SectionLink from '../SectionLink'
 class Toc extends React.Component {
   static propTypes = {
     course: courseType,
-    currentLanguage: PropTypes.string,
     toc: tocTreeType.isRequired,
     expandAll: PropTypes.bool,
   }
 
   static defaultProps = {
-    currentLanguage: undefined,
     course: null,
     expandAll: false,
   }
@@ -78,24 +75,14 @@ class Toc extends React.Component {
   }
 
   renderTreeNodes(section) {
-    const { course, currentLanguage } = this.props
-    const {
-      title,
-      id: sectionId,
-      children = [],
-    } = section
+    const { course } = this.props
+    const { id: sectionId, children = [] } = section
 
     const className = classNames({
       active: sectionId === (course ? course.currentSection : null),
     })
 
-    const sectionNode = (
-      <SectionLink sectionId={sectionId}>
-        <a>
-          {currentLanguage ? title[currentLanguage] : ''}
-        </a>
-      </SectionLink>
-    )
+    const sectionNode = <SectionLink sectionId={sectionId} />
 
     return (
       <Tree.TreeNode
@@ -130,7 +117,6 @@ class Toc extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  currentLanguage: appSelectors.getApp(state).language,
   course: courseSelectors.getCurrentCourse(state),
   toc: sectionSelectors.getToc(state),
 })

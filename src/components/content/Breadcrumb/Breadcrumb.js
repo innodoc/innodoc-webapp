@@ -5,6 +5,7 @@ import { withNamespaces } from 'react-i18next'
 import AntBreadcrumb from 'antd/lib/breadcrumb'
 import Icon from 'antd/lib/icon'
 
+import { sectionTypeSparse } from '../../../lib/propTypes'
 import courseSelectors from '../../../store/selectors/course'
 import sectionSelectors from '../../../store/selectors/section'
 import SectionLink from '../../SectionLink'
@@ -15,13 +16,9 @@ const Breadcrumb = ({ homeLink, sections, t }) => {
   const sectionLinks = sections.map((section, i) => (
     <AntBreadcrumb.Item key={section.id}>
       {
-        i + 1 < sections.length ? (
-          <SectionLink sectionId={section.id}>
-            <a>
-              {section.title}
-            </a>
-          </SectionLink>
-        ) : section.title
+        i + 1 < sections.length
+          ? <SectionLink sectionId={section.id} />
+          : section.title
       }
     </AntBreadcrumb.Item>
   ))
@@ -46,7 +43,7 @@ const Breadcrumb = ({ homeLink, sections, t }) => {
 
 Breadcrumb.propTypes = {
   homeLink: PropTypes.string,
-  sections: PropTypes.arrayOf(PropTypes.object).isRequired,
+  sections: PropTypes.arrayOf(sectionTypeSparse).isRequired,
   t: PropTypes.func.isRequired,
 }
 

@@ -84,3 +84,21 @@ describe('reducer', () => {
     expect(session.state).toEqual(resultState)
   })
 })
+
+describe('Section.getDisplaytitle', () => {
+  it.each([
+    [[0], '1 Test title'],
+    [[0, 0], '1.1 Test title'],
+    [[0, 0, 0], '1.1.1 Test title'],
+    [[4, 5, 3], '5.6.4 Test title'],
+  ])('should generate displayTitle (ord="%s" -> "%s")', (ord, expectedDisplayTitle) => {
+    const session = orm.session(orm.getEmptyState())
+    const section = session.Section.create({
+      id: 'test',
+      ord,
+      title: { en: 'Test title' },
+      parentId: null,
+    })
+    expect(section.getDisplayTitle('en')).toBe(expectedDisplayTitle)
+  })
+})

@@ -43,6 +43,11 @@ const sectionType = PropTypes.shape({
   title: PropTypes.objectOf(PropTypes.string).isRequired,
 })
 
+const sectionTypeSparse = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+})
+
 const tocTreeType = PropTypes.arrayOf(PropTypes.object)
 
 export {
@@ -53,5 +58,6 @@ export {
   messageType,
   refType,
   sectionType,
+  sectionTypeSparse,
   tocTreeType,
 }

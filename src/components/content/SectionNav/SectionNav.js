@@ -3,19 +3,17 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Icon from 'antd/lib/icon'
 
-import { sectionType } from '../../../lib/propTypes'
-import appSelectors from '../../../store/selectors'
 import sectionSelectors from '../../../store/selectors/section'
 import SectionLink from '../../SectionLink'
 import css from './style.sass'
 
-const SectionNav = ({ currentLanguage, prev, next }) => (
+const SectionNav = ({ prevId, nextId }) => (
   <React.Fragment>
     {
-      currentLanguage && prev
+      prevId
         ? (
-          <SectionLink sectionId={prev.id}>
-            <a title={prev.title[currentLanguage]} className={css.prev}>
+          <SectionLink sectionId={prevId}>
+            <a className={css.prev}>
               <Icon type="arrow-left" />
             </a>
           </SectionLink>
@@ -23,10 +21,10 @@ const SectionNav = ({ currentLanguage, prev, next }) => (
         : null
     }
     {
-      currentLanguage && next
+      nextId
         ? (
-          <SectionLink sectionId={next.id}>
-            <a title={next.title[currentLanguage]} className={css.next}>
+          <SectionLink sectionId={nextId}>
+            <a className={css.next}>
               <Icon type="arrow-right" />
             </a>
           </SectionLink>
@@ -37,24 +35,16 @@ const SectionNav = ({ currentLanguage, prev, next }) => (
 )
 
 SectionNav.propTypes = {
-  currentLanguage: PropTypes.string,
-  prev: sectionType,
-  next: sectionType,
+  prevId: PropTypes.string,
+  nextId: PropTypes.string,
 }
 
 SectionNav.defaultProps = {
-  currentLanguage: undefined,
-  prev: undefined,
-  next: undefined,
+  prevId: undefined,
+  nextId: undefined,
 }
 
-const mapStateToProps = (state) => {
-  const navSections = sectionSelectors.getNextPrevSections(state)
-  return {
-    ...navSections,
-    currentLanguage: appSelectors.getApp(state).language,
-  }
-}
+const mapStateToProps = state => sectionSelectors.getNextPrevSections(state)
 
 export { SectionNav as BareSectionNav, mapStateToProps } // for testing
 export default connect(mapStateToProps)(SectionNav)

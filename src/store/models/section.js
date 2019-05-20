@@ -50,4 +50,12 @@ export default class Section extends Model {
         break
     }
   }
+
+  getDisplayTitle(language) {
+    const ordString = this.ord.reduce((acc, secOrd) => {
+      const prefix = acc === '' ? '' : `${acc}.`
+      return `${prefix}${secOrd + 1}`
+    }, '')
+    return `${ordString} ${this.title[language]}`
+  }
 }

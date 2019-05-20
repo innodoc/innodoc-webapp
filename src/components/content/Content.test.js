@@ -10,17 +10,21 @@ import { typesettingStates } from '../hoc/withMathJax'
 
 let mockGetCurrentCourseMock
 let mockGetCurrentSectionMock
+let mockGetCurrentTitle
 
 jest.mock('../../store/selectors/index.js', () => ({
   getApp: () => ({ language: 'en' }),
   getOrmState: () => ({ orm: {} }),
 }))
+
 jest.mock('../../store/selectors/course.js', () => ({
   getCurrentCourse: () => mockGetCurrentCourseMock(),
 }))
+
 jest.mock('../../store/selectors/section/index.js', () => ({
   getCurrentSection: () => mockGetCurrentSectionMock(),
   getCurrentSubsections: () => [],
+  getCurrentTitle: () => mockGetCurrentTitle(),
 }))
 
 describe('<Content />', () => {
@@ -81,6 +85,7 @@ describe('<Content />', () => {
         section={data.section}
         subsections={data.subsections}
         t={data.mockT}
+        title="1 Foo section"
         typesetMathJax={data.mockTypesetMathJax}
         typesettingStatus={typesettingStates.PENDING}
       />
@@ -89,7 +94,7 @@ describe('<Content />', () => {
     expect(wrapper.find(Breadcrumb)).toHaveLength(1)
     const h1 = wrapper.find('h1')
     expect(h1).toHaveLength(1)
-    expect(h1.text()).toEqual(data.section.title.en)
+    expect(h1.text()).toEqual('1 Foo section')
     expect(wrapper.find(ContentFragment).at(0).prop('content')).toEqual(data.section.content.en)
     expect(wrapper.exists(SubsectionList)).toBe(true)
     expect(data.mockTypesetMathJax).toBeCalledTimes(0)
@@ -127,6 +132,7 @@ describe('mapStateToProps', () => {
       title: ['Foobar'],
     })
     mockGetCurrentSectionMock = () => undefined
+    mockGetCurrentTitle = () => undefined
     expect(mapStateToProps().loading).toEqual(true)
   })
 
@@ -138,6 +144,7 @@ describe('mapStateToProps', () => {
       title: ['Foobar'],
     })
     mockGetCurrentSectionMock = () => undefined
+    mockGetCurrentTitle = () => undefined
     expect(mapStateToProps().loading).toEqual(true)
   })
 
@@ -150,11 +157,13 @@ describe('mapStateToProps', () => {
       title: ['Foobar'],
     })
     mockGetCurrentSectionMock = () => section
+    mockGetCurrentTitle = () => '1.1 title'
     expect(mapStateToProps()).toEqual({
       section,
       subsections: [],
       currentLanguage: 'en',
       loading: false,
+      title: '1.1 title',
     })
   })
 })

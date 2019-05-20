@@ -3,31 +3,25 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Link from 'next/link'
 
-import { childrenType } from '../lib/propTypes'
-import { parseSectionId } from '../lib/util'
-import appSelectors from '../store/selectors'
+import { childrenType, sectionTypeSparse } from '../lib/propTypes'
 import sectionSelectors from '../store/selectors/section'
 
-const SectionLink = ({
-  children,
-  content,
-  hash,
-  sectionId,
-  title,
-}) => {
+const SectionLink = ({ children, hash, section }) => {
+  const { id, title } = section
   const linkProps = {
     href: {
       pathname: '/page',
-      query: { sectionId },
+      query: { sectionId: id },
     },
     as: {
-      pathname: `/page/${sectionId}`,
+      pathname: `/page/${id}`,
       hash: hash ? `#${hash}` : undefined,
     },
   }
+
   const newChildren = children
     ? React.cloneElement(children, { title })
-    : <a>{content}</a>
+    : <a>{title}</a>
   return (
     <Link {...linkProps}>
       {newChildren}
@@ -38,33 +32,18 @@ const SectionLink = ({
 SectionLink.defaultProps = {
   children: null,
   hash: null,
-  content: null,
-  title: null,
 }
 
 SectionLink.propTypes = {
   children: childrenType,
-  content: PropTypes.string,
   hash: PropTypes.string,
-  sectionId: PropTypes.string.isRequired,
-  title: PropTypes.string,
+  section: sectionTypeSparse.isRequired,
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { children, sectionId: sectionIdHash } = ownProps
-  const [sectionId, hash] = parseSectionId(sectionIdHash)
-  const ret = { hash, sectionId }
-  try {
-    const section = sectionSelectors.getSection(state, sectionId)
-    const sectionTitle = section.title[appSelectors.getApp(state).language]
-    if (children) {
-      return { ...ret, title: sectionTitle }
-    }
-    return { ...ret, content: sectionTitle }
-  } catch {
-    return { ...ret, content: 'UNKNOWN SECTION ID' }
-  }
+const makeMapStateToProps = () => {
+  const getSectionLink = sectionSelectors.makeGetSectionLink()
+  return (state, props) => getSectionLink(state, props)
 }
 
-export { mapStateToProps, SectionLink as SectionLinkBare } // for testing
-export default connect(mapStateToProps)(SectionLink)
+export { makeMapStateToProps, SectionLink as SectionLinkBare } // for testing
+export default connect(makeMapStateToProps)(SectionLink)

@@ -90,21 +90,25 @@ describe('sectionSelectors', () => {
       sections['test/child1/child12'],
     ])
   })
+
+  test('getCurrentTitle', () => {
+    expect(sectionSelectors.getCurrentTitle(state)).toEqual('1.1 test child1 title')
+  })
 })
 
 describe('getBreadcrumbSections', () => {
   test.each([
     ['test', [
-      { id: 'test', title: 'test title' },
+      { id: 'test', title: '1 test title' },
     ]],
     ['test/child1', [
-      { id: 'test', title: 'test title' },
-      { id: 'test/child1', title: 'test child1 title' },
+      { id: 'test', title: '1 test title' },
+      { id: 'test/child1', title: '1.1 test child1 title' },
     ]],
     ['test/child1/child12', [
-      { id: 'test', title: 'test title' },
-      { id: 'test/child1', title: 'test child1 title' },
-      { id: 'test/child1/child12', title: 'test child12 title' },
+      { id: 'test', title: '1 test title' },
+      { id: 'test/child1', title: '1.1 test child1 title' },
+      { id: 'test/child1/child12', title: '1.1.2 test child12 title' },
     ]],
   ])('%s', (sectionId, crumbs) => {
     state = setSectionId(state, sectionId)
@@ -114,13 +118,15 @@ describe('getBreadcrumbSections', () => {
 
 describe('getNextPrevSections', () => {
   test.each([
-    ['test', null, sections['test/child1']],
-    ['test/child1', sections.test, sections['test/child1/child11']],
-    ['test/child1/child12', sections['test/child1/child11'], sections['test/child2']],
-    ['test/child2', sections['test/child1/child12'], null],
-  ])('%s', (sectionId, prev, next) => {
+    ['test', null, 'test/child1'],
+    ['test/child1', 'test', 'test/child1/child11'],
+    ['test/child1/child12', 'test/child1/child11', 'test/child2'],
+    ['test/child2', 'test/child1/child12', null],
+  ])('%s', (sectionId, expPrevId, expNextId) => {
     state = setSectionId(state, sectionId)
-    expect(sectionSelectors.getNextPrevSections(state)).toEqual({ prev, next })
+    const { prevId, nextId } = sectionSelectors.getNextPrevSections(state)
+    expect(prevId).toEqual(expPrevId)
+    expect(nextId).toEqual(expNextId)
   })
 })
 
@@ -132,5 +138,30 @@ describe('getToc', () => {
     expect(toc[0].children[0].children[0].id).toEqual('test/child1/child11')
     expect(toc[0].children[0].children[1].id).toEqual('test/child1/child12')
     expect(toc[0].children[1].id).toEqual('test/child2')
+  })
+})
+
+describe('makeGetSectionLink', () => {
+  it('returns section', () => {
+    const getSectionLink = sectionSelectors.makeGetSectionLink()
+    const sectionLink = getSectionLink(state, { sectionId: 'test/child1/child11' })
+    expect(sectionLink.section.id).toBe('test/child1/child11')
+    expect(sectionLink.section.title).toBe('1.1.1 test child11 title')
+    expect(sectionLink.hash).toBeUndefined()
+  })
+
+  it('returns section and hash', () => {
+    const getSectionLink = sectionSelectors.makeGetSectionLink()
+    const sectionLink = getSectionLink(state, { sectionId: 'test/child1/child11#foo' })
+    expect(sectionLink.section.id).toBe('test/child1/child11')
+    expect(sectionLink.section.title).toBe('1.1.1 test child11 title')
+    expect(sectionLink.hash).toBe('foo')
+  })
+
+  it('notices unknown section', () => {
+    const getSectionLink = sectionSelectors.makeGetSectionLink()
+    const sectionLink = getSectionLink(state, { sectionId: 'does/not/exist' })
+    expect(sectionLink.section.id).toBe('does/not/exist')
+    expect(sectionLink.section.title).toMatch('UNKNOWN SECTION')
   })
 })

@@ -21,6 +21,7 @@ class Content extends React.Component {
     mathJaxContentRef: refType.isRequired,
     section: sectionType,
     subsections: PropTypes.arrayOf(sectionType),
+    title: PropTypes.string,
     typesetMathJax: PropTypes.func.isRequired,
     typesettingStatus: typesettingStatusType.isRequired,
   }
@@ -34,6 +35,7 @@ class Content extends React.Component {
       content: {},
     },
     subsections: [],
+    title: '',
   }
 
   componentDidUpdate(prevProps) {
@@ -55,6 +57,7 @@ class Content extends React.Component {
       mathJaxContentRef,
       section,
       subsections,
+      title,
       typesettingStatus,
     } = this.props
 
@@ -74,9 +77,7 @@ class Content extends React.Component {
 
     const content = (
       <div className={className}>
-        <h1 className={css.header}>
-          {currentLanguage ? section.title[currentLanguage] : ''}
-        </h1>
+        <h1 className={css.header}>{title}</h1>
         {subsectionList}
         <div ref={mathJaxContentRef}>{rootContentFragment}</div>
       </div>
@@ -93,21 +94,21 @@ class Content extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  let ret = { loading: true }
   const { language } = appSelectors.getApp(state)
   if (language) {
     const section = sectionSelectors.getCurrentSection(state)
     if (section && section.content[language]) {
       const subsections = sectionSelectors.getCurrentSubsections(state)
-      ret = {
+      return {
+        currentLanguage: language,
         loading: false,
         section,
         subsections,
-        currentLanguage: language,
+        title: sectionSelectors.getCurrentTitle(state, language),
       }
     }
   }
-  return ret
+  return { loading: true }
 }
 
 export { Content as BareContent, mapStateToProps } // for testing
