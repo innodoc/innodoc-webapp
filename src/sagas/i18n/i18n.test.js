@@ -1,28 +1,28 @@
 import { expectSaga } from 'redux-saga-test-plan'
 
-import watchI18nInstanceAvailable, { notifyI18next } from './i18n'
-import { changeLanguage, i18nInstanceAvailable } from '../../store/actions/i18n'
+import { notifyI18next, waitForDetectedLanguage } from './i18n'
+import { changeLanguage, languageDetected } from '../../store/actions/i18n'
+import { toTwoLetterCode } from '../../lib/util'
+import nextI18next from '../../lib/i18n'
 
-const language = 'de-DE'
-const i18nMock = {
-  changeLanguage: () => {},
-  language,
-}
+jest.mock('../../lib/i18n', () => ({
+  i18n: { changeLanguage: () => {} },
+}))
 
 describe('notifyI18next', () => {
-  it('should notify i18next', () => expectSaga(notifyI18next, i18nMock, changeLanguage(language))
-    .call([i18nMock, i18nMock.changeLanguage], language)
-    .run()
+  it('should notify i18next',
+    () => expectSaga(notifyI18next, { language: 'de' })
+      .call([nextI18next.i18n, nextI18next.i18n.changeLanguage], 'de')
+      .run()
   )
 })
 
-describe('watchI18nInstanceAvailable', () => {
-  it('should wait for the i18n instance', () => expectSaga(watchI18nInstanceAvailable)
-    .dispatch(i18nInstanceAvailable(i18nMock))
-    .put(changeLanguage('de'))
-    .dispatch(changeLanguage('en')) // trigger takeLatest once more
-    .silentRun(0)
-    // check takeLatest is working
-    .then(({ effects }) => expect(effects.fork).toHaveLength(3))
+describe('waitForDetectedLanguage', () => {
+  it('should wait for the i18n instance',
+    () => expectSaga(waitForDetectedLanguage)
+      .dispatch(languageDetected('en-US'))
+      .call(toTwoLetterCode, 'en-US')
+      .put(changeLanguage('en'))
+      .run()
   )
 })

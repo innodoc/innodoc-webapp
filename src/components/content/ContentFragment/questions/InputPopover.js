@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withNamespaces } from 'react-i18next'
 import Popover from 'antd/lib/popover'
 
+import { withNamespaces } from '../../../../lib/i18n'
 import css from './style.sass'
 import { childrenType } from '../../../../lib/propTypes'
 import MathJaxDiv from '../../../MathJaxDiv'

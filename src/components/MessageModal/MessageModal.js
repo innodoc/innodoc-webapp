@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import Button from 'antd/lib/button'
 import Modal from 'antd/lib/modal'
 import Icon from 'antd/lib/icon'
-import { withNamespaces } from 'react-i18next'
 
+import { withNamespaces } from '../../lib/i18n'
 import css from './style.sass'
 import { messageType } from '../../lib/propTypes'
 

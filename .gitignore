@@ -3,7 +3,7 @@ src/.next
 src/bundles
 node_modules
 *~
-src/locales/en/*.missing.json
+src/static/locales/*/*.missing.json
 .env
 coverage
 e2e/screenshots

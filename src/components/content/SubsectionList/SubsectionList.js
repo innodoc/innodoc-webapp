@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import List from 'antd/lib/list'
-import { withNamespaces } from 'react-i18next'
 
+import { withNamespaces } from '../../../lib/i18n'
 import css from './style.sass'
 import SectionLink from '../../SectionLink'
 import { sectionType } from '../../../lib/propTypes'

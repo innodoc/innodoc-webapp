@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import withI18next from '../../../hoc/withI18next'
+import { withNamespaces } from '../../../../lib/i18n'
 import ContentFragment from '..'
 import appSelectors from '../../../../store/selectors'
 import { astToString } from '../../../../lib/util'
@@ -85,5 +85,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(
-  withI18next()(Video)
+  withNamespaces()(Video)
 )

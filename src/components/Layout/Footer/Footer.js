@@ -4,8 +4,8 @@ import AntLayout from 'antd/lib/layout'
 import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'
 import List from 'antd/lib/list'
-import { Trans, withNamespaces } from 'react-i18next'
 
+import { Trans, withNamespaces } from '../../../lib/i18n'
 import css from './style.sass'
 
 const Footer = ({ t }) => (

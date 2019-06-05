@@ -26,23 +26,36 @@ import 'antd/lib/skeleton/style/index.less'
 import 'antd/lib/table/style/index.less'
 import 'antd/lib/tree/style/index.less'
 
+import { appWithTranslation } from '../lib/i18n'
 import makeStore from '../store'
 import { loadManifest, setContentRoot, setStaticRoot } from '../store/actions/content'
+import { languageDetected } from '../store/actions/i18n'
 
 class InnoDocApp extends App {
   static async getInitialProps({ Component, ctx }) {
+    // SERVER
     if (ctx.isServer) {
       // set initial content URLs
       ctx.store.dispatch(setContentRoot(ctx.res.locals.contentRoot))
       ctx.store.dispatch(setStaticRoot(ctx.res.locals.staticRoot))
+      // pass detected language to app store
+      if (ctx.req.i18n) {
+        ctx.store.dispatch(languageDetected(ctx.req.i18n.language))
+      }
       // load content manifest on start-up
       ctx.store.dispatch(loadManifest())
     }
-    // call getInitialProps from page
+
+    // page props
     const pageProps = Component.getInitialProps
       ? await Component.getInitialProps(ctx)
       : {}
-    return { pageProps }
+    return {
+      pageProps: {
+        ...pageProps,
+        namespacesRequired: ['common'],
+      },
+    }
   }
 
   render() {
@@ -65,7 +78,11 @@ class InnoDocApp extends App {
 const nextReduxWrapperDebug = process.env.NODE_ENV !== 'production' && process.env.NEXT_REDUX_WRAPPER_DEBUG === 'true'
 const withReduxConfig = { debug: nextReduxWrapperDebug }
 
-const InnoDocAppWithReduxSaga = withReduxSaga(InnoDocApp)
-
 export { InnoDocApp } // for testing
-export default withRedux(makeStore, withReduxConfig)(InnoDocAppWithReduxSaga)
+export default withRedux(makeStore, withReduxConfig)(
+  appWithTranslation(
+    withReduxSaga(
+      InnoDocApp
+    )
+  )
+)

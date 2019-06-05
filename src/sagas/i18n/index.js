@@ -1,7 +1,9 @@
-import { fork } from 'redux-saga/effects'
+import { fork, takeLatest } from 'redux-saga/effects'
 
-import watchI18nInstanceAvailable from './i18n'
+import { actionTypes } from '../../store/actions/i18n'
+import { notifyI18next, waitForDetectedLanguage } from './i18n'
 
 export default [
-  fork(watchI18nInstanceAvailable),
+  fork(waitForDetectedLanguage),
+  takeLatest(actionTypes.CHANGE_LANGUAGE, notifyI18next),
 ]

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withNamespaces } from 'react-i18next'
 
+import { withNamespaces } from '../../../../../lib/i18n'
 import { contentType } from '../../../../../lib/propTypes'
 import Card from '../Card'
 import ExerciseProvider from './ExerciseProvider'

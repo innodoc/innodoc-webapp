@@ -4,8 +4,6 @@ import { connect } from 'react-redux'
 
 import { loadSection, loadSectionFailure } from '../../store/actions/content'
 import appSelectors from '../../store/selectors'
-import withI18next from '../hoc/withI18next'
-import withI18nDispatch from '../hoc/withI18nDispatch'
 import Layout from '../Layout'
 import Content from '../content'
 import ErrorPage from './error'
@@ -55,10 +53,4 @@ const mapStateToProps = state => ({
 })
 
 export { CoursePage } // for testing
-export default connect(mapStateToProps)(
-  withI18next()(
-    withI18nDispatch(
-      CoursePage
-    )
-  )
-)
+export default connect(mapStateToProps)(CoursePage)

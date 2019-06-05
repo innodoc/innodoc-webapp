@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Document, { Main, Head as NextHead, NextScript } from 'next/document'
+import { lngFromReq } from 'next-i18next/dist/commonjs/utils'
 
 // TODO: remove this workaround if possible
 // CSS links are in wrong order in production build.
@@ -17,7 +18,7 @@ class InnodocDocument extends Document {
     const initialProps = await Document.getInitialProps(ctx)
     return {
       ...initialProps,
-      language: ctx.req.i18n.language,
+      language: lngFromReq(ctx.req),
     }
   }
 
@@ -26,7 +27,11 @@ class InnodocDocument extends Document {
     return (
       <html lang={language}>
         <Head>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
+          <meta
+            content="initial-scale=1.0, width=device-width"
+            key="viewport"
+            name="viewport"
+          />
         </Head>
         <body>
           <Main />

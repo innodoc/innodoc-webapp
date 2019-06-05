@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Icon from 'antd/lib/icon'
-import { withNamespaces } from 'react-i18next'
 
+import { withNamespaces } from '../../../../lib/i18n'
 import css from './style.sass'
 
 const FeedbackIcon = ({ correct, t }) => {

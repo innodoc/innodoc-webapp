@@ -1,25 +1,16 @@
-import {
-  call,
-  put,
-  take,
-  takeLatest,
-} from 'redux-saga/effects'
+import { call, put, take } from 'redux-saga/effects'
+import nextI18next from '../../lib/i18n'
 import { actionTypes, changeLanguage } from '../../store/actions/i18n'
 import { toTwoLetterCode } from '../../lib/util'
 
-// Notify i18next about language changes
-export function* notifyI18next(i18n, { language }) {
-  yield call([i18n, i18n.changeLanguage], language)
+// Notify i18next about language changes.
+export function* notifyI18next({ language }) {
+  yield call([nextI18next.i18n, nextI18next.i18n.changeLanguage], language)
 }
 
-// Wait for i18n instance and set initial language. i18next does language
-// detection. Once the initial language is set, the store becomes the
-// source of truth.
-export default function* watchI18nInstanceAvailable() {
-  const { i18n } = yield take(actionTypes.I18N_INSTANCE_AVAILABLE)
-  // normalize language (header might give something like 'en-US' but we're
-  // using the two-letter code.
-  const language = yield call(toTwoLetterCode, i18n.language)
+// Wait for i18next to detect language.
+export function* waitForDetectedLanguage() {
+  const { language: detectedLanguage } = yield take(actionTypes.LANGUAGE_DETECTED)
+  const language = yield call(toTwoLetterCode, detectedLanguage)
   yield put(changeLanguage(language))
-  yield takeLatest(actionTypes.CHANGE_LANGUAGE, notifyI18next, i18n)
 }

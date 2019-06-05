@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert } from 'antd'
 
-import withI18next from '../hoc/withI18next'
-import withI18nDispatch from '../hoc/withI18nDispatch'
+import { withNamespaces } from '../../lib/i18n'
 import Layout from '../Layout'
 
 class ErrorPage extends React.Component {
@@ -43,9 +42,5 @@ ErrorPage.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
-export { ErrorPage as TestableErrorPage } // for testing
-export default withI18next()(
-  withI18nDispatch(
-    ErrorPage
-  )
-)
+export { ErrorPage as BareErrorPage } // for testing
+export default withNamespaces(ErrorPage)

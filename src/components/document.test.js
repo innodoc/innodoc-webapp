@@ -1,9 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-
 import Document, { Main, NextScript } from 'next/document'
 
 import InnodocDocument from './document'
+
+jest.mock('next-i18next/dist/commonjs/utils', () => ({ lngFromReq: () => 'pt' }))
 
 describe('<InnoDocDocument />', () => {
   it('should render', () => {
@@ -17,13 +18,21 @@ describe('<InnoDocDocument />', () => {
   })
 
   describe('getInitialProps', () => {
+    const getInitialPropsOrig = Document.getInitialProps
+    afterEach(() => { Document.getInitialProps = getInitialPropsOrig })
+
     it('should add language to props', async () => {
       expect.assertions(1)
-      const getInitialPropsOrig = Document.getInitialProps
-      Document.getInitialProps = jest.fn(() => {})
-      const { language } = await InnodocDocument.getInitialProps({ req: { i18n: { language: 'pt' } } })
+      Document.getInitialProps = () => {}
+      const { language } = await InnodocDocument.getInitialProps({ req: {} })
       expect(language).toBe('pt')
-      Document.getInitialProps = getInitialPropsOrig
+    })
+
+    it('should add Document initial props', async () => {
+      expect.assertions(1)
+      Document.getInitialProps = jest.fn(() => ({ someOtherProp: 'foo' }))
+      const initialProps = await InnodocDocument.getInitialProps({ req: {} })
+      expect(initialProps.someOtherProp).toBe('foo')
     })
   })
 })

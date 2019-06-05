@@ -1,4 +1,4 @@
-import { actionTypes, changeLanguage, i18nInstanceAvailable } from './i18n'
+import { actionTypes, changeLanguage, languageDetected } from './i18n'
 
 test('CHANGE_LANGUAGE', () => {
   expect(changeLanguage('de')).toEqual({
@@ -7,10 +7,9 @@ test('CHANGE_LANGUAGE', () => {
   })
 })
 
-test('I18N_INSTANCE_AVAILABLE', () => {
-  const mockI18n = { language: 'de' }
-  expect(i18nInstanceAvailable(mockI18n)).toEqual({
-    type: actionTypes.I18N_INSTANCE_AVAILABLE,
-    i18n: mockI18n,
+test('LANGUAGE_DETECTED', () => {
+  expect(languageDetected('en-US')).toEqual({
+    type: actionTypes.LANGUAGE_DETECTED,
+    language: 'en-US',
   })
 })

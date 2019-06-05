@@ -6,13 +6,15 @@ import { Container } from 'next/app'
 
 import { InnoDocApp } from './app'
 import { loadManifest, setContentRoot, setStaticRoot } from '../store/actions/content'
+import { languageDetected } from '../store/actions/i18n'
 
 describe('<InnoDocApp />', () => {
   it('should render', () => {
     const mockStore = { dispatch: () => {}, getState: () => {}, subscribe: () => {} }
+    const DummyComponent = () => {}
     const wrapper = shallow(
       <InnoDocApp
-        Component={() => {}}
+        Component={DummyComponent}
         pageProps={{}}
         store={mockStore}
         router={{}}
@@ -21,10 +23,12 @@ describe('<InnoDocApp />', () => {
     expect(wrapper.find(Container).exists()).toBe(true)
     expect(wrapper.find(Head).exists()).toBe(true)
     expect(wrapper.find(Provider).exists()).toBe(true)
+    expect(wrapper.find(DummyComponent).exists()).toBe(true)
   })
 
   describe('getInitialProps', () => {
-    it('should dispatch constants and loadManifest (server)', async () => {
+    it('should dispatch actions (server)', async () => {
+      expect.assertions(5)
       const dispatch = jest.fn()
       const ctx = {
         isServer: true,
@@ -35,35 +39,50 @@ describe('<InnoDocApp />', () => {
             staticRoot: 'https://cdn.example.com/',
           },
         },
+        req: { i18n: { language: 'en-US' } },
       }
       await InnoDocApp.getInitialProps({ ctx, Component: () => {} })
-      expect(dispatch.mock.calls).toEqual([
-        [setContentRoot('https://content.example.com/')],
-        [setStaticRoot('https://cdn.example.com/')],
-        [loadManifest()],
-      ])
+      expect(dispatch).toBeCalledTimes(4)
+      expect(dispatch).toBeCalledWith(setContentRoot('https://content.example.com/'))
+      expect(dispatch).toBeCalledWith(setStaticRoot('https://cdn.example.com/'))
+      expect(dispatch).toBeCalledWith(languageDetected('en-US'))
+      expect(dispatch).toBeCalledWith(loadManifest())
     })
 
     it('should not dispatch anything (client)', async () => {
+      expect.assertions(1)
       const dispatch = jest.fn()
       const ctx = {
         isServer: false,
         store: { dispatch },
       }
       await InnoDocApp.getInitialProps({ ctx, Component: () => {} })
-      expect(dispatch.mock.calls).toEqual([])
+      expect(dispatch).not.toHaveBeenCalled()
     })
 
-    it('should retrieve props from page component', async () => {
+    it('should inject namespacesRequired into pageProps', async () => {
+      expect.assertions(1)
+      const ctx = {
+        isServer: false,
+        store: { dispatch: () => {} },
+      }
+      const Component = () => {}
+      const { pageProps } = await InnoDocApp.getInitialProps({ ctx, Component })
+      expect(pageProps.namespacesRequired).toEqual(['common'])
+    })
+
+    it('should retrieve pageProps', async () => {
+      expect.assertions(3)
       const ctx = {
         isServer: false,
         store: { dispatch: () => {} },
       }
       const Component = () => {}
       Component.getInitialProps = jest.fn(() => ({ foo: 'bar' }))
-      const props = await InnoDocApp.getInitialProps({ ctx, Component })
-      expect(Component.getInitialProps.mock.calls).toEqual([[ctx]])
-      expect(props).toEqual({ pageProps: { foo: 'bar' } })
+      const { pageProps } = await InnoDocApp.getInitialProps({ ctx, Component })
+      expect(Component.getInitialProps).toBeCalledTimes(1)
+      expect(Component.getInitialProps).toBeCalledWith(ctx)
+      expect(pageProps.foo).toEqual('bar')
     })
   })
 })
