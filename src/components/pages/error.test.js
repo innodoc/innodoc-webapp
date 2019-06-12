@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Alert } from 'antd'
 
-import { BareErrorPage as ErrorPage } from './error'
+import ErrorPage from './error'
 import Layout from '../Layout'
 
 describe('<ErrorPage />', () => {

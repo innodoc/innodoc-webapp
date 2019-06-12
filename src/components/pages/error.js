@@ -2,31 +2,29 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert } from 'antd'
 
-import { withNamespaces } from '../../lib/i18n'
 import Layout from '../Layout'
 
 class ErrorPage extends React.Component {
   static getInitialProps({ res, err }) {
-    const props = {}
     if (res) {
-      props.statusCode = res.statusCode
+      return { statusCode: res.statusCode }
     }
     if (err) {
-      props.statusCode = err.statusCode
+      return { statusCode: err.statusCode }
     }
-    return props
+    return {}
   }
 
   render() {
-    const { t, statusCode } = this.props
-    const title = t([`errorPage.${statusCode}.title`, 'errorPage.unspecific.title'])
-    const msg = t([`errorPage.${statusCode}.msg`, 'errorPage.unspecific.msg'])
-
+    const { statusCode } = this.props
+    const descr = statusCode === 404
+      ? 'This page could not be found.'
+      : 'An error occured.'
     return (
       <Layout>
         <Alert
-          message={title}
-          description={msg}
+          message="Error"
+          description={descr}
           type={statusCode === 404 ? 'info' : 'error'}
           showIcon
         />
@@ -35,12 +33,12 @@ class ErrorPage extends React.Component {
   }
 }
 
-ErrorPage.defaultProps = { statusCode: null }
+ErrorPage.defaultProps = {
+  statusCode: null,
+}
 
 ErrorPage.propTypes = {
   statusCode: PropTypes.number,
-  t: PropTypes.func.isRequired,
 }
 
-export { ErrorPage as BareErrorPage } // for testing
-export default withNamespaces(ErrorPage)
+export default ErrorPage

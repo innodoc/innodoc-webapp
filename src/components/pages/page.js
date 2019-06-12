@@ -10,11 +10,11 @@ import ErrorPage from './error'
 
 class CoursePage extends React.Component {
   static getInitialProps({ query, store }) {
-    if (query.sectionId) {
-      store.dispatch(loadSection(query.sectionId))
-    } else {
-      store.dispatch(loadSectionFailure({ error: { statusCode: 404 } }))
-    }
+    store.dispatch(
+      query.sectionId
+        ? loadSection(query.sectionId)
+        : loadSectionFailure({ error: { statusCode: 404 } })
+    )
     return {}
   }
 
