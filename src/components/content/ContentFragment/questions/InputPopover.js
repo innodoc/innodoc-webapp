@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Popover from 'antd/lib/popover'
 
-import { withNamespaces } from '../../../../lib/i18n'
+import { withTranslation } from '../../../../lib/i18n'
 import css from './style.sass'
 import { childrenType } from '../../../../lib/propTypes'
 import MathJaxDiv from '../../../MathJaxDiv'
@@ -54,4 +54,4 @@ InputPopover.defaultProps = {
   userInput: '',
 }
 
-export default withNamespaces()(InputPopover)
+export default withTranslation()(InputPopover)

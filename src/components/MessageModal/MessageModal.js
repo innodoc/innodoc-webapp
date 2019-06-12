@@ -4,7 +4,7 @@ import Button from 'antd/lib/button'
 import Modal from 'antd/lib/modal'
 import Icon from 'antd/lib/icon'
 
-import { withNamespaces } from '../../lib/i18n'
+import { withTranslation } from '../../lib/i18n'
 import css from './style.sass'
 import { messageType } from '../../lib/propTypes'
 
@@ -46,4 +46,4 @@ MessageModal.defaultProps = {
 }
 
 export { MessageModal } // for testing
-export default withNamespaces()(MessageModal)
+export default withTranslation()(MessageModal)

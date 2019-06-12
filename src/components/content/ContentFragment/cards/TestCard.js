@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withNamespaces } from '../../../../lib/i18n'
+import { withTranslation } from '../../../../lib/i18n'
 import { contentType } from '../../../../lib/propTypes'
 import Card from './Card'
 
@@ -25,4 +25,4 @@ TestCard.defaultProps = {
   id: null,
 }
 
-export default withNamespaces()(TestCard)
+export default withTranslation()(TestCard)

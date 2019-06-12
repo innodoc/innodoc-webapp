@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Icon from 'antd/lib/icon'
 
-import { withNamespaces } from '../../../../lib/i18n'
+import { withTranslation } from '../../../../lib/i18n'
 import css from './style.sass'
 
 const FeedbackIcon = ({ correct, t }) => {
@@ -32,4 +32,4 @@ FeedbackIcon.defaultProps = {
 }
 
 export { FeedbackIcon as BareFeedbackIcon } // for testing
-export default withNamespaces()(FeedbackIcon)
+export default withTranslation()(FeedbackIcon)

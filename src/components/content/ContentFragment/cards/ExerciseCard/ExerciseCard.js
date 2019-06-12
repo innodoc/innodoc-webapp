@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withNamespaces } from '../../../../../lib/i18n'
+import { withTranslation } from '../../../../../lib/i18n'
 import { contentType } from '../../../../../lib/propTypes'
 import Card from '../Card'
 import ExerciseProvider from './ExerciseProvider'
@@ -29,4 +29,4 @@ ExerciseCard.defaultProps = {
 }
 
 export { ExerciseCard } // for testing
-export default withNamespaces()(ExerciseCard)
+export default withTranslation()(ExerciseCard)

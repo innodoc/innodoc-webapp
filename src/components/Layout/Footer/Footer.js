@@ -5,7 +5,7 @@ import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'
 import List from 'antd/lib/list'
 
-import { Trans, withNamespaces } from '../../../lib/i18n'
+import { Trans, withTranslation } from '../../../lib/i18n'
 import css from './style.sass'
 
 const Footer = ({ t }) => (
@@ -114,4 +114,4 @@ Footer.propTypes = {
 }
 
 export { Footer } // for testing
-export default withNamespaces()(Footer)
+export default withTranslation()(Footer)

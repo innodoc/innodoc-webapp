@@ -11,7 +11,7 @@ import Menu from 'antd/lib/menu'
 import Input from 'antd/lib/input'
 import Icon from 'antd/lib/icon'
 
-import { withNamespaces } from '../../../lib/i18n'
+import { withTranslation } from '../../../lib/i18n'
 import css from './style.sass'
 import appSelectors from '../../../store/selectors'
 import courseSelectors from '../../../store/selectors/course'
@@ -196,4 +196,4 @@ const mapDispatchToProps = {
 }
 
 export { Header } // for testing
-export default connect(mapStateToProps, mapDispatchToProps)(withNamespaces()(Header))
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Header))

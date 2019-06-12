@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withNamespaces } from '../../../../lib/i18n'
+import { withTranslation } from '../../../../lib/i18n'
 import KeyboardSvg from '../../../../static/img/keyboard-o.svg'
 import { contentType } from '../../../../lib/propTypes'
 import Card from './Card'
@@ -26,4 +26,4 @@ InputHintCard.defaultProps = {
   id: null,
 }
 
-export default withNamespaces()(InputHintCard)
+export default withTranslation()(InputHintCard)

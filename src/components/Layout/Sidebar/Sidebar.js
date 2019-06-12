@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import AntLayout from 'antd/lib/layout'
 import Button from 'antd/lib/button'
 
-import { withNamespaces } from '../../../lib/i18n'
+import { withTranslation } from '../../../lib/i18n'
 import appSelectors from '../../../store/selectors'
 import { toggleSidebar } from '../../../store/actions/ui'
 import Toc from '../../Toc'
@@ -78,4 +78,4 @@ const mapDispatchToProps = {
 }
 
 export { Sidebar } // for testing
-export default connect(mapStateToProps, mapDispatchToProps)(withNamespaces()(Sidebar))
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Sidebar))

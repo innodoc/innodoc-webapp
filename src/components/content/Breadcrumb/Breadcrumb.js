@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import AntBreadcrumb from 'antd/lib/breadcrumb'
 import Icon from 'antd/lib/icon'
 
-import { withNamespaces } from '../../../lib/i18n'
+import { withTranslation } from '../../../lib/i18n'
 import { sectionTypeSparse } from '../../../lib/propTypes'
 import courseSelectors from '../../../store/selectors/course'
 import sectionSelectors from '../../../store/selectors/section'
@@ -58,5 +58,5 @@ const mapStateToProps = state => ({
 
 export { Breadcrumb as BareBreadcrumb, mapStateToProps } // for testing
 export default connect(mapStateToProps)(
-  withNamespaces()(Breadcrumb)
+  withTranslation()(Breadcrumb)
 )

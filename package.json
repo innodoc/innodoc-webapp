@@ -60,7 +60,7 @@
     "nerdamer": "^0.8.4",
     "next": "^8.0.4",
     "next-compose-plugins": "^2.1.1",
-    "next-i18next": "^0.40.1",
+    "next-i18next": "^0.41.0",
     "next-redux-saga": "^4.0.2",
     "next-redux-wrapper": "^3.0.0-alpha.2",
     "node-sass": "^4.12.0",

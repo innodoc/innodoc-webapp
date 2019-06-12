@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Collapse from 'antd/lib/collapse'
 import Icon from 'antd/lib/icon'
 
-import { withNamespaces } from '../../../../lib/i18n'
+import { withTranslation } from '../../../../lib/i18n'
 import css from './style.sass'
 import { attributesToObject } from '../../../../lib/util'
 import { attributeType, contentType } from '../../../../lib/propTypes'
@@ -36,4 +36,4 @@ Hint.propTypes = {
 }
 
 export { Hint } // for testing
-export default withNamespaces()(Hint)
+export default withTranslation()(Hint)
