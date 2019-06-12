@@ -19,61 +19,6 @@
     span
       display: none
 
-.logoLink
-  display: inline-block
-  white-space: nowrap
-  margin-top: 0px
-  position: relative
-  top: -1px
-  padding: 0 $padding-md
-
-  span
-    display: inline-block
-    vertical-align: middle
-    line-height: 3/4 * $line-height-base
-    font-weight: bold
-    white-space: normal
-    color: $menu-item-color
-
-  &:hover span
-    color: $menu-highlight-color
-
-.headerLogoWrapper
-  text-align: center
-
-  img
-    max-height: $layout-header-height - 2 * $padding-xs
-
-.nav
-  height: $layout-header-height
-  line-height: $layout-header-height
-  border: 0
-
-  \:global(.anticon)
-    font-size: 20px
-    transform: translateY(2px)
-
-  =remove-border
-    border-bottom: 0
-    top: 0
-    vertical-align: top
-
-  \:global(.ant-menu-item)
-    &, &:hover
-      +remove-border
-
-  \:global(.ant-menu-submenu)
-    &, &:hover
-      +remove-border
-
-  \:global(.ant-menu-item-selected)
-    &, &:hover
-      background-color: $menu-highlight-color
-
-      a
-        color: white
-        text-decoration: underline
-
 .sidebarToggle
   text-align: right
 
