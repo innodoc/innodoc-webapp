@@ -9,8 +9,8 @@ import UserMenu from './UserMenu'
 import { withTranslation } from '../../../../lib/i18n'
 import css from './style.sass'
 
-const Nav = ({ t }) => (
-  <Menu mode="horizontal" selectable={false} className={css.nav}>
+const Nav = ({ menuMode, t }) => (
+  <Menu mode={menuMode} selectable={false} className={css.nav}>
     <Menu.Item key="about">
       <Link href="/about">
         <a title={t('header.aboutTheCourse')}>
@@ -30,7 +30,12 @@ const Nav = ({ t }) => (
   </Menu>
 )
 
+Nav.defaultProps = {
+  menuMode: 'horizontal',
+}
+
 Nav.propTypes = {
+  menuMode: PropTypes.string,
   t: PropTypes.func.isRequired,
 }
 

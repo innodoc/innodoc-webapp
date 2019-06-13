@@ -37,19 +37,20 @@
   "header": {
     "about": "About",
     "aboutTheCourse": "About the course",
+    "createAccount": "Create Account",
     "downloadPDF": "PDF",
     "downloadPDFTitle": "Download PDF",
-    "linkEN": "English",
-    "linkDE": "German",
-    "login": "Login",
-    "createAccount": "Create Account",
     "hideTocLong": "Close table of contents",
     "language": "Language",
+    "linkDE": "German",
+    "linkEN": "English",
+    "login": "Login",
+    "menu": "Menu",
+    "preparatoryMathematicsCourse": "Preparatory Mathematics<1></1>Course",
     "searchPlaceholder": "Search…",
     "showToc": "Contents",
     "showTocLong": "Show Table of Contents",
-    "tmpTitle": "Preparatory Mathematics Course",
-    "preparatoryMathematicsCourse": "Preparatory Mathematics<1></1>Course"
+    "tmpTitle": "Preparatory Mathematics Course"
   },
   "languages": {
     "de": "Deutsch",

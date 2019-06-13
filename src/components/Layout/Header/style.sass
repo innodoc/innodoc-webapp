@@ -1,5 +1,8 @@
 @import '../../../style/antd-theme.sass'
 
+\:export
+  screen-md: $screen-md
+
 .header
   border-bottom: $border-width-base $border-style-base $border-color-split
   padding-right: $padding-md
@@ -19,8 +22,13 @@
     span
       display: none
 
-.sidebarToggle
+.mobileMenuButton
+  @media (min-width: $screen-md)
+    display: none
+
+.menuRight
   text-align: right
+  white-space: nowrap
 
 .searchInput
   width: 100%
