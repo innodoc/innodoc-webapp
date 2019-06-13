@@ -8,11 +8,11 @@ import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'
 import AntLayout from 'antd/lib/layout'
 import Button from 'antd/lib/button'
-import Input from 'antd/lib/input'
+import { useTranslation } from 'react-i18next'
 
 import Nav from './Nav'
 import Logo from './Logo'
-import { withTranslation } from '../../../lib/i18n'
+import SearchInput from './SearchInput'
 import css from './style.sass'
 import appSelectors from '../../../store/selectors'
 import courseSelectors from '../../../store/selectors/course'
@@ -24,11 +24,11 @@ const screenMd = parseInt(css['screen-md'], 10)
 
 const Header = ({
   course,
-  t,
   dispatchToggleSidebar,
   sidebarVisible,
   disableSidebar,
 }) => {
+  const { t } = useTranslation()
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   useEffect(() => {
@@ -82,7 +82,7 @@ const Header = ({
             <Nav />
           </Col>
           <Col xs={0} sm={0} md={4} lg={4} xl={4}>
-            <Input.Search placeholder={t('header.searchPlaceholder')} />
+            <SearchInput />
           </Col>
         </Row>
       </AntLayout.Header>
@@ -91,7 +91,7 @@ const Header = ({
         title={t('header.menu')}
         visible={isMobile && showMobileMenu}
       >
-        <Input.Search placeholder={t('header.searchPlaceholder')} />
+        <SearchInput className={css.searchInputMenu} />
         <Nav menuMode="inline" />
       </Drawer>
     </React.Fragment>
@@ -100,7 +100,6 @@ const Header = ({
 
 Header.propTypes = {
   course: courseType,
-  t: PropTypes.func.isRequired,
   dispatchToggleSidebar: PropTypes.func.isRequired,
   sidebarVisible: PropTypes.bool.isRequired,
   disableSidebar: PropTypes.bool.isRequired,
@@ -120,4 +119,4 @@ const mapDispatchToProps = {
 }
 
 export { Header } // for testing
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Header))
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

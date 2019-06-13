@@ -1,9 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Icon from 'antd/lib/icon'
 import Menu from 'antd/lib/menu'
+import { useTranslation } from 'react-i18next'
 
-const UserMenu = ({ t, ...otherProps }) => {
+const UserMenu = (props) => {
+  const { t } = useTranslation()
   const userMenuTitle = (
     <span>
       <Icon type="user" />
@@ -13,7 +14,7 @@ const UserMenu = ({ t, ...otherProps }) => {
     </span>
   )
   return (
-    <Menu.SubMenu title={userMenuTitle} {...otherProps}>
+    <Menu.SubMenu title={userMenuTitle} {...props}>
       <Menu.Item key="login">
         <Icon type="login" />
         <span>
@@ -28,10 +29,6 @@ const UserMenu = ({ t, ...otherProps }) => {
       </Menu.Item>
     </Menu.SubMenu>
   )
-}
-
-UserMenu.propTypes = {
-  t: PropTypes.func.isRequired,
 }
 
 export default UserMenu
