@@ -7,7 +7,6 @@ import Menu from 'antd/lib/menu'
 import { changeLanguage } from '../../../../store/actions/i18n'
 import { courseType } from '../../../../lib/propTypes'
 import courseSelectors from '../../../../store/selectors/course'
-import { withTranslation } from '../../../../lib/i18n'
 
 const LanguageSwitcher = ({
   course,
@@ -58,8 +57,4 @@ const mapDispatchToProps = {
   dispatchChangeLanguage: changeLanguage,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withTranslation()(
-    LanguageSwitcher
-  )
-)
+export default connect(mapStateToProps, mapDispatchToProps)(LanguageSwitcher)

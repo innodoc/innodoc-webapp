@@ -75,6 +75,7 @@ const Header = ({
               className={classNames(css.menuButton, css.mobileMenuButton)}
               icon="menu"
               onClick={() => setShowMobileMenu(true)}
+              title={t('header.menu')}
             />
           </Col>
           <Col xs={0} sm={0} md={8} lg={9} xl={12}>
