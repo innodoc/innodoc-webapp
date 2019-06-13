@@ -1,79 +1,90 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import AntLayout from 'antd/lib/layout'
-import Menu from 'antd/lib/menu'
 import Button from 'antd/lib/button'
+import Drawer from 'antd/lib/drawer'
 
+import SectionLink from '../../SectionLink'
 import { Header } from './Header'
+import Nav from './Nav'
+import Logo from './Logo'
+import SearchInput from './SearchInput'
 
 describe('<Header />', () => {
-  const course = {
-    currentSection: 'foo',
-    homeLink: 'foo',
-    languages: ['de', 'en'],
-    title: { en: ['Foobar'] },
-  }
-  const mockDispatchChangeLanguage = jest.fn()
-  const mockDispatchToggleSidebar = jest.fn()
-  const wrapper = shallow(
-    <Header
-      course={course}
-      dispatchChangeLanguage={mockDispatchChangeLanguage}
-      dispatchToggleSidebar={mockDispatchToggleSidebar}
-      disableSidebar={false}
-      t={() => {}}
-      sidebarVisible
-    />
-  )
+  const course = { homeLink: 'foo' }
 
-  it('should render Header', () => {
+  it('should render with sidebar visible', () => {
+    const wrapper = shallow(
+      <Header
+        course={course}
+        disableSidebar={false}
+        dispatchToggleSidebar={() => {}}
+        sidebarVisible
+      />
+    )
     expect(wrapper.find(AntLayout.Header).exists()).toBe(true)
+    expect(wrapper.find(SectionLink)).toHaveLength(1)
+    expect(wrapper.find(Logo)).toHaveLength(1)
+    expect(wrapper.find(Drawer).exists()).toBe(true)
+    expect(wrapper.find(Button)).toHaveLength(2)
+    expect(wrapper.find(SearchInput)).toHaveLength(2)
+    expect(wrapper.find(Nav)).toHaveLength(2)
   })
 
-  it('should render menu', () => {
-    expect(wrapper.find(Menu).exists()).toBe(true)
+  it('should render with sidebar not visible', () => {
+    const wrapper = shallow(
+      <Header
+        course={course}
+        disableSidebar={false}
+        dispatchToggleSidebar={() => {}}
+        sidebarVisible
+      />
+    )
+    expect(wrapper.find(AntLayout.Header).exists()).toBe(true)
+    expect(wrapper.find(SectionLink)).toHaveLength(1)
+    expect(wrapper.find(Logo)).toHaveLength(1)
+    expect(wrapper.find(Drawer).exists()).toBe(true)
+    expect(wrapper.find(Button)).toHaveLength(2)
+    expect(wrapper.find(SearchInput)).toHaveLength(2)
+    expect(wrapper.find(Nav)).toHaveLength(2)
   })
 
-  it('should toggle sidebar', () => {
-    wrapper.find(Button).at(1).simulate('click')
+  it('should render w/o sidebar', () => {
+    const wrapper = shallow(
+      <Header
+        course={course}
+        disableSidebar
+        dispatchToggleSidebar={() => {}}
+        sidebarVisible={false}
+      />
+    )
+    expect(wrapper.find(AntLayout.Header).exists()).toBe(true)
+    expect(wrapper.find(Button)).toHaveLength(1)
+  })
+
+  it('should dispatch toggleSidebar', () => {
+    const mockDispatchToggleSidebar = jest.fn()
+    const wrapper = shallow(
+      <Header
+        course={course}
+        disableSidebar={false}
+        dispatchToggleSidebar={mockDispatchToggleSidebar}
+        sidebarVisible
+      />
+    )
+    wrapper.find(Button).at(0).simulate('click')
     expect(mockDispatchToggleSidebar.mock.calls).toHaveLength(1)
   })
 
-  describe('user menu', () => {
-    const dropdown = wrapper.find(Menu.SubMenu).at(0)
-
-    it('should render dropdown', () => {
-      expect(dropdown.exists()).toBe(true)
-    })
-    it('should have 2 items', () => {
-      expect(dropdown.find(Menu.Item)).toHaveLength(2)
-    })
-  })
-
-  describe('language menu', () => {
-    // TODO: dynamic list of languages
-    const dropdown = wrapper.find(Menu.SubMenu).at(1)
-
-    it('should render dropdown', () => {
-      expect(dropdown.exists()).toBe(true)
-    })
-
-    it('should have 2 items', () => {
-      expect(dropdown.find(Menu.Item)).toHaveLength(2)
-    })
-
-    describe('switch language', () => {
-      it('should switch language to DE', () => {
-        dropdown.find(Menu.Item).at(0).simulate('click')
-        expect(mockDispatchChangeLanguage.mock.calls).toHaveLength(1)
-        expect(mockDispatchChangeLanguage.mock.calls[0][0]).toBe('de')
-      })
-
-      it('should switch language to EN', () => {
-        dropdown.find(Menu.Item).at(1).simulate('click')
-        expect(mockDispatchChangeLanguage.mock.calls).toHaveLength(2)
-        expect(mockDispatchChangeLanguage.mock.calls[1][0]).toBe('en')
-      })
-    })
+  it('should render without home link', () => {
+    const wrapper = shallow(
+      <Header
+        course={{}}
+        disableSidebar={false}
+        dispatchToggleSidebar={() => {}}
+        sidebarVisible
+      />
+    )
+    expect(wrapper.find(SectionLink)).toHaveLength(0)
   })
 })

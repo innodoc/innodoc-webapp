@@ -19,8 +19,13 @@
     span
       display: none
 
-.sidebarToggle
-  text-align: right
+.mobileMenuButton
+  @media (min-width: $screen-md)
+    display: none
 
-.searchInput
-  width: 100%
+.menuRight
+  text-align: right
+  white-space: nowrap
+
+.searchInputMenu
+  margin-bottom: $padding-md
