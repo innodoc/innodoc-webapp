@@ -12,10 +12,10 @@ describe('Basic tests', () => {
   it('should have a menu, footer and TOC', async () => {
     expect.assertions(6)
     await expect(page).toMatchElement('.ant-menu')
-    await expect(page).toMatchElement('[class^=header]')
-    await expect(page).toMatchElement('[class^=footer]')
-    await expect(page).toMatchElement('[class^=content]')
-    await expect(page).toMatchElement('[class^=tocWrapper]')
+    await expect(page).toMatchElement('[class*=header___]')
+    await expect(page).toMatchElement('[class*=footer___]')
+    await expect(page).toMatchElement('[class*=content___]')
+    await expect(page).toMatchElement('[class*=tocWrapper___]')
     await expect(page).toMatchElement('a', { text: 'Project structure' })
   })
 
