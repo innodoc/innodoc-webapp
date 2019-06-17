@@ -23,11 +23,7 @@ describe('<Breadcrumb />', () => {
 
   it('renders', () => {
     const wrapper = shallow(
-      <Breadcrumb
-        homeLink="home"
-        sections={sections}
-        t={() => {}}
-      />
+      <Breadcrumb homeLink="home" sections={sections} />
     )
     expect(wrapper.find(AntBreadcrumb)).toHaveLength(1)
     const items = wrapper.find(AntBreadcrumb.Item)

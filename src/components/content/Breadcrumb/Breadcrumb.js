@@ -4,14 +4,16 @@ import { connect } from 'react-redux'
 import AntBreadcrumb from 'antd/lib/breadcrumb'
 import Icon from 'antd/lib/icon'
 
-import { withTranslation } from '../../../lib/i18n'
+import { useTranslation } from '../../../lib/i18n'
 import { sectionTypeSparse } from '../../../lib/propTypes'
 import courseSelectors from '../../../store/selectors/course'
 import sectionSelectors from '../../../store/selectors/section'
 import SectionLink from '../../SectionLink'
 import css from './style.sass'
 
-const Breadcrumb = ({ homeLink, sections, t }) => {
+const Breadcrumb = ({ homeLink, sections }) => {
+  const { t } = useTranslation()
+
   // links to parent sections, last is current section thus not a link
   const sectionLinks = sections.map((section, i) => (
     <AntBreadcrumb.Item key={section.id}>
@@ -44,7 +46,6 @@ const Breadcrumb = ({ homeLink, sections, t }) => {
 Breadcrumb.propTypes = {
   homeLink: PropTypes.string,
   sections: PropTypes.arrayOf(sectionTypeSparse).isRequired,
-  t: PropTypes.func.isRequired,
 }
 
 Breadcrumb.defaultProps = {
@@ -57,6 +58,4 @@ const mapStateToProps = state => ({
 })
 
 export { Breadcrumb as BareBreadcrumb, mapStateToProps } // for testing
-export default connect(mapStateToProps)(
-  withTranslation()(Breadcrumb)
-)
+export default connect(mapStateToProps)(Breadcrumb)

@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Icon from 'antd/lib/icon'
 
-import { BareFeedbackIcon } from './FeedbackIcon'
+import FeedbackIcon from './FeedbackIcon'
 
 describe('<FeedbackIcon />', () => {
   it.each([
@@ -10,7 +10,7 @@ describe('<FeedbackIcon />', () => {
     [true, 'check-circle'],
     [false, 'close-circle'],
   ])('should render (correct=%s)', (correct, iconType) => {
-    const wrapper = shallow(<BareFeedbackIcon correct={correct} t={() => {}} />)
+    const wrapper = shallow(<FeedbackIcon correct={correct} />)
     const icon = wrapper.find(Icon)
     expect(icon.prop('type')).toBe(iconType)
   })

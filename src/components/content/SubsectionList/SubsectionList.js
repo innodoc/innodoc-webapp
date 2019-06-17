@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import List from 'antd/lib/list'
 
-import { withTranslation } from '../../../lib/i18n'
+import { useTranslation } from '../../../lib/i18n'
 import css from './style.sass'
 import SectionLink from '../../SectionLink'
 import { sectionType } from '../../../lib/propTypes'
@@ -15,7 +15,8 @@ const Subsection = subSection => (
 
 Subsection.propTypes = sectionType.isRequired
 
-const SubsectionList = ({ subsections, t }) => {
+const SubsectionList = ({ subsections }) => {
+  const { t } = useTranslation()
   const header = <h2 className={css.listheader}>{t('content.subsections')}</h2>
   return (
     <List
@@ -31,8 +32,7 @@ const SubsectionList = ({ subsections, t }) => {
 
 SubsectionList.propTypes = {
   subsections: PropTypes.arrayOf(sectionType).isRequired,
-  t: PropTypes.func.isRequired,
 }
 
-export { Subsection, SubsectionList } // for testing
-export default withTranslation()(SubsectionList)
+export { Subsection }
+export default SubsectionList

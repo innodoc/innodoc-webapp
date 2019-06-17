@@ -1,15 +1,15 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Collapse from 'antd/lib/collapse'
 import Icon from 'antd/lib/icon'
 
-import { withTranslation } from '../../../../lib/i18n'
+import { useTranslation } from '../../../../lib/i18n'
 import css from './style.sass'
 import { attributesToObject } from '../../../../lib/util'
 import { attributeType, contentType } from '../../../../lib/propTypes'
 import ContentFragment from '..'
 
-const Hint = ({ attributes, content, t }) => {
+const Hint = ({ attributes, content }) => {
+  const { t } = useTranslation()
   const attrsObj = attributesToObject(attributes)
   const caption = attrsObj.caption || t('content.hint')
   const header = (
@@ -32,8 +32,6 @@ const Hint = ({ attributes, content, t }) => {
 Hint.propTypes = {
   attributes: attributeType.isRequired,
   content: contentType.isRequired,
-  t: PropTypes.func.isRequired,
 }
 
-export { Hint } // for testing
-export default withTranslation()(Hint)
+export default Hint

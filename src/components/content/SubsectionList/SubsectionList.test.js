@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import List from 'antd/lib/list'
 import SectionLink from '../../SectionLink'
 
-import { Subsection, SubsectionList } from './SubsectionList'
+import SubsectionList, { Subsection } from './SubsectionList'
 
 const subsections = [
   {
@@ -23,7 +23,7 @@ const subsections = [
 describe('<Content />', () => {
   it('should render', () => {
     const wrapper = shallow(
-      <SubsectionList subsections={subsections} t={() => {}} />
+      <SubsectionList subsections={subsections} />
     )
     const list = wrapper.find(List)
     expect(list.prop('dataSource')).toBe(subsections)

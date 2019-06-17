@@ -2,17 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Popover from 'antd/lib/popover'
 
-import { withTranslation } from '../../../../lib/i18n'
+import { useTranslation } from '../../../../lib/i18n'
 import css from './style.sass'
 import { childrenType } from '../../../../lib/propTypes'
 import MathJaxDiv from '../../../MathJaxDiv'
 
-const InputPopover = ({
-  children,
-  messages,
-  t,
-  userInput,
-}) => {
+const InputPopover = ({ children, messages, userInput }) => {
+  const { t } = useTranslation()
   const messageItems = messages.map((message, i) => (
     <li key={i.toString()}>
       {message}
@@ -45,7 +41,6 @@ const InputPopover = ({
 InputPopover.propTypes = {
   children: childrenType.isRequired,
   messages: PropTypes.arrayOf(PropTypes.string),
-  t: PropTypes.func.isRequired,
   userInput: PropTypes.string,
 }
 
@@ -54,4 +49,4 @@ InputPopover.defaultProps = {
   userInput: '',
 }
 
-export default withTranslation()(InputPopover)
+export default InputPopover

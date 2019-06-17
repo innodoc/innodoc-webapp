@@ -47,7 +47,7 @@ const Card = ({
 Card.propTypes = {
   title: PropTypes.string.isRequired,
   cardType: PropTypes.string.isRequired,
-  icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func, PropTypes.object]),
   content: contentType.isRequired,
   id: PropTypes.string,
 }

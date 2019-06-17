@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { withTranslation } from '../../../../lib/i18n'
+import { useTranslation } from '../../../../lib/i18n'
 import ContentFragment from '..'
 import appSelectors from '../../../../store/selectors'
 import { astToString } from '../../../../lib/util'
@@ -14,10 +14,9 @@ const Video = ({
   data,
   staticRoot,
   currentLanguage,
-  t,
 }) => {
+  const { t } = useTranslation()
   const [[, classes], content, [src, title]] = data
-
   const cf = (<ContentFragment content={content} />)
 
   if (classes.includes('video-youtube')) {
@@ -69,7 +68,6 @@ Video.propTypes = {
   data: PropTypes.arrayOf(PropTypes.array).isRequired,
   staticRoot: PropTypes.string.isRequired,
   currentLanguage: PropTypes.string,
-  t: PropTypes.func.isRequired,
 }
 
 Video.defaultProps = {
@@ -84,6 +82,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(
-  withTranslation()(Video)
-)
+export default connect(mapStateToProps)(Video)

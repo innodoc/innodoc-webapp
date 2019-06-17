@@ -4,11 +4,12 @@ import Button from 'antd/lib/button'
 import Modal from 'antd/lib/modal'
 import Icon from 'antd/lib/icon'
 
-import { withTranslation } from '../../lib/i18n'
+import { useTranslation } from '../../lib/i18n'
 import css from './style.sass'
 import { messageType } from '../../lib/propTypes'
 
-const MessageModal = ({ t, message, onClose }) => {
+const MessageModal = ({ message, onClose }) => {
+  const { t } = useTranslation()
   const { level, title, msg } = message
   const closable = level !== 'fatal'
   const isError = ['error', 'fatal'].includes(level)
@@ -36,7 +37,6 @@ const MessageModal = ({ t, message, onClose }) => {
 }
 
 MessageModal.propTypes = {
-  t: PropTypes.func.isRequired,
   message: messageType.isRequired,
   onClose: PropTypes.func,
 }
@@ -45,5 +45,4 @@ MessageModal.defaultProps = {
   onClose: () => {},
 }
 
-export { MessageModal } // for testing
-export default withTranslation()(MessageModal)
+export default MessageModal

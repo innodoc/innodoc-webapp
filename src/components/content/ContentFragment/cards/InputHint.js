@@ -1,24 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withTranslation } from '../../../../lib/i18n'
+import { useTranslation } from '../../../../lib/i18n'
 import KeyboardSvg from '../../../../static/img/keyboard-o.svg'
 import { contentType } from '../../../../lib/propTypes'
 import Card from './Card'
 
-const InputHintCard = ({ t, content, id }) => (
-  <Card
-    title={t('content.inputHint')}
-    cardType="inputHint"
-    icon={KeyboardSvg}
-    content={content}
-    id={id}
-  />
-)
+const InputHintCard = ({ content, id }) => {
+  const { t } = useTranslation()
+  return (
+    <Card
+      title={t('content.inputHint')}
+      cardType="inputHint"
+      icon={KeyboardSvg}
+      content={content}
+      id={id}
+    />
+  )
+}
 
 InputHintCard.propTypes = {
   content: contentType.isRequired,
-  t: PropTypes.func.isRequired,
   id: PropTypes.string,
 }
 
@@ -26,4 +28,4 @@ InputHintCard.defaultProps = {
   id: null,
 }
 
-export default withTranslation()(InputHintCard)
+export default InputHintCard

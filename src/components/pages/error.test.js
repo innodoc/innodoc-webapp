@@ -7,7 +7,7 @@ import Layout from '../Layout'
 
 describe('<ErrorPage />', () => {
   it('should render 404 as info', () => {
-    const wrapper = shallow(<ErrorPage t={() => {}} statusCode={404} />)
+    const wrapper = shallow(<ErrorPage statusCode={404} />)
     const layout = wrapper.find(Layout)
     expect(layout.exists()).toBe(true)
     const alert = layout.find(Alert)
@@ -16,7 +16,7 @@ describe('<ErrorPage />', () => {
   })
 
   it('should render 500 as error', () => {
-    const wrapper = shallow(<ErrorPage t={() => {}} statusCode={500} />)
+    const wrapper = shallow(<ErrorPage statusCode={500} />)
     expect(wrapper.find(Alert).prop('type')).toBe('error')
   })
 

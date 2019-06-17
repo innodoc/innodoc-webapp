@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { ExerciseCard } from './ExerciseCard'
+import ExerciseCard from './ExerciseCard'
 import ExerciseProvider from './ExerciseProvider'
 import Card from '../Card'
 
@@ -9,7 +9,7 @@ describe('<ExerciseCard />', () => {
   it('should render', () => {
     const content = [{ foo: 'foo' }]
     const wrapper = shallow(
-      <ExerciseCard content={content} id="EX1" t={() => ''} />
+      <ExerciseCard content={content} id="EX1" />
     )
     expect(wrapper.find(ExerciseProvider)).toHaveLength(1)
     const card = wrapper.find(Card)

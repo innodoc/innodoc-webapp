@@ -2,10 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Icon from 'antd/lib/icon'
 
-import { withTranslation } from '../../../../lib/i18n'
+import { useTranslation } from '../../../../lib/i18n'
 import css from './style.sass'
 
-const FeedbackIcon = ({ correct, t }) => {
+const FeedbackIcon = ({ correct }) => {
+  const { t } = useTranslation()
   const color = correct ? css['color-correct'] : css['color-incorrect']
   const theme = correct === null ? 'outlined' : 'twoTone'
   const twoToneColor = correct === null ? 'black' : color
@@ -24,12 +25,10 @@ const FeedbackIcon = ({ correct, t }) => {
 
 FeedbackIcon.propTypes = {
   correct: PropTypes.bool,
-  t: PropTypes.func.isRequired,
 }
 
 FeedbackIcon.defaultProps = {
   correct: null,
 }
 
-export { FeedbackIcon as BareFeedbackIcon } // for testing
-export default withTranslation()(FeedbackIcon)
+export default FeedbackIcon

@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Collapse from 'antd/lib/collapse'
 
-import { Hint } from './Hint'
+import Hint from './Hint'
 import ContentFragment from '..'
 
 describe('<Hint />', () => {
@@ -10,7 +10,7 @@ describe('<Hint />', () => {
     const attributes = [['caption', 'Solution']]
     const content = [{ t: 'Str', c: 'Bar' }]
     const wrapper = shallow(
-      <Hint attributes={attributes} t={() => {}} content={content} />
+      <Hint attributes={attributes} content={content} />
     )
     expect(wrapper.find(Collapse)).toHaveLength(1)
     const contentFragment = wrapper.find(ContentFragment)

@@ -3,20 +3,19 @@ import { shallow } from 'enzyme'
 import Modal from 'antd/lib/modal'
 import Icon from 'antd/lib/icon'
 
-import { MessageModal } from './MessageModal'
+import MessageModal from './MessageModal'
 
 describe('<MessageModal />', () => {
-  const msg = {
-    level: 'info',
-    title: 'Message title',
-    msg: 'Hello message!',
-  }
-  const onClose = jest.fn()
-  const wrapper = shallow(
-    <MessageModal t={() => {}} onClose={onClose} message={msg} />
-  )
-
   it('should render', () => {
+    const msg = {
+      level: 'info',
+      title: 'Message title',
+      msg: 'Hello message!',
+    }
+    const onClose = jest.fn()
+    const wrapper = shallow(
+      <MessageModal onClose={onClose} message={msg} />
+    )
     const modal = wrapper.find(Modal)
     expect(modal.exists()).toBe(true)
     expect(wrapper.find('h4').text()).toEqual(msg.title)
