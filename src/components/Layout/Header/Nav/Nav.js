@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import Icon from 'antd/lib/icon'
 import Menu from 'antd/lib/menu'
 import Link from 'next/link'
-import { useTranslation } from 'react-i18next'
 
 import LanguageSwitcher from './LanguageSwitcher'
 import UserMenu from './UserMenu'
 import css from './style.sass'
+import { useTranslation } from '../../../../lib/i18n'
 
 const Nav = ({ menuMode }) => {
   const { t } = useTranslation()

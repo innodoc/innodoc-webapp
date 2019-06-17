@@ -1,9 +1,9 @@
 import React from 'react'
 import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'
-import { useTranslation } from 'react-i18next'
 
 import css from './style.sass'
+import { useTranslation } from '../../../../lib/i18n'
 
 const Logo = () => {
   const { t } = useTranslation()

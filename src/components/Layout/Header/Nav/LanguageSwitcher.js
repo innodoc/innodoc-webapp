@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Icon from 'antd/lib/icon'
 import Menu from 'antd/lib/menu'
-import { useTranslation } from 'react-i18next'
 
 import { changeLanguage } from '../../../../store/actions/i18n'
 import { courseType } from '../../../../lib/propTypes'
 import courseSelectors from '../../../../store/selectors/course'
+import { useTranslation } from '../../../../lib/i18n'
 
 const LanguageSwitcher = ({
   course,

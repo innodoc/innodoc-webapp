@@ -7,7 +7,6 @@ import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'
 import AntLayout from 'antd/lib/layout'
 import Button from 'antd/lib/button'
-import { useTranslation } from 'react-i18next'
 
 import Nav from './Nav'
 import Logo from './Logo'
@@ -19,6 +18,7 @@ import { toggleSidebar } from '../../../store/actions/ui'
 import SectionLink from '../../SectionLink'
 import { courseType } from '../../../lib/propTypes'
 import useIsMobile from '../../../hooks/isMobile'
+import { useTranslation } from '../../../lib/i18n'
 
 const Header = ({
   course,

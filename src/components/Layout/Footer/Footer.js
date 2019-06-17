@@ -113,5 +113,5 @@ Footer.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
-export { Footer } // for testing
+export { Footer as BareFooter } // for testing
 export default withTranslation()(Footer)

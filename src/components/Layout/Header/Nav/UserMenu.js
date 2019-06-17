@@ -1,7 +1,8 @@
 import React from 'react'
 import Icon from 'antd/lib/icon'
 import Menu from 'antd/lib/menu'
-import { useTranslation } from 'react-i18next'
+
+import { useTranslation } from '../../../../lib/i18n'
 
 const UserMenu = (props) => {
   const { t } = useTranslation()
