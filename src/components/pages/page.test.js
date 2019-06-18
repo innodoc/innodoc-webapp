@@ -1,14 +1,18 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { CoursePage } from './page'
+import CoursePage from './page'
 import ErrorPage from './error'
 import Layout from '../Layout'
 import Content from '../content/Content'
 import { loadSection, loadSectionFailure } from '../../store/actions/content'
 
+let mockApp = {}
+jest.mock('react-redux', () => ({ useSelector: () => mockApp }))
+
 describe('<CoursePage />', () => {
   it('should render', () => {
+    mockApp = {}
     const wrapper = shallow(<CoursePage />)
     const layout = wrapper.find(Layout)
     expect(layout.exists()).toBe(true)
@@ -17,33 +21,39 @@ describe('<CoursePage />', () => {
   })
 
   describe('getInitialProps', () => {
+    const store = { dispatch: jest.fn() }
+    beforeEach(() => { store.dispatch.mockClear() })
+
     it('should dispatch loadSection with sectionId', () => {
       const query = { sectionId: 'foo/bar' }
-      const store = { dispatch: jest.fn() }
       CoursePage.getInitialProps({ query, store })
-      expect(store.dispatch.mock.calls).toEqual([[loadSection('foo/bar')]])
+      expect(store.dispatch).toBeCalledWith(loadSection('foo/bar'))
     })
 
     it('should dispatch loadSectionFailure without sectionId', () => {
-      const query = { }
-      const store = { dispatch: jest.fn() }
+      const query = {}
       CoursePage.getInitialProps({ query, store })
-      expect(store.dispatch.mock.calls).toEqual(
-        [[loadSectionFailure({ error: { statusCode: 404 } })]])
+      expect(store.dispatch).toBeCalledWith(
+        loadSectionFailure({ error: { statusCode: 404 } })
+      )
     })
   })
 
   describe('handle 404 error', () => {
+    beforeEach(() => {
+      mockApp = { error: { statusCode: 404 } }
+    })
+
     it('should throw on a 404 (server)', () => {
       process.browser = false
       expect(() => {
-        shallow(<CoursePage err={{ statusCode: 404 }} />)
+        shallow(<CoursePage />)
       }).toThrow()
     })
 
     it('should render error on a 404 (client)', () => {
       process.browser = true
-      const wrapper = shallow(<CoursePage err={{ statusCode: 404 }} />)
+      const wrapper = shallow(<CoursePage />)
       expect(wrapper.find(ErrorPage).exists()).toBe(true)
       expect(wrapper.find(Layout).exists()).toBe(false)
     })

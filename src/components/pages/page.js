@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { loadSection, loadSectionFailure } from '../../store/actions/content'
 import appSelectors from '../../store/selectors'
@@ -8,49 +7,36 @@ import Layout from '../Layout'
 import Content from '../content'
 import ErrorPage from './error'
 
-class CoursePage extends React.Component {
-  static getInitialProps({ query, store }) {
-    store.dispatch(
-      query.sectionId
-        ? loadSection(query.sectionId)
-        : loadSectionFailure({ error: { statusCode: 404 } })
-    )
-    return {}
-  }
+const CoursePage = () => {
+  const { error } = useSelector(appSelectors.getApp)
 
-  render() {
-    const { err } = this.props
-
-    if (err) {
-      // workaround for setting the status code (client and server)
-      // https://github.com/zeit/next.js/issues/4451#issuecomment-438096614
-      if (process.browser) {
-        return (
-          <ErrorPage statusCode={err.statusCode} />
-        )
-      }
-      const e = new Error()
-      e.code = 'ENOENT'
-      throw e
+  if (error) {
+    // workaround for setting the status code (client and server)
+    // https://github.com/zeit/next.js/issues/4451#issuecomment-438096614
+    if (process.browser) {
+      return (
+        <ErrorPage statusCode={error.statusCode} />
+      )
     }
-
-    return (
-      <Layout>
-        <Content />
-      </Layout>
-    )
+    const e = new Error()
+    e.code = 'ENOENT'
+    throw e
   }
+
+  return (
+    <Layout>
+      <Content />
+    </Layout>
+  )
 }
 
-CoursePage.defaultProps = { err: null }
-
-CoursePage.propTypes = {
-  err: PropTypes.shape({ statusCode: PropTypes.number }),
+CoursePage.getInitialProps = ({ query, store }) => {
+  store.dispatch(
+    query.sectionId
+      ? loadSection(query.sectionId)
+      : loadSectionFailure({ error: { statusCode: 404 } })
+  )
+  return {}
 }
 
-const mapStateToProps = state => ({
-  err: appSelectors.getApp(state).error,
-})
-
-export { CoursePage } // for testing
-export default connect(mapStateToProps)(CoursePage)
+export default CoursePage

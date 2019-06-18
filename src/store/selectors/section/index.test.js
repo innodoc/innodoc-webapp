@@ -144,7 +144,7 @@ describe('getToc', () => {
 describe('makeGetSectionLink', () => {
   it('returns section', () => {
     const getSectionLink = sectionSelectors.makeGetSectionLink()
-    const sectionLink = getSectionLink(state, { sectionId: 'test/child1/child11' })
+    const sectionLink = getSectionLink(state, 'test/child1/child11')
     expect(sectionLink.section.id).toBe('test/child1/child11')
     expect(sectionLink.section.title).toBe('1.1.1 test child11 title')
     expect(sectionLink.hash).toBeUndefined()
@@ -152,7 +152,7 @@ describe('makeGetSectionLink', () => {
 
   it('returns section and hash', () => {
     const getSectionLink = sectionSelectors.makeGetSectionLink()
-    const sectionLink = getSectionLink(state, { sectionId: 'test/child1/child11#foo' })
+    const sectionLink = getSectionLink(state, 'test/child1/child11#foo')
     expect(sectionLink.section.id).toBe('test/child1/child11')
     expect(sectionLink.section.title).toBe('1.1.1 test child11 title')
     expect(sectionLink.hash).toBe('foo')
@@ -160,7 +160,7 @@ describe('makeGetSectionLink', () => {
 
   it('notices unknown section', () => {
     const getSectionLink = sectionSelectors.makeGetSectionLink()
-    const sectionLink = getSectionLink(state, { sectionId: 'does/not/exist' })
+    const sectionLink = getSectionLink(state, 'does/not/exist')
     expect(sectionLink.section.id).toBe('does/not/exist')
     expect(sectionLink.section.title).toMatch('UNKNOWN SECTION')
   })

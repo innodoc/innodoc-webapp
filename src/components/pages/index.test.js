@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { IndexPage } from './index'
+import IndexPage from './index'
 import Layout from '../Layout'
 import Toc from '../Toc'
 

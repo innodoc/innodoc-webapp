@@ -1,33 +1,40 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import AntLayout from 'antd/lib/layout'
 
 import css from './style.sass'
-import { childrenType, messageType } from '../../lib/propTypes'
+import { childrenType } from '../../lib/propTypes'
 import { clearMessage } from '../../store/actions/ui'
 import appSelectors from '../../store/selectors'
-import Header from './Header'
-import Sidebar from './Sidebar'
 import Footer from './Footer'
+import Header from './Header'
 import MessageModal from '../MessageModal'
+import Sidebar from './Sidebar'
+import Toc from '../Toc'
 
-const Layout = ({
-  children,
-  message,
-  onMessageModalClosed,
-  disableSidebar,
-}) => {
+const Layout = ({ children, disableSidebar }) => {
+  const { message } = useSelector(appSelectors.getApp)
+  const dispatch = useDispatch()
+
   const modal = message
-    ? <MessageModal message={message} onClose={onMessageModalClosed} />
+    ? <MessageModal message={message} onClose={() => dispatch(clearMessage())} />
     : null
+
+  const sidebar = disableSidebar
+    ? null
+    : (
+      <Sidebar>
+        <Toc />
+      </Sidebar>
+    )
 
   return (
     <React.Fragment>
       <AntLayout>
         <Header disableSidebar={disableSidebar} />
         <AntLayout>
-          {disableSidebar ? null : <Sidebar />}
+          {sidebar}
           <AntLayout>
             <div className={css.content}>
               {children}
@@ -43,23 +50,11 @@ const Layout = ({
 
 Layout.propTypes = {
   children: childrenType.isRequired,
-  message: messageType,
-  onMessageModalClosed: PropTypes.func.isRequired,
   disableSidebar: PropTypes.bool,
 }
 
 Layout.defaultProps = {
-  ...React.Component.defaultProps,
   disableSidebar: false,
 }
 
-const mapStateToProps = state => ({
-  message: appSelectors.getApp(state).message,
-})
-
-const mapDispatchToProps = {
-  onMessageModalClosed: clearMessage,
-}
-
-export { Layout } // for testing
-export default connect(mapStateToProps, mapDispatchToProps)(Layout)
+export default Layout

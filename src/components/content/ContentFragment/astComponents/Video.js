@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { useTranslation } from '../../../../lib/i18n'
 import ContentFragment from '..'
@@ -10,11 +10,8 @@ import css from './style.sass'
 
 const ytIdRegexp = /(youtu\.be\/|youtube\.com\/(watch\?(.*&)?v=|(embed|v)\/))([^?&"'>]+)/
 
-const Video = ({
-  data,
-  staticRoot,
-  currentLanguage,
-}) => {
+const Video = ({ data }) => {
+  const { language, staticRoot } = useSelector(appSelectors.getApp)
   const { t } = useTranslation()
   const [[, classes], content, [src, title]] = data
   const cf = (<ContentFragment content={content} />)
@@ -32,8 +29,8 @@ const Video = ({
     const videoTitle = title || astToString(content)
 
     let iframeSrc = `https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1`
-    if (currentLanguage) {
-      iframeSrc += `&hl=${currentLanguage}&cc_lang_pref=${currentLanguage}`
+    if (language) {
+      iframeSrc += `&hl=${language}&cc_lang_pref=${language}`
     }
 
     return (
@@ -66,20 +63,6 @@ const Video = ({
 
 Video.propTypes = {
   data: PropTypes.arrayOf(PropTypes.array).isRequired,
-  staticRoot: PropTypes.string.isRequired,
-  currentLanguage: PropTypes.string,
 }
 
-Video.defaultProps = {
-  currentLanguage: undefined,
-}
-
-const mapStateToProps = (state) => {
-  const app = appSelectors.getApp(state)
-  return {
-    currentLanguage: app.language,
-    staticRoot: app.staticRoot,
-  }
-}
-
-export default connect(mapStateToProps)(Video)
+export default Video

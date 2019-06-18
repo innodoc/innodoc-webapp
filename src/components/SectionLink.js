@@ -1,27 +1,30 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Link from 'next/link'
 
-import { childrenType, sectionTypeSparse } from '../lib/propTypes'
+import { childrenType } from '../lib/propTypes'
 import sectionSelectors from '../store/selectors/section'
 
-const SectionLink = ({ children, hash, section }) => {
+const SectionLink = ({ children, sectionId: sectionIdHash }) => {
+  const getSectionLink = useMemo(sectionSelectors.makeGetSectionLink, [])
+  const { hash, section } = useSelector(state => getSectionLink(state, sectionIdHash))
   const { id, title } = section
   const linkProps = {
     href: {
       pathname: '/page',
       query: { sectionId: id },
     },
-    as: {
-      pathname: `/page/${id}`,
-      hash: hash ? `#${hash}` : undefined,
-    },
+    as: { pathname: `/page/${id}` },
+  }
+  if (hash) {
+    linkProps.as.hash = `#${hash}`
   }
 
   const newChildren = children
     ? React.cloneElement(children, { title })
     : <a>{title}</a>
+
   return (
     <Link {...linkProps}>
       {newChildren}
@@ -31,19 +34,11 @@ const SectionLink = ({ children, hash, section }) => {
 
 SectionLink.defaultProps = {
   children: null,
-  hash: null,
 }
 
 SectionLink.propTypes = {
   children: childrenType,
-  hash: PropTypes.string,
-  section: sectionTypeSparse.isRequired,
+  sectionId: PropTypes.string.isRequired,
 }
 
-const makeMapStateToProps = () => {
-  const getSectionLink = sectionSelectors.makeGetSectionLink()
-  return (state, props) => getSectionLink(state, props)
-}
-
-export { makeMapStateToProps, SectionLink as SectionLinkBare } // for testing
-export default connect(makeMapStateToProps)(SectionLink)
+export default SectionLink

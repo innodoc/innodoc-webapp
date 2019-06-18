@@ -1,18 +1,18 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import AntBreadcrumb from 'antd/lib/breadcrumb'
 import Icon from 'antd/lib/icon'
 
 import { useTranslation } from '../../../lib/i18n'
-import { sectionTypeSparse } from '../../../lib/propTypes'
 import courseSelectors from '../../../store/selectors/course'
 import sectionSelectors from '../../../store/selectors/section'
 import SectionLink from '../../SectionLink'
 import css from './style.sass'
 
-const Breadcrumb = ({ homeLink, sections }) => {
+const Breadcrumb = () => {
   const { t } = useTranslation()
+  const { homeLink } = useSelector(courseSelectors.getCurrentCourse)
+  const sections = useSelector(sectionSelectors.getBreadcrumbSections)
 
   // links to parent sections, last is current section thus not a link
   const sectionLinks = sections.map((section, i) => (
@@ -43,19 +43,4 @@ const Breadcrumb = ({ homeLink, sections }) => {
   )
 }
 
-Breadcrumb.propTypes = {
-  homeLink: PropTypes.string,
-  sections: PropTypes.arrayOf(sectionTypeSparse).isRequired,
-}
-
-Breadcrumb.defaultProps = {
-  homeLink: null,
-}
-
-const mapStateToProps = state => ({
-  homeLink: courseSelectors.getCurrentCourse(state).homeLink,
-  sections: sectionSelectors.getBreadcrumbSections(state),
-})
-
-export { Breadcrumb as BareBreadcrumb, mapStateToProps } // for testing
-export default connect(mapStateToProps)(Breadcrumb)
+export default Breadcrumb

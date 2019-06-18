@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import classNames from 'classnames'
 import objectHash from 'object-hash'
 
@@ -33,14 +33,12 @@ const getQuestionId = (sectionId, id, attributes) => {
   return `${sectionId}#${questionId}`
 }
 
-const Question = ({
-  answer,
-  attributes,
-  correct,
-  onChange,
-  questionClasses,
-  questionId,
-}) => {
+const Question = ({ attributes, id, questionClasses }) => {
+  const { id: sectionId } = useSelector(sectionSelectors.getCurrentSection)
+  const globalQuestionId = getQuestionId(sectionId, id, attributes)
+  const getQuestion = useMemo(questionSelectors.makeGetQuestion, [])
+  const { answer, correct } = useSelector(state => getQuestion(state, globalQuestionId))
+  const dispatch = useDispatch()
   const {
     addQuestion,
     addQuestionAnswered,
@@ -48,15 +46,15 @@ const Question = ({
   } = useContext(ExerciseContext)
 
   // Notify exercise context about this question
-  addQuestion(questionId)
+  addQuestion(globalQuestionId)
   if (answer) {
-    addQuestionAnswered(questionId)
+    addQuestionAnswered(globalQuestionId)
   }
 
   const QuestionComponent = mapClassNameToComponent(questionClasses)
   if (QuestionComponent) {
     const attrsObj = attributesToObject(attributes)
-    const showResult = getShowResult() && correct !== null
+    const showResult = correct !== null && getShowResult()
     const feedbackIcon = <FeedbackIcon correct={showResult ? correct : null} />
     const className = showResult
       ? classNames({
@@ -69,7 +67,13 @@ const Question = ({
         attributes={attrsObj}
         className={className}
         icon={feedbackIcon}
-        onChange={val => onChange({ questionId, attributes: attrsObj, answer: val })}
+        onChange={
+          val => dispatch(questionAnswered({
+            answer: val,
+            attributes: attrsObj,
+            questionId: globalQuestionId,
+          }))
+        }
         value={answer}
       />
     )
@@ -87,35 +91,13 @@ const Question = ({
 }
 
 Question.propTypes = {
-  answer: PropTypes.string,
   attributes: attributeType.isRequired,
-  correct: PropTypes.bool,
-  questionId: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  id: PropTypes.string,
   questionClasses: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 
 Question.defaultProps = {
-  answer: null,
-  correct: null,
+  id: null,
 }
 
-const mapStateToProps = (state, { attributes, id }) => {
-  const sectionId = sectionSelectors.getCurrentSection(state).id
-  const questionId = getQuestionId(sectionId, id, attributes)
-  const question = questionSelectors.getQuestion(state, questionId)
-  const ret = { questionId }
-  if (question) {
-    return {
-      ...ret,
-      correct: question.correct,
-      answer: question.answer,
-    }
-  }
-  return ret
-}
-
-const mapDispatchToProps = { onChange: questionAnswered }
-
-export { Question, mapStateToProps } // for testing
-export default connect(mapStateToProps, mapDispatchToProps)(Question)
+export default Question

@@ -6,14 +6,20 @@ import appSelectors from '.'
 const selectQuestionId = (state, id) => id
 
 // Return question answer by ID
-const getQuestion = createSelector(
+const makeGetQuestion = () => createSelector(
   orm, appSelectors.getOrmState, selectQuestionId,
   (session, id) => {
     const question = session.Question.withId(id)
-    return question ? question.ref : null
+    return question
+      ? question.ref
+      : {
+        answer: null,
+        correct: null,
+        id: null,
+      }
   }
 )
 
 export default {
-  getQuestion,
+  makeGetQuestion,
 }

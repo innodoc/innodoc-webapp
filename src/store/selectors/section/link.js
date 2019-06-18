@@ -4,8 +4,8 @@ import orm from '../../orm'
 import appSelectors from '..'
 import { parseSectionId } from '../../../lib/util'
 
-const selectLinkInfo = (state, props) => {
-  const [sectionId, hash] = parseSectionId(props.sectionId)
+const selectLinkInfo = (state, sectionIdHash) => {
+  const [sectionId, hash] = parseSectionId(sectionIdHash)
   return { hash, sectionId }
 }
 

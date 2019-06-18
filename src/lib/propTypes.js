@@ -17,9 +17,9 @@ const courseType = PropTypes.shape({
 })
 
 const messageType = PropTypes.shape({
-  title: PropTypes.string.isRequired,
-  msg: PropTypes.string.isRequired,
   level: PropTypes.string.isRequired,
+  msg: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 })
 
 if (!process.browser) {
@@ -43,13 +43,6 @@ const sectionType = PropTypes.shape({
   title: PropTypes.objectOf(PropTypes.string).isRequired,
 })
 
-const sectionTypeSparse = PropTypes.shape({
-  id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-})
-
-const tocTreeType = PropTypes.arrayOf(PropTypes.object)
-
 export {
   attributeType,
   childrenType,
@@ -58,6 +51,4 @@ export {
   messageType,
   refType,
   sectionType,
-  sectionTypeSparse,
-  tocTreeType,
 }

@@ -25,9 +25,9 @@ const dummyState = () => {
 }
 
 describe('questionSelectors', () => {
-  test('getQuestion', () => {
+  test('makeGetQuestion', () => {
     const state = dummyState()
-    const question = questionSelectors.getQuestion(state, 'foo/bar#baz')
+    const question = questionSelectors.makeGetQuestion()(state, 'foo/bar#baz')
     expect(question.answer).toBe('42')
     expect(question.correct).toBe(true)
     expect(question.id).toEqual('foo/bar#baz')

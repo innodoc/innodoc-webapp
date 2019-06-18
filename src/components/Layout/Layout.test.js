@@ -1,50 +1,70 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { Layout } from './Layout'
+import Layout from './Layout'
 import Sidebar from './Sidebar'
 import Header from './Header'
 import Footer from './Footer'
 import MessageModal from '../MessageModal'
 
+let mockApp
+const mockDispatch = jest.fn()
+jest.mock('react-redux', () => ({
+  useDispatch: () => mockDispatch,
+  useSelector: () => mockApp,
+}))
+
 describe('<Layout />', () => {
-  const onMessageModalClosed = () => {}
+  beforeEach(() => {
+    mockApp = {}
+  })
+
   describe('default', () => {
-    const wrapper = shallow(
-      <Layout onMessageModalClosed={onMessageModalClosed}>
-        <p>
-          Funky!
-        </p>
-      </Layout>
-    )
-    it('should render children', () => {
-      expect(wrapper.find('p').exists()).toBe(true)
+    let wrapper
+    beforeEach(() => {
+      wrapper = shallow(
+        <Layout>
+          <p>Funky!</p>
+        </Layout>
+      )
     })
+
+    it('should render children', () => {
+      expect(wrapper.find('p').text()).toBe('Funky!')
+    })
+
     it('should render header and footer', () => {
       expect(wrapper.find(Sidebar).exists()).toBe(true)
       expect(wrapper.find(Header).exists()).toBe(true)
       expect(wrapper.find(Footer).exists()).toBe(true)
     })
-    it('should not show a message modal by default', () => {
+
+    it('should not render a message modal by default', () => {
       expect(wrapper.find(MessageModal).exists()).toBe(false)
     })
   })
 
   describe('with message', () => {
-    const message = {
-      title: 'Test message',
-      msg: 'This is a test!',
-      level: 'test',
-    }
-    const wrapper = shallow(
-      <Layout onMessageModalClosed={onMessageModalClosed} message={message}>
-        <p>
-          Funky!
-        </p>
-      </Layout>
-    )
+    beforeEach(() => {
+      mockDispatch.mockClear()
+      mockApp = {
+        message: {
+          level: 'test',
+          msg: 'This is a test!',
+          title: 'Test message',
+        },
+      }
+    })
+
     it('should show a message modal', () => {
+      const wrapper = shallow(<Layout><div /></Layout>)
       expect(wrapper.find(MessageModal).exists()).toBe(true)
+    })
+
+    it('should dispatch clearMessage on modal close', () => {
+      const wrapper = shallow(<Layout><div /></Layout>)
+      wrapper.find(MessageModal).prop('onClose')()
+      expect(mockDispatch.mock.calls).toHaveLength(1)
     })
   })
 })

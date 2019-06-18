@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import classNames from 'classnames'
 import Drawer from 'antd/lib/drawer'
 import Row from 'antd/lib/row'
@@ -16,19 +16,16 @@ import appSelectors from '../../../store/selectors'
 import courseSelectors from '../../../store/selectors/course'
 import { toggleSidebar } from '../../../store/actions/ui'
 import SectionLink from '../../SectionLink'
-import { courseType } from '../../../lib/propTypes'
-import useIsMobile from '../../../hooks/isMobile'
+import useIsNarrowerThan from '../../../hooks/useIsNarrowerThan'
 import { useTranslation } from '../../../lib/i18n'
 
-const Header = ({
-  course,
-  dispatchToggleSidebar,
-  sidebarVisible,
-  disableSidebar,
-}) => {
+const Header = ({ disableSidebar }) => {
   const { t } = useTranslation()
   const [showMobileMenu, setShowMobileMenu] = useState(false)
-  const isMobile = useIsMobile()
+  const isNarrowerThanMd = useIsNarrowerThan('md')
+  const course = useSelector(courseSelectors.getCurrentCourse)
+  const { sidebarVisible } = useSelector(appSelectors.getApp)
+  const dispatch = useDispatch()
 
   const logoWrapper = course && course.homeLink
     ? (
@@ -42,10 +39,10 @@ const Header = ({
     ? null
     : (
       <Button
+        className={classNames(css.menuButton, sidebarVisible ? 'active' : null)}
         ghost
         icon="read"
-        className={classNames(css.menuButton, sidebarVisible ? 'active' : null)}
-        onClick={dispatchToggleSidebar}
+        onClick={() => dispatch(toggleSidebar())}
         title={t(sidebarVisible ? 'header.hideTocLong' : 'header.showTocLong')}
       >
         {t('header.showToc')}
@@ -79,7 +76,7 @@ const Header = ({
       <Drawer
         onClose={() => setShowMobileMenu(false)}
         title={t('header.menu')}
-        visible={isMobile && showMobileMenu}
+        visible={isNarrowerThanMd && showMobileMenu}
       >
         <SearchInput className={css.searchInputMenu} />
         <Nav menuMode="inline" />
@@ -89,24 +86,7 @@ const Header = ({
 }
 
 Header.propTypes = {
-  course: courseType,
-  dispatchToggleSidebar: PropTypes.func.isRequired,
-  sidebarVisible: PropTypes.bool.isRequired,
   disableSidebar: PropTypes.bool.isRequired,
 }
 
-Header.defaultProps = {
-  course: null,
-}
-
-const mapStateToProps = state => ({
-  course: courseSelectors.getCurrentCourse(state),
-  sidebarVisible: appSelectors.getApp(state).sidebarVisible,
-})
-
-const mapDispatchToProps = {
-  dispatchToggleSidebar: toggleSidebar,
-}
-
-export { Header } // for testing
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default Header

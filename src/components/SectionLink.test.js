@@ -2,16 +2,18 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Link from 'next/link'
 
-import { makeMapStateToProps, SectionLinkBare as SectionLink } from './SectionLink'
+import SectionLink from './SectionLink'
+
+const section = {
+  id: 'foo/bar',
+  title: 'Foo bar',
+}
+let mockSection = { section }
+jest.mock('react-redux', () => ({ useSelector: () => mockSection }))
 
 describe('<SectionLink />', () => {
-  const section = {
-    id: 'foo/bar',
-    title: 'Foo bar',
-  }
-
   it('renders', () => {
-    const wrapper = shallow(<SectionLink section={section} />)
+    const wrapper = shallow(<SectionLink sectionId="foo/bar" />)
     const link = wrapper.find(Link)
     expect(link.prop('href')).toEqual({
       pathname: '/page',
@@ -24,7 +26,7 @@ describe('<SectionLink />', () => {
 
   it('renders with custom content', () => {
     const wrapper = shallow(
-      <SectionLink section={section}>
+      <SectionLink sectionId="foo/bar">
         <a>
           Hello World!
         </a>
@@ -41,7 +43,11 @@ describe('<SectionLink />', () => {
   })
 
   it('renders with hash', () => {
-    const wrapper = shallow(<SectionLink section={section} hash="baz" />)
+    mockSection = {
+      section,
+      hash: 'baz',
+    }
+    const wrapper = shallow(<SectionLink sectionId="foo/bar#baz" />)
     const link = wrapper.find(Link)
     expect(link.prop('href')).toEqual({
       pathname: '/page',
@@ -51,11 +57,5 @@ describe('<SectionLink />', () => {
       pathname: '/page/foo/bar',
       hash: '#baz',
     })
-  })
-})
-
-describe('makeMapStateToProps', () => {
-  it('returns function', () => {
-    expect(makeMapStateToProps()).toBeInstanceOf(Function)
   })
 })

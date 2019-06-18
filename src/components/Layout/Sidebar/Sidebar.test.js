@@ -3,78 +3,60 @@ import { shallow } from 'enzyme'
 import AntLayout from 'antd/lib/layout'
 import Button from 'antd/lib/button'
 
-import { Sidebar } from './Sidebar'
-import Toc from '../../Toc'
+import Sidebar from './Sidebar'
+import { toggleSidebar } from '../../../store/actions/ui'
+
+let mockApp
+const mockDispatch = jest.fn()
+jest.mock('react-redux', () => ({
+  useDispatch: () => mockDispatch,
+  useSelector: () => mockApp,
+}))
+
+let mockIsNarrowerThan
+jest.mock('../../../hooks/useIsNarrowerThan', () => (
+  () => mockIsNarrowerThan
+))
 
 describe('<Sidebar />', () => {
-  describe('render', () => {
-    it('should render and have one toc', () => {
-      const wrapper = shallow(
-        <Sidebar
-          t={() => ''}
-          dispatchToggleSidebar={() => undefined}
-          visible
-        />
-      )
+  beforeEach(() => {
+    mockApp = { sidebarVisible: true }
+    mockDispatch.mockClear()
+    mockIsNarrowerThan = true
+  })
+
+  it('should dispatch toggleSidebar', () => {
+    const wrapper = shallow(<Sidebar />)
+    wrapper.find(Button).simulate('click')
+    expect(mockDispatch).toBeCalledTimes(1)
+    expect(mockDispatch).toBeCalledWith(toggleSidebar())
+  })
+
+  describe('should render', () => {
+    test('with children', () => {
+      const wrapper = shallow(<Sidebar>Foo</Sidebar>)
       expect(wrapper.find(AntLayout.Sider)).toHaveLength(1)
-      expect(wrapper.find(Toc)).toHaveLength(1)
+      expect(wrapper.find(Button).exists()).toBe(true)
+      expect(wrapper.children().text()).toContain('Foo')
     })
 
-    it('should render collapsed', () => {
-      const wrapper = shallow(
-        <Sidebar
-          t={() => ''}
-          dispatchToggleSidebar={() => undefined}
-          visible={false}
-        />
-      )
+    test('collapsed', () => {
+      mockApp = { sidebarVisible: false }
+      const wrapper = shallow(<Sidebar />)
       expect(wrapper.find(AntLayout.Sider).prop('collapsed')).toBe(true)
     })
   })
 
-  describe('collapse button', () => {
-    const mockDispatchToggleSidebar = jest.fn()
-    const wrapper = shallow(
-      <Sidebar
-        t={() => ''}
-        dispatchToggleSidebar={mockDispatchToggleSidebar}
-        visible
-      />
-    )
-
-    const button = wrapper.find(Button)
-
-    it('should render', () => {
-      expect(button.exists()).toBe(true)
-    })
-
-    it('triggers sidebar collapse', () => {
-      button.simulate('click')
-      expect(mockDispatchToggleSidebar.mock.calls).toHaveLength(1)
-    })
-  })
-
-  describe('breakpoints', () => {
-    const wrapper = shallow(
-      <Sidebar
-        t={() => ''}
-        dispatchToggleSidebar={() => undefined}
-        visible={false}
-      />
-    )
-
-    it('should have initial value', () => {
+  describe('responsive width', () => {
+    it('should be 300 for narrow screen', () => {
+      const wrapper = shallow(<Sidebar />)
       expect(wrapper.find(AntLayout.Sider).prop('width')).toBe(300)
     })
 
-    it('should adjust width when not breaking', () => {
-      wrapper.instance().onBreak(false)
+    it('should be 400 for wide screen', () => {
+      mockIsNarrowerThan = false
+      const wrapper = shallow(<Sidebar />)
       expect(wrapper.find(AntLayout.Sider).prop('width')).toBe(400)
-    })
-
-    it('should adjust width when breaking', () => {
-      wrapper.instance().onBreak(true)
-      expect(wrapper.find(AntLayout.Sider).prop('width')).toBe(300)
     })
   })
 })

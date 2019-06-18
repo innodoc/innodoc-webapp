@@ -1,15 +1,18 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { BareSectionNav as SectionNav, mapStateToProps } from './SectionNav'
+import SectionNav from './SectionNav'
 import SectionLink from '../../SectionLink'
 
-describe('<SectionNav />', () => {
-  // const prevSection = 'section1'
-  // const nextSection = 'section3'
+let mockNextPrev = {
+  prevId: 'section1',
+  nextId: 'section3',
+}
+jest.mock('react-redux', () => ({ useSelector: () => mockNextPrev }))
 
+describe('<SectionNav />', () => {
   it('renders', () => {
-    const wrapper = shallow(<SectionNav prevId="section1" nextId="section3" />)
+    const wrapper = shallow(<SectionNav />)
     const sectionLinks = wrapper.find(SectionLink)
     expect(sectionLinks).toHaveLength(2)
     const prevSectionLink = sectionLinks.at(0)
@@ -21,7 +24,8 @@ describe('<SectionNav />', () => {
   })
 
   it('renders only next', () => {
-    const wrapper = shallow(<SectionNav nextId="next" />)
+    mockNextPrev = { nextId: 'next' }
+    const wrapper = shallow(<SectionNav />)
     const sectionLinks = wrapper.find(SectionLink)
     expect(sectionLinks).toHaveLength(1)
     const nextSectionLink = sectionLinks.at(0)
@@ -30,29 +34,12 @@ describe('<SectionNav />', () => {
   })
 
   it('renders only prev', () => {
-    const wrapper = shallow(<SectionNav prevId="prev" />)
+    mockNextPrev = { prevId: 'prev' }
+    const wrapper = shallow(<SectionNav />)
     const sectionLinks = wrapper.find(SectionLink)
     expect(sectionLinks).toHaveLength(1)
     const prevSectionLink = sectionLinks.at(0)
     expect(prevSectionLink.prop('sectionId')).toBe('prev')
     expect(prevSectionLink.find('a')).toBeTruthy()
-  })
-})
-
-jest.mock('../../../store/selectors/index.js', () => ({
-  getApp: () => ({ language: 'en' }),
-}))
-jest.mock('../../../store/selectors/section/index.js', () => ({
-  getNextPrevSections: () => ({
-    next: 'next',
-    prev: 'prev',
-  }),
-}))
-
-describe('mapStateToProps', () => {
-  it('returns next and prev section', () => {
-    const props = mapStateToProps(null)
-    expect(props.next).toEqual('next')
-    expect(props.prev).toEqual('prev')
   })
 })
