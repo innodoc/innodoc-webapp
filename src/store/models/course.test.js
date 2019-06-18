@@ -1,6 +1,6 @@
 import orm from '../orm'
 import CourseModel from './course'
-import { loadManifestSuccess, loadSection, loadSectionSuccess } from '../actions/content'
+import { loadManifestSuccess, loadSectionSuccess } from '../actions/content'
 
 const createEmptyState = () => {
   const state = orm.getEmptyState()

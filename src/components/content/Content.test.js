@@ -1,43 +1,61 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { BareContent as Content, mapStateToProps } from './Content'
+import appSelectors from '../../store/selectors'
+import sectionSelectors from '../../store/selectors/section'
+import Content from './Content'
 import SubsectionList from './SubsectionList'
 import Breadcrumb from './Breadcrumb'
 import ContentFragment from './ContentFragment'
 import SectionNav from './SectionNav'
-import { typesettingStates } from '../hoc/withMathJax'
+import fadeInCss from '../../style/fadeIn.sass'
 
-let mockGetCurrentCourseMock
-let mockGetCurrentSectionMock
-let mockGetCurrentTitle
+const { typesetStates } = jest.requireActual('../../hooks/useMathJax')
 
-jest.mock('../../store/selectors/index.js', () => ({
-  getApp: () => ({ language: 'en' }),
-  getOrmState: () => ({ orm: {} }),
+const mockGetApp = appSelectors.getApp
+const mockGetCurrentSection = sectionSelectors.getCurrentSection
+const mockGetCurrentSubsections = sectionSelectors.getCurrentSubsections
+
+let mockApp
+let mockCurrentSection
+let mockCurrentSubsections
+let mockCurrentTitle
+let mockMathJaxElem
+let mockTypesetState
+
+jest.mock('react-redux', () => ({
+  useSelector: (selector) => {
+    if (selector === mockGetApp) {
+      return mockApp
+    }
+    if (selector === mockGetCurrentSection) {
+      return mockCurrentSection
+    }
+    if (selector === mockGetCurrentSubsections) {
+      return mockCurrentSubsections
+    }
+    return mockCurrentTitle
+  },
 }))
 
-jest.mock('../../store/selectors/course.js', () => ({
-  getCurrentCourse: () => mockGetCurrentCourseMock(),
-}))
-
-jest.mock('../../store/selectors/section/index.js', () => ({
-  getCurrentSection: () => mockGetCurrentSectionMock(),
-  getCurrentSubsections: () => [],
-  getCurrentTitle: () => mockGetCurrentTitle(),
+jest.mock('../../hooks/useMathJax', () => ({
+  typesetStates: jest.requireActual('../../hooks/useMathJax').typesetStates,
+  useMathJaxScanElement: () => ({
+    mathJaxElem: mockMathJaxElem,
+    typesetState: mockTypesetState,
+  }),
 }))
 
 describe('<Content />', () => {
-  const getData = () => ({
-    mockTypesetMathJax: jest.fn(),
-    mockT: jest.fn(),
-    section: {
+  beforeEach(() => {
+    mockApp = { language: 'en' }
+    mockCurrentSection = {
       content: { en: [{ t: 'Str', c: 'A nice string' }] },
       id: 'foo',
       ord: [0],
       title: { en: 'Foo section' },
-    },
-    subsections: [
+    }
+    mockCurrentSubsections = [
       {
         content: { en: [] },
         id: 'bar-1',
@@ -50,120 +68,59 @@ describe('<Content />', () => {
         ord: [0, 1],
         title: { en: 'Bar section 2' },
       },
-    ],
-    otherSection: {
-      content: { en: [{ t: 'Str', c: 'An awesome string' }] },
-      id: 'bar',
-      ord: [1],
-      title: { en: 'Bar section' },
-    },
-    contentRef: React.createRef(),
+    ]
+    mockCurrentTitle = '1 Foo section'
+    mockMathJaxElem = React.createRef()
+    mockTypesetState = typesetStates.PENDING
   })
 
-  it('renders without section and currentLanguage', () => {
-    const data = getData()
-    const wrapper = shallow(
-      <Content
-        loading={false}
-        mathJaxContentRef={data.contentRef}
-        t={data.mockT}
-        typesetMathJax={data.mockTypesetMathJax}
-        typesettingStatus={typesettingStates.PENDING}
-      />
-    )
-    expect(wrapper.exists(SubsectionList)).toBe(false)
-    expect(wrapper.exists(ContentFragment)).toBe(false)
-  })
-
-  it('renders', () => {
-    const data = getData()
-    const wrapper = shallow(
-      <Content
-        currentLanguage="en"
-        loading={false}
-        mathJaxContentRef={data.contentRef}
-        section={data.section}
-        subsections={data.subsections}
-        t={data.mockT}
-        title="1 Foo section"
-        typesetMathJax={data.mockTypesetMathJax}
-        typesettingStatus={typesettingStates.PENDING}
-      />
-    )
+  it('should render', () => {
+    const wrapper = shallow(<Content />)
     expect(wrapper.find(SectionNav)).toHaveLength(1)
     expect(wrapper.find(Breadcrumb)).toHaveLength(1)
-    const h1 = wrapper.find('h1')
-    expect(h1).toHaveLength(1)
-    expect(h1.text()).toEqual('1 Foo section')
-    expect(wrapper.find(ContentFragment).at(0).prop('content')).toEqual(data.section.content.en)
+    expect(wrapper.find('h1').text()).toEqual('1 Foo section')
+    expect(wrapper.find(ContentFragment).prop('content')).toBe(mockCurrentSection.content.en)
     expect(wrapper.exists(SubsectionList)).toBe(true)
-    expect(data.mockTypesetMathJax).toBeCalledTimes(0)
   })
 
-  it('renders and updates', () => {
-    const data = getData()
-    const wrapper = shallow(
-      <Content
-        currentLanguage="en"
-        loading={false}
-        mathJaxContentRef={data.contentRef}
-        section={data.section}
-        subsections={data.subsections}
-        t={data.mockT}
-        typesetMathJax={data.mockTypesetMathJax}
-        typesettingStatus={typesettingStates.PENDING}
-      />
-    )
-    const spyComponentDidUpdate = jest.spyOn(wrapper.instance(), 'componentDidUpdate')
-    expect(data.mockTypesetMathJax).toBeCalledTimes(0)
-    wrapper.setProps({ section: data.otherSection })
-    expect(spyComponentDidUpdate).toBeCalledTimes(1)
-    expect(data.mockTypesetMathJax).toBeCalledTimes(1)
-    expect(wrapper.find(ContentFragment).at(0).prop('content')).toEqual(data.otherSection.content.en)
-  })
-})
-
-describe('mapStateToProps', () => {
-  it("returns loading=true if there's no current section id", () => {
-    mockGetCurrentCourseMock = () => ({
-      currentSection: null,
-      homeLink: 'foo',
-      languages: ['en'],
-      title: ['Foobar'],
+  describe('fade in/out', () => {
+    it.each([
+      ['in', typesetStates.SUCCESS, false],
+      ['out', typesetStates.PENDING, true],
+    ])('should fade %s', (_, state, hidePresent) => {
+      mockTypesetState = state
+      const wrapper = shallow(<Content />)
+      expect(wrapper.find('div').at(0).hasClass(fadeInCss.hide)).toBe(hidePresent)
+      expect(wrapper.find('div').at(0).hasClass(fadeInCss.show)).toBe(!hidePresent)
     })
-    mockGetCurrentSectionMock = () => undefined
-    mockGetCurrentTitle = () => undefined
-    expect(mapStateToProps().loading).toEqual(true)
   })
 
-  it("returns loading=true if there's no section returned", () => {
-    mockGetCurrentCourseMock = () => ({
-      currentSection: 'foo',
-      homeLink: 'foo',
-      languages: ['en'],
-      title: ['Foobar'],
+  describe('missing data', () => {
+    it('should render without sections', () => {
+      mockCurrentSection = { content: {} }
+      mockCurrentSubsections = []
+      const wrapper = shallow(<Content />)
+      expect(wrapper.exists(SubsectionList)).toBe(false)
+      expect(wrapper.exists(ContentFragment)).toBe(false)
     })
-    mockGetCurrentSectionMock = () => undefined
-    mockGetCurrentTitle = () => undefined
-    expect(mapStateToProps().loading).toEqual(true)
-  })
 
-  it("returns loading=false if there's a current section", () => {
-    const section = { id: 'foo', title: { en: ['title'] }, content: { en: ['foocontent'] } }
-    mockGetCurrentCourseMock = () => ({
-      currentSection: 'foo',
-      homeLink: 'foo',
-      languages: ['en'],
-      title: ['Foobar'],
+    it('should render without content', () => {
+      mockCurrentSection = {
+        content: {},
+        id: 'foo',
+        ord: [0],
+        title: { en: 'Foo section' },
+      }
+      const wrapper = shallow(<Content />)
+      expect(wrapper.exists(SubsectionList)).toBe(true)
+      expect(wrapper.exists(ContentFragment)).toBe(false)
     })
-    mockGetCurrentSectionMock = () => section
-    mockGetCurrentTitle = () => '1.1 title'
-    expect(mapStateToProps()).toEqual({
-      section,
-      subsections: [],
-      currentLanguage: 'en',
-      loading: false,
-      title: '1.1 title',
+
+    it('should render without language', () => {
+      mockApp = {}
+      const wrapper = shallow(<Content />)
+      expect(wrapper.exists(SubsectionList)).toBe(true)
+      expect(wrapper.exists(ContentFragment)).toBe(false)
     })
   })
 })

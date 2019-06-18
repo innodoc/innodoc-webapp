@@ -22,19 +22,6 @@ const messageType = PropTypes.shape({
   title: PropTypes.string.isRequired,
 })
 
-if (!process.browser) {
-  global.Element = () => {} // shim for Node.js
-}
-const refType = PropTypes.oneOfType([
-  PropTypes.func,
-  PropTypes.shape({
-    current: PropTypes.oneOfType([
-      PropTypes.instanceOf(Element),
-      PropTypes.object,
-    ]),
-  }),
-])
-
 const sectionType = PropTypes.shape({
   content: PropTypes.objectOf(contentType),
   id: PropTypes.string.isRequired,
@@ -49,6 +36,5 @@ export {
   contentType,
   courseType,
   messageType,
-  refType,
   sectionType,
 }

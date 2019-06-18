@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { shallow } from 'enzyme'
 import Tree from 'antd/lib/tree'
 
 import Toc from './Toc'
