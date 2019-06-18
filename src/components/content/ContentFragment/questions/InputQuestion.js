@@ -18,10 +18,7 @@ const InputQuestion = ({
   const length = parseInt(attributes.length, 10) || DEFAULT_INPUT_LENGTH
   const messages = ['Das funktioniert so leider nicht.', 'Du hast alles falsch gemacht!']
   return (
-    <InputPopover
-      userInput={value}
-      messages={messages}
-    >
+    <InputPopover messages={messages} userInput={value}>
       <Input
         className={classNames(css.inputQuestion, className)}
         maxLength={length}

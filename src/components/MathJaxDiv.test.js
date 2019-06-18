@@ -1,69 +1,43 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { shallow } from 'enzyme'
 
-import { mathDelimiter, typesettingStates } from './hoc/withMathJax'
-import { BareMathJaxDiv as MathJaxDiv } from './MathJaxDiv'
+import MathJaxDiv from './MathJaxDiv'
 import fadeInCss from '../style/fadeIn.sass'
 
+const { typesetStates } = jest.requireActual('../hooks/useMathJax')
+
+let mockMathJaxElem
+let mockTypesetState
+
+jest.mock('../hooks/useMathJax', () => ({
+  __esModule: true,
+  default: () => ({
+    mathJaxElem: mockMathJaxElem,
+    typesetState: mockTypesetState,
+  }),
+  typesetStates: jest.requireActual('../hooks/useMathJax').typesetStates,
+}))
+
 describe('<MathJaxDiv />', () => {
-  let updateMathJax
-
   beforeEach(() => {
-    updateMathJax = jest.fn()
+    mockMathJaxElem = React.createRef()
+    mockTypesetState = typesetStates.SUCCESS
   })
 
-  it('renders successful typeset', () => {
-    const wrapper = mount(
-      <MathJaxDiv
-        mathJaxContentRef={React.createRef()}
-        typesettingStatus={typesettingStates.SUCCESS}
-        updateMathJax={updateMathJax}
-        userInput="foo"
-      />
-    )
-    const div = wrapper.find('div')
-    expect(div.hasClass(fadeInCss.show)).toBe(true)
-    expect(div.text()).toEqual(`${mathDelimiter.inline[0]}foo${mathDelimiter.inline[1]}`)
+  it('should render', () => {
+    const wrapper = shallow(<MathJaxDiv texCode="f(x)=x^2" />)
+    expect(wrapper.exists('div')).toBe(true)
   })
 
-  it('renders erroneous typeset', () => {
-    const wrapper = mount(
-      <MathJaxDiv
-        mathJaxContentRef={React.createRef()}
-        typesettingStatus={typesettingStates.ERROR}
-        updateMathJax={updateMathJax}
-        userInput="foo"
-      />
-    )
-    const div = wrapper.find('div')
-    expect(div.hasClass(fadeInCss.hide)).toBe(true)
-  })
-
-  it('renders without userInput', () => {
-    const wrapper = mount(
-      <MathJaxDiv
-        mathJaxContentRef={React.createRef()}
-        typesettingStatus={typesettingStates.SUCCESS}
-        updateMathJax={updateMathJax}
-      />
-    )
-    const div = wrapper.find('div')
-    expect(div.text()).toEqual(`${mathDelimiter.inline[0]}${mathDelimiter.inline[1]}`)
-  })
-
-  it('updates typeset', () => {
-    const wrapper = mount(
-      <MathJaxDiv
-        mathJaxContentRef={React.createRef()}
-        typesettingStatus={typesettingStates.SUCCESS}
-        updateMathJax={updateMathJax}
-        userInput="foo"
-      />
-    )
-    const div = wrapper.find('div')
-    expect(div.text()).toEqual(`${mathDelimiter.inline[0]}foo${mathDelimiter.inline[1]}`)
-    wrapper.setProps({ userInput: 'bar' })
-    expect(updateMathJax).toBeCalledTimes(1)
-    expect(updateMathJax).toBeCalledWith(0, 'bar')
+  describe('fade in/out', () => {
+    it.each([
+      ['in', typesetStates.SUCCESS, false],
+      ['out', typesetStates.PENDING, true],
+    ])('should fade %s', (_, state, hidePresent) => {
+      mockTypesetState = state
+      const wrapper = shallow(<MathJaxDiv texCode="f(x)=x^2" />)
+      expect(wrapper.find('div').hasClass(fadeInCss.hide)).toBe(hidePresent)
+      expect(wrapper.find('div').hasClass(fadeInCss.show)).toBe(!hidePresent)
+    })
   })
 })
