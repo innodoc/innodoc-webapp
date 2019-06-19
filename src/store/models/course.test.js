@@ -61,36 +61,22 @@ describe('reducer', () => {
     })
   })
 
-  describe('loadSection', () => {
-    let course
-    let sectionFoo
-    let sectionBar
-
-    beforeEach(() => {
-      sectionFoo = session.Section.create({
-        id: '/foo/',
-        title: 'Foo',
-      })
-      sectionBar = session.Section.create({
-        id: '/bar/',
-        title: 'Bar',
-      })
-      course = session.Course.create({
-        currentSection: sectionFoo,
-        homeLink: '/foo/',
-        languages: ['en'],
-        title: 'Foo course',
-      })
+  test('loadSectionSuccess', () => {
+    const sectionFoo = session.Section.create({
+      id: '/foo/',
+      title: 'Foo',
     })
-
-    test('loadSection', () => {
-      CourseModel.reducer(loadSection('/bar/'), session.Course, session)
-      expect(course.ref.currentSection).toEqual(null)
+    const sectionBar = session.Section.create({
+      id: '/bar/',
+      title: 'Bar',
     })
-
-    test('loadSectionSuccess', () => {
-      CourseModel.reducer(loadSectionSuccess({ sectionId: '/bar/' }), session.Course, session)
-      expect(course.ref.currentSection).toEqual(sectionBar.ref.id)
+    const course = session.Course.create({
+      currentSection: sectionFoo,
+      homeLink: '/foo/',
+      languages: ['en'],
+      title: 'Foo course',
     })
+    CourseModel.reducer(loadSectionSuccess({ sectionId: '/bar/' }), session.Course, session)
+    expect(course.ref.currentSection).toEqual(sectionBar.ref.id)
   })
 })

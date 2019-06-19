@@ -29,13 +29,6 @@ export default class Course extends Model {
         })
         break
       }
-      case contentActionTypes.LOAD_SECTION: {
-        const course = courseModel.first()
-        if (course) {
-          course.set('currentSection', null)
-        }
-        break
-      }
       case contentActionTypes.LOAD_SECTION_SUCCESS: {
         const course = courseModel.first()
         if (course) {
