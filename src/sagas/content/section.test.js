@@ -30,6 +30,7 @@ describe('loadSectionSaga', () => {
     [select(appSelectors.getApp), { language, contentRoot }],
     [call(parseSectionId, sectionIdHash), [sectionId, 'baz']],
     [select(courseSelectors.getCurrentCourse), { id: 0 }],
+    [select(sectionSelectors.getCurrentSection), { id: null }],
     [select(sectionSelectors.sectionExists, sectionId), true],
     [select(sectionSelectors.getSection, sectionId), { id: 0 }],
     [matchers.call.fn(fetchSection), content[language]],
@@ -52,6 +53,18 @@ describe('loadSectionSaga', () => {
       .silentRun(0)
   )
 
+  it("should do nothing if section didn't actually change",
+    () => expectSaga(loadSectionSaga, loadSection(sectionIdHash))
+      .provide([
+        [select(sectionSelectors.getCurrentSection), { id: 'foo/bar' }],
+        ...defaultProvides,
+      ])
+      .not.call.fn(fetchSection)
+      .not.put.actionType(contentActionTypes.LOAD_SECTION_SUCCESS)
+      .not.put.actionType(contentActionTypes.LOAD_SECTION_FAILURE)
+      .run()
+  )
+
   it('should produce 404 for non-existant sectionId',
     () => expectSaga(loadSectionSaga, loadSection(sectionIdHash))
       .provide([
@@ -60,7 +73,7 @@ describe('loadSectionSaga', () => {
       ])
       .put(loadSectionFailure({ language, statusCode: 404 }))
       .not.call.fn(fetchSection)
-      .not.put.actionType(uiActionTypes.LOAD_MANIFEST_SUCCESS)
+      .not.put.actionType(contentActionTypes.LOAD_SECTION_SUCCESS)
       .run()
   )
 
