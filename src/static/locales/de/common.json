@@ -10,13 +10,15 @@
     "test": "Test",
     "ytIdError": "Konnte YouTube-Video-ID nicht extrahieren: {{src}}"
   },
-  "questions": {
-    "feedback": {
-      "correct": "Eingabe richtig",
-      "incorrect": "Eingabe falsch",
-      "indeterminate": "Noch kein Ergebnis"
+  "errorPage": {
+    "404": {
+      "title": "404 Not found",
+      "msg": "Diese Seite konnte nicht gefunden werden."
     },
-    "inputFeedback": "Eingabe"
+    "unspecific": {
+      "title": "Fehler",
+      "msg": "Leider ist etwas schief gelaufen."
+    }
   },
   "footer": {
     "aboutThisProject": "Über dieses Projekt",
@@ -61,6 +63,14 @@
       "fatal": "Fataler Fehler!",
       "info": "Info"
     }
+  },
+  "questions": {
+    "feedback": {
+      "correct": "Eingabe richtig",
+      "incorrect": "Eingabe falsch",
+      "indeterminate": "Noch kein Ergebnis"
+    },
+    "inputFeedback": "Eingabe"
   },
   "sidebar": {
     "collapseButton": "Inhaltsverzeichnis schließen"

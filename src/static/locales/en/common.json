@@ -10,13 +10,15 @@
     "test": "Test",
     "ytIdError": "Could not extract YouTube Video ID: {{src}}"
   },
-  "questions": {
-    "feedback": {
-      "correct": "Input correct",
-      "incorrect": "Input incorrect",
-      "indeterminate": "No result yet"
+  "errorPage": {
+    "404": {
+      "title": "404 Not found",
+      "msg": "This page could not be found."
     },
-    "inputFeedback": "Input"
+    "unspecific": {
+      "title": "Error",
+      "msg": "Something went wrong."
+    }
   },
   "footer": {
     "aboutThisProject": "About this project",
@@ -62,6 +64,14 @@
       "fatal": "Fatal error!",
       "info": "Info"
     }
+  },
+  "questions": {
+    "feedback": {
+      "correct": "Input correct",
+      "incorrect": "Input incorrect",
+      "indeterminate": "No result yet"
+    },
+    "inputFeedback": "Input"
   },
   "sidebar": {
     "collapseButton": "Close table of contents"
