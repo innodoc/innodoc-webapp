@@ -13,7 +13,6 @@ const IndexSpan = ({ indexConcept, content }) => (
     <ContentFragment content={content} />
   </span>
 )
-
 IndexSpan.propTypes = {
   indexConcept: PropTypes.string.isRequired,
   content: contentType.isRequired,
@@ -76,7 +75,7 @@ const Span = ({ data }) => {
 
   return null
 }
-
 Span.propTypes = { data: PropTypes.arrayOf(PropTypes.array).isRequired }
 
 export default Span
+export { IndexSpan }

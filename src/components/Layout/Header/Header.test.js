@@ -85,10 +85,12 @@ describe('<Header />', () => {
       expect(wrapper.find(Drawer).prop('visible')).toBe(false)
     })
 
-    it('should activate drawer menu', () => {
+    it('should activate and close drawer menu', () => {
       const wrapper = shallow(<Header disableSidebar={false} />)
       wrapper.find(Button).at(1).simulate('click')
       expect(wrapper.find(Drawer).prop('visible')).toBe(true)
+      wrapper.find(Drawer).prop('onClose')()
+      expect(wrapper.find(Drawer).prop('visible')).toBe(false)
     })
   })
 })
