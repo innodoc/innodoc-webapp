@@ -64,19 +64,15 @@ const mapContentTypeToComponent = (name) => {
 
 // ContentFragment parses Pandoc-like AST document stuctures by mapping
 // AST element types to Component implementations.
-export default class ContentFragment extends React.Component {
-  static propTypes = {
-    content: contentType.isRequired,
+const ContentFragment = ({ content }) => {
+  const output = []
+  for (let i = 0; i < content.length; i += 1) {
+    const el = content[i]
+    const Component = mapContentTypeToComponent(el.t)
+    output.push(<Component key={i.toString()} name={el.t} data={el.c} />)
   }
-
-  render() {
-    const { content } = this.props
-    const output = []
-    for (let i = 0; i < content.length; i += 1) {
-      const el = content[i]
-      const Component = mapContentTypeToComponent(el.t)
-      output.push(<Component key={i.toString()} name={el.t} data={el.c} />)
-    }
-    return output
-  }
+  return output
 }
+ContentFragment.propTypes = { content: contentType.isRequired }
+
+export default ContentFragment
