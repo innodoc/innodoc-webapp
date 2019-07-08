@@ -36,8 +36,9 @@ it('should dispatch LOAD_MANIFEST_FAILURE action', () => {
 })
 
 it('should dispatch LOAD_SECTION action', () => {
-  expect(loadSection('foo/bar')).toEqual({
+  expect(loadSection('foo/bar', 'en')).toEqual({
     type: actionTypes.LOAD_SECTION,
+    prevLanguage: 'en',
     sectionId: 'foo/bar',
   })
 })

@@ -11,7 +11,7 @@ jest.mock('../../lib/i18n', () => ({
 
 describe('notifyI18next', () => {
   it('should notify i18next',
-    () => expectSaga(notifyI18next, { language: 'de' })
+    () => expectSaga(notifyI18next, changeLanguage('de', 'en'))
       .call([nextI18next.i18n, nextI18next.i18n.changeLanguage], 'de')
       .run()
   )

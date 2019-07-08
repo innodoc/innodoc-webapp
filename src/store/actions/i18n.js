@@ -3,10 +3,11 @@ export const actionTypes = {
   LANGUAGE_DETECTED: 'LANGUAGE_DETECTED',
 }
 
-export function changeLanguage(language) {
+export function changeLanguage(language, prevLanguage = undefined) {
   return {
     type: actionTypes.CHANGE_LANGUAGE,
     language,
+    prevLanguage,
   }
 }
 

@@ -15,19 +15,30 @@ const resetLanguage = async () => {
 beforeEach(resetLanguage)
 afterAll(resetLanguage)
 
-describe.each([
-  ['en', 'Project structure'],
-  ['de', 'Projektstruktur'],
-])(
-  'Content translation (%s)', (lang, text) => {
-    it('should show content in language', async () => {
-      expect.assertions(1)
-      await page.setExtraHTTPHeaders({ 'Accept-Language': lang })
-      await page.goto(getUrl())
-      await expect(page).toMatchElement('a', { text })
-    })
-  }
-)
+describe('Content translation', () => {
+  it.each([
+    ['en', 'Project structure'],
+    ['de', 'Projektstruktur'],
+  ])('should load content in language (%s)', async (lang, text) => {
+    expect.assertions(1)
+    await page.setExtraHTTPHeaders({ 'Accept-Language': lang })
+    await page.goto(getUrl())
+    await expect(page).toMatchElement('a', { text })
+  })
+
+  it('should switch language w/o page reload', async () => {
+    expect.assertions(6)
+    // need to fit full nav to see language option
+    await page.setViewport({ width: 1200, height: 600 })
+    await page.goto(getUrl('/page/01-project'))
+    await expect(page).toMatchElement('h1', { text: 'Project structure' })
+    await expect(page).toMatchElement('p', { text: 'This sections describes the course structure.' })
+    await expect(page).toClick('li', { text: 'Language' })
+    await expect(page).toClick('li', { text: 'Deutsch' })
+    await expect(page).toMatchElement('h1', { text: 'Projektstruktur' })
+    await expect(page).toMatchElement('p', { text: 'Dieser Abschnitt bespricht die Stuktur eines Kurses.' })
+  })
+})
 
 describe.each(['en', 'de'])('Language detection (%s)', (lang) => {
   describe('Accept-Language header', () => {

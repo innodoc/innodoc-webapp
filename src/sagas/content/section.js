@@ -17,7 +17,7 @@ import { parseSectionId, scrollToHash } from '../../lib/util'
 import { showMessage } from '../../store/actions/ui'
 import loadManifestSaga from './manifest'
 
-export default function* loadSectionSaga({ sectionId: sectionIdHash }) {
+export default function* loadSectionSaga({ sectionId: sectionIdHash, prevLanguage }) {
   const { language, contentRoot } = yield select(appSelectors.getApp)
   const [sectionId] = yield call(parseSectionId, sectionIdHash)
 
@@ -30,9 +30,13 @@ export default function* loadSectionSaga({ sectionId: sectionIdHash }) {
   // TODO: this is strange, is both error and message really needed?
   yield put(clearError())
 
-  // Check if section actually changed
+  // Do not load exact same section another time
   const currentSection = yield select(sectionSelectors.getCurrentSection)
-  if (currentSection && currentSection.id === sectionId) {
+  if (
+    currentSection
+    && currentSection.id === sectionId
+    && language === prevLanguage
+  ) {
     return
   }
 

@@ -7,12 +7,17 @@ import Layout from '../Layout'
 import Content from '../content/Content'
 import { loadSection, loadSectionFailure } from '../../store/actions/content'
 
-let mockApp = {}
+let mockApp
 jest.mock('react-redux', () => ({ useSelector: () => mockApp }))
+jest.mock('../../store/selectors', () => ({
+  getApp: () => mockApp,
+  getOrmState: () => {},
+}))
 
 describe('<CoursePage />', () => {
+  beforeEach(() => { mockApp = { language: 'en' } })
+
   it('should render', () => {
-    mockApp = {}
     const wrapper = shallow(<CoursePage />)
     const layout = wrapper.find(Layout)
     expect(layout.exists()).toBe(true)
@@ -21,13 +26,18 @@ describe('<CoursePage />', () => {
   })
 
   describe('getInitialProps', () => {
-    const store = { dispatch: jest.fn() }
-    beforeEach(() => { store.dispatch.mockClear() })
+    let store
+    beforeEach(() => {
+      store = {
+        dispatch: jest.fn(),
+        getState: () => {},
+      }
+    })
 
     it('should dispatch loadSection with sectionId', () => {
       const query = { sectionId: 'foo/bar' }
       CoursePage.getInitialProps({ query, store })
-      expect(store.dispatch).toBeCalledWith(loadSection('foo/bar'))
+      expect(store.dispatch).toBeCalledWith(loadSection('foo/bar', 'en'))
     })
 
     it('should dispatch loadSectionFailure without sectionId', () => {

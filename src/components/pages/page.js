@@ -31,9 +31,10 @@ const CoursePage = () => {
 }
 
 CoursePage.getInitialProps = ({ query, store }) => {
+  const { language } = appSelectors.getApp(store.getState())
   store.dispatch(
     query.sectionId
-      ? loadSection(query.sectionId)
+      ? loadSection(query.sectionId, language)
       : loadSectionFailure({ error: { statusCode: 404 } })
   )
   return {}

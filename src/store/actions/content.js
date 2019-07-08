@@ -31,9 +31,10 @@ export function loadManifestFailure(error) {
   }
 }
 
-export function loadSection(sectionId) {
+export function loadSection(sectionId, prevLanguage = undefined) {
   return {
     type: actionTypes.LOAD_SECTION,
+    prevLanguage,
     sectionId,
   }
 }

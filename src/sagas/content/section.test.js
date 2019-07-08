@@ -54,7 +54,7 @@ describe('loadSectionSaga', () => {
   )
 
   it("should do nothing if section didn't actually change",
-    () => expectSaga(loadSectionSaga, loadSection(sectionIdHash))
+    () => expectSaga(loadSectionSaga, loadSection(sectionIdHash, 'en'))
       .provide([
         [select(sectionSelectors.getCurrentSection), { id: 'foo/bar' }],
         ...defaultProvides,

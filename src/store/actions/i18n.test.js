@@ -5,6 +5,12 @@ test('CHANGE_LANGUAGE', () => {
     type: actionTypes.CHANGE_LANGUAGE,
     language: 'de',
   })
+
+  expect(changeLanguage('pl', 'de')).toEqual({
+    type: actionTypes.CHANGE_LANGUAGE,
+    language: 'pl',
+    prevLanguage: 'de',
+  })
 })
 
 test('LANGUAGE_DETECTED', () => {
