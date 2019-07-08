@@ -1,4 +1,5 @@
 import React from 'react'
+import Router from 'next/router'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
 
@@ -12,13 +13,19 @@ import Breadcrumb from './Breadcrumb'
 import SectionNav from './SectionNav'
 import SubsectionList from './SubsectionList'
 
+const scrollToHash = () => {
+  if (process.browser) {
+    Router.router.scrollToHash(Router.router.asPath)
+  }
+}
+
 const Content = () => {
   const { language } = useSelector(appSelectors.getApp)
   const section = useSelector(sectionSelectors.getCurrentSection)
   const subsections = useSelector(sectionSelectors.getCurrentSubsections)
   const title = useSelector(sectionSelectors.getCurrentTitle)
   const loading = !language || !section || !section.content[language]
-  const { mathJaxElem, typesetState } = useMathJaxScanElement([language, section])
+  const { mathJaxElem, typesetState } = useMathJaxScanElement([language, section], scrollToHash)
   const show = !loading && typesetState === typesetStates.SUCCESS
   const fadeInClassName = classNames({
     [fadeInCss.show]: show,

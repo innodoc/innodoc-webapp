@@ -13,7 +13,7 @@ import {
 } from '../../store/actions/content'
 import { actionTypes as uiActionTypes } from '../../store/actions/ui'
 import { fetchSection } from '../../lib/api'
-import { parseSectionId, scrollToHash } from '../../lib/util'
+import { parseSectionId } from '../../lib/util'
 import appSelectors from '../../store/selectors'
 import courseSelectors from '../../store/selectors/course'
 import sectionSelectors from '../../store/selectors/section'
@@ -82,7 +82,6 @@ describe('loadSectionSaga', () => {
       .provide(defaultProvides)
       .call(fetchSection, contentRoot, language, sectionId)
       .put(loadSectionSuccess({ language, sectionId, content: content[language] }))
-      .call(scrollToHash)
       .not.put.actionType(contentActionTypes.LOAD_SECTION_FAILURE)
       .run()
   )
@@ -107,7 +106,6 @@ describe('loadSectionSaga', () => {
         ...defaultProvides,
       ])
       .put(loadSectionSuccess({ language, sectionId, content: content[language] }))
-      .not.call(scrollToHash)
       .run()
   )
 })

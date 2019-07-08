@@ -1,5 +1,3 @@
-import Router from 'next/router'
-
 const astToString = (ast) => {
   if (typeof ast === 'string') {
     return ast
@@ -45,12 +43,6 @@ const getHocDisplayName = (HocName, ComposedComponent) => `${HocName}(${getDispl
 
 const parseSectionId = sectionId => sectionId.split('#')
 
-const scrollToHash = () => {
-  if (process.browser) {
-    Router.router.scrollToHash(Router.router.asPath)
-  }
-}
-
 // Normalize language code to 2 letters (e.g. 'en-US' -> 'en').
 const toTwoLetterCode = lang => (lang.length > 2 ? lang.substring(0, 2) : lang)
 
@@ -67,7 +59,6 @@ export {
   getDisplayName,
   getHocDisplayName,
   parseSectionId,
-  scrollToHash,
   toTwoLetterCode,
   unwrapPara,
 }

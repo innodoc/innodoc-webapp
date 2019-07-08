@@ -98,13 +98,16 @@ const onTypesettingDone = (element, setTypesetStatus) => {
 }
 
 // Auto-typeset whole element
-const typesetMathJax = (element, setTypesetStatus) => {
+const typesetMathJax = (element, setTypesetStatus, onDone) => {
   setTypesetStatus(typesetStates.PENDING)
   window.MathJax.Hub.Queue([
     'Typeset',
     window.MathJax.Hub,
     element,
-    () => onTypesettingDone(element, setTypesetStatus),
+    () => {
+      onTypesettingDone(element, setTypesetStatus)
+      if (onDone) { onDone() }
+    },
   ])
 }
 
@@ -117,13 +120,15 @@ const removeMathJaxOnLoadCallback = (cb) => {
   }
 }
 
-const useMathJaxGeneric = (mathCode, mathType, deps) => {
+const useMathJaxGeneric = (mathCode, mathType, deps, typesetDoneCallback) => {
   const singleJax = typeof mathCode !== 'undefined'
   const mathJaxElem = useRef(null)
   const [typesetState, setTypesetStatus] = useState(typesetStates.INITIAL)
   useEffect(
     () => {
-      const typeset = () => typesetMathJax(mathJaxElem.current, setTypesetStatus)
+      const typeset = () => typesetMathJax(
+        mathJaxElem.current, setTypesetStatus, typesetDoneCallback
+      )
       let callbackCleanup = false
       if (singleJax) {
         const [delimOpen, delimClose] = mathDelimiter[mathType]
@@ -150,10 +155,14 @@ const useMathJaxGeneric = (mathCode, mathType, deps) => {
 }
 
 // Render a single formula
-const useMathJax = (mathCode, mathType = 'inline') => useMathJaxGeneric(mathCode, mathType, undefined)
+const useMathJax = (mathCode, mathType = 'inline') => useMathJaxGeneric(
+  mathCode, mathType, undefined
+)
 
 // Scan an entire element tree for formulas
-const useMathJaxScanElement = deps => useMathJaxGeneric(undefined, undefined, deps)
+const useMathJaxScanElement = (deps, typesetDoneCallback) => useMathJaxGeneric(
+  undefined, undefined, deps, typesetDoneCallback
+)
 
 // Remove a Jax that was created by a parent useMathJaxScanElement on unmount
 const useMathJaxRemoveOnUnmount = () => {

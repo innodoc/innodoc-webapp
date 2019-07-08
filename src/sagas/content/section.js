@@ -13,7 +13,7 @@ import {
   loadSectionSuccess,
 } from '../../store/actions/content'
 import { fetchSection } from '../../lib/api'
-import { parseSectionId, scrollToHash } from '../../lib/util'
+import { parseSectionId } from '../../lib/util'
 import { showMessage } from '../../store/actions/ui'
 import loadManifestSaga from './manifest'
 
@@ -54,9 +54,6 @@ export default function* loadSectionSaga({ sectionId: sectionIdHash, prevLanguag
       try {
         const content = yield call(fetchSection, contentRoot, language, sectionId)
         yield put(loadSectionSuccess({ language, sectionId, content }))
-        // TODO: scrollToHash needs to happen *after* mathJax rendering!
-        //       Maybe move this to Content component.
-        yield call(scrollToHash)
       } catch (error) {
         yield put(loadSectionFailure({ language, error }))
         yield put(showMessage({
