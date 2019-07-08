@@ -26,8 +26,7 @@ export default function* loadSectionSaga({ sectionId: sectionIdHash, prevLanguag
     yield call(loadManifestSaga)
   }
 
-  // Clear error
-  // TODO: this is strange, is both error and message really needed?
+  // Clear potential previous error
   yield put(clearError())
 
   // Do not load exact same section another time
