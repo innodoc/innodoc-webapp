@@ -39,7 +39,7 @@ const Header = ({ disableSidebar }) => {
     ? null
     : (
       <Button
-        className={classNames(css.menuButton, sidebarVisible ? 'active' : null)}
+        className={classNames(css.sidebarToggleButton, sidebarVisible ? 'active' : null)}
         ghost
         icon="read"
         onClick={() => dispatch(toggleSidebar())}
