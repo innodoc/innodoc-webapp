@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import classNames from 'classnames'
 import Icon from 'antd/lib/icon'
 import Menu from 'antd/lib/menu'
 
@@ -7,6 +8,7 @@ import { changeLanguage } from '../../../../store/actions/i18n'
 import appSelectors from '../../../../store/selectors'
 import courseSelectors from '../../../../store/selectors/course'
 import { useTranslation } from '../../../../lib/i18n'
+import css from './style.sass'
 
 const LanguageSwitcher = (props) => {
   const { t } = useTranslation()
@@ -26,7 +28,11 @@ const LanguageSwitcher = (props) => {
   const languageList = course && course.languages ? course.languages : []
   const languageOptions = languageList.map(
     lang => (
-      <Menu.Item key={`language-${lang}`} onClick={() => dispatch(changeLanguage(lang, currentLanguage))}>
+      <Menu.Item
+        className={classNames({ [css.active]: lang === currentLanguage })}
+        key={lang}
+        onClick={() => dispatch(changeLanguage(lang, currentLanguage))}
+      >
         {t(`languages.${lang}`)}
       </Menu.Item>
     )
