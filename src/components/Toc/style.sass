@@ -12,13 +12,12 @@
       background-color: transparent
       color: $primary-5
 
-    &:global(.active > span > .ant-tree-title > a)
-      color: $heading-color
-      font-weight: bold
-      transition-property: all
+    &:global(.active .ant-tree-node-content-wrapper)
+      cursor: default
 
-      &:hover
-        color: $primary-5
+    &:global(.active > span > .ant-tree-title)
+      color: $heading-color
+      text-decoration: underline
 
     & :global(.ant-tree-node-selected)
       background-color: transparent !important

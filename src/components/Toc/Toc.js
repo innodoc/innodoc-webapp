@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
@@ -9,10 +9,18 @@ import courseSelectors from '../../store/selectors/course'
 import sectionSelectors from '../../store/selectors/section'
 import SectionLink from '../SectionLink'
 
+const ActiveSectionLabel = ({ sectionId }) => {
+  const getSectionLink = useMemo(sectionSelectors.makeGetSectionLink, [])
+  const { section: { title } } = useSelector(state => getSectionLink(state, sectionId))
+  return title
+}
+
 const renderTreeNodes = (section, currentSection) => {
   const { id: sectionId, children = [] } = section
   const active = sectionId === currentSection
-  const sectionNode = <SectionLink sectionId={sectionId} />
+  const sectionNode = active
+    ? <ActiveSectionLabel sectionId={sectionId} />
+    : <SectionLink sectionId={sectionId} />
   return (
     <Tree.TreeNode className={classNames({ active })} key={sectionId} title={sectionNode}>
       {children.map(s => renderTreeNodes(s, currentSection))}
