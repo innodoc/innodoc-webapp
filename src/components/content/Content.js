@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Router from 'next/router'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
+import Affix from 'antd/lib/affix'
 
 import fadeInCss from '../../style/fadeIn.sass'
 import css from './style.sass'
@@ -20,6 +21,7 @@ const scrollToHash = () => {
 }
 
 const Content = () => {
+  const [affixed, setAffixState] = useState(false)
   const { language } = useSelector(appSelectors.getApp)
   const section = useSelector(sectionSelectors.getCurrentSection)
   const subsections = useSelector(sectionSelectors.getCurrentSubsections)
@@ -31,6 +33,11 @@ const Content = () => {
     [fadeInCss.show]: show,
     [fadeInCss.hide]: !show,
   })
+  const affixClassNames = classNames(
+    css.sectionAffix,
+    'clearfix',
+    { [css.affixed]: affixed }
+  )
 
   const subsectionList = subsections.length
     ? <SubsectionList subsections={subsections} />
@@ -41,7 +48,7 @@ const Content = () => {
     : <ContentFragment content={section.content[language]} />
 
   const content = (
-    <div className={fadeInClassName}>
+    <div className={fadeInClassName} id="content">
       <h1 className={css.header}>{title}</h1>
       {subsectionList}
       <div ref={mathJaxElem}>{rootContentFragment}</div>
@@ -50,8 +57,12 @@ const Content = () => {
 
   return (
     <React.Fragment>
-      <SectionNav />
-      <Breadcrumb />
+      <Affix onChange={newAffixed => setAffixState(newAffixed)}>
+        <div className={affixClassNames}>
+          <SectionNav />
+          <Breadcrumb />
+        </div>
+      </Affix>
       {content}
     </React.Fragment>
   )

@@ -3,11 +3,10 @@ import { useSelector } from 'react-redux'
 import AntBreadcrumb from 'antd/lib/breadcrumb'
 import Icon from 'antd/lib/icon'
 
-import { useTranslation } from '../../../lib/i18n'
-import courseSelectors from '../../../store/selectors/course'
-import sectionSelectors from '../../../store/selectors/section'
-import SectionLink from '../../SectionLink'
-import css from './style.sass'
+import { useTranslation } from '../../lib/i18n'
+import courseSelectors from '../../store/selectors/course'
+import sectionSelectors from '../../store/selectors/section'
+import SectionLink from '../SectionLink'
 
 const Breadcrumb = () => {
   const { t } = useTranslation()
@@ -37,7 +36,7 @@ const Breadcrumb = () => {
   )].concat(sectionLinks)
 
   return (
-    <AntBreadcrumb separator=">" className={css.breadcrumb}>
+    <AntBreadcrumb separator=">">
       {breadcrumbItems}
     </AntBreadcrumb>
   )

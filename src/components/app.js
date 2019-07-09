@@ -9,6 +9,7 @@ import '../style/lato-font.sass'
 import '../style/overrides.sass'
 
 import 'antd/lib/style/index.less'
+import 'antd/lib/affix/style/index.less'
 import 'antd/lib/alert/style/index.less'
 import 'antd/lib/breadcrumb/style/index.less'
 import 'antd/lib/button/style/index.less'

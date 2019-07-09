@@ -3,8 +3,8 @@ import { shallow } from 'enzyme'
 import AntBreadcrumb from 'antd/lib/breadcrumb'
 
 import Breadcrumb from './Breadcrumb'
-import SectionLink from '../../SectionLink'
-import courseSelectors from '../../../store/selectors/course'
+import SectionLink from '../SectionLink'
+import courseSelectors from '../../store/selectors/course'
 
 const mockGetCurrentCourse = courseSelectors.getCurrentCourse
 const mockSections = [

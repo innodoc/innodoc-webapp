@@ -90,8 +90,9 @@ describe('<Content />', () => {
     ])('should fade %s', (_, state, hidePresent) => {
       mockTypesetState = state
       const wrapper = shallow(<Content />)
-      expect(wrapper.find('div').at(0).hasClass(fadeInCss.hide)).toBe(hidePresent)
-      expect(wrapper.find('div').at(0).hasClass(fadeInCss.show)).toBe(!hidePresent)
+      const contentDiv = wrapper.find('#content')
+      expect(contentDiv.hasClass(fadeInCss.hide)).toBe(hidePresent)
+      expect(contentDiv.hasClass(fadeInCss.show)).toBe(!hidePresent)
     })
   })
 
