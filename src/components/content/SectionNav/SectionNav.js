@@ -8,33 +8,28 @@ import sectionSelectors from '../../../store/selectors/section'
 
 const SectionNav = () => {
   const { prevId, nextId } = useSelector(sectionSelectors.getNextPrevSections)
-
-  const prev = prevId
-    ? (
-      <SectionLink sectionId={prevId}>
-        <a className={css.prev}>
-          <Icon type="arrow-left" />
-        </a>
-      </SectionLink>
-    )
-    : null
-
-  const next = nextId
-    ? (
-      <SectionLink sectionId={nextId}>
-        <a className={css.next}>
-          <Icon type="arrow-right" />
-        </a>
-      </SectionLink>
-    )
-    : null
-
-  return (
-    <React.Fragment>
-      {prev}
-      {next}
-    </React.Fragment>
-  )
+  const arrows = [
+    [prevId, 'left'],
+    [nextId, 'right'],
+  ].map(([sectionId, dir]) => {
+    const iconType = `arrow-${dir}`
+    return sectionId
+      ? (
+        <SectionLink key={sectionId} sectionId={sectionId}>
+          <a>
+            <Icon type={iconType} />
+          </a>
+        </SectionLink>
+      )
+      : (
+        <Icon
+          key={`__NON_EXISTENT_${dir}`}
+          className={css.disabled}
+          type={iconType}
+        />
+      )
+  })
+  return <div className={css.sectionNav}>{arrows}</div>
 }
 
 export default SectionNav

@@ -1,16 +1,12 @@
 @import '../../../style/antd-theme.sass'
 
-=sbtn
-  position: fixed
-  top: 50%
-  transform: translate(0, -50%)
-  z-index: 900
-  font-size: $font-size-base * 2
+.sectionNav
+  float: right
+  font-size: $font-size-base * 1.5
+  padding: 0 0 $padding-sm $padding-sm
 
-.next
-  +sbtn
-  right: 0
+  > :first-child
+    margin-right: $padding-md
 
-.prev
-  +sbtn
-  left: 0
+.disabled
+  color: $disabled-color
