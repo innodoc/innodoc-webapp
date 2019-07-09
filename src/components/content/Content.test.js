@@ -1,14 +1,17 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import Affix from 'antd/lib/affix'
+import Router from 'next/router'
 
 import appSelectors from '../../store/selectors'
 import sectionSelectors from '../../store/selectors/section'
-import Content from './Content'
+import Content, { scrollToHash } from './Content'
 import SubsectionList from './SubsectionList'
 import Breadcrumb from './Breadcrumb'
 import ContentFragment from './ContentFragment'
 import SectionNav from './SectionNav'
 import fadeInCss from '../../style/fadeIn.sass'
+import css from './style.sass'
 
 const { typesetStates } = jest.requireActual('../../hooks/useMathJax')
 
@@ -96,6 +99,14 @@ describe('<Content />', () => {
     })
   })
 
+  describe('affix', () => {
+    it.each([true, false])('should set affixed class (%s)', (affixed) => {
+      const wrapper = shallow(<Content />)
+      wrapper.find(Affix).prop('onChange')(affixed)
+      expect(wrapper.find('div').first().hasClass(css.affixed)).toBe(affixed)
+    })
+  })
+
   describe('missing data', () => {
     it('should render without sections', () => {
       mockCurrentSection = { content: {} }
@@ -123,5 +134,21 @@ describe('<Content />', () => {
       expect(wrapper.exists(SubsectionList)).toBe(true)
       expect(wrapper.exists(ContentFragment)).toBe(false)
     })
+  })
+})
+
+jest.mock('next/router', () => ({
+  router: {
+    scrollToHash: jest.fn(),
+    asPath: '/some/path#id',
+  },
+}))
+
+describe('scrollToHash', () => {
+  beforeEach(() => Router.router.scrollToHash.mockClear())
+  it.each([['browser', true], ['server', false]])('should scroll to hash (%s)', (_, browser) => {
+    process.browser = browser
+    scrollToHash()
+    expect(Router.router.scrollToHash.mock.calls).toHaveLength(browser ? 1 : 0)
   })
 })

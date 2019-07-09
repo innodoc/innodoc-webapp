@@ -68,4 +68,5 @@ const Content = () => {
   )
 }
 
+export { scrollToHash }
 export default Content
