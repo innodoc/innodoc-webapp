@@ -1,18 +1,18 @@
 @import '../../../style/antd-theme.sass'
 
 .sidebar
-  overflow-x: hidden
-  overflow-y: auto
 
-  > div
-    padding: $padding-lg 0
+  .stickyContainer
+    background: linear-gradient(to right, transparent 0%, transparent 75%, fade-out($color-dark-bg, 0.99) 100%)
+    border-right: $border-width-base $border-style-base $border-color-split
+    height: 100%
+    transition: minWidth $animation-duration-fast ease-in-out
 
-    > div
-      height: 100%
-      border-right: $border-width-base $border-style-base $border-color-split
+    .sidebarContent
+      padding: $padding-lg $padding-md
 
-      > div
-        padding: 0 $padding-md
+      .sidebarTranslate
+        transition: transform $animation-duration-fast ease-in-out
 
   \:global(.ant-tree-node-content-wrapper)
     margin-bottom: 4px !important
@@ -26,9 +26,10 @@
     vertical-align: 0 !important
 
 .collapseButton
-  float: right
-  border: 0
   background-color: transparent
+  border: 0
+  box-shadow: none
+  float: right
 
   &:hover, &:focus, &:active, &.active
     background: transparent

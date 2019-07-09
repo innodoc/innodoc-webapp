@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import AntLayout from 'antd/lib/layout'
 import Button from 'antd/lib/button'
 
@@ -26,7 +26,8 @@ describe('<Sidebar />', () => {
   })
 
   it('should dispatch toggleSidebar', () => {
-    const wrapper = shallow(<Sidebar />)
+    // need to mount to render react-sticky children
+    const wrapper = mount(<Sidebar />)
     wrapper.find(Button).simulate('click')
     expect(mockDispatch).toBeCalledTimes(1)
     expect(mockDispatch).toBeCalledWith(toggleSidebar())
@@ -34,7 +35,8 @@ describe('<Sidebar />', () => {
 
   describe('should render', () => {
     test('with children', () => {
-      const wrapper = shallow(<Sidebar>Foo</Sidebar>)
+      // need to mount to render react-sticky children
+      const wrapper = mount(<Sidebar>Foo</Sidebar>)
       expect(wrapper.find(AntLayout.Sider)).toHaveLength(1)
       expect(wrapper.find(Button).exists()).toBe(true)
       expect(wrapper.children().text()).toContain('Foo')
