@@ -12,7 +12,7 @@ const content = [{ content: 'foo' }]
 describe('<IndexSpan />', () => {
   it('should render', () => {
     const wrapper = shallow(<IndexSpan indexConcept="foo" content={content} />)
-    expect(wrapper.prop('className')).toBe('index-concept')
+    expect(wrapper.hasClass('index-concept')).toBe(true)
     expect(wrapper.prop('data-index-concept')).toBe('foo')
     expect(wrapper.find(ContentFragment).prop('content')).toBe(content)
   })

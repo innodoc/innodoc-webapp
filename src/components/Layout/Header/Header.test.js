@@ -43,7 +43,7 @@ describe('<Header />', () => {
     expect(wrapper.find(Logo)).toHaveLength(1)
     const buttons = wrapper.find(Button)
     expect(buttons).toHaveLength(2)
-    expect(buttons.at(0).prop('className')).toContain('active')
+    expect(buttons.at(0).hasClass('active')).toBe(true)
     expect(wrapper.find(SearchInput)).toHaveLength(2)
     expect(wrapper.find(Nav)).toHaveLength(2)
     expect(mockDispatch.mock.calls).toHaveLength(0)
@@ -59,7 +59,7 @@ describe('<Header />', () => {
     it('should render with sidebar not visible', () => {
       mockApp.sidebarVisible = false
       const wrapper = shallow(<Header disableSidebar={false} />)
-      expect(wrapper.find(Button).at(0).prop('className')).not.toContain('active')
+      expect(wrapper.find(Button).at(0).hasClass('active')).toBe(false)
     })
 
     it('should render w/o sidebar', () => {

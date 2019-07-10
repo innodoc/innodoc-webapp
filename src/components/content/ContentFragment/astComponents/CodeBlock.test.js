@@ -14,7 +14,7 @@ describe('<CodeBlock />', () => {
     expect(wrapper.find('pre')).toHaveLength(1)
     const codeEl = wrapper.find('code')
     expect(codeEl).toHaveLength(1)
-    expect(codeEl.prop('className')).toEqual('code-python')
+    expect(codeEl.hasClass('code-python')).toBe(true)
     expect(codeEl.text()).toEqual('print("foo")')
   })
 })

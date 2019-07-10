@@ -6,6 +6,7 @@
     "home": "Start",
     "info": "Info",
     "inputHint": "Hilfe zur Eingabe",
+    "noHtml5Video": "Dein Browser unterstützt kein HTML5-Video. Hier is ein <a href=\"{{src}}\">Link zum Video</a>.",
     "subsections": "Unterabschnitte",
     "test": "Test",
     "ytIdError": "Konnte YouTube-Video-ID nicht extrahieren: {{src}}"

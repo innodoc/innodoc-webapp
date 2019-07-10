@@ -6,6 +6,7 @@
     "home": "Home",
     "info": "Info",
     "inputHint": "Input",
+    "noHtml5Video": "Your browser doesn't support HTML5 video. Here is a <a href=\"{{src}}\">link to the video</a> instead.",
     "subsections": "Subsections",
     "test": "Test",
     "ytIdError": "Could not extract YouTube Video ID: {{src}}"

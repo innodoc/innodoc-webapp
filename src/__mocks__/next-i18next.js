@@ -7,7 +7,7 @@ export default class MockNextI18Next {
         props => <WrappedComponent {...props} />
       )
     )
-    this.useTranslation = () => ({ t: () => '' })
+    this.useTranslation = () => ({ t: key => key })
     this.withTranslation = () => (
       WrappedComponent => (
         props => <WrappedComponent t={() => ''} {...props} />

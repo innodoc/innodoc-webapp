@@ -6,12 +6,11 @@ import { mathDelimiter, useMathJaxRemoveOnUnmount } from '../../../../hooks/useM
 
 const Math = ({ data }) => {
   const [{ t: mathType }, texCode] = data
-  const [delims, classes] = mathType === 'InlineMath'
-    ? [mathDelimiter.inline, ['math', 'inline']]
-    : [mathDelimiter.display, ['math', 'display']]
+  const cls = mathType === 'InlineMath' ? 'inline' : 'display'
+  const delims = mathDelimiter[cls]
   const mathJaxElem = useMathJaxRemoveOnUnmount()
   return (
-    <span className={classNames(classes)} ref={mathJaxElem}>
+    <span className={classNames('math', cls)} ref={mathJaxElem}>
       {delims[0]}
       {texCode}
       {delims[1]}

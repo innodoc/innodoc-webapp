@@ -21,8 +21,8 @@ describe('<InputQuestion />', () => {
       />
     )
     const input = wrapper.find(Input)
-    expect(input.prop('className')).toMatch('inputQuestion')
-    expect(input.prop('className')).toMatch('customClass')
+    expect(input.hasClass('inputQuestion')).toBe(true)
+    expect(input.hasClass('customClass')).toBe(true)
     expect(input.prop('value')).toBe(expValue)
     input.prop('onChange')({ target: { value: '27' } })
     expect(onChange).toBeCalledWith('27')
