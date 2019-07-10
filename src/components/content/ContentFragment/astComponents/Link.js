@@ -1,9 +1,11 @@
+// TODO: add PageLinks here too
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import Icon from 'antd/lib/icon'
 
 import ContentFragment from '..'
-import SectionLink from '../../../SectionLink'
+import { SectionLink } from '../../links'
 import Video from './Video'
 
 const Link = ({ data }) => {
@@ -32,18 +34,18 @@ const Link = ({ data }) => {
     )
   }
 
-  const sectionId = href.startsWith('/') ? href.slice(1) : href
+  const contentId = href.startsWith('/') ? href.slice(1) : href
 
   if (content && content.length) {
     return (
-      <SectionLink sectionId={sectionId}>
+      <SectionLink contentId={contentId}>
         <a>
           <ContentFragment content={content} />
         </a>
       </SectionLink>
     )
   }
-  return <SectionLink sectionId={sectionId} />
+  return <SectionLink contentId={contentId} />
 }
 
 Link.propTypes = {

@@ -1,21 +1,15 @@
 import 'isomorphic-unfetch'
 
-function fetchJson(url) {
-  return fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        return Promise.reject(new Error(`Could not fetch JSON data. (Status: ${response.status} URL: ${url})`))
-      }
-      return response.json()
-    })
-}
+const fetchJson = url => fetch(url)
+  .then((response) => {
+    if (!response.ok) {
+      return Promise.reject(new Error(`Could not fetch JSON data. (Status: ${response.status} URL: ${url})`))
+    }
+    return response.json()
+  })
 
-export function fetchManifest(contentRoot) {
-  const url = `${contentRoot}manifest.json`
-  return fetchJson(url)
-}
+const fetchManifest = contentRoot => fetchJson(`${contentRoot}manifest.json`)
+const fetchSection = (contentRoot, language, sectionId) => fetchJson(`${contentRoot}${language}/${sectionId}/content.json`)
+const fetchPage = (contentRoot, language, pageId) => fetchJson(`${contentRoot}${language}/_pages/${pageId}.json`)
 
-export function fetchSection(contentRoot, language, sectionId) {
-  const url = `${contentRoot}${language}/${sectionId}/content.json`
-  return fetchJson(url)
-}
+export { fetchManifest, fetchPage, fetchSection }

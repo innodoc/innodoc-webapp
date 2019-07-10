@@ -5,7 +5,7 @@ import Button from 'antd/lib/button'
 import { StickyContainer, Sticky } from 'react-sticky'
 
 import { useTranslation } from '../../../lib/i18n'
-import useIsNarrowerThan from '../../../hooks/useIsNarrowerThan'
+import useIsNarrowerThan from '../../hooks/useIsNarrowerThan'
 import appSelectors from '../../../store/selectors'
 import { toggleSidebar } from '../../../store/actions/ui'
 import css from './style.sass'

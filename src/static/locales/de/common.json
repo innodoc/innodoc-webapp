@@ -22,7 +22,6 @@
     }
   },
   "footer": {
-    "aboutThisProject": "Über dieses Projekt",
     "authors": "List der Autor*innen",
     "contact": "Kontakt",
     "course": "Kurs",
@@ -38,8 +37,6 @@
     "viewIndex": "Stichwortliste"
   },
   "header": {
-    "about": "Kursinfo",
-    "aboutTheCourse": "Über den Kurs",
     "createAccount": "Konto erstellen",
     "downloadPDF": "PDF",
     "downloadPDFTitle": "PDF herunterladen",

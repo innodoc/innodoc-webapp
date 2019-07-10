@@ -47,6 +47,18 @@ staticRoot = staticRoot.substr(-1) === '/'
   ? staticRoot
   : `${staticRoot}/`
 
+const handleCustomRoute = (app, dest) => (
+  (req, res) => {
+    if (req.params.contentId.endsWith('/')) {
+      res.redirect(req.path.slice(0, -1)) // remove trailing slash
+    } else {
+      app.render(req, res, dest, req.params)
+    }
+  }
+)
+
+const idRegExp = '[A-Za-z0-9_/:-]+'
+
 const startServer = async () => {
   const app = next({
     dir: srcDir,
@@ -62,14 +74,14 @@ const startServer = async () => {
       res.locals.staticRoot = staticRoot
       _next()
     })
-    // custom route for page.js
-    .get('/page/:sectionId([A-Za-z0-9_/:-]+)', (req, res) => {
-      if (req.params.sectionId.endsWith('/')) {
-        res.redirect(req.path.slice(0, -1)) // remove trailing slash
-      } else {
-        app.render(req, res, '/page', req.params)
-      }
-    })
+    .get(
+      `/${process.env.SECTION_PATH_PREFIX}/:contentId(${idRegExp})`,
+      handleCustomRoute(app, '/section')
+    )
+    .get(
+      `/${process.env.PAGE_PATH_PREFIX}/:contentId(${idRegExp})`,
+      handleCustomRoute(app, '/page')
+    )
     // everything else handled by next.js app
     .get('*', app.getRequestHandler())
     .listen(port)

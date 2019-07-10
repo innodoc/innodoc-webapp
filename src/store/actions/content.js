@@ -1,81 +1,80 @@
 export const actionTypes = {
-  LOAD_MANIFEST: 'LOAD_MANIFEST',
-  LOAD_MANIFEST_SUCCESS: 'LOAD_MANIFEST_SUCCESS',
-  LOAD_MANIFEST_FAILURE: 'LOAD_MANIFEST_FAILURE',
-  LOAD_SECTION: 'LOAD_SECTION',
-  LOAD_SECTION_SUCCESS: 'LOAD_SECTION_SUCCESS',
-  LOAD_SECTION_FAILURE: 'LOAD_SECTION_FAILURE',
-  SET_CONTENT_ROOT: 'SET_CONTENT_ROOT',
-  SET_STATIC_ROOT: 'SET_STATIC_ROOT',
   CHANGE_COURSE: 'CHANGE_COURSE',
   CLEAR_ERROR: 'CLEAR_ERROR',
+  LOAD_PAGE_FAILURE: 'LOAD_PAGE_FAILURE',
+  LOAD_PAGE_SUCCESS: 'LOAD_PAGE_SUCCESS',
+  LOAD_PAGE: 'LOAD_PAGE',
+  LOAD_MANIFEST_FAILURE: 'LOAD_MANIFEST_FAILURE',
+  LOAD_MANIFEST_SUCCESS: 'LOAD_MANIFEST_SUCCESS',
+  LOAD_MANIFEST: 'LOAD_MANIFEST',
+  LOAD_SECTION_FAILURE: 'LOAD_SECTION_FAILURE',
+  LOAD_SECTION_SUCCESS: 'LOAD_SECTION_SUCCESS',
+  LOAD_SECTION: 'LOAD_SECTION',
+  SET_CONTENT_ROOT: 'SET_CONTENT_ROOT',
+  SET_STATIC_ROOT: 'SET_STATIC_ROOT',
 }
 
-export function loadManifest() {
-  return {
-    type: actionTypes.LOAD_MANIFEST,
-  }
-}
+export const changeCourse = course => ({
+  type: actionTypes.CHANGE_COURSE,
+  course,
+})
 
-export function loadManifestSuccess(data) {
-  return {
-    type: actionTypes.LOAD_MANIFEST_SUCCESS,
-    data,
-  }
-}
+export const clearError = () => ({
+  type: actionTypes.CLEAR_ERROR,
+})
 
-export function loadManifestFailure(error) {
-  return {
-    type: actionTypes.LOAD_MANIFEST_FAILURE,
-    error,
-  }
-}
+export const loadManifestFailure = error => ({
+  type: actionTypes.LOAD_MANIFEST_FAILURE,
+  error,
+})
 
-export function loadSection(sectionId, prevLanguage = undefined) {
-  return {
-    type: actionTypes.LOAD_SECTION,
-    prevLanguage,
-    sectionId,
-  }
-}
+export const loadManifestSuccess = data => ({
+  type: actionTypes.LOAD_MANIFEST_SUCCESS,
+  data,
+})
 
-export function loadSectionSuccess(data) {
-  return {
-    type: actionTypes.LOAD_SECTION_SUCCESS,
-    data,
-  }
-}
+export const loadManifest = () => ({
+  type: actionTypes.LOAD_MANIFEST,
+})
 
-export function loadSectionFailure(error) {
-  return {
-    type: actionTypes.LOAD_SECTION_FAILURE,
-    error,
-  }
-}
+export const loadPageFailure = error => ({
+  type: actionTypes.LOAD_PAGE_FAILURE,
+  error,
+})
 
-export function setContentRoot(contentRoot) {
-  return {
-    type: actionTypes.SET_CONTENT_ROOT,
-    contentRoot,
-  }
-}
+export const loadPageSuccess = data => ({
+  type: actionTypes.LOAD_PAGE_SUCCESS,
+  data,
+})
 
-export function setStaticRoot(staticRoot) {
-  return {
-    type: actionTypes.SET_STATIC_ROOT,
-    staticRoot,
-  }
-}
+export const loadPage = (contentId, prevLanguage = undefined) => ({
+  type: actionTypes.LOAD_PAGE,
+  prevLanguage,
+  contentId,
+})
 
-export function changeCourse(course) {
-  return {
-    type: actionTypes.CHANGE_COURSE,
-    course,
-  }
-}
+export const loadSectionFailure = error => ({
+  type: actionTypes.LOAD_SECTION_FAILURE,
+  error,
+})
 
-export function clearError() {
-  return {
-    type: actionTypes.CLEAR_ERROR,
-  }
-}
+export const loadSectionSuccess = data => ({
+  type: actionTypes.LOAD_SECTION_SUCCESS,
+  data,
+})
+
+export const loadSection = (contentId, prevLanguage = undefined) => ({
+  type: actionTypes.LOAD_SECTION,
+  prevLanguage,
+  contentId,
+})
+
+export const setContentRoot = contentRoot => ({
+  type: actionTypes.SET_CONTENT_ROOT,
+  contentRoot,
+})
+
+export const setStaticRoot = staticRoot => ({
+  type: actionTypes.SET_STATIC_ROOT,
+  staticRoot,
+})

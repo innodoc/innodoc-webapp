@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import { mathDelimiter, useMathJaxRemoveOnUnmount } from '../../../../hooks/useMathJax'
+import { mathDelimiter, useMathJaxRemoveOnUnmount } from '../../../hooks/useMathJax'
 
 const Math = ({ data }) => {
   const [{ t: mathType }, texCode] = data

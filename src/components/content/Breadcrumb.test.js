@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import AntBreadcrumb from 'antd/lib/breadcrumb'
 
 import Breadcrumb from './Breadcrumb'
-import SectionLink from '../SectionLink'
+import { SectionLink } from './links'
 import courseSelectors from '../../store/selectors/course'
 
 const mockGetCurrentCourse = courseSelectors.getCurrentCourse
@@ -36,8 +36,8 @@ describe('<Breadcrumb />', () => {
     const items = wrapper.find(AntBreadcrumb.Item)
     expect(items).toHaveLength(4)
     expect(wrapper.find(SectionLink)).toHaveLength(3)
-    expect(items.at(0).find(SectionLink).prop('sectionId')).toBe('home')
-    expect(items.at(1).find(SectionLink).prop('sectionId')).toBe('section1')
-    expect(items.at(2).find(SectionLink).prop('sectionId')).toBe('section1/section11')
+    expect(items.at(0).find(SectionLink).prop('contentId')).toBe('home')
+    expect(items.at(1).find(SectionLink).prop('contentId')).toBe('section1')
+    expect(items.at(2).find(SectionLink).prop('contentId')).toBe('section1/section11')
   })
 })

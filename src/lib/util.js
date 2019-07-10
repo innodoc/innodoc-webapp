@@ -41,7 +41,7 @@ const getDisplayName = Component => Component.displayName || Component.name || '
 
 const getHocDisplayName = (HocName, ComposedComponent) => `${HocName}(${getDisplayName(ComposedComponent)})`
 
-const parseSectionId = sectionId => sectionId.split('#')
+const parseContentId = contentId => contentId.split('#')
 
 // Normalize language code to 2 letters (e.g. 'en-US' -> 'en').
 const toTwoLetterCode = lang => (lang.length > 2 ? lang.substring(0, 2) : lang)
@@ -58,7 +58,7 @@ export {
   getClassNameToComponentMapper,
   getDisplayName,
   getHocDisplayName,
-  parseSectionId,
+  parseContentId,
   toTwoLetterCode,
   unwrapPara,
 }

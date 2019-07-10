@@ -22,7 +22,6 @@
     }
   },
   "footer": {
-    "aboutThisProject": "About this project",
     "authors": "List of authors",
     "contact": "Contact",
     "course": "Course",
@@ -38,8 +37,6 @@
     "viewIndex": "View index"
   },
   "header": {
-    "about": "About",
-    "aboutTheCourse": "About the course",
     "createAccount": "Create Account",
     "downloadPDF": "PDF",
     "downloadPDFTitle": "Download PDF",

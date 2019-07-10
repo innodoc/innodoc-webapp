@@ -2,10 +2,10 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Math from './Math'
-import { mathDelimiter } from '../../../../hooks/useMathJax'
+import { mathDelimiter } from '../../../hooks/useMathJax'
 
-jest.mock('../../../../hooks/useMathJax', () => ({
-  mathDelimiter: jest.requireActual('../../../../hooks/useMathJax').mathDelimiter,
+jest.mock('../../../hooks/useMathJax', () => ({
+  mathDelimiter: jest.requireActual('../../../hooks/useMathJax').mathDelimiter,
   useMathJaxRemoveOnUnmount: () => {},
 }))
 

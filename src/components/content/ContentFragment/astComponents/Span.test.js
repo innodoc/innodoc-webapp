@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import ContentFragment from '../ContentFragment'
 import InputHint from '../cards/InputHint'
 import Question from '../questions'
-import SectionLink from '../../../SectionLink'
+import { SectionLink } from '../../links'
 import Span, { IndexSpan } from './Span'
 
 const content = [{ content: 'foo' }]
@@ -29,14 +29,14 @@ describe('<Span />', () => {
   it('should render <SectionLink /> w/o content', () => {
     const data = [[null, [], [['data-link-section', 'some-section']]], []]
     const sectionLink = shallow(<Span data={data} />).find(SectionLink)
-    expect(sectionLink.prop('sectionId')).toBe('some-section')
+    expect(sectionLink.prop('contentId')).toBe('some-section')
     expect(sectionLink.exists(ContentFragment)).toBe(false)
   })
 
   it('should render <SectionLink /> with content', () => {
     const data = [[null, [], [['data-link-section', 'some-section']]], content]
     const sectionLink = shallow(<Span data={data} />).find(SectionLink)
-    expect(sectionLink.prop('sectionId')).toBe('some-section')
+    expect(sectionLink.prop('contentId')).toBe('some-section')
     expect(sectionLink.find(ContentFragment).prop('content')).toBe(content)
   })
 

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import Icon from 'antd/lib/icon'
 
 import css from './style.sass'
-import SectionLink from '../../SectionLink'
+import { SectionLink } from '../links'
 import sectionSelectors from '../../../store/selectors/section'
 
 const SectionNav = () => {
@@ -15,7 +15,7 @@ const SectionNav = () => {
     const iconType = `arrow-${dir}`
     return sectionId
       ? (
-        <SectionLink key={sectionId} sectionId={sectionId}>
+        <SectionLink key={sectionId} contentId={sectionId}>
           <a>
             <Icon type={iconType} />
           </a>

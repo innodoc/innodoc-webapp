@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import List from 'antd/lib/list'
-import SectionLink from '../../SectionLink'
+import { SectionLink } from '../links'
 
 import SubsectionList, { Subsection } from './SubsectionList'
 
@@ -34,6 +34,6 @@ describe('Subsection', () => {
   it('should render', () => {
     const wrapper = shallow(<Subsection {...subsections[0]} />)
     const sectionLink = wrapper.find(SectionLink)
-    expect(sectionLink.prop('sectionId')).toEqual('bar-1')
+    expect(sectionLink.prop('contentId')).toEqual('bar-1')
   })
 })

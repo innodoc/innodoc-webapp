@@ -4,12 +4,12 @@ import List from 'antd/lib/list'
 
 import { useTranslation } from '../../../lib/i18n'
 import css from './style.sass'
-import SectionLink from '../../SectionLink'
+import { SectionLink } from '../links'
 import { sectionType } from '../../../lib/propTypes'
 
 const Subsection = subSection => (
   <List.Item>
-    <SectionLink sectionId={subSection.id} />
+    <SectionLink contentId={subSection.id} />
   </List.Item>
 )
 

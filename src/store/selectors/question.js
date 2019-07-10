@@ -1,13 +1,11 @@
 import { createSelector } from 'redux-orm'
 
 import orm from '../orm'
-import appSelectors from '.'
-
-const selectQuestionId = (state, id) => id
+import appSelectors, { selectId } from '.'
 
 // Return question answer by ID
 const makeGetQuestion = () => createSelector(
-  orm, appSelectors.getOrmState, selectQuestionId,
+  orm, appSelectors.getOrmState, selectId,
   (session, id) => {
     const question = session.Question.withId(id)
     return question

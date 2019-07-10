@@ -4,7 +4,7 @@ import AntLayout from 'antd/lib/layout'
 import Button from 'antd/lib/button'
 import Drawer from 'antd/lib/drawer'
 
-import SectionLink from '../../SectionLink'
+import { SectionLink } from '../../content/links'
 import Header from './Header'
 import Nav from './Nav'
 import Logo from './Logo'
@@ -24,7 +24,7 @@ jest.mock('react-redux', () => ({
   ),
 }))
 let mockUseIsNarrowerThan
-jest.mock('../../../hooks/useIsNarrowerThan', () => (
+jest.mock('../../hooks/useIsNarrowerThan', () => (
   () => mockUseIsNarrowerThan
 ))
 

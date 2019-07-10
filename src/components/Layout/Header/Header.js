@@ -15,8 +15,8 @@ import css from './style.sass'
 import appSelectors from '../../../store/selectors'
 import courseSelectors from '../../../store/selectors/course'
 import { toggleSidebar } from '../../../store/actions/ui'
-import SectionLink from '../../SectionLink'
-import useIsNarrowerThan from '../../../hooks/useIsNarrowerThan'
+import { SectionLink } from '../../content/links'
+import useIsNarrowerThan from '../../hooks/useIsNarrowerThan'
 import { useTranslation } from '../../../lib/i18n'
 
 const Header = ({ disableSidebar }) => {
@@ -29,7 +29,7 @@ const Header = ({ disableSidebar }) => {
 
   const logoWrapper = course && course.homeLink
     ? (
-      <SectionLink sectionId={course.homeLink}>
+      <SectionLink contentId={course.homeLink}>
         <Logo />
       </SectionLink>
     )

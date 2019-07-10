@@ -6,7 +6,7 @@ import Icon from 'antd/lib/icon'
 import { useTranslation } from '../../lib/i18n'
 import courseSelectors from '../../store/selectors/course'
 import sectionSelectors from '../../store/selectors/section'
-import SectionLink from '../SectionLink'
+import { SectionLink } from './links'
 
 const Breadcrumb = () => {
   const { t } = useTranslation()
@@ -18,7 +18,7 @@ const Breadcrumb = () => {
     <AntBreadcrumb.Item key={section.id}>
       {
         i + 1 < sections.length
-          ? <SectionLink sectionId={section.id} />
+          ? <SectionLink contentId={section.id} />
           : section.title
       }
     </AntBreadcrumb.Item>
@@ -27,7 +27,7 @@ const Breadcrumb = () => {
   // prepend custom home link
   const breadcrumbItems = [(
     <AntBreadcrumb.Item key="root">
-      <SectionLink sectionId={homeLink}>
+      <SectionLink contentId={homeLink}>
         <a title={t('content.home')}>
           <Icon type="home" />
         </a>

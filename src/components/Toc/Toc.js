@@ -7,11 +7,11 @@ import Tree from 'antd/lib/tree'
 import css from './style.sass'
 import courseSelectors from '../../store/selectors/course'
 import sectionSelectors from '../../store/selectors/section'
-import SectionLink from '../SectionLink'
+import { SectionLink } from '../content/links'
 
 const ActiveSectionLabel = ({ sectionId }) => {
   const getSectionLink = useMemo(sectionSelectors.makeGetSectionLink, [])
-  const { section: { title } } = useSelector(state => getSectionLink(state, sectionId))
+  const { title } = useSelector(state => getSectionLink(state, sectionId))
   return title
 }
 
@@ -20,7 +20,7 @@ const renderTreeNodes = (section, currentSection) => {
   const active = sectionId === currentSection
   const sectionNode = active
     ? <ActiveSectionLabel sectionId={sectionId} />
-    : <SectionLink sectionId={sectionId} />
+    : <SectionLink contentId={sectionId} />
   return (
     <Tree.TreeNode className={classNames({ active })} key={sectionId} title={sectionNode}>
       {children.map(s => renderTreeNodes(s, currentSection))}

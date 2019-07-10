@@ -1,10 +1,17 @@
 import { ORM } from 'redux-orm'
-import App from './models/app'
-import Course from './models/course'
-import Question from './models/question'
-import Section from './models/section'
+import App from './models/App'
+import Course from './models/Course'
+import Page from './models/Page'
+import Question from './models/Question'
+import Section from './models/Section'
 
 const orm = new ORM()
-orm.register(App, Course, Question, Section)
+orm.register(
+  App,
+  Course,
+  Page,
+  Question,
+  Section,
+)
 
 export default orm

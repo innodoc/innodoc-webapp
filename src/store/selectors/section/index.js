@@ -1,24 +1,21 @@
 import { createSelector } from 'redux-orm'
 
 import orm from '../../orm'
-import appSelectors from '..'
+import appSelectors, { makeMakeGetContentLink, selectId } from '..'
 import courseSelectors from '../course'
 import getBreadcrumbSections from './breadcrumb'
 import getNextPrevSections from './next-prev'
-import makeGetSectionLink from './link'
 import getToc from './toc'
-
-const selectSectionId = (state, id) => id
 
 // Check if section exists
 const sectionExists = createSelector(
-  orm, appSelectors.getOrmState, selectSectionId,
+  orm, appSelectors.getOrmState, selectId,
   (session, id) => session.Section.idExists(id)
 )
 
 // Return section by ID
 const getSection = createSelector(
-  orm, appSelectors.getOrmState, selectSectionId,
+  orm, appSelectors.getOrmState, selectId,
   (session, id) => session.Section.withId(id).ref
 )
 
@@ -48,6 +45,8 @@ const getCurrentTitle = createSelector(
     return section ? section.getDisplayTitle(language) : null
   }
 )
+
+const makeGetSectionLink = makeMakeGetContentLink('Section')
 
 export default {
   getBreadcrumbSections,

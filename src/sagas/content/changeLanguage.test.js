@@ -2,14 +2,20 @@ import { expectSaga } from 'redux-saga-test-plan'
 import { select } from 'redux-saga/effects'
 
 import changeLanguageSaga from './changeLanguage'
-import { actionTypes as contentActionTypes, loadSection } from '../../store/actions/content'
+import { actionTypes as contentActionTypes, loadPage, loadSection } from '../../store/actions/content'
 import { changeLanguage } from '../../store/actions/i18n'
 import courseSelectors from '../../store/selectors/course'
 
 describe('changeLanguageSaga', () => {
-  it('should reload content', () => expectSaga(changeLanguageSaga, changeLanguage('pl', 'fr'))
+  it('should reload section content', () => expectSaga(changeLanguageSaga, changeLanguage('pl', 'fr'))
     .provide([[select(courseSelectors.getCurrentCourse), { id: 0, currentSection: 'foo' }]])
     .put(loadSection('foo', 'fr'))
+    .run()
+  )
+
+  it('should reload page content', () => expectSaga(changeLanguageSaga, changeLanguage('pl', 'fr'))
+    .provide([[select(courseSelectors.getCurrentCourse), { id: 0, currentPage: 'bar' }]])
+    .put(loadPage('bar', 'fr'))
     .run()
   )
 

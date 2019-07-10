@@ -5,7 +5,7 @@ import { contentType } from '../../../../lib/propTypes'
 import ContentFragment from '..'
 import InputHint from '../cards/InputHint'
 import Question from '../questions'
-import SectionLink from '../../../SectionLink'
+import { SectionLink } from '../../links'
 import css from './style.sass'
 
 const IndexSpan = ({ indexConcept, content }) => (
@@ -31,7 +31,7 @@ const Span = ({ data }) => {
       if (content.length) {
         // custom link text
         return (
-          <SectionLink sectionId={val}>
+          <SectionLink contentId={val}>
             <a>
               <ContentFragment content={content} />
             </a>
@@ -39,7 +39,7 @@ const Span = ({ data }) => {
         )
       }
       // uses section title as link text
-      return <SectionLink sectionId={val} />
+      return <SectionLink contentId={val} />
     }
   }
 

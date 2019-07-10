@@ -1,6 +1,7 @@
 import defaultInitialState from '../../defaultInitialState'
 import orm from '../../orm'
 import sectionSelectors from '.'
+import { makeMakeGetContentLink } from '..'
 
 const sections = {
   test: {
@@ -40,6 +41,21 @@ const sections = {
   },
 }
 
+jest.mock('..', () => {
+  const actualAppImport = jest.requireActual('..')
+  return {
+    __esModule: true,
+    default: {
+      getApp: actualAppImport.default.getApp,
+      getOrmState: actualAppImport.default.getOrmState,
+    },
+    makeMakeGetContentLink: jest.fn(() => (
+      () => {}
+    )),
+    selectId: actualAppImport.selectId,
+  }
+})
+
 let state
 beforeEach(() => {
   const session = orm.session(defaultInitialState().orm)
@@ -55,7 +71,7 @@ beforeEach(() => {
   state = { orm: session.state }
 })
 
-const setSectionId = (localState, sectionId) => {
+const setCurrentSection = (localState, sectionId) => {
   const session = orm.session(localState.orm)
   session.Course.first().set('currentSection', sectionId)
   return { orm: session.state }
@@ -63,7 +79,7 @@ const setSectionId = (localState, sectionId) => {
 
 describe('sectionSelectors', () => {
   beforeEach(() => {
-    state = setSectionId(state, 'test/child1')
+    state = setCurrentSection(state, 'test/child1')
   })
 
   test.each([
@@ -111,7 +127,7 @@ describe('getBreadcrumbSections', () => {
       { id: 'test/child1/child12', title: '1.1.2 test child12 title' },
     ]],
   ])('%s', (sectionId, crumbs) => {
-    state = setSectionId(state, sectionId)
+    state = setCurrentSection(state, sectionId)
     expect(sectionSelectors.getBreadcrumbSections(state)).toEqual(crumbs)
   })
 })
@@ -123,7 +139,7 @@ describe('getNextPrevSections', () => {
     ['test/child1/child12', 'test/child1/child11', 'test/child2'],
     ['test/child2', 'test/child1/child12', null],
   ])('%s', (sectionId, expPrevId, expNextId) => {
-    state = setSectionId(state, sectionId)
+    state = setCurrentSection(state, sectionId)
     const { prevId, nextId } = sectionSelectors.getNextPrevSections(state)
     expect(prevId).toEqual(expPrevId)
     expect(nextId).toEqual(expNextId)
@@ -142,26 +158,8 @@ describe('getToc', () => {
 })
 
 describe('makeGetSectionLink', () => {
-  it('returns section', () => {
-    const getSectionLink = sectionSelectors.makeGetSectionLink()
-    const sectionLink = getSectionLink(state, 'test/child1/child11')
-    expect(sectionLink.section.id).toBe('test/child1/child11')
-    expect(sectionLink.section.title).toBe('1.1.1 test child11 title')
-    expect(sectionLink.hash).toBeUndefined()
-  })
-
-  it('returns section and hash', () => {
-    const getSectionLink = sectionSelectors.makeGetSectionLink()
-    const sectionLink = getSectionLink(state, 'test/child1/child11#foo')
-    expect(sectionLink.section.id).toBe('test/child1/child11')
-    expect(sectionLink.section.title).toBe('1.1.1 test child11 title')
-    expect(sectionLink.hash).toBe('foo')
-  })
-
-  it('notices unknown section', () => {
-    const getSectionLink = sectionSelectors.makeGetSectionLink()
-    const sectionLink = getSectionLink(state, 'does/not/exist')
-    expect(sectionLink.section.id).toBe('does/not/exist')
-    expect(sectionLink.section.title).toMatch('UNKNOWN SECTION')
+  it('calls makeMakeGetContentLink', () => {
+    sectionSelectors.makeGetSectionLink()
+    expect(makeMakeGetContentLink).toBeCalledWith('Section')
   })
 })

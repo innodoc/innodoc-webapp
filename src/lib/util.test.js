@@ -4,7 +4,7 @@ import {
   getClassNameToComponentMapper,
   getDisplayName,
   getHocDisplayName,
-  parseSectionId,
+  parseContentId,
   toTwoLetterCode,
   unwrapPara,
 } from './util'
@@ -90,13 +90,13 @@ describe('getHocDisplayName', () => {
   })
 })
 
-describe('parseSectionId', () => {
-  it('should parse a section ID with hash', () => {
-    expect(parseSectionId('foo/bar#baz')).toEqual(['foo/bar', 'baz'])
+describe('parseContentId', () => {
+  it('should parse a content ID with hash', () => {
+    expect(parseContentId('foo/bar#baz')).toEqual(['foo/bar', 'baz'])
   })
 
-  it('should parse a section ID without hash', () => {
-    expect(parseSectionId('foo/bar')).toEqual(['foo/bar'])
+  it('should parse a content ID without hash', () => {
+    expect(parseContentId('foo/bar')).toEqual(['foo/bar'])
   })
 })
 

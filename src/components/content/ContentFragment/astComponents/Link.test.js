@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import ContentFragment from '../ContentFragment'
 import Link from './Link'
-import SectionLink from '../../../SectionLink'
+import { SectionLink } from '../../links'
 import Video from './Video'
 
 describe('<Link />', () => {
@@ -33,7 +33,7 @@ describe('<Link />', () => {
     const wrapper = shallow(<Link data={data} />)
     const sectionLink = wrapper.find(SectionLink)
     expect(sectionLink).toHaveLength(1)
-    expect(sectionLink.prop('sectionId')).toEqual('foo/bar')
+    expect(sectionLink.prop('contentId')).toEqual('foo/bar')
     const a = wrapper.find('a')
     expect(a).toHaveLength(1)
     const contentFragment = wrapper.find(ContentFragment)
@@ -50,7 +50,7 @@ describe('<Link />', () => {
     const wrapper = shallow(<Link data={data} />)
     const sectionLink = wrapper.find(SectionLink)
     expect(sectionLink).toHaveLength(1)
-    expect(sectionLink.prop('sectionId')).toEqual('foo/bar')
+    expect(sectionLink.prop('contentId')).toEqual('foo/bar')
     expect(wrapper.find('a')).toHaveLength(0)
     expect(wrapper.exists(ContentFragment)).toBe(false)
   })

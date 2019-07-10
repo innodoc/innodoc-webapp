@@ -14,7 +14,7 @@ jest.mock('react-redux', () => ({
 }))
 
 let mockIsNarrowerThan
-jest.mock('../../../hooks/useIsNarrowerThan', () => (
+jest.mock('../../hooks/useIsNarrowerThan', () => (
   () => mockIsNarrowerThan
 ))
 

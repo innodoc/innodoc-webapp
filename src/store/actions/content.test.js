@@ -3,6 +3,9 @@ import {
   loadManifest,
   loadManifestFailure,
   loadManifestSuccess,
+  loadPage,
+  loadPageFailure,
+  loadPageSuccess,
   loadSection,
   loadSectionFailure,
   loadSectionSuccess,
@@ -35,11 +38,35 @@ it('should dispatch LOAD_MANIFEST_FAILURE action', () => {
   })
 })
 
+it('should dispatch LOAD_PAGE action', () => {
+  expect(loadPage('foo', 'en')).toEqual({
+    type: actionTypes.LOAD_PAGE,
+    prevLanguage: 'en',
+    contentId: 'foo',
+  })
+})
+
+it('should dispatch LOAD_PAGE_SUCCESS action', () => {
+  const data = [{ t: 'Str', c: 'Foo string' }]
+  expect(loadPageSuccess(data)).toEqual({
+    type: actionTypes.LOAD_PAGE_SUCCESS,
+    data,
+  })
+})
+
+it('should dispatch LOAD_PAGE_FAILURE action', () => {
+  const error = { msg: 'Something went wrong!' }
+  expect(loadPageFailure(error)).toEqual({
+    type: actionTypes.LOAD_PAGE_FAILURE,
+    error,
+  })
+})
+
 it('should dispatch LOAD_SECTION action', () => {
   expect(loadSection('foo/bar', 'en')).toEqual({
     type: actionTypes.LOAD_SECTION,
     prevLanguage: 'en',
-    sectionId: 'foo/bar',
+    contentId: 'foo/bar',
   })
 })
 
