@@ -4,6 +4,7 @@ import {
   changeCourse,
   clearError,
   loadSectionFailure,
+  loadPageFailure,
   setContentRoot,
   setStaticRoot,
 } from '../actions/content'
@@ -29,8 +30,13 @@ describe('App', () => {
 
   describe('reducer', () => {
     test('loadSectionFailure', () => {
-      AppModel.reducer(loadSectionFailure('error message'), session.App)
-      expect(session.App.first().ref.error).toEqual('error message')
+      AppModel.reducer(loadSectionFailure('section error'), session.App)
+      expect(session.App.first().ref.error).toEqual('section error')
+    })
+
+    test('loadPageFailure', () => {
+      AppModel.reducer(loadPageFailure('page error'), session.App)
+      expect(session.App.first().ref.error).toEqual('page error')
     })
 
     test('clearError', () => {

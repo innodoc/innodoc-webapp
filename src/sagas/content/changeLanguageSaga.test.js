@@ -1,7 +1,7 @@
 import { expectSaga } from 'redux-saga-test-plan'
 import { select } from 'redux-saga/effects'
 
-import changeLanguageSaga from './changeLanguage'
+import changeLanguageSaga from './changeLanguageSaga'
 import { actionTypes as contentActionTypes, loadPage, loadSection } from '../../store/actions/content'
 import { changeLanguage } from '../../store/actions/i18n'
 import courseSelectors from '../../store/selectors/course'

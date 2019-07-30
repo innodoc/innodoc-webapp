@@ -4,7 +4,7 @@ import { throwError } from 'redux-saga-test-plan/providers'
 import { call, select } from 'redux-saga/effects'
 
 import makeLoadContentSaga from './makeLoadContentSaga'
-import loadManifestSaga from './manifest'
+import loadManifestSaga from './loadManifestSaga'
 import { actionTypes as uiActionTypes } from '../../store/actions/ui'
 import { parseContentId } from '../../lib/util'
 import appSelectors from '../../store/selectors'
@@ -92,7 +92,7 @@ describe('makeLoadContentSaga', () => {
         [select(contentExists, contentId), false],
         ...defaultProvides,
       ])
-      .put(loadContentFailure({ language, statusCode: 404 }))
+      .put(loadContentFailure({ statusCode: 404 }))
       .not.call.fn(fetchContent)
       .not.put.actionType('LOAD_CONTENT_SUCCESS')
       .run()
@@ -114,7 +114,7 @@ describe('makeLoadContentSaga', () => {
         [matchers.call.fn(fetchContent), throwError(error)],
         ...defaultProvides,
       ])
-      .put(loadContentFailure({ language, error }))
+      .put(loadContentFailure({ error }))
       .put.actionType(uiActionTypes.SHOW_MESSAGE)
       .not.put.actionType('LOAD_CONTENT_SUCCESS')
       .run()

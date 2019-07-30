@@ -5,6 +5,7 @@ const dummyCourse = {
   id: 0,
   homeLink: 'foo',
   languages: ['en'],
+  logo: null,
   title: { en: ['foobar'] },
 }
 

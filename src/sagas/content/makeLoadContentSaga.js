@@ -9,7 +9,7 @@ import courseSelectors from '../../store/selectors/course'
 import { clearError } from '../../store/actions/content'
 import { parseContentId } from '../../lib/util'
 import { showMessage } from '../../store/actions/ui'
-import loadManifestSaga from './manifest'
+import loadManifestSaga from './loadManifestSaga'
 
 export default (
   getCurrentContent,
@@ -20,7 +20,7 @@ export default (
   fetchContent,
 ) => {
   function* loadContentSaga({ contentId: contentIdHash, prevLanguage }) {
-    const { language, contentRoot } = yield select(appSelectors.getApp)
+    const { contentRoot, language } = yield select(appSelectors.getApp)
     const [contentId] = yield call(parseContentId, contentIdHash)
 
     // Load manifest if course does not exist
@@ -60,7 +60,7 @@ export default (
             language,
           }))
         } catch (error) {
-          yield put(loadContentFailure({ language, error }))
+          yield put(loadContentFailure({ error }))
           yield put(showMessage({
             title: 'Loading content failed!',
             msg: error.message,
@@ -69,7 +69,7 @@ export default (
         }
       }
     } else {
-      yield put(loadContentFailure({ language, statusCode: 404 }))
+      yield put(loadContentFailure({ statusCode: 404 }))
     }
   }
   return loadContentSaga

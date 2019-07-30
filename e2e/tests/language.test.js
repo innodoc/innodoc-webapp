@@ -30,7 +30,7 @@ describe('Content translation', () => {
     expect.assertions(6)
     // need to fit full nav to see language option
     await page.setViewport({ width: 1200, height: 600 })
-    await page.goto(getUrl('/page/01-project'))
+    await page.goto(getUrl('/section/01-project'))
     await expect(page).toMatchElement('h1', { text: 'Project structure' })
     await expect(page).toMatchElement('p', { text: 'This sections describes the course structure.' })
     await expect(page).toClick('li', { text: 'Language' })

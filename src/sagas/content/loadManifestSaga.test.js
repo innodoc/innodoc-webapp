@@ -4,7 +4,7 @@ import { throwError } from 'redux-saga-test-plan/providers'
 import { select } from 'redux-saga/effects'
 import { actionTypes as uiActionTypes } from '../../store/actions/ui'
 
-import loadManifestSaga from './manifest'
+import loadManifestSaga from './loadManifestSaga'
 import {
   actionTypes as contentActionTypes,
   loadManifestFailure,

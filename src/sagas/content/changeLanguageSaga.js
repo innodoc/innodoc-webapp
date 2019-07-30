@@ -1,6 +1,6 @@
 import { put, select } from 'redux-saga/effects'
 
-import { loadPage, loadSection } from '../../store/actions/content'
+import { loadFragment, loadPage, loadSection } from '../../store/actions/content'
 import courseSelectors from '../../store/selectors/course'
 
 // When the language changes we may need to (re-)load content.
@@ -13,4 +13,6 @@ export default function* changeLanguageSaga({ prevLanguage }) {
       yield put(loadPage(course.currentPage, prevLanguage))
     }
   }
+  yield put(loadFragment('_footer_a'))
+  yield put(loadFragment('_footer_b'))
 }

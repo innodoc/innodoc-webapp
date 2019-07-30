@@ -21,21 +21,6 @@
       "msg": "Leider ist etwas schief gelaufen."
     }
   },
-  "footer": {
-    "authors": "List der Autor*innen",
-    "contact": "Kontakt",
-    "course": "Kurs",
-    "courseInformation": "Kursinformationen",
-    "displayOfFormulas": "Formeldarstellung",
-    "imprint": "Impressum",
-    "institutions": "Institutionen",
-    "institutionsPhrase": "Die folgenden Institutionen waren an der Entwicklung beteiligt:",
-    "liability": "Haftungsauschluss",
-    "license": "Lizenz",
-    "licensePhrase": "Die Bestandteile dieses Kurses stehen unter der <1>Creative Commons License CC BY-SA 3.0</1> und können kopiert oder nach Bearbeitung weiterverwendet werden solange der Ursprung (dieser Kurs) zitiert wird.",
-    "projectPhrase": "Dieser Kurs wurde im Rahmen des <1>VE&MINT-Projekts</1> entwickelt.",
-    "viewIndex": "Stichwortliste"
-  },
   "header": {
     "createAccount": "Konto erstellen",
     "downloadPDF": "PDF",
@@ -48,8 +33,7 @@
     "menu": "Menü",
     "searchPlaceholder": "Suche…",
     "showToc": "Inhalt",
-    "showTocLong": "Inhaltsverzeichnis",
-    "tmpTitle": "Onlinebrückenkurs Mathematik"
+    "showTocLong": "Inhaltsverzeichnis"
   },
   "languages": {
     "de": "Deutsch",

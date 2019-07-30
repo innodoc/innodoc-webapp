@@ -52,10 +52,12 @@ describe('Course', () => {
     test('loadManifestSuccess', () => {
       CourseModel.reducer(loadManifestSuccess({ content: manifest }), session.Course)
       expect(session.Course.first().ref).toEqual({
-        ...manifest,
-        id: 0,
         currentSection: null,
-        toc: undefined,
+        homeLink: 'bar',
+        languages: ['en'],
+        logo: null,
+        title: { en: 'foobar' },
+        id: 0,
       })
     })
 
@@ -65,11 +67,12 @@ describe('Course', () => {
       })
       CourseModel.reducer(action, session.Course,)
       expect(session.Course.first().ref).toEqual({
-        ...manifest,
-        homeLink: 'foo',
-        id: 0,
         currentSection: null,
-        toc: undefined,
+        homeLink: 'foo',
+        languages: ['en'],
+        logo: null,
+        title: { en: 'foobar' },
+        id: 0,
       })
     })
   })

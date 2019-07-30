@@ -9,11 +9,12 @@ export default class Page extends Model {
 
   static get fields() {
     return {
-      id: attr(),
       content: attr(),
       icon: attr(),
+      id: attr(),
       inFooter: attr({ getDefault: () => false }),
       inNav: attr({ getDefault: () => false }),
+      shortTitle: attr(),
       ord: attr(),
       title: attr(),
     }
@@ -26,10 +27,11 @@ export default class Page extends Model {
           action.data.content.pages.forEach(
             (page, idx) => {
               PageModel.upsert({
-                id: page.id,
                 icon: page.icon,
+                id: page.id,
                 inFooter: page.link_in_footer,
                 inNav: page.link_in_nav,
+                shortTitle: page.short_title,
                 ord: idx,
                 title: page.title,
               })

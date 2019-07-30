@@ -8,8 +8,7 @@ const fetchJson = url => fetch(url)
     return response.json()
   })
 
-const fetchManifest = contentRoot => fetchJson(`${contentRoot}manifest.json`)
-const fetchSection = (contentRoot, language, sectionId) => fetchJson(`${contentRoot}${language}/${sectionId}/content.json`)
-const fetchPage = (contentRoot, language, pageId) => fetchJson(`${contentRoot}${language}/_pages/${pageId}.json`)
-
-export { fetchManifest, fetchPage, fetchSection }
+export const fetchFragment = (contentRoot, language, fragmentId) => fetchJson(`${contentRoot}${language}/${fragmentId}.json`)
+export const fetchManifest = contentRoot => fetchJson(`${contentRoot}manifest.json`)
+export const fetchSection = (contentRoot, language, sectionId) => fetchJson(`${contentRoot}${language}/${sectionId}/content.json`)
+export const fetchPage = (contentRoot, language, pageId) => fetchJson(`${contentRoot}${language}/_pages/${pageId}.json`)

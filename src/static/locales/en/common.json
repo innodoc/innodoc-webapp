@@ -21,21 +21,6 @@
       "msg": "Something went wrong."
     }
   },
-  "footer": {
-    "authors": "List of authors",
-    "contact": "Contact",
-    "course": "Course",
-    "courseInformation": "Course information",
-    "displayOfFormulas": "Display of formulas",
-    "imprint": "Imprint",
-    "institutions": "Institutions",
-    "institutionsPhrase": "The following institutions took part in the development:",
-    "liability": "Exclusion of liability",
-    "license": "License",
-    "licensePhrase": "The components of this course are licensed under the <1>Creative Commons License CC BY-SA 3.0</1> and can be copied or reused after editing as long as the source (this course) is cited.",
-    "projectPhrase": "This course was developed within the <1>VE&MINT project</1>.",
-    "viewIndex": "View index"
-  },
   "header": {
     "createAccount": "Create Account",
     "downloadPDF": "PDF",
@@ -46,11 +31,9 @@
     "linkEN": "English",
     "login": "Login",
     "menu": "Menu",
-    "preparatoryMathematicsCourse": "Preparatory Mathematics<1></1>Course",
     "searchPlaceholder": "Search…",
     "showToc": "Contents",
-    "showTocLong": "Show Table of Contents",
-    "tmpTitle": "Preparatory Mathematics Course"
+    "showTocLong": "Show Table of Contents"
   },
   "languages": {
     "de": "Deutsch",

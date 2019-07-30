@@ -29,7 +29,7 @@ const Nav = ({ menuMode }) => {
             title={page.title[language]}
           >
             {page.icon ? <Icon type={page.icon} /> : null}
-            {page.title[language]}
+            {page.shortTitle[language]}
           </a>
         </PageLink>
       </Menu.Item>

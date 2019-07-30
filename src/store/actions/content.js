@@ -1,6 +1,9 @@
 export const actionTypes = {
   CHANGE_COURSE: 'CHANGE_COURSE',
   CLEAR_ERROR: 'CLEAR_ERROR',
+  LOAD_FRAGMENT_FAILURE: 'LOAD_FRAGMENT_FAILURE',
+  LOAD_FRAGMENT_SUCCESS: 'LOAD_FRAGMENT_SUCCESS',
+  LOAD_FRAGMENT: 'LOAD_FRAGMENT',
   LOAD_PAGE_FAILURE: 'LOAD_PAGE_FAILURE',
   LOAD_PAGE_SUCCESS: 'LOAD_PAGE_SUCCESS',
   LOAD_PAGE: 'LOAD_PAGE',
@@ -23,18 +26,19 @@ export const clearError = () => ({
   type: actionTypes.CLEAR_ERROR,
 })
 
-export const loadManifestFailure = error => ({
-  type: actionTypes.LOAD_MANIFEST_FAILURE,
+export const loadFragmentFailure = error => ({
+  type: actionTypes.LOAD_FRAGMENT_FAILURE,
   error,
 })
 
-export const loadManifestSuccess = data => ({
-  type: actionTypes.LOAD_MANIFEST_SUCCESS,
+export const loadFragmentSuccess = data => ({
+  type: actionTypes.LOAD_FRAGMENT_SUCCESS,
   data,
 })
 
-export const loadManifest = () => ({
-  type: actionTypes.LOAD_MANIFEST,
+export const loadFragment = contentId => ({
+  type: actionTypes.LOAD_FRAGMENT,
+  contentId,
 })
 
 export const loadPageFailure = error => ({
@@ -51,6 +55,20 @@ export const loadPage = (contentId, prevLanguage = undefined) => ({
   type: actionTypes.LOAD_PAGE,
   prevLanguage,
   contentId,
+})
+
+export const loadManifestFailure = error => ({
+  type: actionTypes.LOAD_MANIFEST_FAILURE,
+  error,
+})
+
+export const loadManifestSuccess = data => ({
+  type: actionTypes.LOAD_MANIFEST_SUCCESS,
+  data,
+})
+
+export const loadManifest = () => ({
+  type: actionTypes.LOAD_MANIFEST,
 })
 
 export const loadSectionFailure = error => ({

@@ -14,6 +14,7 @@ export default class Course extends Model {
       currentSection: fk('Section'),
       homeLink: attr({ getDefault: () => null }),
       languages: attr({ getDefault: () => [] }),
+      logo: attr({ getDefault: () => null }),
       title: attr({ getDefault: () => null }),
     }
   }
@@ -26,6 +27,7 @@ export default class Course extends Model {
           currentSection: null,
           homeLink: content.homeLink || content.toc[0].id,
           languages: content.languages,
+          logo: content.logo || null,
           title: content.title,
         })
         break

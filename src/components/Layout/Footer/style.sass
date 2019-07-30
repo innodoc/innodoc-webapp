@@ -19,13 +19,24 @@
     padding-bottom: 0
     border-bottom: 0
 
-.licenseIcon
-  width: 62.5px
-  height: 62.5px
-  margin-right: $padding-xs
+  .pageLink
+    display: flex
+    margin-bottom: $padding-xs
+
+    i
+      margin-right: $padding-xs
+
+    span
+      line-height: 1.0
+
+    .iconPlaceholder
+      visibility: hidden
 
 .footerSegment
   padding-bottom: $padding-lg
+
+  a > sup
+    display: none
 
 @media (min-width: $screen-md)
   .footerCol

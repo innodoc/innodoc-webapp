@@ -1,12 +1,9 @@
-import { takeLatest } from 'redux-saga/effects'
+import { takeEvery, takeLatest } from 'redux-saga/effects'
 
+import changeLanguageSaga from './changeLanguageSaga'
+import loadFragmentSaga from './loadFragmentSaga'
+import loadManifestSaga from './loadManifestSaga'
 import makeLoadContentSaga from './makeLoadContentSaga'
-import pageSelectors from '../../store/selectors/page'
-import sectionSelectors from '../../store/selectors/section'
-import { fetchPage, fetchSection } from '../../lib/api'
-import loadManifestSaga from './manifest'
-import changeLanguageSaga from './changeLanguage'
-import { actionTypes as i18nActionTypes } from '../../store/actions/i18n'
 import {
   actionTypes as contentActionTypes,
   loadPageFailure,
@@ -14,6 +11,10 @@ import {
   loadSectionFailure,
   loadSectionSuccess,
 } from '../../store/actions/content'
+import { actionTypes as i18nActionTypes } from '../../store/actions/i18n'
+import pageSelectors from '../../store/selectors/page'
+import sectionSelectors from '../../store/selectors/section'
+import { fetchPage, fetchSection } from '../../lib/api'
 
 const loadPageSaga = makeLoadContentSaga(
   pageSelectors.getCurrentPage,
@@ -34,6 +35,7 @@ const loadSectionSaga = makeLoadContentSaga(
 )
 
 export default [
+  takeEvery(contentActionTypes.LOAD_FRAGMENT, loadFragmentSaga),
   takeLatest(contentActionTypes.LOAD_MANIFEST, loadManifestSaga),
   takeLatest(contentActionTypes.LOAD_PAGE, loadPageSaga),
   takeLatest(contentActionTypes.LOAD_SECTION, loadSectionSaga),
