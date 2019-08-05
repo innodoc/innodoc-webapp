@@ -13,7 +13,7 @@ variables:
 .docker-default-vars: &docker-default-vars
   GIT_STRATEGY: none
   DOCKER_HOST: tcp://docker:2375
-  DOCKER_DRIVER: overlay2
+  DOCKER_DRIVER: overlay # TODO: should be overlay2 (https://github.com/docker/for-linux/issues/711)
   IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
   IMAGE_E2E_CACHE_TAG: $CI_REGISTRY_IMAGE/e2e:cache
   IMAGE_E2E_TAG: $CI_REGISTRY_IMAGE/e2e:$CI_COMMIT_REF_SLUG
@@ -22,7 +22,7 @@ variables:
 
 .docker-base: &docker-base
   services:
-    - docker:dind
+    - docker:18.09.7-dind # TODO: should be docker:dind (https://gitlab.com/gitlab-org/gitlab-runner/issues/4501)
   before_script:
     - echo "$CI_JOB_TOKEN" | docker login --username gitlab-ci-token --password-stdin "$CI_REGISTRY"
   after_script:
