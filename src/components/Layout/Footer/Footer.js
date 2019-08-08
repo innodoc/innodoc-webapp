@@ -22,7 +22,7 @@ const Footer = () => {
   const pages = useSelector(pageSelectors.getFooterPages)
   const footerA = useSelector(fragmentSelectors.getFooterA)
   const footerB = useSelector(fragmentSelectors.getFooterB)
-  const title = course.title[language]
+  const title = course ? course.title[language] : ''
 
   const pageItems = pages
     .map(page => (

@@ -14,7 +14,7 @@ const pageExists = createSelector(
 const getCurrentPage = createSelector(
   orm, appSelectors.getOrmState, courseSelectors.getCurrentCourse,
   (session, course) => {
-    const page = session.Page.withId(course.currentPage)
+    const page = course ? session.Page.withId(course.currentPage) : null
     return page ? page.ref : null
   }
 )

@@ -10,8 +10,8 @@ import courseSelectors from '../../../../store/selectors/course'
 const Logo = () => {
   const { language, staticRoot } = useSelector(appSelectors.getApp)
   const course = useSelector(courseSelectors.getCurrentCourse)
-  const title = course.title[language]
-  const logoFilename = course.logo
+  const title = course ? course.title[language] : ''
+  const logoFilename = course ? course.logo : ''
   const logoImg = logoFilename
     ? <img alt={title} src={`${staticRoot}${logoFilename}`} />
     : null
