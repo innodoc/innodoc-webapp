@@ -18,12 +18,18 @@ h5.header
 h6.header
   font-size: 1em
 
+$affix-height: 38px
+
+html
+  scroll-padding: $affix-height 0 0 0
+
 .sectionAffix
   background-color: transparent
   border-bottom: $border-width-base $border-style-base transparent
   transition: background-color $animation-duration-slow, border-color $animation-duration-slow
 
   &.affixed
+    height: $affix-height
     background-color: $body-background
     border-bottom-color: $border-color-split
 
