@@ -6,7 +6,6 @@ import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 
 import '../style/lato-font.sass'
-import '../style/overrides.sass'
 
 import 'antd/lib/style/index.less'
 import 'antd/lib/affix/style/index.less'

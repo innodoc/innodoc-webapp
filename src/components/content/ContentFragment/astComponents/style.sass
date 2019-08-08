@@ -36,8 +36,12 @@
   tr:hover > td
     background-color: transparent !important
 
-.codeblock
+.code
   background-color: rgba(0, 0, 0, 0.05)
+  color: $heading-color
+
+.codeblock
+  @extend .code
   border-left: $border-color-base $border-style-base 3 * $border-width-base
   padding-left: $padding-sm
 
