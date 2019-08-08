@@ -48,7 +48,7 @@ describe('loadFragmentSaga', () => {
       .run()
   )
 
-  it('should fail and show message if fetch fails', () => {
+  it('should put loadFragmentFailure and not show message if fetch fails', () => {
     const error = new Error('mock error')
     return expectSaga(loadFragmentSaga, loadFragment(contentId))
       .provide([
@@ -56,7 +56,7 @@ describe('loadFragmentSaga', () => {
         ...defaultProvides,
       ])
       .put(loadFragmentFailure({ error }))
-      .put.actionType(uiActionTypes.SHOW_MESSAGE)
+      .not.put.actionType(uiActionTypes.SHOW_MESSAGE)
       .not.put.actionType(actionTypes.LOAD_FRAGMENT_SUCCESS)
       .run()
   })
