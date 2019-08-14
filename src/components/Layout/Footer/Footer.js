@@ -25,7 +25,7 @@ const Footer = () => {
   const title = course ? course.title[language] : ''
 
   const pageItems = pages
-    .map(page => (
+    .map((page) => (
       <List.Item key={page.id}>
         <PageLink contentId={page.id}>
           <a

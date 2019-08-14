@@ -3,7 +3,7 @@ import mkdirp from 'mkdirp'
 
 const screenshotsPath = path.resolve(__dirname, 'screenshots')
 
-const toFilename = s => s.replace(/[^a-z0-9.-]+/gi, '_')
+const toFilename = (s) => s.replace(/[^a-z0-9.-]+/gi, '_')
 
 const takeScreenshot = (testName, pageInstance = page) => {
   mkdirp.sync(screenshotsPath)

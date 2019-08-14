@@ -50,7 +50,7 @@ describe.each(['en', 'de'])('Language detection (%s)', (lang) => {
     it('should set cookie', async () => {
       expect.assertions(1)
       const cookies = await page.cookies()
-      const cookieLang = cookies.find(c => c.name === COOKIE_NAME).value
+      const cookieLang = cookies.find((c) => c.name === COOKIE_NAME).value
       expect(cookieLang).toEqual(lang)
     })
 

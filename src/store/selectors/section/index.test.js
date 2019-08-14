@@ -65,7 +65,7 @@ beforeEach(() => {
     languages: ['en'],
     title: 'courseTitle',
   })
-  Object.values(sections).forEach(section => session.Section.create(section))
+  Object.values(sections).forEach((section) => session.Section.create(section))
   app.set('language', 'en')
   app.set('currentCourse', course.id)
   state = { orm: session.state }

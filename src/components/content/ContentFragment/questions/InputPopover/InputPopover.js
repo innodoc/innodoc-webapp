@@ -18,12 +18,12 @@ const InputPopover = ({ children, messages, userInput }) => {
     ? <ul className={css.messageList}>{messageItems}</ul>
     : null
   const content = (
-    <React.Fragment>
+    <>
       <div className={css.mathJaxWrapper}>
         <MathJaxDiv texCode={userInput} />
       </div>
       {messageList}
-    </React.Fragment>
+    </>
   )
   return (
     <Popover

@@ -3,11 +3,11 @@ import { createSelector } from 'redux-orm'
 import orm from '../orm'
 import { parseContentId } from '../../lib/util'
 
-const getOrmState = state => state.orm
+const getOrmState = (state) => state.orm
 
 const getApp = createSelector(
   orm, getOrmState,
-  session => session.App.first().ref
+  (session) => session.App.first().ref
 )
 
 const selectId = (state, id) => id
@@ -17,7 +17,7 @@ const selectLinkInfo = (state, contentIdHash) => {
   return { hash, contentId }
 }
 
-const makeMakeGetContentLink = modelName => (
+const makeMakeGetContentLink = (modelName) => (
   () => createSelector(
     orm,
     getOrmState,

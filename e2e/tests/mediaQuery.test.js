@@ -12,7 +12,7 @@ describe('Media query', () => {
     await page.waitFor(500) // animation?
     await expect(drawer).toClick('.ant-drawer-close')
     expect(
-      await page.$eval('.ant-drawer', elem => window.getComputedStyle(elem).getPropertyValue('width'))
+      await page.$eval('.ant-drawer', (elem) => window.getComputedStyle(elem).getPropertyValue('width'))
     ).toBe('0px')
   })
 
@@ -26,7 +26,7 @@ describe('Media query', () => {
       expect.assertions(1)
       await page.setViewport({ width: 800, height: 600 })
       expect(
-        await page.$eval('[class*=mobileMenuButton]', elem => window.getComputedStyle(elem).getPropertyValue('display'))
+        await page.$eval('[class*=mobileMenuButton]', (elem) => window.getComputedStyle(elem).getPropertyValue('display'))
       ).toBe('none')
     })
   })

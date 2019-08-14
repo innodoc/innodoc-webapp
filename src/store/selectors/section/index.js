@@ -32,7 +32,7 @@ const getCurrentSection = createSelector(
 const getCurrentSubsections = createSelector(
   orm, appSelectors.getOrmState, courseSelectors.getCurrentCourse,
   (session, course) => session.Section.all()
-    .filter(section => section.parentId === course.currentSection)
+    .filter((section) => section.parentId === course.currentSection)
     .toRefArray()
 )
 

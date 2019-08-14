@@ -28,8 +28,8 @@ const getPage = createSelector(
 // Return pages that appear in footer
 const getFooterPages = createSelector(
   orm, appSelectors.getOrmState,
-  session => session.Page.all()
-    .filter(page => page.inFooter)
+  (session) => session.Page.all()
+    .filter((page) => page.inFooter)
     .orderBy('ord')
     .toRefArray()
 )
@@ -37,8 +37,8 @@ const getFooterPages = createSelector(
 // Return pages that appear in navigation
 const getNavPages = createSelector(
   orm, appSelectors.getOrmState,
-  session => session.Page.all()
-    .filter(page => page.inNav)
+  (session) => session.Page.all()
+    .filter((page) => page.inNav)
     .orderBy('ord')
     .toRefArray()
 )

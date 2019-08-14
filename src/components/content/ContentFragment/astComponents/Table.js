@@ -13,26 +13,26 @@ const alignMap = {
 
 const Table = ({ data }) => {
   const [, alignment, , headerData, rowData] = data
-  const tableProps = {}
   let columnArr
+  let showHeader
 
   // show header?
-  if (headerData.some(tr => tr.length > 0)) {
+  if (headerData.some((tr) => tr.length > 0)) {
     columnArr = headerData
   } else {
     [columnArr] = rowData
-    tableProps.showHeader = false
+    showHeader = false
   }
 
-  tableProps.columns = columnArr.map((content, i) => ({
+  const columns = columnArr.map((content, i) => ({
     title: <ContentFragment content={content} />,
-    render: c => <ContentFragment content={c} />,
+    render: (c) => <ContentFragment content={c} />,
     key: i,
     dataIndex: i,
     align: alignMap[alignment[i].t],
   }))
 
-  tableProps.dataSource = rowData.map((row, i) => ({
+  const dataSource = rowData.map((row, i) => ({
     ...row,
     key: i,
   }))
@@ -40,8 +40,10 @@ const Table = ({ data }) => {
   return (
     <AntTable
       className={css.table}
+      columns={columns}
+      dataSource={dataSource}
       pagination={false}
-      {...tableProps}
+      showHeader={showHeader}
     />
   )
 }

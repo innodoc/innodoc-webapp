@@ -17,7 +17,7 @@ let mockCourse
 const mockDispatch = jest.fn()
 jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
-  useSelector: selector => (
+  useSelector: (selector) => (
     selector === mockGetCurrentCourse
       ? mockCourse
       : mockApp

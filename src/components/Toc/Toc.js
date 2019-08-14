@@ -11,7 +11,7 @@ import { SectionLink } from '../content/links'
 
 const ActiveSectionLabel = ({ sectionId }) => {
   const getSectionLink = useMemo(sectionSelectors.makeGetSectionLink, [])
-  const { title } = useSelector(state => getSectionLink(state, sectionId))
+  const { title } = useSelector((state) => getSectionLink(state, sectionId))
   return title
 }
 
@@ -23,7 +23,7 @@ const renderTreeNodes = (section, currentSection) => {
     : <SectionLink contentId={sectionId} />
   return (
     <Tree.TreeNode className={classNames({ active })} key={sectionId} title={sectionNode}>
-      {children.map(s => renderTreeNodes(s, currentSection))}
+      {children.map((s) => renderTreeNodes(s, currentSection))}
     </Tree.TreeNode>
   )
 }
@@ -62,9 +62,7 @@ const Toc = ({ expandAll }) => {
   const toc = useSelector(sectionSelectors.getToc)
   const currentSection = course ? course.currentSection : undefined
   const [expandedKeys, setExpandedKeys] = useState(currentSection ? [currentSection] : [])
-  const expandProps = expandAll
-    ? { defaultExpandAll: true }
-    : { expandedKeys }
+
   useAutoExpand(
     currentSection,
     course,
@@ -77,10 +75,11 @@ const Toc = ({ expandAll }) => {
     <div className={css.tocWrapper}>
       <Tree
         className={classNames({ [css.disableExpand]: expandAll })}
-        onExpand={keys => setExpandedKeys(keys)}
-        {...expandProps}
+        onExpand={(keys) => setExpandedKeys(keys)}
+        defaultExpandAll={expandAll}
+        expandedKeys={expandAll ? undefined : expandedKeys}
       >
-        {toc.map(s => renderTreeNodes(s, currentSection))}
+        {toc.map((s) => renderTreeNodes(s, currentSection))}
       </Tree>
     </div>
   )

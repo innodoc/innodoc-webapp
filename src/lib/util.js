@@ -16,7 +16,7 @@ const astToString = (ast) => {
 }
 
 // Convert [[key, val], [key, val], ...] style attribute list to object.
-const attributesToObject = attrs => (
+const attributesToObject = (attrs) => (
   attrs
     ? attrs.reduce((obj, [key, val]) => ({ ...obj, [key]: val }), {})
     : {}
@@ -37,16 +37,16 @@ const getClassNameToComponentMapper = (classNameComponentMap) => {
   }
 }
 
-const getDisplayName = Component => Component.displayName || Component.name || 'Component'
+const getDisplayName = (Component) => Component.displayName || Component.name || 'Component'
 
 const getHocDisplayName = (HocName, ComposedComponent) => `${HocName}(${getDisplayName(ComposedComponent)})`
 
-const parseContentId = contentId => contentId.split('#')
+const parseContentId = (contentId) => contentId.split('#')
 
 // Normalize language code to 2 letters (e.g. 'en-US' -> 'en').
-const toTwoLetterCode = lang => (lang.length > 2 ? lang.substring(0, 2) : lang)
+const toTwoLetterCode = (lang) => (lang.length > 2 ? lang.substring(0, 2) : lang)
 
-const unwrapPara = content => (
+const unwrapPara = (content) => (
   content && content[0].t === 'Para'
     ? content[0].c
     : content

@@ -7,7 +7,7 @@ import css from './style.sass'
 import { SectionLink } from '../links'
 import { sectionType } from '../../../lib/propTypes'
 
-const Subsection = subSection => (
+const Subsection = (subSection) => (
   <List.Item>
     <SectionLink contentId={subSection.id} />
   </List.Item>

@@ -15,25 +15,30 @@ const Logo = () => {
   const logoImg = logoFilename
     ? <img alt={title} src={`${staticRoot}${logoFilename}`} />
     : null
-  const imgColProps = logoFilename
-    ? {
-      xs: 6, sm: 6, md: 8, lg: 8, xl: 8,
-    }
-    : {
-      xs: 0, sm: 0, md: 0, lg: 0, xl: 0,
-    }
+  const xs = logoFilename ? 6 : 0
+  const sm = logoFilename ? 6 : 0
+  const md = logoFilename ? 8 : 0
+  const lg = logoFilename ? 8 : 0
+  const xl = logoFilename ? 8 : 0
   return (
     <a className={css.logoLink}>
       <Row>
-        <Col className={css.headerLogoWrapper} {...imgColProps}>
+        <Col
+          className={css.headerLogoWrapper}
+          xs={xs}
+          sm={sm}
+          md={md}
+          lg={lg}
+          xl={xl}
+        >
           {logoImg}
         </Col>
         <Col
-          xs={24 - imgColProps.xs}
-          sm={24 - imgColProps.sm}
-          md={24 - imgColProps.md}
-          lg={24 - imgColProps.lg}
-          xl={24 - imgColProps.xl}
+          xs={24 - xs}
+          sm={24 - sm}
+          md={24 - md}
+          lg={24 - lg}
+          xl={24 - xl}
         >
           <span>{title}</span>
         </Col>

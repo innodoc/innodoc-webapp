@@ -8,7 +8,7 @@ export const clearMessage = () => ({
   type: actionTypes.CLEAR_MESSAGE,
 })
 
-export const showMessage = data => ({
+export const showMessage = (data) => ({
   type: actionTypes.SHOW_MESSAGE,
   data,
 })

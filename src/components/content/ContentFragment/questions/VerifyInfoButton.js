@@ -16,7 +16,7 @@ const VerifyInfoButton = ({ content }) => {
   } = useContext(ExerciseContext)
   setAutoVerify(false)
   return (
-    <React.Fragment>
+    <>
       <Divider />
       <Button
         disabled={!allAnswered() || userTriggeredVerify}
@@ -27,7 +27,7 @@ const VerifyInfoButton = ({ content }) => {
           <ContentFragment content={unwrapPara(content)} />
         </span>
       </Button>
-    </React.Fragment>
+    </>
   )
 }
 

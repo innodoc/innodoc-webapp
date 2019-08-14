@@ -6,8 +6,18 @@ import ExerciseContext from './ExerciseContext'
 describe('<ExerciseContext />', () => {
   it('should provide defaults', () => {
     const MyComponent = () => {
-      const exerciseContext = useContext(ExerciseContext)
-      return <div {...exerciseContext} />
+      const c = useContext(ExerciseContext)
+      return (
+        <div
+          addQuestion={c.addQuestion}
+          addQuestionAnswered={c.addQuestionAnswered}
+          allAnswered={c.allAnswered}
+          getShowResult={c.getShowResult}
+          setAutoVerify={c.setAutoVerify}
+          setUserTriggeredVerify={c.setUserTriggeredVerify}
+          userTriggeredVerify={c.userTriggeredVerify}
+        />
+      )
     }
     const div = shallow(<MyComponent />).find('div')
     expect(div.prop('addQuestion')).toBeInstanceOf(Function)

@@ -9,17 +9,16 @@ const makeContentLink = (makeGetContentLink, pathnamePrefix) => {
   const ContentLink = ({ children, contentId: contentIdHash }) => {
     const getContentLink = useMemo(makeGetContentLink, [])
     const { contentId, hash, title } = useSelector(
-      state => getContentLink(state, contentIdHash)
+      (state) => getContentLink(state, contentIdHash)
     )
-    const linkProps = {
-      href: {
-        pathname: `/${pathnamePrefix}`,
-        query: { contentId },
-      },
-      as: { pathname: `/${pathnamePrefix}/${contentId}` },
+
+    const href = {
+      pathname: `/${pathnamePrefix}`,
+      query: { contentId },
     }
+    const as = { pathname: `/${pathnamePrefix}/${contentId}` }
     if (hash) {
-      linkProps.as.hash = `#${hash}`
+      as.hash = `#${hash}`
     }
 
     const newChildren = children
@@ -27,7 +26,7 @@ const makeContentLink = (makeGetContentLink, pathnamePrefix) => {
       : <a>{title}</a>
 
     return (
-      <Link {...linkProps}>
+      <Link href={href} as={as}>
         {newChildren}
       </Link>
     )

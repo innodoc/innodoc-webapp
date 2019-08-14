@@ -30,7 +30,7 @@ const Layout = ({ children, disableSidebar }) => {
     )
 
   return (
-    <React.Fragment>
+    <>
       <AntLayout>
         <Header disableSidebar={disableSidebar} />
         <AntLayout>
@@ -44,7 +44,7 @@ const Layout = ({ children, disableSidebar }) => {
         <Footer />
       </AntLayout>
       {modal}
-    </React.Fragment>
+    </>
   )
 }
 

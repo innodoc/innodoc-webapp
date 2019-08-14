@@ -3,12 +3,12 @@ export const actionTypes = {
   QUESTION_SOLVED: 'QUESTION_SOLVED',
 }
 
-export const questionAnswered = data => ({
+export const questionAnswered = (data) => ({
   data,
   type: actionTypes.QUESTION_ANSWERED,
 })
 
-export const questionSolved = data => ({
+export const questionSolved = (data) => ({
   data,
   type: actionTypes.QUESTION_SOLVED,
 })

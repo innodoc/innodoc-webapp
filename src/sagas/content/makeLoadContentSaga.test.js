@@ -10,12 +10,12 @@ import { parseContentId } from '../../lib/util'
 import appSelectors from '../../store/selectors'
 import courseSelectors from '../../store/selectors/course'
 
-const loadContentFailure = error => ({
+const loadContentFailure = (error) => ({
   type: 'LOAD_CONTENT_FAILURE',
   error,
 })
 
-const loadContentSuccess = data => ({
+const loadContentSuccess = (data) => ({
   type: 'LOAD_CONTENT_SUCCESS',
   data,
 })

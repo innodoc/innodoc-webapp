@@ -9,7 +9,7 @@ jest.mock('../../../hooks/useMathJax', () => ({
   useMathJaxRemoveOnUnmount: () => {},
 }))
 
-const getData = mathType => [{ t: mathType }, 'x^2']
+const getData = (mathType) => [{ t: mathType }, 'x^2']
 
 describe('<Math />', () => {
   it.each([

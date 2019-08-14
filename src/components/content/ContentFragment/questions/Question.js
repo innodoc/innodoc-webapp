@@ -37,7 +37,7 @@ const Question = ({ attributes, id, questionClasses }) => {
   const { id: sectionId } = useSelector(sectionSelectors.getCurrentSection)
   const globalQuestionId = getQuestionId(sectionId, id, attributes)
   const getQuestion = useMemo(questionSelectors.makeGetQuestion, [])
-  const { answer, correct } = useSelector(state => getQuestion(state, globalQuestionId))
+  const { answer, correct } = useSelector((state) => getQuestion(state, globalQuestionId))
   const dispatch = useDispatch()
   const {
     addQuestion,
@@ -68,7 +68,7 @@ const Question = ({ attributes, id, questionClasses }) => {
         className={className}
         icon={feedbackIcon}
         onChange={
-          val => dispatch(questionAnswered({
+          (val) => dispatch(questionAnswered({
             answer: val,
             attributes: attrsObj,
             questionId: globalQuestionId,

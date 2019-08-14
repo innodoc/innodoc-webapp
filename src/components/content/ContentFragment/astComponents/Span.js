@@ -42,7 +42,7 @@ const Span = ({ data }) => {
   }
 
   if (classNames.includes('question')) {
-    const questionClasses = classNames.filter(className => className !== 'question')
+    const questionClasses = classNames.filter((className) => className !== 'question')
     return <Question id={id} questionClasses={questionClasses} attributes={attributes} />
   }
 

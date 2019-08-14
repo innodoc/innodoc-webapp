@@ -11,23 +11,26 @@ const CheckboxQuestion = ({
   icon,
   value,
 }) => {
-  const valueProp = {}
+  let checked
+  let indeterminate
   if (value === '1') {
-    valueProp.checked = true
+    checked = true
   } else if (value === '0') {
-    valueProp.checked = false
+    checked = false
   } else {
-    valueProp.indeterminate = true
+    indeterminate = true
   }
+
   return (
-    <React.Fragment>
+    <>
       <Checkbox
+        checked={checked}
         className={classNames(css.checkbox, className)}
-        onChange={ev => onChange(ev.target.checked ? '1' : '0')}
-        {...valueProp}
+        indeterminate={indeterminate}
+        onChange={(ev) => onChange(ev.target.checked ? '1' : '0')}
       />
       {icon}
-    </React.Fragment>
+    </>
   )
 }
 

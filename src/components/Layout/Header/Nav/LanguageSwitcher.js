@@ -10,7 +10,7 @@ import courseSelectors from '../../../../store/selectors/course'
 import { useTranslation } from '../../../../lib/i18n'
 import css from './style.sass'
 
-const LanguageSwitcher = (props) => {
+const LanguageSwitcher = () => {
   const { t } = useTranslation()
   const course = useSelector(courseSelectors.getCurrentCourse)
   const { language: currentLanguage } = useSelector(appSelectors.getApp)
@@ -27,7 +27,7 @@ const LanguageSwitcher = (props) => {
 
   const languageList = course && course.languages ? course.languages : []
   const languageOptions = languageList.map(
-    lang => (
+    (lang) => (
       <Menu.Item
         className={classNames({ [css.active]: lang === currentLanguage })}
         key={lang}
@@ -39,7 +39,7 @@ const LanguageSwitcher = (props) => {
   )
 
   return (
-    <Menu.SubMenu title={title} {...props}>
+    <Menu.SubMenu title={title}>
       {languageOptions}
     </Menu.SubMenu>
   )

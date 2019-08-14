@@ -8,9 +8,9 @@ const withSass = require('@zeit/next-sass')
 const addAntdScssThemePlugin = (config) => {
   const patchLoader = (type) => {
     config.module.rules
-      .filter(rule => Array.isArray(rule.use))
-      .map(rule => rule.use.find(loader => loader.loader === `${type}-loader`))
-      .filter(use => use)
+      .filter((rule) => Array.isArray(rule.use))
+      .map((rule) => rule.use.find((loader) => loader.loader === `${type}-loader`))
+      .filter((use) => use)
       .forEach((use) => {
         const antdScss = AntdScssThemePlugin.themify({
           loader: `${type}-loader`,
@@ -24,12 +24,12 @@ const addAntdScssThemePlugin = (config) => {
 
   // no CSS module for less
   config.module.rules
-    .filter(rule => Array.isArray(rule.use))
-    .map(rule => rule.use)
-    .filter(use => use.some(loader => loader.loader === 'less-loader'))
-    .map(use => use
-      .filter(loader => typeof loader === 'object')
-      .find(loader => loader.loader.startsWith('css-loader')))
+    .filter((rule) => Array.isArray(rule.use))
+    .map((rule) => rule.use)
+    .filter((use) => use.some((loader) => loader.loader === 'less-loader'))
+    .map((use) => use
+      .filter((loader) => typeof loader === 'object')
+      .find((loader) => loader.loader.startsWith('css-loader')))
     .forEach((loader) => { loader.options.modules = false })
 
   // replace sass/less-loaders with AntdScssThemePlugin

@@ -61,7 +61,7 @@ beforeEach(() => {
     languages: ['en'],
     title: 'courseTitle',
   })
-  Object.values(pages).forEach(page => session.Page.create(page))
+  Object.values(pages).forEach((page) => session.Page.create(page))
   app.set('language', 'en')
   app.set('currentCourse', course.id)
   state = { orm: session.state }

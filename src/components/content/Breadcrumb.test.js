@@ -22,7 +22,7 @@ const mockSections = [
   },
 ]
 jest.mock('react-redux', () => ({
-  useSelector: selector => (
+  useSelector: (selector) => (
     selector === mockGetCurrentCourse
       ? { homeLink: 'home' }
       : mockSections

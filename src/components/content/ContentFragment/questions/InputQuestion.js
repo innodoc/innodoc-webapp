@@ -22,7 +22,7 @@ const InputQuestion = ({
       <Input
         className={classNames(css.inputQuestion, className)}
         maxLength={length}
-        onChange={ev => onChange(ev.target.value)}
+        onChange={(ev) => onChange(ev.target.value)}
         style={{ width: `${length + 6}ch` }}
         suffix={icon}
         value={value || ''}

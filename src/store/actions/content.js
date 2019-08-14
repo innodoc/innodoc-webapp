@@ -17,7 +17,7 @@ export const actionTypes = {
   SET_STATIC_ROOT: 'SET_STATIC_ROOT',
 }
 
-export const changeCourse = course => ({
+export const changeCourse = (course) => ({
   type: actionTypes.CHANGE_COURSE,
   course,
 })
@@ -26,27 +26,27 @@ export const clearError = () => ({
   type: actionTypes.CLEAR_ERROR,
 })
 
-export const loadFragmentFailure = error => ({
+export const loadFragmentFailure = (error) => ({
   type: actionTypes.LOAD_FRAGMENT_FAILURE,
   error,
 })
 
-export const loadFragmentSuccess = data => ({
+export const loadFragmentSuccess = (data) => ({
   type: actionTypes.LOAD_FRAGMENT_SUCCESS,
   data,
 })
 
-export const loadFragment = contentId => ({
+export const loadFragment = (contentId) => ({
   type: actionTypes.LOAD_FRAGMENT,
   contentId,
 })
 
-export const loadPageFailure = error => ({
+export const loadPageFailure = (error) => ({
   type: actionTypes.LOAD_PAGE_FAILURE,
   error,
 })
 
-export const loadPageSuccess = data => ({
+export const loadPageSuccess = (data) => ({
   type: actionTypes.LOAD_PAGE_SUCCESS,
   data,
 })
@@ -57,12 +57,12 @@ export const loadPage = (contentId, prevLanguage = undefined) => ({
   contentId,
 })
 
-export const loadManifestFailure = error => ({
+export const loadManifestFailure = (error) => ({
   type: actionTypes.LOAD_MANIFEST_FAILURE,
   error,
 })
 
-export const loadManifestSuccess = data => ({
+export const loadManifestSuccess = (data) => ({
   type: actionTypes.LOAD_MANIFEST_SUCCESS,
   data,
 })
@@ -71,12 +71,12 @@ export const loadManifest = () => ({
   type: actionTypes.LOAD_MANIFEST,
 })
 
-export const loadSectionFailure = error => ({
+export const loadSectionFailure = (error) => ({
   type: actionTypes.LOAD_SECTION_FAILURE,
   error,
 })
 
-export const loadSectionSuccess = data => ({
+export const loadSectionSuccess = (data) => ({
   type: actionTypes.LOAD_SECTION_SUCCESS,
   data,
 })
@@ -87,12 +87,12 @@ export const loadSection = (contentId, prevLanguage = undefined) => ({
   contentId,
 })
 
-export const setContentRoot = contentRoot => ({
+export const setContentRoot = (contentRoot) => ({
   type: actionTypes.SET_CONTENT_ROOT,
   contentRoot,
 })
 
-export const setStaticRoot = staticRoot => ({
+export const setStaticRoot = (staticRoot) => ({
   type: actionTypes.SET_STATIC_ROOT,
   staticRoot,
 })

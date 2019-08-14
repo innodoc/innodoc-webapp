@@ -19,7 +19,7 @@ const Nav = ({ menuMode }) => {
   const pages = useSelector(pageSelectors.getNavPages)
   const { t } = useTranslation()
   const pageItems = pages
-    .map(page => (
+    .map((page) => (
       <Menu.Item key={page.id}>
         <PageLink contentId={page.id}>
           <a

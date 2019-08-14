@@ -5,7 +5,7 @@ import appSelectors from '.'
 
 const getCourses = createSelector(
   orm, appSelectors.getOrmState,
-  session => session.Course.all().toRefArray()
+  (session) => session.Course.all().toRefArray()
 )
 
 // Currently we support one course at the time

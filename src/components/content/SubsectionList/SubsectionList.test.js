@@ -32,7 +32,14 @@ describe('<Content />', () => {
 
 describe('Subsection', () => {
   it('should render', () => {
-    const wrapper = shallow(<Subsection {...subsections[0]} />)
+    const wrapper = shallow(
+      <Subsection
+        id={subsections[0].id}
+        title={subsections[0].title}
+        content={subsections[0].content}
+        ord={subsections[0].ord}
+      />
+    )
     const sectionLink = wrapper.find(SectionLink)
     expect(sectionLink.prop('contentId')).toEqual('bar-1')
   })

@@ -27,7 +27,7 @@ const mockUseSelector = jest.fn((selector) => {
   return mockContent
 })
 jest.mock('react-redux', () => ({
-  useSelector: selector => mockUseSelector(selector),
+  useSelector: (selector) => mockUseSelector(selector),
 }))
 
 let mockMathJaxElem
@@ -50,13 +50,13 @@ const ContentComponent = () => {
     title,
   } = useContentPane(mockSelector)
   return (
-    <React.Fragment>
+    <>
       <h1>{title}</h1>
       <span>{language}</span>
       <div className={fadeInClassName} ref={mathJaxElem}>
         <ContentFragment content={content} />
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

@@ -16,7 +16,7 @@ const typesetStates = {
   ERROR: 2,
 }
 
-const mathJaxOptions = cb => ({
+const mathJaxOptions = (cb) => ({
   skipStartupTypeset: true,
   showMathMenu: mathJaxDebug,
   showProcessingMessages: mathJaxDebug,

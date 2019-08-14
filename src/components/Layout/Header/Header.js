@@ -50,7 +50,7 @@ const Header = ({ disableSidebar }) => {
     )
 
   return (
-    <React.Fragment>
+    <>
       <AntLayout.Header className={css.header}>
         <Row>
           <Col xs={18} sm={20} md={8} lg={7} xl={5}>
@@ -81,7 +81,7 @@ const Header = ({ disableSidebar }) => {
         <SearchInput className={css.searchInputMenu} />
         <Nav menuMode="inline" />
       </Drawer>
-    </React.Fragment>
+    </>
   )
 }
 

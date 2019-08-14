@@ -9,7 +9,7 @@ export const changeLanguage = (language, prevLanguage = undefined) => ({
   prevLanguage,
 })
 
-export const languageDetected = language => ({
+export const languageDetected = (language) => ({
   type: actionTypes.LANGUAGE_DETECTED,
   language,
 })

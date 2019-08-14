@@ -30,7 +30,7 @@ jest.mock('load-script', () => (
         Queue: mockQueue,
       }
       mockWindow.MathJax.AuthorInit()
-      mockMathJaxStartupHooks.forEach(cb => cb())
+      mockMathJaxStartupHooks.forEach((cb) => cb())
       mockWindow.MathJax.isReady = true
     }
   })
@@ -93,7 +93,7 @@ describe('useMathJax', () => {
     const scriptEl = document.getElementById('__MATHJAX_SCRIPT__')
     if (scriptEl) { scriptEl.remove() }
     process.browser = true
-    mockQueue = jest.fn(arr => mockQueueImpl(arr, { mock: 'jaxObject' }))
+    mockQueue = jest.fn((arr) => mockQueueImpl(arr, { mock: 'jaxObject' }))
     mockAllJax = []
     mockMathJaxStartupHooks = []
     mockSkipLoadScript = false
@@ -131,7 +131,7 @@ describe('useMathJax', () => {
   })
 
   it('should render erroneous TeX code', () => {
-    mockQueue = jest.fn(arr => mockQueueImpl(arr, { texError: true }))
+    mockQueue = jest.fn((arr) => mockQueueImpl(arr, { texError: true }))
     expect(document.getElementById('__MATHJAX_SCRIPT__')).toBe(null)
     const wrapper = mount(<MathJaxComponent texCode="f(x)=x^" />)
     const mathJaxDiv = wrapper.find('div#mathJaxDiv')

@@ -25,10 +25,10 @@ const Card = ({
   }
 
   const titleFragment = (
-    <React.Fragment>
+    <>
       {iconElem}
       {title}
-    </React.Fragment>
+    </>
   )
 
   return (

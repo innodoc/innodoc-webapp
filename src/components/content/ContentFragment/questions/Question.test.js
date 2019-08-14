@@ -16,7 +16,7 @@ const mockSection = { id: 'foo/bar' }
 let mockQuestion = {}
 const mockDispatch = jest.fn()
 jest.mock('react-redux', () => ({
-  useSelector: selector => (
+  useSelector: (selector) => (
     selector === mockGetCurrentSection
       ? mockSection
       : mockQuestion

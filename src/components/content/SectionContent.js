@@ -41,15 +41,15 @@ const Content = () => {
   )
 
   return (
-    <React.Fragment>
-      <Affix onChange={newAffixed => setAffixState(newAffixed)}>
+    <>
+      <Affix onChange={(newAffixed) => setAffixState(newAffixed)}>
         <div className={affixClassNames}>
           <SectionNav />
           <Breadcrumb />
         </div>
       </Affix>
       {contentDiv}
-    </React.Fragment>
+    </>
   )
 }
 

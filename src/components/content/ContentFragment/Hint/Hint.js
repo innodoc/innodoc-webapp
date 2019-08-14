@@ -13,10 +13,10 @@ const Hint = ({ attributes, content }) => {
   const attrsObj = attributesToObject(attributes)
   const caption = attrsObj.caption || t('content.hint')
   const header = (
-    <React.Fragment>
+    <>
       <Icon type="bulb" className={css.icon} />
       {caption}
-    </React.Fragment>
+    </>
   )
   return (
     <Collapse bordered={false} className={css.collapse}>

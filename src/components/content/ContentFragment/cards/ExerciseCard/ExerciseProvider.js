@@ -21,8 +21,8 @@ const ExerciseProvider = ({ children }) => {
   const [userTriggeredVerify, setUserTriggeredVerify] = useState(false)
 
   const value = {
-    addQuestion: id => addToIds(id, questionIds, setQuestionIds),
-    addQuestionAnswered: id => addToIds(id, answeredIds, setAnsweredIds),
+    addQuestion: (id) => addToIds(id, questionIds, setQuestionIds),
+    addQuestionAnswered: (id) => addToIds(id, answeredIds, setAnsweredIds),
     allAnswered: () => questionIds.length === answeredIds.length,
     getShowResult: () => autoVerify || userTriggeredVerify,
     setAutoVerify,
