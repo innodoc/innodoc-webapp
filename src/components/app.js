@@ -60,7 +60,7 @@ class InnoDocApp extends App {
   }
 
   render() {
-    const { Component, pageProps, store } = this.props
+    const { Component, store } = this.props
     return (
       <Container>
         <Head>
@@ -69,7 +69,7 @@ class InnoDocApp extends App {
           </title>
         </Head>
         <Provider store={store}>
-          <Component {...pageProps} />
+          <Component />
         </Provider>
       </Container>
     )
