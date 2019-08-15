@@ -34,7 +34,11 @@ html
     border-bottom-color: $border-color-split
 
     \:global(.ant-breadcrumb)
+      height: $affix-height
       line-height: 1.5 * $line-height-base
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
 
   \:global(.ant-breadcrumb)
     transition: line-height $animation-duration-slow
