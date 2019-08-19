@@ -10,7 +10,7 @@ import courseSelectors from '../../../../store/selectors/course'
 import { useTranslation } from '../../../../lib/i18n'
 import css from './style.sass'
 
-const LanguageSwitcher = () => {
+const LanguageSwitcher = (props) => {
   const { t } = useTranslation()
   const course = useSelector(courseSelectors.getCurrentCourse)
   const { language: currentLanguage } = useSelector(appSelectors.getApp)
@@ -39,7 +39,11 @@ const LanguageSwitcher = () => {
   )
 
   return (
-    <Menu.SubMenu title={title}>
+    <Menu.SubMenu
+      title={title}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+    >
       {languageOptions}
     </Menu.SubMenu>
   )
