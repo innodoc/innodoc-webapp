@@ -21,29 +21,27 @@ const Logo = () => {
   const lg = logoFilename ? 8 : 0
   const xl = logoFilename ? 8 : 0
   return (
-    <a className={css.logoLink}>
-      <Row>
-        <Col
-          className={css.headerLogoWrapper}
-          xs={xs}
-          sm={sm}
-          md={md}
-          lg={lg}
-          xl={xl}
-        >
-          {logoImg}
-        </Col>
-        <Col
-          xs={24 - xs}
-          sm={24 - sm}
-          md={24 - md}
-          lg={24 - lg}
-          xl={24 - xl}
-        >
-          <span>{title}</span>
-        </Col>
-      </Row>
-    </a>
+    <Row>
+      <Col
+        className={css.headerLogoWrapper}
+        xs={xs}
+        sm={sm}
+        md={md}
+        lg={lg}
+        xl={xl}
+      >
+        {logoImg}
+      </Col>
+      <Col
+        xs={24 - xs}
+        sm={24 - sm}
+        md={24 - md}
+        lg={24 - lg}
+        xl={24 - xl}
+      >
+        <span>{title}</span>
+      </Col>
+    </Row>
   )
 }
 

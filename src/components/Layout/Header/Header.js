@@ -30,7 +30,9 @@ const Header = ({ disableSidebar }) => {
   const logoWrapper = course && course.homeLink
     ? (
       <SectionLink contentId={course.homeLink}>
-        <Logo />
+        <a className={css.logoLink}>
+          <Logo />
+        </a>
       </SectionLink>
     )
     : <Logo />
