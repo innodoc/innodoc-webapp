@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest } from 'redux-saga/effects'
+import { takeEvery, takeLeading } from 'redux-saga/effects'
 
 import changeLanguageSaga from './changeLanguageSaga'
 import loadFragmentSaga from './loadFragmentSaga'
@@ -36,8 +36,8 @@ const loadSectionSaga = makeLoadContentSaga(
 
 export default [
   takeEvery(contentActionTypes.LOAD_FRAGMENT, loadFragmentSaga),
-  takeLatest(contentActionTypes.LOAD_MANIFEST, loadManifestSaga),
-  takeLatest(contentActionTypes.LOAD_PAGE, loadPageSaga),
-  takeLatest(contentActionTypes.LOAD_SECTION, loadSectionSaga),
-  takeLatest(i18nActionTypes.CHANGE_LANGUAGE, changeLanguageSaga),
+  takeLeading(contentActionTypes.LOAD_MANIFEST, loadManifestSaga),
+  takeLeading(contentActionTypes.LOAD_PAGE, loadPageSaga),
+  takeLeading(contentActionTypes.LOAD_SECTION, loadSectionSaga),
+  takeLeading(i18nActionTypes.CHANGE_LANGUAGE, changeLanguageSaga),
 ]
