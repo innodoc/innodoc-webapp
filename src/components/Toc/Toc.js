@@ -33,7 +33,7 @@ const useAutoExpand = (
   course,
   expandAll,
   expandedKeys,
-  setExpandedKeys
+  setExpandedKeys,
 ) => useEffect(
   () => {
     if (!expandAll && course && currentSection) {
@@ -68,19 +68,25 @@ const Toc = ({ expandAll }) => {
     course,
     expandAll,
     expandedKeys,
-    setExpandedKeys
+    setExpandedKeys,
   )
+
+  const treeNodes = toc.map((s) => renderTreeNodes(s, currentSection))
+  const tree = expandAll
+    ? (
+      <Tree className={css.disableExpand} defaultExpandAll>
+        {treeNodes}
+      </Tree>
+    )
+    : (
+      <Tree expandedKeys={expandedKeys} onExpand={(keys) => setExpandedKeys(keys)}>
+        {treeNodes}
+      </Tree>
+    )
 
   return (
     <div className={css.tocWrapper}>
-      <Tree
-        className={classNames({ [css.disableExpand]: expandAll })}
-        onExpand={(keys) => setExpandedKeys(keys)}
-        defaultExpandAll={expandAll}
-        expandedKeys={expandAll ? undefined : expandedKeys}
-      >
-        {toc.map((s) => renderTreeNodes(s, currentSection))}
-      </Tree>
+      {tree}
     </div>
   )
 }
