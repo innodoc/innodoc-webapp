@@ -8,7 +8,7 @@ const SearchInput = ({ classNames }) => {
   const { t } = useTranslation()
   return (
     <Input.Search
-      classNames={classNames}
+      className={classNames}
       placeholder={t('header.searchPlaceholder')}
     />
   )
