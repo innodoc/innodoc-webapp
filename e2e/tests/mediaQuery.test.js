@@ -11,6 +11,7 @@ describe('Media query', () => {
     const drawer = await expect(page).toMatchElement('.ant-drawer', { visible: true })
     await page.waitFor(500) // animation?
     await expect(drawer).toClick('.ant-drawer-close')
+    await page.waitFor(500)
     expect(
       await page.$eval('.ant-drawer', (elem) => window.getComputedStyle(elem).getPropertyValue('width'))
     ).toBe('0px')
