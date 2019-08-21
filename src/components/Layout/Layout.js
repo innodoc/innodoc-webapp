@@ -31,9 +31,9 @@ const Layout = ({ children, disableSidebar }) => {
 
   return (
     <>
-      <AntLayout>
-        <Header disableSidebar={disableSidebar} />
-        <AntLayout>
+      <AntLayout hasSider={false}>
+        <Header />
+        <AntLayout hasSider={!disableSidebar}>
           {sidebar}
           <AntLayout>
             <div className={css.content}>

@@ -1,18 +1,38 @@
 @import '../../../style/antd-theme.sass'
 
-.sidebar
+.background
+  background: linear-gradient(to right, transparent 0%, transparent 75%, fade-out($color-dark-bg, 0.99) 100%)
+  border-right: $border-width-base $border-style-base $border-color-split
+  height: 100%
 
-  .stickyContainer
-    background: linear-gradient(to right, transparent 0%, transparent 75%, fade-out($color-dark-bg, 0.99) 100%)
-    border-right: $border-width-base $border-style-base $border-color-split
-    height: 100%
-    transition: minWidth $animation-duration-fast ease-in-out
+.closeButton
+  height: 0
+  position: -webkit-sticky /* Safari */
+  position: sticky
+  top: 0
+  z-index: 10
 
-    .sidebarContent
-      padding: $padding-lg $padding-md
+  button
+    background-color: transparent
+    border: 0
+    box-shadow: none
+    margin-top: $padding-lg
 
-      .sidebarTranslate
-        transition: transform $animation-duration-fast ease-in-out
+    &:hover, &:focus, &:active, &.active
+      background: transparent
+
+    &:hover
+      transform: translateX(-2px)
+
+.animation
+  height: 100%
+  transition: transform $animation-duration-base
+
+.sticky
+  position: -webkit-sticky /* Safari */
+  position: sticky
+  top: 0
+  padding: $padding-lg $padding-md
 
   \:global(.ant-tree-node-content-wrapper)
     margin-bottom: 4px !important
@@ -24,15 +44,3 @@
   \:global(.ant-tree-switcher-icon)
     font-size: $font-size-lg !important
     vertical-align: 0 !important
-
-.collapseButton
-  background-color: transparent
-  border: 0
-  box-shadow: none
-  float: right
-
-  &:hover, &:focus, &:active, &.active
-    background: transparent
-
-  &:hover
-    transform: translateX(-2px)
