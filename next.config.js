@@ -1,5 +1,4 @@
 const path = require('path')
-const withPlugins = require('next-compose-plugins')
 const Dotenv = require('dotenv-webpack')
 const AntdScssThemePlugin = require('antd-scss-theme-plugin')
 const withLess = require('@zeit/next-less')
@@ -114,15 +113,11 @@ const nextConfig = {
   webpack: patchWebpackConfig,
 }
 
-// next.js configuration plugins
-const plugins = [
-  withLess,
-  withSass,
-]
+const wrappedNextConfig = (config) => withLess(withSass(config))
 
 // bundle analyzer (set BUNDLE_ANALYZE=both to enable!)
 if (process.env.BUNDLE_ANALYZE) {
-  plugins.push(require('@zeit/next-bundle-analyzer')) // eslint-disable-line global-require
+  const nextBundleAnalyzer = require('@zeit/next-bundle-analyzer') // eslint-disable-line global-require
   nextConfig.analyzeServer = ['server', 'both'].includes(process.env.BUNDLE_ANALYZE)
   nextConfig.analyzeBrowser = ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE)
   nextConfig.bundleAnalyzerConfig = {
@@ -135,6 +130,7 @@ if (process.env.BUNDLE_ANALYZE) {
       reportFilename: '../bundles/client.html',
     },
   }
+  module.exports = nextBundleAnalyzer(wrappedNextConfig(nextConfig))
+} else {
+  module.exports = wrappedNextConfig(nextConfig)
 }
-
-module.exports = withPlugins(plugins, nextConfig)

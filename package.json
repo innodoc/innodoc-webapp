@@ -59,7 +59,6 @@
     "md5": "^2.2.1",
     "nerdamer": "^0.8.4",
     "next": "^9.0.3",
-    "next-compose-plugins": "^2.1.1",
     "next-i18next": "^1.1.0",
     "next-redux-saga": "^4.0.2",
     "next-redux-wrapper": "^3.0.0-alpha.2",

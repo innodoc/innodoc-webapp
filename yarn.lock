@@ -7709,11 +7709,6 @@ nerdamer@^0.8.4:
   resolved "https://registry.yarnpkg.com/nerdamer/-/nerdamer-0.8.4.tgz#c72022ad48dc1cc243c6199719287b69e50f4d3f"
   integrity sha512-zbBJGcADNSt3CQe9/8esY/bSnWPoUBXAQkvFLSJfJsv1vI5lrtUB20bLIqLsJ8weTFo4lQ2XRw38rKV1dohPSA==
 
-next-compose-plugins@^2.1.1:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/next-compose-plugins/-/next-compose-plugins-2.2.0.tgz#95cd8eb40ab0652070d76572fb648354191628b0"
-  integrity sha512-ChUlpT9tWfJ7YxqGw/WQ2T1gf8EeX93n1XqeQw0lkvGa7seszahvF4eOZUJoq7Hetsbzg4UHVnPoCXfXTyQR3g==
-
 next-i18next@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/next-i18next/-/next-i18next-1.1.0.tgz#c091219cb2a90eaec950dad151250a56d550a6a2"
