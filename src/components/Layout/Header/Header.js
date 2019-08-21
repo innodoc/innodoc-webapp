@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import classNames from 'classnames'
 import Drawer from 'antd/lib/drawer'
 import Row from 'antd/lib/row'
@@ -12,20 +11,16 @@ import Nav from './Nav'
 import Logo from './Logo'
 import SearchInput from './SearchInput'
 import css from './style.sass'
-import appSelectors from '../../../store/selectors'
 import courseSelectors from '../../../store/selectors/course'
-import { toggleSidebar } from '../../../store/actions/ui'
 import { SectionLink } from '../../content/links'
 import useIsNarrowerThan from '../../hooks/useIsNarrowerThan'
 import { useTranslation } from '../../../lib/i18n'
 
-const Header = ({ disableSidebar }) => {
+const Header = () => {
   const { t } = useTranslation()
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const isNarrowerThanMd = useIsNarrowerThan('md')
   const course = useSelector(courseSelectors.getCurrentCourse)
-  const { sidebarVisible } = useSelector(appSelectors.getApp)
-  const dispatch = useDispatch()
 
   const logoWrapper = course && course.homeLink
     ? (
@@ -37,20 +32,6 @@ const Header = ({ disableSidebar }) => {
     )
     : <Logo />
 
-  const sidebarToggle = disableSidebar
-    ? null
-    : (
-      <Button
-        className={classNames(css.sidebarToggleButton, sidebarVisible ? 'active' : null)}
-        ghost
-        icon="read"
-        onClick={() => dispatch(toggleSidebar())}
-        title={t(sidebarVisible ? 'header.hideTocLong' : 'header.showTocLong')}
-      >
-        {t('header.showToc')}
-      </Button>
-    )
-
   return (
     <>
       <AntLayout.Header className={css.header}>
@@ -59,7 +40,6 @@ const Header = ({ disableSidebar }) => {
             {logoWrapper}
           </Col>
           <Col xs={6} sm={4} md={4} lg={4} xl={3} className={css.menuRight}>
-            {sidebarToggle}
             <Button
               className={classNames(css.menuButton, css.mobileMenuButton)}
               icon="menu"
@@ -85,10 +65,6 @@ const Header = ({ disableSidebar }) => {
       </Drawer>
     </>
   )
-}
-
-Header.propTypes = {
-  disableSidebar: PropTypes.bool.isRequired,
 }
 
 export default Header

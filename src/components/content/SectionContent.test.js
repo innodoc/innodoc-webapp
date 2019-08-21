@@ -1,14 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Affix from 'antd/lib/affix'
 
 import sectionSelectors from '../../store/selectors/section'
 import SectionContent from './SectionContent'
 import SubsectionList from './SubsectionList'
-import Breadcrumb from './Breadcrumb'
+import ContentAffix from './ContentAffix'
 import ContentFragment from './ContentFragment'
-import SectionNav from './SectionNav'
-import css from './style.sass'
 
 const mockGetCurrentSubsections = sectionSelectors.getCurrentSubsections
 
@@ -56,19 +53,10 @@ describe('<SectionContent />', () => {
 
   it('should render', () => {
     const wrapper = shallow(<SectionContent />)
-    expect(wrapper.exists(SectionNav)).toBe(true)
-    expect(wrapper.exists(Breadcrumb)).toBe(true)
+    expect(wrapper.exists(ContentAffix)).toBe(true)
     expect(wrapper.find('h1').text()).toEqual('1 Foo section')
     expect(wrapper.find(ContentFragment).prop('content')).toBe(mockContent)
     expect(wrapper.exists(SubsectionList)).toBe(true)
-  })
-
-  describe('affix', () => {
-    it.each([true, false])('should set affixed class (%s)', (affixed) => {
-      const wrapper = shallow(<SectionContent />)
-      wrapper.find(Affix).prop('onChange')(affixed)
-      expect(wrapper.find('div').first().hasClass(css.affixed)).toBe(affixed)
-    })
   })
 
   describe('missing data', () => {

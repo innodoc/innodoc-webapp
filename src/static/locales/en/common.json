@@ -2,11 +2,13 @@
   "content": {
     "example": "Example",
     "exercise": "Exercise",
+    "hideToc": "Close table of contents",
     "hint": "Hint",
     "home": "Home",
     "info": "Info",
     "inputHint": "Input",
     "noHtml5Video": "Your browser doesn't support HTML5 video. Here is a <a href=\"{{src}}\">link to the video</a> instead.",
+    "showToc": "Show Table of Contents",
     "subsections": "Subsections",
     "test": "Test",
     "ytIdError": "Could not extract YouTube Video ID: {{src}}"
@@ -25,15 +27,12 @@
     "createAccount": "Create Account",
     "downloadPDF": "PDF",
     "downloadPDFTitle": "Download PDF",
-    "hideTocLong": "Close table of contents",
     "language": "Language",
     "linkDE": "German",
     "linkEN": "English",
     "login": "Login",
     "menu": "Menu",
-    "searchPlaceholder": "Search…",
-    "showToc": "Contents",
-    "showTocLong": "Show Table of Contents"
+    "searchPlaceholder": "Search…"
   },
   "languages": {
     "de": "Deutsch",

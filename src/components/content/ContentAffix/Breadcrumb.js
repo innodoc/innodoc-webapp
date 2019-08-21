@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux'
 import AntBreadcrumb from 'antd/lib/breadcrumb'
 import Icon from 'antd/lib/icon'
 
-import { useTranslation } from '../../lib/i18n'
-import courseSelectors from '../../store/selectors/course'
-import sectionSelectors from '../../store/selectors/section'
-import { SectionLink } from './links'
+import { useTranslation } from '../../../lib/i18n'
+import courseSelectors from '../../../store/selectors/course'
+import sectionSelectors from '../../../store/selectors/section'
+import { SectionLink } from '../links'
 
 const Breadcrumb = () => {
   const { t } = useTranslation()
