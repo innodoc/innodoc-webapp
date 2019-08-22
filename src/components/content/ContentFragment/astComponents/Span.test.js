@@ -10,18 +10,25 @@ const content = [{ content: 'foo' }]
 
 describe('<IndexSpan />', () => {
   it('should render', () => {
-    const wrapper = shallow(<IndexSpan indexConcept="foo" content={content} />)
-    expect(wrapper.hasClass('index-concept')).toBe(true)
-    expect(wrapper.prop('data-index-concept')).toBe('foo')
-    expect(wrapper.find(ContentFragment).prop('content')).toBe(content)
+    const wrapper = shallow(
+      <IndexSpan id="index-term-foo" indexTerm="foo" content={content} />
+    )
+    const span = wrapper.find('span')
+    expect(span.hasClass('index-term')).toBe(true)
+    expect(span.prop('data-index-term')).toBe('foo')
+    expect(span.prop('id')).toBe('index-term-foo')
+    expect(span.find(ContentFragment).prop('content')).toBe(content)
   })
 })
 
 describe('<Span />', () => {
   it('should render <IndexSpan />', () => {
-    const data = [[null, [], [['data-index-concept', 'some-concept']]], content]
+    const data = [
+      ['index-term-some-concept-0', [], [['data-index-term', 'some-concept']]],
+      content,
+    ]
     const indexSpan = shallow(<Span data={data} />).find(IndexSpan)
-    expect(indexSpan.prop('indexConcept')).toBe('some-concept')
+    expect(indexSpan.prop('indexTerm')).toBe('some-concept')
     expect(indexSpan.prop('content')).toBe(content)
   })
 

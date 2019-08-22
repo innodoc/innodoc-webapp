@@ -6,26 +6,35 @@ import ContentFragment from '..'
 import InputHint from '../cards/InputHint'
 import Question from '../questions'
 import css from './style.sass'
+import { attributesToObject } from '../../../../lib/util'
 
-const IndexSpan = ({ indexConcept, content }) => (
-  <span className="index-concept" data-index-concept={indexConcept}>
+const IndexSpan = ({ id, indexTerm, content }) => (
+  <span
+    className="index-term"
+    data-index-term={indexTerm}
+    id={id}
+  >
     <ContentFragment content={content} />
   </span>
 )
 IndexSpan.propTypes = {
-  indexConcept: PropTypes.string.isRequired,
   content: contentType.isRequired,
+  id: PropTypes.string.isRequired,
+  indexTerm: PropTypes.string.isRequired,
 }
 
 const Span = ({ data }) => {
   const [[id, classNames, attributes], content] = data
+  const attrObj = attributesToObject(attributes)
 
-  if (attributes.length === 1) {
-    const attr = attributes[0][0]
-    const val = attributes[0][1]
-    if (attr === 'data-index-concept') {
-      return <IndexSpan indexConcept={val} content={content} />
-    }
+  if (Object.keys(attrObj).includes('data-index-term')) {
+    return (
+      <IndexSpan
+        content={content}
+        id={id}
+        indexTerm={attrObj['data-index-term']}
+      />
+    )
   }
 
   if (classNames.length === 0 && attributes.length === 0) {
@@ -62,5 +71,5 @@ const Span = ({ data }) => {
 }
 Span.propTypes = { data: PropTypes.arrayOf(PropTypes.array).isRequired }
 
-export default Span
 export { IndexSpan }
+export default Span
