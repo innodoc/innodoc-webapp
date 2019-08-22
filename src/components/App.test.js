@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import Head from 'next/head'
 import { Container } from 'next/app'
 
-import { InnoDocApp } from './app'
+import { InnoDocApp } from './App'
 import { loadManifest, setContentRoot, setStaticRoot } from '../store/actions/content'
 import { languageDetected } from '../store/actions/i18n'
 

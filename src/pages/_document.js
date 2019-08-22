@@ -1,1 +1,1 @@
-export default from '../components/document'
+export default from '../components/Document'

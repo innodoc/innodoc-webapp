@@ -4,7 +4,7 @@ import React from 'react'
 import Document, { Main, NextScript } from 'next/document'
 import { lngFromReq } from 'next-i18next/dist/commonjs/utils'
 
-import Head from './head'
+import Head from './Head'
 
 class InnodocDocument extends Document {
   static async getInitialProps(ctx) {
