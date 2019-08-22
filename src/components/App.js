@@ -34,12 +34,11 @@ import { languageDetected } from '../store/actions/i18n'
 
 class InnoDocApp extends App {
   static async getInitialProps({ Component, ctx }) {
-    // SERVER
-    if (ctx.isServer) {
-      // set initial content URLs
+    if (ctx.req && ctx.res) { // ctx.req/ctx.res not present when statically exported
+      // set initial content URLs (passed from server.js/app configuration)
       ctx.store.dispatch(setContentRoot(ctx.res.locals.contentRoot))
       ctx.store.dispatch(setStaticRoot(ctx.res.locals.staticRoot))
-      // pass detected language to app store
+      // pass detected language to store
       if (ctx.req.i18n) {
         ctx.store.dispatch(languageDetected(ctx.req.i18n.language))
       }
