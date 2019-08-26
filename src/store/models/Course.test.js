@@ -1,5 +1,4 @@
 import orm from '../orm'
-import CourseModel from './Course'
 import { loadManifestSuccess, loadPageSuccess, loadSectionSuccess } from '../actions/content'
 
 let state
@@ -28,13 +27,13 @@ describe('Course', () => {
         languages: ['en'],
         title: 'Foo course',
       })
-      CourseModel.reducer(action, session.Course)
+      session.Course.reducer(action, session.Course)
       expect(course.ref.currentSection).toBe(currentSectionId)
       expect(course.ref.currentPage).toBe(currentPageId)
     })
 
     test('no-op action', () => {
-      CourseModel.reducer({ type: 'DOES-NOT-EXIST' }, session.Course)
+      session.Course.reducer({ type: 'DOES-NOT-EXIST' }, session.Course)
     })
   })
 
@@ -50,7 +49,7 @@ describe('Course', () => {
     }
 
     test('loadManifestSuccess', () => {
-      CourseModel.reducer(loadManifestSuccess({ content: manifest }), session.Course)
+      session.Course.reducer(loadManifestSuccess({ content: manifest }), session.Course)
       expect(session.Course.first().ref).toEqual({
         currentSection: null,
         homeLink: 'bar',
@@ -65,7 +64,7 @@ describe('Course', () => {
       const action = loadManifestSuccess({
         content: { ...manifest, homeLink: null },
       })
-      CourseModel.reducer(action, session.Course,)
+      session.Course.reducer(action, session.Course,)
       expect(session.Course.first().ref).toEqual({
         currentSection: null,
         homeLink: 'foo',

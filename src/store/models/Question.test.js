@@ -1,5 +1,4 @@
 import orm from '../orm'
-import QuestionModel from './Question'
 import { questionAnswered, questionSolved } from '../actions/question'
 
 let state
@@ -21,7 +20,7 @@ describe('Question', () => {
   describe('reducer', () => {
     test('questionAnswered', () => {
       expect(session.Question.all().toRefArray()).toHaveLength(0)
-      QuestionModel.reducer(questionAnswered({ questionId: 'foo/bar#EX01', answer: '42' }), session.Question)
+      session.Question.reducer(questionAnswered({ questionId: 'foo/bar#EX01', answer: '42' }), session.Question)
       const questions = session.Question.all().toRefArray()
       expect(questions).toHaveLength(1)
       expect(questions[0].id).toBe('foo/bar#EX01')
@@ -30,15 +29,15 @@ describe('Question', () => {
     })
 
     test('questionSolved', () => {
-      QuestionModel.reducer(questionAnswered({ questionId: 'foo/bar#EX01', answer: '42' }), session.Question)
-      QuestionModel.reducer(questionSolved({ questionId: 'foo/bar#EX01', correct: true }), session.Question)
+      session.Question.reducer(questionAnswered({ questionId: 'foo/bar#EX01', answer: '42' }), session.Question)
+      session.Question.reducer(questionSolved({ questionId: 'foo/bar#EX01', correct: true }), session.Question)
       const questions = session.Question.all().toRefArray()
       expect(questions).toHaveLength(1)
       expect(questions[0].correct).toBe(true)
     })
 
     test('no-op action', () => {
-      QuestionModel.reducer({ type: 'DOES-NOT-EXIST' }, session.Question)
+      session.Question.reducer({ type: 'DOES-NOT-EXIST' }, session.Question)
     })
   })
 })

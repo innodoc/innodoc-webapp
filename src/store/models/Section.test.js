@@ -1,5 +1,4 @@
 import orm from '../orm'
-import SectionModel from './Section'
 import { loadManifestSuccess, loadSectionSuccess } from '../actions/content'
 
 const toc = [
@@ -60,7 +59,7 @@ describe('Page', () => {
   describe('reducer', () => {
     test('loadManifestSuccess', () => {
       const resultState = loadToc(state)
-      SectionModel.reducer(loadManifestSuccess({ content: { toc } }), session.Section)
+      session.Section.reducer(loadManifestSuccess({ content: { toc } }), session.Section)
       expect(session.state).toEqual(resultState)
     })
 
@@ -71,14 +70,14 @@ describe('Page', () => {
         language: 'en',
         contentId: 'test/child1',
       })
-      SectionModel.reducer(action, session.Section)
+      session.Section.reducer(action, session.Section)
       const expectedSession = orm.session(loadToc(orm.getEmptyState()))
       expectedSession.Section.withId('test/child1').set('content', { en: 'test child1 content' })
       expect(session.state).toEqual(expectedSession.state)
     })
 
     test('no-op action', () => {
-      SectionModel.reducer({ type: 'DOES-NOT-EXIST' }, session.Section)
+      session.Section.reducer({ type: 'DOES-NOT-EXIST' }, session.Section)
     })
   })
 

@@ -1,5 +1,4 @@
 import orm from '../orm'
-import PageModel from './Page'
 import { loadManifestSuccess, loadPageSuccess } from '../actions/content'
 
 const pages = [
@@ -62,7 +61,7 @@ describe('Page', () => {
 
   describe('reducer', () => {
     test('loadManifestSuccess', () => {
-      PageModel.reducer(loadManifestSuccess({ content: { pages } }), session.Page)
+      session.Page.reducer(loadManifestSuccess({ content: { pages } }), session.Page)
       expect(session.state).toEqual(loadedPages)
     })
 
@@ -73,14 +72,14 @@ describe('Page', () => {
         contentId: 'foo',
         language: 'en',
       })
-      PageModel.reducer(action, session.Page)
+      session.Page.reducer(action, session.Page)
       const expectedSession = orm.session(loadedPages)
       expectedSession.Page.withId('foo').set('content', { en: 'Foo content' })
       expect(session.state).toEqual(expectedSession.state)
     })
 
     test('no-op action', () => {
-      PageModel.reducer({ type: 'DOES-NOT-EXIST' }, session.Page)
+      session.Page.reducer({ type: 'DOES-NOT-EXIST' }, session.Page)
     })
   })
 
