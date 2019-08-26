@@ -41,15 +41,13 @@ const loadPages = (state) => {
   return session.state
 }
 
-let state
-let session
-let loadedPages
-
 describe('Page', () => {
+  let session
+  let loadedPages
+
   beforeEach(() => {
-    state = orm.getEmptyState()
-    session = orm.session(state)
-    loadedPages = loadPages(state)
+    session = orm.session(orm.getEmptyState())
+    loadedPages = loadPages(session.state)
   })
 
   it('should instantiate', () => {

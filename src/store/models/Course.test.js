@@ -1,13 +1,11 @@
 import orm from '../orm'
 import { loadManifestSuccess, loadPageSuccess, loadSectionSuccess } from '../actions/content'
 
-let state
-let session
-
 describe('Course', () => {
+  let session
+
   beforeEach(() => {
-    state = orm.getEmptyState()
-    session = orm.session(state)
+    session = orm.session(orm.getEmptyState())
     session.App.create({ language: 'en' })
     session.Course.create({})
   })

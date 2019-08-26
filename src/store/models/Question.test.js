@@ -1,13 +1,11 @@
 import orm from '../orm'
 import { questionAnswered, questionSolved } from '../actions/question'
 
-let state
-let session
-
 describe('Question', () => {
+  let session
+
   beforeEach(() => {
-    state = orm.getEmptyState()
-    session = orm.session(state)
+    session = orm.session(orm.getEmptyState())
     session.App.create({ language: 'en' })
     session.Course.create({})
   })

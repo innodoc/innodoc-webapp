@@ -42,13 +42,11 @@ const loadToc = (state) => {
   return session.state
 }
 
-let state
-let session
-
 describe('Page', () => {
+  let session
+
   beforeEach(() => {
-    state = orm.getEmptyState()
-    session = orm.session(state)
+    session = orm.session(orm.getEmptyState())
   })
 
   it('should instantiate', () => {
@@ -58,13 +56,13 @@ describe('Page', () => {
 
   describe('reducer', () => {
     test('loadManifestSuccess', () => {
-      const resultState = loadToc(state)
+      const resultState = loadToc(session.state)
       session.Section.reducer(loadManifestSuccess({ content: { toc } }), session.Section)
       expect(session.state).toEqual(resultState)
     })
 
     test('loadSectionSuccess', () => {
-      session = orm.session(loadToc(state))
+      session = orm.session(loadToc(session.state))
       const action = loadSectionSuccess({
         content: 'test child1 content',
         language: 'en',

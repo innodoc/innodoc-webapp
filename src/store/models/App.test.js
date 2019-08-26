@@ -10,13 +10,11 @@ import {
 import { changeLanguage } from '../actions/i18n'
 import { clearMessage, showMessage, toggleSidebar } from '../actions/ui'
 
-let state
-let session
-
 describe('App', () => {
+  let session
+
   beforeEach(() => {
-    state = orm.getEmptyState()
-    session = orm.session(state)
+    session = orm.session(orm.getEmptyState())
     session.App.create({})
   })
 
