@@ -20,9 +20,9 @@ html
   transition: background-color $animation-duration-slow, border-color $animation-duration-slow
 
   \:global(.ant-breadcrumb)
-    transition: line-height $animation-duration-slow
     line-height: $line-height-base
     flex-grow: 1
+    transition: none
 
   \:global(.ant-menu)
     line-height: $affix-height
@@ -48,4 +48,5 @@ html
       line-height: 1.5 * $line-height-base
       overflow: hidden
       text-overflow: ellipsis
+      transition: line-height $animation-duration-slow
       white-space: nowrap
