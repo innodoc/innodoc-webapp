@@ -24,6 +24,7 @@ import 'antd/lib/menu/style/index.less'
 import 'antd/lib/modal/style/index.less'
 import 'antd/lib/popover/style/index.less'
 import 'antd/lib/skeleton/style/index.less'
+import 'antd/lib/tag/style/index.less'
 import 'antd/lib/table/style/index.less'
 import 'antd/lib/tree/style/index.less'
 

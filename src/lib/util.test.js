@@ -5,6 +5,7 @@ import {
   getDisplayName,
   getHocDisplayName,
   parseContentId,
+  intSortArray,
   toTwoLetterCode,
   unwrapPara,
 } from './util'
@@ -97,6 +98,45 @@ describe('parseContentId', () => {
 
   it('should parse a content ID without hash', () => {
     expect(parseContentId('foo/bar')).toEqual(['foo/bar'])
+  })
+})
+
+describe('intSortArray', () => {
+  const sortFunc = intSortArray('de')
+
+  it('should ignore case', () => {
+    const unsorted = [
+      { name: 'alt' },
+      { name: 'Ast' },
+    ]
+    expect(unsorted.sort(sortFunc)).toEqual([
+      { name: 'alt' },
+      { name: 'Ast' },
+    ])
+  })
+
+  it('should ignore special character $', () => {
+    const unsorted = [
+      { name: 'pass' },
+      { name: '$n$' },
+    ]
+    expect(unsorted.sort(sortFunc)).toEqual([
+      { name: '$n$' },
+      { name: 'pass' },
+    ])
+  })
+
+  it('should consider umlauts and accents', () => {
+    const unsorted = [
+      { name: 'Zug' },
+      { name: 'Éclair' },
+      { name: 'Äpfel' },
+    ]
+    expect(unsorted.sort(sortFunc)).toEqual([
+      { name: 'Äpfel' },
+      { name: 'Éclair' },
+      { name: 'Zug' },
+    ])
   })
 })
 

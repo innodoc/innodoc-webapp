@@ -43,6 +43,15 @@ const getHocDisplayName = (HocName, ComposedComponent) => `${HocName}(${getDispl
 
 const parseContentId = (contentId) => contentId.split('#')
 
+// Sort an obejct (using name key) in an alphanumerical way considering umlauts/accents etc.
+const intSortArray = (lang) => {
+  const { compare } = new Intl.Collator(lang)
+  // Need to remove special character $ (used in LaTeX formulas)
+  // const normalize = (string) => string.replace(/^\$/g, '').toUpperCase()
+  const normalize = (string) => string.replace(/^\$/g, '')
+  return (a, b) => compare(normalize(a.name), normalize(b.name))
+}
+
 // Normalize language code to 2 letters (e.g. 'en-US' -> 'en').
 const toTwoLetterCode = (lang) => (lang.length > 2 ? lang.substring(0, 2) : lang)
 
@@ -59,6 +68,7 @@ export {
   getDisplayName,
   getHocDisplayName,
   parseContentId,
+  intSortArray,
   toTwoLetterCode,
   unwrapPara,
 }

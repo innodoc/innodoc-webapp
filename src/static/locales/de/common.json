@@ -1,14 +1,18 @@
 {
+  "common": {
+    "hideToc": "Inhaltsverzeichnis schließen",
+    "index": "Stichwortverzeichnis",
+    "showToc": "Inhaltsverzeichnis öffnen",
+    "toc": "Inhaltsverzeichnis"
+  },
   "content": {
     "example": "Beispiel",
     "exercise": "Aufgabe",
-    "hideToc": "Inhaltsverzeichnis schließen",
     "hint": "Hinweis",
     "home": "Start",
     "info": "Info",
     "inputHint": "Hilfe zur Eingabe",
     "noHtml5Video": "Dein Browser unterstützt kein HTML5-Video. Hier is ein <a href=\"{{src}}\">Link zum Video</a>.",
-    "showToc": "Inhaltsverzeichnis öffnen",
     "subsections": "Unterabschnitte",
     "test": "Test",
     "ytIdError": "Konnte YouTube-Video-ID nicht extrahieren: {{src}}"

@@ -1,25 +1,15 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Button from 'antd/lib/button'
 import Icon from 'antd/lib/icon'
 import Menu from 'antd/lib/menu'
 
 import AffixButtons, { SectionButton } from './AffixButtons'
 import { SectionLink } from '../links'
-import sectionSelectors from '../../../store/selectors/section'
-import { toggleSidebar } from '../../../store/actions/ui'
+import SidebarToggleButton from '../../Layout/Sidebar/ToggleButton'
 
-const mockGetNextPrevSections = sectionSelectors.getNextPrevSections
 let mockNextPrev
-let mockApp
-const mockDispatch = jest.fn()
 jest.mock('react-redux', () => ({
-  useDispatch: () => mockDispatch,
-  useSelector: (selector) => (
-    selector === mockGetNextPrevSections
-      ? mockNextPrev
-      : mockApp
-  ),
+  useSelector: () => mockNextPrev,
 }))
 
 describe('<SectionButton />', () => {
@@ -40,9 +30,7 @@ describe('<SectionButton />', () => {
 
 describe('<AffixButtons />', () => {
   beforeEach(() => {
-    mockDispatch.mockClear()
     mockNextPrev = { prevId: 'section1', nextId: 'section3' }
-    mockApp = { sidebarVisible: true }
   })
 
   it('renders', () => {
@@ -54,14 +42,7 @@ describe('<AffixButtons />', () => {
     expect(sectionButtons.at(0).prop('sectionId')).toBe('section1')
     expect(sectionButtons.at(1).prop('direction')).toBe('right')
     expect(sectionButtons.at(1).prop('sectionId')).toBe('section3')
-    const sidebarToggle = wrapper.find(Button)
-    expect(sidebarToggle.hasClass('active')).toBe(true)
-  })
-
-  it('renders with disabled sidebar', () => {
-    mockApp = { sidebarVisible: false }
-    const wrapper = shallow(<AffixButtons />)
-    expect(wrapper.find(Button).hasClass('active')).toBe(false)
+    expect(wrapper.exists(SidebarToggleButton)).toBe(true)
   })
 
   it('renders only next', () => {
@@ -80,11 +61,5 @@ describe('<AffixButtons />', () => {
     expect(sectionButtons).toHaveLength(2)
     expect(sectionButtons.at(0).prop('sectionId')).toBe('prev')
     expect(sectionButtons.at(1).prop('sectionId')).toBeFalsy()
-  })
-
-  it('dispatches toggleSidebar', () => {
-    const wrapper = shallow(<AffixButtons />)
-    wrapper.find(Button).simulate('click')
-    expect(mockDispatch).toBeCalledWith(toggleSidebar())
   })
 })
