@@ -23,8 +23,11 @@ const getSection = createSelector(
 const getCurrentSection = createSelector(
   orm, appSelectors.getOrmState, courseSelectors.getCurrentCourse,
   (session, course) => {
-    const section = session.Section.withId(course.currentSection)
-    return section ? section.ref : null
+    if (course) {
+      const section = session.Section.withId(course.currentSection)
+      return section ? section.ref : null
+    }
+    return null
   }
 )
 
