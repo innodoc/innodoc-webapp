@@ -30,18 +30,25 @@ describe('IndexTerm', () => {
       },
     }
 
-    test('loadManifestSuccess', () => {
-      session.IndexTerm.reducer(
-        loadManifestSuccess({ content: manifest }), session.IndexTerm, session
-      )
-      const indexTerm = session.IndexTerm.first().ref
-      expect(indexTerm.indexTermId).toBe('term-1')
-      expect(indexTerm.language).toBe('en')
-      expect(indexTerm.name).toBe('Term 1')
-      const indexTermLocation = session.IndexTermLocation.first().ref
-      expect(indexTermLocation.anchorId).toBe('term-1-0')
-      expect(indexTermLocation.indexTermId).toBe(indexTerm.id)
-      expect(indexTermLocation.sectionId).toBe('section-0/subsection-1')
+    describe('loadManifestSuccess', () => {
+      test('regular', () => {
+        session.IndexTerm.reducer(
+          loadManifestSuccess({ content: manifest }), session.IndexTerm, session
+        )
+        const indexTerm = session.IndexTerm.first().ref
+        expect(indexTerm.indexTermId).toBe('term-1')
+        expect(indexTerm.language).toBe('en')
+        expect(indexTerm.name).toBe('Term 1')
+        const indexTermLocation = session.IndexTermLocation.first().ref
+        expect(indexTermLocation.anchorId).toBe('term-1-0')
+        expect(indexTermLocation.indexTermId).toBe(indexTerm.id)
+        expect(indexTermLocation.sectionId).toBe('section-0/subsection-1')
+      })
+
+      test('missing index_terms key', () => {
+        session.IndexTerm.reducer(loadManifestSuccess({ content: {} }), session.IndexTerm, session)
+        expect(session.IndexTerm.count()).toBe(0)
+      })
     })
 
     test('no-op action', () => {
