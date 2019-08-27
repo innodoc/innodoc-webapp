@@ -2,7 +2,6 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Provider } from 'react-redux'
 import Head from 'next/head'
-import { Container } from 'next/app'
 
 import { InnoDocApp } from './App'
 import { loadManifest, setContentRoot, setStaticRoot } from '../store/actions/content'
@@ -20,7 +19,6 @@ describe('<InnoDocApp />', () => {
         router={{}}
       />
     )
-    expect(wrapper.find(Container).exists()).toBe(true)
     expect(wrapper.find(Head).exists()).toBe(true)
     expect(wrapper.find(Provider).exists()).toBe(true)
     expect(wrapper.find(DummyComponent).exists()).toBe(true)
