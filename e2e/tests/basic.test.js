@@ -1,6 +1,6 @@
 describe('Basic tests', () => {
   beforeAll(async () => {
-    await page.goto(getUrl())
+    await page.goto(getUrl('/toc'))
   })
 
   it('loads without error', async () => {
