@@ -1,0 +1,27 @@
+{
+  "private": true,
+  "name": "@innodoc/client-sagas",
+  "version": "0.1.0",
+  "author": "innoCampus, TU Berlin",
+  "contributors": [
+    "Mirko Dietrich <dietrich@math.tu-berlin.de>"
+  ],
+  "description": "innoDoc client sagas",
+  "homepage": "https://gitlab.tubit.tu-berlin.de/innodoc/innodoc/tree/master/packages/client-sagas#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.tu-berlin.de/innodoc/innodoc",
+    "directory": "packages/client-sagas"
+  },
+  "license": "GPL-3.0-or-later",
+  "main": "src/index.js",
+  "dependencies": {
+    "@innodoc/client-misc": "*",
+    "@innodoc/client-store": "*",
+    "@innodoc/tools": "^0.1.0",
+    "redux-saga": "^1.0.5"
+  },
+  "devDependencies": {
+    "redux-saga-test-plan": "4.0.0-beta.4"
+  }
+}
