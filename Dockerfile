@@ -7,14 +7,16 @@ LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 WORKDIR /innodoc-webapp
 COPY . .
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+# TODO: once antd-scss-theme-plugin is fixed, remove git
 RUN set -xe && \
   apk add \
     build-base \
+    git \
     python2 && \
   ln -s .env.example .env && \
   yarn install --pure-lockfile && \
-  yarn build && \
-  yarn add --no-lockfile pm2
+  yarn add --no-lockfile --ignore-workspace-root-check pm2 && \
+  yarn build
 
 FROM $BASE_IMAGE
 

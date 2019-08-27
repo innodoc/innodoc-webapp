@@ -1,18 +1,8 @@
 module.exports = {
-  testEnvironment: 'enzyme',
-  roots: ['src'],
-  collectCoverageFrom: [
-    'src/**/*.js',
-    '!src/static/**',
-    '!src/.next/**',
+  projects: [
+    '<rootDir>/packages/client-misc',
+    '<rootDir>/packages/client-sagas',
+    '<rootDir>/packages/client-store',
+    '<rootDir>/packages/client-web',
   ],
-  moduleNameMapper: {
-    '\\.(less|sass|svg)$': 'identity-obj-proxy',
-  },
-  setupFilesAfterEnv: ['<rootDir>/enzyme.config.js'],
-  testPathIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '<rootDir>/src/.next/',
-  ],
-  verbose: true,
 }

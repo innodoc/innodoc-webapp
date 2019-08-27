@@ -54,7 +54,7 @@ Please make sure you have a current version of [Node.js](https://nodejs.org/)
 and [Yarn](https://yarnpkg.com/) installed on your system.
 
 For Node.js use your package manager of choice.
-[nvm](https://github.com/creationix/nvm) is a great alternative to install a
+[nvm](https://github.com/creationix/nvm) is an excellent option to install a
 current version of Node.js into your home directory.
 
 The software is built and tested on Linux systems. Using it on other operating
@@ -84,7 +84,7 @@ variables (e.g. when using Docker).
 #### `CONTENT_ROOT`
 
 The application will look for `manifest.json` in this location. It will also
-serve as the base URL for content files.
+serve as the base URL for content files unless `STATIC_ROOT` is specified.
 
 **Example:** `https://example.com/content/`
 
@@ -108,11 +108,33 @@ The port the web app is listening on in development.
 
 **Example:** `3000`
 
+#### `SECTION_PATH_PREFIX`
+
+The first URL component for sections. Having a section `foo/bar` the default
+results in the URL `example.com/section/foo/bar` while
+`SECTION_PATH_PREFIX=s` would result in `example.com/s/foo/bar`.
+
+**Example:** `s`
+
+**Default:** `section`
+
+#### `PAGE_PATH_PREFIX`
+
+Similar to `SECTION_PATH_PREFIX` this can be used to customize the first URL
+component for pages.
+
+**Example:** `p`
+
+**Default:** `page`
+
 #### Build application
 
 ```sh
 $ yarn build
 ```
+
+The optimized production can be found in the directory
+`packages/client-web/src/.next`.
 
 #### Start production server
 
@@ -120,22 +142,33 @@ $ yarn build
 $ yarn start
 ```
 
+Before starting the server you need to build the application.
+
 ### Deployment
 
-As a web application server the software should be run behind a reverse proxy
-that adds features such as TLS termination, static asset serving or load
-balancing. The web has tons of helpful guides on how to do this.
+Web applications usually run behind a reverse proxy to provide features such as
+TLS termination, static asset serving or load balancing. The web has tons of
+helpful guides on how to do this.
 
 Static assets are stored in the directory `/innodoc-webapp/src/.next/static`
 in the Docker container.
 
-Currently the application should be served directly from a domain (like
+Currently the application should be served directly from the domain root (like
 `myapp.example.com`) rather than from a sub-directory (like
 `www.example.com/myapp`).
 
 ## Development
 
+The codebase is split into separate sub-packages for organizational purposes
+and to enable sharing of code. This is managed by
+[Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/).
+
 ### Development server
+
+The development server compiles code on-the-fly and therefore there's no need
+to build in advance.
+[Hot Module Replacement (HMR)](https://webpack.js.org/concepts/hot-module-replacement/)
+is activated by default.
 
 ```sh
 $ yarn dev
@@ -187,6 +220,9 @@ E2E tests can also be looked at while running.
 $ yarn test:e2e:show
 ```
 
+For failed tests a screenshot will be taken automatically and placed into the
+directory `packages/client-web/e2e/screenshots`.
+
 #### Serve test content
 
 Serve content for use as `CONTENT_ROOT`. That comes in handy for development
@@ -208,8 +244,9 @@ $ yarn lint
 
 ### Bundle analyzer
 
-Visualize bundles using `webpack-bundle-analyzer`.
+Visualize bundle contents using
+[Webpack Bundle Analyzer](https://www.npmjs.com/package/webpack-bundle-analyzer).
 
 ```sh
-$ yarn build:bundle-analyze
+$ cd packages/client-web && yarn build:bundle-analyze
 ```

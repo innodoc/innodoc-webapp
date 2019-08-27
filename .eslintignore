@@ -1,3 +1,4 @@
-e2e/content
-src/.next
-src/static
+packages/client-web/e2e/content
+packages/client-web/src/.next
+packages/client-web/src/static
+!.eslintrc.js
