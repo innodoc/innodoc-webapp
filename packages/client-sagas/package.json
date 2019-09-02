@@ -18,7 +18,6 @@
   "dependencies": {
     "@innodoc/client-misc": "*",
     "@innodoc/client-store": "*",
-    "@innodoc/tools": "^0.1.0",
     "redux-saga": "^1.0.5"
   },
   "devDependencies": {

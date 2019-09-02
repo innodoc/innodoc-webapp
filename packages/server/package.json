@@ -23,7 +23,6 @@
   "dependencies": {
     "@innodoc/client-misc": "*",
     "@innodoc/client-web": "*",
-    "@innodoc/tools": "*",
     "dotenv-safe": "^8.1.0",
     "express": "^4.17.1",
     "next": "^9.0.5",

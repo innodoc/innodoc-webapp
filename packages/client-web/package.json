@@ -17,9 +17,7 @@
     "build:bundle-analyze": "BUNDLE_ANALYZE=both yarn build",
     "build": "next build src",
     "test:e2e:content": "http-server e2e/content -a localhost -p ${CONTENT_PORT:-8001} --cors",
-    "test:e2e:show": "PUPPETEER_HEADLESS=false yarn run test:e2e",
-    "test:e2e": "PROD_PORT=${PROD_PORT:-6123} CONTENT_PORT=${CONTENT_PORT:-6124} CONTENT_ROOT=${CONTENT_ROOT:-http://localhost:6124/} jest --runInBand --forceExit --detectOpenHandles --config e2e/jest.e2e.config.js",
-    "test": "yarn run test:unit && yarn run test:e2e"
+    "test:e2e": "PROD_PORT=${PROD_PORT:-6123} CONTENT_PORT=${CONTENT_PORT:-6124} CONTENT_ROOT=${CONTENT_ROOT:-http://localhost:6124/} jest --runInBand --forceExit --detectOpenHandles --config e2e/jest.e2e.config.js"
   },
   "keywords": [
     "innodoc",
@@ -31,7 +29,6 @@
     "@innodoc/client-misc": "*",
     "@innodoc/client-sagas": "*",
     "@innodoc/client-store": "*",
-    "@innodoc/tools": "^0.1.0",
     "@svgr/webpack": "^4.3.2",
     "@zeit/next-bundle-analyzer": "^0.1.2",
     "@zeit/next-css": "^1.0.1",
