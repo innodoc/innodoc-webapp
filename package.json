@@ -8,7 +8,7 @@
     "start": "cd packages/server && yarn start",
     "test:e2e:content": "cd packages/client-web && yarn test:e2e:content",
     "test:e2e:show": "PUPPETEER_HEADLESS=false yarn run test:e2e",
-    "test:e2e": "cd packages/client-web && yarn build && yarn test:e2e",
+    "test:e2e": "cd packages/client-web && yarn test:e2e",
     "test:unit:coverage": "yarn run test:unit --coverage",
     "test:unit": "jest"
   },
