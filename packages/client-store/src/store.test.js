@@ -3,7 +3,7 @@ import { Session } from 'redux-orm'
 import orm from './orm'
 import makeMakeStore from './store'
 
-const makeStore = makeMakeStore(function* () {})
+const makeStore = makeMakeStore(function* dummyRootSaga() { yield })
 
 describe('makeStore', () => {
   it('should create a store', () => {

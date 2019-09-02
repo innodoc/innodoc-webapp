@@ -3,9 +3,10 @@
   "private": true,
   "scripts": {
     "dev": "cd packages/server && yarn dev",
-    "test:unit": "jest",
+    "lint": "eslint .",
+    "test:e2e:web": "cd packages/client-web && yarn build && yarn test:e2e",
     "test:unit:coverage": "yarn run test:unit --coverage",
-    "lint": "eslint ."
+    "test:unit": "jest"
   },
   "workspaces": [
     "packages/*"

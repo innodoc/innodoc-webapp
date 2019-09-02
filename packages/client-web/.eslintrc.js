@@ -1,11 +1,11 @@
-const esLintNoExtraneousDependenciesConfig = require('@innodoc/tools/esLintNoExtraneousDependenciesConfig')
+const eslintNoExtraneousDependenciesConfig = require('@innodoc/tools/eslintNoExtraneousDependenciesConfig')
 const baseConfig = require('../../.eslintrc')
 
 module.exports = {
   ...baseConfig,
   rules: {
     ...baseConfig.rules,
-    ...esLintNoExtraneousDependenciesConfig(__dirname),
+    ...eslintNoExtraneousDependenciesConfig(__dirname),
   },
   overrides: [
     {

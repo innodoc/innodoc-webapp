@@ -18,7 +18,7 @@ const protocol = 'http'
 const usedPortAction = 'error'
 const server = [
   {
-    command: `PROD_PORT=${process.env.PROD_PORT} yarn run start`,
+    command: `cd ../server && PROD_PORT=${process.env.PROD_PORT} yarn run start`,
     port: parseInt(process.env.PROD_PORT, 10),
     launchTimeout,
     protocol,
