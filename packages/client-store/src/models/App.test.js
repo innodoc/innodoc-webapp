@@ -5,8 +5,7 @@ import {
   clearError,
   loadSectionFailure,
   loadPageFailure,
-  setContentRoot,
-  setStaticRoot,
+  setServerConfiguration,
 } from '../actions/content'
 import { changeLanguage } from '../actions/i18n'
 import { clearMessage, showMessage, toggleSidebar } from '../actions/ui'
@@ -43,14 +42,21 @@ describe('App', () => {
       expect(session.App.first().ref.error).toEqual(null)
     })
 
-    test('setContentRoot', () => {
-      session.App.reducer(setContentRoot('https://content.example.com'), session.App)
-      expect(session.App.first().ref.contentRoot).toEqual('https://content.example.com')
-    })
-
-    test('setStaticRoot', () => {
-      session.App.reducer(setStaticRoot('https://cdn.example.com'), session.App)
-      expect(session.App.first().ref.staticRoot).toEqual('https://cdn.example.com')
+    test('setServerConfiguration', () => {
+      session.App.reducer(
+        setServerConfiguration(
+          'https://content.example.com/',
+          'https://cdn.example.com/',
+          'sec',
+          'p',
+        ),
+        session.App
+      )
+      const app = session.App.first().ref
+      expect(app.contentRoot).toEqual('https://content.example.com/')
+      expect(app.staticRoot).toEqual('https://cdn.example.com/')
+      expect(app.sectionPathPrefix).toEqual('sec')
+      expect(app.pagePathPrefix).toEqual('p')
     })
 
     test('changeCourse', () => {

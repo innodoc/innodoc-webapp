@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require('path')
 
 // chromium launch options
 const headless = process.env.PUPPETEER_HEADLESS !== 'false'
@@ -16,16 +17,23 @@ if (fs.existsSync('/etc/alpine-release')) {
 const launchTimeout = 60000
 const protocol = 'http'
 const usedPortAction = 'error'
+const serverEnvVars = [
+  // force configuration in case .env is customized
+  'SECTION_PATH_PREFIX=section',
+  'PAGE_PATH_PREFIX=page',
+].join(' ')
+const serverPath = path.join('..', 'server')
+
 const server = [
   {
-    command: `cd ../server && PROD_PORT=${process.env.PROD_PORT} yarn run start`,
+    command: `cd ${serverPath} && ${serverEnvVars} yarn run start`,
     port: parseInt(process.env.PROD_PORT, 10),
     launchTimeout,
     protocol,
     usedPortAction,
   },
   {
-    command: `CONTENT_PORT=${process.env.CONTENT_PORT} yarn run test:e2e:content`,
+    command: 'yarn run test:e2e:content',
     port: parseInt(process.env.CONTENT_PORT, 10),
     launchTimeout,
     protocol,

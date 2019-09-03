@@ -4,19 +4,21 @@ import { useSelector } from 'react-redux'
 import Link from 'next/link'
 
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
+import appSelectors from '@innodoc/client-store/src/selectors'
 
-const makeContentLink = (makeGetContentLink, pathnamePrefix) => {
+const makeContentLink = (makeGetContentLink, prefixName) => {
   const ContentLink = ({ children, contentId: contentIdHash }) => {
     const getContentLink = useMemo(makeGetContentLink, [])
     const { contentId, hash, title } = useSelector(
       (state) => getContentLink(state, contentIdHash)
     )
+    const pathPrefix = useSelector(appSelectors.getApp)[`${prefixName}PathPrefix`]
 
     const href = {
-      pathname: `/${pathnamePrefix}`,
+      pathname: `/${pathPrefix}`,
       query: { contentId },
     }
-    const as = { pathname: `/${pathnamePrefix}/${contentId}` }
+    const as = { pathname: `/${pathPrefix}/${contentId}` }
     if (hash) {
       as.hash = `#${hash}`
     }

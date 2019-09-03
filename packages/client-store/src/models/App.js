@@ -33,11 +33,8 @@ export default class App extends Model {
         case contentActionTypes.LOAD_PAGE_FAILURE:
           app.set('error', action.error)
           break
-        case contentActionTypes.SET_CONTENT_ROOT:
-          app.set('contentRoot', action.contentRoot)
-          break
-        case contentActionTypes.SET_STATIC_ROOT:
-          app.set('staticRoot', action.staticRoot)
+        case contentActionTypes.SET_SERVER_CONFIGURATION:
+          app.update(action.config)
           break
         case contentActionTypes.CHANGE_COURSE:
           app.set('currentCourse', action.course.id)

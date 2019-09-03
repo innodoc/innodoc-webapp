@@ -76,6 +76,8 @@ const startServer = async () => {
       .use((req, res, _next) => {
         res.locals.contentRoot = contentRoot
         res.locals.staticRoot = staticRoot
+        res.locals.sectionPathPrefix = process.env.SECTION_PATH_PREFIX
+        res.locals.pagePathPrefix = process.env.PAGE_PATH_PREFIX
         _next()
       })
       .get(

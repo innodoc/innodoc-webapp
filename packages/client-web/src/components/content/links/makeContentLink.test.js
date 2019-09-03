@@ -2,12 +2,21 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Link from 'next/link'
 
+import appSelectors from '@innodoc/client-store/src/selectors'
 import makeContentLink from './makeContentLink'
 
 let mockContent
-jest.mock('react-redux', () => ({ useSelector: () => mockContent }))
+const mockGetApp = appSelectors.getApp
+const mockApp = { sectionPathPrefix: 'sec' }
+jest.mock('react-redux', () => ({
+  useSelector: (selector) => (
+    selector === mockGetApp
+      ? mockApp
+      : mockContent
+  ),
+}))
 
-const ContentLink = makeContentLink(() => {}, 'content')
+const ContentLink = makeContentLink(() => {}, 'section')
 
 describe('makeContentLink', () => {
   beforeEach(() => {
@@ -25,10 +34,10 @@ describe('makeContentLink', () => {
     const wrapper = shallow(<ContentLink contentId="foo" />)
     const link = wrapper.find(Link)
     expect(link.prop('href')).toEqual({
-      pathname: '/content',
+      pathname: '/sec',
       query: { contentId: 'foo' },
     })
-    expect(link.prop('as')).toEqual({ pathname: '/content/foo' })
+    expect(link.prop('as')).toEqual({ pathname: '/sec/foo' })
     const a = wrapper.find('a')
     expect(a.text()).toEqual('Foo title')
   })
@@ -41,10 +50,10 @@ describe('makeContentLink', () => {
     )
     const link = wrapper.find(Link)
     expect(link.prop('href')).toEqual({
-      pathname: '/content',
+      pathname: '/sec',
       query: { contentId: 'foo' },
     })
-    expect(link.prop('as')).toEqual({ pathname: '/content/foo' })
+    expect(link.prop('as')).toEqual({ pathname: '/sec/foo' })
     const a = wrapper.find('a')
     expect(a.prop('title')).toEqual('Foo title')
     expect(a.text()).toEqual('Hello World!')
@@ -59,11 +68,11 @@ describe('makeContentLink', () => {
     const wrapper = shallow(<ContentLink contentId="foo#bar" />)
     const link = wrapper.find(Link)
     expect(link.prop('href')).toEqual({
-      pathname: '/content',
+      pathname: '/sec',
       query: { contentId: 'foo' },
     })
     expect(link.prop('as')).toEqual({
-      pathname: '/content/foo',
+      pathname: '/sec/foo',
       hash: '#bar',
     })
   })

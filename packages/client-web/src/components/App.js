@@ -31,15 +31,22 @@ import 'antd/lib/tree/style/index.less'
 import { appWithTranslation } from '@innodoc/client-misc/src/i18n'
 import rootSaga from '@innodoc/client-sagas'
 import makeMakeStore from '@innodoc/client-store/src/store'
-import { loadManifest, setContentRoot, setStaticRoot } from '@innodoc/client-store/src/actions/content'
+import { loadManifest, setServerConfiguration } from '@innodoc/client-store/src/actions/content'
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
 
 class InnoDocApp extends App {
   static async getInitialProps({ Component, ctx }) {
     if (ctx.req && ctx.res) { // ctx.req/ctx.res not present when statically exported
       // set initial content URLs (passed from server.js/app configuration)
-      ctx.store.dispatch(setContentRoot(ctx.res.locals.contentRoot))
-      ctx.store.dispatch(setStaticRoot(ctx.res.locals.staticRoot))
+      const {
+        contentRoot,
+        staticRoot,
+        sectionPathPrefix,
+        pagePathPrefix,
+      } = ctx.res.locals
+      ctx.store.dispatch(
+        setServerConfiguration(contentRoot, staticRoot, sectionPathPrefix, pagePathPrefix)
+      )
       // pass detected language to store
       if (ctx.req.i18n) {
         ctx.store.dispatch(languageDetected(ctx.req.i18n.language))

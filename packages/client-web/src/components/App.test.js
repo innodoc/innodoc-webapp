@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import { Provider } from 'react-redux'
 import Head from 'next/head'
 
-import { loadManifest, setContentRoot, setStaticRoot } from '@innodoc/client-store/src/actions/content'
+import { loadManifest, setServerConfiguration } from '@innodoc/client-store/src/actions/content'
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
 
 import { InnoDocApp } from './App'
@@ -27,7 +27,7 @@ describe('<InnoDocApp />', () => {
 
   describe('getInitialProps', () => {
     it('should dispatch actions (server)', async () => {
-      expect.assertions(5)
+      expect.assertions(4)
       const dispatch = jest.fn()
       const ctx = {
         isServer: true,
@@ -36,14 +36,22 @@ describe('<InnoDocApp />', () => {
           locals: {
             contentRoot: 'https://content.example.com/',
             staticRoot: 'https://cdn.example.com/',
+            sectionPathPrefix: 'section',
+            pagePathPrefix: 'page',
           },
         },
         req: { i18n: { language: 'en-US' } },
       }
       await InnoDocApp.getInitialProps({ ctx, Component: () => {} })
-      expect(dispatch).toBeCalledTimes(4)
-      expect(dispatch).toBeCalledWith(setContentRoot('https://content.example.com/'))
-      expect(dispatch).toBeCalledWith(setStaticRoot('https://cdn.example.com/'))
+      expect(dispatch).toBeCalledTimes(3)
+      expect(dispatch).toBeCalledWith(
+        setServerConfiguration(
+          'https://content.example.com/',
+          'https://cdn.example.com/',
+          'section',
+          'page',
+        )
+      )
       expect(dispatch).toBeCalledWith(languageDetected('en-US'))
       expect(dispatch).toBeCalledWith(loadManifest())
     })

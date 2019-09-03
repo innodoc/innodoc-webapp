@@ -13,8 +13,7 @@ export const actionTypes = {
   LOAD_SECTION_FAILURE: 'LOAD_SECTION_FAILURE',
   LOAD_SECTION_SUCCESS: 'LOAD_SECTION_SUCCESS',
   LOAD_SECTION: 'LOAD_SECTION',
-  SET_CONTENT_ROOT: 'SET_CONTENT_ROOT',
-  SET_STATIC_ROOT: 'SET_STATIC_ROOT',
+  SET_SERVER_CONFIGURATION: 'SET_SERVER_CONFIGURATION',
 }
 
 export const changeCourse = (course) => ({
@@ -87,12 +86,17 @@ export const loadSection = (contentId, prevLanguage = undefined) => ({
   contentId,
 })
 
-export const setContentRoot = (contentRoot) => ({
-  type: actionTypes.SET_CONTENT_ROOT,
+export const setServerConfiguration = (
   contentRoot,
-})
-
-export const setStaticRoot = (staticRoot) => ({
-  type: actionTypes.SET_STATIC_ROOT,
   staticRoot,
+  sectionPathPrefix,
+  pagePathPrefix
+) => ({
+  type: actionTypes.SET_SERVER_CONFIGURATION,
+  config: {
+    contentRoot,
+    staticRoot,
+    sectionPathPrefix,
+    pagePathPrefix,
+  },
 })
