@@ -91,7 +91,8 @@ $ yarn start
 For the application to do anything useful, you will need content to display.
 
 Content is static data in the shape of JSON and image files. To produce such
-content a separate program [innoConv](innodoc/innoconv) can be used. The
+content a separate program
+[innoConv](https://gitlab.tu-berlin.de/innodoc/innoconv) can be used. The
 content needs to be served from a location and can be configured using
 [`CONTENT_ROOT`](#content_root). Don't forget to configure the
 [CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
