@@ -11,6 +11,13 @@ const rootDir = path.resolve(__dirname, '..', '..')
 // babel rootMode for monorepo support
 const rootMode = 'upward'
 
+/* eslint no-param-reassign:
+  ["error", {
+    "props": true,
+    "ignorePropertyModificationsFor": ["use", "loader", "rule"],
+  }]
+*/
+
 const addAntdScssThemePlugin = (config) => {
   const patchLoader = (type) => {
     config.module.rules
@@ -22,7 +29,6 @@ const addAntdScssThemePlugin = (config) => {
           loader: `${type}-loader`,
           options: use.options,
         })
-        /* eslint-disable no-param-reassign */
         use.loader = antdScss.loader
         use.options = antdScss.options
       })
@@ -94,7 +100,8 @@ const patchWebpackConfig = (config) => {
 
   addAntdScssThemePlugin(config)
 
-  // add rootMode to next-babel-loader
+  // Add rootMode to next-babel-loader. This is important so sub-package babel
+  // is picking up the root babel.config.js.
   config.module.rules
     .filter(
       (rule) => (
