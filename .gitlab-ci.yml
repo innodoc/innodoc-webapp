@@ -127,3 +127,5 @@ Deploy (staging):
     - rm -f ~/.ssh/id_rsa
   only:
     - dev
+  variables:
+    GIT_STRATEGY: none
