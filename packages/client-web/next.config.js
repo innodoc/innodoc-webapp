@@ -128,6 +128,9 @@ const nextConfig = {
     javascriptEnabled: true, // needed by antd less code
   },
 
+  // GZIP compression should happen in reverse proxy
+  compress: false,
+
   // css modules with local scope (for component sass styles)
   cssModules: true,
   cssLoaderOptions: {
