@@ -13,6 +13,6 @@ LICENSE.txt
 coverage
 Dockerfile
 Dockerfile.e2e
-packages/client-web/src/bundles
+packages/client-web/bundle-analyzer
 packages/client-web/src/.next
 packages/client-web/e2e/screenshots

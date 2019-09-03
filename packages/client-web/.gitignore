@@ -1,4 +1,4 @@
 src/.next
-src/bundles
+/bundle-analyzer
 src/static/locales/*/*.missing.json
 e2e/screenshots

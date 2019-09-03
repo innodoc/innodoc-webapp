@@ -3,6 +3,7 @@ const Dotenv = require('dotenv-webpack')
 const AntdScssThemePlugin = require('antd-scss-theme-plugin')
 const withLess = require('@zeit/next-less')
 const withSass = require('@zeit/next-sass')
+const nextBundleAnalyzer = require('@zeit/next-bundle-analyzer')
 const withTranspileModules = require('next-transpile-modules')
 
 const rootDir = path.resolve(__dirname, '..', '..')
@@ -148,22 +149,24 @@ const wrappedNextConfig = (config) => (
   )
 )
 
-// bundle analyzer (set BUNDLE_ANALYZE=both to enable!)
-if (process.env.BUNDLE_ANALYZE) {
-  const nextBundleAnalyzer = require('@zeit/next-bundle-analyzer') // eslint-disable-line global-require
+// bundle analyzer (set BUNDLE_ANALYZE=both to enable)
+const withBundleAnalyzer = (config) => {
+  const bundleAnalyzerBasePath = path.join(__dirname, 'bundle-analyzer')
   nextConfig.analyzeServer = ['server', 'both'].includes(process.env.BUNDLE_ANALYZE)
   nextConfig.analyzeBrowser = ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE)
   nextConfig.bundleAnalyzerConfig = {
     server: {
       analyzerMode: 'static',
-      reportFilename: '../../bundles/server.html',
+      reportFilename: path.join(bundleAnalyzerBasePath, 'server.html'),
     },
     browser: {
       analyzerMode: 'static',
-      reportFilename: '../bundles/client.html',
+      reportFilename: path.join(bundleAnalyzerBasePath, 'client.html'),
     },
   }
-  module.exports = nextBundleAnalyzer(wrappedNextConfig(nextConfig))
-} else {
-  module.exports = wrappedNextConfig(nextConfig)
+  return nextBundleAnalyzer(config)
 }
+
+module.exports = process.env.BUNDLE_ANALYZE
+  ? withBundleAnalyzer(wrappedNextConfig(nextConfig))
+  : wrappedNextConfig(nextConfig)
