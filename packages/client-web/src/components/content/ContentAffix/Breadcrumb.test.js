@@ -5,7 +5,7 @@ import AntBreadcrumb from 'antd/lib/breadcrumb'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
 import Breadcrumb from './Breadcrumb'
-import { SectionLink } from '../links'
+import { InternalLink, SectionLink } from '../links'
 
 const mockGetCurrentCourse = courseSelectors.getCurrentCourse
 const mockSections = [
@@ -25,7 +25,7 @@ const mockSections = [
 jest.mock('react-redux', () => ({
   useSelector: (selector) => (
     selector === mockGetCurrentCourse
-      ? { homeLink: 'home' }
+      ? { homeLink: '/section/home' }
       : mockSections
   ),
 }))
@@ -36,9 +36,10 @@ describe('<Breadcrumb />', () => {
     expect(wrapper.find(AntBreadcrumb)).toHaveLength(1)
     const items = wrapper.find(AntBreadcrumb.Item)
     expect(items).toHaveLength(4)
-    expect(wrapper.find(SectionLink)).toHaveLength(3)
-    expect(items.at(0).find(SectionLink).prop('contentId')).toBe('home')
+    expect(items.at(0).find(InternalLink).prop('href')).toBe('/section/home')
     expect(items.at(1).find(SectionLink).prop('contentId')).toBe('section1')
     expect(items.at(2).find(SectionLink).prop('contentId')).toBe('section1/section11')
+    expect(wrapper.find(InternalLink)).toHaveLength(1)
+    expect(wrapper.find(SectionLink)).toHaveLength(2)
   })
 })

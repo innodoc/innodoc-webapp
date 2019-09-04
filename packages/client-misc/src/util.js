@@ -41,15 +41,24 @@ const getDisplayName = (Component) => Component.displayName || Component.name ||
 
 const getHocDisplayName = (HocName, ComposedComponent) => `${HocName}(${getDisplayName(ComposedComponent)})`
 
-const parseContentId = (contentId) => contentId.split('#')
-
 // Sort an obejct (using name key) in an alphanumerical way considering umlauts/accents etc.
 const intSortArray = (lang) => {
   const { compare } = new Intl.Collator(lang)
-  // Need to remove special character $ (used in LaTeX formulas)
-  // const normalize = (string) => string.replace(/^\$/g, '').toUpperCase()
-  const normalize = (string) => string.replace(/^\$/g, '')
+  // Remove special characters in front, case-insensitive
+  const normalize = (string) => string.replace(/^[$\\]+/g, '').toUpperCase()
   return (a, b) => compare(normalize(a.name), normalize(b.name))
+}
+
+const parseContentId = (contentId) => contentId.split('#')
+
+const parseLink = (href) => {
+  if (href.startsWith('/page/')) {
+    return ['page', href.slice(6)]
+  }
+  if (href.startsWith('/section/')) {
+    return ['section', href.slice(9)]
+  }
+  throw new Error(`Malformed link encountered: ${href}`)
 }
 
 // Normalize language code to 2 letters (e.g. 'en-US' -> 'en').
@@ -67,8 +76,9 @@ export {
   getClassNameToComponentMapper,
   getDisplayName,
   getHocDisplayName,
-  parseContentId,
   intSortArray,
+  parseContentId,
+  parseLink,
   toTwoLetterCode,
   unwrapPara,
 }

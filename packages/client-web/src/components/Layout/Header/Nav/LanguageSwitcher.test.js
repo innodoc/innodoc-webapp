@@ -6,7 +6,7 @@ import LanguageSwitcher from './LanguageSwitcher'
 
 const mockCourse = {
   currentSection: 'foo',
-  homeLink: 'foo',
+  homeLink: '/section/foo',
   languages: ['de', 'en'],
   title: { en: ['Foobar'] },
 }

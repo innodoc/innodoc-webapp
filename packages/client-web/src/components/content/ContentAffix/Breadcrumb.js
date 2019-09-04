@@ -7,7 +7,7 @@ import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
-import { SectionLink } from '../links'
+import { SectionLink, InternalLink } from '../links'
 
 const Breadcrumb = () => {
   const { t } = useTranslation()
@@ -26,13 +26,14 @@ const Breadcrumb = () => {
   ))
 
   // prepend custom home link
+
   const breadcrumbItems = [(
     <AntBreadcrumb.Item key="root">
-      <SectionLink contentId={homeLink}>
+      <InternalLink href={homeLink}>
         <a title={t('content.home')}>
           <Icon type="home" />
         </a>
-      </SectionLink>
+      </InternalLink>
     </AntBreadcrumb.Item>
   )].concat(sectionLinks)
 

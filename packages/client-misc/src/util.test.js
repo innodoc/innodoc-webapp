@@ -5,6 +5,7 @@ import {
   getDisplayName,
   getHocDisplayName,
   parseContentId,
+  parseLink,
   intSortArray,
   toTwoLetterCode,
   unwrapPara,
@@ -101,6 +102,20 @@ describe('parseContentId', () => {
   })
 })
 
+describe('parseLink', () => {
+  it.each(['page', 'section'])('should parse link (%s)', (contentType) => {
+    const [parsedContentType, contentId] = parseLink(`/${contentType}/foo/bar`)
+    expect(parsedContentType).toBe(contentType)
+    expect(contentId).toBe('foo/bar')
+  })
+
+  it('should throw with malformed link', () => {
+    expect(() => {
+      parseLink('/foo/bar')
+    }).toThrow()
+  })
+})
+
 describe('intSortArray', () => {
   const sortFunc = intSortArray('de')
 
@@ -119,8 +134,10 @@ describe('intSortArray', () => {
     const unsorted = [
       { name: 'pass' },
       { name: '$n$' },
+      { name: '$\\LaTex$' },
     ]
     expect(unsorted.sort(sortFunc)).toEqual([
+      { name: '$\\LaTex$' },
       { name: '$n$' },
       { name: 'pass' },
     ])

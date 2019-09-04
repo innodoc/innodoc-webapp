@@ -1,1 +1,1 @@
-export default from '../components/pages/IndexPage'
+export default from '../components/pages/Index'

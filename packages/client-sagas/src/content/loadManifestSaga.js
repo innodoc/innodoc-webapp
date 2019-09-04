@@ -15,7 +15,7 @@ export default function* loadManifestSaga() {
       const courses = yield select(courseSelectors.getCourses)
       yield put(changeCourse(courses[0]))
     } catch (error) {
-      yield put(loadManifestFailure({ error }))
+      yield put(loadManifestFailure(error))
       yield put(showMessage({
         title: 'Loading content manifest failed!',
         msg: error.message,

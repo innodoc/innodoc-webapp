@@ -3,7 +3,7 @@ import questionSelectors from './question'
 
 const dummyCourse = {
   id: 0,
-  homeLink: 'foo',
+  homeLink: '/section/foo',
   languages: ['en'],
   title: { en: ['foobar'] },
 }

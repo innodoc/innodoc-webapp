@@ -49,13 +49,14 @@ const Layout = ({ children, disableSidebar }) => {
   )
 }
 
-Layout.propTypes = {
-  children: childrenType.isRequired,
-  disableSidebar: PropTypes.bool,
+Layout.defaultProps = {
+  children: null,
+  disableSidebar: false,
 }
 
-Layout.defaultProps = {
-  disableSidebar: false,
+Layout.propTypes = {
+  children: childrenType,
+  disableSidebar: PropTypes.bool,
 }
 
 export default Layout

@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
+import getLinkInfo from '../../../getLinkInfo'
+
 const makeContentLink = (makeGetContentLink, prefixName) => {
   const ContentLink = ({ children, contentId: contentIdHash }) => {
     const getContentLink = useMemo(makeGetContentLink, [])
@@ -13,15 +15,7 @@ const makeContentLink = (makeGetContentLink, prefixName) => {
       (state) => getContentLink(state, contentIdHash)
     )
     const pathPrefix = useSelector(appSelectors.getApp)[`${prefixName}PathPrefix`]
-
-    const href = {
-      pathname: `/${pathPrefix}`,
-      query: { contentId },
-    }
-    const as = { pathname: `/${pathPrefix}/${contentId}` }
-    if (hash) {
-      as.hash = `#${hash}`
-    }
+    const { href, as } = getLinkInfo(pathPrefix, contentId, hash)
 
     const newChildren = children
       ? React.cloneElement(children, { title })

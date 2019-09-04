@@ -61,7 +61,7 @@ export default (
             language,
           }))
         } catch (error) {
-          yield put(loadContentFailure({ error }))
+          yield put(loadContentFailure(error))
           yield put(showMessage({
             title: 'Loading content failed!',
             msg: error.message,

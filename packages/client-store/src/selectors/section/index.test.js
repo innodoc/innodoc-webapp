@@ -61,7 +61,7 @@ beforeEach(() => {
   const session = orm.session(defaultInitialState().orm)
   const app = session.App.first()
   const course = session.Course.create({
-    homeLink: 'test',
+    homeLink: '/section/test',
     languages: ['en'],
     title: 'courseTitle',
   })

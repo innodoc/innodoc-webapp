@@ -53,7 +53,7 @@ describe('loadManifestSaga', () => {
         [matchers.call.fn(fetchManifest), throwError(error)],
         ...defaultProvides,
       ])
-      .put(loadManifestFailure({ error }))
+      .put(loadManifestFailure(error))
       .put.actionType(uiActionTypes.SHOW_MESSAGE)
       .not.put.actionType(contentActionTypes.LOAD_MANIFEST_SUCCESS)
       .run()

@@ -29,6 +29,7 @@ export default class App extends Model {
         case contentActionTypes.CLEAR_ERROR:
           app.set('error', null)
           break
+        case contentActionTypes.LOAD_MANIFEST_FAILURE:
         case contentActionTypes.LOAD_SECTION_FAILURE:
         case contentActionTypes.LOAD_PAGE_FAILURE:
           app.set('error', action.error)

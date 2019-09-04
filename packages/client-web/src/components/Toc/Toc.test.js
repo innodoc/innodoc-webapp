@@ -20,7 +20,7 @@ jest.mock('react-redux', () => ({
 
 const course = {
   currentSection: null,
-  homeLink: 'section-1',
+  homeLink: '/section/section-1',
   languages: ['en'],
   title: { en: 'Foobar' },
 }

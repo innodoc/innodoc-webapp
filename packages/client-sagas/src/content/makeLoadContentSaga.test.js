@@ -115,7 +115,7 @@ describe('makeLoadContentSaga', () => {
         [matchers.call.fn(fetchContent), throwError(error)],
         ...defaultProvides,
       ])
-      .put(loadContentFailure({ error }))
+      .put(loadContentFailure(error))
       .put.actionType(uiActionTypes.SHOW_MESSAGE)
       .not.put.actionType('LOAD_CONTENT_SUCCESS')
       .run()

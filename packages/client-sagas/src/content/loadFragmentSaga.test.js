@@ -56,7 +56,7 @@ describe('loadFragmentSaga', () => {
         [matchers.call.fn(fetchFragment), throwError(error)],
         ...defaultProvides,
       ])
-      .put(loadFragmentFailure({ error }))
+      .put(loadFragmentFailure(error))
       .not.put.actionType(uiActionTypes.SHOW_MESSAGE)
       .not.put.actionType(actionTypes.LOAD_FRAGMENT_SUCCESS)
       .run()

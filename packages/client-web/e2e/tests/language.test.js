@@ -22,7 +22,7 @@ describe('Content translation', () => {
   ])('should load content in language (%s)', async (lang, text) => {
     expect.assertions(1)
     await page.setExtraHTTPHeaders({ 'Accept-Language': lang })
-    await page.goto(getUrl())
+    await page.goto(getUrl('/toc'))
     await expect(page).toMatchElement('a', { text })
   })
 

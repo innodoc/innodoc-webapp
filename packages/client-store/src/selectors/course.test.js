@@ -3,7 +3,7 @@ import courseSelectors from './course'
 
 const dummyCourse = {
   id: 0,
-  homeLink: 'foo',
+  homeLink: '/section/foo',
   languages: ['en'],
   logo: null,
   title: { en: ['foobar'] },

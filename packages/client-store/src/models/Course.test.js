@@ -38,7 +38,7 @@ describe('Course', () => {
 
   describe('loadManifest', () => {
     const manifest = {
-      homeLink: 'bar',
+      home_link: '/section/bar',
       languages: ['en'],
       title: { en: 'foobar' },
       toc: [
@@ -51,7 +51,7 @@ describe('Course', () => {
       session.Course.reducer(loadManifestSuccess({ content: manifest }), session.Course)
       expect(session.Course.first().ref).toEqual({
         currentSection: null,
-        homeLink: 'bar',
+        homeLink: '/section/bar',
         languages: ['en'],
         logo: null,
         title: { en: 'foobar' },
@@ -61,12 +61,12 @@ describe('Course', () => {
 
     test('loadManifestSuccess (w/o homeLink)', () => {
       const action = loadManifestSuccess({
-        content: { ...manifest, homeLink: null },
+        content: { ...manifest, home_link: null },
       })
       session.Course.reducer(action, session.Course,)
       expect(session.Course.first().ref).toEqual({
         currentSection: null,
-        homeLink: 'foo',
+        homeLink: '/section/foo',
         languages: ['en'],
         logo: null,
         title: { en: 'foobar' },

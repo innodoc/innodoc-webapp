@@ -25,7 +25,7 @@ export default class Course extends Model {
         const { content } = action.data
         CourseModel.create({
           currentSection: null,
-          homeLink: content.homeLink || content.toc[0].id,
+          homeLink: content.home_link || `/section/${content.toc[0].id}`,
           languages: content.languages,
           logo: content.logo || null,
           title: content.title,

@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import ContentFragment from '../ContentFragment'
 import Link from './Link'
-import { PageLink, SectionLink } from '../../links'
+import { InternalLink } from '../../links'
 import Video from './Video'
 
 describe('<Link />', () => {
@@ -14,7 +14,7 @@ describe('<Link />', () => {
       ['https://en.wikipedia.org/', 'link title'],
     ]
     const wrapper = shallow(<Link data={data} />)
-    expect(wrapper.exists(SectionLink)).toBe(false)
+    expect(wrapper.exists(InternalLink)).toBe(false)
     const a = wrapper.find('a')
     expect(a).toHaveLength(1)
     expect(a.prop('href')).toEqual('https://en.wikipedia.org/')
@@ -25,10 +25,7 @@ describe('<Link />', () => {
   })
 
   describe('internal links', () => {
-    describe.each([
-      ['page', PageLink],
-      ['section', SectionLink],
-    ])('content links (%s)', (contentType, LinkComponent) => {
+    describe.each(['page', 'section'])('content links (%s)', (contentType) => {
       it('should render (with content)', () => {
         const data = [
           [null, [], null],
@@ -36,9 +33,9 @@ describe('<Link />', () => {
           [`/${contentType}/foo/bar`, 'link title'],
         ]
         const wrapper = shallow(<Link data={data} />)
-        const contentLink = wrapper.find(LinkComponent)
-        expect(contentLink).toHaveLength(1)
-        expect(contentLink.prop('contentId')).toEqual('foo/bar')
+        const internalLink = wrapper.find(InternalLink)
+        expect(internalLink).toHaveLength(1)
+        expect(internalLink.prop('href')).toEqual(data[2][0])
         expect(wrapper.find('a')).toHaveLength(1)
         const contentFragment = wrapper.find(ContentFragment)
         expect(contentFragment).toHaveLength(1)
@@ -52,54 +49,11 @@ describe('<Link />', () => {
           [`/${contentType}/foo/bar`, 'link title'],
         ]
         const wrapper = shallow(<Link data={data} />)
-        const contentLink = wrapper.find(LinkComponent)
-        expect(contentLink).toHaveLength(1)
-        expect(contentLink.prop('contentId')).toEqual('foo/bar')
+        const internalLink = wrapper.find(InternalLink)
+        expect(internalLink).toHaveLength(1)
+        expect(internalLink.prop('href')).toEqual(data[2][0])
         expect(wrapper.find('a')).toHaveLength(0)
         expect(wrapper.exists(ContentFragment)).toBe(false)
-      })
-    })
-
-    describe('missing prefix', () => {
-      it('should render debug error message (in development)', () => {
-        const data = [
-          [null, [], null],
-          [{ t: 'Str', c: 'foo' }],
-          ['/foo/bar', 'link title'],
-        ]
-        const wrapper = shallow(<Link data={data} />)
-        expect(wrapper.exists(SectionLink)).toBe(false)
-        expect(wrapper.exists(PageLink)).toBe(false)
-        expect(wrapper.text()).toMatch('Unhandled internal link: /foo/bar')
-        expect(wrapper.find(ContentFragment).prop('content')).toBe(data[1])
-      })
-
-      describe('in production', () => {
-        beforeEach(() => { process.env.NODE_ENV = 'production' })
-
-        it('should render ContentFragment with content', () => {
-          const data = [
-            [null, [], null],
-            [{ t: 'Str', c: 'foo' }],
-            ['/foo/bar', 'link title'],
-          ]
-          const wrapper = shallow(<Link data={data} />)
-          expect(wrapper.exists(SectionLink)).toBe(false)
-          expect(wrapper.exists(PageLink)).toBe(false)
-          expect(wrapper.find(ContentFragment).prop('content')).toBe(data[1])
-        })
-
-        it('should render nothing w/o content', () => {
-          const data = [
-            [null, [], null],
-            null,
-            ['/foo/bar', 'link title'],
-          ]
-          const wrapper = shallow(<Link data={data} />)
-          expect(wrapper.exists(SectionLink)).toBe(false)
-          expect(wrapper.exists(PageLink)).toBe(false)
-          expect(wrapper.exists(ContentFragment)).toBe(false)
-        })
       })
     })
 
@@ -121,7 +75,7 @@ describe('<Link />', () => {
       ['https://www.youtube.com/watch?v=abc', 'link title'],
     ]
     const wrapper = shallow(<Link data={data} />)
-    expect(wrapper.exists(SectionLink)).toBe(false)
+    expect(wrapper.exists(InternalLink)).toBe(false)
     const video = wrapper.find(Video)
     expect(video.prop('data')).toBe(data)
   })

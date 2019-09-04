@@ -13,8 +13,8 @@ import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import Nav from './Nav'
 import Logo from './Logo'
 import SearchInput from './SearchInput'
+import { InternalLink } from '../../content/links'
 import css from './style.sass'
-import { SectionLink } from '../../content/links'
 import useIsNarrowerThan from '../../../hooks/useIsNarrowerThan'
 
 const Header = () => {
@@ -25,11 +25,11 @@ const Header = () => {
 
   const logoWrapper = course && course.homeLink
     ? (
-      <SectionLink contentId={course.homeLink}>
+      <InternalLink href={course.homeLink}>
         <a className={css.logoLink}>
           <Logo />
         </a>
-      </SectionLink>
+      </InternalLink>
     )
     : <Logo />
 
