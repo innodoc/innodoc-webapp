@@ -37,10 +37,6 @@ const getClassNameToComponentMapper = (classNameComponentMap) => {
   }
 }
 
-const getDisplayName = (Component) => Component.displayName || Component.name || 'Component'
-
-const getHocDisplayName = (HocName, ComposedComponent) => `${HocName}(${getDisplayName(ComposedComponent)})`
-
 // Sort an obejct (using name key) in an alphanumerical way considering umlauts/accents etc.
 const intSortArray = (lang) => {
   const { compare } = new Intl.Collator(lang)
@@ -74,8 +70,6 @@ export {
   astToString,
   attributesToObject,
   getClassNameToComponentMapper,
-  getDisplayName,
-  getHocDisplayName,
   intSortArray,
   parseContentId,
   parseLink,

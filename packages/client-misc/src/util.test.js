@@ -2,8 +2,6 @@ import {
   astToString,
   attributesToObject,
   getClassNameToComponentMapper,
-  getDisplayName,
-  getHocDisplayName,
   parseContentId,
   parseLink,
   intSortArray,
@@ -67,28 +65,6 @@ describe('getClassNameToComponentMapper', () => {
     expect(mapper('foo')).toBe(Foo)
     expect(mapper('bar')).toBe(Bar)
     expect(mapper('baz')).toBe(null)
-  })
-})
-
-describe('getDisplayName', () => {
-  it("should return Component's displayName", () => {
-    const Component = () => 'Hello Little!'
-    Component.displayName = 'MyLittleComponent'
-    expect(getDisplayName(Component)).toBe('MyLittleComponent')
-  })
-
-  it('should return "Component" if there\'s no displayName', () => {
-    const Component = () => 'Hello'
-    expect(getDisplayName(Component)).toBe('Component')
-  })
-})
-
-describe('getHocDisplayName', () => {
-  it('should return HOC display name', () => {
-    const Component = () => 'Hello'
-    Component.displayName = 'HelloComponent'
-    const displayName = getHocDisplayName('HOComponent', Component)
-    expect(displayName).toBe('HOComponent(HelloComponent)')
   })
 })
 
