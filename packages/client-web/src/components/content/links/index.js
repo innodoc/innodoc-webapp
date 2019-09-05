@@ -7,6 +7,7 @@ import pageSelectors from '@innodoc/client-store/src/selectors/page'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import makeContentLink from './makeContentLink'
+import css from './style.sass'
 
 const PageLink = makeContentLink(pageSelectors.makeGetPageLink, 'page')
 const SectionLink = makeContentLink(sectionSelectors.makeGetSectionLink, 'section')
@@ -20,14 +21,13 @@ const InternalLink = ({ children, href }) => {
   } catch {
     if (process.env.NODE_ENV !== 'production') {
       return (
-        <span>
-          <span>
-            Unhandled internal link:
-            {' '}
-            {href}
-          </span>
-          {' '}
+        <span className={css.unhandled}>
           {children}
+          {' '}
+          (Unhandled internal link:
+          {' '}
+          <code>{href}</code>
+          )
         </span>
       )
     }
