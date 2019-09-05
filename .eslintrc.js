@@ -14,6 +14,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['jest'],
+  root: true,
   rules: {
     'comma-dangle': ['error', {
       arrays: 'always-multiline',
