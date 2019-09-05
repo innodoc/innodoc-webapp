@@ -6,8 +6,7 @@ import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import Layout from '../Layout'
 import Index from '../Index'
 import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
-import css from './style.sass'
-import contentCss from '../content/style.sass'
+import css from '../content/style.sass'
 
 const IndexPage = () => {
   const { t } = useTranslation()
@@ -16,7 +15,7 @@ const IndexPage = () => {
       <div className={css.sidebarToggle}>
         <SidebarToggleButton />
       </div>
-      <h1 className={classNames(contentCss.header, 'clearfix')}>
+      <h1 className={classNames(css.header, 'clearfix')}>
         {t('common.index')}
       </h1>
       <Index />

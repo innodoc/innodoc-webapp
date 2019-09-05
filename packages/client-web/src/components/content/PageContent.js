@@ -3,8 +3,9 @@ import React from 'react'
 import pageSelectors from '@innodoc/client-store/src/selectors/page'
 
 import useContentPane from '../../hooks/useContentPane'
-import css from './style.sass'
 import ContentFragment from './ContentFragment'
+import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
+import css from './style.sass'
 
 const PageContent = () => {
   const {
@@ -16,6 +17,9 @@ const PageContent = () => {
 
   return (
     <div className={fadeInClassName} id="content">
+      <div className={css.sidebarToggle}>
+        <SidebarToggleButton />
+      </div>
       <h1 className={css.header}>{title}</h1>
       <div ref={mathJaxElem}>
         <ContentFragment content={content} />
