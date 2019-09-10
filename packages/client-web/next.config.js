@@ -161,10 +161,11 @@ const wrappedNextConfig = (config) => (
 
 // bundle analyzer (set BUNDLE_ANALYZE=both to enable)
 const withBundleAnalyzer = (config) => {
+  const newConfig = { ...config }
   const bundleAnalyzerBasePath = path.join(__dirname, 'bundle-analyzer')
-  nextConfig.analyzeServer = ['server', 'both'].includes(process.env.BUNDLE_ANALYZE)
-  nextConfig.analyzeBrowser = ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE)
-  nextConfig.bundleAnalyzerConfig = {
+  newConfig.analyzeServer = ['server', 'both'].includes(process.env.BUNDLE_ANALYZE)
+  newConfig.analyzeBrowser = ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE)
+  newConfig.bundleAnalyzerConfig = {
     server: {
       analyzerMode: 'static',
       reportFilename: path.join(bundleAnalyzerBasePath, 'server.html'),
@@ -174,7 +175,7 @@ const withBundleAnalyzer = (config) => {
       reportFilename: path.join(bundleAnalyzerBasePath, 'client.html'),
     },
   }
-  return nextBundleAnalyzer(config)
+  return nextBundleAnalyzer(newConfig)
 }
 
 module.exports = process.env.BUNDLE_ANALYZE
