@@ -9,9 +9,8 @@ import fragmentSelectors from '@innodoc/client-store/src/selectors/fragment'
 import pageSelectors from '@innodoc/client-store/src/selectors/page'
 
 import Footer from './Footer'
+import FooterLink from './Link'
 import ContentFragment from '../../content/ContentFragment'
-import { PageLink } from '../../content/links'
-import css from './style.sass'
 
 const mockGetApp = appSelectors.getApp
 const mockGetCurrentCourse = courseSelectors.getCurrentCourse
@@ -54,6 +53,9 @@ jest.mock('react-redux', () => ({
     return mockFooterB
   },
 }))
+jest.mock('next/router', () => ({
+  useRouter: () => ({ asPath: '/toc' }),
+}))
 
 describe('<Footer />', () => {
   it('should render', () => {
@@ -62,20 +64,38 @@ describe('<Footer />', () => {
     expect(wrapper.find('h4').text()).toBe('Test Course')
   })
 
-  it('should render page links', () => {
+  it('should render custom page links', () => {
     const wrapper = shallow(<Footer />)
-    const pageLinks = wrapper.find(PageLink)
-    expect(pageLinks).toHaveLength(2)
-    const pageLink1 = pageLinks.at(0)
-    const pageLink2 = pageLinks.at(1)
-    expect(pageLink1.prop('contentId')).toBe('foo')
-    expect(pageLink1.find('a').prop('className')).toMatch(css.active)
-    expect(pageLink1.find('a').prop('title')).toBe('Foo page')
-    expect(pageLink1.find('a > span').text()).toBe('Foo')
-    expect(pageLink2.prop('contentId')).toBe('bar')
-    expect(pageLink2.find('a').prop('className')).not.toMatch(css.active)
-    expect(pageLink2.find('a').prop('title')).toBe('Bar page')
-    expect(pageLink2.find('a > span').text()).toBe('Bar')
+    const footerLinks = wrapper.find(FooterLink)
+    expect(footerLinks).toHaveLength(4)
+    const footerLink1 = footerLinks.at(0)
+    expect(footerLink1.prop('active')).toBe(true)
+    expect(footerLink1.prop('iconType')).toBe('foo')
+    expect(footerLink1.prop('renderLink')().props.contentId).toBe('foo')
+    expect(footerLink1.prop('shortTitle')).toBe('Foo')
+    expect(footerLink1.prop('title')).toBe('Foo page')
+    const footerLink2 = footerLinks.at(1)
+    expect(footerLink2.prop('active')).toBe(false)
+    expect(footerLink2.prop('iconType')).toBe('bar')
+    expect(footerLink2.prop('renderLink')().props.contentId).toBe('bar')
+    expect(footerLink2.prop('shortTitle')).toBe('Bar')
+    expect(footerLink2.prop('title')).toBe('Bar page')
+  })
+
+  it('should render other page links', () => {
+    const wrapper = shallow(<Footer />)
+    const footerLinks = wrapper.find(FooterLink)
+    expect(footerLinks).toHaveLength(4)
+    const otherLink1 = footerLinks.at(2)
+    expect(otherLink1.prop('active')).toBe(true)
+    expect(otherLink1.prop('iconType')).toBe('read')
+    expect(otherLink1.prop('renderLink')().props.href).toBe('/toc')
+    expect(otherLink1.prop('title')).toBe('common.toc')
+    const otherLink2 = footerLinks.at(3)
+    expect(otherLink2.prop('active')).toBe(false)
+    expect(otherLink2.prop('iconType')).toBe('bars')
+    expect(otherLink2.prop('renderLink')().props.href).toBe('/index-page')
+    expect(otherLink2.prop('title')).toBe('common.index')
   })
 
   it.each(['A', 'B'])('should render custom footer %s', (footer) => {

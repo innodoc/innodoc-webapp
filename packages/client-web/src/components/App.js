@@ -1,7 +1,8 @@
 import React from 'react'
-import { Provider } from 'react-redux'
+import { connect, Provider } from 'react-redux'
 import Head from 'next/head'
 import App from 'next/app'
+import Router from 'next/router'
 import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 
@@ -31,7 +32,7 @@ import 'antd/lib/tree/style/index.less'
 import { appWithTranslation } from '@innodoc/client-misc/src/i18n'
 import rootSaga from '@innodoc/client-sagas'
 import makeMakeStore from '@innodoc/client-store/src/store'
-import { loadManifest, setServerConfiguration } from '@innodoc/client-store/src/actions/content'
+import { loadManifest, navigate, setServerConfiguration } from '@innodoc/client-store/src/actions/content'
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
 
 class InnoDocApp extends App {
@@ -68,7 +69,17 @@ class InnoDocApp extends App {
   }
 
   render() {
-    const { Component, pageProps, store } = this.props
+    const {
+      Component,
+      dispatchNavigate,
+      pageProps,
+      store,
+    } = this.props
+
+    if (process.browser) {
+      Router.events.on('routeChangeStart', dispatchNavigate)
+    }
+
     return (
       <>
         <Head>
@@ -91,7 +102,9 @@ export { InnoDocApp } // for testing
 export default withRedux(makeMakeStore(rootSaga), withReduxConfig)(
   appWithTranslation(
     withReduxSaga(
-      InnoDocApp
+      connect(null, { dispatchNavigate: navigate })(
+        InnoDocApp
+      )
     )
   )
 )

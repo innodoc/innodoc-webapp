@@ -48,6 +48,16 @@ export default class Course extends Model {
         }
         break
       }
+      case contentActionTypes.NAVIGATE: {
+        const course = CourseModel.first()
+        if (course) {
+          course.update({
+            currentPage: null,
+            currentSection: null,
+          })
+        }
+        break
+      }
       default:
         break
     }
