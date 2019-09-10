@@ -25,7 +25,8 @@
     "unspecific": {
       "title": "Error",
       "msg": "Something went wrong."
-    }
+    },
+    "backHome": "Back home"
   },
   "header": {
     "createAccount": "Create Account",

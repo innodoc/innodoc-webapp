@@ -25,7 +25,8 @@
     "unspecific": {
       "title": "Fehler",
       "msg": "Leider ist etwas schief gelaufen."
-    }
+    },
+    "backHome": "Zurück zu Home"
   },
   "header": {
     "createAccount": "Konto erstellen",

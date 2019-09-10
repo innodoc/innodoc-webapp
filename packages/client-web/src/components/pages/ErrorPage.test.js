@@ -1,23 +1,38 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Alert } from 'antd'
+import { Result } from 'antd'
 
 import ErrorPage from './ErrorPage'
 import Layout from '../Layout'
 
+jest.mock('react-redux', () => ({
+  useSelector: () => ({ homeLink: '/home/link' }),
+}))
+
+let mockRouter
+jest.mock('next/router', () => ({
+  useRouter: () => mockRouter,
+}))
+
 describe('<ErrorPage />', () => {
-  it('should render 404 as info', () => {
-    const wrapper = shallow(<ErrorPage statusCode={404} />)
-    const layout = wrapper.find(Layout)
-    expect(layout.exists()).toBe(true)
-    const alert = layout.find(Alert)
-    expect(alert.exists()).toBe(true)
-    expect(alert.prop('type')).toBe('info')
+  beforeEach(() => {
+    mockRouter = { asPath: '/current/url', replace: jest.fn() }
   })
 
-  it('should render 500 as error', () => {
-    const wrapper = shallow(<ErrorPage statusCode={500} />)
-    expect(wrapper.find(Alert).prop('type')).toBe('error')
+  it.each([404, 500])('should render %s', (statusCode) => {
+    const wrapper = shallow(<ErrorPage statusCode={statusCode} />)
+    expect(wrapper.exists(Layout)).toBe(true)
+    const result = wrapper.find(Result)
+    expect(result.prop('status')).toBe(statusCode.toString())
+    expect(result.prop('subTitle')).toEqual([`errorPage.${statusCode}.msg`, 'errorPage.unspecific.msg'])
+    expect(result.prop('title')).toEqual([`errorPage.${statusCode}.title`, 'errorPage.unspecific.title'])
+    expect(result.prop('extra').props.href).toBe('/home/link')
+    expect(mockRouter.replace).not.toBeCalled()
+  })
+
+  it('should call router.replace() if without statusCode', () => {
+    shallow(<ErrorPage />)
+    expect(mockRouter.replace).toBeCalledWith('/current/url')
   })
 
   describe('getInitialProps', () => {
