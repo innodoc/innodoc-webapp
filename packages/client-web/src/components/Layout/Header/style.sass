@@ -10,19 +10,18 @@
 
 .logoLink
   display: inline-block
-  white-space: nowrap
+  height: $layout-header-height
   margin-top: 0px
+  padding: 0 $padding-md 0 0
   position: relative
-  top: -1px
-  padding: 0 $padding-md
+  white-space: nowrap
 
   span
-    display: inline-block
-    vertical-align: middle
-    line-height: 3/4 * $line-height-base
-    font-weight: bold
-    white-space: normal
     color: $menu-item-color
+    display: inline-block
+    font-weight: bold
+    line-height: 3/4 * $line-height-base
+    white-space: normal
 
   &:hover span
     color: $menu-highlight-color

@@ -1,7 +1,5 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
@@ -16,33 +14,11 @@ const Logo = () => {
   const logoImg = logoFilename
     ? <img alt={title} src={`${staticRoot}${logoFilename}`} />
     : null
-  const xs = logoFilename ? 6 : 0
-  const sm = logoFilename ? 6 : 0
-  const md = logoFilename ? 8 : 0
-  const lg = logoFilename ? 8 : 0
-  const xl = logoFilename ? 8 : 0
   return (
-    <Row>
-      <Col
-        className={css.headerLogoWrapper}
-        xs={xs}
-        sm={sm}
-        md={md}
-        lg={lg}
-        xl={xl}
-      >
-        {logoImg}
-      </Col>
-      <Col
-        xs={24 - xs}
-        sm={24 - sm}
-        md={24 - md}
-        lg={24 - lg}
-        xl={24 - xl}
-      >
-        <span>{title}</span>
-      </Col>
-    </Row>
+    <div className={css.headerLogoWrapper}>
+      {logoImg}
+      <span>{title}</span>
+    </div>
   )
 }
 

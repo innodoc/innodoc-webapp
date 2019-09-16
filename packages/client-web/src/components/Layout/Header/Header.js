@@ -37,10 +37,10 @@ const Header = () => {
     <>
       <AntLayout.Header className={css.header}>
         <Row>
-          <Col xs={18} sm={20} md={8} lg={7} xl={5}>
+          <Col xs={18} sm={20} md={5} lg={4} xl={3}>
             {logoWrapper}
           </Col>
-          <Col xs={6} sm={4} md={4} lg={4} xl={3} className={css.menuRight}>
+          <Col xs={6} sm={4} md={0} lg={0} xl={0} className={css.menuRight}>
             <Button
               className={classNames(css.menuButton, css.mobileMenuButton)}
               icon="menu"
@@ -48,10 +48,10 @@ const Header = () => {
               title={t('header.menu')}
             />
           </Col>
-          <Col xs={0} sm={0} md={8} lg={9} xl={12}>
+          <Col xs={0} sm={0} md={14} lg={16} xl={17}>
             <Nav />
           </Col>
-          <Col xs={0} sm={0} md={4} lg={4} xl={4}>
+          <Col xs={0} sm={0} md={5} lg={4} xl={4}>
             <SearchInput />
           </Col>
         </Row>
