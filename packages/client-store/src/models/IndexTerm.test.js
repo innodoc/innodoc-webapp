@@ -37,10 +37,11 @@ describe('IndexTerm', () => {
           loadManifestSuccess({ content: manifest }), session.IndexTerm, session
         )
         const indexTerm = session.IndexTerm.first().ref
-        expect(indexTerm.indexTermId).toBe('term-1')
+        expect(indexTerm.id).toBe('term-1')
         expect(indexTerm.language).toBe('en')
         expect(indexTerm.name).toBe('Term 1')
         const indexTermLocation = session.IndexTermLocation.first().ref
+        expect(indexTermLocation.id).toBe('section-0/subsection-1#index-term-term-1-0')
         expect(indexTermLocation.anchorId).toBe('term-1-0')
         expect(indexTermLocation.indexTermId).toBe(indexTerm.id)
         expect(indexTermLocation.sectionId).toBe('section-0/subsection-1')

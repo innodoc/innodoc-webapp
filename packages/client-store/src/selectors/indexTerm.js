@@ -16,9 +16,7 @@ const getIndexTerms = createSelector(
       const { ref } = term
       return {
         ...ref,
-        locations: term.locations.toRefArray().map((location) => (
-          `${location.sectionId}#index-term-${location.anchorId}`
-        )),
+        locations: term.locations.toRefArray().map((location) => location.id),
       }
     })
     .sort(intSortArray(language))
