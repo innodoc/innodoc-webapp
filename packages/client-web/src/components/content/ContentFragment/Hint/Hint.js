@@ -1,6 +1,5 @@
 import React from 'react'
-import Collapse from 'antd/es/collapse'
-import Icon from 'antd/es/icon'
+import { Collapse, Icon } from 'antd'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { attributesToObject } from '@innodoc/client-misc/src/util'

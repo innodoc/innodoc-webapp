@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
-import Button from 'antd/es/button'
-import Col from 'antd/es/col'
-import Drawer from 'antd/es/drawer'
-import AntLayout from 'antd/es/layout'
-import Row from 'antd/es/row'
+import {
+  Button,
+  Col,
+  Drawer,
+  Layout as AntLayout,
+  Row,
+} from 'antd'
 
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'

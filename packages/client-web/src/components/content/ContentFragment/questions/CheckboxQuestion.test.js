@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Checkbox from 'antd/es/checkbox'
-import Icon from 'antd/es/icon'
+import { Checkbox, Icon } from 'antd'
 
 import CheckboxQuestion from './CheckboxQuestion'
 

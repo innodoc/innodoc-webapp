@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import List from 'antd/es/list'
+import { List } from 'antd'
 import { SectionLink } from '../links'
 
 import SubsectionList, { Subsection } from './SubsectionList'

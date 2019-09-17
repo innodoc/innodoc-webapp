@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import AntCard from 'antd/es/card'
-import Icon from 'antd/es/icon'
+import { Card as AntCard, Icon } from 'antd'
 
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 

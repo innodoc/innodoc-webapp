@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Icon from 'antd/es/icon'
+import { Icon } from 'antd'
 
 import FeedbackIcon from './FeedbackIcon'
 

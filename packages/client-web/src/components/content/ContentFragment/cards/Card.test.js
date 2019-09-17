@@ -1,7 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import AntCard from 'antd/es/card'
-import Icon from 'antd/es/icon'
+import { Card as AntCard, Icon } from 'antd'
 
 import Card from './Card'
 import ContentFragment from '..'

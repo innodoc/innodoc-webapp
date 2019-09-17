@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import classNames from 'classnames'
-import Button from 'antd/es/button'
+import { Button } from 'antd'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import { toggleSidebar } from '@innodoc/client-store/src/actions/ui'

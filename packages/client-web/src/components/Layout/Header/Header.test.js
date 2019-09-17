@@ -1,8 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Button from 'antd/es/button'
-import Drawer from 'antd/es/drawer'
-import AntLayout from 'antd/es/layout'
+import { Button, Drawer, Layout as AntLayout } from 'antd'
 
 import { InternalLink } from '../../content/links'
 import Header from './Header'

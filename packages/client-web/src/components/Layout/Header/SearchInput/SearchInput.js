@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Input from 'antd/es/input'
+import { Input } from 'antd'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import List from 'antd/es/list'
+import { List } from 'antd'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { sectionType } from '@innodoc/client-misc/src/propTypes'

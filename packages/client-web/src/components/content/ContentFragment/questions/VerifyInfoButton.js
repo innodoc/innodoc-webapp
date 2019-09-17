@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
-import Button from 'antd/es/button'
-import Divider from 'antd/es/divider'
+import { Button, Divider } from 'antd'
 
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 import { unwrapPara } from '@innodoc/client-misc/src/util'

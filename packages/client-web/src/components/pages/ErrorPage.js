@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
-import Button from 'antd/es/button'
-import Result from 'antd/es/result'
+import { Button, Result } from 'antd'
 
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 

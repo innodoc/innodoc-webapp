@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import AntBreadcrumb from 'antd/es/breadcrumb'
+import { Breadcrumb as AntBreadcrumb } from 'antd'
 
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 

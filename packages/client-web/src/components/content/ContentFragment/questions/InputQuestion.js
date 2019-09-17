@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import Input from 'antd/es/input'
+import { Input } from 'antd'
 
 import css from './style.sass'
 import InputPopover from './InputPopover'

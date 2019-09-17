@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import AntTable from 'antd/es/table'
+import { Table as AntTable } from 'antd'
 
 import css from './style.sass'
 import ContentFragment from '..'

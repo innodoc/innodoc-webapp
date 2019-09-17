@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Menu from 'antd/es/menu'
+import { Menu } from 'antd'
 
 import LanguageSwitcher from './LanguageSwitcher'
 

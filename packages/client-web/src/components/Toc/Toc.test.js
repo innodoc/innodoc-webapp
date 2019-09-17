@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Tree from 'antd/es/tree'
+import { Tree } from 'antd'
 
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 

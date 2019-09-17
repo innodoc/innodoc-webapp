@@ -1,6 +1,5 @@
 import React from 'react'
-import Icon from 'antd/es/icon'
-import Menu from 'antd/es/menu'
+import { Icon, Menu } from 'antd'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 

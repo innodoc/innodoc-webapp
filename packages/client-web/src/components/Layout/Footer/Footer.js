@@ -2,10 +2,12 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import Col from 'antd/es/col'
-import AntLayout from 'antd/es/layout'
-import List from 'antd/es/list'
-import Row from 'antd/es/row'
+import {
+  Col,
+  Layout as AntLayout,
+  List,
+  Row,
+} from 'antd'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'

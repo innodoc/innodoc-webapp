@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Col from 'antd/es/col'
-import AntLayout from 'antd/es/layout'
+import { Col, Layout as AntLayout } from 'antd'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'

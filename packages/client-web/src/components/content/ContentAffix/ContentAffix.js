@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
-import Affix from 'antd/es/affix'
+import { Affix } from 'antd'
 
 import css from './style.sass'
 import Breadcrumb from './Breadcrumb'

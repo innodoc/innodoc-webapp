@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Button from 'antd/es/button'
+import { Button } from 'antd'
 
 import { toggleSidebar } from '@innodoc/client-store/src/actions/ui'
 

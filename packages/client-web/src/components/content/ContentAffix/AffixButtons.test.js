@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Icon from 'antd/es/icon'
-import Menu from 'antd/es/menu'
+import { Icon, Menu } from 'antd'
 
 import AffixButtons, { SectionButton } from './AffixButtons'
 import { SectionLink } from '../links'

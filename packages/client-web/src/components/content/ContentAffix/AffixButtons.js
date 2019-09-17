@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import Icon from 'antd/es/icon'
-import Menu from 'antd/es/menu'
+import { Icon, Menu } from 'antd'
 
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
