@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Result } from 'antd'
+import Result from 'antd/lib/result'
 
 import ErrorPage from './ErrorPage'
 import Layout from '../Layout'

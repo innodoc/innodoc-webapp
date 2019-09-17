@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Button from 'antd/lib/button'
-import Modal from 'antd/lib/modal'
 import Icon from 'antd/lib/icon'
+import Modal from 'antd/lib/modal'
 
 import { messageType } from '@innodoc/client-misc/src/propTypes'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'

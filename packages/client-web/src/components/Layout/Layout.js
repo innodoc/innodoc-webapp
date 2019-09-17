@@ -7,12 +7,12 @@ import { childrenType } from '@innodoc/client-misc/src/propTypes'
 import { clearMessage } from '@innodoc/client-store/src/actions/ui'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
-import css from './style.sass'
 import Footer from './Footer'
 import Header from './Header'
 import MessageModal from '../MessageModal'
 import Sidebar from './Sidebar'
 import Toc from '../Toc'
+import css from './style.sass'
 
 const Layout = ({ children, disableSidebar }) => {
   const { message } = useSelector(appSelectors.getApp)

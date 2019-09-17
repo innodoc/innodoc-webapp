@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Modal from 'antd/lib/modal'
 import Icon from 'antd/lib/icon'
+import Modal from 'antd/lib/modal'
 
 import MessageModal from './MessageModal'
 
