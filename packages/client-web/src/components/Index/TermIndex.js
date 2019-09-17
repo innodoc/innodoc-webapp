@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
-import List from 'antd/lib/list'
-import Tag from 'antd/lib/tag'
+import List from 'antd/es/list'
+import Tag from 'antd/es/tag'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import indexTermSelectors from '@innodoc/client-store/src/selectors/indexTerm'

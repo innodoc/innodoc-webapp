@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Affix from 'antd/lib/affix'
+import Affix from 'antd/es/affix'
 
 import css from './style.sass'
 import ContentAffix from './ContentAffix'

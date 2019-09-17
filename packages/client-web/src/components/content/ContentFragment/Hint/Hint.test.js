@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Collapse from 'antd/lib/collapse'
+import Collapse from 'antd/es/collapse'
 
 import Hint from './Hint'
 import ContentFragment from '..'

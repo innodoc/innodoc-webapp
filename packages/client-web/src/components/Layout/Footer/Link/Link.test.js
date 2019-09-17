@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Icon from 'antd/lib/icon'
-import List from 'antd/lib/list'
+import Icon from 'antd/es/icon'
+import List from 'antd/es/list'
 
 import Link from './Link'
 import css from './style.sass'

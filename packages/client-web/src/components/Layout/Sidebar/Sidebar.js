@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Button from 'antd/lib/button'
-import AntLayout from 'antd/lib/layout'
+import Button from 'antd/es/button'
+import AntLayout from 'antd/es/layout'
 
 import { toggleSidebar } from '@innodoc/client-store/src/actions/ui'
 import appSelectors from '@innodoc/client-store/src/selectors'

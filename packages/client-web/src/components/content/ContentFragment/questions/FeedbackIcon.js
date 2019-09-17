@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Icon from 'antd/lib/icon'
+import Icon from 'antd/es/icon'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 

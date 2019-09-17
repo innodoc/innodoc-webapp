@@ -113,9 +113,12 @@ const patchWebpackConfig = (config) => {
     .forEach((rule) => { rule.use.options.rootMode = rootMode })
 
   // debug print webpack config
-  /* eslint-disable-next-line no-extend-native */
-  // Object.defineProperty(RegExp.prototype, 'toJSON', { value: RegExp.prototype.toString })
-  // console.log(JSON.stringify(config.module.rules, null, 2))
+  if (process.env.PRINT_WEBPACK_CONFIG) {
+    /* eslint-disable-next-line no-extend-native */
+    Object.defineProperty(RegExp.prototype, 'toJSON', { value: RegExp.prototype.toString })
+    /* eslint-disable-next-line no-console */
+    console.log(JSON.stringify(config.module.rules, null, 2))
+  }
 
   return config
 }
@@ -138,11 +141,21 @@ const nextConfig = {
     localIdentName: '[local]___[hash:base64:5]',
   },
 
-  // transpile local modules
   transpileModules: [
+    // local modules
     '@innodoc/client-misc',
     '@innodoc/client-sagas',
     '@innodoc/client-store',
+    // ES6 node modules
+    'antd',
+    'css-animation',
+    'rc-calendar',
+    'rc-animate',
+    'rc-pagination',
+    'rc-tabs',
+    'rc-tooltip',
+    'rc-tree',
+    'rc-util',
   ],
 
   // custom webpack config

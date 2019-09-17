@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Icon from 'antd/lib/icon'
-import Input from 'antd/lib/input'
+import Icon from 'antd/es/icon'
+import Input from 'antd/es/input'
 
 import InputQuestion from './InputQuestion'
 

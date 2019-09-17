@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Menu from 'antd/lib/menu'
+import Menu from 'antd/es/menu'
 
 import UserMenu from './UserMenu'
 

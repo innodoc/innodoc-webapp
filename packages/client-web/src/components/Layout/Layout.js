@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import AntLayout from 'antd/lib/layout'
+import AntLayout from 'antd/es/layout'
 
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
 import { clearMessage } from '@innodoc/client-store/src/actions/ui'

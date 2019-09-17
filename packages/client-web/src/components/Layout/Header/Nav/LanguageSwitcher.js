@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import classNames from 'classnames'
-import Icon from 'antd/lib/icon'
-import Menu from 'antd/lib/menu'
+import Icon from 'antd/es/icon'
+import Menu from 'antd/es/menu'
 
 import { changeLanguage } from '@innodoc/client-store/src/actions/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'

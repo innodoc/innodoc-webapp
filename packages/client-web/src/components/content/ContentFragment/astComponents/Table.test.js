@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import AntTable from 'antd/lib/table'
+import AntTable from 'antd/es/table'
 
 import Table from './Table'
 

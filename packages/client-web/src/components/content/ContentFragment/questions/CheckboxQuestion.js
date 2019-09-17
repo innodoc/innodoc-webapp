@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import Checkbox from 'antd/lib/checkbox'
+import Checkbox from 'antd/es/checkbox'
 
 import css from './style.sass'
 

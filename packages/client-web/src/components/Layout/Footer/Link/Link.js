@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import Icon from 'antd/lib/icon'
-import List from 'antd/lib/list'
+import Icon from 'antd/es/icon'
+import List from 'antd/es/list'
 
 import css from './style.sass'
 

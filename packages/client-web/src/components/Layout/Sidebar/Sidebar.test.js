@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import AntLayout from 'antd/lib/layout'
+import AntLayout from 'antd/es/layout'
 
 import Sidebar from './Sidebar'
 

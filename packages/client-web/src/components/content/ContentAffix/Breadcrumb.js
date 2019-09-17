@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import AntBreadcrumb from 'antd/lib/breadcrumb'
-import Icon from 'antd/lib/icon'
+import AntBreadcrumb from 'antd/es/breadcrumb'
+import Icon from 'antd/es/icon'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'

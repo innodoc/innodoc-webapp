@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import List from 'antd/lib/list'
+import List from 'antd/es/list'
 
 import { unwrapPara } from '@innodoc/client-misc/src/util'
 

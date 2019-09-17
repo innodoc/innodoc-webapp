@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import List from 'antd/lib/list'
+import List from 'antd/es/list'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 
