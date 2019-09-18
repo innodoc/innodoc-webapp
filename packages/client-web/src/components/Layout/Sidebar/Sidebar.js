@@ -35,7 +35,7 @@ const Sidebar = ({ children }) => {
               icon="double-left"
               onClick={() => dispatch(toggleSidebar())}
               size="small"
-              title={t('content.hideToc')}
+              title={t('common.hideToc')}
             />
           </div>
           <div className={css.sticky} style={{ minWidth: width }}>
