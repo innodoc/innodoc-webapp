@@ -40,7 +40,7 @@ const Footer = () => {
         key={page.id}
         renderLink={() => <PageLink contentId={page.id} />}
         shortTitle={page.shortTitle[language]}
-        title={page.title[language]}
+        title={page.title[language] || ''}
       />
     )
   )
