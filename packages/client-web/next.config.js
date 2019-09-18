@@ -6,6 +6,8 @@ const withSass = require('@zeit/next-sass')
 const nextBundleAnalyzer = require('@zeit/next-bundle-analyzer')
 const withTranspileModules = require('next-transpile-modules')
 
+const nodeModulesEs = require('./nodeModulesEs')
+
 // babel rootMode for monorepo support
 const rootMode = 'upward'
 
@@ -143,15 +145,7 @@ const nextConfig = {
     '@innodoc/client-sagas',
     '@innodoc/client-store',
     // ES6 node modules
-    'antd',
-    'css-animation',
-    'rc-calendar',
-    'rc-animate',
-    'rc-pagination',
-    'rc-tabs',
-    'rc-tooltip',
-    'rc-tree',
-    'rc-util',
+    ...nodeModulesEs,
   ],
 
   // custom webpack config

@@ -1,3 +1,5 @@
+const nodeModulesEs = require('./nodeModulesEs')
+
 module.exports = {
   testEnvironment: 'enzyme',
   roots: ['src'],
@@ -13,6 +15,13 @@ module.exports = {
   testPathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/src/.next/',
+  ],
+  transform: {
+    '^.+\\.[t|j]sx?$': 'babel-jest',
+  },
+  transformIgnorePatterns: [
+    '!enzyme\\.config\\.js',
+    `/node_modules/(?!(${nodeModulesEs.join('|')})/)`,
   ],
   verbose: true,
 }
