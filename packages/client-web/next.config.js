@@ -6,59 +6,24 @@ const withSass = require('@zeit/next-sass')
 const nextBundleAnalyzer = require('@zeit/next-bundle-analyzer')
 const withTranspileModules = require('next-transpile-modules')
 
-const rootDir = path.resolve(__dirname, '..', '..')
-
 // babel rootMode for monorepo support
 const rootMode = 'upward'
 
-/* eslint no-param-reassign:
-  ["error", {
-    "props": true,
-    "ignorePropertyModificationsFor": ["use", "loader", "rule"],
-  }]
-*/
-
-const addAntdScssThemePlugin = (config) => {
-  const patchLoader = (type) => {
-    config.module.rules
-      .filter((rule) => Array.isArray(rule.use))
-      .map((rule) => rule.use.find((loader) => loader.loader === `${type}-loader`))
-      .filter((use) => use)
-      .forEach((use) => {
-        const antdScss = AntdScssThemePlugin.themify({
-          loader: `${type}-loader`,
-          options: use.options,
-        })
-        use.loader = antdScss.loader
-        use.options = antdScss.options
-      })
-  }
-
-  // no CSS module for less
-  config.module.rules
-    .filter((rule) => Array.isArray(rule.use))
-    .map((rule) => rule.use)
-    .filter((use) => use.some((loader) => loader.loader === 'less-loader'))
-    .map((use) => use
-      .filter((loader) => typeof loader === 'object')
-      .find((loader) => loader.loader.startsWith('css-loader')))
-    .forEach((loader) => { loader.options.modules = false })
-
-  // replace sass/less-loaders with AntdScssThemePlugin
-  patchLoader('sass')
-  patchLoader('less')
-
-  const antdThemeFile = path.resolve(__dirname, 'src', 'style', 'antd-theme.sass')
-  config.plugins.push(new AntdScssThemePlugin(antdThemeFile))
-}
+// used to override ant design theme variables
+const antdThemeFile = path.resolve(__dirname, 'src', 'style', 'antd-theme.sass')
 
 // update next.js webpack config
-const patchWebpackConfig = (config) => {
+const webpack = (prevConfig) => {
+  const config = { ...prevConfig }
+
+  const dotEnvFile = path.resolve(__dirname, '..', '..', '.env')
   config.plugins.push(new Dotenv({
-    path: path.resolve(rootDir, '.env'),
-    safe: path.resolve(rootDir, '.env.example'),
+    path: dotEnvFile,
+    safe: `${dotEnvFile}.example`,
     systemvars: true,
   }))
+
+  config.plugins.push(new AntdScssThemePlugin(antdThemeFile))
 
   // images, fonts
   config.module.rules.push({
@@ -92,32 +57,64 @@ const patchWebpackConfig = (config) => {
     ],
   })
 
-  // We must not include '*.test.js' files in the build
+  // do not include '*.test.js' files in the build
   config.module.rules.push({
     test: /\.test\.js$/,
     loader: 'ignore-loader',
   })
 
-  addAntdScssThemePlugin(config)
+  // disable CSS modules for less
+  for (let i = 0; i < config.module.rules.length; i += 1) {
+    const rule = config.module.rules[i]
+    if (Array.isArray(rule.use)) {
+      if (rule.use.some((loader) => loader.loader === 'less-loader')) {
+        for (let j = 0; j < rule.use.length; j += 1) {
+          const use = rule.use[j]
+          if (typeof use === 'object' && use.loader.startsWith('css-loader')) {
+            use.options.modules = false
+          }
+        }
+      }
+    }
+  }
+
+  // replace sass/less-loaders with AntdScssThemePlugin
+  const loaderTypes = ['sass', 'less']
+  for (let i = 0; i < loaderTypes.length; i += 1) {
+    for (let j = 0; j < config.module.rules.length; j += 1) {
+      const rule = config.module.rules[j]
+      if (Array.isArray(rule.use)) {
+        for (let k = 0; k < rule.use.length; k += 1) {
+          const use = rule.use[k]
+          const loader = `${loaderTypes[i]}-loader`
+          if (use.loader === loader) {
+            const antdScss = AntdScssThemePlugin.themify({
+              loader,
+              options: use.options,
+            })
+            use.loader = antdScss.loader
+            use.options = antdScss.options
+          }
+        }
+      }
+    }
+  }
 
   // Add rootMode to next-babel-loader. This is important so sub-package babel
   // is picking up the root babel.config.js.
-  config.module.rules
-    .filter(
-      (rule) => (
-        rule.use
-        && rule.use.loader
-        && rule.use.loader === 'next-babel-loader'
-      )
-    )
-    .forEach((rule) => { rule.use.options.rootMode = rootMode })
+  for (let i = 0; i < config.module.rules.length; i += 1) {
+    const rule = config.module.rules[i]
+    if (rule.use && rule.use.loader && rule.use.loader === 'next-babel-loader') {
+      rule.use.options.rootMode = rootMode
+    }
+  }
 
   // debug print webpack config
   if (process.env.PRINT_WEBPACK_CONFIG) {
     /* eslint-disable-next-line no-extend-native */
     Object.defineProperty(RegExp.prototype, 'toJSON', { value: RegExp.prototype.toString })
     /* eslint-disable-next-line no-console */
-    console.log(JSON.stringify(config.module.rules, null, 2))
+    console.log(JSON.stringify(config, null, 2))
   }
 
   return config
@@ -127,9 +124,8 @@ const patchWebpackConfig = (config) => {
 const nextConfig = {
   pageExtensions: ['js'], // only use .js (not .jsx)
 
-  lessLoaderOptions: {
-    javascriptEnabled: true, // needed by antd less code
-  },
+  // needed by antd less code
+  lessLoaderOptions: { javascriptEnabled: true },
 
   // GZIP compression should happen in reverse proxy
   compress: false,
@@ -159,7 +155,7 @@ const nextConfig = {
   ],
 
   // custom webpack config
-  webpack: patchWebpackConfig,
+  webpack,
 }
 
 const wrappedNextConfig = (config) => (
