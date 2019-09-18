@@ -13,7 +13,7 @@ import Layout from '../Layout'
 
 const ErrorPage = ({ statusCode }) => {
   const { t } = useTranslation()
-  const { homeLink } = useSelector(courseSelectors.getCurrentCourse)
+  const course = useSelector(courseSelectors.getCurrentCourse)
   const router = useRouter()
 
   if (!statusCode) {
@@ -21,19 +21,23 @@ const ErrorPage = ({ statusCode }) => {
     return null
   }
 
+  const resultExtra = course
+    ? (
+      <InternalLink href={course.homeLink} title="">
+        <Button icon="home" type="primary">
+          {t('errorPage.backHome')}
+        </Button>
+      </InternalLink>
+    )
+    : null
+
   return (
     <Layout>
       <Result
         status={statusCode.toString()}
         title={t([`errorPage.${statusCode}.title`, 'errorPage.unspecific.title'])}
         subTitle={t([`errorPage.${statusCode}.msg`, 'errorPage.unspecific.msg'])}
-        extra={(
-          <InternalLink href={homeLink} title="">
-            <Button icon="home" type="primary">
-              {t('errorPage.backHome')}
-            </Button>
-          </InternalLink>
-        )}
+        extra={resultExtra}
       />
     </Layout>
   )
