@@ -32,3 +32,16 @@
 
 .active, .active:hover
   text-decoration: underline
+
+\:global(.ant-drawer) .nav
+    margin-top: $padding-sm
+
+    > [role=menuitem]
+      padding-left: 0 !important
+      padding-right: 0 !important
+
+    \:global(.ant-menu-submenu-title)
+      padding-left: 0 !important
+
+    \:global(.ant-menu-sub) > [role=menuitem]
+      padding-left: $padding-lg !important
