@@ -2,4 +2,5 @@
 /packages/client-web/e2e/content
 /packages/client-web/src/.next
 /packages/client-web/src/static
+/packages/server/dist
 !.eslintrc.js

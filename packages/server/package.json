@@ -16,16 +16,20 @@
   "license": "GPL-3.0-or-later",
   "main": "src/server.js",
   "scripts": {
-    "dev": "NODE_ENV=development yarn run server",
-    "server": "node src/server.js",
-    "start": "NODE_ENV=production yarn run server"
+    "build": "babel -d dist/ src/server.js",
+    "dev": "NODE_ENV=development babel-node src/server.js",
+    "start": "NODE_ENV=production node dist/server.js"
   },
   "dependencies": {
+    "@babel/cli": "^7.6.0",
     "@innodoc/client-misc": "*",
     "@innodoc/client-web": "*",
     "dotenv-safe": "^8.1.0",
     "express": "^4.17.1",
     "next": "^9.0.5",
     "next-i18next": "^1.2.0"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.6.1"
   }
 }

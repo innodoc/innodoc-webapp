@@ -1,12 +1,12 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
 
-const Dotenv = require('dotenv-safe')
-const express = require('express')
-const next = require('next')
-const nextI18NextMiddleware = require('next-i18next/middleware').default
+import Dotenv from 'dotenv-safe'
+import express from 'express'
+import next from 'next'
+import nextI18NextMiddleware from 'next-i18next/middleware'
 
-const nextI18next = require('@innodoc/client-misc/src/i18n')
+import nextI18next from '@innodoc/client-misc/src/i18n'
 
 // directories
 const rootDir = path.resolve(__dirname, '..', '..', '..')
