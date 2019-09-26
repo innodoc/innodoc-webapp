@@ -7,7 +7,7 @@ import appSelectors from '@innodoc/client-store/src/selectors'
 import { toggleSidebar } from '@innodoc/client-store/src/actions/ui'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
-import css from './style.sass'
+import css from './style.sss'
 
 const ToggleButton = () => {
   const dispatch = useDispatch()

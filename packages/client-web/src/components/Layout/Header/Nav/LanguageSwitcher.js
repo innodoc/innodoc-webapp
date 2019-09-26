@@ -8,7 +8,7 @@ import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
-import css from './style.sass'
+import css from './style.sss'
 
 const LanguageSwitcher = (props) => {
   const { t } = useTranslation()

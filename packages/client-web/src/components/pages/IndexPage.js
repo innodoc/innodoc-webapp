@@ -6,7 +6,7 @@ import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import Layout from '../Layout'
 import Index from '../Index'
 import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
-import css from '../content/style.sass'
+import css from '../content/style.sss'
 
 const IndexPage = () => {
   const { t } = useTranslation()

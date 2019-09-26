@@ -7,7 +7,7 @@ import pageSelectors from '@innodoc/client-store/src/selectors/page'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import makeContentLink from './makeContentLink'
-import css from './style.sass'
+import css from './style.sss'
 
 const PageLink = makeContentLink(pageSelectors.makeGetPageLink, 'page')
 const SectionLink = makeContentLink(sectionSelectors.makeGetSectionLink, 'section')

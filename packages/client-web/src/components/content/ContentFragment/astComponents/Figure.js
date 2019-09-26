@@ -5,7 +5,7 @@ import { unwrapPara } from '@innodoc/client-misc/src/util'
 
 import ContentFragment from '..'
 import ImageTag from './Image'
-import css from './style.sass'
+import css from './style.sss'
 
 const Figure = ({ content }) => {
   const imgData = unwrapPara(content)[0].c

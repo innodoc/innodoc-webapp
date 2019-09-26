@@ -5,7 +5,7 @@ import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { attributesToObject } from '@innodoc/client-misc/src/util'
 import { attributeType, contentType } from '@innodoc/client-misc/src/propTypes'
 
-import css from './style.sass'
+import css from './style.sss'
 import ContentFragment from '..'
 
 const Hint = ({ attributes, content }) => {

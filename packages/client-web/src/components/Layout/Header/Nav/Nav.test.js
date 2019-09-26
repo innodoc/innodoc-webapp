@@ -8,7 +8,7 @@ import Nav from './Nav'
 import LanguageSwitcher from './LanguageSwitcher'
 import UserMenu from './UserMenu'
 import { PageLink } from '../../../content/links'
-import css from './style.sass'
+import css from './style.sss'
 
 const mockGetCurrentPage = pageSelectors.getCurrentPage
 const mockGetNavPages = pageSelectors.getNavPages

@@ -1,7 +1,7 @@
-@import '../../../style/antd-theme.sass'
+@import '@innodoc/client-web/src/style/antd-theme.sss'
 
 .background
-  background: linear-gradient(to right, transparent 0%, transparent 75%, fade-out($color-dark-bg, 0.99) 100%)
+  background: linear-gradient(to right, transparent 0%, transparent 75%, color($color-dark-bg a(1%)) 100%)
   border-right: $border-width-base $border-style-base $border-color-split
   height: 100%
 
@@ -34,14 +34,14 @@
   top: 0
   padding: $padding-lg $padding-md
 
-  \:global(.ant-tree-node-content-wrapper)
+  :global(.ant-tree-node-content-wrapper)
     margin-bottom: 4px !important
     height: auto !important
-    line-height: $line-height-base * 5/6 !important
+    line-height: calc($line-height-base * 5/6) !important
     white-space: normal !important
     margin-right: $padding-lg !important
 
-  \:global(.ant-tree-switcher-icon)
+  :global(.ant-tree-switcher-icon)
     font-size: $font-size-lg !important
     vertical-align: 0 !important
 

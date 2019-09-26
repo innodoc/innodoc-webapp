@@ -5,7 +5,7 @@ import { Card as AntCard, Icon } from 'antd'
 
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 
-import css from './style.sass'
+import css from './style.sss'
 import ContentFragment from '..'
 
 const Card = ({

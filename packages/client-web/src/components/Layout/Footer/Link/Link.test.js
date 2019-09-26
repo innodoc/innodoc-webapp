@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import { Icon, List } from 'antd'
 
 import Link from './Link'
-import css from './style.sass'
+import css from './style.sss'
 
 describe('<Footer />', () => {
   it('should render', () => {

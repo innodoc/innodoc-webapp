@@ -16,7 +16,7 @@ import Nav from './Nav'
 import Logo from './Logo'
 import SearchInput from './SearchInput'
 import { InternalLink } from '../../content/links'
-import css from './style.sass'
+import css from './style.sss'
 import useIsNarrowerThan from '../../../hooks/useIsNarrowerThan'
 
 const Header = () => {

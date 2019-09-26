@@ -1,18 +1,78 @@
+/* eslint-disable no-console */
+
+const fs = require('fs')
 const path = require('path')
 const Dotenv = require('dotenv-webpack')
-const AntdScssThemePlugin = require('antd-scss-theme-plugin')
+const withCss = require('@zeit/next-css')
 const withLess = require('@zeit/next-less')
-const withSass = require('@zeit/next-sass')
 const nextBundleAnalyzer = require('@zeit/next-bundle-analyzer')
 const withTranspileModules = require('next-transpile-modules')
+const postcss = require('postcss')
+const less = require('less')
+const LessPluginVariablesOutput = require('less-plugin-variables-output')
+const sugarss = require('sugarss')
+const deasync = require('deasync')
 
 const nodeModulesEs = require('./nodeModulesEs')
+const getPostcssConfig = require('./postcss.config')
 
 // babel rootMode for monorepo support
 const rootMode = 'upward'
 
-// used to override ant design theme variables
-const antdThemeFile = path.resolve(__dirname, 'src', 'style', 'antd-theme.sass')
+// antd default vars
+const antdThemeFilename = path.resolve(
+  __dirname, '..', '..', 'node_modules', 'antd', 'lib', 'style', 'themes', 'default.less'
+)
+
+// generated file with antd default vars
+const antdVarsFilename = path.resolve(__dirname, 'src', 'style', 'antd-vars.json')
+
+// overriden antd variables
+const antdVarsOverrideFilename = path.resolve(__dirname, 'src', 'style', 'antd-theme.sss')
+
+// extract antd default variables as JSON
+let varsExtracted = false
+less.render(
+  fs.readFileSync(antdThemeFilename).toString(),
+  {
+    filename: antdThemeFilename,
+    javascriptEnabled: true,
+    plugins: [new LessPluginVariablesOutput({ filename: antdVarsFilename })],
+  },
+  (err) => {
+    if (err) {
+      console.error('Failed to extract antd default variables!')
+      console.error(err)
+      process.exit(-1)
+    }
+    console.log('> Extracted Ant Design default variables.')
+    varsExtracted = true
+  }
+)
+deasync.loopWhile(() => !varsExtracted)
+
+// generate custom vars for antd
+let antdVars = null
+const postcssConfig = getPostcssConfig(
+  { file: { extname: path.extname(antdVarsOverrideFilename) } }
+)
+postcss(postcssConfig.plugins)
+  .process(
+    fs.readFileSync(antdVarsOverrideFilename).toString(),
+    {
+      from: antdVarsOverrideFilename,
+      parser: sugarss.parse,
+    }
+  )
+  .then((result) => {
+    antdVars = result.root.variables
+  })
+  .catch((err) => {
+    console.error('Failed to generate variables for Ant Design!')
+    console.log(err)
+    process.exit(-1)
+  })
+deasync.loopWhile(() => !antdVars)
 
 // update next.js webpack config
 const webpack = (prevConfig) => {
@@ -24,8 +84,6 @@ const webpack = (prevConfig) => {
     safe: `${dotEnvFile}.example`,
     systemvars: true,
   }))
-
-  config.plugins.push(new AntdScssThemePlugin(antdThemeFile))
 
   // images, fonts
   config.module.rules.push({
@@ -65,49 +123,38 @@ const webpack = (prevConfig) => {
     loader: 'ignore-loader',
   })
 
-  // disable CSS modules for less
   for (let i = 0; i < config.module.rules.length; i += 1) {
     const rule = config.module.rules[i]
-    if (Array.isArray(rule.use)) {
-      if (rule.use.some((loader) => loader.loader === 'less-loader')) {
-        for (let j = 0; j < rule.use.length; j += 1) {
-          const use = rule.use[j]
-          if (typeof use === 'object' && use.loader.startsWith('css-loader')) {
-            use.options.modules = false
-          }
+
+    // disable CSS modules for less
+    if (Array.isArray(rule.use) && rule.use.some((loader) => loader.loader === 'less-loader')) {
+      for (let j = 0; j < rule.use.length; j += 1) {
+        const use = rule.use[j]
+        if (typeof use === 'object' && use.loader.startsWith('css-loader')) {
+          use.options.modules = false
         }
       }
     }
-  }
 
-  // replace sass/less-loaders with AntdScssThemePlugin
-  const loaderTypes = ['sass', 'less']
-  for (let i = 0; i < loaderTypes.length; i += 1) {
-    for (let j = 0; j < config.module.rules.length; j += 1) {
-      const rule = config.module.rules[j]
-      if (Array.isArray(rule.use)) {
-        for (let k = 0; k < rule.use.length; k += 1) {
-          const use = rule.use[k]
-          const loader = `${loaderTypes[i]}-loader`
-          if (use.loader === loader) {
-            const antdScss = AntdScssThemePlugin.themify({
-              loader,
-              options: use.options,
-            })
-            use.loader = antdScss.loader
-            use.options = antdScss.options
-          }
-        }
-      }
+    // use .sss extension for css-loader
+    if (rule.test.source.match('css')) {
+      rule.test = /\.sss$/
     }
-  }
 
-  // Add rootMode to next-babel-loader. This is important so sub-package babel
-  // is picking up the root babel.config.js.
-  for (let i = 0; i < config.module.rules.length; i += 1) {
-    const rule = config.module.rules[i]
+    // Add rootMode to next-babel-loader. This is important so sub-package babel
+    // is picking up the root babel.config.js.
     if (rule.use && rule.use.loader && rule.use.loader === 'next-babel-loader') {
       rule.use.options.rootMode = rootMode
+    }
+
+    // disable CSS minimize (performed by cssnano)
+    if (Array.isArray(rule.use)) {
+      for (let j = 0; j < rule.use.length; j += 1) {
+        const use = rule.use[j]
+        if (typeof use === 'object' && use.loader.startsWith('css-loader')) {
+          use.options.minimize = false
+        }
+      }
     }
   }
 
@@ -115,8 +162,7 @@ const webpack = (prevConfig) => {
   if (process.env.PRINT_WEBPACK_CONFIG) {
     /* eslint-disable-next-line no-extend-native */
     Object.defineProperty(RegExp.prototype, 'toJSON', { value: RegExp.prototype.toString })
-    /* eslint-disable-next-line no-console */
-    console.log(JSON.stringify(config, null, 2))
+    console.log(JSON.stringify(config.module.rules, null, 2))
   }
 
   return config
@@ -126,13 +172,17 @@ const webpack = (prevConfig) => {
 const nextConfig = {
   pageExtensions: ['js'], // only use .js (not .jsx)
 
-  // needed by antd less code
-  lessLoaderOptions: { javascriptEnabled: true },
+  lessLoaderOptions: {
+    // needed by antd less code
+    javascriptEnabled: true,
+    // pass custom variables to antd
+    modifyVars: antdVars,
+  },
 
   // GZIP compression should happen in reverse proxy
   compress: false,
 
-  // css modules with local scope (for component sass styles)
+  // css modules with local scope
   cssModules: true,
   cssLoaderOptions: {
     importLoaders: 1,
@@ -154,7 +204,7 @@ const nextConfig = {
 
 const wrappedNextConfig = (config) => (
   withLess(
-    withSass(
+    withCss(
       withTranspileModules(
         config
       )
