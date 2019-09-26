@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
-import css from './style.sass'
+import css from './style.sss'
 
 const Code = ({ data }) => {
   const [[id, classNames], content] = data

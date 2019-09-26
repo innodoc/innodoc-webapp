@@ -6,7 +6,7 @@ import Router from 'next/router'
 import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 
-import '../style/lato-font.sass'
+import '@innodoc/client-web/src/style/lato-font.sss'
 
 import { appWithTranslation } from '@innodoc/client-misc/src/i18n'
 import rootSaga from '@innodoc/client-sagas'

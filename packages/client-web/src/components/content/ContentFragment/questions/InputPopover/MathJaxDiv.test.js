@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
 import MathJaxDiv from './MathJaxDiv'
-import fadeInCss from '../../../../../style/fadeIn.sass'
 
 const { typesetStates } = jest.requireActual('../../../../../hooks/useMathJax')
 

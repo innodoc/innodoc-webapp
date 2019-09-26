@@ -4,7 +4,7 @@ import { List } from 'antd'
 
 import { unwrapPara } from '@innodoc/client-misc/src/util'
 
-import css from './style.sass'
+import css from './style.sss'
 import ContentFragment from '..'
 
 const BulletList = ({ data }) => {

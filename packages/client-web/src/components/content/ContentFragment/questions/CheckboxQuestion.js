@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Checkbox } from 'antd'
 
-import css from './style.sass'
+import css from './style.sss'
 
 const CheckboxQuestion = ({
   className,

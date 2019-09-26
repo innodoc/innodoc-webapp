@@ -14,7 +14,7 @@ import ExerciseContext from '../cards/ExerciseCard/ExerciseContext'
 import CheckboxQuestion from './CheckboxQuestion'
 import InputQuestion from './InputQuestion'
 import FeedbackIcon from './FeedbackIcon'
-import css from './style.sass'
+import css from './style.sss'
 
 const mapClassNameToComponent = getClassNameToComponentMapper({
   text: InputQuestion,

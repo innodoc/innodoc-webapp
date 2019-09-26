@@ -1,4 +1,4 @@
-@import '../../../style/antd-theme.sass'
+@import '@innodoc/client-web/src/style/antd-theme.sss'
 
 .disabled
   color: $disabled-color
@@ -14,16 +14,16 @@ html
   border-bottom: $border-width-base $border-style-base transparent
   transition: background-color $animation-duration-slow, border-color $animation-duration-slow
 
-  \:global(.ant-breadcrumb)
+  :global(.ant-breadcrumb)
     line-height: $line-height-base
     flex-grow: 1
     transition: none
 
-  \:global(.ant-menu)
+  :global(.ant-menu)
     line-height: $affix-height
     border-bottom: none
 
-    \:global(.ant-menu-item)
+    :global(.ant-menu-item)
       top: 0
       padding: 0
       border-bottom: none
@@ -38,9 +38,9 @@ html
     background-color: $body-background
     border-bottom-color: $border-color-split
 
-    \:global(.ant-breadcrumb)
+    :global(.ant-breadcrumb)
       height: $affix-height
-      line-height: 1.5 * $line-height-base
+      line-height: calc(1.5 * $line-height-base)
       overflow: hidden
       text-overflow: ellipsis
       transition: line-height $animation-duration-slow

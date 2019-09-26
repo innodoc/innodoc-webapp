@@ -6,10 +6,10 @@ import { List, Tag } from 'antd'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import indexTermSelectors from '@innodoc/client-store/src/selectors/indexTerm'
 
+import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
 import { SectionLink } from '../content/links'
 import { mathDelimiter, useMathJaxScanElement, typesetStates } from '../../hooks/useMathJax'
-import css from './style.sass'
-import fadeInCss from '../../style/fadeIn.sass'
+import css from './style.sss'
 
 const { inline: inlineMathDelimiter } = mathDelimiter
 const replaceLatexDelimiters = (str) => (

@@ -7,7 +7,7 @@ let mockUseMedia
 jest.mock('use-media', () => jest.fn(() => mockUseMedia))
 
 // Can't import values from SASS without webpack
-jest.mock('../style/breakpoints.sass', () => ({
+jest.mock('@innodoc/client-web/src/style/breakpoints.sss', () => ({
   'screen-xs': '480px',
   'screen-sm': '576px',
   'screen-md': '768px',

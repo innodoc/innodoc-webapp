@@ -5,7 +5,7 @@ import { List } from 'antd'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { sectionType } from '@innodoc/client-misc/src/propTypes'
 
-import css from './style.sass'
+import css from './style.sss'
 import { SectionLink } from '../links'
 
 const Subsection = (subSection) => (

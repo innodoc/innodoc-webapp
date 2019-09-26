@@ -1,11 +1,11 @@
-@import '../../../style/antd-theme.sass'
+@import '@innodoc/client-web/src/style/antd-theme.sss'
 
 .header
   border-bottom: $border-width-base $border-style-base $border-color-split
   padding-right: $padding-md
   padding-left: $padding-md
 
-  \:global(.ant-menu)
+  :global(.ant-menu)
     background-color: transparent
 
 .logoLink
@@ -20,7 +20,7 @@
     color: $menu-item-color
     display: inline-block
     font-weight: bold
-    line-height: 3/4 * $line-height-base
+    line-height: calc(3/4 * $line-height-base)
     white-space: normal
 
   &:hover span

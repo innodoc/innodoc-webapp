@@ -12,7 +12,7 @@ import Header from './Header'
 import MessageModal from '../MessageModal'
 import Sidebar from './Sidebar'
 import Toc from '../Toc'
-import css from './style.sass'
+import css from './style.sss'
 
 const Layout = ({ children, disableSidebar }) => {
   const { message } = useSelector(appSelectors.getApp)

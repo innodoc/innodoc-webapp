@@ -2,7 +2,7 @@ import React from 'react'
 
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 
-import css from './style.sass'
+import css from './style.sss'
 import ContentFragment from '..'
 
 const BlockQuote = ({ data }) => (

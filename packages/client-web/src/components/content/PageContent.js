@@ -5,7 +5,7 @@ import pageSelectors from '@innodoc/client-store/src/selectors/page'
 import useContentPane from '../../hooks/useContentPane'
 import ContentFragment from './ContentFragment'
 import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
-import css from './style.sass'
+import css from './style.sss'
 
 const PageContent = () => {
   const {

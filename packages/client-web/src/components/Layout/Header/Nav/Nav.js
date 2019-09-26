@@ -10,7 +10,7 @@ import pageSelectors from '@innodoc/client-store/src/selectors/page'
 
 import LanguageSwitcher from './LanguageSwitcher'
 import UserMenu from './UserMenu'
-import css from './style.sass'
+import css from './style.sss'
 import { PageLink } from '../../../content/links'
 
 const Nav = ({ menuMode }) => {

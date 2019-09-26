@@ -19,7 +19,7 @@ import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import FooterLink from './Link'
 import { PageLink } from '../../content/links'
 import ContentFragment from '../../content/ContentFragment'
-import css from './style.sass'
+import css from './style.sss'
 
 const Footer = () => {
   const { t } = useTranslation()

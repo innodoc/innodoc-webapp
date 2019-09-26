@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import css from './style.sass'
+import css from './style.sss'
 
 const CodeBlock = ({ data }) => {
   const [[id, codeType], content] = data

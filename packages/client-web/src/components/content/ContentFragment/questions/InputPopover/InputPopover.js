@@ -5,7 +5,7 @@ import { Popover } from 'antd'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
 
-import css from './style.sass'
+import css from './style.sss'
 import MathJaxDiv from './MathJaxDiv'
 
 const InputPopover = ({ children, messages, userInput }) => {

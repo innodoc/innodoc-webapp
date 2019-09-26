@@ -4,7 +4,7 @@ import { Icon } from 'antd'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
-import css from './style.sass'
+import css from './style.sss'
 
 const FeedbackIcon = ({ correct }) => {
   const { t } = useTranslation()
