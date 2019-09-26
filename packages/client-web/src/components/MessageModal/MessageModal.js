@@ -5,7 +5,7 @@ import { Button, Icon, Modal } from 'antd'
 import { messageType } from '@innodoc/client-misc/src/propTypes'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
-import css from './style.sass'
+import css from './style.sss'
 
 const MessageModal = ({ message, onClose }) => {
   const { t } = useTranslation()

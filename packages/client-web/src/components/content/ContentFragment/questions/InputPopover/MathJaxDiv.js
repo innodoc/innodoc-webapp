@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import fadeInCss from '../../../../../style/fadeIn.sass'
+import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
 import useMathJax, { typesetStates } from '../../../../../hooks/useMathJax'
 
 const MathJaxDiv = ({ texCode }) => {

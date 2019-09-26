@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import useContentPane from '../../hooks/useContentPane'
-import css from './style.sass'
+import css from './style.sss'
 import ContentFragment from './ContentFragment'
 import ContentAffix from './ContentAffix'
 import SubsectionList from './SubsectionList'

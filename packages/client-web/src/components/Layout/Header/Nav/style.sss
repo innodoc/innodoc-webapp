@@ -1,0 +1,47 @@
+@import '@innodoc/client-web/src/style/antd-theme.sss'
+
+%remove-border
+  border-bottom: 0
+  top: 0
+  vertical-align: top
+
+.nav
+  height: $layout-header-height
+  line-height: $layout-header-height
+  border: 0
+
+  :global(.anticon)
+    font-size: 20px
+    transform: translateY(2px)
+
+  :global(.ant-menu-item)
+    &, &:hover
+      @extend %remove-border
+
+  :global(.ant-menu-submenu)
+    &, &:hover
+      @extend %remove-border
+
+  :global(.ant-menu-item-selected)
+    &, &:hover
+      background-color: $menu-highlight-color
+
+      a
+        color: white
+        text-decoration: underline
+
+.active, .active:hover
+  text-decoration: underline
+
+:global(.ant-drawer) .nav
+  margin-top: $padding-sm
+
+  > [role=menuitem]
+    padding-left: 0 !important
+    padding-right: 0 !important
+
+  :global(.ant-menu-submenu-title)
+    padding-left: 0 !important
+
+  :global(.ant-menu-sub) > [role=menuitem]
+    padding-left: $padding-lg !important

@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Affix } from 'antd'
 
-import css from './style.sass'
+import css from './style.sss'
 import ContentAffix from './ContentAffix'
 import Breadcrumb from './Breadcrumb'
 import AffixButtons from './AffixButtons'

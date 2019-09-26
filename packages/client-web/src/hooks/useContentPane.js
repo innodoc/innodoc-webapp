@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 
-import fadeInCss from '../style/fadeIn.sass'
+import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
 import { typesetStates, useMathJaxScanElement } from './useMathJax'
 
 const scrollToHash = () => {

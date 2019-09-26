@@ -2,3 +2,4 @@ src/.next
 /bundle-analyzer
 src/static/locales/*/*.missing.json
 e2e/screenshots
+/src/style/antd-vars.json

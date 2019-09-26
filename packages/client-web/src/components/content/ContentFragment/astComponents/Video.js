@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
-import css from './style.sass'
+import css from './style.sss'
 
 const StaticVideo = ({ src }) => {
   const { staticRoot } = useSelector(appSelectors.getApp)

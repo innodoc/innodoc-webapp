@@ -8,7 +8,7 @@ import { childrenType } from '@innodoc/client-misc/src/propTypes'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
 import useIsNarrowerThan from '../../../hooks/useIsNarrowerThan'
-import css from './style.sass'
+import css from './style.sss'
 
 const WIDTHS = [300, 400] // width change on breakpoint
 

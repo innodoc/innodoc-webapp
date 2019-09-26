@@ -7,7 +7,7 @@ import { attributesToObject } from '@innodoc/client-misc/src/util'
 import ContentFragment from '..'
 import InputHint from '../cards/InputHint'
 import Question from '../questions'
-import css from './style.sass'
+import css from './style.sss'
 
 const IndexSpan = ({ id, indexTerm, content }) => (
   <span

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Table as AntTable } from 'antd'
 
-import css from './style.sass'
+import css from './style.sss'
 import ContentFragment from '..'
 
 const alignMap = {

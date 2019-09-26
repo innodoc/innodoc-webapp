@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
-import css from './style.sass'
+import css from './style.sss'
 
 const Logo = () => {
   const { language, staticRoot } = useSelector(appSelectors.getApp)

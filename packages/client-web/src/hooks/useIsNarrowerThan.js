@@ -1,6 +1,6 @@
 import useMedia from 'use-media'
 
-import css from '../style/breakpoints.sass'
+import css from '@innodoc/client-web/src/style/breakpoints.sss'
 
 // Map CSS breakpoints to JS object
 const breakpoints = Object.keys(css).reduce(

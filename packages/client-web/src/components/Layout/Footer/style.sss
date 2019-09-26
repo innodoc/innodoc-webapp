@@ -1,9 +1,9 @@
-@import '../../../style/antd-theme.sass'
+@import '@innodoc/client-web/src/style/antd-theme.sss'
 
 .footer
   color: $text-color-dark
-  padding-top: 2 * $padding-lg
-  padding-bottom: 2 * $padding-lg
+  padding-top: calc(2 * $padding-lg)
+  padding-bottom: calc(2 * $padding-lg)
 
   a
     color: $blue-5
@@ -14,7 +14,7 @@
     font-weight: bold
     color: $heading-color-dark
 
-  \:global(.ant-list-item)
+  :global(.ant-list-item)
     padding-top: 0
     padding-bottom: 0
     border-bottom: 0

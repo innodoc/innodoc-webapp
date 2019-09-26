@@ -1,4 +1,4 @@
-@import '../../../../style/antd-theme.sass'
+@import '@innodoc/client-web/src/style/antd-theme.sss'
 
 .blockquote
   padding: 0 $padding-md
@@ -9,19 +9,19 @@
   margin-bottom: $padding-sm
   margin-left: $padding-lg
 
-  \:global(.ant-list)
+  :global(.ant-list)
     margin-bottom: 0
 
-  \:global(.ant-list-item-content)
+  :global(.ant-list-item-content)
     margin-bottom: 0
 
 .orderedList
   margin-bottom: $padding-sm
 
-  \:global(.ant-list)
+  :global(.ant-list)
     margin-bottom: 0
 
-  \:global(.ant-list-item)
+  :global(.ant-list-item)
     display: flex
     margin-bottom: 0
 
@@ -42,7 +42,7 @@
 
 .codeblock
   @extend .code
-  border-left: $border-color-base $border-style-base 3 * $border-width-base
+  border-left: $border-color-base $border-style-base calc(3 * $border-width-base)
   padding-left: $padding-sm
 
 .figure

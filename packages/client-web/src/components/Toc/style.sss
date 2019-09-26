@@ -1,14 +1,14 @@
-@import '../../style/antd-theme.sass'
+@import '@innodoc/client-web/src/style/antd-theme.sss'
 
 .tocWrapper
   margin-bottom: $padding-lg
 
   [role=treeitem]
 
-    \:global(.ant-tree-title) > a:focus
+    :global(.ant-tree-title) > a:focus
       text-decoration: none
 
-    \:global(.ant-tree-node-content-wrapper:hover)
+    :global(.ant-tree-node-content-wrapper:hover)
       background-color: transparent
       color: $primary-5
 
@@ -23,5 +23,5 @@
       background-color: transparent !important
 
 .disableExpand
-  \:global(.ant-tree-switcher)
+  :global(.ant-tree-switcher)
     display: none !important

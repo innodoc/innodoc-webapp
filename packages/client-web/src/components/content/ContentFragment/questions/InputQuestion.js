@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Input } from 'antd'
 
-import css from './style.sass'
+import css from './style.sss'
 import InputPopover from './InputPopover'
 
 const DEFAULT_INPUT_LENGTH = 10

@@ -5,7 +5,7 @@ import { Icon, Menu } from 'antd'
 
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
-import css from './style.sass'
+import css from './style.sss'
 import SidebarToggleButton from '../../Layout/Sidebar/ToggleButton'
 import { SectionLink } from '../links'
 
