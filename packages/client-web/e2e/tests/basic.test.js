@@ -1,27 +1,19 @@
 describe('Basic tests', () => {
-  beforeAll(async () => {
-    await page.goto(getUrl('/toc'))
+  beforeEach(async () => {
+    await page.goto(getUrl())
   })
 
-  it('loads without error', async () => {
+  it('should load without error', async () => {
     expect.assertions(2)
     expect(await page.title()).toContain('innoDoc')
-    await expect(page).toMatch('About')
+    await expect(page).toMatchElement('h1', { text: 'About this course' })
   })
 
-  it('should have a menu, footer and TOC', async () => {
-    expect.assertions(6)
+  it('should have a header, footer and menu', async () => {
+    expect.assertions(4)
     await expect(page).toMatchElement('.ant-menu')
     await expect(page).toMatchElement('[class*=header___]')
     await expect(page).toMatchElement('[class*=footer___]')
     await expect(page).toMatchElement('[class*=content___]')
-    await expect(page).toMatchElement('[class*=tocWrapper___]')
-    await expect(page).toMatchElement('a', { text: 'Project structure' })
-  })
-
-  it('should be possible to go to another page', async () => {
-    expect.assertions(2)
-    await expect(page).toClick('a', { text: 'Project structure' })
-    await expect(page).toMatchElement('h1', { text: 'Project structure' })
   })
 })
