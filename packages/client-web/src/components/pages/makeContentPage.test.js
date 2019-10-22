@@ -9,7 +9,6 @@ let mockApp
 jest.mock('react-redux', () => ({ useSelector: () => mockApp }))
 jest.mock('@innodoc/client-store/src/selectors', () => ({
   getApp: () => mockApp,
-  getOrmState: () => {},
   makeMakeGetContentLink: () => {},
   selectId: () => {},
 }))

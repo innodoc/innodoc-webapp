@@ -3,10 +3,10 @@ import { createSelector } from 'redux-orm'
 import { intSortArray } from '@innodoc/client-misc/src/util'
 
 import orm from '../orm'
-import appSelectors, { selectId } from '.'
+import { selectId } from '.'
 
 const getIndexTerms = createSelector(
-  orm, appSelectors.getOrmState, selectId,
+  orm, selectId,
   (session, language) => session
     .IndexTerm
     .all()

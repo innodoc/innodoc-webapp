@@ -47,7 +47,6 @@ jest.mock('..', () => {
     __esModule: true,
     default: {
       getApp: actualAppImport.default.getApp,
-      getOrmState: actualAppImport.default.getOrmState,
     },
     makeMakeGetContentLink: jest.fn(() => (
       () => {}

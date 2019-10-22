@@ -1,11 +1,11 @@
 import { createSelector } from 'redux-orm'
 
 import orm from '../orm'
-import appSelectors, { selectId } from '.'
+import { selectId } from '.'
 
 // Return fragment by ID
 const getFragment = createSelector(
-  orm, appSelectors.getOrmState, selectId,
+  orm, selectId,
   (session, id) => {
     const fragment = session.Fragment.withId(id)
     return fragment ? fragment.ref : null
@@ -13,7 +13,7 @@ const getFragment = createSelector(
 )
 
 const getFooterA = createSelector(
-  orm, appSelectors.getOrmState,
+  orm,
   (session) => {
     const fragment = session.Fragment.withId('_footer_a')
     return fragment ? fragment.ref : null
@@ -21,7 +21,7 @@ const getFooterA = createSelector(
 )
 
 const getFooterB = createSelector(
-  orm, appSelectors.getOrmState,
+  orm,
   (session) => {
     const fragment = session.Fragment.withId('_footer_b')
     return fragment ? fragment.ref : null
