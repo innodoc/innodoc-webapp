@@ -4,10 +4,8 @@ import { parseContentId } from '@innodoc/client-misc/src/util'
 
 import orm from '../orm'
 
-const getOrmState = (state) => state.orm
-
 const getApp = createSelector(
-  orm, getOrmState,
+  orm,
   (session) => session.App.first().ref
 )
 
@@ -20,10 +18,7 @@ const selectLinkInfo = (state, contentIdHash) => {
 
 const makeMakeGetContentLink = (modelName) => (
   () => createSelector(
-    orm,
-    getOrmState,
-    getApp,
-    selectLinkInfo,
+    orm, getApp, selectLinkInfo,
     (session, { language }, linkInfo) => {
       const { hash, contentId } = linkInfo
       if (session[modelName].idExists(contentId)) {
@@ -43,4 +38,4 @@ const makeMakeGetContentLink = (modelName) => (
 )
 
 export { makeMakeGetContentLink, selectId }
-export default { getApp, getOrmState }
+export default { getApp }

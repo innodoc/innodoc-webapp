@@ -1,12 +1,10 @@
 import { createSelector } from 'redux-orm'
 
 import orm from '../../orm'
-import appSelectors from '..'
-
 import courseSelectors from '../course'
 
 const getSortedSections = createSelector(
-  orm, appSelectors.getOrmState,
+  orm,
   (session) => session.Section.all().toRefArray()
     // sort lexicographically
     .sort((a, b) => {
@@ -30,7 +28,7 @@ const getSortedSections = createSelector(
 
 // Gets the next and previous sections
 const getNextPrevSections = createSelector(
-  orm, appSelectors.getOrmState, courseSelectors.getCurrentCourse, getSortedSections,
+  orm, courseSelectors.getCurrentCourse, getSortedSections,
   (session, course, sortedSections) => {
     const idx = sortedSections.findIndex((section) => section.id === course.currentSection)
     return {

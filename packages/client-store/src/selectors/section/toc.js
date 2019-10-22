@@ -1,7 +1,6 @@
 import { createSelector } from 'redux-orm'
 
 import orm from '../../orm'
-import appSelectors from '..'
 
 const getChildren = (session, level, parentId) => session.Section.all().toRefArray()
   .filter((section) => (
@@ -19,7 +18,7 @@ const getChildren = (session, level, parentId) => session.Section.all().toRefArr
 
 // Create tree structure for the TOC
 const getToc = createSelector(
-  orm, appSelectors.getOrmState,
+  orm,
   (session) => getChildren(session, 0, null)
 )
 

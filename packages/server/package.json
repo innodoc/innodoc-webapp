@@ -21,7 +21,7 @@
     "start": "NODE_ENV=production node dist/server.js"
   },
   "dependencies": {
-    "@babel/cli": "^7.6.0",
+    "@babel/cli": "^7.6.4",
     "@innodoc/client-misc": "*",
     "@innodoc/client-web": "*",
     "dotenv-safe": "^8.1.0",
@@ -30,6 +30,6 @@
     "next-i18next": "^1.2.0"
   },
   "devDependencies": {
-    "@babel/node": "^7.6.1"
+    "@babel/node": "^7.6.3"
   }
 }

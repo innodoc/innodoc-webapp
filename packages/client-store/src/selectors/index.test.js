@@ -35,10 +35,6 @@ describe('appSelectors', () => {
   test('getApp', () => {
     expect(appSelectors.getApp(state)).toEqual(app)
   })
-
-  test('getOrmState', () => {
-    expect(appSelectors.getOrmState(state)).toBe(state.orm)
-  })
 })
 
 test('selectId', () => {
