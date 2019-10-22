@@ -13,17 +13,8 @@ const alignMap = {
 
 const Table = ({ data }) => {
   const [, alignment, , headerData, rowData] = data
-  let columnArr
-  let showHeader
-
-  // show header?
-  if (headerData.some((tr) => tr.length > 0)) {
-    columnArr = headerData
-  } else {
-    [columnArr] = rowData
-    showHeader = false
-  }
-
+  const hasHeader = headerData.some((tr) => tr.length > 0)
+  const columnArr = hasHeader ? headerData : rowData[0]
   const columns = columnArr.map((content, i) => ({
     title: <ContentFragment content={content} />,
     render: (c) => <ContentFragment content={c} />,
@@ -43,7 +34,7 @@ const Table = ({ data }) => {
       columns={columns}
       dataSource={dataSource}
       pagination={false}
-      showHeader={showHeader}
+      showHeader={hasHeader}
     />
   )
 }
