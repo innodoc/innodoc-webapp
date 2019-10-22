@@ -9,7 +9,7 @@ import Page from './models/Page'
 import Question from './models/Question'
 import Section from './models/Section'
 
-const orm = new ORM()
+const orm = new ORM({ stateSelector: (state) => state.orm })
 orm.register(
   App,
   Course,

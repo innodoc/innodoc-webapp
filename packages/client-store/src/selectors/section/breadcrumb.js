@@ -11,7 +11,7 @@ import courseSelectors from '../course'
 //  { id: 'foo/bar/baz', title: 'Baz' },
 // ]
 const getBreadcrumbSections = createSelector(
-  orm, appSelectors.getOrmState, courseSelectors.getCurrentCourse, appSelectors.getApp,
+  orm, courseSelectors.getCurrentCourse, appSelectors.getApp,
   (session, course, { language }) => (
     course.currentSection
       ? course.currentSection

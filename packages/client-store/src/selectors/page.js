@@ -1,18 +1,18 @@
 import { createSelector } from 'redux-orm'
 
 import orm from '../orm'
-import appSelectors, { makeMakeGetContentLink, selectId } from '.'
+import { makeMakeGetContentLink, selectId } from '.'
 import courseSelectors from './course'
 
 // Check if page exists
 const pageExists = createSelector(
-  orm, appSelectors.getOrmState, selectId,
+  orm, selectId,
   (session, id) => session.Page.idExists(id)
 )
 
 // Return current page
 const getCurrentPage = createSelector(
-  orm, appSelectors.getOrmState, courseSelectors.getCurrentCourse,
+  orm, courseSelectors.getCurrentCourse,
   (session, course) => {
     if (course) {
       const page = course ? session.Page.withId(course.currentPage) : null
@@ -24,13 +24,13 @@ const getCurrentPage = createSelector(
 
 // Return page by ID
 const getPage = createSelector(
-  orm, appSelectors.getOrmState, selectId,
+  orm, selectId,
   (session, id) => session.Page.withId(id).ref
 )
 
 // Return pages that appear in footer
 const getFooterPages = createSelector(
-  orm, appSelectors.getOrmState,
+  orm,
   (session) => session.Page.all()
     .filter((page) => page.inFooter)
     .orderBy('ord')
@@ -39,7 +39,7 @@ const getFooterPages = createSelector(
 
 // Return pages that appear in navigation
 const getNavPages = createSelector(
-  orm, appSelectors.getOrmState,
+  orm,
   (session) => session.Page.all()
     .filter((page) => page.inNav)
     .orderBy('ord')
