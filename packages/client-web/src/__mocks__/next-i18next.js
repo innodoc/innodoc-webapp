@@ -10,7 +10,7 @@ export default class MockNextI18Next {
         (props) => <WrappedComponent t={() => ''} {...props} />
       )
     )
-    this.Trans = ({ children }) => (
+    this.Trans = ({ children }) => ( // eslint-disable-line react/prop-types
       <>
         {children}
       </>
