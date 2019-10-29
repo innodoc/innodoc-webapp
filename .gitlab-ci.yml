@@ -12,8 +12,6 @@ variables:
 
 .docker-default-vars: &docker-default-vars
   GIT_STRATEGY: none
-  DOCKER_HOST: tcp://docker:2375
-  DOCKER_DRIVER: overlay2
   IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
   IMAGE_E2E_CACHE_TAG: $CI_REGISTRY_IMAGE/e2e:cache
   IMAGE_E2E_TAG: $CI_REGISTRY_IMAGE/e2e:$CI_COMMIT_REF_SLUG
@@ -21,9 +19,8 @@ variables:
   SEMVER_REGEXP: '^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$'
 
 .docker-base: &docker-base
-  services:
-    - docker:dind
   before_script:
+    - docker info
     - echo "$CI_JOB_TOKEN" | docker login --username gitlab-ci-token --password-stdin "$CI_REGISTRY"
   after_script:
     - docker logout "$CI_REGISTRY"
