@@ -20,7 +20,6 @@ variables:
 
 .docker-base: &docker-base
   before_script:
-    - docker info
     - echo "$CI_JOB_TOKEN" | docker login --username gitlab-ci-token --password-stdin "$CI_REGISTRY"
   after_script:
     - docker logout "$CI_REGISTRY"

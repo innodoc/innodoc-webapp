@@ -5,12 +5,13 @@ LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
 # build
 WORKDIR /innodoc-webapp
-COPY . .
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 RUN set -xe && \
   apk add --no-cache \
     build-base \
-    python && \
+    python
+COPY . .
+RUN set -xe && \
   ln -s .env.example .env && \
   yarn install --pure-lockfile && \
   yarn add --no-lockfile --ignore-workspace-root-check pm2 && \
