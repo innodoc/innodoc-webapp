@@ -28,20 +28,6 @@ const webpack = (prevConfig) => {
     systemvars: true,
   }))
 
-  // images, fonts
-  config.module.rules.push({
-    test: /\.(png|woff2)$/,
-    use: {
-      loader: 'url-loader',
-      options: {
-        limit: 32 * 1024,
-        publicPath: '../',
-        outputPath: 'static/',
-        name: '[name].[hash:8].[ext]',
-      },
-    },
-  })
-
   // svg icons
   config.module.rules.push({
     test: /\.svg$/,

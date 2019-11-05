@@ -5,7 +5,7 @@ module.exports = {
   roots: ['src'],
   collectCoverageFrom: [
     'src/**/*.js',
-    '!src/static/**',
+    '!src/public/**',
     '!src/.next/**',
   ],
   moduleNameMapper: {

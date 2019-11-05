@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 
-import KeyboardSvg from '../../../../static/img/keyboard-o.svg'
+import KeyboardSvg from '../../../../public/img/keyboard-o.svg'
 import Card from './Card'
 
 const InputHintCard = ({ content, id }) => {

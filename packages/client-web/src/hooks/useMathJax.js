@@ -40,7 +40,7 @@ const mathJaxOptions = (cb) => ({
   // stuff that depends on MathJax being available goes into AuthorInit
   AuthorInit: () => {
     // path to our custom MathJax extension (needs to be absolute)
-    window.MathJax.Ajax.config.path.innodoc = `${window.location.origin}/static`
+    window.MathJax.Ajax.config.path.innodoc = window.location.origin
     // register start-up hook
     window.MathJax.Hub.Register.StartupHook('End', cb)
   },
@@ -64,7 +64,7 @@ const injectMathJax = (cb) => {
         mathJaxReadyCallbacks = []
       })
       loadScript(
-        '/static/vendor/MathJax/unpacked/MathJax.js',
+        '/vendor/MathJax/unpacked/MathJax.js',
         { attrs: { id: MATHJAX_SCRIPT_ID } },
       )
     }
