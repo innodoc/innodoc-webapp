@@ -1,6 +1,6 @@
 /packages/*/node_modules
 /packages/client-web/e2e/content
 /packages/client-web/src/.next
-/packages/client-web/src/static
+/packages/client-web/src/public
 /packages/server/dist
 !.eslintrc.js
