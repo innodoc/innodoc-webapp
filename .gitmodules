@@ -1,3 +1,3 @@
-[submodule "packages/client-web/src/static/vendor/MathJax"]
-	path = packages/client-web/src/static/vendor/MathJax
+[submodule "packages/client-web/src/public/vendor/MathJax"]
+	path = packages/client-web/src/public/vendor/MathJax
 	url = https://github.com/mathjax/MathJax.git
