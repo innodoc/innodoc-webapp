@@ -40,7 +40,10 @@ const postcssConfig = getPostcssConfig(
   { file: { extname: path.extname(antdVarsOverrideFilename) } }
 )
 
-const generateVarsForAntd = () => postcss(postcssConfig.plugins)
+// don't use postcss-import-json plugin so only overridden variables are exported
+const plugins = postcssConfig.plugins.filter((plugin) => plugin.postcssPlugin !== 'postcss-import-json')
+
+const generateVarsForAntd = () => postcss(plugins)
   .process(
     fs.readFileSync(antdVarsOverrideFilename).toString(),
     {
