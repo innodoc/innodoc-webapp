@@ -11,9 +11,10 @@ const mathDelimiter = {
 }
 
 const typesetStates = {
-  PENDING: 0,
-  SUCCESS: 1,
-  ERROR: 2,
+  INITIAL: 0,
+  PENDING: 1,
+  SUCCESS: 2,
+  ERROR: 3,
 }
 
 const mathJaxOptions = (cb) => ({
