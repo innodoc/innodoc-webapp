@@ -25,6 +25,7 @@ const Sidebar = ({ children }) => {
       collapsed={!sidebarVisible}
       collapsedWidth={0}
       collapsible
+      theme="light"
       trigger={null}
       width={width}
     >
