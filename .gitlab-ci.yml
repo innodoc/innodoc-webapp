@@ -41,7 +41,6 @@ Build image:
   variables:
     <<: *docker-default-vars
     GIT_STRATEGY: fetch
-    GIT_SUBMODULE_STRATEGY: recursive
 
 Linting:
   <<: *docker-base
@@ -71,7 +70,6 @@ E2E tests:
   variables:
     <<: *docker-default-vars
     GIT_STRATEGY: fetch
-    GIT_SUBMODULE_STRATEGY: none
 
 Push to GitLab registry (staging):
   <<: *docker-base

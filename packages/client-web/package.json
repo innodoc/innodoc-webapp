@@ -43,6 +43,7 @@
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "load-script": "^1.0.0",
+    "mathjax-full": "^3.0.0",
     "md5": "^2.2.1",
     "next": "^9.1.2",
     "next-i18next": "^2.0.0",
@@ -60,9 +61,11 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-redux": "^7.1.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^2.2.0",
     "use-media": "^1.4.0",
-    "webpack": "^4.41.2"
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   },
   "devDependencies": {
     "@zeit/next-css": "^1.0.1",

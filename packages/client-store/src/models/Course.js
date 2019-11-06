@@ -16,6 +16,7 @@ export default class Course extends Model {
       languages: attr({ getDefault: () => [] }),
       logo: attr({ getDefault: () => null }),
       title: attr({ getDefault: () => null }),
+      mathjax: attr({ getDefault: () => null }),
     }
   }
 
@@ -29,6 +30,7 @@ export default class Course extends Model {
           languages: content.languages,
           logo: content.logo || null,
           title: content.title,
+          mathjaxOptions: content.mathjax || null,
         })
         break
       }

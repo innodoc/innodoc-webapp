@@ -1,9 +1,14 @@
-import { useEffect, useRef, useState } from 'react'
+import {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import loadScript from 'load-script'
 
-const MATHJAX_SCRIPT_ID = '__MATHJAX_SCRIPT__'
+import MathJaxOptionsContext from '../mathjax/MathJaxOptionsContext'
 
-const mathJaxDebug = process.env.NODE_ENV !== 'production'
+const MATHJAX_SCRIPT_ID = '__MATHJAX_SCRIPT__'
 
 const mathDelimiter = {
   inline: ['\\(', '\\)'],
@@ -17,105 +22,77 @@ const typesetStates = {
   ERROR: 3,
 }
 
-const mathJaxOptions = (cb) => ({
-  skipStartupTypeset: true,
-  showMathMenu: mathJaxDebug,
-  showProcessingMessages: mathJaxDebug,
-  messageStyle: mathJaxDebug ? 'none' : 'normal',
-  jax: ['input/TeX', 'output/HTML-CSS'],
-  tex2jax: {
-    inlineMath: [mathDelimiter.inline],
-    displayMath: [mathDelimiter.display],
-  },
-  extensions: [
-    'tex2jax.js',
-    'MathEvents.js',
-    'MathMenu.js',
-    'TeX/noErrors.js',
-    'TeX/noUndefined.js',
-    'TeX/AMSmath.js',
-    'TeX/AMSsymbols.js',
-    '[a11y]/accessibility-menu.js',
-    '[innodoc]/innodoc.mathjax.js',
-  ],
-  // stuff that depends on MathJax being available goes into AuthorInit
-  AuthorInit: () => {
-    // path to our custom MathJax extension (needs to be absolute)
-    window.MathJax.Ajax.config.path.innodoc = window.location.origin
-    // register start-up hook
-    window.MathJax.Hub.Register.StartupHook('End', cb)
-  },
-})
+const mathJaxOptions = (mathJaxOpts, pageReady) => {
+  const opts = {
+    startup: {
+      pageReady,
+      typeset: false,
+    },
+    tex: {
+      inlineMath: [mathDelimiter.inline],
+      displayMath: [mathDelimiter.display],
+      packages: { '[+]': ['ams'] },
+    },
+  }
+  try {
+    opts.loader = mathJaxOpts.loader
+    opts.tex.packages['[+]'] = [
+      ...opts.tex.packages['[+]'],
+      ...mathJaxOpts.tex.packages['[+]'],
+    ]
+  } catch {
+    // ignore missing mathJaxOpts
+  }
+  return opts
+}
 
 // keeps callbacks for all MathJax-enabled components page-wide
-let mathJaxReadyCallbacks = []
+let mathJaxIsReadyCallbacks = []
 
 // if injection has been triggered already
 let mathJaxInjected = false
+let mathJaxIsReady = false
 
-const injectMathJax = (cb) => {
+const injectMathJax = (mathJaxOpts, cb) => {
   if (process.browser) {
-    mathJaxReadyCallbacks.push(cb)
+    mathJaxIsReadyCallbacks.push(cb)
     if (!mathJaxInjected) {
       mathJaxInjected = true
-      window.MathJax = mathJaxOptions(() => {
-        for (let i = 0; i < mathJaxReadyCallbacks.length; i += 1) {
-          mathJaxReadyCallbacks[i]()
+      const pageReady = () => {
+        for (let i = 0; i < mathJaxIsReadyCallbacks.length; i += 1) {
+          mathJaxIsReadyCallbacks[i]()
         }
-        mathJaxReadyCallbacks = []
-      })
+        mathJaxIsReadyCallbacks = []
+        mathJaxIsReady = true
+      }
+      window.MathJax = mathJaxOptions(mathJaxOpts, pageReady)
       loadScript(
-        '/vendor/MathJax/unpacked/MathJax.js',
+        '/js/MathJax/mathjax-bundle.js',
         { attrs: { id: MATHJAX_SCRIPT_ID } },
       )
     }
   }
 }
 
-const isMathJaxLoaded = () => (
-  document.getElementById(MATHJAX_SCRIPT_ID)
-    && window.MathJax
-    && window.MathJax.isReady
-)
-
-const removeAllJaxes = (element) => {
-  if (element) {
-    const allJaxes = window.MathJax.Hub.getAllJax(element)
-    for (let i = 0; i < allJaxes.length; i += 1) {
-      window.MathJax.Hub.Queue(['Remove', allJaxes[i]])
-    }
-  }
-}
-
-const onTypesettingDone = (element, setTypesetStatus) => {
-  const allJaxes = window.MathJax.Hub.getAllJax(element)
-  for (let i = 0; i < allJaxes.length; i += 1) {
-    if (allJaxes[i].texError) {
-      setTypesetStatus(typesetStates.ERROR)
-      return
-    }
-  }
-  setTypesetStatus(typesetStates.SUCCESS)
-}
-
-// Auto-typeset whole element
 const typesetMathJax = (element, setTypesetStatus, onDone) => {
   setTypesetStatus(typesetStates.PENDING)
-  window.MathJax.Hub.Queue([
-    'Typeset',
-    window.MathJax.Hub,
-    element,
-    () => {
-      onTypesettingDone(element, setTypesetStatus)
-      if (onDone) { onDone() }
-    },
-  ])
+  window.MathJax
+    .typesetPromise([element])
+    .then(() => {
+      setTypesetStatus(typesetStates.SUCCESS)
+      if (onDone) {
+        onDone()
+      }
+    })
+    .catch(() => {
+      setTypesetStatus(typesetStates.ERROR)
+    })
 }
 
 const removeMathJaxOnLoadCallback = (cb) => {
-  for (let i = 0; i < mathJaxReadyCallbacks.length; i += 1) {
-    if (mathJaxReadyCallbacks[i] === cb) {
-      mathJaxReadyCallbacks.splice(i, 1)
+  for (let i = 0; i < mathJaxIsReadyCallbacks.length; i += 1) {
+    if (mathJaxIsReadyCallbacks[i] === cb) {
+      mathJaxIsReadyCallbacks.splice(i, 1)
       break
     }
   }
@@ -125,6 +102,7 @@ const useMathJaxGeneric = (mathCode, mathType, deps, typesetDoneCallback) => {
   const singleJax = typeof mathCode !== 'undefined'
   const mathJaxElem = useRef(null)
   const [typesetState, setTypesetStatus] = useState(typesetStates.INITIAL)
+  const customMathJaxOptions = useContext(MathJaxOptionsContext)
   useEffect(
     () => {
       const typeset = () => typesetMathJax(
@@ -135,16 +113,13 @@ const useMathJaxGeneric = (mathCode, mathType, deps, typesetDoneCallback) => {
         const [delimOpen, delimClose] = mathDelimiter[mathType]
         mathJaxElem.current.innerHTML = `${delimOpen}${mathCode || ''}${delimClose}`
       }
-      if (isMathJaxLoaded()) {
+      if (mathJaxIsReady) {
         typeset()
       } else {
-        injectMathJax(typeset)
+        injectMathJax(customMathJaxOptions, typeset)
         callbackCleanup = true
       }
       return () => {
-        if (singleJax && isMathJaxLoaded()) {
-          removeAllJaxes(mathJaxElem.current)
-        }
         if (callbackCleanup) {
           removeMathJaxOnLoadCallback(typeset)
         }
@@ -165,23 +140,9 @@ const useMathJaxScanElement = (deps, typesetDoneCallback) => useMathJaxGeneric(
   undefined, undefined, deps, typesetDoneCallback
 )
 
-// Remove a Jax that was created by a parent useMathJaxScanElement on unmount
-const useMathJaxRemoveOnUnmount = () => {
-  const mathJaxElem = useRef(null)
-  useEffect(() => (
-    () => {
-      if (isMathJaxLoaded()) {
-        removeAllJaxes(mathJaxElem.current)
-      }
-    }
-  ), [])
-  return mathJaxElem
-}
-
 export {
   mathDelimiter,
   typesetStates,
-  useMathJaxRemoveOnUnmount,
   useMathJaxScanElement,
 }
 export default useMathJax

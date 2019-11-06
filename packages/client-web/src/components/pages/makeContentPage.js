@@ -2,13 +2,16 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
+import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
+import MathJaxOptionsContext from '../../mathjax/MathJaxOptionsContext'
 import Layout from '../Layout'
 import ErrorPage from './ErrorPage'
 
 export default (ContentComponent, load, loadFailure) => {
   const ContentPage = () => {
     const { error } = useSelector(appSelectors.getApp)
+    const { mathjaxOptions } = useSelector(courseSelectors.getCurrentCourse)
 
     if (error) {
       // workaround for setting the status code (client and server)
@@ -23,7 +26,9 @@ export default (ContentComponent, load, loadFailure) => {
 
     return (
       <Layout>
-        <ContentComponent />
+        <MathJaxOptionsContext.Provider value={mathjaxOptions}>
+          <ContentComponent />
+        </MathJaxOptionsContext.Provider>
       </Layout>
     )
   }

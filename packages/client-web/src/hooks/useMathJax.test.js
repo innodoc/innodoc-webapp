@@ -39,7 +39,6 @@ jest.mock('load-script', () => (
 let mathDelimiter
 let typesetStates
 let useMathJax
-let useMathJaxRemoveOnUnmount
 let useMathJaxScanElement
 
 const MathJaxComponent = ({ texCode }) => {
@@ -53,16 +52,13 @@ const MathJaxComponent = ({ texCode }) => {
 }
 MathJaxComponent.propTypes = { texCode: PropTypes.string.isRequired }
 
-const MathJaxComponentElement = ({ texCode }) => {
-  const mathJaxElem = useMathJaxRemoveOnUnmount()
-  return (
-    <span ref={mathJaxElem}>
-      {mathDelimiter.inline[0]}
-      {texCode}
-      {mathDelimiter.inline[1]}
-    </span>
-  )
-}
+const MathJaxComponentElement = ({ texCode }) => (
+  <span>
+    {mathDelimiter.inline[0]}
+    {texCode}
+    {mathDelimiter.inline[1]}
+  </span>
+)
 MathJaxComponentElement.propTypes = { texCode: PropTypes.string.isRequired }
 
 const MathJaxComponentScanElement = ({ texCode }) => {
@@ -86,7 +82,6 @@ describe('useMathJax', () => {
         default: useMathJax,
         mathDelimiter,
         typesetStates,
-        useMathJaxRemoveOnUnmount,
         useMathJaxScanElement,
       } = require('./useMathJax')) // eslint-disable-line global-require
     })
