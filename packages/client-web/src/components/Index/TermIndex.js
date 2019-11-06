@@ -1,23 +1,44 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useContext } from 'react'
 import classNames from 'classnames'
+import { useSelector } from 'react-redux'
 import { List, Tag } from 'antd'
+import MathJax from '@innodoc/react-mathjax-node'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import indexTermSelectors from '@innodoc/client-store/src/selectors/indexTerm'
 
 import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
 import { SectionLink } from '../content/links'
-import { mathDelimiter, useMathJaxScanElement, typesetStates } from '../../hooks/useMathJax'
 import css from './style.sss'
 
-const { inline: inlineMathDelimiter } = mathDelimiter
-const replaceLatexDelimiters = (str) => (
-  str.replace(/\$([^$]+)\$/g, `${inlineMathDelimiter[0]}$1${inlineMathDelimiter[1]}`)
-)
+const parseName = (term) => {
+  const name = []
+  let index = 0
+  let remain = term
+  while (remain.length > 0) {
+    let match = remain.match(/^([^$]+)/)
+    if (match) {
+      const [, content] = match
+      name.push(<span key={index}>{content}</span>)
+      remain = remain.slice(content.length)
+      index += 1
+    } else {
+      match = remain.match(/^\$([^$]+)\$/)
+      if (match) {
+        const [, content] = match
+        name.push(<MathJax.Span key={index} texCode={content} />)
+        remain = remain.slice(content.length + 2)
+        index += 1
+      } else {
+        throw new Error(`Could not parse index term: ${term}`)
+      }
+    }
+  }
+  return name
+}
 
 const renderTerm = (term) => {
-  const title = <strong>{replaceLatexDelimiters(term.name)}</strong>
+  const title = <strong>{parseName(term.name)}</strong>
   const links = term.locations.map((id) => (
     <Tag key={id}>
       <SectionLink contentId={id} />
@@ -35,18 +56,19 @@ const renderTerm = (term) => {
 
 const Index = () => {
   const { language } = useSelector(appSelectors.getApp)
-  const { mathJaxElem, typesetState } = useMathJaxScanElement([language])
   const indexTerms = useSelector((state) => indexTermSelectors.getIndexTerms(state, language))
-  const show = typesetState === typesetStates.SUCCESS
+  const { typesetDone } = useContext(MathJax.Context)
   const fadeInClassName = classNames({
-    [fadeInCss.show]: show,
-    [fadeInCss.hide]: !show,
+    [fadeInCss.show]: typesetDone,
+    [fadeInCss.hide]: !typesetDone,
   })
 
   return (
-    <div className={fadeInClassName} ref={mathJaxElem}>
-      <List dataSource={indexTerms} renderItem={renderTerm} />
-    </div>
+    <MathJax.Provider>
+      <div className={fadeInClassName}>
+        <List dataSource={indexTerms} renderItem={renderTerm} />
+      </div>
+    </MathJax.Provider>
   )
 }
 

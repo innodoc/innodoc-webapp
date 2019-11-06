@@ -5,14 +5,41 @@ import App from 'next/app'
 import Router from 'next/router'
 import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
+import { insert } from 'mathjax-full/js/util/Options'
+import MathJax from '@innodoc/react-mathjax-node'
 
 import '@innodoc/client-web/src/style/lato-font.sss'
 
 import { appWithTranslation } from '@innodoc/client-misc/src/i18n'
 import rootSaga from '@innodoc/client-sagas'
+import appSelectors from '@innodoc/client-store/src/selectors'
+import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import makeMakeStore from '@innodoc/client-store/src/store'
 import { loadManifest, navigate, setServerConfiguration } from '@innodoc/client-store/src/actions/content'
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
+
+const DEFAULT_MATHJAX_FONT_URL = `${process.browser ? window.location.origin : ''}/fonts/mathjax-woff-v2`
+
+const waitForCourse = (store) => new Promise((resolve, reject) => {
+  let course = courseSelectors.getCurrentCourse(store.getState())
+  if (course) {
+    resolve(course)
+  } else {
+    const unsubscribe = store.subscribe(() => {
+      course = courseSelectors.getCurrentCourse(store.getState())
+      if (course) {
+        unsubscribe()
+        resolve(course)
+      } else {
+        const { error } = appSelectors.getApp(store.getState())
+        if (error) {
+          unsubscribe()
+          reject(error)
+        }
+      }
+    })
+  }
+})
 
 class InnoDocApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -35,6 +62,11 @@ class InnoDocApp extends App {
       ctx.store.dispatch(loadManifest())
     }
 
+    // build custom MathJax options
+    const { mathJaxOptions: courseMathJaxOptions } = await waitForCourse(ctx.store)
+    const defaultMathJaxOptions = { chtml: { fontURL: DEFAULT_MATHJAX_FONT_URL } }
+    const mathJaxOptions = insert(defaultMathJaxOptions, courseMathJaxOptions)
+
     // page props
     const pageProps = Component.getInitialProps
       ? await Component.getInitialProps(ctx)
@@ -43,6 +75,7 @@ class InnoDocApp extends App {
       pageProps: {
         ...pageProps,
         namespacesRequired: ['common'],
+        mathJaxOptions,
       },
     }
   }
@@ -55,6 +88,7 @@ class InnoDocApp extends App {
       store,
     } = this.props
 
+    // inform store about route changes
     if (process.browser) {
       Router.events.on('routeChangeStart', dispatchNavigate)
     }
@@ -67,7 +101,9 @@ class InnoDocApp extends App {
           </title>
         </Head>
         <Provider store={store}>
-          <Component statusCode={pageProps.statusCode} />
+          <MathJax.ConfigProvider options={pageProps.mathJaxOptions}>
+            <Component statusCode={pageProps.statusCode} />
+          </MathJax.ConfigProvider>
         </Provider>
       </>
     )

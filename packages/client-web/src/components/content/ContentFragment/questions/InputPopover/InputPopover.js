@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Popover } from 'antd'
+import MathJax from '@innodoc/react-mathjax-node'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
 
+import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
 import css from './style.sss'
-import MathJaxDiv from './MathJaxDiv'
 
 const InputPopover = ({ children, messages, userInput }) => {
   const { t } = useTranslation()
@@ -18,10 +19,17 @@ const InputPopover = ({ children, messages, userInput }) => {
   const messageList = messageItems.length
     ? <ul className={css.messageList}>{messageItems}</ul>
     : null
+
   const content = (
     <>
       <div className={css.mathJaxWrapper}>
-        <MathJaxDiv texCode={userInput} />
+        <MathJax.Provider>
+          <MathJax.Div
+            classNameHide={fadeInCss.hide}
+            classNameShow={fadeInCss.show}
+            texCode={userInput}
+          />
+        </MathJax.Provider>
       </div>
       {messageList}
     </>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import MathJax from '@innodoc/react-mathjax-node'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 
@@ -23,7 +24,9 @@ export default (ContentComponent, load, loadFailure) => {
 
     return (
       <Layout>
-        <ContentComponent />
+        <MathJax.Provider>
+          <ContentComponent />
+        </MathJax.Provider>
       </Layout>
     )
   }

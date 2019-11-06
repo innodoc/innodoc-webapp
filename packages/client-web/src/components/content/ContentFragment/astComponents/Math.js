@@ -1,21 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
-
-import { mathDelimiter, useMathJaxRemoveOnUnmount } from '../../../../hooks/useMathJax'
+import MathJax from '@innodoc/react-mathjax-node'
 
 const Math = ({ data }) => {
   const [{ t: mathType }, texCode] = data
-  const cls = mathType === 'InlineMath' ? 'inline' : 'display'
-  const delims = mathDelimiter[cls]
-  const mathJaxElem = useMathJaxRemoveOnUnmount()
-  return (
-    <span className={classNames('math', cls)} ref={mathJaxElem}>
-      {delims[0]}
-      {texCode}
-      {delims[1]}
-    </span>
-  )
+  const MathJaxComponent = mathType === 'InlineMath' ? MathJax.Span : MathJax.Div
+  return <MathJaxComponent texCode={texCode} />
 }
 
 Math.propTypes = {

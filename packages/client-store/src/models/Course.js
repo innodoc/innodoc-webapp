@@ -16,6 +16,7 @@ export default class Course extends Model {
       languages: attr({ getDefault: () => [] }),
       logo: attr({ getDefault: () => null }),
       title: attr({ getDefault: () => null }),
+      mathJaxOptions: attr({ getDefault: () => {} }),
     }
   }
 
@@ -28,6 +29,7 @@ export default class Course extends Model {
           homeLink: content.home_link || `/section/${content.toc[0].id}`,
           languages: content.languages,
           logo: content.logo || null,
+          mathJaxOptions: content.mathJaxOptions || {},
           title: content.title,
         })
         break

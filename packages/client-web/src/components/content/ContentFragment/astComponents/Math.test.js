@@ -6,7 +6,6 @@ import { mathDelimiter } from '../../../../hooks/useMathJax'
 
 jest.mock('../../../../hooks/useMathJax', () => ({
   mathDelimiter: jest.requireActual('../../../../hooks/useMathJax').mathDelimiter,
-  useMathJaxRemoveOnUnmount: () => {},
 }))
 
 const getData = (mathType) => [{ t: mathType }, 'x^2']

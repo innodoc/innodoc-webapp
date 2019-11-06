@@ -1,41 +1,16 @@
-import React from 'react'
-
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import { showMessage } from '@innodoc/client-store/src/actions/ui'
 import { parseLink } from '@innodoc/client-misc/src/util'
 import getLinkInfo from '../../getLinkInfo'
 
-import Layout from '../Layout'
-
-const waitForCourse = (store) => new Promise((resolve, reject) => {
-  const unsubscribe = store.subscribe(() => {
-    const course = courseSelectors.getCurrentCourse(store.getState())
-    if (course) {
-      unsubscribe()
-      resolve(course)
-    } else {
-      const { error } = appSelectors.getApp(store.getState())
-      if (error) {
-        unsubscribe()
-        reject(error)
-      }
-    }
-  })
-})
-
-const Index = () => <Layout />
+const Index = () => null
 
 Index.getInitialProps = async (ctx) => {
   if (ctx.store && ctx.res) {
-    let course
     let contentType
     let contentId
-    try {
-      course = await waitForCourse(ctx.store)
-    } catch {
-      return {} // UI message action is dispatched in saga
-    }
+    const course = courseSelectors.getCurrentCourse(ctx.store.getState())
     try {
       [contentType, contentId] = parseLink(course.homeLink)
     } catch (e) {
