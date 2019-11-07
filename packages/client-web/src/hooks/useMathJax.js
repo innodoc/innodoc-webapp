@@ -17,33 +17,42 @@ const typesetStates = {
   ERROR: 3,
 }
 
+// mathjaxv2 options
+// const mathJaxOptions = (cb) => ({
+//   skipStartupTypeset: true,
+//   showMathMenu: mathJaxDebug,
+//   showProcessingMessages: mathJaxDebug,
+//   messageStyle: mathJaxDebug ? 'none' : 'normal',
+//   jax: ['input/TeX', 'output/HTML-CSS'],
+//   tex2jax: {
+//     inlineMath: [mathDelimiter.inline],
+//     displayMath: [mathDelimiter.display],
+//   },
+//   extensions: [
+//     'tex2jax.js',
+//     'MathEvents.js',
+//     'MathMenu.js',
+//     'TeX/noErrors.js',
+//     'TeX/noUndefined.js',
+//     'TeX/AMSmath.js',
+//     'TeX/AMSsymbols.js',
+//     '[a11y]/accessibility-menu.js',
+//     '[innodoc]/innodoc.mathjax.js',
+//   ],
+//   // stuff that depends on MathJax being available goes into AuthorInit
+//   AuthorInit: () => {
+//     // path to our custom MathJax extension (needs to be absolute)
+//     window.MathJax.Ajax.config.path.innodoc = window.location.origin
+//     // register start-up hook
+//     window.MathJax.Hub.Register.StartupHook('End', cb)
+//   },
+// })
+
 const mathJaxOptions = (cb) => ({
-  skipStartupTypeset: true,
-  showMathMenu: mathJaxDebug,
-  showProcessingMessages: mathJaxDebug,
-  messageStyle: mathJaxDebug ? 'none' : 'normal',
-  jax: ['input/TeX', 'output/HTML-CSS'],
-  tex2jax: {
+  ready: cb,
+  tex: {
     inlineMath: [mathDelimiter.inline],
     displayMath: [mathDelimiter.display],
-  },
-  extensions: [
-    'tex2jax.js',
-    'MathEvents.js',
-    'MathMenu.js',
-    'TeX/noErrors.js',
-    'TeX/noUndefined.js',
-    'TeX/AMSmath.js',
-    'TeX/AMSsymbols.js',
-    '[a11y]/accessibility-menu.js',
-    '[innodoc]/innodoc.mathjax.js',
-  ],
-  // stuff that depends on MathJax being available goes into AuthorInit
-  AuthorInit: () => {
-    // path to our custom MathJax extension (needs to be absolute)
-    window.MathJax.Ajax.config.path.innodoc = window.location.origin
-    // register start-up hook
-    window.MathJax.Hub.Register.StartupHook('End', cb)
   },
 })
 
@@ -65,7 +74,7 @@ const injectMathJax = (cb) => {
         mathJaxReadyCallbacks = []
       })
       loadScript(
-        '/vendor/MathJax/unpacked/MathJax.js',
+        '/js/MathJax/mathjax-bundle.js',
         { attrs: { id: MATHJAX_SCRIPT_ID } },
       )
     }
@@ -99,17 +108,32 @@ const onTypesettingDone = (element, setTypesetStatus) => {
 }
 
 // Auto-typeset whole element
+// const typesetMathJax = (element, setTypesetStatus, onDone) => {
+//   setTypesetStatus(typesetStates.PENDING)
+//   window.MathJax.Hub.Queue([
+//     'Typeset',
+//     window.MathJax.Hub,
+//     element,
+//     () => {
+//       onTypesettingDone(element, setTypesetStatus)
+//       if (onDone) { onDone() }
+//     },
+//   ])
+// }
 const typesetMathJax = (element, setTypesetStatus, onDone) => {
   setTypesetStatus(typesetStates.PENDING)
-  window.MathJax.Hub.Queue([
-    'Typeset',
-    window.MathJax.Hub,
-    element,
-    () => {
-      onTypesettingDone(element, setTypesetStatus)
-      if (onDone) { onDone() }
-    },
-  ])
+  window.MathJax
+    .typesetPromise(element)
+    .then(() => {
+      // onTypesettingDone(element, setTypesetStatus)
+      if (onDone) {
+        onDone()
+      }
+    })
+    .catch((err) => {
+      console.error('Typesetting error!')
+      console.error(err)
+    })
 }
 
 const removeMathJaxOnLoadCallback = (cb) => {

@@ -20,10 +20,15 @@ const useContentPane = (getCurrent) => {
   const { mathJaxElem, typesetState } = useMathJaxScanElement([language, current], scrollToHash)
   const show = !loading && typesetState === typesetStates.SUCCESS
   const title = loading ? null : current.title[language]
+  // TODO temp. disable fade-in
   const fadeInClassName = classNames({
-    [fadeInCss.show]: show,
-    [fadeInCss.hide]: !show,
+    [fadeInCss.show]: true,
+    [fadeInCss.hide]: false,
   })
+  // const fadeInClassName = classNames({
+  //   [fadeInCss.show]: show,
+  //   [fadeInCss.hide]: !show,
+  // })
   return {
     content: loading ? [] : current.content[language],
     fadeInClassName,

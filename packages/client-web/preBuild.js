@@ -59,6 +59,7 @@ const generateVarsForAntd = () => postcss(plugins)
   });
 
 (async () => {
+  // TODO webpack mathjax here?
   await extractAntdDefaultVariables()
   const vars = await generateVarsForAntd()
   console.log(JSON.stringify(vars))
