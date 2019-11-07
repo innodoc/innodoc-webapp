@@ -9,8 +9,6 @@ Loader.preLoad(
   'input/tex-base',
   '[tex]/ams',
   '[tex]/newcommand',
-  '[tex]/noundefined',
-  '[tex]/configMacros',
 
   'output/chtml',
   'output/chtml/fonts/tex.js'
