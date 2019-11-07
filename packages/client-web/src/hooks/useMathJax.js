@@ -48,8 +48,11 @@ const typesetStates = {
 //   },
 // })
 
-const mathJaxOptions = (cb) => ({
-  ready: cb,
+const mathJaxOptions = (pageReady) => ({
+  startup: {
+    pageReady,
+    typeset: false,
+  },
   tex: {
     inlineMath: [mathDelimiter.inline],
     displayMath: [mathDelimiter.display],
@@ -87,6 +90,7 @@ const isMathJaxLoaded = () => (
     && window.MathJax.isReady
 )
 
+// TODO: how to do this in mathjax v3?
 const removeAllJaxes = (element) => {
   if (element) {
     const allJaxes = window.MathJax.Hub.getAllJax(element)
@@ -96,36 +100,12 @@ const removeAllJaxes = (element) => {
   }
 }
 
-const onTypesettingDone = (element, setTypesetStatus) => {
-  const allJaxes = window.MathJax.Hub.getAllJax(element)
-  for (let i = 0; i < allJaxes.length; i += 1) {
-    if (allJaxes[i].texError) {
-      setTypesetStatus(typesetStates.ERROR)
-      return
-    }
-  }
-  setTypesetStatus(typesetStates.SUCCESS)
-}
-
-// Auto-typeset whole element
-// const typesetMathJax = (element, setTypesetStatus, onDone) => {
-//   setTypesetStatus(typesetStates.PENDING)
-//   window.MathJax.Hub.Queue([
-//     'Typeset',
-//     window.MathJax.Hub,
-//     element,
-//     () => {
-//       onTypesettingDone(element, setTypesetStatus)
-//       if (onDone) { onDone() }
-//     },
-//   ])
-// }
 const typesetMathJax = (element, setTypesetStatus, onDone) => {
   setTypesetStatus(typesetStates.PENDING)
   window.MathJax
-    .typesetPromise(element)
+    .typesetPromise([element])
     .then(() => {
-      // onTypesettingDone(element, setTypesetStatus)
+      setTypesetStatus(typesetStates.SUCCESS)
       if (onDone) {
         onDone()
       }
@@ -133,6 +113,7 @@ const typesetMathJax = (element, setTypesetStatus, onDone) => {
     .catch((err) => {
       console.error('Typesetting error!')
       console.error(err)
+      setTypesetStatus(typesetStates.ERROR)
     })
 }
 
