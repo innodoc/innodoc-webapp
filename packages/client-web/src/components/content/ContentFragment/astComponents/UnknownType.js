@@ -6,9 +6,9 @@ import css from './style.sss'
 const dataType = PropTypes.arrayOf(PropTypes.object)
 
 const UnknownTypeData = ({ data }) => (
-  <pre className={css.componentData}>
+  <span className={css.componentData}>
     {JSON.stringify(data, null, 2)}
-  </pre>
+  </span>
 )
 UnknownTypeData.propTypes = { data: dataType.isRequired }
 
@@ -16,7 +16,7 @@ const UnknownType = ({ data, name }) => {
   const [showData, setShowData] = useState(false)
   const toggleData = () => setShowData(!showData)
   return (
-    <div
+    <span
       className={css.unknownComponent}
       onClick={toggleData}
       onKeyPress={toggleData}
@@ -31,7 +31,7 @@ const UnknownType = ({ data, name }) => {
         <strong><code>{name}</code></strong>
       </span>
       {showData ? <UnknownTypeData data={data} /> : null}
-    </div>
+    </span>
   )
 }
 
