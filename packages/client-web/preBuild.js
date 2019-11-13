@@ -1,7 +1,9 @@
 /* eslint-disable no-console */
 
-// 1) Extract Ant Design default variables to JSON file.
-// 2) Extract and return overridden variables from antd-theme.sss.
+/**
+ * 1) Extract Ant Design default variables to JSON file.
+ * 2) Extract and return overridden variables from antd-theme.sss.
+ */
 
 const fs = require('fs')
 const path = require('path')
@@ -56,10 +58,12 @@ const generateVarsForAntd = () => postcss(plugins)
     console.error('Failed to generate variables for Ant Design!')
     console.log(err)
     process.exit(-1)
-  });
+  })
 
-(async () => {
+const main = async () => {
   await extractAntdDefaultVariables()
   const vars = await generateVarsForAntd()
   console.log(JSON.stringify(vars))
-})()
+}
+
+main()
