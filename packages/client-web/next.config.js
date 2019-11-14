@@ -13,19 +13,6 @@ const nodeModulesEs = require('./nodeModulesEs')
 // babel rootMode for monorepo support
 const rootMode = 'upward'
 
-// webpack custom MathJax bundle
-try {
-  execSync('../../../../node_modules/mathjax-full/components/bin/makeAll', {
-    cwd: path.resolve(__dirname, 'src', 'mathjax'),
-    stdio: 'inherit',
-    timeout: 120 * 1000,
-  })
-} catch (err) {
-  console.log('Webpacking MathJax failed!')
-  console.log(err)
-  process.exit(-1)
-}
-
 // extract antd default vars to JSON file and prepare overridden vars
 const prepareScript = path.resolve(__dirname, 'preBuild.js')
 const antdVars = JSON.parse(execSync(`node ${prepareScript}`).toString())

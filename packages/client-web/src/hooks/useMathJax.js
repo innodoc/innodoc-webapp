@@ -4,11 +4,8 @@ import {
   useRef,
   useState,
 } from 'react'
-import loadScript from 'load-script'
 
 import MathJaxOptionsContext from '../mathjax/MathJaxOptionsContext'
-
-const MATHJAX_SCRIPT_ID = '__MATHJAX_SCRIPT__'
 
 const mathDelimiter = {
   inline: ['\\(', '\\)'],
@@ -33,6 +30,9 @@ const mathJaxOptions = (mathJaxOpts, pageReady) => {
       displayMath: [mathDelimiter.display],
       packages: { '[+]': ['ams'] },
     },
+    chtml: {
+      fontURL: `${window.location.origin}/fonts/mathjax-woff-v2`,
+    },
   }
   try {
     opts.loader = mathJaxOpts.loader
@@ -49,30 +49,8 @@ const mathJaxOptions = (mathJaxOpts, pageReady) => {
 // keeps callbacks for all MathJax-enabled components page-wide
 let mathJaxIsReadyCallbacks = []
 
-// if injection has been triggered already
-let mathJaxInjected = false
-let mathJaxIsReady = false
-
-const injectMathJax = (mathJaxOpts, cb) => {
-  if (process.browser) {
-    mathJaxIsReadyCallbacks.push(cb)
-    if (!mathJaxInjected) {
-      mathJaxInjected = true
-      const pageReady = () => {
-        for (let i = 0; i < mathJaxIsReadyCallbacks.length; i += 1) {
-          mathJaxIsReadyCallbacks[i]()
-        }
-        mathJaxIsReadyCallbacks = []
-        mathJaxIsReady = true
-      }
-      window.MathJax = mathJaxOptions(mathJaxOpts, pageReady)
-      loadScript(
-        '/js/MathJax/mathjax-bundle.js',
-        { attrs: { id: MATHJAX_SCRIPT_ID } },
-      )
-    }
-  }
-}
+// if MathJax loading has been triggered
+let mathJaxIsLoaded = false
 
 const typesetMathJax = (element, setTypesetStatus, onDone) => {
   setTypesetStatus(typesetStates.PENDING)
@@ -89,7 +67,7 @@ const typesetMathJax = (element, setTypesetStatus, onDone) => {
     })
 }
 
-const removeMathJaxOnLoadCallback = (cb) => {
+const removeMathJaxReadyCallback = (cb) => {
   for (let i = 0; i < mathJaxIsReadyCallbacks.length; i += 1) {
     if (mathJaxIsReadyCallbacks[i] === cb) {
       mathJaxIsReadyCallbacks.splice(i, 1)
@@ -105,23 +83,39 @@ const useMathJaxGeneric = (mathCode, mathType, deps, typesetDoneCallback) => {
   const customMathJaxOptions = useContext(MathJaxOptionsContext)
   useEffect(
     () => {
-      const typeset = () => typesetMathJax(
-        mathJaxElem.current, setTypesetStatus, typesetDoneCallback
+      let needCallbackCleanup = false
+      const typeset = () => (
+        typesetMathJax(mathJaxElem.current, setTypesetStatus, typesetDoneCallback)
       )
-      let callbackCleanup = false
       if (singleJax) {
         const [delimOpen, delimClose] = mathDelimiter[mathType]
         mathJaxElem.current.innerHTML = `${delimOpen}${mathCode || ''}${delimClose}`
       }
-      if (mathJaxIsReady) {
-        typeset()
-      } else {
-        injectMathJax(customMathJaxOptions, typeset)
-        callbackCleanup = true
+
+      if (process.browser) {
+        if (mathJaxIsLoaded) {
+          typeset()
+        } else {
+          const pageReady = () => {
+            for (let i = 0; i < mathJaxIsReadyCallbacks.length; i += 1) {
+              mathJaxIsReadyCallbacks[i]()
+            }
+            mathJaxIsReadyCallbacks = []
+            mathJaxIsLoaded = true
+          }
+          window.MathJax = mathJaxOptions(customMathJaxOptions, pageReady)
+          mathJaxIsReadyCallbacks.push(typeset)
+          needCallbackCleanup = true
+          import(
+            /* webpackChunkName: "mathjax" */
+            '../mathjax/mathjax-bundle'
+          )
+        }
       }
+
       return () => {
-        if (callbackCleanup) {
-          removeMathJaxOnLoadCallback(typeset)
+        if (needCallbackCleanup) {
+          removeMathJaxReadyCallback(typeset)
         }
       }
     },

@@ -3,4 +3,3 @@
 /src/public/locales/*/*.missing.json
 /e2e/screenshots
 /src/style/antd-vars.json
-/src/public/js/MathJax/mathjax-bundle.js

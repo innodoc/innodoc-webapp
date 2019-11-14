@@ -42,7 +42,6 @@
     "ignore-loader": "^0.1.2",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
-    "load-script": "^1.0.0",
     "mathjax-full": "^3.0.0",
     "md5": "^2.2.1",
     "next": "^9.1.2",
