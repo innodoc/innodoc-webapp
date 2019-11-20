@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
-import MathJaxOptionsContext from '../../mathjax/MathJaxOptionsContext'
+import MathJaxProvider from '../../mathjax/MathJaxProvider'
 import Layout from '../Layout'
 import ErrorPage from './ErrorPage'
 
@@ -26,9 +26,9 @@ export default (ContentComponent, load, loadFailure) => {
 
     return (
       <Layout>
-        <MathJaxOptionsContext.Provider value={mathjaxOptions}>
-          <ContentComponent />
-        </MathJaxOptionsContext.Provider>
+        <MathJaxProvider options={mathjaxOptions}>
+          {(numFormulars) => <ContentComponent numFormulars={numFormulars} />}
+        </MathJaxProvider>
       </Layout>
     )
   }

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
@@ -9,11 +10,11 @@ import ContentFragment from './ContentFragment'
 import ContentAffix from './ContentAffix'
 import SubsectionList from './SubsectionList'
 
-const Content = () => {
+const Content = ({ numFormulars }) => {
   const {
     content,
     fadeInClassName,
-    mathJaxElem,
+    // mathJaxElem,
   } = useContentPane(sectionSelectors.getCurrentSection)
   const subsections = useSelector(sectionSelectors.getCurrentSubsections)
   const title = useSelector(sectionSelectors.getCurrentTitle)
@@ -28,12 +29,14 @@ const Content = () => {
       <div className={fadeInClassName} id="content">
         <h1 className={css.header}>{title}</h1>
         {subsectionList}
-        <div ref={mathJaxElem}>
-          <ContentFragment content={content} />
-        </div>
+        <ContentFragment content={content} />
       </div>
     </>
   )
+}
+
+Content.propTypes = {
+  numFormulars: PropTypes.number.isRequired,
 }
 
 export default Content

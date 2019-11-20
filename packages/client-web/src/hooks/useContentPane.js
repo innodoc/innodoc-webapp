@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
-import { typesetStates, useMathJaxScanElement } from './useMathJax'
+// import { typesetStates, useMathJaxScanElement } from './useMathJax'
 
 const scrollToHash = () => {
   if (process.browser) {
@@ -17,19 +17,23 @@ const useContentPane = (getCurrent) => {
   const { language } = useSelector(appSelectors.getApp)
   const current = useSelector(getCurrent)
   const loading = !language || !current || !current.content[language]
-  const { mathJaxElem, typesetState } = useMathJaxScanElement([language, current], scrollToHash)
+  // const { mathJaxElem, typesetState } = useMathJaxScanElement([language, current], scrollToHash)
 
-  const show = !loading && [typesetStates.SUCCESS, typesetStates.ERROR].includes(typesetState)
+  // const show = !loading && [typesetStates.SUCCESS, typesetStates.ERROR].includes(typesetState)
   const title = loading ? null : current.title[language]
+  // const fadeInClassName = classNames({
+  //   [fadeInCss.show]: show,
+  //   [fadeInCss.hide]: !show,
+  // })
   const fadeInClassName = classNames({
-    [fadeInCss.show]: show,
-    [fadeInCss.hide]: !show,
+    [fadeInCss.show]: true,
+    [fadeInCss.hide]: false,
   })
   return {
     content: loading ? [] : current.content[language],
     fadeInClassName,
     language,
-    mathJaxElem,
+    // mathJaxElem,
     title,
   }
 }
