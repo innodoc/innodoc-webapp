@@ -10,12 +10,9 @@ import ContentFragment from './ContentFragment'
 import ContentAffix from './ContentAffix'
 import SubsectionList from './SubsectionList'
 
-const Content = ({ numFormulars }) => {
-  const {
-    content,
-    fadeInClassName,
-    // mathJaxElem,
-  } = useContentPane(sectionSelectors.getCurrentSection)
+const Content = ({ typesettingDone }) => {
+  const { content, fadeInClassName } = useContentPane(
+    sectionSelectors.getCurrentSection, typesettingDone)
   const subsections = useSelector(sectionSelectors.getCurrentSubsections)
   const title = useSelector(sectionSelectors.getCurrentTitle)
 
@@ -36,7 +33,7 @@ const Content = ({ numFormulars }) => {
 }
 
 Content.propTypes = {
-  numFormulars: PropTypes.number.isRequired,
+  typesettingDone: PropTypes.bool.isRequired,
 }
 
 export default Content

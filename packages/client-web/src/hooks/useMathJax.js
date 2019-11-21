@@ -46,118 +46,91 @@ const mathJaxOptions = (mathJaxOpts, pageReady) => {
   return opts
 }
 
-// keeps callbacks for all MathJax-enabled components page-wide
-let mathJaxIsReadyCallbacks = []
-
-// if MathJax loading has been triggered
+// MathJax loading has been triggered
 let mathJaxIsLoading = false
+
+// MathJax is ready to operate
 let mathJaxIsReady = false
 
-const typesetMathJax = (texCode, mathType, element, setNumFormulars, setTypesetStatus, onDone) => {
-  setTypesetStatus(typesetStates.PENDING)
-  setNumFormulars((numFormulars) => numFormulars + 1)
-  console.log('TYPESET', texCode)
-  const display = mathType === 'display'
-  const options = window.MathJax.getMetricsFor(element, display)
-  // const options = {}
-  // console.log(options)
-  window.MathJax
-    .tex2chtmlPromise(texCode, { ...options, display })
-    .then((mathJaxNodes) => {
-      console.log('TYPESET DONE')
-      console.log(document.getElementsByTagName('head')[0])
-      document.getElementsByTagName('head')[0].appendChild(
-        window.MathJax.chtmlStylesheet()
-      )
-      element.innerHTML = mathJaxNodes.outerHTML
-      setTypesetStatus(typesetStates.SUCCESS)
-      if (onDone) {
-        onDone()
-      }
-    })
-    .catch(() => setTypesetStatus(typesetStates.ERROR))
-    .finally(() => setNumFormulars((numFormulars) => numFormulars - 1))
-}
+// current MathJax promise
+let currentPromise
 
-const removeMathJaxReadyCallback = (cb) => {
-  for (let i = 0; i < mathJaxIsReadyCallbacks.length; i += 1) {
-    if (mathJaxIsReadyCallbacks[i] === cb) {
-      mathJaxIsReadyCallbacks.splice(i, 1)
-      break
+const loadMathJax = (options) => new Promise((resolve) => {
+  mathJaxIsLoading = true
+  window.MathJax = mathJaxOptions(options, () => {
+    mathJaxIsReady = true
+    resolve()
+  })
+  import(
+    /* webpackChunkName: "mathjax" */
+    '../mathjax/mathjax-bundle'
+  )
+})
+
+const useLoadMathJax = (options) => {
+  const [mathJaxReady, setMathJaxReady] = useState(false)
+
+  if (process.browser) {
+    if (!mathJaxIsLoading) {
+      currentPromise = loadMathJax(options).then(() => setMathJaxReady(true))
+    } else if (mathJaxIsReady && !mathJaxReady) {
+      setMathJaxReady(true)
     }
   }
+
+  return mathJaxReady
 }
 
-const useMathJaxGeneric = (texCode, mathType, deps, typesetDoneCallback) => {
-  // const singleJax = typeof mathCode !== 'undefined'
+const useMathJax = (texCode, mathType = 'inline') => {
+  // console.log('useMathJax')
   const mathJaxElem = useRef(null)
-  const [typesetState, setTypesetStatus] = useState(typesetStates.INITIAL)
-  const { options, setNumFormulars } = useContext(MathJaxContext)
-  const [delimOpen, delimClose] = mathDelimiter[mathType]
+  // const [typesetState, setTypesetStatus] = useState(typesetStates.INITIAL)
+  const { setFormularsProcessing } = useContext(MathJaxContext)
+
+  // load MathJax and trigger typesetting
   useEffect(
     () => {
-      let needCallbackCleanup = false
-      const typeset = () => (
-        typesetMathJax(texCode, mathType, mathJaxElem.current, setNumFormulars, setTypesetStatus, typesetDoneCallback)
-      )
-      // if (singleJax) {
-      //   const [delimOpen, delimClose] = mathDelimiter[mathType]
-      //   mathJaxElem.current.innerHTML = `${delimOpen}${mathCode || ''}${delimClose}`
-      // }
-
       if (process.browser) {
-        if (mathJaxIsReady) {
-          console.log('MJ READY')
-          typeset()
-        } else {
-          needCallbackCleanup = true
-          mathJaxIsReadyCallbacks.push(typeset)
-          if (mathJaxIsLoading) {
-            console.log('MJ LOADING')
-          } else {
-            console.log('MJ LOAD!')
-            mathJaxIsLoading = true
-            const pageReady = () => {
-              mathJaxIsReady = true
-              for (let i = 0; i < mathJaxIsReadyCallbacks.length; i += 1) {
-                mathJaxIsReadyCallbacks[i]()
-              }
-              mathJaxIsReadyCallbacks = []
-            }
-            window.MathJax = mathJaxOptions(options, pageReady)
-            import(
-              /* webpackChunkName: "mathjax" */
-              '../mathjax/mathjax-bundle'
-            )
+        if (!currentPromise) {
+          throw new Error('Did you forget to use the MathJaxProvider?')
+        }
+        // queue typeset after last operation
+        currentPromise.then(() => {
+          if (mathJaxElem.current) {
+            console.log('useMathJax')
+            setFormularsProcessing((prev) => prev + 1)
+            const display = mathType === 'display'
+            const metrics = window.MathJax.getMetricsFor(mathJaxElem.current, display)
+            console.log(metrics)
+            currentPromise = window.MathJax
+              .tex2chtmlPromise(texCode, { ...metrics, display })
+              .then((mathJaxNodes) => {
+                // add chtml styles
+                const chtmlStylesheet = window.MathJax.chtmlStylesheet()
+                const existingChtmlStylesheet = document.getElementById(chtmlStylesheet.id)
+                if (existingChtmlStylesheet) {
+                  existingChtmlStylesheet.parentNode.replaceChild(
+                    chtmlStylesheet, existingChtmlStylesheet)
+                } else {
+                  document.getElementsByTagName('head')[0].appendChild(chtmlStylesheet)
+                }
+                // add rendered nodes
+                mathJaxElem.current.innerHTML = mathJaxNodes.outerHTML
+                // setTypesetStatus(typesetStates.SUCCESS)
+                // if (onDone) {
+                //   onDone()
+                // }
+              })
           }
-        }
-      }
-
-      return () => {
-        if (needCallbackCleanup) {
-          removeMathJaxReadyCallback(typeset)
-        }
+          setFormularsProcessing((prev) => prev - 1)
+        })
       }
     },
     [texCode]
-    // singleJax ? [mathCode] : deps
   )
-  return { mathJaxElem, typesetState }
+
+  return { mathJaxElem }
 }
 
-// Render a single formula
-const useMathJax = (mathCode, mathType = 'inline') => useMathJaxGeneric(
-  mathCode, mathType, undefined
-)
-
-// Scan an entire element tree for formulas
-const useMathJaxScanElement = (deps, typesetDoneCallback) => useMathJaxGeneric(
-  undefined, undefined, deps, typesetDoneCallback
-)
-
-export {
-  mathDelimiter,
-  typesetStates,
-  useMathJaxScanElement,
-}
+export { mathDelimiter, typesetStates, useLoadMathJax }
 export default useMathJax

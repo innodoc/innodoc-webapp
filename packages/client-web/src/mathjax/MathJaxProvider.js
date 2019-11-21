@@ -1,17 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
 
 import MathJaxContext from './MathJaxContext'
 
+import { useLoadMathJax } from '../hooks/useMathJax'
+
 // All formulas under this context are connected.
 
 const MathJaxProvider = ({ children, options }) => {
-  const [numFormulars, setNumFormulars] = useState(0)
+  const [numFormularsProcessing, setFormularsProcessing] = useState(0)
+  const [typesettingDone, setTypesettingDone] = useState(false)
+  const mathJaxReady = useLoadMathJax(options)
+  useEffect(() => {
+    if (mathJaxReady && numFormularsProcessing === 0) {
+      setTypesettingDone(true)
+    }
+  }, [mathJaxReady, numFormularsProcessing])
+
   return (
-    <MathJaxContext.Provider value={{ options, setNumFormulars }}>
-      {children(numFormulars)}
+    <MathJaxContext.Provider value={{ setFormularsProcessing }}>
+      {children(typesettingDone)}
     </MathJaxContext.Provider>
   )
 }

@@ -27,7 +27,7 @@ export default (ContentComponent, load, loadFailure) => {
     return (
       <Layout>
         <MathJaxProvider options={mathjaxOptions}>
-          {(numFormulars) => <ContentComponent numFormulars={numFormulars} />}
+          {(typesettingDone) => <ContentComponent typesettingDone={typesettingDone} />}
         </MathJaxProvider>
       </Layout>
     )
