@@ -1,27 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
 
 import MathJaxContext from './MathJaxContext'
+import typesetStates from '../hooks/mathjax/states'
 
-import { useLoadMathJax } from '../hooks/useMathJax'
-
-// All formulas under this context are connected.
+import useInitMathJax from '../hooks/mathjax/useInitMathJax'
 
 const MathJaxProvider = ({ children, options }) => {
-  const [numFormularsProcessing, setFormularsProcessing] = useState(0)
-  const [typesettingDone, setTypesettingDone] = useState(false)
-  const mathJaxReady = useLoadMathJax(options)
-  useEffect(() => {
-    if (mathJaxReady && numFormularsProcessing === 0) {
-      setTypesettingDone(true)
-    }
-  }, [mathJaxReady, numFormularsProcessing])
-
+  console.log('provider render')
+  const typesetTimer = useRef(false)
+  const [typesetStatus, setTypesetStatus] = useState(typesetStates.INITIAL)
+  useInitMathJax(options)
   return (
-    <MathJaxContext.Provider value={{ setFormularsProcessing }}>
-      {children(typesettingDone)}
+    <MathJaxContext.Provider value={{ setTypesetStatus, typesetStatus, typesetTimer }}>
+      {children}
     </MathJaxContext.Provider>
   )
 }

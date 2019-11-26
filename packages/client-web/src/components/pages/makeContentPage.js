@@ -11,7 +11,7 @@ import ErrorPage from './ErrorPage'
 export default (ContentComponent, load, loadFailure) => {
   const ContentPage = () => {
     const { error } = useSelector(appSelectors.getApp)
-    const { mathjaxOptions } = useSelector(courseSelectors.getCurrentCourse)
+    const { mathJaxOptions } = useSelector(courseSelectors.getCurrentCourse)
 
     if (error) {
       // workaround for setting the status code (client and server)
@@ -26,8 +26,8 @@ export default (ContentComponent, load, loadFailure) => {
 
     return (
       <Layout>
-        <MathJaxProvider options={mathjaxOptions}>
-          {(typesettingDone) => <ContentComponent typesettingDone={typesettingDone} />}
+        <MathJaxProvider options={mathJaxOptions}>
+          <ContentComponent />
         </MathJaxProvider>
       </Layout>
     )
