@@ -34,9 +34,13 @@ const getCurrentSection = createSelector(
 // Return direct subsections for current section
 const getCurrentSubsections = createSelector(
   orm, courseSelectors.getCurrentCourse,
-  (session, course) => session.Section.all()
-    .filter((section) => section.parentId === course.currentSection)
-    .toRefArray()
+  (session, course) => (
+    course.currentSection
+      ? session.Section.all()
+        .filter((section) => section.parentId === course.currentSection)
+        .toRefArray()
+      : []
+  )
 )
 
 const getCurrentTitle = createSelector(
