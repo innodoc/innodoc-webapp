@@ -18,51 +18,40 @@ const updateCss = () => {
   }
 }
 
-const useMathJax = (texCode, mathType = 'inline', onTypesettingDone) => {
+const useMathJax = (texCode, mathType = 'inline') => {
   const mathJaxElem = useRef(null)
-  const { setTypesetStatus, typesetTimer } = useContext(MathJaxContext)
+  const { setTypesetStatus, typesetCallbacks, typesetTimer } = useContext(MathJaxContext)
 
   // load MathJax and trigger typesetting
   useEffect(
     () => {
       if (process.browser) {
-        console.log('adding to queue')
         addToQueue(
           () => {
-            console.log('useEffect', mathJaxElem.current)
-
             setTypesetStatus(typesetStates.PENDING)
             const display = mathType === 'display'
-            const metrics = window.MathJax.getMetricsFor(mathJaxElem.current, display)
-
-            return window.MathJax
-              .tex2chtmlPromise(texCode, { ...metrics, display })
-              .then((mathJaxNodes) => {
-                console.log('render node')
+            return new Promise((resolve, reject) => {
+              window.MathJax.tex2chtmlPromise(texCode, {
+                ...window.MathJax.getMetricsFor(mathJaxElem.current, display),
+                display,
+              }).then((mathJaxNodes) => {
                 // add rendered nodes
                 if (mathJaxNodes) {
                   mathJaxElem.current.innerHTML = mathJaxNodes.outerHTML
                 }
-              })
-              .finally(() => {
-                if (typesetTimer.current) {
-                  window.clearTimeout(typesetTimer.current)
+              }).catch(reject).finally(resolve)
+            }).finally(() => {
+              if (typesetTimer.current) {
+                window.clearTimeout(typesetTimer.current)
+              }
+              typesetTimer.current = window.setTimeout(() => {
+                updateCss()
+                for (let i = 0; i < typesetCallbacks.current.length; i += 1) {
+                  typesetCallbacks.current[i]()
                 }
-                typesetTimer.current = window.setTimeout(() => {
-                  console.log('Timeout')
-                  updateCss()
-                  setTypesetStatus(typesetStates.DONE)
-                  if (onTypesettingDone) {
-                    onTypesettingDone()
-                  }
-                }, TYPESETTING_DONE_TIMEOUT)
-              })
-              .catch((err) => {
-                console.log(`Typeset error with '${texCode}' display=${display}`)
-                console.log(mathJaxElem.current)
-                console.log(metrics)
-                console.log(err)
-              })
+                setTypesetStatus(typesetStates.DONE)
+              }, TYPESETTING_DONE_TIMEOUT)
+            })
           }
         )
       }

@@ -1,12 +1,9 @@
-import { useState } from 'react'
 import { insert } from 'mathjax-full/js/util/Options'
 
 import addToQueue from './addToQueue'
 
-const mathDelimiter = {
-  inline: ['\\(', '\\)'],
-  display: ['\\[', '\\]'],
-}
+// if MathJax import has been triggered
+let mathJaxImported = false
 
 const getDefaultOptions = () => ({
   startup: { typeset: false },
@@ -15,13 +12,9 @@ const getDefaultOptions = () => ({
 })
 
 const useInitMathJax = (options) => {
-  // MathJax import has been triggered
-  const [mathJaxImported, setMathJaxImported] = useState(false)
   if (process.browser) {
-    console.log('useInitMathJax')
     if (!mathJaxImported) {
-      console.log('useInitMathJax: importing')
-      setMathJaxImported(true)
+      mathJaxImported = true
       addToQueue(
         () => new Promise((resolve) => {
           // MathJax reads options from window.MathJax

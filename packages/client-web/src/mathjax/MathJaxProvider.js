@@ -1,4 +1,9 @@
-import React, { useRef, useState } from 'react'
+import React, {
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import PropTypes from 'prop-types'
 
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
@@ -9,12 +14,25 @@ import typesetStates from '../hooks/mathjax/states'
 import useInitMathJax from '../hooks/mathjax/useInitMathJax'
 
 const MathJaxProvider = ({ children, options }) => {
-  console.log('provider render')
   const typesetTimer = useRef(false)
+  const typesetCallbacks = useRef([])
   const [typesetStatus, setTypesetStatus] = useState(typesetStates.INITIAL)
+
+  const addCallback = useCallback((cb) => typesetCallbacks.current.push(cb), [])
+  const removeCallback = useCallback(
+    (cb) => typesetCallbacks.current.splice(typesetCallbacks.current.indexOf(cb), 1), [])
+  const value = {
+    addCallback,
+    removeCallback,
+    setTypesetStatus,
+    typesetCallbacks,
+    typesetStatus,
+    typesetTimer,
+  }
+
   useInitMathJax(options)
   return (
-    <MathJaxContext.Provider value={{ setTypesetStatus, typesetStatus, typesetTimer }}>
+    <MathJaxContext.Provider value={value}>
       {children}
     </MathJaxContext.Provider>
   )
