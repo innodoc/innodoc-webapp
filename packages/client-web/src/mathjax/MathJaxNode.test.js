@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
-import MathJaxDiv from './MathJaxDiv'
+import MathJax from './MathJax'
 
 const { typesetStates } = jest.requireActual('../../../../../hooks/useMathJax')
 
@@ -18,14 +18,14 @@ jest.mock('../../../../../hooks/useMathJax', () => ({
   typesetStates: jest.requireActual('../../../../../hooks/useMathJax').typesetStates,
 }))
 
-describe('<MathJaxDiv />', () => {
+describe('<MathJax />', () => {
   beforeEach(() => {
     mockMathJaxElem = React.createRef()
     mockTypesetState = typesetStates.SUCCESS
   })
 
   it('should render', () => {
-    const wrapper = shallow(<MathJaxDiv texCode="f(x)=x^2" />)
+    const wrapper = shallow(<MathJax texCode="f(x)=x^2" />)
     expect(wrapper.exists('div')).toBe(true)
   })
 
@@ -35,7 +35,7 @@ describe('<MathJaxDiv />', () => {
       ['out', typesetStates.PENDING, true],
     ])('should fade %s', (_, state, hidePresent) => {
       mockTypesetState = state
-      const wrapper = shallow(<MathJaxDiv texCode="f(x)=x^2" />)
+      const wrapper = shallow(<MathJax texCode="f(x)=x^2" />)
       expect(wrapper.find('div').hasClass(fadeInCss.hide)).toBe(hidePresent)
       expect(wrapper.find('div').hasClass(fadeInCss.show)).toBe(!hidePresent)
     })

@@ -55,12 +55,16 @@ const useMathJax = (texCode, mathType = 'inline') => {
           }
         )
       }
+      return () => {
+        if (mathJaxElem.current) {
+          mathJaxElem.current.innerHTML = ''
+        }
+      }
     },
     [texCode]
   )
 
-  return { mathJaxElem }
+  return mathJaxElem
 }
 
-export { typesetStates }
 export default useMathJax

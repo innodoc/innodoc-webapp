@@ -1,14 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 
-import useMathJax from '../../../../hooks/mathjax/useMathJax'
+import MathJaxNode from '../../../../mathjax/MathJaxNode'
 
 const Math = ({ data }) => {
   const [{ t: mathType }, texCode] = data
-  const cls = mathType === 'InlineMath' ? 'inline' : 'display'
-  const { mathJaxElem } = useMathJax(texCode, cls)
-  return <span className={classNames('math', cls)} ref={mathJaxElem} />
+  console.log(texCode)
+  return (
+    <MathJaxNode
+      displayType={mathType === 'InlineMath' ? 'inline' : 'display'}
+      texCode={texCode}
+    />
+  )
 }
 
 Math.propTypes = {

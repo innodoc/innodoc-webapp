@@ -1,7 +1,6 @@
 import { useEffect, useContext } from 'react'
 import Router from 'next/router'
 import { useSelector } from 'react-redux'
-import classNames from 'classnames'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 
@@ -22,19 +21,16 @@ const useContentPane = (getCurrent) => {
   const { addCallback, removeCallback, typesetStatus } = useContext(MathJaxContext)
   const typesetDone = typesetStatus === typesetStates.DONE
   const show = !loading && typesetDone
+  const fadeInClassName = show ? fadeInCss.show : fadeInCss.hide
+  const title = loading ? null : current.title[language]
 
-  // Page is going to relayout after typesetting. So, we need to scroll todo
-  // anchor afterwards.
+  // Page is going to re-layout after typesetting. So, we need to manually
+  // scroll to anchor.
   useEffect(() => {
     addCallback(scrollToHash)
     return () => removeCallback(scrollToHash)
   })
 
-  const title = loading ? null : current.title[language]
-  const fadeInClassName = classNames({
-    [fadeInCss.show]: show,
-    [fadeInCss.hide]: !show,
-  })
   return {
     content: loading ? [] : current.content[language],
     fadeInClassName,
