@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { List, Tag } from 'antd'
+import MathJaxNode, { MathJaxProvider } from 'use-mathjax'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
@@ -8,8 +9,6 @@ import indexTermSelectors from '@innodoc/client-store/src/selectors/indexTerm'
 
 import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
 import { SectionLink } from '../content/links'
-import MathJaxNode from '../../mathjax/MathJaxNode'
-import MathJaxProvider from '../../mathjax/MathJaxProvider'
 import css from './style.sss'
 
 const parseName = (term) => {

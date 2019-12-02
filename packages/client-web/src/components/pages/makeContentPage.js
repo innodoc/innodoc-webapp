@@ -1,10 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { MathJaxProvider } from 'use-mathjax'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
-import MathJaxProvider from '../../mathjax/MathJaxProvider'
 import Layout from '../Layout'
 import ErrorPage from './ErrorPage'
 

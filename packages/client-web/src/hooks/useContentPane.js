@@ -1,12 +1,11 @@
 import { useEffect, useContext } from 'react'
 import Router from 'next/router'
 import { useSelector } from 'react-redux'
+import { MathJaxContext, typesetStates } from 'use-mathjax'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import fadeInCss from '../style/fade-in.sss'
-import typesetStates from './mathjax/states'
-import MathJaxContext from '../mathjax/MathJaxContext'
 
 const scrollToHash = () => {
   if (process.browser) {

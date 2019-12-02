@@ -2,13 +2,11 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Popover } from 'antd'
+import MathJaxNode, { MathJaxProvider } from 'use-mathjax'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
-
-import MathJaxProvider from '../../../../../mathjax/MathJaxProvider'
-import MathJaxNode from '../../../../../mathjax/MathJaxNode'
 
 import css from './style.sss'
 
