@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Popover } from 'antd'
-import { MathJaxDiv, MathJaxProvider } from '@innodoc/use-mathjax'
+import { MathJaxDiv, MathJaxProvider } from '@innodoc/react-mathjax-node'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { childrenType } from '@innodoc/client-misc/src/propTypes'

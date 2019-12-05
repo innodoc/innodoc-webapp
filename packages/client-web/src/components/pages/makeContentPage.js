@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { MathJaxProvider } from '@innodoc/use-mathjax'
+import { MathJaxProvider } from '@innodoc/react-mathjax-node'
 import { insert } from 'mathjax-full/js/util/Options'
 
 import appSelectors from '@innodoc/client-store/src/selectors'

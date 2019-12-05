@@ -29,7 +29,7 @@
     "@innodoc/client-misc": "*",
     "@innodoc/client-sagas": "*",
     "@innodoc/client-store": "*",
-    "@innodoc/use-mathjax": "../use-mathjax",
+    "@innodoc/react-mathjax-node": "/home/buzz/react-mathjax-node",
     "@svgr/webpack": "^4.3.3",
     "@zeit/next-bundle-analyzer": "^0.1.2",
     "@zeit/next-css": "^1.0.1",

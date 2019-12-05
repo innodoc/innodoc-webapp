@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { List, Tag } from 'antd'
-import { MathJaxSpan, MathJaxProvider } from '@innodoc/use-mathjax'
+import { MathJaxSpan, MathJaxProvider } from '@innodoc/react-mathjax-node'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'

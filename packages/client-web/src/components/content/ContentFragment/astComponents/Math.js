@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { MathJaxDiv, MathJaxSpan } from '@innodoc/use-mathjax'
+import { MathJaxDiv, MathJaxSpan } from '@innodoc/react-mathjax-node'
 
 const Math = ({ data }) => {
   const [{ t: mathType }, texCode] = data

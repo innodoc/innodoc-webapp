@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react'
 import Router from 'next/router'
 import { useSelector } from 'react-redux'
-import { MathJaxContext, typesetStates } from '@innodoc/use-mathjax'
+import { MathJaxContext, typesetStates } from '@innodoc/react-mathjax-node'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 
