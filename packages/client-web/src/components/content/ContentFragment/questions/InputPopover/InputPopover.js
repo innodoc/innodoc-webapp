@@ -2,12 +2,13 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Popover } from 'antd'
-import MathJaxNode, { MathJaxProvider } from 'use-mathjax'
+import { MathJaxDiv, MathJaxProvider } from '@innodoc/use-mathjax'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
+import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
 import css from './style.sss'
 
 const InputPopover = ({ children, messages, userInput }) => {
@@ -21,11 +22,16 @@ const InputPopover = ({ children, messages, userInput }) => {
   const messageList = messageItems.length
     ? <ul className={css.messageList}>{messageItems}</ul>
     : null
+
   const content = (
     <>
       <div className={css.mathJaxWrapper}>
         <MathJaxProvider options={mathJaxOptions}>
-          <MathJaxNode fadeIn texCode={userInput} />
+          <MathJaxDiv
+            classNameHide={fadeInCss.hide}
+            classNameShow={fadeInCss.show}
+            texCode={userInput}
+          />
         </MathJaxProvider>
       </div>
       {messageList}

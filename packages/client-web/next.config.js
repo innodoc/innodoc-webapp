@@ -87,6 +87,10 @@ const webpack = (prevConfig) => {
     }
   }
 
+  // TODO remove!
+  // only for use-mathjax lib development, to force one version of react
+  config.resolve.alias.react = path.resolve('../../node_modules/react')
+
   // debug print webpack config
   if (process.env.PRINT_WEBPACK_CONFIG) {
     /* eslint-disable-next-line no-extend-native */

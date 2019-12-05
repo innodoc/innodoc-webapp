@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react'
 import Router from 'next/router'
 import { useSelector } from 'react-redux'
-import { MathJaxContext, typesetStates } from 'use-mathjax'
+import { MathJaxContext, typesetStates } from '@innodoc/use-mathjax'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 
@@ -18,7 +18,7 @@ const useContentPane = (getCurrent) => {
   const current = useSelector(getCurrent)
   const loading = !language || !current || !current.content[language]
   const { addCallback, removeCallback, typesetStatus } = useContext(MathJaxContext)
-  const typesetDone = typesetStatus === typesetStates.DONE
+  const typesetDone = typesetStatus === typesetStates.READY
   const show = !loading && typesetDone
   const fadeInClassName = show ? fadeInCss.show : fadeInCss.hide
   const title = loading ? null : current.title[language]

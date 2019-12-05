@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { List, Tag } from 'antd'
-import MathJaxNode, { MathJaxProvider } from 'use-mathjax'
+import { MathJaxSpan, MathJaxProvider } from '@innodoc/use-mathjax'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
@@ -26,7 +26,7 @@ const parseName = (term) => {
       match = remain.match(/^\$([^$]+)\$/)
       if (match) {
         const [, content] = match
-        name.push(<MathJaxNode displayType="inline" key={index} texCode={content} />)
+        name.push(<MathJaxSpan key={index} texCode={content} />)
         remain = remain.slice(content.length + 2)
         index += 1
       } else {

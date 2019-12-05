@@ -1,12 +1,17 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { MathJaxProvider } from 'use-mathjax'
+import { MathJaxProvider } from '@innodoc/use-mathjax'
+import { insert } from 'mathjax-full/js/util/Options'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
 import Layout from '../Layout'
 import ErrorPage from './ErrorPage'
+
+const DEFAULT_MATHJAX_FONT_URL = process.browser
+  ? `${window.location.origin}/fonts/mathjax-woff-v2`
+  : ''
 
 export default (ContentComponent, load, loadFailure) => {
   const ContentPage = () => {
@@ -26,7 +31,9 @@ export default (ContentComponent, load, loadFailure) => {
 
     return (
       <Layout>
-        <MathJaxProvider options={mathJaxOptions}>
+        <MathJaxProvider options={insert(
+          { chtml: { fontURL: DEFAULT_MATHJAX_FONT_URL } }, mathJaxOptions)}
+        >
           <ContentComponent />
         </MathJaxProvider>
       </Layout>
