@@ -6,9 +6,7 @@ import css from './style.sss'
 const dataType = PropTypes.arrayOf(PropTypes.object)
 
 const UnknownTypeData = ({ data }) => (
-  <span className={css.componentData}>
-    {JSON.stringify(data, null, 2)}
-  </span>
+  <span className={css.componentData}>{JSON.stringify(data, null, 2)}</span>
 )
 UnknownTypeData.propTypes = { data: dataType.isRequired }
 
@@ -24,11 +22,10 @@ const UnknownType = ({ data, name }) => {
       tabIndex={0}
     >
       <span>
-        { showData ? '➖' : '➕' }
-        {' '}
-        Unknown component:
-        {' '}
-        <strong><code>{name}</code></strong>
+        {showData ? '➖' : '➕'} Unknown component:{' '}
+        <strong>
+          <code>{name}</code>
+        </strong>
       </span>
       {showData ? <UnknownTypeData data={data} /> : null}
     </span>

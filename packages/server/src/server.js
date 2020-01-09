@@ -39,26 +39,23 @@ if (!port) {
 }
 
 // ensure trailing slash
-const contentRoot = process.env.CONTENT_ROOT.substr(-1) === '/'
-  ? process.env.CONTENT_ROOT
-  : `${process.env.CONTENT_ROOT}/`
+const contentRoot =
+  process.env.CONTENT_ROOT.substr(-1) === '/'
+    ? process.env.CONTENT_ROOT
+    : `${process.env.CONTENT_ROOT}/`
 
 let staticRoot = process.env.STATIC_ROOT
   ? process.env.STATIC_ROOT
   : `${contentRoot}_static/`
-staticRoot = staticRoot.substr(-1) === '/'
-  ? staticRoot
-  : `${staticRoot}/`
+staticRoot = staticRoot.substr(-1) === '/' ? staticRoot : `${staticRoot}/`
 
-const handleCustomRoute = (app, dest) => (
-  (req, res) => {
-    if (req.params.contentId.endsWith('/')) {
-      res.redirect(req.path.slice(0, -1)) // remove trailing slash
-    } else {
-      app.render(req, res, dest, req.params)
-    }
+const handleCustomRoute = (app, dest) => (req, res) => {
+  if (req.params.contentId.endsWith('/')) {
+    res.redirect(req.path.slice(0, -1)) // remove trailing slash
+  } else {
+    app.render(req, res, dest, req.params)
   }
-)
+}
 
 const idRegExp = '[A-Za-z0-9_/:-]+'
 

@@ -14,7 +14,11 @@ const MessageModal = ({ message, onClose }) => {
   const isError = ['error', 'fatal'].includes(level)
   const iconType = isError ? 'warning' : 'info'
   const footer = closable
-    ? [<Button key="back" onClick={onClose}>OK</Button>]
+    ? [
+        <Button key="back" onClick={onClose}>
+          OK
+        </Button>,
+      ]
     : null
 
   return (

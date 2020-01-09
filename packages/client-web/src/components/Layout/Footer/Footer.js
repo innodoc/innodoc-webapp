@@ -2,12 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import {
-  Col,
-  Layout as AntLayout,
-  List,
-  Row,
-} from 'antd'
+import { Col, Layout as AntLayout, List, Row } from 'antd'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
@@ -32,18 +27,16 @@ const Footer = () => {
   const footerB = useSelector(fragmentSelectors.getFooterB)
   const title = course ? course.title[language] : ''
 
-  const customPageItems = pages.map(
-    (page) => (
-      <FooterLink
-        active={currentPage && page.id === currentPage.id}
-        iconType={page.icon}
-        key={page.id}
-        renderLink={() => <PageLink contentId={page.id} />}
-        shortTitle={page.shortTitle[language]}
-        title={page.title[language] || ''}
-      />
-    )
-  )
+  const customPageItems = pages.map((page) => (
+    <FooterLink
+      active={currentPage && page.id === currentPage.id}
+      iconType={page.icon}
+      key={page.id}
+      renderLink={() => <PageLink contentId={page.id} />}
+      shortTitle={page.shortTitle[language]}
+      title={page.title[language] || ''}
+    />
+  ))
 
   const otherPageItems = [
     ['/toc', 'common.toc', 'read'],
@@ -53,17 +46,23 @@ const Footer = () => {
       active={router.asPath === href}
       iconType={iconType}
       key={href}
-      renderLink={() => <Link href={href}><a> </a></Link>}
+      renderLink={() => (
+        <Link href={href}>
+          <a> </a>
+        </Link>
+      )}
       title={t(translateKey)}
     />
   ))
 
-  const footerAContent = footerA && footerA.content[language]
-    ? <ContentFragment content={footerA.content[language]} />
-    : null
-  const footerBContent = footerB && footerB.content[language]
-    ? <ContentFragment content={footerB.content[language]} />
-    : null
+  const footerAContent =
+    footerA && footerA.content[language] ? (
+      <ContentFragment content={footerA.content[language]} />
+    ) : null
+  const footerBContent =
+    footerB && footerB.content[language] ? (
+      <ContentFragment content={footerB.content[language]} />
+    ) : null
 
   return (
     <AntLayout.Footer className={css.footer}>

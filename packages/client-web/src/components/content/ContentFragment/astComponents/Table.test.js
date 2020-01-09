@@ -6,54 +6,68 @@ import Table from './Table'
 
 const tableData = [
   [],
-  [
-    { t: 'AlignCenter' },
-    { t: 'AlignRight' },
-    { t: 'AlignLeft' },
-  ],
+  [{ t: 'AlignCenter' }, { t: 'AlignRight' }, { t: 'AlignLeft' }],
   [0, 0, 0],
   [
-    [{
-      t: 'Str',
-      c: 'A',
-    }],
-    [{
-      t: 'Str',
-      c: 'B',
-    }],
-    [{
-      t: 'Str',
-      c: 'C',
-    }],
+    [
+      {
+        t: 'Str',
+        c: 'A',
+      },
+    ],
+    [
+      {
+        t: 'Str',
+        c: 'B',
+      },
+    ],
+    [
+      {
+        t: 'Str',
+        c: 'C',
+      },
+    ],
   ],
   [
     [
-      [{
-        t: 'Str',
-        c: 'A1',
-      }],
-      [{
-        t: 'Str',
-        c: 'B1',
-      }],
-      [{
-        t: 'Str',
-        c: 'C1',
-      }],
+      [
+        {
+          t: 'Str',
+          c: 'A1',
+        },
+      ],
+      [
+        {
+          t: 'Str',
+          c: 'B1',
+        },
+      ],
+      [
+        {
+          t: 'Str',
+          c: 'C1',
+        },
+      ],
     ],
     [
-      [{
-        t: 'Str',
-        c: 'A2',
-      }],
-      [{
-        t: 'Str',
-        c: 'B2',
-      }],
-      [{
-        t: 'Str',
-        c: 'C2',
-      }],
+      [
+        {
+          t: 'Str',
+          c: 'A2',
+        },
+      ],
+      [
+        {
+          t: 'Str',
+          c: 'B2',
+        },
+      ],
+      [
+        {
+          t: 'Str',
+          c: 'C2',
+        },
+      ],
     ],
   ],
 ]

@@ -51,7 +51,10 @@ describe('<Span />', () => {
   })
 
   it('should render <Question />', () => {
-    const data = [['foo', ['question', 'foo-question'], [['key', 'val']]], content]
+    const data = [
+      ['foo', ['question', 'foo-question'], [['key', 'val']]],
+      content,
+    ]
     const wrapper = shallow(<Span data={data} />)
     expect(wrapper.type()).toBe(Question)
     expect(wrapper.prop('id')).toBe('foo')

@@ -9,9 +9,7 @@ const Image = ({ data }) => {
   const { staticRoot } = useSelector(appSelectors.getApp)
   const [[id], content, [src, alt]] = data
 
-  const imgSrc = /^https?:\/\//i.test(src)
-    ? src
-    : `${staticRoot}${src}`
+  const imgSrc = /^https?:\/\//i.test(src) ? src : `${staticRoot}${src}`
   const imgAlt = alt || astToString(content)
 
   return <img id={id} src={imgSrc} alt={imgAlt} />

@@ -56,7 +56,9 @@ describe('indexTermSelectors', () => {
     expect(indexTerms).toHaveLength(2)
     expect(termA.id).toBe('term-a')
     expect(termA.language).toBe('en')
-    expect(termA.locations).toEqual(['section-0/subsection-1#index-term-term-a-0'])
+    expect(termA.locations).toEqual([
+      'section-0/subsection-1#index-term-term-a-0',
+    ])
     expect(termA.name).toBe('Term A')
     expect(termB.id).toBe('term-b')
     expect(termB.language).toBe('en')

@@ -38,7 +38,12 @@ describe('<StaticVideo />', () => {
 
 describe('<YouTubeVideo />', () => {
   it('should render', () => {
-    const wrapper = shallow(<YouTubeVideo src="https://www.youtube.com/watch?v=Jqqwh0oTWpo" title="TU Berlin" />)
+    const wrapper = shallow(
+      <YouTubeVideo
+        src="https://www.youtube.com/watch?v=Jqqwh0oTWpo"
+        title="TU Berlin"
+      />
+    )
     const iframe = wrapper.find('iframe')
     const iframeSrc = iframe.prop('src')
     expect(iframeSrc).toMatch('https://www.youtube.com/embed/')
@@ -48,7 +53,9 @@ describe('<YouTubeVideo />', () => {
   })
 
   it('should not render with invalid video URL', () => {
-    const wrapper = shallow(<YouTubeVideo src="https://vimeo.com/119230629" title="Broken URL" />)
+    const wrapper = shallow(
+      <YouTubeVideo src="https://vimeo.com/119230629" title="Broken URL" />
+    )
     expect(wrapper.exists('iframe')).toBe(false)
     expect(wrapper.text()).toMatch(/error/i)
   })

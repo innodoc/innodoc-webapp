@@ -19,11 +19,17 @@ const ActiveSectionLabel = ({ sectionId }) => {
 const renderTreeNodes = (section, currentSection) => {
   const { id: sectionId, children = [] } = section
   const active = sectionId === currentSection
-  const sectionNode = active
-    ? <ActiveSectionLabel sectionId={sectionId} />
-    : <SectionLink contentId={sectionId} />
+  const sectionNode = active ? (
+    <ActiveSectionLabel sectionId={sectionId} />
+  ) : (
+    <SectionLink contentId={sectionId} />
+  )
   return (
-    <Tree.TreeNode className={classNames({ active })} key={sectionId} title={sectionNode}>
+    <Tree.TreeNode
+      className={classNames({ active })}
+      key={sectionId}
+      title={sectionNode}
+    >
       {children.map((s) => renderTreeNodes(s, currentSection))}
     </Tree.TreeNode>
   )
@@ -34,17 +40,17 @@ const useAutoExpand = (
   course,
   expandAll,
   expandedKeys,
-  setExpandedKeys,
-) => useEffect(
-  () => {
+  setExpandedKeys
+) =>
+  useEffect(() => {
     if (!expandAll && course && currentSection) {
       // current key and all parent keys
       const allKeys = currentSection
         .split('/')
-        .reduce((acc, id, idx) => [
-          ...acc,
-          idx > 0 ? `${acc[idx - 1]}/${id}` : id,
-        ], [])
+        .reduce(
+          (acc, id, idx) => [...acc, idx > 0 ? `${acc[idx - 1]}/${id}` : id],
+          []
+        )
       // add all keys
       let newExpandedKeys = [...expandedKeys]
       allKeys.forEach((key) => {
@@ -54,42 +60,39 @@ const useAutoExpand = (
       })
       setExpandedKeys(newExpandedKeys)
     }
-  },
-  [currentSection, course, expandAll]
-)
+  }, [currentSection, course, expandAll])
 
 const Toc = ({ expandAll }) => {
   const course = useSelector(courseSelectors.getCurrentCourse)
   const toc = useSelector(sectionSelectors.getToc)
   const currentSection = course ? course.currentSection : undefined
-  const [expandedKeys, setExpandedKeys] = useState(currentSection ? [currentSection] : [])
+  const [expandedKeys, setExpandedKeys] = useState(
+    currentSection ? [currentSection] : []
+  )
 
   useAutoExpand(
     currentSection,
     course,
     expandAll,
     expandedKeys,
-    setExpandedKeys,
+    setExpandedKeys
   )
 
   const treeNodes = toc.map((s) => renderTreeNodes(s, currentSection))
-  const tree = expandAll
-    ? (
-      <Tree className={css.disableExpand} defaultExpandAll>
-        {treeNodes}
-      </Tree>
-    )
-    : (
-      <Tree expandedKeys={expandedKeys} onExpand={(keys) => setExpandedKeys(keys)}>
-        {treeNodes}
-      </Tree>
-    )
-
-  return (
-    <div className={css.tocWrapper}>
-      {tree}
-    </div>
+  const tree = expandAll ? (
+    <Tree className={css.disableExpand} defaultExpandAll>
+      {treeNodes}
+    </Tree>
+  ) : (
+    <Tree
+      expandedKeys={expandedKeys}
+      onExpand={(keys) => setExpandedKeys(keys)}
+    >
+      {treeNodes}
+    </Tree>
   )
+
+  return <div className={css.tocWrapper}>{tree}</div>
 }
 
 Toc.defaultProps = { expandAll: false }

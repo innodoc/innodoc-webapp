@@ -96,22 +96,12 @@ describe('intSortArray', () => {
   const sortFunc = intSortArray('de')
 
   it('should ignore case', () => {
-    const unsorted = [
-      { name: 'alt' },
-      { name: 'Ast' },
-    ]
-    expect(unsorted.sort(sortFunc)).toEqual([
-      { name: 'alt' },
-      { name: 'Ast' },
-    ])
+    const unsorted = [{ name: 'alt' }, { name: 'Ast' }]
+    expect(unsorted.sort(sortFunc)).toEqual([{ name: 'alt' }, { name: 'Ast' }])
   })
 
   it('should ignore special character $', () => {
-    const unsorted = [
-      { name: 'pass' },
-      { name: '$n$' },
-      { name: '$\\LaTex$' },
-    ]
+    const unsorted = [{ name: 'pass' }, { name: '$n$' }, { name: '$\\LaTex$' }]
     expect(unsorted.sort(sortFunc)).toEqual([
       { name: '$\\LaTex$' },
       { name: '$n$' },
@@ -120,11 +110,7 @@ describe('intSortArray', () => {
   })
 
   it('should consider umlauts and accents', () => {
-    const unsorted = [
-      { name: 'Zug' },
-      { name: 'Éclair' },
-      { name: 'Äpfel' },
-    ]
+    const unsorted = [{ name: 'Zug' }, { name: 'Éclair' }, { name: 'Äpfel' }]
     expect(unsorted.sort(sortFunc)).toEqual([
       { name: 'Äpfel' },
       { name: 'Éclair' },

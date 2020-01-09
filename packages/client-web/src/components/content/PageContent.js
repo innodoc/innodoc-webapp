@@ -8,7 +8,9 @@ import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
 import css from './style.sss'
 
 const PageContent = () => {
-  const { content, fadeInClassName, title } = useContentPane(pageSelectors.getCurrentPage)
+  const { content, fadeInClassName, title } = useContentPane(
+    pageSelectors.getCurrentPage
+  )
   return (
     <div className={fadeInClassName} id="content">
       <div className={css.sidebarToggle}>

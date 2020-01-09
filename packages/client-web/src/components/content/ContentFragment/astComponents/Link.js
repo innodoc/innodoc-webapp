@@ -19,7 +19,9 @@ const Link = ({ data }) => {
     return (
       <a href={href} title={title}>
         <ContentFragment content={content} />
-        <sup><Icon type="link" /></sup>
+        <sup>
+          <Icon type="link" />
+        </sup>
       </a>
     )
   }
@@ -34,15 +36,15 @@ const Link = ({ data }) => {
   }
 
   // Internal link
-  return contentAvailable
-    ? (
-      <InternalLink href={href}>
-        <a>
-          <ContentFragment content={content} />
-        </a>
-      </InternalLink>
-    )
-    : <InternalLink href={href} />
+  return contentAvailable ? (
+    <InternalLink href={href}>
+      <a>
+        <ContentFragment content={content} />
+      </a>
+    </InternalLink>
+  ) : (
+    <InternalLink href={href} />
+  )
 }
 
 Link.propTypes = {

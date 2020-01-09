@@ -9,11 +9,7 @@ let mockContent
 const mockGetApp = appSelectors.getApp
 const mockApp = { sectionPathPrefix: 'sec' }
 jest.mock('react-redux', () => ({
-  useSelector: (selector) => (
-    selector === mockGetApp
-      ? mockApp
-      : mockContent
-  ),
+  useSelector: (selector) => (selector === mockGetApp ? mockApp : mockContent),
 }))
 
 const ContentLink = makeContentLink(() => {}, 'section')

@@ -87,7 +87,12 @@ it('should dispatch LOAD_SECTION_FAILURE action', () => {
 
 it('should dispatch SET_SERVER_CONFIGURATION action', () => {
   expect(
-    setServerConfiguration('https://content.example.com/', 'https://cdn.example.com/', 'section', 'page')
+    setServerConfiguration(
+      'https://content.example.com/',
+      'https://cdn.example.com/',
+      'section',
+      'page'
+    )
   ).toEqual({
     type: actionTypes.SET_SERVER_CONFIGURATION,
     config: {

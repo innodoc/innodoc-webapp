@@ -57,12 +57,20 @@ describe('<Layout />', () => {
     })
 
     it('should show a message modal', () => {
-      const wrapper = shallow(<Layout><div /></Layout>)
+      const wrapper = shallow(
+        <Layout>
+          <div />
+        </Layout>
+      )
       expect(wrapper.find(MessageModal).exists()).toBe(true)
     })
 
     it('should dispatch clearMessage on modal close', () => {
-      const wrapper = shallow(<Layout><div /></Layout>)
+      const wrapper = shallow(
+        <Layout>
+          <div />
+        </Layout>
+      )
       wrapper.find(MessageModal).prop('onClose')()
       expect(mockDispatch.mock.calls).toHaveLength(1)
     })

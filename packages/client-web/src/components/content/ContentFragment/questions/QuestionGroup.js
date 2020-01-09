@@ -6,9 +6,7 @@ import ContentFragment from '..'
 
 // TODO: Remove this?
 
-const QuestionGroup = ({ content }) => (
-  <ContentFragment content={content} />
-)
+const QuestionGroup = ({ content }) => <ContentFragment content={content} />
 
 QuestionGroup.propTypes = {
   content: contentType.isRequired,

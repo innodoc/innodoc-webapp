@@ -4,9 +4,7 @@ import { shallow } from 'enzyme'
 import Strikeout from './Strikeout'
 import ContentFragment from '../ContentFragment'
 
-const content = [
-  { t: 'Str', c: 'Foo' },
-]
+const content = [{ t: 'Str', c: 'Foo' }]
 
 describe('<Strikeout />', () => {
   it('should render', () => {

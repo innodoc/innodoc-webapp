@@ -22,11 +22,13 @@ const webpack = (prevConfig) => {
   const config = { ...prevConfig }
 
   const dotEnvFile = path.resolve(__dirname, '..', '..', '.env')
-  config.plugins.push(new Dotenv({
-    path: dotEnvFile,
-    safe: `${dotEnvFile}.example`,
-    systemvars: true,
-  }))
+  config.plugins.push(
+    new Dotenv({
+      path: dotEnvFile,
+      safe: `${dotEnvFile}.example`,
+      systemvars: true,
+    })
+  )
 
   // svg icons
   config.module.rules.push({
@@ -56,7 +58,10 @@ const webpack = (prevConfig) => {
     const rule = config.module.rules[i]
 
     // disable CSS modules for less
-    if (Array.isArray(rule.use) && rule.use.some((loader) => loader.loader === 'less-loader')) {
+    if (
+      Array.isArray(rule.use) &&
+      rule.use.some((loader) => loader.loader === 'less-loader')
+    ) {
       for (let j = 0; j < rule.use.length; j += 1) {
         const use = rule.use[j]
         if (typeof use === 'object' && use.loader.startsWith('css-loader')) {
@@ -72,7 +77,11 @@ const webpack = (prevConfig) => {
 
     // Add rootMode to next-babel-loader. This is important so sub-package babel
     // is picking up the root babel.config.js.
-    if (rule.use && rule.use.loader && rule.use.loader === 'next-babel-loader') {
+    if (
+      rule.use &&
+      rule.use.loader &&
+      rule.use.loader === 'next-babel-loader'
+    ) {
       rule.use.options.rootMode = rootMode
     }
 
@@ -90,7 +99,9 @@ const webpack = (prevConfig) => {
   // debug print webpack config
   if (process.env.PRINT_WEBPACK_CONFIG) {
     /* eslint-disable-next-line no-extend-native */
-    Object.defineProperty(RegExp.prototype, 'toJSON', { value: RegExp.prototype.toString })
+    Object.defineProperty(RegExp.prototype, 'toJSON', {
+      value: RegExp.prototype.toString,
+    })
     console.log(JSON.stringify(config.module.rules, null, 2))
   }
 
@@ -131,22 +142,19 @@ const nextConfig = {
   webpack,
 }
 
-const wrappedNextConfig = (config) => (
-  withLess(
-    withCss(
-      withTranspileModules(
-        config
-      )
-    )
-  )
-)
+const wrappedNextConfig = (config) =>
+  withLess(withCss(withTranspileModules(config)))
 
 // bundle analyzer (set BUNDLE_ANALYZE=both to enable)
 const withBundleAnalyzer = (config) => {
   const newConfig = { ...config }
   const bundleAnalyzerBasePath = path.join(__dirname, 'bundle-analyzer')
-  newConfig.analyzeServer = ['server', 'both'].includes(process.env.BUNDLE_ANALYZE)
-  newConfig.analyzeBrowser = ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE)
+  newConfig.analyzeServer = ['server', 'both'].includes(
+    process.env.BUNDLE_ANALYZE
+  )
+  newConfig.analyzeBrowser = ['browser', 'both'].includes(
+    process.env.BUNDLE_ANALYZE
+  )
   newConfig.bundleAnalyzerConfig = {
     server: {
       analyzerMode: 'static',

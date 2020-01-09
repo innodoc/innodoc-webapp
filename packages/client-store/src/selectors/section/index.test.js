@@ -48,9 +48,7 @@ jest.mock('..', () => {
     default: {
       getApp: actualAppImport.default.getApp,
     },
-    makeMakeGetContentLink: jest.fn(() => (
-      () => {}
-    )),
+    makeMakeGetContentLink: jest.fn(() => () => {}),
     selectId: actualAppImport.selectId,
   }
 })
@@ -88,15 +86,19 @@ describe('sectionSelectors', () => {
     expect(sectionSelectors.sectionExists(state, sectionId)).toBe(exists)
   })
 
-  test.each([
-    'test/child1',
-    'test/child1/child12',
-  ])('getSection: %s', (sectionId) => {
-    expect(sectionSelectors.getSection(state, sectionId)).toEqual(sections[sectionId])
-  })
+  test.each(['test/child1', 'test/child1/child12'])(
+    'getSection: %s',
+    (sectionId) => {
+      expect(sectionSelectors.getSection(state, sectionId)).toEqual(
+        sections[sectionId]
+      )
+    }
+  )
 
   test('getCurrentSection', () => {
-    expect(sectionSelectors.getCurrentSection(state)).toEqual(sections['test/child1'])
+    expect(sectionSelectors.getCurrentSection(state)).toEqual(
+      sections['test/child1']
+    )
   })
 
   test('getCurrentSubsections', () => {
@@ -107,24 +109,30 @@ describe('sectionSelectors', () => {
   })
 
   test('getCurrentTitle', () => {
-    expect(sectionSelectors.getCurrentTitle(state)).toEqual('1.1 test child1 title')
+    expect(sectionSelectors.getCurrentTitle(state)).toEqual(
+      '1.1 test child1 title'
+    )
   })
 })
 
 describe('getBreadcrumbSections', () => {
   test.each([
-    ['test', [
-      { id: 'test', title: '1 test title' },
-    ]],
-    ['test/child1', [
-      { id: 'test', title: '1 test title' },
-      { id: 'test/child1', title: '1.1 test child1 title' },
-    ]],
-    ['test/child1/child12', [
-      { id: 'test', title: '1 test title' },
-      { id: 'test/child1', title: '1.1 test child1 title' },
-      { id: 'test/child1/child12', title: '1.1.2 test child12 title' },
-    ]],
+    ['test', [{ id: 'test', title: '1 test title' }]],
+    [
+      'test/child1',
+      [
+        { id: 'test', title: '1 test title' },
+        { id: 'test/child1', title: '1.1 test child1 title' },
+      ],
+    ],
+    [
+      'test/child1/child12',
+      [
+        { id: 'test', title: '1 test title' },
+        { id: 'test/child1', title: '1.1 test child1 title' },
+        { id: 'test/child1/child12', title: '1.1.2 test child12 title' },
+      ],
+    ],
   ])('%s', (sectionId, crumbs) => {
     state = setCurrentSection(state, sectionId)
     expect(sectionSelectors.getBreadcrumbSections(state)).toEqual(crumbs)

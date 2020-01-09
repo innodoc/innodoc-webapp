@@ -8,13 +8,7 @@ import { contentType } from '@innodoc/client-misc/src/propTypes'
 import css from './style.sss'
 import ContentFragment from '..'
 
-const Card = ({
-  title,
-  icon,
-  cardType,
-  content,
-  id,
-}) => {
+const Card = ({ title, icon, cardType, content, id }) => {
   let iconElem = null
   if (icon) {
     if (typeof icon === 'string') {

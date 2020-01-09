@@ -11,9 +11,9 @@ const Logo = () => {
   const course = useSelector(courseSelectors.getCurrentCourse)
   const title = course ? course.title[language] : ''
   const logoFilename = course ? course.logo : ''
-  const logoImg = logoFilename
-    ? <img alt={title} src={`${staticRoot}${logoFilename}`} />
-    : null
+  const logoImg = logoFilename ? (
+    <img alt={title} src={`${staticRoot}${logoFilename}`} />
+  ) : null
   return (
     <div className={css.headerLogoWrapper}>
       {logoImg}

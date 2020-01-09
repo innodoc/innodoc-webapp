@@ -17,18 +17,16 @@ const bindMiddleware = (middleware) => {
 }
 
 // create store and run root saga
-const makeMakeStore = (rootSaga) => (
-  (initialState = defaultInitialState()) => {
-    const rootReducer = combineReducers({ orm: createReducer(orm) })
-    const sagaMiddleware = createSagaMiddleware()
-    const store = createStore(
-      rootReducer,
-      initialState,
-      bindMiddleware([sagaMiddleware])
-    )
-    store.sagaTask = sagaMiddleware.run(rootSaga)
-    return store
-  }
-)
+const makeMakeStore = (rootSaga) => (initialState = defaultInitialState()) => {
+  const rootReducer = combineReducers({ orm: createReducer(orm) })
+  const sagaMiddleware = createSagaMiddleware()
+  const store = createStore(
+    rootReducer,
+    initialState,
+    bindMiddleware([sagaMiddleware])
+  )
+  store.sagaTask = sagaMiddleware.run(rootSaga)
+  return store
+}
 
 export default makeMakeStore

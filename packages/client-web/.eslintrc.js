@@ -9,9 +9,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: [
-        'src/components/content/ContentFragment/**/*.js',
-      ],
+      files: ['src/components/content/ContentFragment/**/*.js'],
       rules: {
         'import/no-cycle': 'off',
       },

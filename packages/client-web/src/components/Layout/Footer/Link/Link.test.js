@@ -8,10 +8,7 @@ import css from './style.sss'
 describe('<Footer />', () => {
   it('should render', () => {
     const wrapper = shallow(
-      <Link
-        renderLink={() => <span />}
-        title="Foo link"
-      />
+      <Link renderLink={() => <span />} title="Foo link" />
     )
     expect(wrapper.exists(List.Item)).toBe(true)
     const icon = wrapper.find(Icon)
@@ -24,22 +21,14 @@ describe('<Footer />', () => {
 
   it('should render with active class', () => {
     const wrapper = shallow(
-      <Link
-        active
-        renderLink={() => <span />}
-        title="Foo"
-      />
+      <Link active renderLink={() => <span />} title="Foo" />
     )
     expect(wrapper.find('a').hasClass(css.active)).toBe(true)
   })
 
   it('should render with icon', () => {
     const wrapper = shallow(
-      <Link
-        iconType="foo-icon"
-        renderLink={() => <span />}
-        title="Foo"
-      />
+      <Link iconType="foo-icon" renderLink={() => <span />} title="Foo" />
     )
     const icon = wrapper.find(Icon)
     expect(icon.prop('type')).toBe('foo-icon')

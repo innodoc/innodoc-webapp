@@ -5,7 +5,9 @@ const getLinkInfo = (pathPrefix, contentId, hash = undefined) => {
     query: { contentId },
   }
   const as = { pathname: `/${pathPrefix}/${contentId}` }
-  if (hash) { as.hash = `#${hash}` }
+  if (hash) {
+    as.hash = `#${hash}`
+  }
   return { href, as }
 }
 

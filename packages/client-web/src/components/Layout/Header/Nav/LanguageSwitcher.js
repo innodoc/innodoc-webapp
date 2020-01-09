@@ -19,24 +19,20 @@ const LanguageSwitcher = (props) => {
   const title = (
     <span>
       <Icon type="global" />
-      <span>
-        {t('header.language')}
-      </span>
+      <span>{t('header.language')}</span>
     </span>
   )
 
   const languageList = course && course.languages ? course.languages : []
-  const languageOptions = languageList.map(
-    (lang) => (
-      <Menu.Item
-        className={classNames({ [css.active]: lang === currentLanguage })}
-        key={lang}
-        onClick={() => dispatch(changeLanguage(lang, currentLanguage))}
-      >
-        {t(`languages.${lang}`)}
-      </Menu.Item>
-    )
-  )
+  const languageOptions = languageList.map((lang) => (
+    <Menu.Item
+      className={classNames({ [css.active]: lang === currentLanguage })}
+      key={lang}
+      onClick={() => dispatch(changeLanguage(lang, currentLanguage))}
+    >
+      {t(`languages.${lang}`)}
+    </Menu.Item>
+  ))
 
   return (
     <Menu.SubMenu

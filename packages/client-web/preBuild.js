@@ -17,48 +17,67 @@ const getPostcssConfig = require('./postcss.config')
 
 // antd default vars
 const antdThemeFilename = path.resolve(
-  __dirname, '..', '..', 'node_modules', 'antd', 'lib', 'style', 'themes', 'default.less'
+  __dirname,
+  '..',
+  '..',
+  'node_modules',
+  'antd',
+  'lib',
+  'style',
+  'themes',
+  'default.less'
 )
 
 // output path for antd default vars
-const antdVarsFilename = path.resolve(__dirname, 'src', 'style', 'antd-vars.json')
-
-const extractAntdDefaultVariables = () => (
-  less.render(fs.readFileSync(antdThemeFilename).toString(), {
-    filename: antdThemeFilename,
-    javascriptEnabled: true,
-    plugins: [new LessPluginVariablesOutput({ filename: antdVarsFilename })],
-  }).catch((err) => {
-    console.error('Failed to extract antd default variables!')
-    console.error(err)
-    process.exit(-1)
-  })
+const antdVarsFilename = path.resolve(
+  __dirname,
+  'src',
+  'style',
+  'antd-vars.json'
 )
+
+const extractAntdDefaultVariables = () =>
+  less
+    .render(fs.readFileSync(antdThemeFilename).toString(), {
+      filename: antdThemeFilename,
+      javascriptEnabled: true,
+      plugins: [new LessPluginVariablesOutput({ filename: antdVarsFilename })],
+    })
+    .catch((err) => {
+      console.error('Failed to extract antd default variables!')
+      console.error(err)
+      process.exit(-1)
+    })
 
 // overridden antd variables
-const antdVarsOverrideFilename = path.resolve(__dirname, 'src', 'style', 'antd-theme.sss')
-
-const postcssConfig = getPostcssConfig(
-  { file: { extname: path.extname(antdVarsOverrideFilename) } }
+const antdVarsOverrideFilename = path.resolve(
+  __dirname,
+  'src',
+  'style',
+  'antd-theme.sss'
 )
 
-// don't use postcss-import-json plugin so only overridden variables are exported
-const plugins = postcssConfig.plugins.filter((plugin) => plugin.postcssPlugin !== 'postcss-import-json')
+const postcssConfig = getPostcssConfig({
+  file: { extname: path.extname(antdVarsOverrideFilename) },
+})
 
-const generateVarsForAntd = () => postcss(plugins)
-  .process(
-    fs.readFileSync(antdVarsOverrideFilename).toString(),
-    {
+// don't use postcss-import-json plugin so only overridden variables are exported
+const plugins = postcssConfig.plugins.filter(
+  (plugin) => plugin.postcssPlugin !== 'postcss-import-json'
+)
+
+const generateVarsForAntd = () =>
+  postcss(plugins)
+    .process(fs.readFileSync(antdVarsOverrideFilename).toString(), {
       from: antdVarsOverrideFilename,
       parser: sugarss.parse,
-    }
-  )
-  .then((result) => result.root.variables)
-  .catch((err) => {
-    console.error('Failed to generate variables for Ant Design!')
-    console.log(err)
-    process.exit(-1)
-  })
+    })
+    .then((result) => result.root.variables)
+    .catch((err) => {
+      console.error('Failed to generate variables for Ant Design!')
+      console.log(err)
+      process.exit(-1)
+    })
 
 const main = async () => {
   await extractAntdDefaultVariables()

@@ -20,7 +20,11 @@ const loadContentFailure = () => ({ action: 'mockLoadContentFailure' })
 describe('makeContentPage', () => {
   beforeEach(() => {
     mockApp = { language: 'en' }
-    ContentPage = makeContentPage(ContentComponent, loadContent, loadContentFailure)
+    ContentPage = makeContentPage(
+      ContentComponent,
+      loadContent,
+      loadContentFailure
+    )
   })
 
   it('should render', () => {
@@ -49,7 +53,9 @@ describe('makeContentPage', () => {
     it('should dispatch loadSectionFailure without sectionId', () => {
       const query = {}
       ContentPage.getInitialProps({ query, store })
-      expect(store.dispatch).toBeCalledWith(loadContentFailure({ error: { statusCode: 404 } }))
+      expect(store.dispatch).toBeCalledWith(
+        loadContentFailure({ error: { statusCode: 404 } })
+      )
     })
   })
 

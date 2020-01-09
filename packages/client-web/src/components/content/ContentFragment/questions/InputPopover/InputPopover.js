@@ -12,13 +12,11 @@ import css from './style.sss'
 const InputPopover = ({ children, messages, userInput }) => {
   const { t } = useTranslation()
   const messageItems = messages.map((message, i) => (
-    <li key={i.toString()}>
-      {message}
-    </li>
+    <li key={i.toString()}>{message}</li>
   ))
-  const messageList = messageItems.length
-    ? <ul className={css.messageList}>{messageItems}</ul>
-    : null
+  const messageList = messageItems.length ? (
+    <ul className={css.messageList}>{messageItems}</ul>
+  ) : null
 
   const content = (
     <>

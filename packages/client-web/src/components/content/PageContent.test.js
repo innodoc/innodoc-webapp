@@ -6,14 +6,12 @@ import ContentFragment from './ContentFragment'
 
 const mockContent = [{ t: 'Str', c: 'A nice string' }]
 const mockRef = React.createRef()
-jest.mock('../../hooks/useContentPane', () => (
-  () => ({
-    content: mockContent,
-    fadeInClassName: 'show',
-    mathJaxElem: mockRef,
-    title: 'Foo page',
-  })
-))
+jest.mock('../../hooks/useContentPane', () => () => ({
+  content: mockContent,
+  fadeInClassName: 'show',
+  mathJaxElem: mockRef,
+  title: 'Foo page',
+}))
 
 describe('<PageContent />', () => {
   it('should render', () => {

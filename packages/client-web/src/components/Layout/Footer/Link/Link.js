@@ -5,30 +5,25 @@ import { Icon, List } from 'antd'
 
 import css from './style.sss'
 
-const FooterLink = ({
-  active,
-  iconType,
-  renderLink,
-  shortTitle,
-  title,
-}) => {
-  const icon = iconType
-    ? <Icon type={iconType} />
-    : <Icon type="border" className={css.iconPlaceholder} />
+const FooterLink = ({ active, iconType, renderLink, shortTitle, title }) => {
+  const icon = iconType ? (
+    <Icon type={iconType} />
+  ) : (
+    <Icon type="border" className={css.iconPlaceholder} />
+  )
 
   const children = (
-    <a className={classNames(css.pageLink, { [css.active]: active })} title={title}>
+    <a
+      className={classNames(css.pageLink, { [css.active]: active })}
+      title={title}
+    >
       {icon}
       <span>{shortTitle || title}</span>
     </a>
   )
 
   const linkContent = React.cloneElement(renderLink(), { children })
-  return (
-    <List.Item>
-      {linkContent}
-    </List.Item>
-  )
+  return <List.Item>{linkContent}</List.Item>
 }
 
 FooterLink.defaultProps = {

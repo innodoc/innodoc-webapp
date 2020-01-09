@@ -18,22 +18,21 @@ const Nav = ({ menuMode }) => {
   const currentPage = useSelector(pageSelectors.getCurrentPage)
   const pages = useSelector(pageSelectors.getNavPages)
   const { t } = useTranslation()
-  const pageItems = pages
-    .map((page) => (
-      <Menu.Item key={page.id}>
-        <PageLink contentId={page.id}>
-          <a
-            className={
-              classNames({ [css.active]: currentPage && page.id === currentPage.id })
-            }
-            title={page.title[language]}
-          >
-            {page.icon ? <Icon type={page.icon} /> : null}
-            {page.shortTitle[language]}
-          </a>
-        </PageLink>
-      </Menu.Item>
-    ))
+  const pageItems = pages.map((page) => (
+    <Menu.Item key={page.id}>
+      <PageLink contentId={page.id}>
+        <a
+          className={classNames({
+            [css.active]: currentPage && page.id === currentPage.id,
+          })}
+          title={page.title[language]}
+        >
+          {page.icon ? <Icon type={page.icon} /> : null}
+          {page.shortTitle[language]}
+        </a>
+      </PageLink>
+    </Menu.Item>
+  ))
 
   return (
     <Menu mode={menuMode} selectable={false} className={css.nav}>

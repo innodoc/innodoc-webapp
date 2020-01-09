@@ -8,13 +8,11 @@ import css from './style.sss'
 import ContentFragment from '..'
 
 const BulletList = ({ data }) => {
-  const listItems = data.map(
-    (item, i) => (
-      <List.Item key={i.toString()}>
-        <ContentFragment content={unwrapPara(item)} />
-      </List.Item>
-    )
-  )
+  const listItems = data.map((item, i) => (
+    <List.Item key={i.toString()}>
+      <ContentFragment content={unwrapPara(item)} />
+    </List.Item>
+  ))
   return (
     <List itemLayout="vertical" className={css.bulletList}>
       {listItems}

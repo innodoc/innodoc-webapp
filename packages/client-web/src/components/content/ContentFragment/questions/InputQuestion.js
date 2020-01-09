@@ -8,15 +8,12 @@ import InputPopover from './InputPopover'
 
 const DEFAULT_INPUT_LENGTH = 10
 
-const InputQuestion = ({
-  attributes,
-  className,
-  icon,
-  onChange,
-  value,
-}) => {
+const InputQuestion = ({ attributes, className, icon, onChange, value }) => {
   const length = parseInt(attributes.length, 10) || DEFAULT_INPUT_LENGTH
-  const messages = ['Das funktioniert so leider nicht.', 'Du hast alles falsch gemacht!']
+  const messages = [
+    'Das funktioniert so leider nicht.',
+    'Du hast alles falsch gemacht!',
+  ]
   return (
     <InputPopover messages={messages} userInput={value}>
       <Input

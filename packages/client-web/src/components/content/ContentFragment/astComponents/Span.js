@@ -10,11 +10,7 @@ import Question from '../questions'
 import css from './style.sss'
 
 const IndexSpan = ({ id, indexTerm, content }) => (
-  <span
-    className="index-term"
-    data-index-term={indexTerm}
-    id={id}
-  >
+  <span className="index-term" data-index-term={indexTerm} id={id}>
     <ContentFragment content={content} />
   </span>
 )
@@ -52,17 +48,23 @@ const Span = ({ data }) => {
   }
 
   if (classNames.includes('question')) {
-    const questionClasses = classNames.filter((className) => className !== 'question')
-    return <Question id={id} questionClasses={questionClasses} attributes={attributes} />
+    const questionClasses = classNames.filter(
+      (className) => className !== 'question'
+    )
+    return (
+      <Question
+        id={id}
+        questionClasses={questionClasses}
+        attributes={attributes}
+      />
+    )
   }
 
   if (process.env.NODE_ENV !== 'production') {
     const msg = `Unknown span: classes=${classNames} attrs=${attributes} content-length=${content.length}`
     return (
       <span>
-        <span className={css.errorBGColor}>
-          {msg}
-        </span>
+        <span className={css.errorBGColor}>{msg}</span>
         <ContentFragment content={content} />
       </span>
     )

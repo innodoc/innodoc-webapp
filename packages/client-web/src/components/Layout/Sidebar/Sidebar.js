@@ -30,8 +30,14 @@ const Sidebar = ({ children }) => {
       width={width}
     >
       <div className={css.background}>
-        <div className={css.animation} style={{ transform: `translateX(${sidebarVisible ? 0 : -width}px)` }}>
-          <div className={css.closeButton} style={{ marginLeft: `${width - 48}px` }}>
+        <div
+          className={css.animation}
+          style={{ transform: `translateX(${sidebarVisible ? 0 : -width}px)` }}
+        >
+          <div
+            className={css.closeButton}
+            style={{ marginLeft: `${width - 48}px` }}
+          >
             <Button
               icon="double-left"
               onClick={() => dispatch(toggleSidebar())}

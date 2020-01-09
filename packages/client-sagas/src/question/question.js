@@ -1,7 +1,10 @@
 import { call, put, throttle } from 'redux-saga/effects'
 
 import checkers from '@innodoc/client-misc/src/questionCheckers'
-import { actionTypes, questionSolved } from '@innodoc/client-store/src/actions/question'
+import {
+  actionTypes,
+  questionSolved,
+} from '@innodoc/client-store/src/actions/question'
 
 export const QUESTION_ANSWER_THROTTLE = 500
 
@@ -16,5 +19,9 @@ export function* handleQuestionAnswered({ data }) {
 }
 
 export default function* watchQuestionChange() {
-  yield throttle(QUESTION_ANSWER_THROTTLE, actionTypes.QUESTION_ANSWERED, handleQuestionAnswered)
+  yield throttle(
+    QUESTION_ANSWER_THROTTLE,
+    actionTypes.QUESTION_ANSWERED,
+    handleQuestionAnswered
+  )
 }

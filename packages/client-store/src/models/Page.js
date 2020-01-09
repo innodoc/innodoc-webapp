@@ -24,19 +24,17 @@ export default class Page extends Model {
     switch (action.type) {
       case actionTypes.LOAD_MANIFEST_SUCCESS:
         if (action.data.content.pages) {
-          action.data.content.pages.forEach(
-            (page, idx) => {
-              PageModel.upsert({
-                icon: page.icon,
-                id: page.id,
-                inFooter: page.link_in_footer,
-                inNav: page.link_in_nav,
-                shortTitle: page.short_title,
-                ord: idx,
-                title: page.title,
-              })
-            }
-          )
+          action.data.content.pages.forEach((page, idx) => {
+            PageModel.upsert({
+              icon: page.icon,
+              id: page.id,
+              inFooter: page.link_in_footer,
+              inNav: page.link_in_nav,
+              shortTitle: page.short_title,
+              ord: idx,
+              title: page.title,
+            })
+          })
         }
         break
       case actionTypes.LOAD_PAGE_SUCCESS:

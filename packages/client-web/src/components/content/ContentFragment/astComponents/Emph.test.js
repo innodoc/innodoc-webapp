@@ -4,9 +4,7 @@ import { shallow } from 'enzyme'
 import Emph from './Emph'
 import ContentFragment from '../ContentFragment'
 
-const content = [
-  { t: 'Str', c: 'Foo' },
-]
+const content = [{ t: 'Str', c: 'Foo' }]
 
 describe('<Emph />', () => {
   it('should render', () => {

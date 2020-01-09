@@ -8,18 +8,14 @@ import css from './style.sss'
 import ContentFragment from '..'
 
 const OrderedList = ({ data }) => {
-  const listItems = data[1].map(
-    (item, i) => (
-      <List.Item key={i.toString()}>
-        <div className={css.listnumber}>
-          {`${i + 1}.`}
-        </div>
-        <div>
-          <ContentFragment content={unwrapPara(item)} />
-        </div>
-      </List.Item>
-    )
-  )
+  const listItems = data[1].map((item, i) => (
+    <List.Item key={i.toString()}>
+      <div className={css.listnumber}>{`${i + 1}.`}</div>
+      <div>
+        <ContentFragment content={unwrapPara(item)} />
+      </div>
+    </List.Item>
+  ))
   return (
     <List itemLayout="vertical" className={css.orderedList}>
       {listItems}

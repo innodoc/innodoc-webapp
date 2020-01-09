@@ -15,35 +15,43 @@ import rootSaga from '@innodoc/client-sagas'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import makeMakeStore from '@innodoc/client-store/src/store'
-import { loadManifest, navigate, setServerConfiguration } from '@innodoc/client-store/src/actions/content'
+import {
+  loadManifest,
+  navigate,
+  setServerConfiguration,
+} from '@innodoc/client-store/src/actions/content'
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
 
-const DEFAULT_MATHJAX_FONT_URL = `${process.browser ? window.location.origin : ''}/fonts/mathjax-woff-v2`
+const DEFAULT_MATHJAX_FONT_URL = `${
+  process.browser ? window.location.origin : ''
+}/fonts/mathjax-woff-v2`
 
-const waitForCourse = (store) => new Promise((resolve, reject) => {
-  let course = courseSelectors.getCurrentCourse(store.getState())
-  if (course) {
-    resolve(course)
-  } else {
-    const unsubscribe = store.subscribe(() => {
-      course = courseSelectors.getCurrentCourse(store.getState())
-      if (course) {
-        unsubscribe()
-        resolve(course)
-      } else {
-        const { error } = appSelectors.getApp(store.getState())
-        if (error) {
+const waitForCourse = (store) =>
+  new Promise((resolve, reject) => {
+    let course = courseSelectors.getCurrentCourse(store.getState())
+    if (course) {
+      resolve(course)
+    } else {
+      const unsubscribe = store.subscribe(() => {
+        course = courseSelectors.getCurrentCourse(store.getState())
+        if (course) {
           unsubscribe()
-          reject(error)
+          resolve(course)
+        } else {
+          const { error } = appSelectors.getApp(store.getState())
+          if (error) {
+            unsubscribe()
+            reject(error)
+          }
         }
-      }
-    })
-  }
-})
+      })
+    }
+  })
 
 class InnoDocApp extends App {
   static async getInitialProps({ Component, ctx }) {
-    if (ctx.req && ctx.res) { // ctx.req/ctx.res not present when statically exported
+    if (ctx.req && ctx.res) {
+      // ctx.req/ctx.res not present when statically exported
       // set initial content URLs (passed from server.js/app configuration)
       const {
         contentRoot,
@@ -52,7 +60,12 @@ class InnoDocApp extends App {
         pagePathPrefix,
       } = ctx.res.locals
       ctx.store.dispatch(
-        setServerConfiguration(contentRoot, staticRoot, sectionPathPrefix, pagePathPrefix)
+        setServerConfiguration(
+          contentRoot,
+          staticRoot,
+          sectionPathPrefix,
+          pagePathPrefix
+        )
       )
       // pass detected language to store
       if (ctx.req.i18n) {
@@ -63,8 +76,12 @@ class InnoDocApp extends App {
     }
 
     // build custom MathJax options
-    const { mathJaxOptions: courseMathJaxOptions } = await waitForCourse(ctx.store)
-    const defaultMathJaxOptions = { chtml: { fontURL: DEFAULT_MATHJAX_FONT_URL } }
+    const { mathJaxOptions: courseMathJaxOptions } = await waitForCourse(
+      ctx.store
+    )
+    const defaultMathJaxOptions = {
+      chtml: { fontURL: DEFAULT_MATHJAX_FONT_URL },
+    }
     const mathJaxOptions = insert(defaultMathJaxOptions, courseMathJaxOptions)
 
     // page props
@@ -81,12 +98,7 @@ class InnoDocApp extends App {
   }
 
   render() {
-    const {
-      Component,
-      dispatchNavigate,
-      pageProps,
-      store,
-    } = this.props
+    const { Component, dispatchNavigate, pageProps, store } = this.props
 
     // inform store about route changes
     if (process.browser) {
@@ -96,9 +108,7 @@ class InnoDocApp extends App {
     return (
       <>
         <Head>
-          <title key="title">
-            innoDoc web app
-          </title>
+          <title key="title">innoDoc web app</title>
         </Head>
         <Provider store={store}>
           <MathJax.ConfigProvider options={pageProps.mathJaxOptions}>
@@ -110,16 +120,17 @@ class InnoDocApp extends App {
   }
 }
 
-const nextReduxWrapperDebug = process.env.NODE_ENV !== 'production' && process.env.NEXT_REDUX_WRAPPER_DEBUG === 'true'
+const nextReduxWrapperDebug =
+  process.env.NODE_ENV !== 'production' &&
+  process.env.NEXT_REDUX_WRAPPER_DEBUG === 'true'
 const withReduxConfig = { debug: nextReduxWrapperDebug }
 
 export { InnoDocApp } // for testing
-export default withRedux(makeMakeStore(rootSaga), withReduxConfig)(
+export default withRedux(
+  makeMakeStore(rootSaga),
+  withReduxConfig
+)(
   appWithTranslation(
-    withReduxSaga(
-      connect(null, { dispatchNavigate: navigate })(
-        InnoDocApp
-      )
-    )
+    withReduxSaga(connect(null, { dispatchNavigate: navigate })(InnoDocApp))
   )
 )

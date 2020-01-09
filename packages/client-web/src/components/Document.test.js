@@ -4,7 +4,9 @@ import Document, { Main, NextScript } from 'next/document'
 
 import InnodocDocument from './Document'
 
-jest.mock('next-i18next/dist/commonjs/utils', () => ({ lngFromReq: () => 'pt' }))
+jest.mock('next-i18next/dist/commonjs/utils', () => ({
+  lngFromReq: () => 'pt',
+}))
 
 describe('<InnoDocDocument />', () => {
   it('should render', () => {
@@ -19,7 +21,9 @@ describe('<InnoDocDocument />', () => {
 
   describe('getInitialProps', () => {
     const getInitialPropsOrig = Document.getInitialProps
-    afterEach(() => { Document.getInitialProps = getInitialPropsOrig })
+    afterEach(() => {
+      Document.getInitialProps = getInitialPropsOrig
+    })
 
     it('should add language to props', async () => {
       expect.assertions(1)

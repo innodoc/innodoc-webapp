@@ -23,7 +23,7 @@ const loadPageSaga = makeLoadContentSaga(
   pageSelectors.getPage,
   loadPageSuccess,
   loadPageFailure,
-  fetchPage,
+  fetchPage
 )
 
 const loadSectionSaga = makeLoadContentSaga(
@@ -32,7 +32,7 @@ const loadSectionSaga = makeLoadContentSaga(
   sectionSelectors.getSection,
   loadSectionSuccess,
   loadSectionFailure,
-  fetchSection,
+  fetchSection
 )
 
 export default [

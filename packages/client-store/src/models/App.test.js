@@ -48,7 +48,7 @@ describe('App', () => {
           'https://content.example.com/',
           'https://cdn.example.com/',
           'sec',
-          'p',
+          'p'
         ),
         session.App
       )

@@ -23,7 +23,10 @@ describe('Fragment', () => {
     }
 
     test('loadFragmentSuccess', () => {
-      session.Fragment.reducer(loadFragmentSuccess(fragmentData), session.Fragment)
+      session.Fragment.reducer(
+        loadFragmentSuccess(fragmentData),
+        session.Fragment
+      )
       const fragment = session.Fragment.first().ref
       expect(fragment.id).toBe('frag-1')
       expect(fragment.content.en).toBe(content)

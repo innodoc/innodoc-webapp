@@ -12,7 +12,7 @@ Index.getInitialProps = async (ctx) => {
     let contentId
     const course = courseSelectors.getCurrentCourse(ctx.store.getState())
     try {
-      [contentType, contentId] = parseLink(course.homeLink)
+      ;[contentType, contentId] = parseLink(course.homeLink)
     } catch (e) {
       ctx.store.dispatch(
         showMessage({
@@ -23,8 +23,11 @@ Index.getInitialProps = async (ctx) => {
       )
       return {}
     }
-    const { pagePathPrefix, sectionPathPrefix } = appSelectors.getApp(ctx.store.getState())
-    const pathPrefix = contentType === 'page' ? pagePathPrefix : sectionPathPrefix
+    const { pagePathPrefix, sectionPathPrefix } = appSelectors.getApp(
+      ctx.store.getState()
+    )
+    const pathPrefix =
+      contentType === 'page' ? pagePathPrefix : sectionPathPrefix
     const linkInfo = getLinkInfo(pathPrefix, contentId)
     ctx.res.writeHead(301, { Location: linkInfo.as.pathname })
     ctx.res.end()

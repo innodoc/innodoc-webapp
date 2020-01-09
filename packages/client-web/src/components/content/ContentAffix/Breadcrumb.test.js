@@ -23,11 +23,10 @@ const mockSections = [
   },
 ]
 jest.mock('react-redux', () => ({
-  useSelector: (selector) => (
+  useSelector: (selector) =>
     selector === mockGetCurrentCourse
       ? { homeLink: '/section/home' }
-      : mockSections
-  ),
+      : mockSections,
 }))
 
 describe('<Breadcrumb />', () => {
@@ -36,9 +35,24 @@ describe('<Breadcrumb />', () => {
     expect(wrapper.find(AntBreadcrumb)).toHaveLength(1)
     const items = wrapper.find(AntBreadcrumb.Item)
     expect(items).toHaveLength(4)
-    expect(items.at(0).find(InternalLink).prop('href')).toBe('/section/home')
-    expect(items.at(1).find(SectionLink).prop('contentId')).toBe('section1')
-    expect(items.at(2).find(SectionLink).prop('contentId')).toBe('section1/section11')
+    expect(
+      items
+        .at(0)
+        .find(InternalLink)
+        .prop('href')
+    ).toBe('/section/home')
+    expect(
+      items
+        .at(1)
+        .find(SectionLink)
+        .prop('contentId')
+    ).toBe('section1')
+    expect(
+      items
+        .at(2)
+        .find(SectionLink)
+        .prop('contentId')
+    ).toBe('section1/section11')
     expect(wrapper.find(InternalLink)).toHaveLength(1)
     expect(wrapper.find(SectionLink)).toHaveLength(2)
   })

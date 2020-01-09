@@ -17,11 +17,8 @@ const mockSection = { id: 'foo/bar' }
 let mockQuestion = {}
 const mockDispatch = jest.fn()
 jest.mock('react-redux', () => ({
-  useSelector: (selector) => (
-    selector === mockGetCurrentSection
-      ? mockSection
-      : mockQuestion
-  ),
+  useSelector: (selector) =>
+    selector === mockGetCurrentSection ? mockSection : mockQuestion,
   useDispatch: () => mockDispatch,
 }))
 
@@ -50,7 +47,11 @@ describe('<Question />', () => {
     it('with given question ID', () => {
       mockQuestion = { answer: '41', correct: false }
       const wrapper = shallow(
-        <Question attributes={[['fooKey', 'fooValue']]} id="EX01" questionClasses={['text']} />
+        <Question
+          attributes={[['fooKey', 'fooValue']]}
+          id="EX01"
+          questionClasses={['text']}
+        />
       )
       const questionComponent = wrapper.find(InputQuestion)
       expect(questionComponent.prop('value')).toBe('41')
@@ -69,7 +70,11 @@ describe('<Question />', () => {
     it('correct', () => {
       mockQuestion = { answer: '42', correct: true }
       const wrapper = shallow(
-        <Question attributes={[['foo', 'bar']]} id="EX01" questionClasses={['text']} />
+        <Question
+          attributes={[['foo', 'bar']]}
+          id="EX01"
+          questionClasses={['text']}
+        />
       )
       const inputQuestion = wrapper.find(InputQuestion)
       expect(inputQuestion).toHaveLength(1)
@@ -88,7 +93,9 @@ describe('<Question />', () => {
       expect(inputQuestion).toHaveLength(1)
       expect(inputQuestion.prop('attributes')).toEqual({})
       expect(inputQuestion.hasClass('incorrect')).toBe(true)
-      expect(inputQuestion.prop('icon')).toEqual(<FeedbackIcon correct={false} />)
+      expect(inputQuestion.prop('icon')).toEqual(
+        <FeedbackIcon correct={false} />
+      )
       expect(inputQuestion.prop('value')).toBe('41')
     })
   })
@@ -97,16 +104,23 @@ describe('<Question />', () => {
     it.each([
       ['text', InputQuestion],
       ['checkbox', CheckboxQuestion],
-    ])('should map className (%s) to correct Component', (className, Component) => {
-      const wrapper = shallow(
-        <Question attributes={[]} id="EX01" questionClasses={[className]} />
-      )
-      expect(wrapper.is(Component)).toBe(true)
-    })
+    ])(
+      'should map className (%s) to correct Component',
+      (className, Component) => {
+        const wrapper = shallow(
+          <Question attributes={[]} id="EX01" questionClasses={[className]} />
+        )
+        expect(wrapper.is(Component)).toBe(true)
+      }
+    )
 
     it('should render unknownQuestion for unknown component className', () => {
       const wrapper = shallow(
-        <Question attributes={[]} id="EX01" questionClasses={['this-component-does-not-exist']} />
+        <Question
+          attributes={[]}
+          id="EX01"
+          questionClasses={['this-component-does-not-exist']}
+        />
       )
       expect(wrapper.hasClass('unknownQuestion')).toBe(true)
     })

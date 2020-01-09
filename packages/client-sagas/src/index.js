@@ -5,9 +5,5 @@ import contentSagas from './content'
 import questionSagas from './question'
 
 export default function* rootSaga() {
-  yield all([
-    ...i18nSagas,
-    ...contentSagas,
-    ...questionSagas,
-  ])
+  yield all([...i18nSagas, ...contentSagas, ...questionSagas])
 }

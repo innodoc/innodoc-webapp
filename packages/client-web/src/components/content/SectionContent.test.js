@@ -24,13 +24,11 @@ jest.mock('react-redux', () => ({
 }))
 
 const mockRef = React.createRef()
-jest.mock('../../hooks/useContentPane', () => (
-  () => ({
-    content: mockContent,
-    fadeInClassName: 'show',
-    mathJaxElem: mockRef,
-  })
-))
+jest.mock('../../hooks/useContentPane', () => () => ({
+  content: mockContent,
+  fadeInClassName: 'show',
+  mathJaxElem: mockRef,
+}))
 
 describe('<SectionContent />', () => {
   beforeEach(() => {

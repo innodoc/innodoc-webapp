@@ -32,11 +32,17 @@ describe('Content translation', () => {
     await page.setViewport({ width: 1200, height: 600 })
     await page.goto(getUrl('/section/01-project'))
     await expect(page).toMatchElement('h1', { text: 'Project structure' })
-    await expect(page).toMatchElement('p', { text: 'A course consists of a number of chapters, sections and subsections.' })
+    await expect(page).toMatchElement('p', {
+      text:
+        'A course consists of a number of chapters, sections and subsections.',
+    })
     await expect(page).toClick('li', { text: 'Language' })
     await expect(page).toClick('li', { text: 'Deutsch' })
     await expect(page).toMatchElement('h1', { text: 'Projektstruktur' })
-    await expect(page).toMatchElement('p', { text: 'Ein Kurs besteht aus einer Anzahl von Kapiteln, Abschnitten und Unterabschnitten.' })
+    await expect(page).toMatchElement('p', {
+      text:
+        'Ein Kurs besteht aus einer Anzahl von Kapiteln, Abschnitten und Unterabschnitten.',
+    })
   })
 })
 

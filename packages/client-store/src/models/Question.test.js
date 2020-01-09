@@ -19,7 +19,10 @@ describe('Question', () => {
   describe('reducer', () => {
     test('questionAnswered', () => {
       expect(session.Question.all().toRefArray()).toHaveLength(0)
-      session.Question.reducer(questionAnswered({ questionId: 'foo/bar#EX01', answer: '42' }), session.Question)
+      session.Question.reducer(
+        questionAnswered({ questionId: 'foo/bar#EX01', answer: '42' }),
+        session.Question
+      )
       const questions = session.Question.all().toRefArray()
       expect(questions).toHaveLength(1)
       expect(questions[0].id).toBe('foo/bar#EX01')
@@ -28,8 +31,14 @@ describe('Question', () => {
     })
 
     test('questionSolved', () => {
-      session.Question.reducer(questionAnswered({ questionId: 'foo/bar#EX01', answer: '42' }), session.Question)
-      session.Question.reducer(questionSolved({ questionId: 'foo/bar#EX01', correct: true }), session.Question)
+      session.Question.reducer(
+        questionAnswered({ questionId: 'foo/bar#EX01', answer: '42' }),
+        session.Question
+      )
+      session.Question.reducer(
+        questionSolved({ questionId: 'foo/bar#EX01', correct: true }),
+        session.Question
+      )
       const questions = session.Question.all().toRefArray()
       expect(questions).toHaveLength(1)
       expect(questions[0].correct).toBe(true)

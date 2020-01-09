@@ -11,21 +11,19 @@ import { SectionLink } from '../links'
 
 const SectionButton = ({ sectionId, direction }) => {
   const iconType = `arrow-${direction}`
-  return sectionId
-    ? (
-      <SectionLink key={sectionId} contentId={sectionId}>
-        <a>
-          <Icon type={iconType} />
-        </a>
-      </SectionLink>
-    )
-    : (
-      <Icon
-        key={`__NON_EXISTENT_${direction}`}
-        className={css.disabled}
-        type={iconType}
-      />
-    )
+  return sectionId ? (
+    <SectionLink key={sectionId} contentId={sectionId}>
+      <a>
+        <Icon type={iconType} />
+      </a>
+    </SectionLink>
+  ) : (
+    <Icon
+      key={`__NON_EXISTENT_${direction}`}
+      className={css.disabled}
+      type={iconType}
+    />
+  )
 }
 
 SectionButton.defaultProps = { sectionId: null }

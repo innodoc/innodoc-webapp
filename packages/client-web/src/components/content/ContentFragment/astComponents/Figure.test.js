@@ -5,27 +5,26 @@ import Figure from './Figure'
 import ContentFragment from '../ContentFragment'
 import ImageTag from './Image'
 
-const content = [{
-  t: 'Para',
-  c: [
-    {
-      t: 'Image',
-      c: [
-        ['', ['img'], []],
-        [
-          {
-            t: 'Str',
-            c: 'The Creation of Adam by Michelangelo',
-          },
+const content = [
+  {
+    t: 'Para',
+    c: [
+      {
+        t: 'Image',
+        c: [
+          ['', ['img'], []],
+          [
+            {
+              t: 'Str',
+              c: 'The Creation of Adam by Michelangelo',
+            },
+          ],
+          ['02-elements/06-media/adam.jpg', 'fig:The Creation of Adam'],
         ],
-        [
-          '02-elements/06-media/adam.jpg',
-          'fig:The Creation of Adam',
-        ],
-      ],
-    },
-  ],
-}]
+      },
+    ],
+  },
+]
 
 describe('<Figure />', () => {
   it('should render', () => {

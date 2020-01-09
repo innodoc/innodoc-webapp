@@ -18,7 +18,7 @@ orm.register(
   IndexTermLocation,
   Page,
   Question,
-  Section,
+  Section
 )
 
 export default orm

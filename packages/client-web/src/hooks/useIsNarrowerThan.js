@@ -11,6 +11,7 @@ const breakpoints = Object.keys(css).reduce(
   {}
 )
 
-const useIsNarrowerThan = (breakpoint) => useMedia({ maxWidth: breakpoints[breakpoint] })
+const useIsNarrowerThan = (breakpoint) =>
+  useMedia({ maxWidth: breakpoints[breakpoint] })
 
 export default useIsNarrowerThan

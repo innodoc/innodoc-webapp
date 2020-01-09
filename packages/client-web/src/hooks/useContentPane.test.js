@@ -80,35 +80,44 @@ describe('useContentPane', () => {
 
   it('should use MathJax', () => {
     shallow(<ContentComponent />)
-    expect(mockUseMathJaxScanElement).toBeCalledWith(['en', mockContent], scrollToHash)
+    expect(mockUseMathJaxScanElement).toBeCalledWith(
+      ['en', mockContent],
+      scrollToHash
+    )
   })
 
   describe('fade in/out', () => {
     it.each([
       ['in', true, typesetStates.SUCCESS],
       ['out', false, typesetStates.PENDING],
-    ])('should fade %s depending on MathJax typesetting', (_, show, typesetState) => {
-      mockTypesetState = typesetState
-      const wrapper = shallow(<ContentComponent />)
-      const div = wrapper.find('div')
-      expect(div.hasClass(fadeInCss.show)).toBe(show)
-      expect(div.hasClass(fadeInCss.hide)).toBe(!show)
-    })
+    ])(
+      'should fade %s depending on MathJax typesetting',
+      (_, show, typesetState) => {
+        mockTypesetState = typesetState
+        const wrapper = shallow(<ContentComponent />)
+        const div = wrapper.find('div')
+        expect(div.hasClass(fadeInCss.show)).toBe(show)
+        expect(div.hasClass(fadeInCss.hide)).toBe(!show)
+      }
+    )
 
     it.each([
       ['in', true, stdApp, stdContent],
       ['out', false, {}, stdContent],
       ['out', false, stdApp, null],
       ['out', false, stdApp, { content: { de: contentArr } }],
-    ])('should fade %s depending on content load state', (_, show, app, content) => {
-      mockApp = app
-      mockContent = content
-      mockTypesetState = typesetStates.SUCCESS
-      const wrapper = shallow(<ContentComponent />)
-      const div = wrapper.find('div')
-      expect(div.hasClass(fadeInCss.show)).toBe(show)
-      expect(div.hasClass(fadeInCss.hide)).toBe(!show)
-    })
+    ])(
+      'should fade %s depending on content load state',
+      (_, show, app, content) => {
+        mockApp = app
+        mockContent = content
+        mockTypesetState = typesetStates.SUCCESS
+        const wrapper = shallow(<ContentComponent />)
+        const div = wrapper.find('div')
+        expect(div.hasClass(fadeInCss.show)).toBe(show)
+        expect(div.hasClass(fadeInCss.hide)).toBe(!show)
+      }
+    )
   })
 })
 
@@ -121,7 +130,10 @@ jest.mock('next/router', () => ({
 
 describe('scrollToHash', () => {
   beforeEach(() => Router.router.scrollToHash.mockClear())
-  it.each([['browser', true], ['server', false]])('should scroll to hash (%s)', (_, browser) => {
+  it.each([
+    ['browser', true],
+    ['server', false],
+  ])('should scroll to hash (%s)', (_, browser) => {
     process.browser = browser
     scrollToHash()
     expect(Router.router.scrollToHash.mock.calls).toHaveLength(browser ? 1 : 0)

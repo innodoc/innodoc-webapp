@@ -4,9 +4,7 @@ import { shallow } from 'enzyme'
 import BlockQuote from './BlockQuote'
 import ContentFragment from '../ContentFragment'
 
-const content = [
-  { t: 'Para', c: ['Foo'] },
-]
+const content = [{ t: 'Para', c: ['Foo'] }]
 
 describe('<BlockQuote />', () => {
   it('should render', () => {

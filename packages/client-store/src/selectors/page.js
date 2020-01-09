@@ -5,14 +5,14 @@ import { makeMakeGetContentLink, selectId } from '.'
 import courseSelectors from './course'
 
 // Check if page exists
-const pageExists = createSelector(
-  orm, selectId,
-  (session, id) => session.Page.idExists(id)
+const pageExists = createSelector(orm, selectId, (session, id) =>
+  session.Page.idExists(id)
 )
 
 // Return current page
 const getCurrentPage = createSelector(
-  orm, courseSelectors.getCurrentCourse,
+  orm,
+  courseSelectors.getCurrentCourse,
   (session, course) => {
     if (course) {
       const page = course ? session.Page.withId(course.currentPage) : null
@@ -24,23 +24,22 @@ const getCurrentPage = createSelector(
 
 // Return page by ID
 const getPage = createSelector(
-  orm, selectId,
+  orm,
+  selectId,
   (session, id) => session.Page.withId(id).ref
 )
 
 // Return pages that appear in footer
-const getFooterPages = createSelector(
-  orm,
-  (session) => session.Page.all()
+const getFooterPages = createSelector(orm, (session) =>
+  session.Page.all()
     .filter((page) => page.inFooter)
     .orderBy('ord')
     .toRefArray()
 )
 
 // Return pages that appear in navigation
-const getNavPages = createSelector(
-  orm,
-  (session) => session.Page.all()
+const getNavPages = createSelector(orm, (session) =>
+  session.Page.all()
     .filter((page) => page.inNav)
     .orderBy('ord')
     .toRefArray()

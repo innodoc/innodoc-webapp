@@ -58,7 +58,10 @@ describe('Page', () => {
   describe('reducer', () => {
     test('loadManifestSuccess', () => {
       const resultState = loadToc(session.state)
-      session.Section.reducer(loadManifestSuccess({ content: { toc } }), session.Section)
+      session.Section.reducer(
+        loadManifestSuccess({ content: { toc } }),
+        session.Section
+      )
       expect(session.state).toEqual(resultState)
     })
 
@@ -71,7 +74,9 @@ describe('Page', () => {
       })
       session.Section.reducer(action, session.Section)
       const expectedSession = orm.session(loadToc(orm.getEmptyState()))
-      expectedSession.Section.withId('test/child1').set('content', { en: 'test child1 content' })
+      expectedSession.Section.withId('test/child1').set('content', {
+        en: 'test child1 content',
+      })
       expect(session.state).toEqual(expectedSession.state)
     })
 
@@ -86,14 +91,17 @@ describe('Page', () => {
       [[0, 0], '1.1 Test title'],
       [[0, 0, 0], '1.1.1 Test title'],
       [[4, 5, 3], '5.6.4 Test title'],
-    ])('should generate displayTitle (ord="%s" -> "%s")', (ord, expectedDisplayTitle) => {
-      const section = session.Section.create({
-        id: 'test',
-        ord,
-        title: { en: 'Test title' },
-        parentId: null,
-      })
-      expect(section.getDisplayTitle('en')).toBe(expectedDisplayTitle)
-    })
+    ])(
+      'should generate displayTitle (ord="%s" -> "%s")',
+      (ord, expectedDisplayTitle) => {
+        const section = session.Section.create({
+          id: 'test',
+          ord,
+          title: { en: 'Test title' },
+          parentId: null,
+        })
+        expect(section.getDisplayTitle('en')).toBe(expectedDisplayTitle)
+      }
+    )
   })
 })

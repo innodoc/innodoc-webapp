@@ -16,7 +16,9 @@ const FeedbackIcon = ({ correct }) => {
   const title = correct ? 'correct' : 'incorrect'
   return (
     <Icon
-      title={t(`questions.feedback.${correct === null ? 'indeterminate' : title}`)}
+      title={t(
+        `questions.feedback.${correct === null ? 'indeterminate' : title}`
+      )}
       theme={theme}
       twoToneColor={twoToneColor}
       type={type}

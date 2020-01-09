@@ -21,22 +21,26 @@ const ErrorPage = ({ statusCode }) => {
     return null
   }
 
-  const resultExtra = course
-    ? (
-      <InternalLink href={course.homeLink} title="">
-        <Button icon="home" type="primary">
-          {t('errorPage.backHome')}
-        </Button>
-      </InternalLink>
-    )
-    : null
+  const resultExtra = course ? (
+    <InternalLink href={course.homeLink} title="">
+      <Button icon="home" type="primary">
+        {t('errorPage.backHome')}
+      </Button>
+    </InternalLink>
+  ) : null
 
   return (
     <Layout>
       <Result
         status={statusCode.toString()}
-        title={t([`errorPage.${statusCode}.title`, 'errorPage.unspecific.title'])}
-        subTitle={t([`errorPage.${statusCode}.msg`, 'errorPage.unspecific.msg'])}
+        title={t([
+          `errorPage.${statusCode}.title`,
+          'errorPage.unspecific.title',
+        ])}
+        subTitle={t([
+          `errorPage.${statusCode}.msg`,
+          'errorPage.unspecific.msg',
+        ])}
         extra={resultExtra}
       />
     </Layout>

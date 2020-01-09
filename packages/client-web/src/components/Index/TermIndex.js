@@ -47,16 +47,16 @@ const renderTerm = (term) => {
   return (
     <List.Item key={term.id}>
       <List.Item.Meta title={title} />
-      <div className={css.tagList}>
-        {links}
-      </div>
+      <div className={css.tagList}>{links}</div>
     </List.Item>
   )
 }
 
 const Index = () => {
   const { language } = useSelector(appSelectors.getApp)
-  const indexTerms = useSelector((state) => indexTermSelectors.getIndexTerms(state, language))
+  const indexTerms = useSelector((state) =>
+    indexTermSelectors.getIndexTerms(state, language)
+  )
   const { typesetDone } = useContext(MathJax.Context)
   const fadeInClassName = classNames({
     [fadeInCss.show]: typesetDone,

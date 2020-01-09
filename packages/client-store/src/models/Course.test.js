@@ -1,6 +1,10 @@
 import orm from '../orm'
 
-import { loadManifestSuccess, loadPageSuccess, loadSectionSuccess } from '../actions/content'
+import {
+  loadManifestSuccess,
+  loadPageSuccess,
+  loadSectionSuccess,
+} from '../actions/content'
 
 describe('Course', () => {
   let session
@@ -17,7 +21,12 @@ describe('Course', () => {
 
   describe('reducer', () => {
     test.each([
-      ['loadSectionSuccess', loadSectionSuccess({ contentId: 'bar' }), 'bar', null],
+      [
+        'loadSectionSuccess',
+        loadSectionSuccess({ contentId: 'bar' }),
+        'bar',
+        null,
+      ],
       ['loadPageSuccess', loadPageSuccess({ contentId: 'baz' }), null, 'baz'],
     ])('%s', (_, action, currentSectionId, currentPageId) => {
       const course = session.Course.create({
@@ -48,7 +57,10 @@ describe('Course', () => {
     }
 
     test('loadManifestSuccess', () => {
-      session.Course.reducer(loadManifestSuccess({ content: manifest }), session.Course)
+      session.Course.reducer(
+        loadManifestSuccess({ content: manifest }),
+        session.Course
+      )
       expect(session.Course.first().ref).toEqual({
         currentSection: null,
         homeLink: '/section/bar',
@@ -63,7 +75,7 @@ describe('Course', () => {
       const action = loadManifestSuccess({
         content: { ...manifest, home_link: null },
       })
-      session.Course.reducer(action, session.Course,)
+      session.Course.reducer(action, session.Course)
       expect(session.Course.first().ref).toEqual({
         currentSection: null,
         homeLink: '/section/foo',

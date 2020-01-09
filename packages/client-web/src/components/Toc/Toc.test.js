@@ -11,11 +11,8 @@ let mockCurrentCourse
 let mockToc
 
 jest.mock('react-redux', () => ({
-  useSelector: (selector) => (
-    selector === mockGetCurrentCourse
-      ? mockCurrentCourse
-      : mockToc
-  ),
+  useSelector: (selector) =>
+    selector === mockGetCurrentCourse ? mockCurrentCourse : mockToc,
 }))
 
 const course = {

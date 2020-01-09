@@ -8,7 +8,8 @@ module.exports = {
       'import',
       {
         libraryName: 'antd',
-        customName: (name) => path.resolve(__dirname, 'node_modules', 'antd', 'es', name),
+        customName: (name) =>
+          path.resolve(__dirname, 'node_modules', 'antd', 'es', name),
         style: (name) => path.resolve(name, 'style'),
       },
     ],

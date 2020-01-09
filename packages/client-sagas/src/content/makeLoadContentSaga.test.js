@@ -37,7 +37,7 @@ const loadContentSaga = makeLoadContentSaga(
   getContent,
   loadContentSuccess,
   loadContentFailure,
-  fetchContent,
+  fetchContent
 )
 
 describe('makeLoadContentSaga', () => {
@@ -58,25 +58,23 @@ describe('makeLoadContentSaga', () => {
     [matchers.call.fn(fetchContent), fetchedContent[language]],
   ]
 
-  it('should not loadManifest with currentCourse',
-    () => expectSaga(loadContentSaga, { contentId: contentIdHash })
+  it('should not loadManifest with currentCourse', () =>
+    expectSaga(loadContentSaga, { contentId: contentIdHash })
       .provide(defaultProvides)
       .not.call(loadManifestSaga)
-      .run()
-  )
+      .run())
 
-  it('should loadManifest without currentCourse',
-    () => expectSaga(loadContentSaga, loadContent(contentIdHash))
+  it('should loadManifest without currentCourse', () =>
+    expectSaga(loadContentSaga, loadContent(contentIdHash))
       .provide([
         [select(courseSelectors.getCurrentCourse), null],
         ...defaultProvides,
       ])
       .call(loadManifestSaga)
-      .silentRun(0)
-  )
+      .silentRun(0))
 
-  it("should do nothing if content didn't actually change",
-    () => expectSaga(loadContentSaga, loadContent(contentIdHash, 'en'))
+  it("should do nothing if content didn't actually change", () =>
+    expectSaga(loadContentSaga, loadContent(contentIdHash, 'en'))
       .provide([
         [select(getCurrentContent), { id: 'foo/bar' }],
         ...defaultProvides,
@@ -84,29 +82,29 @@ describe('makeLoadContentSaga', () => {
       .not.call.fn(fetchContent)
       .not.put.actionType('LOAD_CONTENT_SUCCESS')
       .not.put.actionType('LOAD_CONTENT_FAILURE')
-      .run()
-  )
+      .run())
 
-  it('should produce 404 for non-existant contentId',
-    () => expectSaga(loadContentSaga, loadContent(contentIdHash))
-      .provide([
-        [select(contentExists, contentId), false],
-        ...defaultProvides,
-      ])
+  it('should produce 404 for non-existant contentId', () =>
+    expectSaga(loadContentSaga, loadContent(contentIdHash))
+      .provide([[select(contentExists, contentId), false], ...defaultProvides])
       .put(loadContentFailure({ statusCode: 404 }))
       .not.call.fn(fetchContent)
       .not.put.actionType('LOAD_CONTENT_SUCCESS')
-      .run()
-  )
+      .run())
 
-  it('should fetch content',
-    () => expectSaga(loadContentSaga, loadContent(contentIdHash))
+  it('should fetch content', () =>
+    expectSaga(loadContentSaga, loadContent(contentIdHash))
       .provide(defaultProvides)
       .call(fetchContent, contentRoot, language, contentId)
-      .put(loadContentSuccess({ language, contentId, content: fetchedContent[language] }))
+      .put(
+        loadContentSuccess({
+          language,
+          contentId,
+          content: fetchedContent[language],
+        })
+      )
       .not.put.actionType('LOAD_CONTENT_FAILURE')
-      .run()
-  )
+      .run())
 
   it('should fail and show message if fetch fails', () => {
     const error = new Error('mock error')
@@ -121,14 +119,16 @@ describe('makeLoadContentSaga', () => {
       .run()
   })
 
-  it('should get content from cache',
-    () => expectSaga(loadContentSaga, loadContent(contentIdHash))
-      .provide([
-        [select(getContent, contentId), content],
-        ...defaultProvides,
-      ])
+  it('should get content from cache', () =>
+    expectSaga(loadContentSaga, loadContent(contentIdHash))
+      .provide([[select(getContent, contentId), content], ...defaultProvides])
       .not.call.fn(fetchContent)
-      .put(loadContentSuccess({ language, contentId, content: fetchedContent[language] }))
-      .run()
-  )
+      .put(
+        loadContentSuccess({
+          language,
+          contentId,
+          content: fetchedContent[language],
+        })
+      )
+      .run())
 })

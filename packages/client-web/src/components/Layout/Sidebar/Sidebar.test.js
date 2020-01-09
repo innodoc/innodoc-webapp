@@ -12,9 +12,7 @@ jest.mock('react-redux', () => ({
 }))
 
 let mockIsNarrowerThan
-jest.mock('../../../hooks/useIsNarrowerThan', () => (
-  () => mockIsNarrowerThan
-))
+jest.mock('../../../hooks/useIsNarrowerThan', () => () => mockIsNarrowerThan)
 
 describe('<Sidebar />', () => {
   beforeEach(() => {

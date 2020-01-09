@@ -3,10 +3,7 @@ import { shallow } from 'enzyme'
 
 import Code from './Code'
 
-const data = [
-  ['fooId', 'fooClass', null],
-  'echo "hello world!"',
-]
+const data = [['fooId', 'fooClass', null], 'echo "hello world!"']
 
 describe('<Code />', () => {
   it('should render', () => {

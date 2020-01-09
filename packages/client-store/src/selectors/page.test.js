@@ -10,9 +10,7 @@ jest.mock('.', () => {
     default: {
       getApp: actualAppImport.default.getApp,
     },
-    makeMakeGetContentLink: jest.fn(() => (
-      () => {}
-    )),
+    makeMakeGetContentLink: jest.fn(() => () => {}),
     selectId: actualAppImport.selectId,
   }
 })
@@ -84,10 +82,7 @@ describe('pageSelectors', () => {
     expect(pageSelectors.pageExists(state, pageId)).toBe(exists)
   })
 
-  test.each([
-    [pages.bar],
-    [null],
-  ])('getCurrentPage (%s)', (currentPage) => {
+  test.each([[pages.bar], [null]])('getCurrentPage (%s)', (currentPage) => {
     state = setCurrentpage(state, currentPage ? currentPage.id : undefined)
     expect(pageSelectors.getCurrentPage(state)).toEqual(currentPage)
   })

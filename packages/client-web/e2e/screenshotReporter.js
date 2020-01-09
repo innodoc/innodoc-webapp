@@ -9,7 +9,7 @@ const takeScreenshot = (testName, pageInstance = page) => {
   mkdirp.sync(screenshotsPath)
   const filePath = path.resolve(
     screenshotsPath,
-    toFilename(`${new Date().toISOString()}_${testName}.png`),
+    toFilename(`${new Date().toISOString()}_${testName}.png`)
   )
   return pageInstance.screenshot({ path: filePath })
 }

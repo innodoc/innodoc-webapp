@@ -8,9 +8,7 @@ const UserMenu = (props) => {
   const userMenuTitle = (
     <span>
       <Icon type="user" />
-      <span>
-        {t('header.login')}
-      </span>
+      <span>{t('header.login')}</span>
     </span>
   )
   return (
@@ -21,15 +19,11 @@ const UserMenu = (props) => {
     >
       <Menu.Item key="login">
         <Icon type="login" />
-        <span>
-          {t('header.login')}
-        </span>
+        <span>{t('header.login')}</span>
       </Menu.Item>
       <Menu.Item key="register">
         <Icon type="user-add" />
-        <span>
-          {t('header.createAccount')}
-        </span>
+        <span>{t('header.createAccount')}</span>
       </Menu.Item>
     </Menu.SubMenu>
   )

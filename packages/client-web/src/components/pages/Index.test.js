@@ -6,7 +6,7 @@ import { actionTypes as uiActionTypes } from '@innodoc/client-store/src/actions/
 import Index from './Index'
 import Layout from '../Layout'
 
-jest.mock('../Layout', () => (() => null))
+jest.mock('../Layout', () => () => null)
 
 describe('<IndexPage />', () => {
   it('should render', () => {
@@ -52,8 +52,11 @@ describe.each(['page', 'section'])('getInitialProps (%s)', (contentType) => {
     expect.assertions(3)
     await Index.getInitialProps(ctx)
     expect(ctx.store.dispatch).not.toHaveBeenCalled()
-    const pathPrefix = contentType === 'page' ? pagePathPrefix : sectionPathPrefix
-    expect(ctx.res.writeHead).toBeCalledWith(301, { Location: `/${pathPrefix}/foo/bar` })
+    const pathPrefix =
+      contentType === 'page' ? pagePathPrefix : sectionPathPrefix
+    expect(ctx.res.writeHead).toBeCalledWith(301, {
+      Location: `/${pathPrefix}/foo/bar`,
+    })
     expect(ctx.res.end).toHaveBeenCalled()
   })
 
@@ -71,7 +74,9 @@ describe.each(['page', 'section'])('getInitialProps (%s)', (contentType) => {
     mockCourse = { homeLink: '/foo/bar' }
     expect.assertions(3)
     await Index.getInitialProps(ctx)
-    expect(ctx.store.dispatch.mock.calls[0][0].type).toBe(uiActionTypes.SHOW_MESSAGE)
+    expect(ctx.store.dispatch.mock.calls[0][0].type).toBe(
+      uiActionTypes.SHOW_MESSAGE
+    )
     expect(ctx.res.writeHead).not.toHaveBeenCalled()
     expect(ctx.res.end).not.toHaveBeenCalled()
   })

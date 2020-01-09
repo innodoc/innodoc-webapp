@@ -3,9 +3,9 @@ import { createSelector } from 'redux-orm'
 import orm from '../../orm'
 import courseSelectors from '../course'
 
-const getSortedSections = createSelector(
-  orm,
-  (session) => session.Section.all().toRefArray()
+const getSortedSections = createSelector(orm, (session) =>
+  session.Section.all()
+    .toRefArray()
     // sort lexicographically
     .sort((a, b) => {
       const minLen = Math.min(a.ord.length, b.ord.length)
@@ -28,12 +28,17 @@ const getSortedSections = createSelector(
 
 // Gets the next and previous sections
 const getNextPrevSections = createSelector(
-  orm, courseSelectors.getCurrentCourse, getSortedSections,
+  orm,
+  courseSelectors.getCurrentCourse,
+  getSortedSections,
   (session, course, sortedSections) => {
-    const idx = sortedSections.findIndex((section) => section.id === course.currentSection)
+    const idx = sortedSections.findIndex(
+      (section) => section.id === course.currentSection
+    )
     return {
       prevId: idx > 0 ? sortedSections[idx - 1].id : null,
-      nextId: idx < sortedSections.length - 1 ? sortedSections[idx + 1].id : null,
+      nextId:
+        idx < sortedSections.length - 1 ? sortedSections[idx + 1].id : null,
     }
   }
 )

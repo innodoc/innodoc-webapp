@@ -22,9 +22,7 @@ const subsections = [
 
 describe('<Content />', () => {
   it('should render', () => {
-    const wrapper = shallow(
-      <SubsectionList subsections={subsections} />
-    )
+    const wrapper = shallow(<SubsectionList subsections={subsections} />)
     const list = wrapper.find(List)
     expect(list.prop('dataSource')).toBe(subsections)
   })

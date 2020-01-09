@@ -5,7 +5,8 @@ import Math from './Math'
 import { mathDelimiter } from '../../../../hooks/useMathJax'
 
 jest.mock('../../../../hooks/useMathJax', () => ({
-  mathDelimiter: jest.requireActual('../../../../hooks/useMathJax').mathDelimiter,
+  mathDelimiter: jest.requireActual('../../../../hooks/useMathJax')
+    .mathDelimiter,
 }))
 
 const getData = (mathType) => [{ t: mathType }, 'x^2']

@@ -1,8 +1,4 @@
-import {
-  call,
-  put,
-  select,
-} from 'redux-saga/effects'
+import { call, put, select } from 'redux-saga/effects'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
@@ -18,7 +14,7 @@ export default (
   getContent,
   loadContentSuccess,
   loadContentFailure,
-  fetchContent,
+  fetchContent
 ) => {
   function* loadContentSaga({ contentId: contentIdHash, prevLanguage }) {
     const { contentRoot, language } = yield select(appSelectors.getApp)
@@ -35,9 +31,9 @@ export default (
     // Do not load exact same content another time
     const currentContent = yield select(getCurrentContent)
     if (
-      currentContent
-      && currentContent.id === contentId
-      && language === prevLanguage
+      currentContent &&
+      currentContent.id === contentId &&
+      language === prevLanguage
     ) {
       return
     }
@@ -47,26 +43,37 @@ export default (
       // Check if fetched already
       const content = yield select(getContent, contentId)
       if (content.content && content.content[language]) {
-        yield put(loadContentSuccess({
-          language,
-          contentId,
-          content: content.content[language],
-        }))
+        yield put(
+          loadContentSuccess({
+            language,
+            contentId,
+            content: content.content[language],
+          })
+        )
       } else {
         // Fetch from remote
         try {
-          yield put(loadContentSuccess({
-            content: yield call(fetchContent, contentRoot, language, contentId),
-            contentId,
-            language,
-          }))
+          yield put(
+            loadContentSuccess({
+              content: yield call(
+                fetchContent,
+                contentRoot,
+                language,
+                contentId
+              ),
+              contentId,
+              language,
+            })
+          )
         } catch (error) {
           yield put(loadContentFailure(error))
-          yield put(showMessage({
-            title: 'Loading content failed!',
-            msg: error.message,
-            level: 'error',
-          }))
+          yield put(
+            showMessage({
+              title: 'Loading content failed!',
+              msg: error.message,
+              level: 'error',
+            })
+          )
         }
       }
     } else {

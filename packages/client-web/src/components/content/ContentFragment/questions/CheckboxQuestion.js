@@ -5,12 +5,7 @@ import { Checkbox } from 'antd'
 
 import css from './style.sss'
 
-const CheckboxQuestion = ({
-  className,
-  onChange,
-  icon,
-  value,
-}) => {
+const CheckboxQuestion = ({ className, onChange, icon, value }) => {
   let checked
   let indeterminate
   if (value === '1') {

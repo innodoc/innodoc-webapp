@@ -8,11 +8,9 @@ import AffixButtons from './AffixButtons'
 
 const ContentAffix = () => {
   const [affixed, setAffixState] = useState(false)
-  const affixClassNames = classNames(
-    css.sectionAffix,
-    'clearfix',
-    { [css.affixed]: affixed }
-  )
+  const affixClassNames = classNames(css.sectionAffix, 'clearfix', {
+    [css.affixed]: affixed,
+  })
 
   return (
     <Affix onChange={(newAffixed) => setAffixState(newAffixed)}>

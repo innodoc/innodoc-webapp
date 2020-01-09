@@ -32,11 +32,7 @@ describe('<InputQuestion />', () => {
     ['36ch', { length: '30' }],
   ])('should add width style (expecting %s)', (expWidth, attrs) => {
     const wrapper = shallow(
-      <InputQuestion
-        attributes={attrs}
-        icon={<Icon />}
-        onChange={() => {}}
-      />
+      <InputQuestion attributes={attrs} icon={<Icon />} onChange={() => {}} />
     )
     const input = wrapper.find(Input)
     expect(input.prop('style').width).toBe(expWidth)

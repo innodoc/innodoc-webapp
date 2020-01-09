@@ -3,14 +3,21 @@ import { shallow } from 'enzyme'
 import { Provider } from 'react-redux'
 import Head from 'next/head'
 
-import { loadManifest, setServerConfiguration } from '@innodoc/client-store/src/actions/content'
+import {
+  loadManifest,
+  setServerConfiguration,
+} from '@innodoc/client-store/src/actions/content'
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
 
 import { InnoDocApp } from './App'
 
 describe('<InnoDocApp />', () => {
   it('should render', () => {
-    const mockStore = { dispatch: () => {}, getState: () => {}, subscribe: () => {} }
+    const mockStore = {
+      dispatch: () => {},
+      getState: () => {},
+      subscribe: () => {},
+    }
     const DummyComponent = () => {}
     const wrapper = shallow(
       <InnoDocApp
@@ -49,7 +56,7 @@ describe('<InnoDocApp />', () => {
           'https://content.example.com/',
           'https://cdn.example.com/',
           'section',
-          'page',
+          'page'
         )
       )
       expect(dispatch).toBeCalledWith(languageDetected('en-US'))

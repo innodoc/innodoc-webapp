@@ -2,7 +2,10 @@ import { call, put, select } from 'redux-saga/effects'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import fragmentSelectors from '@innodoc/client-store/src/selectors/fragment'
-import { loadFragmentFailure, loadFragmentSuccess } from '@innodoc/client-store/src/actions/content'
+import {
+  loadFragmentFailure,
+  loadFragmentSuccess,
+} from '@innodoc/client-store/src/actions/content'
 import { fetchFragment } from '@innodoc/client-misc/src/api'
 
 export default function* loadFragmentSaga({ contentId }) {
@@ -11,19 +14,28 @@ export default function* loadFragmentSaga({ contentId }) {
     // Check if fetched already
     const fragment = yield select(fragmentSelectors.getFragment, contentId)
     if (fragment && fragment.content[language]) {
-      yield put(loadFragmentSuccess({
-        language,
-        contentId,
-        content: fragment.content[language],
-      }))
+      yield put(
+        loadFragmentSuccess({
+          language,
+          contentId,
+          content: fragment.content[language],
+        })
+      )
     } else {
       // Fetch from remote
-      const content = yield call(fetchFragment, contentRoot, language, contentId)
-      yield put(loadFragmentSuccess({
+      const content = yield call(
+        fetchFragment,
+        contentRoot,
         language,
-        contentId,
-        content,
-      }))
+        contentId
+      )
+      yield put(
+        loadFragmentSuccess({
+          language,
+          contentId,
+          content,
+        })
+      )
     }
   } catch (error) {
     yield put(loadFragmentFailure(error))

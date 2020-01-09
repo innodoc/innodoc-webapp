@@ -15,11 +15,7 @@ describe('<InternalLink />', () => {
   })
 
   it('should render with malformed href (development)', () => {
-    const wrapper = shallow(
-      <InternalLink href="/foo/bar">
-        Foo
-      </InternalLink>
-    )
+    const wrapper = shallow(<InternalLink href="/foo/bar">Foo</InternalLink>)
     expect(wrapper.exists(PageLink)).toBe(false)
     expect(wrapper.exists(SectionLink)).toBe(false)
     expect(wrapper.text()).toMatch('Unhandled internal link: /foo/bar')
@@ -27,11 +23,7 @@ describe('<InternalLink />', () => {
 
   it('should render with malformed href (production)', () => {
     process.env.NODE_ENV = 'production'
-    const wrapper = shallow(
-      <InternalLink href="/foo/bar">
-        Foo
-      </InternalLink>
-    )
+    const wrapper = shallow(<InternalLink href="/foo/bar">Foo</InternalLink>)
     expect(wrapper.exists(PageLink)).toBe(false)
     expect(wrapper.exists(SectionLink)).toBe(false)
     expect(wrapper.text()).toBe('Foo')

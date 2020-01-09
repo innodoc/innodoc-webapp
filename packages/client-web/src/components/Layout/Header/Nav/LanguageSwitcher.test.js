@@ -18,9 +18,7 @@ jest.mock('react-redux', () => ({
 
 describe('<LanguageSwitcher />', () => {
   describe('render', () => {
-    const wrapper = shallow(
-      <LanguageSwitcher />
-    )
+    const wrapper = shallow(<LanguageSwitcher />)
 
     it('should render dropdown', () => {
       expect(wrapper.find(Menu.SubMenu).exists()).toBe(true)
@@ -35,11 +33,13 @@ describe('<LanguageSwitcher />', () => {
     beforeEach(mockDispatch.mockClear)
 
     it('should dispatch changeLanguage', () => {
-      const wrapper = shallow(
-        <LanguageSwitcher />
-      )
+      const wrapper = shallow(<LanguageSwitcher />)
       const idx = mockCourse.languages.indexOf(lang)
-      wrapper.find(Menu.SubMenu).find(Menu.Item).at(idx).simulate('click')
+      wrapper
+        .find(Menu.SubMenu)
+        .find(Menu.Item)
+        .at(idx)
+        .simulate('click')
       expect(mockDispatch.mock.calls).toHaveLength(1)
       expect(mockDispatch.mock.calls[0][0].language).toBe(lang)
     })

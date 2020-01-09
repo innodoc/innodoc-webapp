@@ -13,9 +13,7 @@ jest.mock('react-redux', () => ({
   useSelector: () => mockCourse,
 }))
 let mockUseIsNarrowerThan
-jest.mock('../../../hooks/useIsNarrowerThan', () => (
-  () => mockUseIsNarrowerThan
-))
+jest.mock('../../../hooks/useIsNarrowerThan', () => () => mockUseIsNarrowerThan)
 
 describe('<Header />', () => {
   beforeEach(() => {
@@ -51,7 +49,10 @@ describe('<Header />', () => {
 
     it('should activate and close drawer menu', () => {
       const wrapper = shallow(<Header />)
-      wrapper.find(Button).at(0).simulate('click')
+      wrapper
+        .find(Button)
+        .at(0)
+        .simulate('click')
       expect(wrapper.find(Drawer).prop('visible')).toBe(true)
       wrapper.find(Drawer).prop('onClose')()
       expect(wrapper.find(Drawer).prop('visible')).toBe(false)

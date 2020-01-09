@@ -3,10 +3,7 @@ import { shallow } from 'enzyme'
 
 import CodeBlock from './CodeBlock'
 
-const content = [
-  [null, 'python', null],
-  'print("foo")',
-]
+const content = [[null, 'python', null], 'print("foo")']
 
 describe('<CodeBlock />', () => {
   it('should render', () => {

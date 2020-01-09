@@ -6,10 +6,7 @@ module.exports = (dirname) => ({
     'error',
     {
       devDependencies: true,
-      packageDir: [
-        dirname,
-        path.resolve(dirname, '..', '..'),
-      ],
+      packageDir: [dirname, path.resolve(dirname, '..', '..')],
     },
   ],
 })

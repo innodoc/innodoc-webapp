@@ -12,9 +12,7 @@ describe('<MessageModal />', () => {
       msg: 'Hello message!',
     }
     const onClose = jest.fn()
-    const wrapper = shallow(
-      <MessageModal onClose={onClose} message={msg} />
-    )
+    const wrapper = shallow(<MessageModal onClose={onClose} message={msg} />)
     const modal = wrapper.find(Modal)
     expect(modal.exists()).toBe(true)
     expect(wrapper.find('h4').text()).toEqual(msg.title)

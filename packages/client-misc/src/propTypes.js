@@ -23,10 +23,4 @@ const sectionType = PropTypes.shape({
   title: PropTypes.objectOf(PropTypes.string).isRequired,
 })
 
-export {
-  attributeType,
-  childrenType,
-  contentType,
-  messageType,
-  sectionType,
-}
+export { attributeType, childrenType, contentType, messageType, sectionType }

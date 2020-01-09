@@ -20,8 +20,8 @@ export default class Section extends Model {
   static parseTOC(path, ord, node, SectionModel) {
     const currentPath = [...path, node.id]
     if (node.children !== undefined) {
-      node.children.forEach(
-        (child, idx) => Section.parseTOC(currentPath, [...ord, idx], child, SectionModel)
+      node.children.forEach((child, idx) =>
+        Section.parseTOC(currentPath, [...ord, idx], child, SectionModel)
       )
     }
     SectionModel.upsert({
@@ -35,8 +35,9 @@ export default class Section extends Model {
   static reducer(action, SectionModel) {
     switch (action.type) {
       case actionTypes.LOAD_MANIFEST_SUCCESS:
-        action.data.content.toc.forEach(
-          (node, idx) => Section.parseTOC([], [idx], node, SectionModel))
+        action.data.content.toc.forEach((node, idx) =>
+          Section.parseTOC([], [idx], node, SectionModel)
+        )
         break
       case actionTypes.LOAD_SECTION_SUCCESS:
         SectionModel.upsert({
