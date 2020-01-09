@@ -16,7 +16,7 @@ const StaticVideo = ({ src }) => {
   /* eslint-disable jsx-a11y/media-has-caption */
   return (
     <video controls src={videoSrc} className={css.video}>
-      <p>{t('content.noHtml5Video', { src })}</p>
+      {t('content.noHtml5Video', { src })}
     </video>
   )
 }
