@@ -6,6 +6,7 @@
     "build": "yarn client-web:build && yarn server:build",
     "client-web:build": "yarn workspace @innodoc/client-web build",
     "dev": "yarn workspace @innodoc/server dev",
+    "format": "prettier --write \"*.js\" \"packages/**/*.js\"",
     "lint": "eslint .",
     "prepush": "yarn lint && yarn test:unit && yarn build && yarn test:e2e",
     "server:build": "yarn workspace @innodoc/server build",
@@ -35,9 +36,12 @@
     "babel-plugin-dynamic-import-node": "^2.3.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^23.0.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "jest": "^24.9.0"
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1"
   }
 }
