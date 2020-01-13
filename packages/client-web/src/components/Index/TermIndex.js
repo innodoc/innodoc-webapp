@@ -64,11 +64,9 @@ const Index = () => {
   })
 
   return (
-    <MathJax.Provider>
-      <div className={fadeInClassName}>
-        <List dataSource={indexTerms} renderItem={renderTerm} />
-      </div>
-    </MathJax.Provider>
+    <div className={fadeInClassName}>
+      <List dataSource={indexTerms} renderItem={renderTerm} />
+    </div>
   )
 }
 

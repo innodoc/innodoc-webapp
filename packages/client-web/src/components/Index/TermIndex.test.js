@@ -1,8 +1,10 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { List } from 'antd'
+import MathJax from '@innodoc/react-mathjax-node'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
+import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
 
 import { SectionLink } from '../content/links'
 import TermIndex from './TermIndex'
@@ -28,6 +30,7 @@ const mockTerms = [
     name: 'Term 2',
   },
 ]
+
 const mockAppSelectors = appSelectors
 jest.mock('react-redux', () => ({
   useSelector: (selector) => {
@@ -38,16 +41,33 @@ jest.mock('react-redux', () => ({
   },
 }))
 
+const makeMockProvider = (typesetDone) => ({ children }) => (
+  <MathJax.Context.Provider value={{ typesetDone }}>
+    {children}
+  </MathJax.Context.Provider>
+)
+
 describe('<TermIndex />', () => {
-  it('should render', () => {
-    const wrapper = mount(<TermIndex />)
+  it.each([true, false])('should render (typesetDone=%s)', (typesetDone) => {
+    const MockProvider = makeMockProvider(typesetDone)
+    const wrapper = mount(
+      <MockProvider>
+        <TermIndex />
+      </MockProvider>
+    )
+    expect(
+      wrapper
+        .find('div')
+        .first()
+        .hasClass(typesetDone ? fadeInCss.show : fadeInCss.hide)
+    ).toBe(true)
     const listItems = wrapper.find(List.Item)
     expect(listItems).toHaveLength(2)
     const getTitle = (i) =>
       listItems
         .at(i)
         .find(List.Item.Meta)
-        .prop('title').props.children
+        .prop('title').props.children[0].props.children
     expect(getTitle(0)).toMatch('Term 1')
     expect(getTitle(1)).toMatch('Term 2')
     const sectionLinks = wrapper.find(SectionLink)

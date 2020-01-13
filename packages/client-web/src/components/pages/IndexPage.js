@@ -1,5 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
+import MathJax from '@innodoc/react-mathjax-node'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
@@ -18,7 +19,9 @@ const IndexPage = () => {
       <h1 className={classNames(css.header, 'clearfix')}>
         {t('common.index')}
       </h1>
-      <Index />
+      <MathJax.Provider>
+        <Index />
+      </MathJax.Provider>
     </Layout>
   )
 }
