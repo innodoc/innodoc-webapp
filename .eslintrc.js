@@ -19,14 +19,6 @@ module.exports = {
     'jest/no-disabled-tests': 'off',
     'jest/prefer-to-have-length': 'warn',
     'jest/valid-expect': 'error',
-    'jsx-a11y/anchor-is-valid': 'off',
-    'react/jsx-filename-extension': [
-      'error',
-      {
-        extensions: ['.js'],
-      },
-    ],
-    'react/forbid-prop-types': 'off',
     'prettier/prettier': 'error',
   },
 }

@@ -60,7 +60,7 @@ const useAutoExpand = (
       })
       setExpandedKeys(newExpandedKeys)
     }
-  }, [currentSection, course, expandAll])
+  }, [course, currentSection, expandAll, expandedKeys, setExpandedKeys])
 
 const Toc = ({ expandAll }) => {
   const course = useSelector(courseSelectors.getCurrentCourse)
