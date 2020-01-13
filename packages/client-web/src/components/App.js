@@ -101,9 +101,7 @@ class InnoDocApp extends App {
     const { Component, dispatchNavigate, pageProps, store } = this.props
 
     // inform store about route changes
-    if (process.browser) {
-      Router.events.on('routeChangeStart', dispatchNavigate)
-    }
+    Router.events.on('routeChangeStart', dispatchNavigate)
 
     return (
       <>
@@ -125,7 +123,7 @@ const nextReduxWrapperDebug =
   process.env.NEXT_REDUX_WRAPPER_DEBUG === 'true'
 const withReduxConfig = { debug: nextReduxWrapperDebug }
 
-export { InnoDocApp } // for testing
+export { InnoDocApp, waitForCourse } // for testing
 export default withRedux(
   makeMakeStore(rootSaga),
   withReduxConfig
