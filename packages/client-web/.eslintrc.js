@@ -25,5 +25,11 @@ module.exports = {
         'import/no-cycle': 'off',
       },
     },
+    {
+      files: ['src/**/*.test.js'],
+      rules: {
+        'react/prop-types': 'off',
+      },
+    },
   ],
 }
