@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import classNames from 'classnames'
@@ -51,10 +51,12 @@ const Question = ({ attributes, id, questionClasses }) => {
   )
 
   // Notify exercise context about this question
-  addQuestion(globalQuestionId)
-  if (answer) {
-    addQuestionAnswered(globalQuestionId)
-  }
+  useEffect(() => {
+    addQuestion(globalQuestionId)
+    if (answer) {
+      addQuestionAnswered(globalQuestionId)
+    }
+  }, [addQuestion, addQuestionAnswered, answer, globalQuestionId])
 
   const QuestionComponent = mapClassNameToComponent(questionClasses)
   if (QuestionComponent) {
