@@ -12,15 +12,15 @@
       background-color: transparent
       color: $primary-5
 
-    &:global(.active .ant-tree-node-content-wrapper)
-      cursor: default
-
-    &:global(.active > span > .ant-tree-title)
-      color: $heading-color
-      text-decoration: underline
-
     & :global(.ant-tree-node-selected)
       background-color: transparent !important
+
+    &.active :global(.ant-tree-node-content-wrapper)
+      cursor: default
+
+    &.active > span > :global(.ant-tree-title)
+      color: $heading-color
+      text-decoration: underline
 
 .disableExpand
   :global(.ant-tree-switcher)
