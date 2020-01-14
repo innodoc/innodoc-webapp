@@ -11,8 +11,12 @@ let mockCurrentCourse
 let mockToc
 
 jest.mock('react-redux', () => ({
-  useSelector: (selector) =>
-    selector === mockGetCurrentCourse ? mockCurrentCourse : mockToc,
+  useSelector: (selector) => {
+    if (selector === mockGetCurrentCourse) {
+      return mockCurrentCourse
+    }
+    return mockToc
+  },
 }))
 
 const course = {
@@ -51,35 +55,32 @@ describe('<Toc />', () => {
     mockToc = toc
   })
 
-  it('renders tree nodes', () => {
+  it('renders', () => {
     const wrapper = shallow(<Toc />)
-    expect(wrapper.find(Tree)).toHaveLength(1)
-    const treeNodes = wrapper.find(Tree.TreeNode)
-    expect(treeNodes).toHaveLength(4)
+    const tree = wrapper.find(Tree)
+    expect(tree).toHaveLength(1)
+    expect(tree.find(Tree.TreeNode)).toHaveLength(4)
+    expect(tree.prop('expandedKeys')).toHaveLength(0)
   })
 
-  it('renders with active section', () => {
-    mockCurrentCourse = {
-      ...course,
-      currentSection: 'section-1/section-1-1',
-    }
+  it('renders w/o course', () => {
+    mockCurrentCourse = null
+    mockToc = []
     const wrapper = shallow(<Toc />)
-    const treeNodes = wrapper.find(Tree.TreeNode)
-    expect(treeNodes).toHaveLength(4)
-    expect(treeNodes.filter('.active')).toHaveLength(1)
-  })
-
-  it('renders without active section', () => {
-    const wrapper = shallow(<Toc />)
-    expect(wrapper.find(Tree.TreeNode).filter('.active')).toHaveLength(0)
+    const tree = wrapper.find(Tree)
+    expect(tree).toHaveLength(1)
+    expect(tree.find(Tree.TreeNode)).toHaveLength(0)
+    expect(tree.prop('expandedKeys')).toHaveLength(0)
   })
 
   it('can expand all', () => {
     const wrapper = shallow(<Toc expandAll />)
-    expect(wrapper.find(Tree).prop('defaultExpandAll')).toBe(true)
+    const tree = wrapper.find(Tree)
+    expect(tree.prop('defaultExpandAll')).toBe(true)
+    expect(tree.prop('expandedKeys')).toBeFalsy()
   })
 
-  it('expands current section from within tree component', () => {
+  it('expands section from within tree component', () => {
     const wrapper = shallow(<Toc />)
     const tree = wrapper.find(Tree)
     expect(tree.prop('expandedKeys')).toHaveLength(0)
@@ -88,24 +89,15 @@ describe('<Toc />', () => {
     expect(wrapper.find(Tree).prop('expandedKeys')).toHaveLength(1)
   })
 
-  // TODO: should be working once facebook/react#15275 is resolved
-  xit('expands current section from outside tree component', () => {
-    const wrapper = shallow(<Toc />)
-    let tree = wrapper.find(Tree)
-    expect(tree.prop('expandedKeys')).toHaveLength(0)
-    expect(wrapper.find(Tree.TreeNode).filter('.active')).toHaveLength(0)
+  it('expands current section', () => {
     mockCurrentCourse = {
       ...course,
       currentSection: 'section-1/section-1-1/section-1-1-1',
     }
-    // tree.prop('onExpand')([])
-    wrapper.update()
+    const wrapper = shallow(<Toc />)
     expect(wrapper.find(Tree.TreeNode).filter('.active')).toHaveLength(1)
-    tree = wrapper.find(Tree)
-    expect(tree.prop('expandedKeys')).toEqual([
-      ['section-1'],
-      ['section-1/section-1-1'],
-      ['section-1/section-1-1-1'],
+    expect(wrapper.find(Tree).prop('expandedKeys')).toEqual([
+      'section-1/section-1-1/section-1-1-1',
     ])
   })
 })
