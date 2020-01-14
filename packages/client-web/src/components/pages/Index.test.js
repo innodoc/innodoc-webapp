@@ -4,15 +4,13 @@ import { shallow } from 'enzyme'
 import { actionTypes as uiActionTypes } from '@innodoc/client-store/src/actions/ui'
 
 import Index from './Index'
-import Layout from '../Layout'
 
 jest.mock('../Layout', () => () => null)
 
 describe('<IndexPage />', () => {
-  it('should render', () => {
+  it('should render empty', () => {
     const wrapper = shallow(<Index />)
-    const layout = wrapper.find(Layout)
-    expect(layout.exists()).toBe(true)
+    expect(wrapper.isEmptyRender()).toBe(true)
   })
 })
 
@@ -36,10 +34,6 @@ describe.each(['page', 'section'])('getInitialProps (%s)', (contentType) => {
       store: {
         dispatch: jest.fn(),
         getState: () => {},
-        subscribe: (cb) => {
-          setTimeout(() => cb(), 0)
-          return () => {}
-        },
       },
       res: {
         writeHead: jest.fn(),
@@ -49,8 +43,9 @@ describe.each(['page', 'section'])('getInitialProps (%s)', (contentType) => {
   })
 
   it('should wait for course and redirect permanently to homeLink', async () => {
-    expect.assertions(3)
-    await Index.getInitialProps(ctx)
+    expect.assertions(4)
+    const props = await Index.getInitialProps(ctx)
+    expect(props).toEqual({})
     expect(ctx.store.dispatch).not.toHaveBeenCalled()
     const pathPrefix =
       contentType === 'page' ? pagePathPrefix : sectionPathPrefix
@@ -60,20 +55,14 @@ describe.each(['page', 'section'])('getInitialProps (%s)', (contentType) => {
     expect(ctx.res.end).toHaveBeenCalled()
   })
 
-  it("should do nothing when course couldn't be fetched", async () => {
-    mockCourse = null
-    mockApp.error = new Error()
-    expect.assertions(3)
-    await Index.getInitialProps(ctx)
-    expect(ctx.store.dispatch).not.toHaveBeenCalled()
-    expect(ctx.res.writeHead).not.toHaveBeenCalled()
-    expect(ctx.res.end).not.toHaveBeenCalled()
-  })
-
-  it("should dispatch showMessage when homeLink couldn't be parsed", async () => {
-    mockCourse = { homeLink: '/foo/bar' }
-    expect.assertions(3)
-    await Index.getInitialProps(ctx)
+  it.each([
+    ["course couldn't be fetched", null],
+    ["homeLink couldn't be parsed", { homeLink: '/foo/bar' }],
+  ])('should dispatch showMessaage when %s', async (_, course) => {
+    expect.assertions(4)
+    mockCourse = course
+    const props = await Index.getInitialProps(ctx)
+    expect(props).toEqual({})
     expect(ctx.store.dispatch.mock.calls[0][0].type).toBe(
       uiActionTypes.SHOW_MESSAGE
     )
