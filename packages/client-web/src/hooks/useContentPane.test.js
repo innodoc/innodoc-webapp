@@ -1,14 +1,13 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Router from 'next/router'
+import MathJax from '@innodoc/react-mathjax-node'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
 import useContentPane, { scrollToHash } from './useContentPane'
 import ContentFragment from '../components/content/ContentFragment'
-
-const { typesetStates } = jest.requireActual('./useMathJax')
 
 const stdApp = { language: 'en' }
 const contentArr = [{ t: 'Str', c: 'Foo' }]
@@ -31,75 +30,83 @@ jest.mock('react-redux', () => ({
   useSelector: (selector) => mockUseSelector(selector),
 }))
 
-let mockMathJaxElem
-let mockTypesetState
-const mockUseMathJaxScanElement = jest.fn(() => ({
-  mathJaxElem: mockMathJaxElem,
-  typesetState: mockTypesetState,
-}))
-jest.mock('./useMathJax', () => ({
-  typesetStates: jest.requireActual('./useMathJax').typesetStates,
-  useMathJaxScanElement: (...args) => mockUseMathJaxScanElement(...args),
-}))
-
 const ContentComponent = () => {
-  const {
-    content,
-    fadeInClassName,
-    language,
-    mathJaxElem,
-    title,
-  } = useContentPane(mockSelector)
+  const { content, fadeInClassName, language, title } = useContentPane(
+    mockSelector
+  )
   return (
     <>
       <h1>{title}</h1>
       <span>{language}</span>
-      <div className={fadeInClassName} ref={mathJaxElem}>
+      <div className={fadeInClassName}>
         <ContentFragment content={content} />
       </div>
     </>
   )
 }
 
+const makeMockProvider = (
+  typesetDone = true,
+  addCallback = () => {},
+  removeCallback = () => {}
+) => ({ children }) => (
+  <MathJax.Context.Provider
+    value={{ addCallback, removeCallback, typesetDone }}
+  >
+    {children}
+  </MathJax.Context.Provider>
+)
+
 describe('useContentPane', () => {
   beforeEach(() => {
     mockApp = stdApp
     mockContent = stdContent
     mockUseSelector.mockClear()
-    mockUseMathJaxScanElement.mockClear()
-    mockMathJaxElem = React.createRef()
-    mockTypesetState = typesetStates.PENDING
   })
 
   it('should render', () => {
-    const wrapper = shallow(<ContentComponent />)
+    const MockProvider = makeMockProvider()
+    const wrapper = mount(
+      <MockProvider>
+        <ContentComponent />
+      </MockProvider>
+    )
     expect(mockUseSelector).toBeCalledWith(mockSelector)
     expect(wrapper.find('h1').text()).toBe('Foo title')
     expect(wrapper.find('span').text()).toBe('en')
   })
 
-  it('should use MathJax', () => {
-    shallow(<ContentComponent />)
-    expect(mockUseMathJaxScanElement).toBeCalledWith(
-      ['en', mockContent],
-      scrollToHash
+  it('should provide add/remove callback scrollToHash', () => {
+    const addCallback = jest.fn()
+    const removeCallback = jest.fn()
+    const MockProvider = makeMockProvider(true, addCallback, removeCallback)
+    const wrapper = mount(
+      <MockProvider>
+        <ContentComponent />
+      </MockProvider>
     )
+    expect(addCallback).toBeCalledTimes(1)
+    expect(addCallback).toBeCalledWith(scrollToHash)
+    wrapper.unmount()
+    expect(removeCallback).toBeCalledTimes(1)
+    expect(removeCallback).toBeCalledWith(scrollToHash)
   })
 
   describe('fade in/out', () => {
     it.each([
-      ['in', true, typesetStates.SUCCESS],
-      ['out', false, typesetStates.PENDING],
-    ])(
-      'should fade %s depending on MathJax typesetting',
-      (_, show, typesetState) => {
-        mockTypesetState = typesetState
-        const wrapper = shallow(<ContentComponent />)
-        const div = wrapper.find('div')
-        expect(div.hasClass(fadeInCss.show)).toBe(show)
-        expect(div.hasClass(fadeInCss.hide)).toBe(!show)
-      }
-    )
+      ['in', true],
+      ['out', false],
+    ])('should fade %s depending on typesetDone', (_, typesetDone) => {
+      const MockProvider = makeMockProvider(typesetDone)
+      const wrapper = mount(
+        <MockProvider>
+          <ContentComponent />
+        </MockProvider>
+      )
+      const div = wrapper.find('div')
+      expect(div.hasClass(fadeInCss.show)).toBe(typesetDone)
+      expect(div.hasClass(fadeInCss.hide)).toBe(!typesetDone)
+    })
 
     it.each([
       ['in', true, stdApp, stdContent],
@@ -111,8 +118,12 @@ describe('useContentPane', () => {
       (_, show, app, content) => {
         mockApp = app
         mockContent = content
-        mockTypesetState = typesetStates.SUCCESS
-        const wrapper = shallow(<ContentComponent />)
+        const MockProvider = makeMockProvider()
+        const wrapper = mount(
+          <MockProvider>
+            <ContentComponent />
+          </MockProvider>
+        )
         const div = wrapper.find('div')
         expect(div.hasClass(fadeInCss.show)).toBe(show)
         expect(div.hasClass(fadeInCss.hide)).toBe(!show)
