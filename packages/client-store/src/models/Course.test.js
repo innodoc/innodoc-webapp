@@ -66,6 +66,7 @@ describe('Course', () => {
         homeLink: '/section/bar',
         languages: ['en'],
         logo: null,
+        mathJaxOptions: {},
         title: { en: 'foobar' },
         id: 0,
       })
@@ -81,6 +82,7 @@ describe('Course', () => {
         homeLink: '/section/foo',
         languages: ['en'],
         logo: null,
+        mathJaxOptions: {},
         title: { en: 'foobar' },
         id: 0,
       })
