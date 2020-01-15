@@ -27,7 +27,7 @@ const mockTerms = [
       'section-1/subsection-1#index-term-term2-0',
       'section-3#index-term-term2-0',
     ],
-    name: 'Term 2',
+    name: 'Term 2 $x^2$',
   },
 ]
 
@@ -41,51 +41,80 @@ jest.mock('react-redux', () => ({
   },
 }))
 
-const makeMockProvider = (typesetDone) => ({ children }) => (
-  <MathJax.Context.Provider value={{ typesetDone }}>
-    {children}
-  </MathJax.Context.Provider>
-)
+const makeMockProvider = (typesetDone) => ({ children }) => {
+  const value = {
+    promiseMakers: { current: [] },
+    setTypesetDone: () => {},
+    triggerProcessing: () => {},
+    typesetDone,
+  }
+  return (
+    <MathJax.Context.Provider value={value}>
+      {children}
+    </MathJax.Context.Provider>
+  )
+}
 
 describe('<TermIndex />', () => {
-  it.each([true, false])('should render (typesetDone=%s)', (typesetDone) => {
+  describe.each([true, false])('render (typesetDone=%s)', (typesetDone) => {
     const MockProvider = makeMockProvider(typesetDone)
     const wrapper = mount(
       <MockProvider>
         <TermIndex />
       </MockProvider>
     )
-    expect(
-      wrapper
-        .find('div')
-        .first()
-        .hasClass(typesetDone ? fadeInCss.show : fadeInCss.hide)
-    ).toBe(true)
     const listItems = wrapper.find(List.Item)
-    expect(listItems).toHaveLength(2)
-    const getTitle = (i) =>
-      listItems
-        .at(i)
-        .find(List.Item.Meta)
-        .prop('title').props.children[0].props.children
-    expect(getTitle(0)).toMatch('Term 1')
-    expect(getTitle(1)).toMatch('Term 2')
-    const sectionLinks = wrapper.find(SectionLink)
-    expect(sectionLinks).toHaveLength(5)
-    expect(sectionLinks.at(0).prop('contentId')).toBe(
-      'section-1/subsection-1#index-term-term1-0'
-    )
-    expect(sectionLinks.at(1).prop('contentId')).toBe(
-      'section-1/subsection-1#index-term-term1-1'
-    )
-    expect(sectionLinks.at(2).prop('contentId')).toBe(
-      'section-2#index-term-term1-0'
-    )
-    expect(sectionLinks.at(3).prop('contentId')).toBe(
-      'section-1/subsection-1#index-term-term2-0'
-    )
-    expect(sectionLinks.at(4).prop('contentId')).toBe(
-      'section-3#index-term-term2-0'
-    )
+
+    it('should have correct CSS class', () => {
+      expect(
+        wrapper
+          .find('div')
+          .first()
+          .hasClass(typesetDone ? fadeInCss.show : fadeInCss.hide)
+      ).toBe(true)
+    })
+
+    it('should have 2 list items', () => {
+      expect(listItems).toHaveLength(2)
+    })
+
+    it('should have correct titles', () => {
+      const getTitle = (i) =>
+        listItems
+          .at(i)
+          .find(List.Item.Meta)
+          .prop('title')
+      const title0 = getTitle(0)
+      expect(
+        wrapper.wrap(title0.props.children[0].props.children).text()
+      ).toMatch('Term 1')
+      const title1 = getTitle(1)
+      expect(
+        wrapper.wrap(title1.props.children[0].props.children).text()
+      ).toMatch('Term 2 ')
+      const mathJaxSpan = wrapper.wrap(title1.props.children[1])
+      expect(mathJaxSpan.type()).toBe(MathJax.Span)
+      expect(mathJaxSpan.prop('texCode')).toBe('x^2')
+    })
+
+    it('should have secion links', () => {
+      const sectionLinks = wrapper.find(SectionLink)
+      expect(sectionLinks).toHaveLength(5)
+      expect(sectionLinks.at(0).prop('contentId')).toBe(
+        'section-1/subsection-1#index-term-term1-0'
+      )
+      expect(sectionLinks.at(1).prop('contentId')).toBe(
+        'section-1/subsection-1#index-term-term1-1'
+      )
+      expect(sectionLinks.at(2).prop('contentId')).toBe(
+        'section-2#index-term-term1-0'
+      )
+      expect(sectionLinks.at(3).prop('contentId')).toBe(
+        'section-1/subsection-1#index-term-term2-0'
+      )
+      expect(sectionLinks.at(4).prop('contentId')).toBe(
+        'section-3#index-term-term2-0'
+      )
+    })
   })
 })
