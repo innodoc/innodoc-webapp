@@ -17,8 +17,8 @@
   "main": "src/index.js",
   "dependencies": {
     "isomorphic-unfetch": "^3.0.0",
-    "nerdamer": "^1.0.0",
-    "next-i18next": "^2.0.0",
+    "nerdamer": "^1.1.2",
+    "next-i18next": "^4.0.0",
     "prop-types": "^15.6.2"
   }
 }
