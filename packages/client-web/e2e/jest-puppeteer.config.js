@@ -22,18 +22,20 @@ const serverEnvVars = [
   'SECTION_PATH_PREFIX=section',
   'PAGE_PATH_PREFIX=page',
 ].join(' ')
-const serverPath = path.join('..', 'server')
+const rootPath = path.resolve(__dirname, '..', '..')
+const serverCmd = `cd ${rootPath} && ${serverEnvVars} yarn start`
+const testCmd = `cd ${__dirname} && yarn run test:e2e:content`
 
 const server = [
   {
-    command: `cd ${serverPath} && ${serverEnvVars} yarn run start`,
+    command: serverCmd,
     port: parseInt(process.env.PROD_PORT, 10),
     launchTimeout,
     protocol,
     usedPortAction,
   },
   {
-    command: 'yarn run test:e2e:content',
+    command: testCmd,
     port: parseInt(process.env.CONTENT_PORT, 10),
     launchTimeout,
     protocol,
