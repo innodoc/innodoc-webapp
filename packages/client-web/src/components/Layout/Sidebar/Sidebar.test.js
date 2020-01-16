@@ -1,6 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Layout as AntLayout } from 'antd'
+import { Button, Layout as AntLayout } from 'antd'
+
+import { toggleSidebar } from '@innodoc/client-store/src/actions/ui'
 
 import Sidebar from './Sidebar'
 
@@ -26,13 +28,21 @@ describe('<Sidebar />', () => {
       const wrapper = shallow(<Sidebar>Foo</Sidebar>)
       expect(wrapper.find(AntLayout.Sider)).toHaveLength(1)
       expect(wrapper.children().text()).toContain('Foo')
+      expect(mockDispatch).not.toBeCalled()
     })
 
     test('collapsed', () => {
       mockApp = { sidebarVisible: false }
       const wrapper = shallow(<Sidebar />)
       expect(wrapper.find(AntLayout.Sider).prop('collapsed')).toBe(true)
+      expect(mockDispatch).not.toBeCalled()
     })
+  })
+
+  it('should dispatch toggleSidebar', () => {
+    const wrapper = shallow(<Sidebar>Foo</Sidebar>)
+    wrapper.find(Button).invoke('onClick')()
+    expect(mockDispatch).toBeCalledWith(toggleSidebar())
   })
 
   describe('responsive width', () => {
