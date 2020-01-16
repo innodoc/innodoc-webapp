@@ -20,10 +20,18 @@ describe('<Div />', () => {
     }
   )
 
-  it('should render UnknownType for an unknown className', () => {
+  it('should render UnknownType for an unknown className (non-production)', () => {
     const wrapper = shallow(
       <Div data={[[null, ['this-does-really-not-exist-ab93ldc']], []]} />
     )
     expect(wrapper.is(UnknownType)).toBe(true)
+  })
+
+  it('should render UnknownType for an unknown className (production)', () => {
+    process.env.NODE_ENV = 'production'
+    const wrapper = shallow(
+      <Div data={[[null, ['this-does-really-not-exist-ab93ldc']], []]} />
+    )
+    expect(wrapper.isEmptyRender()).toBe(true)
   })
 })
