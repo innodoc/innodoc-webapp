@@ -15,9 +15,10 @@ const sugarss = require('sugarss')
 
 const getPostcssConfig = require('./postcss.config')
 
-// antd default vars
+// Antd default vars
 const antdThemeFilename = path.resolve(
   __dirname,
+  '..',
   '..',
   '..',
   'node_modules',
@@ -28,9 +29,10 @@ const antdThemeFilename = path.resolve(
   'default.less'
 )
 
-// output path for antd default vars
+// Output path for antd default vars
 const antdVarsFilename = path.resolve(
   __dirname,
+  '..',
   'src',
   'style',
   'antd-vars.json'
@@ -49,9 +51,10 @@ const extractAntdDefaultVariables = () =>
       process.exit(-1)
     })
 
-// overridden antd variables
+// Overridden antd variables
 const antdVarsOverrideFilename = path.resolve(
   __dirname,
+  '..',
   'src',
   'style',
   'antd-theme.sss'
@@ -61,7 +64,7 @@ const postcssConfig = getPostcssConfig({
   file: { extname: path.extname(antdVarsOverrideFilename) },
 })
 
-// don't use postcss-import-json plugin so only overridden variables are exported
+// Don't use postcss-import-json plugin so only overridden variables are exported
 const plugins = postcssConfig.plugins.filter(
   (plugin) => plugin.postcssPlugin !== 'postcss-import-json'
 )

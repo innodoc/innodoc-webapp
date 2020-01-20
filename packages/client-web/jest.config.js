@@ -1,4 +1,4 @@
-const nodeModulesEs = require('./nodeModulesEs')
+const nodeModulesEs = require('./nextConfig/nodeModulesEs')
 
 module.exports = {
   testEnvironment: 'enzyme',

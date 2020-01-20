@@ -1,0 +1,37 @@
+const path = require('path')
+const { execSync } = require('child_process')
+
+const nodeModulesEs = require('./nodeModulesEs')
+const webpack = require('./webpack')
+
+// Extract antd default vars to JSON file and prepare overridden vars
+const prepareScript = path.resolve(__dirname, 'preBuild.js')
+const antdVars = JSON.parse(execSync(`node ${prepareScript}`).toString())
+
+module.exports = {
+  // Only use .js (not .jsx)
+  pageExtensions: ['js'],
+  lessLoaderOptions: {
+    // Needed by antd less code
+    javascriptEnabled: true,
+    // Pass custom variables to antd
+    modifyVars: antdVars,
+  },
+  // GZIP compression should happen in reverse proxy
+  compress: false,
+  // CSS modules with local scope
+  cssModules: true,
+  cssLoaderOptions: {
+    importLoaders: 1,
+    localIdentName: '[local]___[hash:base64:5]',
+  },
+  transpileModules: [
+    // Monorepo modules
+    '@innodoc/client-misc',
+    '@innodoc/client-sagas',
+    '@innodoc/client-store',
+    // ES6 node modules
+    ...nodeModulesEs,
+  ],
+  webpack,
+}
