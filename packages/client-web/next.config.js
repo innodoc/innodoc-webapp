@@ -71,7 +71,7 @@ const webpack = (prevConfig) => {
     }
 
     // use .sss extension for css-loader
-    if (rule.test.source.match('css')) {
+    if (!rule.oneOf && rule.test.source.match('css')) {
       rule.test = /\.sss$/
     }
 
