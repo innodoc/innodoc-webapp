@@ -38,7 +38,7 @@ const loadToc = (state) => {
     id: 'test',
     ord: [0],
     title: { en: 'test title' },
-    parentId: null,
+    parentId: undefined,
   })
   return session.state
 }
@@ -98,7 +98,7 @@ describe('Page', () => {
           id: 'test',
           ord,
           title: { en: 'Test title' },
-          parentId: null,
+          parentId: undefined,
         })
         expect(section.getDisplayTitle('en')).toBe(expectedDisplayTitle)
       }

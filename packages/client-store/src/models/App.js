@@ -1,4 +1,4 @@
-import { Model, attr, fk } from 'redux-orm'
+import { Model, attr, oneToOne } from 'redux-orm'
 
 import { actionTypes as contentActionTypes } from '../actions/content'
 import { actionTypes as i18nActionTypes } from '../actions/i18n'
@@ -13,10 +13,13 @@ export default class App extends Model {
     return {
       id: attr({ getDefault: () => 0 }),
       contentRoot: attr({ getDefault: () => '' }),
-      currentCourse: fk('Course'),
-      error: attr({ getDefault: () => null }),
-      language: attr({ getDefault: () => null }),
-      message: attr({ getDefault: () => null }),
+      currentCourseId: oneToOne({
+        to: 'Course',
+        as: 'currentCourse',
+      }),
+      error: attr(),
+      language: attr(),
+      message: attr(),
       sidebarVisible: attr({ getDefault: () => false }),
       staticRoot: attr({ getDefault: () => '' }),
     }
@@ -27,7 +30,7 @@ export default class App extends Model {
     if (app) {
       switch (action.type) {
         case contentActionTypes.CLEAR_ERROR:
-          app.set('error', null)
+          app.set('error', undefined)
           break
         case contentActionTypes.LOAD_MANIFEST_FAILURE:
         case contentActionTypes.LOAD_SECTION_FAILURE:
@@ -38,13 +41,13 @@ export default class App extends Model {
           app.update(action.config)
           break
         case contentActionTypes.CHANGE_COURSE:
-          app.set('currentCourse', action.course.id)
+          app.set('currentCourseId', action.course.id)
           break
         case i18nActionTypes.CHANGE_LANGUAGE:
           app.set('language', action.language)
           break
         case uiActionTypes.CLEAR_MESSAGE:
-          app.set('message', null)
+          app.set('message', undefined)
           break
         case uiActionTypes.SHOW_MESSAGE:
           app.set('message', action.data)

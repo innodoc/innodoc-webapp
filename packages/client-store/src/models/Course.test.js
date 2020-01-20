@@ -25,9 +25,14 @@ describe('Course', () => {
         'loadSectionSuccess',
         loadSectionSuccess({ contentId: 'bar' }),
         'bar',
-        null,
+        undefined,
       ],
-      ['loadPageSuccess', loadPageSuccess({ contentId: 'baz' }), null, 'baz'],
+      [
+        'loadPageSuccess',
+        loadPageSuccess({ contentId: 'baz' }),
+        undefined,
+        'baz',
+      ],
     ])('%s', (_, action, currentSectionId, currentPageId) => {
       const course = session.Course.create({
         currentSection: session.Section.create({ id: 'foo', title: 'Foo' }),
@@ -36,8 +41,8 @@ describe('Course', () => {
         title: 'Foo course',
       })
       session.Course.reducer(action, session.Course)
-      expect(course.ref.currentSection).toBe(currentSectionId)
-      expect(course.ref.currentPage).toBe(currentPageId)
+      expect(course.ref.currentSectionId).toBe(currentSectionId)
+      expect(course.ref.currentPageId).toBe(currentPageId)
     })
 
     test('no-op action', () => {
@@ -62,10 +67,10 @@ describe('Course', () => {
         session.Course
       )
       expect(session.Course.first().ref).toEqual({
-        currentSection: null,
+        currentSection: undefined,
         homeLink: '/section/bar',
         languages: ['en'],
-        logo: null,
+        logo: undefined,
         mathJaxOptions: {},
         title: { en: 'foobar' },
         id: 0,
@@ -74,14 +79,14 @@ describe('Course', () => {
 
     test('loadManifestSuccess (w/o homeLink)', () => {
       const action = loadManifestSuccess({
-        content: { ...manifest, home_link: null },
+        content: { ...manifest, home_link: undefined },
       })
       session.Course.reducer(action, session.Course)
       expect(session.Course.first().ref).toEqual({
-        currentSection: null,
+        currentSection: undefined,
         homeLink: '/section/foo',
         languages: ['en'],
-        logo: null,
+        logo: undefined,
         mathJaxOptions: {},
         title: { en: 'foobar' },
         id: 0,

@@ -10,7 +10,7 @@ export default class IndexTermLocation extends Model {
       id: attr(),
       anchorId: attr(),
       indexTermId: fk('IndexTerm', 'locations'),
-      sectionId: fk('Section', 'indexTerms'),
+      sectionId: fk('Section', 'indexTermLocations'),
     }
   }
 }

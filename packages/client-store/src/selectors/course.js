@@ -12,8 +12,8 @@ const getCurrentCourse = createSelector(
   orm,
   appSelectors.getApp,
   (session, app) => {
-    const firstCourse = session.Course.withId(app.currentCourse)
-    return firstCourse ? firstCourse.ref : null
+    const currentCourse = session.Course.withId(app.currentCourseId)
+    return currentCourse ? currentCourse.ref : undefined
   }
 )
 

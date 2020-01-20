@@ -39,7 +39,7 @@ describe('App', () => {
     test('clearError', () => {
       session.App.first().set('error', {})
       session.App.reducer(clearError(), session.App)
-      expect(session.App.first().ref.error).toEqual(null)
+      expect(session.App.first().ref.error).toBeUndefined()
     })
 
     test('setServerConfiguration', () => {
@@ -61,7 +61,7 @@ describe('App', () => {
 
     test('changeCourse', () => {
       session.App.reducer(changeCourse({ id: 17 }), session.App)
-      expect(session.App.first().ref.currentCourse).toEqual(17)
+      expect(session.App.first().ref.currentCourseId).toEqual(17)
     })
 
     test('changeLanguage', () => {
@@ -72,7 +72,7 @@ describe('App', () => {
     test('clearMessage', () => {
       session.App.first().set('message', 'foo')
       session.App.reducer(clearMessage(), session.App)
-      expect(session.App.first().ref.message).toEqual(null)
+      expect(session.App.first().ref.message).toBeUndefined()
     })
 
     test('showMessage', () => {

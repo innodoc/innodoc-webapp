@@ -6,6 +6,7 @@ const dummyCourse = {
   homeLink: '/section/foo',
   languages: ['en'],
   logo: null,
+  mathJaxOptions: {},
   title: { en: ['foobar'] },
 }
 
@@ -13,13 +14,10 @@ const dummyCourse = {
 const dummyState = (course = dummyCourse) => {
   const state = orm.getEmptyState()
   const session = orm.mutableSession(state)
+  const app = session.App.create({})
   if (course) {
-    session.Course.create(course)
+    app.set('currentCourseId', session.Course.create(course).id)
   }
-  session.App.create({
-    id: 0,
-    currentCourse: session.Course.first(),
-  })
   return { orm: state }
 }
 
@@ -37,7 +35,7 @@ describe('courseSelectors', () => {
 
     test("course doesn't exist", () => {
       const state = dummyState(null)
-      expect(courseSelectors.getCurrentCourse(state)).toBe(null)
+      expect(courseSelectors.getCurrentCourse(state)).toBeUndefined()
     })
   })
 })

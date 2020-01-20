@@ -28,7 +28,7 @@ export default class Section extends Model {
       id: currentPath.join('/'),
       ord,
       title: node.title,
-      parentId: path.length ? path.join('/') : null,
+      parentId: path.length ? path.join('/') : undefined,
     })
   }
 

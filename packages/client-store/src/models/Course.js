@@ -1,4 +1,4 @@
-import { Model, attr, fk } from 'redux-orm'
+import { Model, attr, oneToOne } from 'redux-orm'
 
 import { actionTypes as contentActionTypes } from '../actions/content'
 
@@ -10,13 +10,13 @@ export default class Course extends Model {
   static get fields() {
     return {
       id: attr({ getDefault: () => 0 }),
-      currentPage: fk('Page'),
-      currentSection: fk('Section'),
-      homeLink: attr({ getDefault: () => null }),
+      currentPageId: oneToOne({ to: 'Page', as: 'currentPage' }),
+      currentSectionId: oneToOne({ to: 'Section', as: 'currentSection' }),
+      homeLink: attr(),
       languages: attr({ getDefault: () => [] }),
-      logo: attr({ getDefault: () => null }),
-      title: attr({ getDefault: () => null }),
-      mathJaxOptions: attr({ getDefault: () => {} }),
+      logo: attr(),
+      mathJaxOptions: attr({ getDefault: () => ({}) }),
+      title: attr(),
     }
   }
 
@@ -25,10 +25,9 @@ export default class Course extends Model {
       case contentActionTypes.LOAD_MANIFEST_SUCCESS: {
         const { content } = action.data
         CourseModel.create({
-          currentSection: null,
           homeLink: content.home_link || `/section/${content.toc[0].id}`,
           languages: content.languages,
-          logo: content.logo || null,
+          logo: content.logo || undefined,
           mathJaxOptions: content.mathJaxOptions || {},
           title: content.title,
         })
@@ -37,16 +36,20 @@ export default class Course extends Model {
       case contentActionTypes.LOAD_PAGE_SUCCESS: {
         const course = CourseModel.first()
         if (course) {
-          course.set('currentSection', null)
-          course.set('currentPage', action.data.contentId)
+          course.update({
+            currentPageId: action.data.contentId,
+            currentSectionId: undefined,
+          })
         }
         break
       }
       case contentActionTypes.LOAD_SECTION_SUCCESS: {
         const course = CourseModel.first()
         if (course) {
-          course.set('currentPage', null)
-          course.set('currentSection', action.data.contentId)
+          course.update({
+            currentPageId: undefined,
+            currentSectionId: action.data.contentId,
+          })
         }
         break
       }
@@ -54,8 +57,8 @@ export default class Course extends Model {
         const course = CourseModel.first()
         if (course) {
           course.update({
-            currentPage: null,
-            currentSection: null,
+            currentPageId: undefined,
+            currentSectionId: undefined,
           })
         }
         break
