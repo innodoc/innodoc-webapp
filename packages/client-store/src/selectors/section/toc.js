@@ -20,6 +20,8 @@ const getChildren = (session, level, parentId) =>
     .sort((a, b) => a.ord[level] > b.ord[level])
 
 // Create tree structure for the TOC
-const getToc = createSelector(orm, (session) => getChildren(session, 0, null))
+const getToc = createSelector(orm, (session) =>
+  getChildren(session, 0, undefined)
+)
 
 export default getToc

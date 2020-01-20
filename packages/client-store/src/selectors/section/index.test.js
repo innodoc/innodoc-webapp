@@ -9,7 +9,7 @@ const sections = {
     ord: [0],
     title: { en: 'test title' },
     content: { en: 'test content' },
-    parentId: null,
+    parentId: undefined,
   },
   'test/child1': {
     id: 'test/child1',
@@ -48,14 +48,15 @@ jest.mock('..', () => {
     default: {
       getApp: actualAppImport.default.getApp,
     },
-    makeMakeGetContentLink: jest.fn(() => () => {}),
+    makeMakeGetContentLink: jest.fn(),
     selectId: actualAppImport.selectId,
   }
 })
 
-let state
+// let state
+let session
 beforeEach(() => {
-  const session = orm.session(defaultInitialState().orm)
+  session = orm.mutableSession(defaultInitialState().orm)
   const app = session.App.first()
   const course = session.Course.create({
     homeLink: '/section/test',
@@ -64,55 +65,46 @@ beforeEach(() => {
   })
   Object.values(sections).forEach((section) => session.Section.create(section))
   app.set('language', 'en')
-  app.set('currentCourse', course.id)
-  state = { orm: session.state }
+  app.set('currentCourseId', course.id)
 })
 
-const setCurrentSection = (localState, sectionId) => {
-  const session = orm.session(localState.orm)
+const setCurrentSection = (sectionId) =>
   session.Course.first().set('currentSection', sectionId)
-  return { orm: session.state }
-}
+const getState = () => ({ orm: session.state })
 
 describe('sectionSelectors', () => {
-  beforeEach(() => {
-    state = setCurrentSection(state, 'test/child1')
-  })
+  beforeEach(() => setCurrentSection('test/child1'))
 
   test.each([
     ['test/child1/child11', true],
     ['does/not/exist', false],
-  ])('sectionExists: %s', (sectionId, exists) => {
-    expect(sectionSelectors.sectionExists(state, sectionId)).toBe(exists)
-  })
+  ])('sectionExists: %s', (sectionId, exists) =>
+    expect(sectionSelectors.sectionExists(getState(), sectionId)).toBe(exists)
+  )
 
   test.each(['test/child1', 'test/child1/child12'])(
     'getSection: %s',
-    (sectionId) => {
-      expect(sectionSelectors.getSection(state, sectionId)).toEqual(
+    (sectionId) =>
+      expect(sectionSelectors.getSection(getState(), sectionId)).toEqual(
         sections[sectionId]
       )
-    }
   )
 
-  test('getCurrentSection', () => {
-    expect(sectionSelectors.getCurrentSection(state)).toEqual(
+  test('getCurrentSection', () =>
+    expect(sectionSelectors.getCurrentSection(getState())).toEqual(
       sections['test/child1']
-    )
-  })
+    ))
 
-  test('getCurrentSubsections', () => {
-    expect(sectionSelectors.getCurrentSubsections(state)).toEqual([
+  test('getCurrentSubsections', () =>
+    expect(sectionSelectors.getCurrentSubsections(getState())).toEqual([
       sections['test/child1/child11'],
       sections['test/child1/child12'],
-    ])
-  })
+    ]))
 
-  test('getCurrentTitle', () => {
-    expect(sectionSelectors.getCurrentTitle(state)).toEqual(
+  test('getCurrentTitle', () =>
+    expect(sectionSelectors.getCurrentTitle(getState())).toEqual(
       '1.1 test child1 title'
-    )
-  })
+    ))
 })
 
 describe('getBreadcrumbSections', () => {
@@ -134,20 +126,20 @@ describe('getBreadcrumbSections', () => {
       ],
     ],
   ])('%s', (sectionId, crumbs) => {
-    state = setCurrentSection(state, sectionId)
-    expect(sectionSelectors.getBreadcrumbSections(state)).toEqual(crumbs)
+    setCurrentSection(sectionId)
+    expect(sectionSelectors.getBreadcrumbSections(getState())).toEqual(crumbs)
   })
 })
 
 describe('getNextPrevSections', () => {
   test.each([
-    ['test', null, 'test/child1'],
+    ['test', undefined, 'test/child1'],
     ['test/child1', 'test', 'test/child1/child11'],
     ['test/child1/child12', 'test/child1/child11', 'test/child2'],
-    ['test/child2', 'test/child1/child12', null],
+    ['test/child2', 'test/child1/child12', undefined],
   ])('%s', (sectionId, expPrevId, expNextId) => {
-    state = setCurrentSection(state, sectionId)
-    const { prevId, nextId } = sectionSelectors.getNextPrevSections(state)
+    setCurrentSection(sectionId)
+    const { prevId, nextId } = sectionSelectors.getNextPrevSections(getState())
     expect(prevId).toEqual(expPrevId)
     expect(nextId).toEqual(expNextId)
   })
@@ -155,7 +147,7 @@ describe('getNextPrevSections', () => {
 
 describe('getToc', () => {
   test('getToc', () => {
-    const toc = sectionSelectors.getToc(state)
+    const toc = sectionSelectors.getToc(getState())
     expect(toc[0].id).toEqual('test')
     expect(toc[0].children[0].id).toEqual('test/child1')
     expect(toc[0].children[0].children[0].id).toEqual('test/child1/child11')
@@ -166,7 +158,7 @@ describe('getToc', () => {
 
 describe('makeGetSectionLink', () => {
   it('calls makeMakeGetContentLink', () => {
-    sectionSelectors.makeGetSectionLink()
+    expect(makeMakeGetContentLink).toBeCalledTimes(1)
     expect(makeMakeGetContentLink).toBeCalledWith('Section')
   })
 })

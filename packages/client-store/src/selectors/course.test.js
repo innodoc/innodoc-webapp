@@ -1,40 +1,37 @@
 import orm from '../orm'
 import courseSelectors from './course'
 
-const dummyCourse = {
+const courseData = {
   id: 0,
   homeLink: '/section/foo',
   languages: ['en'],
-  logo: null,
+  logo: undefined,
   mathJaxOptions: {},
   title: { en: ['foobar'] },
 }
 
-// Create/Mock state
-const dummyState = (course = dummyCourse) => {
-  const state = orm.getEmptyState()
-  const session = orm.mutableSession(state)
-  const app = session.App.create({})
-  if (course) {
-    app.set('currentCourseId', session.Course.create(course).id)
-  }
-  return { orm: state }
-}
-
 describe('courseSelectors', () => {
-  test('getCourses', () => {
-    const state = dummyState()
-    expect(courseSelectors.getCourses(state)).toEqual([dummyCourse])
+  let state
+  let app
+
+  beforeEach(() => {
+    state = orm.getEmptyState()
+    const session = orm.mutableSession(state)
+    app = session.App.create({})
+    const course = session.Course.create(courseData)
+    app.set('currentCourseId', course.id)
+    state = { orm: state }
   })
 
+  test('getCourses', () =>
+    expect(courseSelectors.getCourses(state)).toEqual([courseData]))
+
   describe('getCurrentCourse', () => {
-    test('course exists', () => {
-      const state = dummyState()
-      expect(courseSelectors.getCurrentCourse(state)).toEqual(dummyCourse)
-    })
+    test('course exists', () =>
+      expect(courseSelectors.getCurrentCourse(state)).toEqual(courseData))
 
     test("course doesn't exist", () => {
-      const state = dummyState(null)
+      app.set('currentCourseId', undefined)
       expect(courseSelectors.getCurrentCourse(state)).toBeUndefined()
     })
   })

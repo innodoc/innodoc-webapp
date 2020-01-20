@@ -10,7 +10,7 @@ jest.mock('.', () => {
     default: {
       getApp: actualAppImport.default.getApp,
     },
-    makeMakeGetContentLink: jest.fn(() => () => {}),
+    makeMakeGetContentLink: jest.fn(),
     selectId: actualAppImport.selectId,
   }
 })
@@ -51,8 +51,9 @@ const pages = {
 }
 
 let state
+let session
 beforeEach(() => {
-  const session = orm.session(defaultInitialState().orm)
+  session = orm.mutableSession(defaultInitialState().orm)
   const app = session.App.first()
   const course = session.Course.create({
     languages: ['en'],
@@ -60,49 +61,41 @@ beforeEach(() => {
   })
   Object.values(pages).forEach((page) => session.Page.create(page))
   app.set('language', 'en')
-  app.set('currentCourse', course.id)
+  app.set('currentCourseId', course.id)
   state = { orm: session.state }
 })
 
-const setCurrentpage = (localState, pageId) => {
-  const session = orm.session(localState.orm)
-  session.Course.first().set('currentPage', pageId)
-  return { orm: session.state }
-}
-
 describe('pageSelectors', () => {
-  beforeEach(() => {
-    state = setCurrentpage(state, 'bar')
-  })
-
   test.each([
     ['foo', true],
+    ['baz', true],
     ['does-not-exist', false],
-  ])('sectionExists: %s', (pageId, exists) => {
+  ])('sectionExists: %s (%s)', (pageId, exists) =>
     expect(pageSelectors.pageExists(state, pageId)).toBe(exists)
-  })
+  )
 
-  test.each([[pages.bar], [null]])('getCurrentPage (%s)', (currentPage) => {
-    state = setCurrentpage(state, currentPage ? currentPage.id : undefined)
+  test.each([
+    ['foo', pages.foo],
+    ['bar', pages.bar],
+    [undefined, undefined],
+  ])('getCurrentPage (%s)', (pageId, currentPage) => {
+    session.Course.first().set('currentPageId', pageId)
     expect(pageSelectors.getCurrentPage(state)).toEqual(currentPage)
   })
 
-  test('getPage', () => {
-    expect(pageSelectors.getPage(state, 'foo')).toEqual(pages.foo)
-  })
+  test('getPage', () =>
+    expect(pageSelectors.getPage(state, 'foo')).toEqual(pages.foo))
 
-  test('getFooterPages', () => {
-    expect(pageSelectors.getFooterPages(state)).toEqual([pages.bar, pages.baz])
-  })
+  test('getFooterPages', () =>
+    expect(pageSelectors.getFooterPages(state)).toEqual([pages.bar, pages.baz]))
 
-  test('getNavPages', () => {
-    expect(pageSelectors.getNavPages(state)).toEqual([pages.qux, pages.foo])
-  })
+  test('getNavPages', () =>
+    expect(pageSelectors.getNavPages(state)).toEqual([pages.qux, pages.foo]))
 })
 
 describe('makeGetPageLink', () => {
   it('calls makeMakeGetContentLink', () => {
-    pageSelectors.makeGetPageLink()
+    expect(makeMakeGetContentLink).toBeCalledTimes(1)
     expect(makeMakeGetContentLink).toBeCalledWith('Page')
   })
 })

@@ -26,9 +26,9 @@ const getCurrentSection = createSelector(
   (session, course) => {
     if (course) {
       const section = session.Section.withId(course.currentSection)
-      return section ? section.ref : null
+      return section ? section.ref : undefined
     }
-    return null
+    return undefined
   }
 )
 
@@ -50,7 +50,7 @@ const getCurrentTitle = createSelector(
   courseSelectors.getCurrentCourse,
   (session, { language }, course) => {
     const section = session.Section.withId(course.currentSection)
-    return section ? section.getDisplayTitle(language) : null
+    return section ? section.getDisplayTitle(language) : undefined
   }
 )
 

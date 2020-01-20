@@ -15,10 +15,10 @@ const getCurrentPage = createSelector(
   courseSelectors.getCurrentCourse,
   (session, course) => {
     if (course) {
-      const page = course ? session.Page.withId(course.currentPage) : null
-      return page ? page.ref : null
+      const page = session.Page.withId(course.currentPageId)
+      return page ? page.ref : undefined
     }
-    return null
+    return undefined
   }
 )
 

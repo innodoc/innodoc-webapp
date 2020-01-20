@@ -10,9 +10,9 @@ const makeGetQuestion = () =>
     return question
       ? question.ref
       : {
-          answer: null,
-          correct: null,
-          id: null,
+          answer: undefined,
+          correct: undefined,
+          id: undefined,
         }
   })
 

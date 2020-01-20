@@ -32,14 +32,10 @@ beforeEach(() => {
 })
 
 describe('appSelectors', () => {
-  test('getApp', () => {
-    expect(appSelectors.getApp(state)).toEqual(app)
-  })
+  test('getApp', () => expect(appSelectors.getApp(state)).toEqual(app))
 })
 
-test('selectId', () => {
-  expect(selectId(state, 12)).toBe(12)
-})
+test('selectId', () => expect(selectId(state, 12)).toBe(12))
 
 describe.each([
   ['Section', 'foo/bar', '1 Foo bar'],
@@ -52,30 +48,23 @@ describe.each([
     getContentLink = makeGetContentLink()
   })
 
-  it('returns function that returns a function', () => {
-    expect(makeGetContentLink).toBeInstanceOf(Function)
-    expect(getContentLink).toBeInstanceOf(Function)
+  it('returns content data w/o hash', () => {
+    const contentLink = getContentLink(state, contentId)
+    expect(contentLink.contentId).toBe(contentId)
+    expect(contentLink.title).toBe(title)
+    expect(contentLink.hash).toBeUndefined()
   })
 
-  describe('returns link data', () => {
-    it('returns content data w/o hash', () => {
-      const contentLink = getContentLink(state, contentId)
-      expect(contentLink.contentId).toBe(contentId)
-      expect(contentLink.title).toBe(title)
-      expect(contentLink.hash).toBeUndefined()
-    })
+  it('returns content data and hash', () => {
+    const contentLink = getContentLink(state, `${contentId}#baz`)
+    expect(contentLink.contentId).toBe(contentId)
+    expect(contentLink.title).toBe(title)
+    expect(contentLink.hash).toBe('baz')
+  })
 
-    it('returns content data and hash', () => {
-      const contentLink = getContentLink(state, `${contentId}#baz`)
-      expect(contentLink.contentId).toBe(contentId)
-      expect(contentLink.title).toBe(title)
-      expect(contentLink.hash).toBe('baz')
-    })
-
-    it('notices unknown content', () => {
-      const contentLink = getContentLink(state, 'does/not/exist')
-      expect(contentLink.contentId).toBe('does/not/exist')
-      expect(contentLink.title).toMatch('UNKNOWN')
-    })
+  it('notices unknown content', () => {
+    const contentLink = getContentLink(state, 'does/not/exist')
+    expect(contentLink.contentId).toBe('does/not/exist')
+    expect(contentLink.title).toMatch('UNKNOWN')
   })
 })

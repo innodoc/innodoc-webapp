@@ -36,9 +36,11 @@ const getNextPrevSections = createSelector(
       (section) => section.id === course.currentSection
     )
     return {
-      prevId: idx > 0 ? sortedSections[idx - 1].id : null,
+      prevId: idx > 0 ? sortedSections[idx - 1].id : undefined,
       nextId:
-        idx < sortedSections.length - 1 ? sortedSections[idx + 1].id : null,
+        idx < sortedSections.length - 1
+          ? sortedSections[idx + 1].id
+          : undefined,
     }
   }
 )
