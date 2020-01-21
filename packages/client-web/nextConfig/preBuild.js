@@ -2,7 +2,7 @@
 
 /**
  * 1) Extract Ant Design default variables to JSON file.
- * 2) Extract and return overridden variables from antd-theme.sss.
+ * 2) Extract overridden variables from antd-theme.sss and output as JSON to stdout.
  */
 
 const fs = require('fs')
@@ -11,9 +11,7 @@ const path = require('path')
 const less = require('less')
 const LessPluginVariablesOutput = require('less-plugin-variables-output')
 const postcss = require('postcss')
-const sugarss = require('sugarss')
-
-const getPostcssConfig = require('./postcss.config')
+const postcssrc = require('postcss-load-config')
 
 // Antd default vars
 const antdThemeFilename = path.resolve(
@@ -60,32 +58,35 @@ const antdVarsOverrideFilename = path.resolve(
   'antd-theme.sss'
 )
 
-const postcssConfig = getPostcssConfig({
-  file: { extname: path.extname(antdVarsOverrideFilename) },
-})
-
-// Don't use postcss-import-json plugin so only overridden variables are exported
-const plugins = postcssConfig.plugins.filter(
-  (plugin) => plugin.postcssPlugin !== 'postcss-import-json'
-)
-
 const generateVarsForAntd = () =>
-  postcss(plugins)
-    .process(fs.readFileSync(antdVarsOverrideFilename).toString(), {
-      from: antdVarsOverrideFilename,
-      parser: sugarss.parse,
-    })
-    .then((result) => result.root.variables)
-    .catch((err) => {
-      console.error('Failed to generate variables for Ant Design!')
-      console.log(err)
-      process.exit(-1)
-    })
+  postcssrc(
+    {
+      // Don't use postcss-import-json so only overridden variables are exported
+      disablePostcssImportJson: true,
+      file: { extname: path.extname(antdVarsOverrideFilename) },
+    },
+    path.resolve(__dirname, 'postcss.config.js')
+  ).then(({ plugins, options }) =>
+    postcss(plugins)
+      .process(fs.readFileSync(antdVarsOverrideFilename).toString(), {
+        ...options,
+        from: antdVarsOverrideFilename,
+      })
+      .then((result) => result.root.variables)
+      .catch((err) => {
+        console.error('Failed to generate variables for Ant Design!')
+        console.log(err)
+        process.exit(-1)
+      })
+  )
 
 const main = async () => {
-  await extractAntdDefaultVariables()
-  const vars = await generateVarsForAntd()
-  console.log(JSON.stringify(vars))
+  try {
+    await extractAntdDefaultVariables()
+    console.log(JSON.stringify(await generateVarsForAntd()))
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 main()

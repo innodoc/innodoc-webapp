@@ -1,23 +1,11 @@
-const postcssImport = require('postcss-import')
-const precss = require('precss')
-const postcssColorFunction = require('postcss-color-function')
-const postcssMixins = require('postcss-mixins')
-const cssnano = require('cssnano')
-const postcssImportJson = require('./postcss-import-json')
-
-const plugins = [
-  postcssImport(),
-  postcssImportJson(),
-  postcssMixins(),
-  precss(),
-  postcssColorFunction(),
-]
-
-if (process.env.NODE_ENV === 'production') {
-  plugins.push(cssnano())
-}
-
-module.exports = ({ file: { extname } }) => ({
+module.exports = ({ disablePostcssImportJson, env, file: { extname } }) => ({
   parser: extname === '.sss' ? 'sugarss' : undefined,
-  plugins,
+  plugins: {
+    'postcss-import': {},
+    './postcss-import-json': disablePostcssImportJson ? false : {},
+    'postcss-mixins': {},
+    precss: {},
+    'postcss-color-function': {},
+    cssnano: env === 'production' ? {} : false,
+  },
 })
