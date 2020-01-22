@@ -1,6 +1,6 @@
 const path = require('path')
 
-module.exports = ({ disablePostcssImportJson, env, file: { extname } }) => ({
+module.exports = ({ disablePostcssImportJson, file: { extname } }) => ({
   parser: extname === '.sss' ? 'sugarss' : undefined,
   plugins: {
     'postcss-import': {},
@@ -10,6 +10,5 @@ module.exports = ({ disablePostcssImportJson, env, file: { extname } }) => ({
     'postcss-mixins': {},
     precss: {},
     'postcss-color-function': {},
-    cssnano: env === 'production' ? {} : false,
   },
 })
