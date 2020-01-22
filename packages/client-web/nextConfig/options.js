@@ -6,7 +6,14 @@ const webpack = require('./webpack')
 
 // Extract antd default vars to JSON file and prepare overridden vars
 const prepareScript = path.resolve(__dirname, 'preBuild.js')
-const antdVars = JSON.parse(execSync(`node ${prepareScript}`).toString())
+const output = execSync(`node ${prepareScript}`).toString()
+let antdVars
+try {
+  antdVars = JSON.parse(output)
+} catch (e) {
+  // eslint-disable-next-line no-console
+  console.error(`${e}\n${output}`)
+}
 
 module.exports = {
   // Only use .js (not .jsx)
