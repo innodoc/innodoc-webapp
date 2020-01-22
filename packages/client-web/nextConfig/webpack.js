@@ -4,9 +4,21 @@ const Dotenv = require('dotenv-webpack')
 // Babel rootMode for monorepo support
 const rootMode = 'upward'
 
-module.exports = (prevConfig) => {
-  const config = { ...prevConfig }
+const printDebugInfo = (config, options) => {
+  // eslint-disable-next-line no-extend-native
+  Object.defineProperty(RegExp.prototype, 'toJSON', {
+    value: RegExp.prototype.toString,
+  })
+  // eslint-disable-next-line no-console
+  console.log(
+    `-------------------------- webpack config (isServer=${options.isServer})\n`,
+    JSON.stringify(config.module.rules, null, 2),
+    '-------------------------- options\n',
+    JSON.stringify(options, null, 2)
+  )
+}
 
+const addDotenv = (config) => {
   const dotEnvFile = path.resolve(__dirname, '..', '..', '..', '.env')
   config.plugins.push(
     new Dotenv({
@@ -15,8 +27,9 @@ module.exports = (prevConfig) => {
       systemvars: true,
     })
   )
+}
 
-  // SVG icons
+const addSvgIcons = (config) => {
   config.module.rules.push({
     test: /\.svg$/,
     use: [
@@ -33,63 +46,61 @@ module.exports = (prevConfig) => {
       },
     ],
   })
+}
 
-  // Do not include '*.test.js' files in the build
+const ignoreTests = (config) => {
   config.module.rules.push({
     test: /\.test\.js$/,
     loader: 'ignore-loader',
   })
+}
 
-  for (let i = 0; i < config.module.rules.length; i += 1) {
-    const rule = config.module.rules[i]
+const setRootModeUpward = {
+  test: (r) => r.use && r.use.loader && r.use.loader === 'next-babel-loader',
+  modify: (rOrig) => {
+    const r = { ...rOrig }
+    r.use.options.rootMode = rootMode
+    return r
+  },
+}
 
-    // Disable CSS modules for less
-    if (
-      Array.isArray(rule.use) &&
-      rule.use.some((loader) => loader.loader === 'less-loader')
-    ) {
-      for (let j = 0; j < rule.use.length; j += 1) {
-        const use = rule.use[j]
-        if (typeof use === 'object' && use.loader.startsWith('css-loader')) {
-          use.options.modules = false
-        }
+const disableCssModulesForLess = {
+  test: (r) =>
+    Array.isArray(r.use) &&
+    r.use.some((loader) => loader.loader === 'less-loader'),
+  modify: (rOrig) => {
+    const r = { ...rOrig }
+    for (let i = 0; i < r.use.length; i += 1) {
+      const use = r.use[i]
+      if (typeof use === 'object' && use.loader.startsWith('css-loader')) {
+        use.options.modules = false
       }
     }
+    return r
+  },
+}
 
-    // Use .sss extension for css-loader
-    if (!rule.oneOf && rule.test.source.match('css')) {
-      rule.test = /\.sss$/
-    }
+const ruleModifiers = [setRootModeUpward, disableCssModulesForLess]
 
-    // Add rootMode to next-babel-loader. This is important so sub-package babel
-    // is picking up the root babel.config.js.
-    if (
-      rule.use &&
-      rule.use.loader &&
-      rule.use.loader === 'next-babel-loader'
-    ) {
-      rule.use.options.rootMode = rootMode
-    }
+module.exports = (prevConfig, options) => {
+  const config = { ...prevConfig }
 
-    // Disable CSS minimize (performed by cssnano)
-    if (Array.isArray(rule.use)) {
-      for (let j = 0; j < rule.use.length; j += 1) {
-        const use = rule.use[j]
-        if (typeof use === 'object' && use.loader.startsWith('css-loader')) {
-          use.options.minimize = false
-        }
+  // Apply rule modifiers
+  for (let i = 0; i < config.module.rules.length; i += 1) {
+    for (let j = 0; j < ruleModifiers.length; j += 1) {
+      const { test, modify } = ruleModifiers[j]
+      if (test(config.module.rules[i])) {
+        config.module.rules[i] = modify(config.module.rules[i])
       }
     }
   }
 
-  // Debug print webpack config
+  addDotenv(config)
+  addSvgIcons(config)
+  ignoreTests(config)
+
   if (process.env.PRINT_WEBPACK_CONFIG) {
-    /* eslint-disable-next-line no-extend-native */
-    Object.defineProperty(RegExp.prototype, 'toJSON', {
-      value: RegExp.prototype.toString,
-    })
-    /* eslint-disable-next-line no-console */
-    console.log(JSON.stringify(config.module.rules, null, 2))
+    printDebugInfo(config, options)
   }
 
   return config
