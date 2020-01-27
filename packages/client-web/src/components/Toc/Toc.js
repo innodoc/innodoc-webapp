@@ -13,13 +13,13 @@ import css from './style.sss'
 const Toc = ({ expandAll }) => {
   const course = useSelector(courseSelectors.getCurrentCourse)
   const toc = useSelector(sectionSelectors.getToc)
-  const currentSection = course ? course.currentSection : undefined
+  const currentSectionId = course ? course.currentSectionId : undefined
   const [expandedKeys, setExpandedKeys] = useState(
-    currentSection ? [currentSection] : []
+    currentSectionId ? [currentSectionId] : []
   )
-  useAutoExpand(currentSection, expandAll, expandedKeys, setExpandedKeys)
+  useAutoExpand(currentSectionId, expandAll, expandedKeys, setExpandedKeys)
 
-  const treeNodes = toc.map((s) => renderTreeNode(s, currentSection))
+  const treeNodes = toc.map((s) => renderTreeNode(s, currentSectionId))
   const tree = expandAll ? (
     <Tree className={css.disableExpand} defaultExpandAll>
       {treeNodes}

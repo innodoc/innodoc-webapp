@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
 
 const useAutoExpand = (
-  currentSection,
+  currentSectionId,
   expandAll,
   expandedKeys,
   setExpandedKeys
 ) =>
   useEffect(() => {
-    if (!expandAll && currentSection) {
+    if (!expandAll && currentSectionId) {
       // current key and all parent keys
-      const allKeys = currentSection
+      const allKeys = currentSectionId
         .split('/')
         .reduce(
           (acc, id, idx) => [...acc, idx > 0 ? `${acc[idx - 1]}/${id}` : id],
@@ -28,6 +28,6 @@ const useAutoExpand = (
         setExpandedKeys(newExpandedKeys)
       }
     }
-  }, [currentSection, expandAll, expandedKeys, setExpandedKeys])
+  }, [currentSectionId, expandAll, expandedKeys, setExpandedKeys])
 
 export default useAutoExpand

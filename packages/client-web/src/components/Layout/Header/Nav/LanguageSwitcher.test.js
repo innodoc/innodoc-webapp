@@ -5,7 +5,7 @@ import { Menu } from 'antd'
 import LanguageSwitcher from './LanguageSwitcher'
 
 const mockCourse = {
-  currentSection: 'foo',
+  currentSectionId: 'foo',
   homeLink: '/section/foo',
   languages: ['de', 'en'],
   title: { en: ['Foobar'] },

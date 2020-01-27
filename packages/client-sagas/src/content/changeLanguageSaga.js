@@ -11,10 +11,10 @@ import courseSelectors from '@innodoc/client-store/src/selectors/course'
 export default function* changeLanguageSaga({ prevLanguage }) {
   const course = yield select(courseSelectors.getCurrentCourse)
   if (course) {
-    if (course.currentSection) {
-      yield put(loadSection(course.currentSection, prevLanguage))
-    } else if (course.currentPage) {
-      yield put(loadPage(course.currentPage, prevLanguage))
+    if (course.currentSectionId) {
+      yield put(loadSection(course.currentSectionId, prevLanguage))
+    } else if (course.currentPageId) {
+      yield put(loadPage(course.currentPageId, prevLanguage))
     }
   }
   yield put(loadFragment('_footer_a'))

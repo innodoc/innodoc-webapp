@@ -5,8 +5,8 @@ import useAutoExpand from './useAutoExpand'
 
 describe('useAutoExpand', () => {
   const setExpandedKeys = jest.fn()
-  const makeComp = (currentSection, expandAll) => ({ expandedKeys = [] }) => {
-    useAutoExpand(currentSection, expandAll, expandedKeys, setExpandedKeys)
+  const makeComp = (currentSectionId, expandAll) => ({ expandedKeys = [] }) => {
+    useAutoExpand(currentSectionId, expandAll, expandedKeys, setExpandedKeys)
     return null
   }
 
@@ -15,15 +15,15 @@ describe('useAutoExpand', () => {
   })
 
   it.each([
-    ['expandAll=true', {}, true],
-    ['w/o currentSection', undefined, false],
-  ])('should not setExpandedKeys with %s', (_, currentSection, expandAll) => {
-    const Comp = makeComp(currentSection, expandAll)
+    ['expandAll=true', 'foo/bar', true],
+    ['w/o currentSectionId', undefined, false],
+  ])('should not setExpandedKeys with %s', (_, currentSectionId, expandAll) => {
+    const Comp = makeComp(currentSectionId, expandAll)
     mount(<Comp />)
     expect(setExpandedKeys).not.toBeCalled()
   })
 
-  it('should add currentSection and all parents to expandedKeys', () => {
+  it('should add currentSectionId and all parents IDs to expandedKeys', () => {
     const Comp = makeComp('foo/bar/baz/qux', false)
     mount(<Comp />)
     expect(setExpandedKeys).toBeCalledTimes(1)

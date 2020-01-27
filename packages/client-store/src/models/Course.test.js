@@ -67,7 +67,7 @@ describe('Course', () => {
         session.Course
       )
       expect(session.Course.first().ref).toEqual({
-        currentSection: undefined,
+        currentSectionId: undefined,
         homeLink: '/section/bar',
         languages: ['en'],
         logo: undefined,
@@ -83,7 +83,7 @@ describe('Course', () => {
       })
       session.Course.reducer(action, session.Course)
       expect(session.Course.first().ref).toEqual({
-        currentSection: undefined,
+        currentSectionId: undefined,
         homeLink: '/section/foo',
         languages: ['en'],
         logo: undefined,

@@ -20,7 +20,7 @@ jest.mock('react-redux', () => ({
 }))
 
 const course = {
-  currentSection: null,
+  currentSectionId: null,
   homeLink: '/section/section-1',
   languages: ['en'],
   title: { en: 'Foobar' },
@@ -92,7 +92,7 @@ describe('<Toc />', () => {
   it('expands current section', () => {
     mockCurrentCourse = {
       ...course,
-      currentSection: 'section-1/section-1-1/section-1-1-1',
+      currentSectionId: 'section-1/section-1-1/section-1-1-1',
     }
     const wrapper = shallow(<Toc />)
     expect(wrapper.find(Tree.TreeNode).filter('.active')).toHaveLength(1)

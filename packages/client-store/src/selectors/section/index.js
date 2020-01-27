@@ -25,7 +25,7 @@ const getCurrentSection = createSelector(
   courseSelectors.getCurrentCourse,
   (session, course) => {
     if (course) {
-      const section = session.Section.withId(course.currentSection)
+      const section = session.Section.withId(course.currentSectionId)
       return section ? section.ref : undefined
     }
     return undefined
@@ -37,9 +37,9 @@ const getCurrentSubsections = createSelector(
   orm,
   courseSelectors.getCurrentCourse,
   (session, course) =>
-    course.currentSection
+    course.currentSectionId
       ? session.Section.all()
-          .filter((section) => section.parentId === course.currentSection)
+          .filter((section) => section.parentId === course.currentSectionId)
           .toRefArray()
       : []
 )
@@ -49,7 +49,7 @@ const getCurrentTitle = createSelector(
   appSelectors.getApp,
   courseSelectors.getCurrentCourse,
   (session, { language }, course) => {
-    const section = session.Section.withId(course.currentSection)
+    const section = session.Section.withId(course.currentSectionId)
     return section ? section.getDisplayTitle(language) : undefined
   }
 )

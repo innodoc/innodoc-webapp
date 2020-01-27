@@ -15,8 +15,8 @@ const getBreadcrumbSections = createSelector(
   courseSelectors.getCurrentCourse,
   appSelectors.getApp,
   (session, course, { language }) =>
-    course.currentSection
-      ? course.currentSection
+    course.currentSectionId
+      ? course.currentSectionId
           // Calculate array of parent sections, e.g.: current='a/b/c' => ['a', 'a/b', 'a/b/c']
           .split('/')
           .reduce(

@@ -69,7 +69,7 @@ beforeEach(() => {
 })
 
 const setCurrentSection = (sectionId) =>
-  session.Course.first().set('currentSection', sectionId)
+  session.Course.first().set('currentSectionId', sectionId)
 const getState = () => ({ orm: session.state })
 
 describe('sectionSelectors', () => {

@@ -31,8 +31,8 @@ describe('<TreeNodes />', () => {
   it.each([
     ['with', 'section-1/section-1-1'],
     ['w/o', null],
-  ])('should render tree of nodes %s active section', (_, currentSection) => {
-    const wrapper = renderTreeNodeHelper(section, currentSection)
+  ])('should render tree of nodes %s active section', (_, currentSectionId) => {
+    const wrapper = renderTreeNodeHelper(section, currentSectionId)
     expect(wrapper.find(Tree.TreeNode)).toHaveLength(3)
     expect(wrapper.key()).toBe('section-1')
     expect(wrapper.prop('className')).toBeFalsy()
@@ -40,7 +40,7 @@ describe('<TreeNodes />', () => {
     expect(wrapper.children()).toHaveLength(1)
     const section11 = wrapper.children().first()
     expect(section11.key()).toBe('section-1/section-1-1')
-    if (currentSection) {
+    if (currentSectionId) {
       expect(section11.prop('className')).toBe(css.active)
       expect(section11.prop('title').type.name).toBe('ActiveSectionLabel')
     } else {

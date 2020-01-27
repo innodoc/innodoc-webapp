@@ -17,7 +17,7 @@ describe('changeLanguageSaga', () => {
       .provide([
         [
           select(courseSelectors.getCurrentCourse),
-          { id: 0, currentSection: 'foo' },
+          { id: 0, currentSectionId: 'foo' },
         ],
       ])
       .put(loadSection('foo', 'fr'))
@@ -28,7 +28,7 @@ describe('changeLanguageSaga', () => {
       .provide([
         [
           select(courseSelectors.getCurrentCourse),
-          { id: 0, currentPage: 'bar' },
+          { id: 0, currentPageId: 'bar' },
         ],
       ])
       .put(loadPage('bar', 'fr'))
