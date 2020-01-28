@@ -1,7 +1,6 @@
 const path = require('path')
 const { execSync } = require('child_process')
 
-const nodeModulesEs = require('./nodeModulesEs')
 const webpack = require('./webpack')
 
 // Extract antd default vars to JSON file and prepare overridden vars
@@ -32,13 +31,5 @@ module.exports = {
     importLoaders: 1,
     localIdentName: '[local]___[hash:base64:5]',
   },
-  transpileModules: [
-    // Monorepo modules
-    '@innodoc/client-misc',
-    '@innodoc/client-sagas',
-    '@innodoc/client-store',
-    // ES6 node modules
-    ...nodeModulesEs,
-  ],
   webpack,
 }

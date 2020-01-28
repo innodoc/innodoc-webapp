@@ -8153,7 +8153,7 @@ nerdamer@^1.1.2:
   resolved "https://registry.yarnpkg.com/nerdamer/-/nerdamer-1.1.2.tgz#e5c2da6d25b9648c50e7d94193ad4ed503d39a88"
   integrity sha512-fSgBJpy+fu/YwwvYJcC1qjhBZsJVoXZd6yokIDvlnPTAHms/e1xF9snuqaNA6BnqDZ9YSsxYFYAT9u8ptCGyQA==
 
-next-i18next@^4.0.0:
+next-i18next@^4.0.0, next-i18next@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/next-i18next/-/next-i18next-4.1.0.tgz#dcb5afba1254551b5ced34ef2e40b38203babdb6"
   integrity sha512-i02CxQdLzUg1ny3FNFZ0QXoBu8Yn5SkNt1lctcUYUQNWw/xBGfN+WhuDAM8Vcifhb5bAcJeo3nX7ELMG2PyhBw==
@@ -8171,7 +8171,7 @@ next-i18next@^4.0.0:
     react-i18next "^11.0.0"
     url "^0.11.0"
 
-next-redux-saga@^4.0.2:
+next-redux-saga@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/next-redux-saga/-/next-redux-saga-4.1.2.tgz#adf65cd694deac2514676767d3b733862297db66"
   integrity sha512-UEI/8bRObquIpHeHX1RuqOFBe2zhI2gTHLijBLiinOZrCbir18B4/lJpymrEoHHpel0iiZEwV4R6jeUWYv+Avw==
@@ -8199,12 +8199,15 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-next-transpile-modules@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/next-transpile-modules/-/next-transpile-modules-2.3.1.tgz#8977c070912fbc3e927c662431fc4e91ae335b43"
-  integrity sha512-euNOBAk/CXZA6binwL47+QpcxAmK1pzH2zjF7XnRN55f2iuN/ecpUw5p3x4bikFu0yDPtSLS92nv9fcgcCo0vg==
+next-transpile-modules@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/next-transpile-modules/-/next-transpile-modules-3.0.2.tgz#b289698d453bb7346fd768da171b53a740bfe436"
+  integrity sha512-w3WsyxvkJ3ws16InHwXhlDaOyG6Peo4co9U2sVBMePwEDo9r3SsbzX7p43sLUTYbpuA2t9iwJoCXkj/4BuD3Qw==
+  dependencies:
+    micromatch "^4.0.2"
+    slash "^3.0.0"
 
-next@^9.2.0:
+next@^9.2.0, next@^9.2.1:
   version "9.2.1"
   resolved "https://registry.yarnpkg.com/next/-/next-9.2.1.tgz#5275adfdeffc85b4a4b113466581a326390940c5"
   integrity sha512-oI68lEmBLf9Z/R81wRFbziD9v/2quPdC3nRP+dTgOYcCR9F3ylbnB+D2BKYqBCLaGNXKQDt4FuVtZLYBAea6Gw==
