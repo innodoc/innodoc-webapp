@@ -4,7 +4,7 @@ describe('Media query', () => {
     await page.setViewport({ width: 400, height: 600 })
   })
 
-  it('it should toggle drawer menu', async () => {
+  it('should toggle drawer menu', async () => {
     expect.assertions(5)
     await expect(page).not.toMatchElement('.ant-drawer')
     await expect(page).toClick('[class*=mobileMenuButton]')
@@ -15,8 +15,9 @@ describe('Media query', () => {
     await expect(drawer).toClick('.ant-drawer-close')
     await page.waitFor(500)
     expect(
-      await page.$eval('.ant-drawer', (elem) =>
-        window.getComputedStyle(elem).getPropertyValue('width')
+      await page.$eval(
+        '.ant-drawer',
+        (elem) => window.getComputedStyle(elem).width
       )
     ).toBe('0px')
   })
@@ -32,11 +33,11 @@ describe('Media query', () => {
     it('should hide on wide viewport', async () => {
       expect.assertions(1)
       await page.setViewport({ width: 800, height: 600 })
-      expect(
-        await page.$eval('[class*=mobileMenuButton]', (elem) =>
-          window.getComputedStyle(elem).getPropertyValue('display')
-        )
-      ).toBe('none')
+      const val = await page.$eval(
+        '[class*=mobileMenuButton]',
+        (elem) => window.getComputedStyle(elem).display
+      )
+      expect(val).toBe('none')
     })
   })
 })
