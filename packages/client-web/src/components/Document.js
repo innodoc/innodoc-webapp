@@ -1,8 +1,10 @@
 // this is only rendered server-side
 
 import React from 'react'
-import Document, { Head, Main, NextScript } from 'next/document'
+import Document, { Main, NextScript } from 'next/document'
 import { lngFromReq } from 'next-i18next/dist/commonjs/utils'
+
+import Head from './Head'
 
 export default class InnodocDocument extends Document {
   static async getInitialProps(ctx) {
