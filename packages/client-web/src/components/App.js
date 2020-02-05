@@ -82,7 +82,11 @@ class InnoDocApp extends App {
     const defaultMathJaxOptions = {
       chtml: { fontURL: DEFAULT_MATHJAX_FONT_URL },
     }
-    const mathJaxOptions = insert(defaultMathJaxOptions, courseMathJaxOptions)
+    const mathJaxOptions = insert(
+      defaultMathJaxOptions,
+      courseMathJaxOptions,
+      false
+    )
 
     // page props
     const pageProps = Component.getInitialProps

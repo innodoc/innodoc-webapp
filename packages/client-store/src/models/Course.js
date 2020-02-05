@@ -28,7 +28,7 @@ export default class Course extends Model {
           homeLink: content.home_link || `/section/${content.toc[0].id}`,
           languages: content.languages,
           logo: content.logo || undefined,
-          mathJaxOptions: content.mathJaxOptions || {},
+          mathJaxOptions: content.mathjax || {},
           title: content.title,
         })
         break
