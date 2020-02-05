@@ -29,7 +29,7 @@
     "@innodoc/client-misc": "*",
     "@innodoc/client-sagas": "*",
     "@innodoc/client-store": "*",
-    "@innodoc/react-mathjax-node": "^0.0.3",
+    "@innodoc/react-mathjax-node": "^0.0.4",
     "@svgr/webpack": "^5.1.0",
     "@zeit/next-bundle-analyzer": "^0.1.2",
     "antd": "^3.26.7",
