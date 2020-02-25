@@ -52,7 +52,7 @@ class InnoDocApp extends App {
   static async getInitialProps({ Component, ctx }) {
     if (ctx.req && ctx.res) {
       // ctx.req/ctx.res not present when statically exported
-      // set initial content URLs (passed from server.js/app configuration)
+      // set initial content URLs (passed from server/app configuration)
       const {
         contentRoot,
         staticRoot,

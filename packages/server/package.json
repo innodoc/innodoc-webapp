@@ -14,11 +14,11 @@
     "directory": "packages/server"
   },
   "license": "GPL-3.0-or-later",
-  "main": "src/server.js",
+  "main": "src/index.js",
   "scripts": {
-    "build": "babel -d dist/ src/server.js",
-    "dev": "NODE_ENV=development babel-node src/server.js",
-    "start": "NODE_ENV=production node dist/server.js"
+    "build": "babel -d dist/ src/*.js",
+    "dev": "NODE_ENV=development babel-node src/index.js",
+    "start": "NODE_ENV=production node dist/index.js"
   },
   "dependencies": {
     "@babel/cli": "^7.8.3",
