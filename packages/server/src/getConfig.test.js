@@ -21,6 +21,8 @@ describe('getConfig', () => {
     process.env.CONTENT_ROOT = 'https://example.com/content/'
     process.env.STATIC_ROOT = 'https://example.com/static/'
     process.env.PROD_PORT = '8123'
+    process.env.SECTION_PATH_PREFIX = 'customsection'
+    process.env.PAGE_PATH_PREFIX = 'custompage'
   })
   afterEach(() => {
     process.env = OLD_ENV
@@ -41,6 +43,8 @@ describe('getConfig', () => {
       staticRoot: 'https://example.com/static/',
       nodeEnv: 'production',
       port: 8123,
+      sectionPathPrefix: 'customsection',
+      pagePathPrefix: 'custompage',
     })
   })
 

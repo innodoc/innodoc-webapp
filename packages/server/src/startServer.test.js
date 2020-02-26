@@ -1,70 +1,50 @@
 import express from 'express'
-import next from 'next'
 
+import getConfig from './getConfig'
+import createNextApp, { setupExpress } from './nextApp'
 import startServer from './startServer'
 
-const mockExpressUse = jest.fn()
-const mockExpressGet = jest.fn()
-const mockExpressListen = jest.fn(() => Promise.resolve())
-const mockExpress = {
-  use: mockExpressUse,
-  get: mockExpressGet,
-  listen: mockExpressListen,
+const mockConfig = {
+  contentRoot: 'https://example.com/content',
+  staticRoot: 'https://example.com/static',
+  nodeEnv: 'development',
+  port: 8123,
+  sectionPathPrefix: 'section',
+  pagePathPrefix: 'page',
 }
-mockExpressUse.mockImplementation(() => mockExpress)
-mockExpressGet.mockImplementation(() => mockExpress)
-jest.mock('express', () => jest.fn(() => mockExpress))
 
-const mockAppPrepare = jest.fn(() => Promise.resolve())
-const mockAppGetRequestHandler = jest.fn()
-jest.mock('next', () =>
+jest.mock('express', () =>
   jest.fn(() => ({
-    prepare: mockAppPrepare,
-    getRequestHandler: mockAppGetRequestHandler,
+    listen: jest.fn(),
   }))
 )
-jest.mock('next-i18next/middleware', () => jest.fn())
 
-jest.mock('@innodoc/client-misc/src/i18n', () => {})
+jest.mock('./getConfig', () => jest.fn(() => mockConfig))
 
-describe.each(['production', 'development'])('startServer (%s)', (nodeEnv) => {
-  let mockLog
-  beforeEach(() => {
-    jest.clearAllMocks()
-    startServer(
-      '/mock/src',
-      8123,
-      'https://example.com/static/',
-      'https://example.com/content/',
-      nodeEnv
+jest.mock('./nextApp', () => ({
+  __esModule: true,
+  default: jest.fn(),
+  setupExpress: jest.fn(),
+}))
+
+describe('startServer', () => {
+  it('should start', async () => {
+    const ret = await startServer('/mock/root')
+    expect(ret).toBe(mockConfig)
+    expect(getConfig).toBeCalledTimes(1)
+    expect(getConfig).toBeCalledWith('/mock/root')
+    const config = getConfig.mock.results[0].value
+    expect(createNextApp).toBeCalledTimes(1)
+    expect(createNextApp).toBeCalledWith(
+      '/mock/root/packages/client-web/src',
+      'development'
     )
-    mockLog = jest.spyOn(console, 'info').mockImplementation(() => {})
-  })
-  afterEach(() => {
-    mockLog.mockRestore()
-  })
-
-  it('should create next app', () => {
-    expect(next).toHaveBeenCalledTimes(1)
-    expect(next).toHaveBeenCalledWith({
-      dir: '/mock/src',
-      dev: nodeEnv === 'development',
-    })
-    expect(mockAppPrepare).toHaveBeenCalledTimes(1)
-  })
-
-  it('should create express instance', () => {
-    expect(express).toHaveBeenCalledTimes(1)
-    expect(mockExpressUse).toHaveBeenCalled()
-    expect(mockExpressGet).toHaveBeenCalled()
-    expect(mockExpressListen).toHaveBeenCalledTimes(1)
-    expect(mockAppGetRequestHandler).toHaveBeenCalledTimes(1)
-  })
-
-  it('should print log message', () => {
-    expect(mockLog).toHaveBeenCalledTimes(1)
-    expect(mockLog).toHaveBeenCalledWith(
-      `Started ${nodeEnv} server on port 8123.`
-    )
+    const nextApp = createNextApp.mock.results[0].value
+    expect(express).toBeCalledTimes(1)
+    const expressApp = express.mock.results[0].value
+    expect(setupExpress).toBeCalledTimes(1)
+    expect(setupExpress).toBeCalledWith(expressApp, nextApp, config)
+    expect(expressApp.listen).toBeCalledTimes(1)
+    expect(expressApp.listen).toBeCalledWith(8123)
   })
 })

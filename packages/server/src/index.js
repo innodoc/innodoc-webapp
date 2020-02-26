@@ -1,15 +1,16 @@
-import path from 'path'
+/* eslint-disable no-console */
 
-import getConfig from './getConfig'
+import path from 'path'
 import startServer from './startServer'
 
 const rootDir = path.resolve(__dirname, '..', '..', '..')
-const srcDir = path.resolve(rootDir, 'packages', 'client-web', 'src')
 
-try {
-  const { contentRoot, staticRoot, nodeEnv, port } = getConfig(rootDir)
-  startServer(srcDir, port, staticRoot, contentRoot, nodeEnv)
-} catch (e) {
-  console.error(e)
-  process.exit(1)
-}
+startServer(rootDir).then(
+  ({ port, nodeEnv }) => {
+    console.info(`Started ${nodeEnv} server on port ${port}.`)
+  },
+  (error) => {
+    console.error(error)
+    process.exit(1)
+  }
+)

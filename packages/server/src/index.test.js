@@ -1,83 +1,65 @@
-const mockConfig = {
-  contentRoot: 'https://example.com/content',
-  staticRoot: 'https://example.com/static',
-  nodeEnv: 'development',
-  port: 8123,
-}
-
 describe('index', () => {
+  let mockInfoLog
+  let mockErrorLog
+  let mockExit
+
   beforeEach(() => {
     jest.resetModules()
+    mockInfoLog = jest.spyOn(console, 'info').mockImplementation(() => {})
+    mockErrorLog = jest.spyOn(console, 'error').mockImplementation(() => {})
+    mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {})
     jest.doMock('path', () => ({
-      resolve: jest
-        .fn()
-        .mockReturnValueOnce('/mock/root')
-        .mockReturnValueOnce('/mock/src'),
+      resolve: jest.fn().mockReturnValue('/mock/root'),
     }))
   })
 
-  describe('regular startup', () => {
-    let getConfig
-    let startServer
-
-    beforeEach(async () => {
-      jest.doMock('./getConfig', () => jest.fn(() => mockConfig))
-      jest.doMock('./startServer', () => jest.fn())
-      getConfig = await import('./getConfig')
-      startServer = await import('./startServer')
-    })
-
-    it('should get config', () =>
-      import('.').then(() => {
-        expect(getConfig).toBeCalledTimes(1)
-        expect(getConfig).toBeCalledWith('/mock/root')
-      }))
-
-    it('should start server', () =>
-      import('.').then(() => {
-        expect(startServer).toBeCalledTimes(1)
-        expect(startServer).toBeCalledWith(
-          '/mock/src',
-          8123,
-          'https://example.com/static',
-          'https://example.com/content',
-          'development'
-        )
-      }))
+  afterEach(() => {
+    mockInfoLog.mockRestore()
+    mockErrorLog.mockRestore()
+    mockExit.mockRestore()
   })
 
-  describe('errors', () => {
-    let mockExit
-    let mockLog
-    beforeEach(() => {
-      mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {})
-      mockLog = jest.spyOn(console, 'error').mockImplementation(() => {})
-    })
-    afterEach(() => {
-      mockExit.mockRestore()
-      mockLog.mockRestore()
+  describe('proper startup', () => {
+    beforeEach(async () => {
+      jest.doMock('./startServer', () =>
+        jest.fn().mockResolvedValue({ port: 7766, nodeEnv: 'production' })
+      )
+      await import('.')
     })
 
-    it.each(['getConfig', 'startServer'])(
-      'should exit process and log on error in %s',
-      (module) => {
-        jest.doMock(`./${module}`, () =>
-          jest.fn(() => {
-            throw new Error('MockError')
-          })
-        )
-        if (module === 'getConfig') {
-          jest.doMock('./startServer', () => () => {})
-        } else {
-          jest.doMock('./getConfig', () => () => mockConfig)
-        }
-        return import('.').then(() => {
-          expect(mockLog).toHaveBeenCalledTimes(1)
-          expect(mockLog.mock.calls[0][0].toString()).toMatch('MockError')
-          expect(mockExit).toHaveBeenCalledTimes(1)
-          expect(mockExit).toHaveBeenCalledWith(1)
-        })
-      }
-    )
+    it('should call startServer', async () => {
+      const startServer = await import('./startServer')
+      expect(startServer).toHaveBeenCalledTimes(1)
+      expect(startServer).toHaveBeenCalledWith('/mock/root')
+      expect(mockExit).not.toHaveBeenCalled()
+    })
+
+    it('should print log message', () => {
+      expect(mockInfoLog).toHaveBeenCalledTimes(1)
+      expect(mockInfoLog.mock.calls[0][0].toString()).toMatch(
+        'Started production server on port 7766'
+      )
+      expect(mockErrorLog).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('failed startup', () => {
+    const error = new Error('MockError')
+
+    beforeEach(async () => {
+      jest.doMock('./startServer', () => jest.fn().mockRejectedValue(error))
+      await import('.')
+    })
+
+    it('should catch and print errors', () => {
+      expect(mockErrorLog).toHaveBeenCalledTimes(1)
+      expect(mockErrorLog).toHaveBeenCalledWith(error)
+      expect(mockInfoLog).not.toHaveBeenCalled()
+    })
+
+    it('should exit with code 1', () => {
+      expect(mockExit).toHaveBeenCalledTimes(1)
+      expect(mockExit).toHaveBeenCalledWith(1)
+    })
   })
 })

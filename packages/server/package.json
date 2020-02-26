@@ -16,7 +16,7 @@
   "license": "GPL-3.0-or-later",
   "main": "src/index.js",
   "scripts": {
-    "build": "babel -d dist/ src/*.js",
+    "build": "babel -d ./dist/ ./src/",
     "dev": "NODE_ENV=development babel-node src/index.js",
     "start": "NODE_ENV=production node dist/index.js"
   },
