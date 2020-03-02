@@ -10,16 +10,17 @@ const userRoutes = (app) => {
       req.body.password,
       (err) => {
         if (err) {
-          if (err instanceof errors.UserExistsError) {
-            res.status(400).json({ result: err.name, message: err.message })
-          } else {
-            next(err)
-          }
-        } else {
-          passport.authenticate('local')(req, res, () => {
-            res.status(200).json({ result: 'ok' })
-          })
+          return next(err)
+          // if (err instanceof errors.UserExistsError) {
+          //   res.status(400).json({ result: err.name, message: err.message })
+          // } else {
+          //   return next(err)
+          // }
         }
+        passport.authenticate('local')(req, res, () => {
+          res.status(200).json({ result: 'ok' })
+        })
+        return undefined
       }
     )
   })

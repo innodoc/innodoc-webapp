@@ -18,7 +18,6 @@ const setupExpressPassport = (app) => {
         saveUninitialized: false,
       })
     )
-
     .use(passport.initialize())
     .use(passport.session())
 
