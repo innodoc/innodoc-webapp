@@ -59,7 +59,6 @@ describe('<Toc />', () => {
     const wrapper = shallow(<Toc />)
     const tree = wrapper.find(Tree)
     expect(tree).toHaveLength(1)
-    expect(tree.find(Tree.TreeNode)).toHaveLength(4)
     expect(tree.prop('expandedKeys')).toHaveLength(0)
   })
 
@@ -69,7 +68,6 @@ describe('<Toc />', () => {
     const wrapper = shallow(<Toc />)
     const tree = wrapper.find(Tree)
     expect(tree).toHaveLength(1)
-    expect(tree.find(Tree.TreeNode)).toHaveLength(0)
     expect(tree.prop('expandedKeys')).toHaveLength(0)
   })
 
@@ -95,7 +93,6 @@ describe('<Toc />', () => {
       currentSectionId: 'section-1/section-1-1/section-1-1-1',
     }
     const wrapper = shallow(<Toc />)
-    expect(wrapper.find(Tree.TreeNode).filter('.active')).toHaveLength(1)
     expect(wrapper.find(Tree).prop('expandedKeys')).toEqual([
       'section-1/section-1-1/section-1-1-1',
     ])

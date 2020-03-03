@@ -6,31 +6,34 @@ import { Tree } from 'antd'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
-import renderTreeNode from './renderTreeNode'
+import getTreeData from './getTreeData'
 import useAutoExpand from './useAutoExpand'
 import css from './style.sss'
 
 const Toc = ({ expandAll }) => {
   const course = useSelector(courseSelectors.getCurrentCourse)
-  const toc = useSelector(sectionSelectors.getToc)
+  const tocData = useSelector(sectionSelectors.getToc)
   const currentSectionId = course ? course.currentSectionId : undefined
   const [expandedKeys, setExpandedKeys] = useState(
     currentSectionId ? [currentSectionId] : []
   )
+  const treeData = getTreeData(tocData, currentSectionId)
   useAutoExpand(currentSectionId, expandAll, expandedKeys, setExpandedKeys)
 
-  const treeNodes = toc.map((s) => renderTreeNode(s, currentSectionId))
   const tree = expandAll ? (
-    <Tree className={css.disableExpand} defaultExpandAll>
-      {treeNodes}
-    </Tree>
+    <Tree
+      className={css.disableExpand}
+      defaultExpandAll
+      selectable={false}
+      treeData={treeData}
+    />
   ) : (
     <Tree
-      expandedKeys={expandedKeys}
-      onExpand={(keys) => setExpandedKeys(keys)}
-    >
-      {treeNodes}
-    </Tree>
+      expandedKeys={expandAll ? null : expandedKeys}
+      onExpand={expandAll ? undefined : (keys) => setExpandedKeys(keys)}
+      selectable={false}
+      treeData={treeData}
+    />
   )
 
   return <div className={css.tocWrapper}>{tree}</div>

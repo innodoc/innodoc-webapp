@@ -3,24 +3,13 @@
 .tocWrapper
   margin-bottom: $padding-lg
 
-  [role=treeitem]
+  :global(.ant-tree-node-content-wrapper:hover)
+    background-color: transparent
+    color: $primary-5
 
-    :global(.ant-tree-title) > a:focus
-      text-decoration: none
-
-    :global(.ant-tree-node-content-wrapper:hover)
-      background-color: transparent
-      color: $primary-5
-
-    & :global(.ant-tree-node-selected)
-      background-color: transparent !important
-
-    &.active :global(.ant-tree-node-content-wrapper)
-      cursor: default
-
-    &.active > span > :global(.ant-tree-title)
-      color: $heading-color
-      text-decoration: underline
+  .active
+    color: $heading-color
+    text-decoration: underline
 
 .disableExpand
   :global(.ant-tree-switcher)
