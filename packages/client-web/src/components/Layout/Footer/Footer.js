@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Col, Layout as AntLayout, List, Row } from 'antd'
+import { BarsOutlined, ReadOutlined } from '@ant-design/icons'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
@@ -14,6 +15,7 @@ import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import FooterLink from './Link'
 import { PageLink } from '../../content/links'
 import ContentFragment from '../../content/ContentFragment'
+import PageIcon from '../PageIcon'
 import css from './style.sss'
 
 const Footer = () => {
@@ -30,7 +32,7 @@ const Footer = () => {
   const customPageItems = pages.map((page) => (
     <FooterLink
       active={currentPage && page.id === currentPage.id}
-      iconType={page.icon}
+      icon={page.icon ? <PageIcon type={page.icon} /> : null}
       key={page.id}
       renderLink={() => <PageLink contentId={page.id} />}
       shortTitle={page.shortTitle[language]}
@@ -39,12 +41,12 @@ const Footer = () => {
   ))
 
   const otherPageItems = [
-    ['/toc', 'common.toc', 'read'],
-    ['/index-page', 'common.index', 'bars'],
-  ].map(([href, translateKey, iconType]) => (
+    ['/toc', 'common.toc', ReadOutlined],
+    ['/index-page', 'common.index', BarsOutlined],
+  ].map(([href, translateKey, Icon]) => (
     <FooterLink
       active={router.asPath === href}
-      iconType={iconType}
+      icon={<Icon />}
       key={href}
       renderLink={() => (
         <Link href={href}>

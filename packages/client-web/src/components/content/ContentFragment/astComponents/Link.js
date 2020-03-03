@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Icon } from 'antd'
+import { LinkOutlined } from '@ant-design/icons'
 
 import ContentFragment from '..'
 import { InternalLink } from '../../links'
@@ -20,7 +20,7 @@ const Link = ({ data }) => {
       <a href={href} title={title}>
         <ContentFragment content={content} />
         <sup>
-          <Icon type="link" />
+          <LinkOutlined />
         </sup>
       </a>
     )

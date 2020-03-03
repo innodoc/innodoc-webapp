@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Icon, Modal } from 'antd'
+import { Button, Modal } from 'antd'
+import { InfoOutlined, WarningOutlined } from '@ant-design/icons'
 
 import { messageType } from '@innodoc/client-misc/src/propTypes'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
@@ -12,7 +13,7 @@ const MessageModal = ({ message, onClose }) => {
   const { level, title, msg } = message
   const closable = level !== 'fatal'
   const isError = ['error', 'fatal'].includes(level)
-  const iconType = isError ? 'warning' : 'info'
+  const Icon = isError ? WarningOutlined : InfoOutlined
   const footer = closable
     ? [
         <Button key="back" onClick={onClose}>
@@ -32,7 +33,7 @@ const MessageModal = ({ message, onClose }) => {
       centered
       visible
     >
-      <Icon type={iconType} className={css.icon} />
+      <Icon className={css.icon} />
       <h4>{title}</h4>
       <p>{msg}</p>
     </Modal>

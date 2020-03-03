@@ -1,5 +1,6 @@
 import React from 'react'
-import { Collapse, Icon } from 'antd'
+import { Collapse } from 'antd'
+import { BulbOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { attributesToObject } from '@innodoc/client-misc/src/util'
@@ -14,7 +15,7 @@ const Hint = ({ attributes, content }) => {
   const caption = attrsObj.caption || t('content.hint')
   const header = (
     <>
-      <Icon type="bulb" className={css.icon} />
+      <BulbOutlined className={css.icon} />
       {caption}
     </>
   )

@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import { Icon, Menu } from 'antd'
+import { Menu } from 'antd'
+import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
 
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
@@ -10,19 +11,16 @@ import SidebarToggleButton from '../../Layout/Sidebar/ToggleButton'
 import { SectionLink } from '../links'
 
 const SectionButton = ({ sectionId, direction }) => {
-  const iconType = `arrow-${direction}`
+  const icon =
+    direction === 'left' ? <ArrowLeftOutlined /> : <ArrowRightOutlined />
   return sectionId ? (
     <SectionLink key={sectionId} contentId={sectionId}>
-      <a>
-        <Icon type={iconType} />
-      </a>
+      <a>{icon}</a>
     </SectionLink>
   ) : (
-    <Icon
-      key={`__NON_EXISTENT_${direction}`}
-      className={css.disabled}
-      type={iconType}
-    />
+    <span className={css.disabled} key={`__NON_EXISTENT_${direction}`}>
+      {icon}
+    </span>
   )
 }
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { Col, Layout as AntLayout } from 'antd'
+import { BarsOutlined, ReadOutlined } from '@ant-design/icons'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
@@ -9,6 +10,7 @@ import pageSelectors from '@innodoc/client-store/src/selectors/page'
 
 import Footer from './Footer'
 import FooterLink from './Link'
+import PageIcon from '../PageIcon'
 import ContentFragment from '../../content/ContentFragment'
 
 const mockGetApp = appSelectors.getApp
@@ -21,13 +23,13 @@ const mockCourse = { title: { en: 'Test Course' } }
 let mockFooterA
 let mockFooterB
 const mockPage1 = {
-  icon: 'foo',
+  icon: 'foo-icon',
   id: 'foo',
   shortTitle: { en: 'Foo' },
   title: { en: 'Foo page' },
 }
 const mockPage2 = {
-  icon: 'bar',
+  icon: 'bar-icon',
   id: 'bar',
   shortTitle: { en: 'Bar' },
   title: { en: 'Bar page' },
@@ -69,13 +71,13 @@ describe('<Footer />', () => {
     expect(footerLinks).toHaveLength(4)
     const footerLink1 = footerLinks.at(0)
     expect(footerLink1.prop('active')).toBe(true)
-    expect(footerLink1.prop('iconType')).toBe('foo')
+    expect(footerLink1.prop('icon')).toEqual(<PageIcon type="foo-icon" />)
     expect(footerLink1.prop('renderLink')().props.contentId).toBe('foo')
     expect(footerLink1.prop('shortTitle')).toBe('Foo')
     expect(footerLink1.prop('title')).toBe('Foo page')
     const footerLink2 = footerLinks.at(1)
     expect(footerLink2.prop('active')).toBe(false)
-    expect(footerLink2.prop('iconType')).toBe('bar')
+    expect(footerLink2.prop('icon')).toEqual(<PageIcon type="bar-icon" />)
     expect(footerLink2.prop('renderLink')().props.contentId).toBe('bar')
     expect(footerLink2.prop('shortTitle')).toBe('Bar')
     expect(footerLink2.prop('title')).toBe('Bar page')
@@ -87,12 +89,12 @@ describe('<Footer />', () => {
     expect(footerLinks).toHaveLength(4)
     const otherLink1 = footerLinks.at(2)
     expect(otherLink1.prop('active')).toBe(true)
-    expect(otherLink1.prop('iconType')).toBe('read')
+    expect(otherLink1.prop('icon')).toEqual(<ReadOutlined />)
     expect(otherLink1.prop('renderLink')().props.href).toBe('/toc')
     expect(otherLink1.prop('title')).toBe('common.toc')
     const otherLink2 = footerLinks.at(3)
     expect(otherLink2.prop('active')).toBe(false)
-    expect(otherLink2.prop('iconType')).toBe('bars')
+    expect(otherLink2.prop('icon')).toEqual(<BarsOutlined />)
     expect(otherLink2.prop('renderLink')().props.href).toBe('/index-page')
     expect(otherLink2.prop('title')).toBe('common.index')
   })

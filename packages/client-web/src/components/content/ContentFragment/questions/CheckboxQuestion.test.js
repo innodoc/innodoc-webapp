@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Checkbox, Icon } from 'antd'
+import { Checkbox } from 'antd'
+import { SmileOutlined } from '@ant-design/icons'
 
 import CheckboxQuestion from './CheckboxQuestion'
 
@@ -16,12 +17,12 @@ describe('<CheckboxQuestion />', () => {
       const wrapper = shallow(
         <CheckboxQuestion
           className="customClass"
-          icon={<Icon type="test" />}
+          icon={<SmileOutlined />}
           onChange={onChange}
           value={value}
         />
       )
-      expect(wrapper.find(Icon)).toHaveLength(1)
+      expect(wrapper.find(SmileOutlined)).toHaveLength(1)
       const cb = wrapper.find(Checkbox)
       expect(cb.hasClass('checkbox')).toBe(true)
       expect(cb.hasClass('customClass')).toBe(true)

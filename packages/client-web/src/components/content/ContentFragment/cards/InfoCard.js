@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { InfoCircleOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { contentType } from '@innodoc/client-misc/src/propTypes'
@@ -12,7 +13,7 @@ const InfoCard = ({ content, id }) => {
     <Card
       title={t('content.info')}
       cardType="info"
-      icon="info-circle"
+      icon={<InfoCircleOutlined />}
       content={content}
       id={id}
     />

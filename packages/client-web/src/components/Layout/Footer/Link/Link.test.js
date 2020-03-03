@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Icon, List } from 'antd'
+import { List } from 'antd'
+import { BorderOutlined, MenuOutlined } from '@ant-design/icons'
 
 import Link from './Link'
 import css from './style.sss'
@@ -11,8 +12,7 @@ describe('<Footer />', () => {
       <Link renderLink={() => <span />} title="Foo link" />
     )
     expect(wrapper.exists(List.Item)).toBe(true)
-    const icon = wrapper.find(Icon)
-    expect(icon.prop('type')).toBe('border')
+    expect(wrapper.exists(BorderOutlined)).toBe(true)
     const a = wrapper.find('a')
     expect(a.prop('title')).toBe('Foo link')
     expect(a.text()).toMatch('Foo link')
@@ -28,10 +28,9 @@ describe('<Footer />', () => {
 
   it('should render with icon', () => {
     const wrapper = shallow(
-      <Link iconType="foo-icon" renderLink={() => <span />} title="Foo" />
+      <Link icon={<MenuOutlined />} renderLink={() => <span />} title="Foo" />
     )
-    const icon = wrapper.find(Icon)
-    expect(icon.prop('type')).toBe('foo-icon')
+    expect(wrapper.exists(MenuOutlined)).toBe(true)
   })
 
   it('should render with short title', () => {

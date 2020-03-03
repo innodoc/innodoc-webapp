@@ -1,8 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Icon, Input } from 'antd'
+import { Input } from 'antd'
 
 import InputQuestion from './InputQuestion'
+
+const Icon = () => null
 
 describe('<InputQuestion />', () => {
   it.each([

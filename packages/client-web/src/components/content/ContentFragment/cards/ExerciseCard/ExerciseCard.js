@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { FormOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { contentType } from '@innodoc/client-misc/src/propTypes'
@@ -14,7 +15,7 @@ const ExerciseCard = ({ content, id }) => {
       <Card
         title={t('content.exercise')}
         cardType="exercise"
-        icon="form"
+        icon={<FormOutlined />}
         content={content}
         id={id}
       />

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { Button, Divider } from 'antd'
+import { CheckOutlined } from '@ant-design/icons'
 
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 import { unwrapPara } from '@innodoc/client-misc/src/util'
@@ -20,7 +21,7 @@ const VerifyInfoButton = ({ content }) => {
       <Divider />
       <Button
         disabled={!allAnswered() || userTriggeredVerify}
-        icon="check"
+        icon={<CheckOutlined />}
         onClick={() => setUserTriggeredVerify(true)}
       >
         <span>

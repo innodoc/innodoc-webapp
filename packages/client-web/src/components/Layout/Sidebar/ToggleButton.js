@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import classNames from 'classnames'
 import { Button } from 'antd'
+import { ReadOutlined } from '@ant-design/icons'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import { toggleSidebar } from '@innodoc/client-store/src/actions/ui'
@@ -17,7 +18,7 @@ const ToggleButton = () => {
     <Button
       className={classNames(css.toggleButton, sidebarVisible ? 'active' : null)}
       ghost
-      icon="read"
+      icon={<ReadOutlined />}
       onClick={() => dispatch(toggleSidebar())}
       title={t(sidebarVisible ? 'common.hideToc' : 'common.showToc')}
     />

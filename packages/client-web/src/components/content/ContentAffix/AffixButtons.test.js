@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Icon, Menu } from 'antd'
+import { Menu } from 'antd'
+import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
 
 import AffixButtons, { SectionButton } from './AffixButtons'
 import { SectionLink } from '../links'
@@ -15,15 +16,15 @@ describe('<SectionButton />', () => {
   it('renders', () => {
     const wrapper = shallow(<SectionButton sectionId="foo" direction="left" />)
     expect(wrapper.find(SectionLink).prop('contentId')).toBe('foo')
-    expect(wrapper.find('a')).toBeTruthy()
-    expect(wrapper.find(Icon).prop('type')).toBe('arrow-left')
+    expect(wrapper.exists('a')).toBe(true)
+    expect(wrapper.exists(ArrowLeftOutlined)).toBe(true)
   })
 
   it('renders w/o sectionId', () => {
     const wrapper = shallow(<SectionButton direction="right" />)
     expect(wrapper.exists(SectionLink)).toBe(false)
     expect(wrapper.exists('a')).toBe(false)
-    expect(wrapper.find(Icon).prop('type')).toBe('arrow-right')
+    expect(wrapper.exists(ArrowRightOutlined)).toBe(true)
   })
 })
 

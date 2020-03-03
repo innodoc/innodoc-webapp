@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { Card as AntCard, Icon } from 'antd'
+import { Card as AntCard } from 'antd'
+import { FileOutlined } from '@ant-design/icons'
 
 import Card from './Card'
 import ContentFragment from '..'
@@ -11,7 +12,7 @@ describe('<Card />', () => {
     const wrapper = mount(
       <Card
         title="foo"
-        icon="file"
+        icon={<FileOutlined />}
         cardType="info"
         content={content}
         id="foo-id"
@@ -21,8 +22,7 @@ describe('<Card />', () => {
     expect(antCard).toHaveLength(1)
     expect(antCard.prop('id')).toBe('foo-id')
     expect(wrapper.find(ContentFragment)).toHaveLength(1)
-    const icon = antCard.find(Icon)
+    const icon = antCard.find(FileOutlined)
     expect(icon).toHaveLength(1)
-    expect(icon.prop('type')).toBe('file')
   })
 })

@@ -1,5 +1,6 @@
 import React from 'react'
-import { Icon, Menu } from 'antd'
+import { Menu } from 'antd'
+import { LoginOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
@@ -7,7 +8,7 @@ const UserMenu = (props) => {
   const { t } = useTranslation()
   const userMenuTitle = (
     <span>
-      <Icon type="user" />
+      <UserOutlined />
       <span>{t('header.login')}</span>
     </span>
   )
@@ -18,11 +19,11 @@ const UserMenu = (props) => {
       {...props}
     >
       <Menu.Item key="login">
-        <Icon type="login" />
+        <LoginOutlined />
         <span>{t('header.login')}</span>
       </Menu.Item>
       <Menu.Item key="register">
-        <Icon type="user-add" />
+        <UserAddOutlined />
         <span>{t('header.createAccount')}</span>
       </Menu.Item>
     </Menu.SubMenu>

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { Card as AntCard, Icon } from 'antd'
+import { Card as AntCard } from 'antd'
 
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 
@@ -9,18 +9,9 @@ import css from './style.sss'
 import ContentFragment from '..'
 
 const Card = ({ title, icon, cardType, content, id }) => {
-  let iconElem = null
-  if (icon) {
-    if (typeof icon === 'string') {
-      iconElem = <Icon type={icon} className={css.icon} />
-    } else {
-      iconElem = <Icon component={icon} className={css.icon} />
-    }
-  }
-
   const titleFragment = (
     <>
-      {iconElem}
+      {icon ? <span className={css.icon}>{icon}</span> : null}
       {title}
     </>
   )

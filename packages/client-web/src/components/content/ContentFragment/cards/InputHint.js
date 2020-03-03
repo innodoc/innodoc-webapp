@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Icon from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { contentType } from '@innodoc/client-misc/src/propTypes'
@@ -13,7 +14,7 @@ const InputHintCard = ({ content, id }) => {
     <Card
       title={t('content.inputHint')}
       cardType="inputHint"
-      icon={KeyboardSvg}
+      icon={<Icon component={KeyboardSvg} />}
       content={content}
       id={id}
     />

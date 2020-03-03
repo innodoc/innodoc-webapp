@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { Button, Result } from 'antd'
+import { HomeOutlined } from '@ant-design/icons'
 
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
@@ -23,7 +24,7 @@ const ErrorPage = ({ statusCode }) => {
 
   const resultExtra = course ? (
     <InternalLink href={course.homeLink} title="">
-      <Button icon="home" type="primary">
+      <Button icon={<HomeOutlined />} type="primary">
         {t('errorPage.backHome')}
       </Button>
     </InternalLink>

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { EyeOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { contentType } from '@innodoc/client-misc/src/propTypes'
@@ -12,7 +13,7 @@ const ExampleCard = ({ content, id }) => {
     <Card
       title={t('content.example')}
       cardType="example"
-      icon="eye"
+      icon={<EyeOutlined />}
       content={content}
       id={id}
     />

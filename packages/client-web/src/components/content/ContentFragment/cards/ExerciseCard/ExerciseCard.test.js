@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { FormOutlined } from '@ant-design/icons'
 
 import ExerciseCard from './ExerciseCard'
 import ExerciseProvider from './ExerciseProvider'
@@ -12,8 +13,8 @@ describe('<ExerciseCard />', () => {
     expect(wrapper.find(ExerciseProvider)).toHaveLength(1)
     const card = wrapper.find(Card)
     expect(card.prop('cardType')).toBe('exercise')
-    expect(card.prop('icon')).toBe('form')
     expect(card.prop('content')).toBe(content)
+    expect(card.prop('icon')).toEqual(<FormOutlined />)
     expect(card.prop('id')).toBe('EX1')
   })
 })

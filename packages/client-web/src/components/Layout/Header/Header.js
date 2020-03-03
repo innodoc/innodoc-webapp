@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
 import { Button, Col, Drawer, Layout as AntLayout, Row } from 'antd'
+import { MenuOutlined } from '@ant-design/icons'
 
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
@@ -40,7 +41,7 @@ const Header = () => {
           <Col xs={6} sm={4} md={0} lg={0} xl={0} className={css.menuRight}>
             <Button
               className={classNames(css.menuButton, css.mobileMenuButton)}
-              icon="menu"
+              icon={<MenuOutlined />}
               onClick={() => setShowMobileMenu(true)}
               title={t('header.menu')}
             />

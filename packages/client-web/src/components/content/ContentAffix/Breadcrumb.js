@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Breadcrumb as AntBreadcrumb, Icon } from 'antd'
+import { Breadcrumb as AntBreadcrumb } from 'antd'
+import { HomeOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
@@ -30,7 +31,7 @@ const Breadcrumb = () => {
     <AntBreadcrumb.Item key="root">
       <InternalLink href={homeLink}>
         <a title={t('content.home')}>
-          <Icon type="home" />
+          <HomeOutlined />
         </a>
       </InternalLink>
     </AntBreadcrumb.Item>,

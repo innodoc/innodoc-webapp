@@ -1,15 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { Icon, List } from 'antd'
+import { List } from 'antd'
+import { BorderOutlined } from '@ant-design/icons'
 
 import css from './style.sss'
 
-const FooterLink = ({ active, iconType, renderLink, shortTitle, title }) => {
-  const icon = iconType ? (
-    <Icon type={iconType} />
+const FooterLink = ({ active, icon, renderLink, shortTitle, title }) => {
+  const iconSpan = icon ? (
+    <span className={css.icon}>{icon}</span>
   ) : (
-    <Icon type="border" className={css.iconPlaceholder} />
+    <span className={classNames(css.icon, css.iconPlaceholder)}>
+      <BorderOutlined />
+    </span>
   )
 
   const children = (
@@ -17,7 +20,7 @@ const FooterLink = ({ active, iconType, renderLink, shortTitle, title }) => {
       className={classNames(css.pageLink, { [css.active]: active })}
       title={title}
     >
-      {icon}
+      {iconSpan}
       <span>{shortTitle || title}</span>
     </a>
   )
@@ -28,13 +31,13 @@ const FooterLink = ({ active, iconType, renderLink, shortTitle, title }) => {
 
 FooterLink.defaultProps = {
   active: false,
-  iconType: null,
+  icon: null,
   shortTitle: null,
 }
 
 FooterLink.propTypes = {
   active: PropTypes.bool,
-  iconType: PropTypes.string,
+  icon: PropTypes.node,
   renderLink: PropTypes.func.isRequired,
   shortTitle: PropTypes.string,
   title: PropTypes.string.isRequired,

@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { useSelector } from 'react-redux'
-import { Icon, Menu } from 'antd'
+import { Menu } from 'antd'
+import { FilePdfOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'
@@ -11,6 +12,7 @@ import pageSelectors from '@innodoc/client-store/src/selectors/page'
 import LanguageSwitcher from './LanguageSwitcher'
 import UserMenu from './UserMenu'
 import css from './style.sss'
+import PageIcon from '../../PageIcon'
 import { PageLink } from '../../../content/links'
 
 const Nav = ({ menuMode }) => {
@@ -27,7 +29,7 @@ const Nav = ({ menuMode }) => {
           })}
           title={page.title[language]}
         >
-          {page.icon ? <Icon type={page.icon} /> : null}
+          <PageIcon type={page.icon} />
           {page.shortTitle[language]}
         </a>
       </PageLink>
@@ -39,7 +41,7 @@ const Nav = ({ menuMode }) => {
       {pageItems}
       <Menu.Item key="pdf">
         <a title={t('header.downloadPDFTitle')}>
-          <Icon type="file-pdf" />
+          <FilePdfOutlined />
           {t('header.downloadPDF')}
         </a>
       </Menu.Item>
