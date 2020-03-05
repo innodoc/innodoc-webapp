@@ -57,14 +57,18 @@
     "inputFeedback": "Input"
   },
   "user": {
+    "confirmPassword": "Confirm Password",
     "createAccount": "create account",
     "email": "Email",
+    "emailInvalid": "Please enter valid email!",
     "emailMissing": "Please input your email!",
     "loginTitle": "Login",
     "orCreateAccount": "or <1></1>",
     "orLogin": "or <1></1> if you already have an account.",
     "password": "Password",
+    "passwordMismatch": "The passwords you entered have to match!",
     "passwordMissing": "Please input your password!",
+    "pleaseConfirmPassword": "Please confirm your password!",
     "registerTitle": "Create account",
     "signIn": "Sign-in"
   }

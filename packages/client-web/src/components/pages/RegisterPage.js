@@ -1,4 +1,5 @@
 import React from 'react'
+import { Row, Col } from 'antd'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
@@ -10,8 +11,12 @@ const RegisterPage = () => {
   const { t } = useTranslation()
   return (
     <Layout disableSidebar>
-      <h1 className={css.header}>{t('user.registerTitle')}</h1>
-      <RegisterForm />
+      <Row justify="space-around" align="middle">
+        <Col xs={24} sm={20} md={18} lg={16}>
+          <h1 className={css.header}>{t('user.registerTitle')}</h1>
+          <RegisterForm />
+        </Col>
+      </Row>
     </Layout>
   )
 }

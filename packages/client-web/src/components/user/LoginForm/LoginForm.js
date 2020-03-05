@@ -29,10 +29,10 @@ const LoginForm = () => {
     <Form
       name="login-form"
       wrapperCol={{
-        xs: { span: 24 },
-        sm: { span: 16 },
-        md: { span: 10 },
-        lg: { span: 8 },
+        xs: { span: 20 },
+        sm: { span: 18 },
+        md: { span: 18 },
+        lg: { span: 18 },
       }}
     >
       <Form.Item

@@ -1,21 +1,23 @@
-export const actionTypes = {
-  CHANGE_COURSE: 'CHANGE_COURSE',
-  CLEAR_ERROR: 'CLEAR_ERROR',
-  LOAD_FRAGMENT_FAILURE: 'LOAD_FRAGMENT_FAILURE',
-  LOAD_FRAGMENT_SUCCESS: 'LOAD_FRAGMENT_SUCCESS',
-  LOAD_FRAGMENT: 'LOAD_FRAGMENT',
-  LOAD_MANIFEST_FAILURE: 'LOAD_MANIFEST_FAILURE',
-  LOAD_MANIFEST_SUCCESS: 'LOAD_MANIFEST_SUCCESS',
-  LOAD_MANIFEST: 'LOAD_MANIFEST',
-  LOAD_PAGE_FAILURE: 'LOAD_PAGE_FAILURE',
-  LOAD_PAGE_SUCCESS: 'LOAD_PAGE_SUCCESS',
-  LOAD_PAGE: 'LOAD_PAGE',
-  LOAD_SECTION_FAILURE: 'LOAD_SECTION_FAILURE',
-  LOAD_SECTION_SUCCESS: 'LOAD_SECTION_SUCCESS',
-  LOAD_SECTION: 'LOAD_SECTION',
-  NAVIGATE: 'NAVIGATE',
-  SET_SERVER_CONFIGURATION: 'SET_SERVER_CONFIGURATION',
-}
+import makeActions from './makeActions'
+
+export const actionTypes = makeActions([
+  'CHANGE_COURSE',
+  'CLEAR_ERROR',
+  'LOAD_FRAGMENT_FAILURE',
+  'LOAD_FRAGMENT_SUCCESS',
+  'LOAD_FRAGMENT',
+  'LOAD_MANIFEST_FAILURE',
+  'LOAD_MANIFEST_SUCCESS',
+  'LOAD_MANIFEST',
+  'LOAD_PAGE_FAILURE',
+  'LOAD_PAGE_SUCCESS',
+  'LOAD_PAGE',
+  'LOAD_SECTION_FAILURE',
+  'LOAD_SECTION_SUCCESS',
+  'LOAD_SECTION',
+  'NAVIGATE',
+  'SET_SERVER_CONFIGURATION',
+])
 
 export const changeCourse = (course) => ({
   type: actionTypes.CHANGE_COURSE,
@@ -92,6 +94,7 @@ export const navigate = () => ({
 })
 
 export const setServerConfiguration = (
+  appRoot,
   contentRoot,
   staticRoot,
   sectionPathPrefix,
@@ -99,6 +102,7 @@ export const setServerConfiguration = (
 ) => ({
   type: actionTypes.SET_SERVER_CONFIGURATION,
   config: {
+    appRoot,
     contentRoot,
     staticRoot,
     sectionPathPrefix,

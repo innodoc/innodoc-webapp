@@ -2,10 +2,14 @@ import mongoose from 'mongoose'
 import passportLocalMongoose from 'passport-local-mongoose'
 
 const User = new mongoose.Schema({
-  username: String,
+  activated: Boolean,
+  email: String,
   password: String,
 })
 
-User.plugin(passportLocalMongoose)
+User.plugin(passportLocalMongoose, {
+  usernameField: 'email',
+  usernameLowerCase: true,
+})
 
 export default mongoose.model('User', User)

@@ -2,10 +2,9 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import session from 'express-session'
 import passport from 'passport'
-import LocalStrategy from 'passport-local'
 
 import User from './models/User'
-import userRoutes from './routes'
+import router from './routes'
 
 const setupExpressPassport = (app) => {
   app
@@ -20,8 +19,9 @@ const setupExpressPassport = (app) => {
     )
     .use(passport.initialize())
     .use(passport.session())
+    .use('/user', router)
 
-  passport.use(new LocalStrategy(User.authenticate()))
+  passport.use(User.createStrategy())
   passport.serializeUser(User.serializeUser())
   passport.deserializeUser(User.deserializeUser())
 
@@ -30,8 +30,6 @@ const setupExpressPassport = (app) => {
     useUnifiedTopology: true,
   })
   mongoose.set('debug', true)
-
-  userRoutes(app)
 }
 
 export default setupExpressPassport

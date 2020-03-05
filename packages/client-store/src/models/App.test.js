@@ -45,6 +45,7 @@ describe('App', () => {
     test('setServerConfiguration', () => {
       session.App.reducer(
         setServerConfiguration(
+          'https://app.example.com/',
           'https://content.example.com/',
           'https://cdn.example.com/',
           'sec',
@@ -53,6 +54,7 @@ describe('App', () => {
         session.App
       )
       const app = session.App.first().ref
+      expect(app.appRoot).toEqual('https://app.example.com/')
       expect(app.contentRoot).toEqual('https://content.example.com/')
       expect(app.staticRoot).toEqual('https://cdn.example.com/')
       expect(app.sectionPathPrefix).toEqual('sec')

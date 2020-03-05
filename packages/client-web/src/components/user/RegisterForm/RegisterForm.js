@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import Link from 'next/link'
 import { Button, Form, Input } from 'antd'
-import { UserAddOutlined, UserOutlined, LockOutlined } from '@ant-design/icons'
+import {
+  MailOutlined,
+  LoadingOutlined,
+  LockOutlined,
+  UserAddOutlined,
+} from '@ant-design/icons'
 
 import { useTranslation, Trans } from '@innodoc/client-misc/src/i18n'
+import { registerUser } from '@innodoc/client-store/src/actions/user'
 
 const LoginLink = () => {
   const { t } = useTranslation()
@@ -15,19 +22,17 @@ const LoginLink = () => {
 }
 
 const RegisterForm = () => {
+  const [disabled, setDisabled] = useState(false)
   const { t } = useTranslation()
-  // const onFinish = (values) => {
-  //   console.log('Success:', values)
-  // }
-  // const onFinishFailed = (errorInfo) => {
-  //   console.log('Failed:', errorInfo)
-  // }
-
-  // onFinish={onFinish}
-  // onFinishFailed={onFinishFailed}
+  const dispatch = useDispatch()
+  const onFinish = ({ email, password }) => {
+    dispatch(registerUser(email, password))
+    setDisabled(true)
+  }
   return (
     <Form
       name="register-form"
+      onFinish={onFinish}
       labelCol={{
         sm: { span: 24 },
         md: { span: 8 },
@@ -45,14 +50,36 @@ const RegisterForm = () => {
           { required: true, message: t('user.emailMissing') },
         ]}
       >
-        <Input prefix={<UserOutlined />} />
+        <Input disabled={disabled} prefix={<MailOutlined />} />
       </Form.Item>
+
       <Form.Item
         label={t('user.password')}
         name="password"
         rules={[{ required: true, message: t('user.passwordMissing') }]}
       >
-        <Input prefix={<LockOutlined />} type="password" />
+        <Input.Password disabled={disabled} prefix={<LockOutlined />} />
+      </Form.Item>
+
+      <Form.Item
+        dependencies={['password']}
+        hasFeedback
+        label={t('user.confirmPassword')}
+        name="confirm"
+        rules={[
+          {
+            required: true,
+            message: t('user.pleaseConfirmPassword'),
+          },
+          ({ getFieldValue }) => ({
+            validator: (rule, value) =>
+              !value || getFieldValue('password') === value
+                ? Promise.resolve()
+                : Promise.reject(new Error(t('user.passwordMismatch'))),
+          }),
+        ]}
+      >
+        <Input.Password disabled={disabled} prefix={<LockOutlined />} />
       </Form.Item>
 
       <Form.Item
@@ -61,8 +88,8 @@ const RegisterForm = () => {
           md: { span: 16, offset: 8 },
         }}
       >
-        <Button type="primary" htmlType="submit">
-          <UserAddOutlined />
+        <Button disabled={disabled} htmlType="submit" type="primary">
+          {disabled ? <LoadingOutlined /> : <UserAddOutlined />}
           {t('user.registerTitle')}
         </Button>
         <br />

@@ -54,6 +54,7 @@ class InnoDocApp extends App {
       // ctx.req/ctx.res not present when statically exported
       // set initial content URLs (passed from server/app configuration)
       const {
+        appRoot,
         contentRoot,
         staticRoot,
         sectionPathPrefix,
@@ -61,6 +62,7 @@ class InnoDocApp extends App {
       } = ctx.res.locals
       ctx.store.dispatch(
         setServerConfiguration(
+          appRoot,
           contentRoot,
           staticRoot,
           sectionPathPrefix,

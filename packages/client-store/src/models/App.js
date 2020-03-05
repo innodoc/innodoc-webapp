@@ -12,6 +12,7 @@ export default class App extends Model {
   static get fields() {
     return {
       id: attr({ getDefault: () => 0 }),
+      appRoot: attr(),
       contentRoot: attr({ getDefault: () => '' }),
       currentCourseId: oneToOne({
         to: 'Course',

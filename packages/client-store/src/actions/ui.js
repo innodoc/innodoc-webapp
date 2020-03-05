@@ -1,8 +1,10 @@
-export const actionTypes = {
-  CLEAR_MESSAGE: 'CLEAR_MESSAGE',
-  SHOW_MESSAGE: 'SHOW_MESSAGE',
-  TOGGLE_SIDEBAR: 'TOGGLE_SIDEBAR',
-}
+import makeActions from './makeActions'
+
+export const actionTypes = makeActions([
+  'CLEAR_MESSAGE',
+  'SHOW_MESSAGE',
+  'TOGGLE_SIDEBAR',
+])
 
 export const clearMessage = () => ({
   type: actionTypes.CLEAR_MESSAGE,
