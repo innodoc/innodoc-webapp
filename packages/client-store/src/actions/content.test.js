@@ -30,7 +30,7 @@ it('should dispatch LOAD_MANIFEST_SUCCESS action', () => {
 })
 
 it('should dispatch LOAD_MANIFEST_FAILURE action', () => {
-  const error = { msg: 'Something went wrong!' }
+  const error = new Error('Something went wrong!')
   expect(loadManifestFailure(error)).toEqual({
     type: actionTypes.LOAD_MANIFEST_FAILURE,
     error,
@@ -54,7 +54,7 @@ it('should dispatch LOAD_PAGE_SUCCESS action', () => {
 })
 
 it('should dispatch LOAD_PAGE_FAILURE action', () => {
-  const error = { msg: 'Something went wrong!' }
+  const error = new Error('Something went wrong!')
   expect(loadPageFailure(error)).toEqual({
     type: actionTypes.LOAD_PAGE_FAILURE,
     error,
@@ -78,7 +78,7 @@ it('should dispatch LOAD_SECTION_SUCCESS action', () => {
 })
 
 it('should dispatch LOAD_SECTION_FAILURE action', () => {
-  const error = { msg: 'Something went wrong!' }
+  const error = new Error('Something went wrong!')
   expect(loadSectionFailure(error)).toEqual({
     type: actionTypes.LOAD_SECTION_FAILURE,
     error,

@@ -2,8 +2,6 @@ import { call, put, select } from 'redux-saga/effects'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
-import { clearError } from '@innodoc/client-store/src/actions/content'
-import { showMessage } from '@innodoc/client-store/src/actions/ui'
 import { parseContentId } from '@innodoc/client-misc/src/util'
 
 import loadManifestSaga from './loadManifestSaga'
@@ -24,9 +22,6 @@ export default (
     if (!(yield select(courseSelectors.getCurrentCourse))) {
       yield call(loadManifestSaga)
     }
-
-    // Clear potential previous error
-    yield put(clearError())
 
     // Do not load exact same content another time
     const currentContent = yield select(getCurrentContent)
@@ -67,17 +62,12 @@ export default (
           )
         } catch (error) {
           yield put(loadContentFailure(error))
-          yield put(
-            showMessage({
-              title: 'Loading content failed!',
-              msg: error.message,
-              level: 'error',
-            })
-          )
         }
       }
     } else {
-      yield put(loadContentFailure({ statusCode: 404 }))
+      const error = new Error()
+      error.statusCode = 404
+      yield put(loadContentFailure(error))
     }
   }
   return loadContentSaga

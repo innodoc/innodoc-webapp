@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types'
 
+import { messageLevels, messageTypes } from './messageDef'
+
 const attributeType = PropTypes.PropTypes.arrayOf(PropTypes.array)
 
 const childrenType = PropTypes.oneOfType([
@@ -10,9 +12,9 @@ const childrenType = PropTypes.oneOfType([
 const contentType = PropTypes.arrayOf(PropTypes.object)
 
 const messageType = PropTypes.shape({
-  level: PropTypes.string.isRequired,
-  msg: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  level: PropTypes.oneOf(messageLevels).isRequired,
+  text: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(messageTypes).isRequired,
 })
 
 const sectionType = PropTypes.shape({

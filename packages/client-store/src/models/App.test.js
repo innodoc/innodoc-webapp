@@ -2,7 +2,6 @@ import orm from '../orm'
 
 import {
   changeCourse,
-  clearError,
   loadSectionFailure,
   loadPageFailure,
   setServerConfiguration,
@@ -36,12 +35,6 @@ describe('App', () => {
       expect(session.App.first().ref.error).toEqual('page error')
     })
 
-    test('clearError', () => {
-      session.App.first().set('error', {})
-      session.App.reducer(clearError(), session.App)
-      expect(session.App.first().ref.error).toBeUndefined()
-    })
-
     test('setServerConfiguration', () => {
       session.App.reducer(
         setServerConfiguration(
@@ -69,17 +62,6 @@ describe('App', () => {
     test('changeLanguage', () => {
       session.App.reducer(changeLanguage('en'), session.App)
       expect(session.App.first().ref.language).toEqual('en')
-    })
-
-    test('clearMessage', () => {
-      session.App.first().set('message', 'foo')
-      session.App.reducer(clearMessage(), session.App)
-      expect(session.App.first().ref.message).toBeUndefined()
-    })
-
-    test('showMessage', () => {
-      session.App.reducer(showMessage('bar'), session.App)
-      expect(session.App.first().ref.message).toEqual('bar')
     })
 
     test('toggleSidebar', () => {

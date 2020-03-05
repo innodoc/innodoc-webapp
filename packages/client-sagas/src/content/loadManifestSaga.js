@@ -7,7 +7,6 @@ import {
   loadManifestFailure,
   loadManifestSuccess,
 } from '@innodoc/client-store/src/actions/content'
-import { showMessage } from '@innodoc/client-store/src/actions/ui'
 import { fetchManifest } from '@innodoc/client-misc/src/api'
 
 export default function* loadManifestSaga() {
@@ -20,13 +19,6 @@ export default function* loadManifestSaga() {
       yield put(changeCourse(courses[0]))
     } catch (error) {
       yield put(loadManifestFailure(error))
-      yield put(
-        showMessage({
-          title: 'Loading content manifest failed!',
-          msg: error.message,
-          level: 'fatal',
-        })
-      )
     }
   }
 }

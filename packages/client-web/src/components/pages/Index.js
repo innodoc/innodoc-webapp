@@ -13,11 +13,7 @@ Index.getInitialProps = async (ctx) => {
     const course = courseSelectors.getCurrentCourse(ctx.store.getState())
     if (!course) {
       ctx.store.dispatch(
-        showMessage({
-          title: 'Error',
-          msg: 'Could not retrieve course!',
-          level: 'fatal',
-        })
+        showMessage('couldNotRetrieveCourse', 'Could not retrieve course!')
       )
       return {}
     }
@@ -25,11 +21,7 @@ Index.getInitialProps = async (ctx) => {
       ;[contentType, contentId] = parseLink(course.homeLink)
     } catch (e) {
       ctx.store.dispatch(
-        showMessage({
-          title: 'Could not parse homeLink!',
-          msg: e.message,
-          level: 'fatal',
-        })
+        showMessage('couldNotParseHomeLink', 'Could not parse homeLink!')
       )
       return {}
     }

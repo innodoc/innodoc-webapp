@@ -41,11 +41,15 @@
     "de": "Deutsch",
     "en": "English"
   },
-  "message": {
-    "title": {
-      "error": "Oh, nein! Ein Fehler ist aufgetreten.",
-      "fatal": "Fataler Fehler!",
-      "info": "Info"
+  "userMessage": {
+    "levels": {
+      "error": "Fehler!"
+    },
+    "types": {
+      "loadManifestFailure": {
+        "text": "Konnte Kurs-Manifest nicht laden. Die Fehlermeldung war:",
+        "title": "Laden des Manifests fehlgeschlagen!"
+      }
     }
   },
   "questions": {

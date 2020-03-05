@@ -41,11 +41,15 @@
     "de": "Deutsch",
     "en": "English"
   },
-  "message": {
-    "title": {
-      "error": "Oh no! An error occured.",
-      "fatal": "Fatal error!",
-      "info": "Info"
+  "userMessage": {
+    "levels": {
+      "error": "Error!"
+    },
+    "types": {
+      "loadManifestFailure": {
+        "text": "Couldn't load the course manifest. The error message was:",
+        "title": "Loading manifest failed!"
+      }
     }
   },
   "questions": {

@@ -5,7 +5,7 @@ import Layout from './Layout'
 import Sidebar from './Sidebar'
 import Header from './Header'
 import Footer from './Footer'
-import MessageModal from '../MessageModal'
+import MessageModal from './MessageModal'
 
 let mockApp
 const mockDispatch = jest.fn()

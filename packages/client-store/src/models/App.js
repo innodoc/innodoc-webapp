@@ -18,9 +18,7 @@ export default class App extends Model {
         to: 'Course',
         as: 'currentCourse',
       }),
-      error: attr(),
       language: attr(),
-      message: attr(),
       sidebarVisible: attr({ getDefault: () => false }),
       staticRoot: attr({ getDefault: () => '' }),
     }
@@ -30,14 +28,6 @@ export default class App extends Model {
     const app = AppModel.first()
     if (app) {
       switch (action.type) {
-        case contentActionTypes.CLEAR_ERROR:
-          app.set('error', undefined)
-          break
-        case contentActionTypes.LOAD_MANIFEST_FAILURE:
-        case contentActionTypes.LOAD_SECTION_FAILURE:
-        case contentActionTypes.LOAD_PAGE_FAILURE:
-          app.set('error', action.error)
-          break
         case contentActionTypes.SET_SERVER_CONFIGURATION:
           app.update(action.config)
           break
@@ -46,12 +36,6 @@ export default class App extends Model {
           break
         case i18nActionTypes.CHANGE_LANGUAGE:
           app.set('language', action.language)
-          break
-        case uiActionTypes.CLEAR_MESSAGE:
-          app.set('message', undefined)
-          break
-        case uiActionTypes.SHOW_MESSAGE:
-          app.set('message', action.data)
           break
         case uiActionTypes.TOGGLE_SIDEBAR: {
           app.set('sidebarVisible', !app.sidebarVisible)

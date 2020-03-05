@@ -1,18 +1,15 @@
-import { clearMessage, showMessage, toggleSidebar } from './ui'
+import { closeMessage, showMessage, toggleSidebar } from './ui'
 
-it('should dispatch CLEAR_MESSAGE action', () => {
-  expect(clearMessage()).toEqual({ type: 'CLEAR_MESSAGE' })
+it('should dispatch CLOSE_MESSAGE action', () => {
+  expect(closeMessage(6)).toEqual({ type: 'CLOSE_MESSAGE', id: 6 })
 })
 
 it('should dispatch SHOW_MESSAGE action', () => {
-  const message = {
-    title: 'Test message',
-    msg: 'This is a test.',
-    level: 'info',
-  }
-  expect(showMessage(message)).toEqual({
+  expect(showMessage('error', 'testError', 'message.test')).toEqual({
+    level: 'error',
+    message: 'message.test',
+    messageType: 'testError',
     type: 'SHOW_MESSAGE',
-    data: message,
   })
 })
 

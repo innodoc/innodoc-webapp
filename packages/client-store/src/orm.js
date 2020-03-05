@@ -8,6 +8,7 @@ import IndexTermLocation from './models/IndexTermLocation'
 import Page from './models/Page'
 import Question from './models/Question'
 import Section from './models/Section'
+import UserMessage from './models/UserMessage'
 
 const orm = new ORM({ stateSelector: (state) => state.orm })
 orm.register(
@@ -18,7 +19,8 @@ orm.register(
   IndexTermLocation,
   Page,
   Question,
-  Section
+  Section,
+  UserMessage
 )
 
 export default orm

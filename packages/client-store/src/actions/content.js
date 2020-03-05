@@ -2,7 +2,6 @@ import makeActions from './makeActions'
 
 export const actionTypes = makeActions([
   'CHANGE_COURSE',
-  'CLEAR_ERROR',
   'LOAD_FRAGMENT_FAILURE',
   'LOAD_FRAGMENT_SUCCESS',
   'LOAD_FRAGMENT',
@@ -22,10 +21,6 @@ export const actionTypes = makeActions([
 export const changeCourse = (course) => ({
   type: actionTypes.CHANGE_COURSE,
   course,
-})
-
-export const clearError = () => ({
-  type: actionTypes.CLEAR_ERROR,
 })
 
 export const loadFragmentFailure = (error) => ({

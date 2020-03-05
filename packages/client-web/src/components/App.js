@@ -78,17 +78,29 @@ class InnoDocApp extends App {
     }
 
     // build custom MathJax options
-    const { mathJaxOptions: courseMathJaxOptions } = await waitForCourse(
-      ctx.store
-    )
     const defaultMathJaxOptions = {
       chtml: { fontURL: DEFAULT_MATHJAX_FONT_URL },
     }
-    const mathJaxOptions = insert(
-      defaultMathJaxOptions,
-      courseMathJaxOptions,
-      false
-    )
+    let mathJaxOptions
+    let course
+    try {
+      course = await Promise.race([
+        waitForCourse(ctx.store),
+        new Promise((resolve, reject) => {
+          const timeoutId = setTimeout(() => {
+            clearTimeout(timeoutId)
+            reject()
+          }, 1000)
+        }),
+      ])
+      mathJaxOptions = insert(
+        defaultMathJaxOptions,
+        course.mathJaxOptions,
+        false
+      )
+    } catch (error) {
+      mathJaxOptions = defaultMathJaxOptions
+    }
 
     // page props
     const pageProps = Component.getInitialProps
