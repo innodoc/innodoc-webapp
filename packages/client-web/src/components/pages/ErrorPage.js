@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import { useRouter } from 'next/router'
 import { Button, Result } from 'antd'
 import { HomeOutlined } from '@ant-design/icons'
 
@@ -15,15 +14,9 @@ import Layout from '../Layout'
 const ErrorPage = ({ statusCode }) => {
   const { t } = useTranslation()
   const course = useSelector(courseSelectors.getCurrentCourse)
-  const router = useRouter()
-
-  if (!statusCode) {
-    router.replace(router.asPath)
-    return null
-  }
 
   const resultExtra = course ? (
-    <InternalLink href={course.homeLink} title="">
+    <InternalLink href={course.homeLink}>
       <Button icon={<HomeOutlined />} type="primary">
         {t('errorPage.backHome')}
       </Button>
@@ -57,7 +50,7 @@ ErrorPage.getInitialProps = ({ res, err }) => {
   }
   return {}
 }
-ErrorPage.defaultProps = { statusCode: null }
+ErrorPage.defaultProps = { statusCode: 500 }
 ErrorPage.propTypes = { statusCode: PropTypes.number }
 
 export default ErrorPage

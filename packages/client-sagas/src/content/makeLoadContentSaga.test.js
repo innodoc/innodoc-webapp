@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers'
 import { throwError } from 'redux-saga-test-plan/providers'
 import { call, select } from 'redux-saga/effects'
 
-import { actionTypes as uiActionTypes } from '@innodoc/client-store/src/actions/ui'
+import { contentNotFound } from '@innodoc/client-store/src/actions/content'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import { parseContentId } from '@innodoc/client-misc/src/util'
@@ -84,10 +84,10 @@ describe('makeLoadContentSaga', () => {
       .not.put.actionType('LOAD_CONTENT_FAILURE')
       .run())
 
-  it('should produce 404 for non-existant contentId', () =>
+  it('should put contentNotFound for non-existent contentId', () =>
     expectSaga(loadContentSaga, loadContent(contentIdHash))
       .provide([[select(contentExists, contentId), false], ...defaultProvides])
-      .put(loadContentFailure({ statusCode: 404 }))
+      .put(contentNotFound())
       .not.call.fn(fetchContent)
       .not.put.actionType('LOAD_CONTENT_SUCCESS')
       .run())
@@ -106,7 +106,7 @@ describe('makeLoadContentSaga', () => {
       .not.put.actionType('LOAD_CONTENT_FAILURE')
       .run())
 
-  it('should fail and show message if fetch fails', () => {
+  it('should put loadContentFailure if fetch fails', () => {
     const error = new Error('mock error')
     return expectSaga(loadContentSaga, loadContent(contentIdHash))
       .provide([
@@ -114,7 +114,6 @@ describe('makeLoadContentSaga', () => {
         ...defaultProvides,
       ])
       .put(loadContentFailure(error))
-      .put.actionType(uiActionTypes.SHOW_MESSAGE)
       .not.put.actionType('LOAD_CONTENT_SUCCESS')
       .run()
   })

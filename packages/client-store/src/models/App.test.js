@@ -2,13 +2,12 @@ import orm from '../orm'
 
 import {
   changeCourse,
-  clearError,
-  loadSectionFailure,
-  loadPageFailure,
+  contentNotFound,
+  routeChangeStart,
   setServerConfiguration,
 } from '../actions/content'
 import { changeLanguage } from '../actions/i18n'
-import { clearMessage, showMessage, toggleSidebar } from '../actions/ui'
+import { toggleSidebar } from '../actions/ui'
 
 describe('App', () => {
   let session
@@ -26,25 +25,10 @@ describe('App', () => {
   })
 
   describe('reducer', () => {
-    test('loadSectionFailure', () => {
-      session.App.reducer(loadSectionFailure('section error'), session.App)
-      expect(session.App.first().ref.error).toEqual('section error')
-    })
-
-    test('loadPageFailure', () => {
-      session.App.reducer(loadPageFailure('page error'), session.App)
-      expect(session.App.first().ref.error).toEqual('page error')
-    })
-
-    test('clearError', () => {
-      session.App.first().set('error', {})
-      session.App.reducer(clearError(), session.App)
-      expect(session.App.first().ref.error).toBeUndefined()
-    })
-
     test('setServerConfiguration', () => {
       session.App.reducer(
         setServerConfiguration(
+          'https://app.example.com/',
           'https://content.example.com/',
           'https://cdn.example.com/',
           'sec',
@@ -53,6 +37,7 @@ describe('App', () => {
         session.App
       )
       const app = session.App.first().ref
+      expect(app.appRoot).toEqual('https://app.example.com/')
       expect(app.contentRoot).toEqual('https://content.example.com/')
       expect(app.staticRoot).toEqual('https://cdn.example.com/')
       expect(app.sectionPathPrefix).toEqual('sec')
@@ -64,20 +49,19 @@ describe('App', () => {
       expect(session.App.first().ref.currentCourseId).toEqual(17)
     })
 
+    test('contentNotFound', () => {
+      session.App.reducer(contentNotFound(), session.App)
+      expect(session.App.first().ref.show404).toEqual(true)
+    })
+
+    test('routeChangeStart', () => {
+      session.App.reducer(routeChangeStart(), session.App)
+      expect(session.App.first().ref.show404).toEqual(false)
+    })
+
     test('changeLanguage', () => {
       session.App.reducer(changeLanguage('en'), session.App)
       expect(session.App.first().ref.language).toEqual('en')
-    })
-
-    test('clearMessage', () => {
-      session.App.first().set('message', 'foo')
-      session.App.reducer(clearMessage(), session.App)
-      expect(session.App.first().ref.message).toBeUndefined()
-    })
-
-    test('showMessage', () => {
-      session.App.reducer(showMessage('bar'), session.App)
-      expect(session.App.first().ref.message).toEqual('bar')
     })
 
     test('toggleSidebar', () => {

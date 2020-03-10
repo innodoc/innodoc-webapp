@@ -53,7 +53,7 @@ export default class Course extends Model {
         }
         break
       }
-      case contentActionTypes.NAVIGATE: {
+      case contentActionTypes.ROUTE_CHANGE_START: {
         const course = CourseModel.first()
         if (course) {
           course.update({

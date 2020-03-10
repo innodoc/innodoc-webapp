@@ -1,22 +1,44 @@
 import 'isomorphic-unfetch'
 
-const fetchJson = (url) =>
-  fetch(url).then((response) => {
-    if (!response.ok) {
-      return Promise.reject(
-        new Error(
-          `Could not fetch JSON data. (Status: ${response.status} URL: ${url})`
+const getJson = (url) =>
+  fetch(url).then((response) =>
+    response.ok
+      ? response.json()
+      : Promise.reject(
+          new Error(
+            `Could not fetch JSON data. (Status: ${response.status} URL: ${url})`
+          )
         )
-      )
-    }
-    return response.json()
-  })
+  )
 
-export const fetchFragment = (contentRoot, language, fragmentId) =>
-  fetchJson(`${contentRoot}${language}/${fragmentId}.json`)
-export const fetchManifest = (contentRoot) =>
-  fetchJson(`${contentRoot}manifest.json`)
-export const fetchSection = (contentRoot, language, sectionId) =>
-  fetchJson(`${contentRoot}${language}/${sectionId}/content.json`)
-export const fetchPage = (contentRoot, language, pageId) =>
-  fetchJson(`${contentRoot}${language}/_pages/${pageId}.json`)
+const postJson = (url, data) =>
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }).then((response) =>
+    response.ok
+      ? response.json()
+      : response
+          .json()
+          .then((respData) => Promise.reject(new Error(respData.result)))
+  )
+
+export const fetchFragment = (base, language, fragmentId) =>
+  getJson(`${base}${language}/${fragmentId}.json`)
+
+export const fetchManifest = (base) => getJson(`${base}manifest.json`)
+
+export const fetchSection = (base, language, sectionId) =>
+  getJson(`${base}${language}/${sectionId}/content.json`)
+
+export const fetchPage = (base, language, pageId) =>
+  getJson(`${base}${language}/_pages/${pageId}.json`)
+
+export const registerUser = (base, email, password) =>
+  postJson(`${base}user/register`, { email, password })
+
+export const loginUser = (base, email, password) =>
+  postJson(`${base}user/login`, { email, password })

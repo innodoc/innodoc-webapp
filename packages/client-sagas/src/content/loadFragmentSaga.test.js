@@ -3,7 +3,6 @@ import * as matchers from 'redux-saga-test-plan/matchers'
 import { throwError } from 'redux-saga-test-plan/providers'
 import { select } from 'redux-saga/effects'
 
-import { actionTypes as uiActionTypes } from '@innodoc/client-store/src/actions/ui'
 import {
   actionTypes,
   loadFragment,
@@ -59,7 +58,7 @@ describe('loadFragmentSaga', () => {
       )
       .run())
 
-  it('should put loadFragmentFailure and not show message if fetch fails', () => {
+  it('should put loadFragmentFailure if fetch fails', () => {
     const error = new Error('mock error')
     return expectSaga(loadFragmentSaga, loadFragment(contentId))
       .provide([
@@ -67,7 +66,6 @@ describe('loadFragmentSaga', () => {
         ...defaultProvides,
       ])
       .put(loadFragmentFailure(error))
-      .not.put.actionType(uiActionTypes.SHOW_MESSAGE)
       .not.put.actionType(actionTypes.LOAD_FRAGMENT_SUCCESS)
       .run()
   })

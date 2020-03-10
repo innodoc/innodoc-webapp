@@ -1,16 +1,19 @@
-export const actionTypes = {
-  CLEAR_MESSAGE: 'CLEAR_MESSAGE',
-  SHOW_MESSAGE: 'SHOW_MESSAGE',
-  TOGGLE_SIDEBAR: 'TOGGLE_SIDEBAR',
-}
+import makeActions from './makeActions'
 
-export const clearMessage = () => ({
-  type: actionTypes.CLEAR_MESSAGE,
+export const actionTypes = makeActions([
+  'CLOSE_MESSAGE',
+  'SHOW_MESSAGE',
+  'TOGGLE_SIDEBAR',
+])
+
+export const closeMessage = (id) => ({
+  type: actionTypes.CLOSE_MESSAGE,
+  id,
 })
 
-export const showMessage = (data) => ({
+export const showMessage = (msg) => ({
   type: actionTypes.SHOW_MESSAGE,
-  data,
+  msg,
 })
 
 export const toggleSidebar = () => ({

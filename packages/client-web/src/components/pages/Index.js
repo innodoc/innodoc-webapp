@@ -1,6 +1,5 @@
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
-import { showMessage } from '@innodoc/client-store/src/actions/ui'
 import { parseLink } from '@innodoc/client-misc/src/util'
 import getLinkInfo from '../../getLinkInfo'
 
@@ -8,31 +7,19 @@ const Index = () => null
 
 Index.getInitialProps = async (ctx) => {
   if (ctx.store && ctx.res) {
-    let contentType
-    let contentId
     const course = courseSelectors.getCurrentCourse(ctx.store.getState())
     if (!course) {
-      ctx.store.dispatch(
-        showMessage({
-          title: 'Error',
-          msg: 'Could not retrieve course!',
-          level: 'fatal',
-        })
-      )
-      return {}
+      throw new Error('Could not retrieve course!')
     }
+
+    let parsedHomeLink
     try {
-      ;[contentType, contentId] = parseLink(course.homeLink)
+      parsedHomeLink = parseLink(course.homeLink)
     } catch (e) {
-      ctx.store.dispatch(
-        showMessage({
-          title: 'Could not parse homeLink!',
-          msg: e.message,
-          level: 'fatal',
-        })
-      )
-      return {}
+      throw new Error(`Could not parse homeLink: ${course.homeLink}`)
     }
+    const [contentType, contentId] = parsedHomeLink
+
     const { pagePathPrefix, sectionPathPrefix } = appSelectors.getApp(
       ctx.store.getState()
     )

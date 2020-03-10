@@ -1,7 +1,6 @@
-export const actionTypes = {
-  CHANGE_LANGUAGE: 'CHANGE_LANGUAGE',
-  LANGUAGE_DETECTED: 'LANGUAGE_DETECTED',
-}
+import makeActions from './makeActions'
+
+export const actionTypes = makeActions(['CHANGE_LANGUAGE', 'LANGUAGE_DETECTED'])
 
 export const changeLanguage = (language, prevLanguage = undefined) => ({
   type: actionTypes.CHANGE_LANGUAGE,

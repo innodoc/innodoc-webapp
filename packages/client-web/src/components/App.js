@@ -17,7 +17,7 @@ import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import makeMakeStore from '@innodoc/client-store/src/store'
 import {
   loadManifest,
-  navigate,
+  routeChangeStart,
   setServerConfiguration,
 } from '@innodoc/client-store/src/actions/content'
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
@@ -54,6 +54,7 @@ class InnoDocApp extends App {
       // ctx.req/ctx.res not present when statically exported
       // set initial content URLs (passed from server/app configuration)
       const {
+        appRoot,
         contentRoot,
         staticRoot,
         sectionPathPrefix,
@@ -61,6 +62,7 @@ class InnoDocApp extends App {
       } = ctx.res.locals
       ctx.store.dispatch(
         setServerConfiguration(
+          appRoot,
           contentRoot,
           staticRoot,
           sectionPathPrefix,
@@ -76,22 +78,35 @@ class InnoDocApp extends App {
     }
 
     // build custom MathJax options
-    const { mathJaxOptions: courseMathJaxOptions } = await waitForCourse(
-      ctx.store
-    )
     const defaultMathJaxOptions = {
       chtml: { fontURL: DEFAULT_MATHJAX_FONT_URL },
     }
-    const mathJaxOptions = insert(
-      defaultMathJaxOptions,
-      courseMathJaxOptions,
-      false
-    )
+    let mathJaxOptions
+    let course
+    try {
+      course = await Promise.race([
+        waitForCourse(ctx.store),
+        new Promise((resolve, reject) => {
+          const timeoutId = setTimeout(() => {
+            clearTimeout(timeoutId)
+            reject()
+          }, 1000)
+        }),
+      ])
+      mathJaxOptions = insert(
+        defaultMathJaxOptions,
+        course.mathJaxOptions,
+        false
+      )
+    } catch (error) {
+      mathJaxOptions = defaultMathJaxOptions
+    }
 
     // page props
     const pageProps = Component.getInitialProps
       ? await Component.getInitialProps(ctx)
       : {}
+
     return {
       pageProps: {
         ...pageProps,
@@ -101,12 +116,17 @@ class InnoDocApp extends App {
     }
   }
 
+  componentDidMount() {
+    // Notify store about route change
+    Router.events.on('routeChangeStart', this.props.dispatchRouteChangeStart)
+  }
+
+  componentWillUnmount() {
+    Router.events.off('routeChangeStart', this.props.dispatchRouteChangeStart)
+  }
+
   render() {
-    const { Component, dispatchNavigate, pageProps, store } = this.props
-
-    // inform store about route changes
-    Router.events.on('routeChangeStart', dispatchNavigate)
-
+    const { Component, pageProps, store } = this.props
     return (
       <>
         <Head>
@@ -133,6 +153,8 @@ export default withRedux(
   withReduxConfig
 )(
   appWithTranslation(
-    withReduxSaga(connect(null, { dispatchNavigate: navigate })(InnoDocApp))
+    withReduxSaga(
+      connect(null, { dispatchRouteChangeStart: routeChangeStart })(InnoDocApp)
+    )
   )
 )

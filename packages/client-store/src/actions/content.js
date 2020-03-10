@@ -1,29 +1,31 @@
-export const actionTypes = {
-  CHANGE_COURSE: 'CHANGE_COURSE',
-  CLEAR_ERROR: 'CLEAR_ERROR',
-  LOAD_FRAGMENT_FAILURE: 'LOAD_FRAGMENT_FAILURE',
-  LOAD_FRAGMENT_SUCCESS: 'LOAD_FRAGMENT_SUCCESS',
-  LOAD_FRAGMENT: 'LOAD_FRAGMENT',
-  LOAD_MANIFEST_FAILURE: 'LOAD_MANIFEST_FAILURE',
-  LOAD_MANIFEST_SUCCESS: 'LOAD_MANIFEST_SUCCESS',
-  LOAD_MANIFEST: 'LOAD_MANIFEST',
-  LOAD_PAGE_FAILURE: 'LOAD_PAGE_FAILURE',
-  LOAD_PAGE_SUCCESS: 'LOAD_PAGE_SUCCESS',
-  LOAD_PAGE: 'LOAD_PAGE',
-  LOAD_SECTION_FAILURE: 'LOAD_SECTION_FAILURE',
-  LOAD_SECTION_SUCCESS: 'LOAD_SECTION_SUCCESS',
-  LOAD_SECTION: 'LOAD_SECTION',
-  NAVIGATE: 'NAVIGATE',
-  SET_SERVER_CONFIGURATION: 'SET_SERVER_CONFIGURATION',
-}
+import makeActions from './makeActions'
+
+export const actionTypes = makeActions([
+  'CHANGE_COURSE',
+  'CONTENT_NOT_FOUND',
+  'LOAD_FRAGMENT_FAILURE',
+  'LOAD_FRAGMENT_SUCCESS',
+  'LOAD_FRAGMENT',
+  'LOAD_MANIFEST_FAILURE',
+  'LOAD_MANIFEST_SUCCESS',
+  'LOAD_MANIFEST',
+  'LOAD_PAGE_FAILURE',
+  'LOAD_PAGE_SUCCESS',
+  'LOAD_PAGE',
+  'LOAD_SECTION_FAILURE',
+  'LOAD_SECTION_SUCCESS',
+  'LOAD_SECTION',
+  'ROUTE_CHANGE_START',
+  'SET_SERVER_CONFIGURATION',
+])
 
 export const changeCourse = (course) => ({
   type: actionTypes.CHANGE_COURSE,
   course,
 })
 
-export const clearError = () => ({
-  type: actionTypes.CLEAR_ERROR,
+export const contentNotFound = () => ({
+  type: actionTypes.CONTENT_NOT_FOUND,
 })
 
 export const loadFragmentFailure = (error) => ({
@@ -87,11 +89,12 @@ export const loadSection = (contentId, prevLanguage = undefined) => ({
   contentId,
 })
 
-export const navigate = () => ({
-  type: actionTypes.NAVIGATE,
+export const routeChangeStart = () => ({
+  type: actionTypes.ROUTE_CHANGE_START,
 })
 
 export const setServerConfiguration = (
+  appRoot,
   contentRoot,
   staticRoot,
   sectionPathPrefix,
@@ -99,6 +102,7 @@ export const setServerConfiguration = (
 ) => ({
   type: actionTypes.SET_SERVER_CONFIGURATION,
   config: {
+    appRoot,
     contentRoot,
     staticRoot,
     sectionPathPrefix,

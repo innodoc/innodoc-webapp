@@ -20,6 +20,7 @@ describe('makeStore', () => {
     expect(state.orm.Page).toBeDefined()
     expect(state.orm.Question).toBeDefined()
     expect(state.orm.Section).toBeDefined()
+    expect(state.orm.UserMessage).toBeDefined()
     expect(orm.session(store.getState())).toBeInstanceOf(Session)
   })
 })

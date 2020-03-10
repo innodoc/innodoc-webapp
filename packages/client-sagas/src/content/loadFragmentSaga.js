@@ -39,6 +39,5 @@ export default function* loadFragmentSaga({ contentId }) {
     }
   } catch (error) {
     yield put(loadFragmentFailure(error))
-    // No message is shown as fragments should fail silently
   }
 }

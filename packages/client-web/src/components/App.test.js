@@ -60,19 +60,19 @@ describe('<InnoDocApp />', () => {
     })
 
     it('should subscribe to Router.routeChangeStart', () => {
-      const dispatchNavigate = () => {}
+      const dispatchRouteChangeStart = () => {}
       Router.events.on.mockClear()
       shallow(
         <InnoDocApp
           Component={DummyComponent}
-          dispatchNavigate={dispatchNavigate}
+          dispatchRouteChangeStart={dispatchRouteChangeStart}
           pageProps={{}}
           store={mockStore}
         />
       )
       expect(Router.events.on).toBeCalledTimes(1)
       expect(Router.events.on.mock.calls[0][0]).toBe('routeChangeStart')
-      expect(Router.events.on.mock.calls[0][1]).toBe(dispatchNavigate)
+      expect(Router.events.on.mock.calls[0][1]).toBe(dispatchRouteChangeStart)
     })
   })
 
@@ -100,6 +100,7 @@ describe('<InnoDocApp />', () => {
         store: mockStore,
         res: {
           locals: {
+            appRoot: 'https://app.example.com/',
             contentRoot: 'https://content.example.com/',
             staticRoot: 'https://cdn.example.com/',
             sectionPathPrefix: 'section',
@@ -112,6 +113,7 @@ describe('<InnoDocApp />', () => {
       expect(mockStore.dispatch).toBeCalledTimes(3)
       expect(mockStore.dispatch).toBeCalledWith(
         setServerConfiguration(
+          'https://app.example.com/',
           'https://content.example.com/',
           'https://cdn.example.com/',
           'section',
@@ -229,7 +231,7 @@ describe('waitForCourse', () => {
 
   it('should reject with error', async () => {
     expect.assertions(2)
-    const error = { error: 'foo' }
+    const error = new Error('foo')
     mockGetApp = () => ({ error })
     mockGetCurrentCourse = () => {}
     const waitForCoursePromise = waitForCourse(mockStore)

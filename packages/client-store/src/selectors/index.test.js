@@ -5,9 +5,9 @@ const app = {
   id: 0,
   contentRoot: 'http://root/to/conent',
   currentCourse: 5,
-  error: 'error',
   language: 'en',
   message: 'custom message',
+  show404: false,
   sidebarVisible: true,
   staticRoot: 'https://cdn.example.com/',
 }

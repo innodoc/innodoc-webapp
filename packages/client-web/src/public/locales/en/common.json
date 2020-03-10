@@ -2,6 +2,7 @@
   "common": {
     "hideToc": "Close table of contents",
     "index": "Index",
+    "ok": "OK",
     "showToc": "Show Table of Contents",
     "toc": "Table of contents"
   },
@@ -29,13 +30,11 @@
     "backHome": "Back home"
   },
   "header": {
-    "createAccount": "Create Account",
     "downloadPDF": "PDF",
     "downloadPDFTitle": "Download PDF",
     "language": "Language",
     "linkDE": "German",
     "linkEN": "English",
-    "login": "Login",
     "menu": "Menu",
     "searchPlaceholder": "Search…"
   },
@@ -43,11 +42,19 @@
     "de": "Deutsch",
     "en": "English"
   },
-  "message": {
-    "title": {
-      "error": "Oh no! An error occured.",
-      "fatal": "Fatal error!",
-      "info": "Info"
+  "userMessage": {
+    "levels": {
+      "error": "Error!"
+    },
+    "types": {
+      "loadManifestFailure": {
+        "text": "Couldn't load the course manifest. The error message was:",
+        "title": "Loading manifest failed!"
+      },
+      "loadSectionFailure": {
+        "text": "Couldn't load section. The error message was:",
+        "title": "Loading section failed!"
+      }
     }
   },
   "questions": {
@@ -57,5 +64,21 @@
       "indeterminate": "No result yet"
     },
     "inputFeedback": "Input"
+  },
+  "user": {
+    "confirmPassword": "Confirm Password",
+    "createAccount": "create account",
+    "email": "Email",
+    "emailInvalid": "Please enter valid email!",
+    "emailMissing": "Please input your email!",
+    "loginTitle": "Login",
+    "orCreateAccount": "or <1></1>",
+    "orLogin": "or <1></1> if you already have an account.",
+    "password": "Password",
+    "passwordMismatch": "The passwords you entered have to match!",
+    "passwordMissing": "Please input your password!",
+    "pleaseConfirmPassword": "Please confirm your password!",
+    "registerTitle": "Create account",
+    "signIn": "Sign-in"
   }
 }

@@ -5,18 +5,18 @@ import Layout from './Layout'
 import Sidebar from './Sidebar'
 import Header from './Header'
 import Footer from './Footer'
-import MessageModal from '../MessageModal'
+import MessageModal from './MessageModal'
 
-let mockApp
+let mockLatestMessage
 const mockDispatch = jest.fn()
 jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
-  useSelector: () => mockApp,
+  useSelector: () => mockLatestMessage,
 }))
 
 describe('<Layout />', () => {
   beforeEach(() => {
-    mockApp = {}
+    mockLatestMessage = undefined
   })
 
   describe('default', () => {
@@ -47,12 +47,11 @@ describe('<Layout />', () => {
   describe('with message', () => {
     beforeEach(() => {
       mockDispatch.mockClear()
-      mockApp = {
-        message: {
-          level: 'test',
-          msg: 'This is a test!',
-          title: 'Test message',
-        },
+      mockLatestMessage = {
+        closable: false,
+        level: 'error',
+        text: 'Error message',
+        type: 'loadManifestFailure',
       }
     })
 
@@ -62,7 +61,7 @@ describe('<Layout />', () => {
           <div />
         </Layout>
       )
-      expect(wrapper.find(MessageModal).exists()).toBe(true)
+      expect(wrapper.find(MessageModal).prop('message')).toBe(mockLatestMessage)
     })
 
     it('should dispatch clearMessage on modal close', () => {

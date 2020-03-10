@@ -2,6 +2,7 @@
   "common": {
     "hideToc": "Inhaltsverzeichnis schließen",
     "index": "Stichwortverzeichnis",
+    "ok": "OK",
     "showToc": "Inhaltsverzeichnis öffnen",
     "toc": "Inhaltsverzeichnis"
   },
@@ -29,13 +30,11 @@
     "backHome": "Zurück zu Home"
   },
   "header": {
-    "createAccount": "Konto erstellen",
     "downloadPDF": "PDF",
     "downloadPDFTitle": "PDF herunterladen",
     "language": "Sprache",
     "linkDE": "Deutsch",
     "linkEN": "Englisch",
-    "login": "Login",
     "menu": "Menü",
     "searchPlaceholder": "Suche…"
   },
@@ -43,11 +42,19 @@
     "de": "Deutsch",
     "en": "English"
   },
-  "message": {
-    "title": {
-      "error": "Oh, nein! Ein Fehler ist aufgetreten.",
-      "fatal": "Fataler Fehler!",
-      "info": "Info"
+  "userMessage": {
+    "levels": {
+      "error": "Fehler!"
+    },
+    "types": {
+      "loadManifestFailure": {
+        "text": "Konnte Kurs-Manifest nicht laden. Die Fehlermeldung war:",
+        "title": "Laden des Manifests fehlgeschlagen!"
+      },
+      "loadSectionFailure": {
+        "text": "Konnte Abschnitt nicht laden. Die Fehlermeldung war:",
+        "title": "Laden des Abschnitts fehlgeschlagen!"
+      }
     }
   },
   "questions": {
@@ -57,5 +64,21 @@
       "indeterminate": "Noch kein Ergebnis"
     },
     "inputFeedback": "Eingabe"
+  },
+  "user": {
+    "confirmPassword": "Passwort bestätigen",
+    "createAccount": "Konto erstellen",
+    "email": "E-Mail",
+    "emailInvalid": "Bitte gültige E-Mail eintragen!",
+    "emailMissing": "Bitte E-Mail eintragen!",
+    "loginTitle": "Login",
+    "orCreateAccount": "oder <1></1>",
+    "orLogin": "oder <1></1> wenn Du schon ein Konto hast.",
+    "password": "Passwort",
+    "passwordMismatch": "Beide Passwörter müssen übereinstimmen!",
+    "passwordMissing": "Bitte Passwort eintragen!",
+    "pleaseConfirmPassword": "Bitte Passwort bestätigen!",
+    "registerTitle": "Konto erstellen",
+    "signIn": "Einloggen"
   }
 }

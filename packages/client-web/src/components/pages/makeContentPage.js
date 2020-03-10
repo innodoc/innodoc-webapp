@@ -2,27 +2,18 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import MathJax from '@innodoc/react-mathjax-node'
 
+import { contentNotFound } from '@innodoc/client-store/src/actions/content'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import Layout from '../Layout'
 import ErrorPage from './ErrorPage'
 
-export default (ContentComponent, load, loadFailure) => {
+export default (ContentComponent, load) => {
   const ContentPage = () => {
-    const { error } = useSelector(appSelectors.getApp)
-
-    if (error) {
-      // workaround for setting the status code (client and server)
-      // https://github.com/zeit/next.js/issues/4451#issuecomment-438096614
-      if (process.browser) {
-        return <ErrorPage statusCode={error.statusCode} />
-      }
-      const e = new Error()
-      e.code = 'ENOENT'
-      throw e
-    }
-
-    return (
+    const { show404 } = useSelector(appSelectors.getApp)
+    return show404 ? (
+      <ErrorPage statusCode={404} />
+    ) : (
       <Layout>
         <MathJax.Provider>
           <ContentComponent />
@@ -34,9 +25,7 @@ export default (ContentComponent, load, loadFailure) => {
   ContentPage.getInitialProps = ({ query, store }) => {
     const { language } = appSelectors.getApp(store.getState())
     store.dispatch(
-      query.contentId
-        ? load(query.contentId, language)
-        : loadFailure({ error: { statusCode: 404 } })
+      query.contentId ? load(query.contentId, language) : contentNotFound()
     )
     return {}
   }

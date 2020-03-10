@@ -1,8 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { actionTypes as uiActionTypes } from '@innodoc/client-store/src/actions/ui'
-
 import Index from './Index'
 
 jest.mock('../Layout', () => () => null)
@@ -56,16 +54,15 @@ describe.each(['page', 'section'])('getInitialProps (%s)', (contentType) => {
   })
 
   it.each([
-    ["course couldn't be fetched", null],
-    ["homeLink couldn't be parsed", { homeLink: '/foo/bar' }],
-  ])('should dispatch showMessaage when %s', async (_, course) => {
-    expect.assertions(4)
+    ["course couldn't be fetched", undefined, 'Could not retrieve course!'],
+    [
+      "homeLink couldn't be parsed",
+      { homeLink: 'borken' },
+      'Could not parse homeLink: borken',
+    ],
+  ])('should throw if %s', async (_, course, errMsg) => {
     mockCourse = course
-    const props = await Index.getInitialProps(ctx)
-    expect(props).toEqual({})
-    expect(ctx.store.dispatch.mock.calls[0][0].type).toBe(
-      uiActionTypes.SHOW_MESSAGE
-    )
+    await expect(Index.getInitialProps(ctx)).rejects.toEqual(new Error(errMsg))
     expect(ctx.res.writeHead).not.toHaveBeenCalled()
     expect(ctx.res.end).not.toHaveBeenCalled()
   })

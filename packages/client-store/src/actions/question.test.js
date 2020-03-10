@@ -1,6 +1,6 @@
 import { actionTypes, questionAnswered, questionSolved } from './question'
 
-test('dispatch QUESTION_ANSWERED', () => {
+test('QUESTION_ANSWERED', () => {
   const data = { foo: 'bar' }
   expect(questionAnswered(data)).toEqual({
     type: actionTypes.QUESTION_ANSWERED,
@@ -8,7 +8,7 @@ test('dispatch QUESTION_ANSWERED', () => {
   })
 })
 
-test('dispatch QUESTION_SOLVED', () => {
+test('QUESTION_SOLVED', () => {
   const data = { foo: 'bar' }
   expect(questionSolved(data)).toEqual({
     type: actionTypes.QUESTION_SOLVED,

@@ -1,7 +1,6 @@
-export const actionTypes = {
-  QUESTION_ANSWERED: 'QUESTION_ANSWERED',
-  QUESTION_SOLVED: 'QUESTION_SOLVED',
-}
+import makeActions from './makeActions'
+
+export const actionTypes = makeActions(['QUESTION_ANSWERED', 'QUESTION_SOLVED'])
 
 export const questionAnswered = (data) => ({
   data,

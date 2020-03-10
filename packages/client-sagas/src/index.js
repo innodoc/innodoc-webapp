@@ -1,9 +1,17 @@
 import { all } from 'redux-saga/effects'
 
-import i18nSagas from './i18n'
 import contentSagas from './content'
+import i18nSagas from './i18n'
 import questionSagas from './question'
+import uiSagas from './ui'
+import userSagas from './user'
 
 export default function* rootSaga() {
-  yield all([...i18nSagas, ...contentSagas, ...questionSagas])
+  yield all([
+    ...contentSagas,
+    ...i18nSagas,
+    ...questionSagas,
+    ...uiSagas,
+    ...userSagas,
+  ])
 }

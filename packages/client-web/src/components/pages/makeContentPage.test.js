@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import { contentNotFound } from '@innodoc/client-store/src/actions/content'
 import makeContentPage from './makeContentPage'
 import ErrorPage from './ErrorPage'
 import Layout from '../Layout'
@@ -12,19 +13,15 @@ jest.mock('@innodoc/client-store/src/selectors', () => ({
   makeMakeGetContentLink: () => {},
   selectId: () => {},
 }))
-const ContentComponent = () => 'Content'
-let ContentPage
-const loadContent = () => ({ action: 'mockLoadContent' })
-const loadContentFailure = () => ({ action: 'mockLoadContentFailure' })
 
 describe('makeContentPage', () => {
+  const ContentComponent = () => 'Content'
+  const loadContent = () => ({ action: 'mockLoadContent' })
+  let ContentPage
+
   beforeEach(() => {
     mockApp = { language: 'en' }
-    ContentPage = makeContentPage(
-      ContentComponent,
-      loadContent,
-      loadContentFailure
-    )
+    ContentPage = makeContentPage(ContentComponent, loadContent)
   })
 
   it('should render', () => {
@@ -50,32 +47,17 @@ describe('makeContentPage', () => {
       expect(store.dispatch).toBeCalledWith(loadContent('foo/bar', 'en'))
     })
 
-    it('should dispatch loadSectionFailure without sectionId', () => {
+    it('should dispatch contentNotFound without sectionId', () => {
       const query = {}
       ContentPage.getInitialProps({ query, store })
-      expect(store.dispatch).toBeCalledWith(
-        loadContentFailure({ error: { statusCode: 404 } })
-      )
+      expect(store.dispatch).toBeCalledWith(contentNotFound())
     })
   })
 
-  describe('handle 404 error', () => {
-    beforeEach(() => {
-      mockApp = { error: { statusCode: 404 } }
-    })
-
-    it('should throw on a 404 (server)', () => {
-      process.browser = false
-      expect(() => {
-        shallow(<ContentPage />)
-      }).toThrow()
-    })
-
-    it('should render error on a 404 (client)', () => {
-      process.browser = true
-      const wrapper = shallow(<ContentPage />)
-      expect(wrapper.find(ErrorPage).exists()).toBe(true)
-      expect(wrapper.find(Layout).exists()).toBe(false)
-    })
+  it('should show error page for 404', () => {
+    mockApp = { show404: true }
+    const wrapper = shallow(<ContentPage />)
+    expect(wrapper.find(ErrorPage).prop('statusCode')).toBe(404)
+    expect(wrapper.find(Layout).exists()).toBe(false)
   })
 })

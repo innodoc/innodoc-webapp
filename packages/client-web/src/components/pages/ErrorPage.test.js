@@ -36,11 +36,6 @@ describe('<ErrorPage />', () => {
     expect(mockRouter.replace).not.toBeCalled()
   })
 
-  it('should call router.replace() if without statusCode', () => {
-    shallow(<ErrorPage />)
-    expect(mockRouter.replace).toBeCalledWith('/current/url')
-  })
-
   describe('getInitialProps', () => {
     it('should extract status code from response', async () => {
       const { statusCode } = await ErrorPage.getInitialProps({

@@ -1,5 +1,10 @@
 import {
   actionTypes,
+  changeCourse,
+  contentNotFound,
+  loadFragment,
+  loadFragmentFailure,
+  loadFragmentSuccess,
   loadManifest,
   loadManifestFailure,
   loadManifestSuccess,
@@ -9,14 +14,52 @@ import {
   loadSection,
   loadSectionFailure,
   loadSectionSuccess,
+  routeChangeStart,
   setServerConfiguration,
 } from './content'
 
-it('should dispatch LOAD_MANIFEST action', () => {
+test('CHANGE_COURSE action', () => {
+  const course = { id: 0 }
+  expect(changeCourse(course)).toEqual({
+    type: actionTypes.CHANGE_COURSE,
+    course,
+  })
+})
+
+test('CONTENT_NOT_FOUND action', () => {
+  expect(contentNotFound()).toEqual({
+    type: actionTypes.CONTENT_NOT_FOUND,
+  })
+})
+
+test('LOAD_FRAGMENT action', () => {
+  expect(loadFragment('foo')).toEqual({
+    type: actionTypes.LOAD_FRAGMENT,
+    contentId: 'foo',
+  })
+})
+
+test('LOAD_FRAGMENT_SUCCESS action', () => {
+  const data = { fragment: 'data' }
+  expect(loadFragmentSuccess(data)).toEqual({
+    type: actionTypes.LOAD_FRAGMENT_SUCCESS,
+    data,
+  })
+})
+
+test('LOAD_FRAGMENT_FAILURE action', () => {
+  const error = new Error('Test')
+  expect(loadFragmentFailure(error)).toEqual({
+    type: actionTypes.LOAD_FRAGMENT_FAILURE,
+    error,
+  })
+})
+
+test('LOAD_MANIFEST action', () => {
   expect(loadManifest()).toEqual({ type: actionTypes.LOAD_MANIFEST })
 })
 
-it('should dispatch LOAD_MANIFEST_SUCCESS action', () => {
+test('LOAD_MANIFEST_SUCCESS action', () => {
   const data = [
     {
       title: [{ t: 'Str', c: 'Foo section' }],
@@ -29,15 +72,15 @@ it('should dispatch LOAD_MANIFEST_SUCCESS action', () => {
   })
 })
 
-it('should dispatch LOAD_MANIFEST_FAILURE action', () => {
-  const error = { msg: 'Something went wrong!' }
+test('LOAD_MANIFEST_FAILURE action', () => {
+  const error = new Error('Something went wrong!')
   expect(loadManifestFailure(error)).toEqual({
     type: actionTypes.LOAD_MANIFEST_FAILURE,
     error,
   })
 })
 
-it('should dispatch LOAD_PAGE action', () => {
+test('LOAD_PAGE action', () => {
   expect(loadPage('foo', 'en')).toEqual({
     type: actionTypes.LOAD_PAGE,
     prevLanguage: 'en',
@@ -45,7 +88,7 @@ it('should dispatch LOAD_PAGE action', () => {
   })
 })
 
-it('should dispatch LOAD_PAGE_SUCCESS action', () => {
+test('LOAD_PAGE_SUCCESS action', () => {
   const data = [{ t: 'Str', c: 'Foo string' }]
   expect(loadPageSuccess(data)).toEqual({
     type: actionTypes.LOAD_PAGE_SUCCESS,
@@ -53,15 +96,15 @@ it('should dispatch LOAD_PAGE_SUCCESS action', () => {
   })
 })
 
-it('should dispatch LOAD_PAGE_FAILURE action', () => {
-  const error = { msg: 'Something went wrong!' }
+test('LOAD_PAGE_FAILURE action', () => {
+  const error = new Error('Something went wrong!')
   expect(loadPageFailure(error)).toEqual({
     type: actionTypes.LOAD_PAGE_FAILURE,
     error,
   })
 })
 
-it('should dispatch LOAD_SECTION action', () => {
+test('LOAD_SECTION action', () => {
   expect(loadSection('foo/bar', 'en')).toEqual({
     type: actionTypes.LOAD_SECTION,
     prevLanguage: 'en',
@@ -69,7 +112,7 @@ it('should dispatch LOAD_SECTION action', () => {
   })
 })
 
-it('should dispatch LOAD_SECTION_SUCCESS action', () => {
+test('LOAD_SECTION_SUCCESS action', () => {
   const data = [{ t: 'Str', c: 'Foo string' }]
   expect(loadSectionSuccess(data)).toEqual({
     type: actionTypes.LOAD_SECTION_SUCCESS,
@@ -77,17 +120,24 @@ it('should dispatch LOAD_SECTION_SUCCESS action', () => {
   })
 })
 
-it('should dispatch LOAD_SECTION_FAILURE action', () => {
-  const error = { msg: 'Something went wrong!' }
+test('LOAD_SECTION_FAILURE action', () => {
+  const error = new Error('Something went wrong!')
   expect(loadSectionFailure(error)).toEqual({
     type: actionTypes.LOAD_SECTION_FAILURE,
     error,
   })
 })
 
-it('should dispatch SET_SERVER_CONFIGURATION action', () => {
+test('ROUTE_CHANGE_START action', () => {
+  expect(routeChangeStart()).toEqual({
+    type: actionTypes.ROUTE_CHANGE_START,
+  })
+})
+
+test('SET_SERVER_CONFIGURATION action', () => {
   expect(
     setServerConfiguration(
+      'https://app.example.com/',
       'https://content.example.com/',
       'https://cdn.example.com/',
       'section',
@@ -96,6 +146,7 @@ it('should dispatch SET_SERVER_CONFIGURATION action', () => {
   ).toEqual({
     type: actionTypes.SET_SERVER_CONFIGURATION,
     config: {
+      appRoot: 'https://app.example.com/',
       contentRoot: 'https://content.example.com/',
       staticRoot: 'https://cdn.example.com/',
       sectionPathPrefix: 'section',

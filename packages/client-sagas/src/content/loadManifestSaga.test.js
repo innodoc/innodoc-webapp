@@ -46,7 +46,7 @@ describe('loadManifestSaga', () => {
       .not.put.actionType(contentActionTypes.LOAD_MANIFEST_FAILURE)
       .run())
 
-  it('should fail and show message if fetch fails', () => {
+  it('should put loadManifestFailure if fetch fails', () => {
     const error = new Error('mock error')
     return expectSaga(loadManifestSaga)
       .provide([
@@ -54,7 +54,6 @@ describe('loadManifestSaga', () => {
         ...defaultProvides,
       ])
       .put(loadManifestFailure(error))
-      .put.actionType(uiActionTypes.SHOW_MESSAGE)
       .not.put.actionType(contentActionTypes.LOAD_MANIFEST_SUCCESS)
       .run()
   })
