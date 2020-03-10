@@ -96,6 +96,7 @@ export const routeChangeStart = () => ({
 export const setServerConfiguration = (
   appRoot,
   contentRoot,
+  csrfToken,
   staticRoot,
   sectionPathPrefix,
   pagePathPrefix
@@ -104,6 +105,7 @@ export const setServerConfiguration = (
   config: {
     appRoot,
     contentRoot,
+    csrfToken,
     staticRoot,
     sectionPathPrefix,
     pagePathPrefix,

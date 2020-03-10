@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Layout as AntLayout } from 'antd'
 
 import { childrenType } from '@innodoc/client-misc/src/propTypes'

@@ -3,6 +3,7 @@ import { Model, attr, oneToOne } from 'redux-orm'
 import { actionTypes as contentActionTypes } from '../actions/content'
 import { actionTypes as i18nActionTypes } from '../actions/i18n'
 import { actionTypes as uiActionTypes } from '../actions/ui'
+import { actionTypes as userActionTypes } from '../actions/user'
 
 export default class App extends Model {
   static get modelName() {
@@ -18,7 +19,9 @@ export default class App extends Model {
         to: 'Course',
         as: 'currentCourse',
       }),
+      csrfToken: attr(),
       language: attr(),
+      loggedInEmail: attr(),
       show404: attr({ getDefault: () => false }),
       sidebarVisible: attr({ getDefault: () => false }),
       staticRoot: attr({ getDefault: () => '' }),
@@ -43,6 +46,12 @@ export default class App extends Model {
           break
         case i18nActionTypes.CHANGE_LANGUAGE:
           app.set('language', action.language)
+          break
+        case userActionTypes.USER_LOGGED_IN:
+          app.set('loggedInEmail', action.email)
+          break
+        case userActionTypes.USER_LOGGED_OUT:
+          app.set('loggedInEmail', undefined)
           break
         case uiActionTypes.TOGGLE_SIDEBAR: {
           app.set('sidebarVisible', !app.sidebarVisible)

@@ -18,6 +18,16 @@
     "test": "Test",
     "ytIdError": "Konnte YouTube-Video-ID nicht extrahieren: {{src}}"
   },
+  "emails": {
+    "emailVerification": {
+      "subject": "Konto erstellt: Bitte bestätige Deine E-Mail-Adresse",
+      "text": "Ein neues Konto wurde erstellt. Bitte verifiziere Deine E-Mail-Adresse, indem Du auf folgenden Link klickst:\n{{verificationLink}}"
+    },
+    "passwordReset": {
+      "subject": "Zurücksetzung des Passworts angefordert",
+      "text": "Die Zurücksetzung Deines Passworts wurde angefordert. Du kannst ein neues Passwort wählen, indem Du auf den folgenden Link klickst:\n{{passwordResetLink}}\nBitte ignoriere diese Nachricht, falls Du die Zurücksetzung des Passworts nicht angefordert hast."
+    }
+  },
   "errorPage": {
     "404": {
       "title": "404 Not found",
@@ -44,7 +54,8 @@
   },
   "userMessage": {
     "levels": {
-      "error": "Fehler!"
+      "error": "Fehler!",
+      "success": "Erfolg!"
     },
     "types": {
       "loadManifestFailure": {
@@ -54,6 +65,10 @@
       "loadSectionFailure": {
         "text": "Konnte Abschnitt nicht laden. Die Fehlermeldung war:",
         "title": "Laden des Abschnitts fehlgeschlagen!"
+      },
+      "registerUserSuccess": {
+        "text": "Ein neues Benutzerkonto wurde angelegt. Bitte checke Dein E-Mail-Postfach und bestätige die Aktivierungsmail, um das Konto zu nutzen.",
+        "title": "Konto erstellt!"
       }
     }
   },
@@ -66,19 +81,116 @@
     "inputFeedback": "Eingabe"
   },
   "user": {
+    "changePassword": {
+      "error": {
+        "description": "Dein Passwort konnte nicht geändert werden.<1></1><2>Ich habe mein Passwort vergessen</2>",
+        "message": "Ändern des Passworts fehlgeschlagen!"
+      },
+      "newPassword": "Neues Passwort",
+      "oldPassword": "Altes Passwort",
+      "submit": "Passwort ändern",
+      "success": {
+        "description": "Dein Passwort wurde erfolgreich geändert.",
+        "message": "Passwort geändert."
+      },
+      "title": "Password ändern"
+    },
     "confirmPassword": "Passwort bestätigen",
-    "createAccount": "Konto erstellen",
     "email": "E-Mail",
-    "emailInvalid": "Bitte gültige E-Mail eintragen!",
-    "emailMissing": "Bitte E-Mail eintragen!",
-    "loginTitle": "Login",
-    "orCreateAccount": "oder <1></1>",
-    "orLogin": "oder <1></1> wenn Du schon ein Konto hast.",
+    "emailValidation": {
+      "alreadyUsed": "Diese E-Mail-Adresse wird schon von einem anderen Konto verwendet!",
+      "invalid": "Bitte gültige E-Mail eintragen!",
+      "missing": "Bitte E-Mail eintragen!"
+    },
+    "login": {
+      "error": {
+        "description": "Bitte E-Mail und Passwort überprüfen.<1></1><2>Ich habe mein Passwort vergessen</2><3></3><4></4>Bevor Du Dich anmelden kannst, musst du den Link in der Bestätigungsmail aufrufen.<6></6><7>Bestätigungsmail erneut anfordern</7>",
+        "message": "Anmeldung fehlgeschlagen!"
+      },
+      "orCreateAccount": "oder <1>neues Konto erstellen</1>.",
+      "signIn": "Anmelden",
+      "success": {
+        "description": "Deine Ergebnisse werden auf dem Server gespeichert.",
+        "message": "Die Anmeldung war erfolgreich."
+      },
+      "title": "Login"
+    },
+    "logout": {
+      "errorMessage": "Abmelden fehlgeschlagen!",
+      "pendingMessage": "Abmelden…",
+      "successMessage": "Du wurdest abgemeldet.",
+      "title": "Abmelden"
+    },
+    "registration": {
+      "createAccount": "Konto erstellen",
+      "error": {
+        "description": "Leider konnte die Registrierung nicht abgeschlossen werden. Fehlermeldung:",
+        "message": "Registrierung fehlgeschlagen!"
+      },
+      "orLogin": "oder <1>melde Dich an</1> wenn Du schon ein Konto hast.",
+      "title": "Konto erstellen"
+    },
+    "requestPasswordReset": {
+      "error": {
+        "description": "Die eingegebene E-Mail-Adresse konnte nicht gefunden werden.",
+        "message": "Fehler!"
+      },
+      "success": {
+        "description": "Du wirst in Kürze eine E-Mail mit weiteren Informationen zum Zurücksetzen des Passworts erhalten.",
+        "message": "E-Mail zum Zurücksetzen des Passworts versandt."
+      },
+      "title": "Passwort zurücksetzen"
+    },
     "password": "Passwort",
-    "passwordMismatch": "Beide Passwörter müssen übereinstimmen!",
-    "passwordMissing": "Bitte Passwort eintragen!",
-    "pleaseConfirmPassword": "Bitte Passwort bestätigen!",
-    "registerTitle": "Konto erstellen",
-    "signIn": "Einloggen"
+    "passwordValidation": {
+      "confirm": "Bitte Passwort bestätigen!",
+      "digits": "Das Passwort muss mindestens eine Ziffer enthalten!",
+      "lowercase": "Das Passwort muss mindestens einen Kleinbuchstaben enthalten!",
+      "max": "Das Passwort darf höchstens {{max}} Zeichen lang sein!",
+      "min": "Das Passwort muss mindestens {{min}} Zeichen lang sein!",
+      "mismatch": "Beide Passwörter müssen übereinstimmen!",
+      "missing": "Bitte Passwort eintragen!",
+      "spaces": "Das Passwort darf keine Leerzeichen enthalten!",
+      "symbols": "Das Passwort muss mindestens ein Sonderzeichen enthalten!",
+      "uppercase": "Das Passwort muss mindestens einen Großbuchstaben enthalten!"
+    },
+    "request": "Anfordern",
+    "requestVerification": {
+      "error": {
+        "description": "Die angegebene E-Mail konnte nicht gefunden werden.",
+        "message": "Bestätigungsmail wurde nicht verschickt!"
+      },
+      "success": {
+        "description": "Eine neue Bestätigungsmail wurde verschickt. Bitte checke Dein E-Mail-Postfach und bestätige die Aktivierungsmail, um das Konto zu nutzen.",
+        "message": "Bestätigungsmail wurde verschickt."
+      },
+      "title": "Bestätigungsmail anfordern"
+    },
+    "resetPassword": {
+      "error": {
+        "description": "Das neue Passwort konnte nicht gesetzt werden.",
+        "message": "Fehler!"
+      },
+      "submit": "Neues Passwort setzen",
+      "success": {
+        "description": "Das neue Passwort wurde erfolgreich gesetzt. Du kannst Dich jetzt mit dem neuen Passwort <2>anmelden</2>.",
+        "message": "Neues Passwort wurde gesetzt."
+      },
+      "title": "Neues Passwort setzen"
+    },
+    "verification": {
+      "error": {
+        "description": "Dein neues Konto konnte nicht aktiviert werden.",
+        "title": "Aktivierung fehlgeschlagen!"
+      },
+      "pending": {
+        "description": "Dein neues Konto wird nun aktiviert. Bitte warten…",
+        "title": "Aktivierung Deines Kontos"
+      },
+      "success": {
+        "description": "Dein neues Konto wurde erfolgreich aktiviert und kann nun genutzt werden.",
+        "title": "Konto aktiviert"
+      }
+    }
   }
 }

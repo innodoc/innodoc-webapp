@@ -21,6 +21,7 @@ import {
   setServerConfiguration,
 } from '@innodoc/client-store/src/actions/content'
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
+import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
 
 const DEFAULT_MATHJAX_FONT_URL = `${
   process.browser ? window.location.origin : ''
@@ -50,8 +51,10 @@ const waitForCourse = (store) =>
 
 class InnoDocApp extends App {
   static async getInitialProps({ Component, ctx }) {
+    // ctx.req/ctx.res not present when statically exported
     if (ctx.req && ctx.res) {
-      // ctx.req/ctx.res not present when statically exported
+      const { dispatch } = ctx.store
+
       // set initial content URLs (passed from server/app configuration)
       const {
         appRoot,
@@ -60,21 +63,29 @@ class InnoDocApp extends App {
         sectionPathPrefix,
         pagePathPrefix,
       } = ctx.res.locals
-      ctx.store.dispatch(
+      dispatch(
         setServerConfiguration(
           appRoot,
           contentRoot,
+          ctx.req.csrfToken(),
           staticRoot,
           sectionPathPrefix,
           pagePathPrefix
         )
       )
+
       // pass detected language to store
       if (ctx.req.i18n) {
-        ctx.store.dispatch(languageDetected(ctx.req.i18n.language))
+        dispatch(languageDetected(ctx.req.i18n.language))
       }
+
       // load content manifest on start-up
-      ctx.store.dispatch(loadManifest())
+      dispatch(loadManifest())
+
+      // server verified access token
+      if (ctx.res.locals.loggedInEmail) {
+        dispatch(userLoggedIn(ctx.res.locals.loggedInEmail))
+      }
     }
 
     // build custom MathJax options
@@ -127,14 +138,18 @@ class InnoDocApp extends App {
 
   render() {
     const { Component, pageProps, store } = this.props
+    const { mathJaxOptions, ...pagePropsRest } = pageProps
     return (
       <>
         <Head>
           <title key="title">innoDoc web app</title>
         </Head>
         <Provider store={store}>
-          <MathJax.ConfigProvider options={pageProps.mathJaxOptions}>
-            <Component statusCode={pageProps.statusCode} />
+          <MathJax.ConfigProvider options={mathJaxOptions}>
+            <Component
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...pagePropsRest}
+            />
           </MathJax.ConfigProvider>
         </Provider>
       </>

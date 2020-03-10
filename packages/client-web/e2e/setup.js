@@ -8,8 +8,7 @@ jest.setTimeout(15000) // for a single test
 registerScreenshotReporter()
 
 // provide URL to tests
-global.getUrl = (rest = '') =>
-  `http://localhost:${process.env.PROD_PORT}${rest}`
+global.getUrl = (rest = '') => `${process.env.APP_ROOT}${rest}`
 
 // force language
 const forceLanguage = async () => {

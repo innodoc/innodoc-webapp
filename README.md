@@ -103,6 +103,12 @@ Configuration options are set in the `.env` file. You can use `.env.example` as
 a basis. When using Docker you need to specify variables using the `--env`
 argument.
 
+#### `APP_ROOT`
+
+> The location the app will be served from.
+
+**Example:** `https://app.example.com/`
+
 #### `CONTENT_ROOT`
 
 > The application will look for `manifest.json` in this location. It will also
@@ -117,18 +123,6 @@ another location (e.g. a CDN).
 
 **Example:** `https://cdn.example.com/`  
 **Default:** `${CONTENT_ROOT}_static/`
-
-#### `PROD_PORT`
-
-> The port the web app is listening on in production.
-
-**Example:** `8000`
-
-#### `DEV_PORT`
-
-> The port the web app is listening on in development.
-
-**Example:** `3000`
 
 #### `SECTION_PATH_PREFIX`
 
@@ -219,9 +213,8 @@ directory `packages/client-web/e2e/screenshots`.
 ### Serve test content
 
 Serve test content that can be used with [`CONTENT_ROOT`](#content_root). That
-comes in handy for development and testing. The port can be configured using
-the env variable `CONTENT_PORT`. For production you should set up a proper web
-server to handle static content.
+comes in handy for development and testing. For production you should set up a
+proper web server to handle static content.
 
 ```sh
 $ yarn test:e2e:content

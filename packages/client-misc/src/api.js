@@ -11,19 +11,16 @@ const getJson = (url) =>
         )
   )
 
-const postJson = (url, data) =>
+const postJson = (url, { csrfToken, ...data }) =>
   fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'CSRF-Token': csrfToken,
     },
     body: JSON.stringify(data),
   }).then((response) =>
-    response.ok
-      ? response.json()
-      : response
-          .json()
-          .then((respData) => Promise.reject(new Error(respData.result)))
+    response.ok ? response.json() : Promise.reject(new Error(response.status))
   )
 
 export const fetchFragment = (base, language, fragmentId) =>
@@ -37,8 +34,34 @@ export const fetchSection = (base, language, sectionId) =>
 export const fetchPage = (base, language, pageId) =>
   getJson(`${base}${language}/_pages/${pageId}.json`)
 
-export const registerUser = (base, email, password) =>
-  postJson(`${base}user/register`, { email, password })
+export const checkEmail = (base, csrfToken, email) =>
+  postJson(`${base}user/check-email`, { csrfToken, email })
 
-export const loginUser = (base, email, password) =>
-  postJson(`${base}user/login`, { email, password })
+export const verifyUser = (base, csrfToken, token) =>
+  postJson(`${base}user/verify`, { csrfToken, token })
+
+export const registerUser = (base, csrfToken, email, password) =>
+  postJson(`${base}user/register`, { csrfToken, email, password })
+
+export const changePassword = (base, csrfToken, email, password, oldPassword) =>
+  postJson(`${base}user/change-password`, {
+    csrfToken,
+    email,
+    password,
+    oldPassword,
+  })
+
+export const resetPassword = (base, csrfToken, password, token) =>
+  postJson(`${base}user/reset-password`, { csrfToken, password, token })
+
+export const requestPasswordReset = (base, csrfToken, email) =>
+  postJson(`${base}user/request-password-reset`, { csrfToken, email })
+
+export const requestVerification = (base, csrfToken, email) =>
+  postJson(`${base}user/request-verification`, { csrfToken, email })
+
+export const loginUser = (base, csrfToken, email, password) =>
+  postJson(`${base}user/login`, { csrfToken, email, password })
+
+export const logoutUser = (base, csrfToken) =>
+  postJson(`${base}user/logout`, { csrfToken })

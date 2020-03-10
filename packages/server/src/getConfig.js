@@ -3,6 +3,8 @@ import path from 'path'
 
 import Dotenv from 'dotenv-safe'
 
+const ensureTrailingSlash = (url) => (url.substr(-1) === '/' ? url : `${url}/`)
+
 const getConfig = (rootDir) => {
   // load Dotenv file
   const dotEnvFile = path.resolve(rootDir, '.env')
@@ -18,41 +20,36 @@ const getConfig = (rootDir) => {
 
   // node environment
   let nodeEnv
-  let portVarName
   if (process.env.NODE_ENV === 'production') {
     nodeEnv = 'production'
-    portVarName = 'PROD_PORT'
   } else {
     nodeEnv = 'development'
-    portVarName = 'DEV_PORT'
   }
 
-  // port
-  if (!Object.prototype.hasOwnProperty.call(process.env, portVarName)) {
-    throw new Error(`You need to configure ${portVarName} in your .env file!`)
-  }
-  const port = parseInt(process.env[portVarName], 10)
-  if (Number.isNaN(port)) {
-    throw new Error(`Could not parse ${portVarName}!`)
-  }
-
-  // root URLs
-  const contentRoot =
-    process.env.CONTENT_ROOT.substr(-1) === '/'
-      ? process.env.CONTENT_ROOT
-      : `${process.env.CONTENT_ROOT}/` // ensure trailing slash
-  let staticRoot = process.env.STATIC_ROOT
-    ? process.env.STATIC_ROOT
+  // set root URLs (and ensure trailing slash)
+  const appRoot = ensureTrailingSlash(process.env.APP_ROOT)
+  const contentRoot = ensureTrailingSlash(process.env.CONTENT_ROOT)
+  const staticRoot = process.env.STATIC_ROOT
+    ? ensureTrailingSlash(process.env.STATIC_ROOT)
     : `${contentRoot}_static/`
-  staticRoot = staticRoot.substr(-1) === '/' ? staticRoot : `${staticRoot}/`
 
   return {
-    nodeEnv,
-    port,
+    appRoot,
     contentRoot,
-    staticRoot,
-    sectionPathPrefix: process.env.SECTION_PATH_PREFIX,
+    jwtSecret: process.env.JWT_SECRET,
+    mongodbConnectionString: process.env.MONGODB_CONNECTION_STRING,
+    nodeEnv,
     pagePathPrefix: process.env.PAGE_PATH_PREFIX,
+    port: parseInt(new URL(appRoot).port, 10),
+    sectionPathPrefix: process.env.SECTION_PATH_PREFIX,
+    smtp: {
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT, 10),
+      user: process.env.SMTP_USER,
+      password: process.env.SMTP_PASSWORD,
+      senderAddress: process.env.SMTP_SENDER,
+    },
+    staticRoot,
   }
 }
 

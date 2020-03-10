@@ -1,0 +1,85 @@
+import React, { useCallback, useState } from 'react'
+import PropTypes from 'prop-types'
+import { Alert, Button, Form } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
+
+import { childrenType } from '@innodoc/client-misc/src/propTypes'
+
+const UserForm = ({
+  children,
+  extra,
+  labelCol,
+  name,
+  onFinish,
+  submitIcon,
+  submitText,
+  submitWrapperCol,
+  wrapperCol,
+}) => {
+  const [message, setMessage] = useState()
+  const [disabled, setDisabled] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const onFormFinish = useCallback(
+    (fields) => {
+      setDisabled(true)
+      setLoading(true)
+      onFinish(fields, setDisabled, setMessage).finally(() => setLoading(false))
+    },
+    [onFinish]
+  )
+
+  const messageAlert = message ? (
+    <Form.Item wrapperCol={{ span: 24, offset: 0 }}>
+      <Alert
+        afterClose={() => setMessage()}
+        closable
+        description={message.description}
+        message={message.message}
+        showIcon
+        type={message.level}
+      />
+    </Form.Item>
+  ) : null
+
+  return (
+    <Form
+      labelCol={labelCol}
+      name={name}
+      onFinish={onFormFinish}
+      wrapperCol={wrapperCol}
+    >
+      {children(disabled)}
+      <Form.Item wrapperCol={submitWrapperCol}>
+        <Button disabled={disabled} htmlType="submit" type="primary">
+          {loading ? <LoadingOutlined /> : submitIcon}
+          {submitText}
+        </Button>
+        <br />
+        {extra}
+      </Form.Item>
+      {messageAlert}
+    </Form>
+  )
+}
+
+UserForm.defaultProps = {
+  extra: null,
+  labelCol: null,
+  submitWrapperCol: null,
+  wrapperCol: null,
+}
+
+UserForm.propTypes = {
+  children: PropTypes.func.isRequired,
+  extra: childrenType,
+  labelCol: PropTypes.objectOf(PropTypes.any),
+  name: PropTypes.string.isRequired,
+  onFinish: PropTypes.func.isRequired,
+  submitIcon: PropTypes.node.isRequired,
+  submitText: PropTypes.string.isRequired,
+  submitWrapperCol: PropTypes.objectOf(PropTypes.any),
+  wrapperCol: PropTypes.objectOf(PropTypes.any),
+}
+
+export default UserForm

@@ -17,7 +17,7 @@
     "build:bundle-analyze": "BUNDLE_ANALYZE=both yarn build",
     "build": "next build src",
     "test:e2e:content": "http-server e2e/content -a localhost -p ${CONTENT_PORT:-8001} --cors",
-    "test:e2e": "JEST_PUPPETEER_CONFIG=e2e/jest-puppeteer.config.js PROD_PORT=${PROD_PORT:-6123} CONTENT_PORT=${CONTENT_PORT:-6124} CONTENT_ROOT=${CONTENT_ROOT:-http://localhost:6124/} jest --runInBand --forceExit --detectOpenHandles --config e2e/jest.e2e.config.js"
+    "test:e2e": "JEST_PUPPETEER_CONFIG=e2e/jest-puppeteer.config.js APP_ROOT=${APP_ROOT:-http://localhost:6123/} CONTENT_ROOT=${CONTENT_ROOT:-http://localhost:6124/} jest --runInBand --forceExit --detectOpenHandles --config e2e/jest.e2e.config.js"
   },
   "keywords": [
     "innodoc",

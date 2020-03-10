@@ -34,6 +34,7 @@ describe('startServer', () => {
     expect(getConfig).toBeCalledTimes(1)
     expect(getConfig).toBeCalledWith('/mock/root')
     const config = getConfig.mock.results[0].value
+    // TODO: test mailer middleware added
     expect(createNextApp).toBeCalledTimes(1)
     expect(createNextApp).toBeCalledWith(
       '/mock/root/packages/client-web/src',

@@ -14,7 +14,7 @@ const contentType = PropTypes.arrayOf(PropTypes.object)
 const messageType = PropTypes.shape({
   closable: PropTypes.bool.isRequired,
   level: PropTypes.oneOf(MESSAGE_LEVELS).isRequired,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   type: PropTypes.oneOf(MESSAGE_TYPES).isRequired,
 })
 

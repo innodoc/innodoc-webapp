@@ -8,6 +8,7 @@ import {
 } from '../actions/content'
 import { changeLanguage } from '../actions/i18n'
 import { toggleSidebar } from '../actions/ui'
+import { userLoggedIn, userLoggedOut } from '../actions/user'
 
 describe('App', () => {
   let session
@@ -62,6 +63,17 @@ describe('App', () => {
     test('changeLanguage', () => {
       session.App.reducer(changeLanguage('en'), session.App)
       expect(session.App.first().ref.language).toEqual('en')
+    })
+
+    test('userLoggedIn', () => {
+      session.App.reducer(userLoggedIn('alice@example.com'), session.App)
+      expect(session.App.first().ref.loggedInEmail).toEqual('alice@example.com')
+    })
+
+    test('userLoggedOut', () => {
+      session.App.first().set('userLoggedIn', 'alice@example.com')
+      session.App.reducer(userLoggedOut(), session.App)
+      expect(session.App.first().ref.loggedInEmail).toBeUndefined()
     })
 
     test('toggleSidebar', () => {

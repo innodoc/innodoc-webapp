@@ -7,7 +7,7 @@ describe('makeShowMessageSaga', () => {
   it('should put showMessage', () => {
     const showMessageSaga = makeShowMessageSaga('error', 'testError', true)
     return expectSaga(showMessageSaga, {
-      error: new Error('Test error'),
+      errorMsg: 'Test error',
     })
       .put(
         showMessage({

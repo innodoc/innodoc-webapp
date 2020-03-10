@@ -1,8 +1,9 @@
-export const MESSAGE_LEVELS = ['error', 'info', 'success']
+export const MESSAGE_LEVELS = ['error', 'warning', 'info', 'success']
 
 export const MESSAGE_TYPES = [
-  'loadManifestFailure',
-  'loadSectionFailure',
-  'loadPageFailure',
   'loadFragmentFailure',
+  'loadManifestFailure',
+  'loadPageFailure',
+  'loadSectionFailure',
+  'registerUserSuccess',
 ]

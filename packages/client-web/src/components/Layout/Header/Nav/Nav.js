@@ -16,10 +16,11 @@ import PageIcon from '../../PageIcon'
 import { PageLink } from '../../../content/links'
 
 const Nav = ({ menuMode }) => {
-  const { language } = useSelector(appSelectors.getApp)
+  const { language, loggedInEmail } = useSelector(appSelectors.getApp)
   const currentPage = useSelector(pageSelectors.getCurrentPage)
   const pages = useSelector(pageSelectors.getNavPages)
   const { t } = useTranslation()
+
   const pageItems = pages.map((page) => (
     <Menu.Item key={page.id}>
       <PageLink contentId={page.id}>
@@ -46,7 +47,7 @@ const Nav = ({ menuMode }) => {
         </a>
       </Menu.Item>
       <LanguageSwitcher />
-      <UserMenu />
+      <UserMenu email={loggedInEmail} />
     </Menu>
   )
 }

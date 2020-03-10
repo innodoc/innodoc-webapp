@@ -1,5 +1,4 @@
 import orm from '../orm'
-
 import { closeMessage, showMessage } from '../actions/ui'
 
 describe('UserMessage', () => {

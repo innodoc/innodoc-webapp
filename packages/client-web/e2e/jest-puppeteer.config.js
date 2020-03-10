@@ -24,20 +24,21 @@ const serverEnvVars = [
 ].join(' ')
 const rootPath = path.resolve(__dirname, '..', '..')
 const serverCmd = `cd ${rootPath} && ${serverEnvVars} yarn start`
-const testCmd = `cd ${__dirname} && yarn run test:e2e:content`
+const contentPort = parseInt(new URL(process.env.CONTENT_ROOT).port, 10)
+const testCmd = `cd ${__dirname} && CONTENT_PORT=${contentPort} yarn run test:e2e:content`
 
 const server = [
   {
     command: serverCmd,
-    port: parseInt(process.env.PROD_PORT, 10),
     launchTimeout,
+    port: parseInt(new URL(process.env.APP_ROOT).port, 10),
     protocol,
     usedPortAction,
   },
   {
     command: testCmd,
-    port: parseInt(process.env.CONTENT_PORT, 10),
     launchTimeout,
+    port: contentPort,
     protocol,
     usedPortAction,
   },

@@ -17,12 +17,18 @@ describe('getConfig', () => {
   beforeEach(() => {
     fs.existsSync.mockReset().mockReturnValue(true)
     Dotenv.config.mockClear()
-    process.env.NODE_ENV = 'production'
+    process.env.APP_ROOT = 'http://localhost:8123/'
     process.env.CONTENT_ROOT = 'https://example.com/content/'
-    process.env.STATIC_ROOT = 'https://example.com/static/'
-    process.env.PROD_PORT = '8123'
-    process.env.SECTION_PATH_PREFIX = 'customsection'
+    process.env.MONGODB_CONNECTION_STRING = 'mongodb://mongohost/coll'
+    process.env.NODE_ENV = 'production'
     process.env.PAGE_PATH_PREFIX = 'custompage'
+    process.env.SECTION_PATH_PREFIX = 'customsection'
+    process.env.SMTP_HOST = 'mail.example.com'
+    process.env.SMTP_PASSWORD = 's3cr3t'
+    process.env.SMTP_PORT = '587'
+    process.env.SMTP_USER = 'alice'
+    process.env.SMTP_SENDER = 'no-reply@example.com'
+    process.env.STATIC_ROOT = 'https://example.com/static/'
   })
   afterEach(() => {
     process.env = OLD_ENV
@@ -39,11 +45,20 @@ describe('getConfig', () => {
 
   it('should return config', () => {
     expect(getConfig('/mock/root')).toEqual({
+      appRoot: 'http://localhost:8123/',
       contentRoot: 'https://example.com/content/',
       staticRoot: 'https://example.com/static/',
+      mongodbConnectionString: 'mongodb://mongohost/coll',
       nodeEnv: 'production',
       port: 8123,
       sectionPathPrefix: 'customsection',
+      smtp: {
+        host: 'mail.example.com',
+        password: 's3cr3t',
+        port: 587,
+        user: 'alice',
+        senderAddress: 'no-reply@example.com',
+      },
       pagePathPrefix: 'custompage',
     })
   })
@@ -73,24 +88,6 @@ describe('getConfig', () => {
       }).toThrow('Could not find configuration file')
       expect(fs.existsSync).toBeCalledTimes(1)
       expect(fs.existsSync).toBeCalledWith('/mock/root/.env')
-    })
-
-    it.each([
-      ['production', 'PROD_PORT'],
-      ['development', 'DEV_PORT'],
-    ])("should throw if port isn't set (%s)", (nodeEnv, portVarName) => {
-      process.env.NODE_ENV = nodeEnv
-      delete process.env[portVarName]
-      expect(() => {
-        getConfig('/mock/root')
-      }).toThrow(`You need to configure ${portVarName}`)
-    })
-
-    it("should throw if port can't be parsed", () => {
-      process.env.PROD_PORT = 'abcd'
-      expect(() => {
-        getConfig('/mock/root')
-      }).toThrow('Could not parse PROD_PORT')
     })
   })
 })
