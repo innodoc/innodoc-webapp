@@ -3,6 +3,8 @@ import path from 'path'
 
 import Dotenv from 'dotenv-safe'
 
+const ensureTrailingSlash = (url) => (url.substr(-1) === '/' ? url : `${url}/`)
+
 const getConfig = (rootDir) => {
   // load Dotenv file
   const dotEnvFile = path.resolve(rootDir, '.env')
@@ -36,19 +38,17 @@ const getConfig = (rootDir) => {
     throw new Error(`Could not parse ${portVarName}!`)
   }
 
-  // root URLs
-  const contentRoot =
-    process.env.CONTENT_ROOT.substr(-1) === '/'
-      ? process.env.CONTENT_ROOT
-      : `${process.env.CONTENT_ROOT}/` // ensure trailing slash
-  let staticRoot = process.env.STATIC_ROOT
-    ? process.env.STATIC_ROOT
+  // set root URLs (and ensure trailing slash)
+  const appRoot = ensureTrailingSlash(process.env.APP_ROOT)
+  const contentRoot = ensureTrailingSlash(process.env.CONTENT_ROOT)
+  const staticRoot = process.env.STATIC_ROOT
+    ? ensureTrailingSlash(process.env.STATIC_ROOT)
     : `${contentRoot}_static/`
-  staticRoot = staticRoot.substr(-1) === '/' ? staticRoot : `${staticRoot}/`
 
   return {
     nodeEnv,
     port,
+    appRoot,
     contentRoot,
     staticRoot,
     sectionPathPrefix: process.env.SECTION_PATH_PREFIX,
