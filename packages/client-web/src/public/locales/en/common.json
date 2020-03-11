@@ -82,6 +82,10 @@
     "passwordMismatch": "The passwords you entered have to match!",
     "passwordMissing": "Please input your password!",
     "pleaseConfirmPassword": "Please confirm your password!",
+    "registerUserFailure": {
+      "description": "Please check the entered information.",
+      "message": "Registration failed!"
+    },
     "registerTitle": "Create account",
     "signIn": "Sign-in"
   }

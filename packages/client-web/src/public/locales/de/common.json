@@ -82,6 +82,10 @@
     "passwordMismatch": "Beide Passwörter müssen übereinstimmen!",
     "passwordMissing": "Bitte Passwort eintragen!",
     "pleaseConfirmPassword": "Bitte Passwort bestätigen!",
+    "registerUserFailure": {
+      "description": "Bitte die Daten überprüfen.",
+      "message": "Registrierung fehlgeschlagen!"
+    },
     "registerTitle": "Konto erstellen",
     "signIn": "Einloggen"
   }
