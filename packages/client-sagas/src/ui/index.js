@@ -31,6 +31,6 @@ export default [
   ),
   takeEvery(
     userActionTypes.REGISTER_USER_SUCCESS,
-    makeShowMessageSaga('success', 'registerUserSuccess', true)
+    makeShowMessageSaga('success', 'registerUserSuccess', false)
   ),
 ]

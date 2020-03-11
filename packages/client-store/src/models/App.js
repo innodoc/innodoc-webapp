@@ -25,8 +25,9 @@ export default class App extends Model {
         as: 'currentCourse',
       }),
       language: attr(),
+      loggedInEmail: attr(),
       loginFormState: attr({ getDefault: () => FORM_STATES.FINISHED }),
-      registerFormState: attr({ getDefault: () => FORM_STATES.FINISHED }),
+      registrationFormState: attr({ getDefault: () => FORM_STATES.FINISHED }),
       show404: attr({ getDefault: () => false }),
       sidebarVisible: attr({ getDefault: () => false }),
       staticRoot: attr({ getDefault: () => '' }),
@@ -56,15 +57,16 @@ export default class App extends Model {
           app.set('loginFormState', FORM_STATES.PENDING)
           break
         case userActionTypes.LOGIN_USER_FAILURE:
-        case userActionTypes.LOGIN_USER_SUCCESS:
           app.set('loginFormState', FORM_STATES.FINISHED)
           break
+        case userActionTypes.LOGIN_USER_SUCCESS:
+          app.set('loggedInEmail', action.email)
+          break
         case userActionTypes.REGISTER_USER:
-          app.set('registerFormState', FORM_STATES.PENDING)
+          app.set('registrationFormState', FORM_STATES.PENDING)
           break
         case userActionTypes.REGISTER_USER_FAILURE:
-        case userActionTypes.REGISTER_USER_SUCCESS:
-          app.set('registerFormState', FORM_STATES.FINISHED)
+          app.set('registrationFormState', FORM_STATES.FINISHED)
           break
         case uiActionTypes.TOGGLE_SIDEBAR: {
           app.set('sidebarVisible', !app.sidebarVisible)

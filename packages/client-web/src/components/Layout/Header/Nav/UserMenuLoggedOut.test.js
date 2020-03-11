@@ -2,11 +2,11 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Menu } from 'antd'
 
-import UserMenu from './UserMenu'
+import UserMenuLoggedOut from './UserMenuLoggedOut'
 
-describe('<UserMenu />', () => {
+describe('<UserMenuLoggedOut />', () => {
   it('should render dropdown', () => {
-    const wrapper = shallow(<UserMenu />)
+    const wrapper = shallow(<UserMenuLoggedOut />)
     expect(wrapper.find(Menu.SubMenu).exists()).toBe(true)
   })
 })

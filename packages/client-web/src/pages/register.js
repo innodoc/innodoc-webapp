@@ -1,1 +1,1 @@
-export default from '../components/pages/RegisterPage'
+export default from '../components/pages/RegistrationPage'

@@ -28,6 +28,32 @@ const LoginForm = () => {
     </Trans>
   )
 
+  const renderItems = (disabled) => (
+    <>
+      <Form.Item
+        name="email"
+        rules={[{ required: true, message: t('user.emailMissing') }]}
+      >
+        <Input
+          disabled={disabled}
+          prefix={<UserOutlined />}
+          placeholder={t('user.email')}
+        />
+      </Form.Item>
+      <Form.Item
+        name="password"
+        rules={[{ required: true, message: t('user.passwordMissing') }]}
+      >
+        <Input
+          disabled={disabled}
+          prefix={<LockOutlined />}
+          type="password"
+          placeholder={t('user.password')}
+        />
+      </Form.Item>
+    </>
+  )
+
   return (
     <UserForm
       extra={extra}
@@ -38,22 +64,7 @@ const LoginForm = () => {
       submitIcon={<LoginOutlined />}
       submitText={t('user.signIn')}
     >
-      <Form.Item
-        name="email"
-        rules={[{ required: true, message: t('user.emailMissing') }]}
-      >
-        <Input prefix={<UserOutlined />} placeholder={t('user.email')} />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: t('user.passwordMissing') }]}
-      >
-        <Input
-          prefix={<LockOutlined />}
-          type="password"
-          placeholder={t('user.password')}
-        />
-      </Form.Item>
+      {renderItems}
     </UserForm>
   )
 }

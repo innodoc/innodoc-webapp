@@ -18,7 +18,7 @@ const LoginLink = () => {
   )
 }
 
-const RegisterForm = () => {
+const RegistrationForm = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
 
@@ -28,30 +28,8 @@ const RegisterForm = () => {
     </Trans>
   )
 
-  return (
-    <UserForm
-      extra={extra}
-      formStateField="registerFormState"
-      labelCol={{
-        sm: { span: 24 },
-        md: { span: 8 },
-      }}
-      messageTypes={MESSAGE_TYPES_REGISTER}
-      name="register-form"
-      onFinish={({ email, password }) =>
-        dispatch(registerUser(email, password))
-      }
-      submitIcon={<UserAddOutlined />}
-      submitText={t('user.registerTitle')}
-      submitWrapperCol={{
-        sm: { span: 24, offset: 0 },
-        md: { span: 16, offset: 8 },
-      }}
-      wrapperCol={{
-        sm: { span: 24 },
-        md: { span: 16 },
-      }}
-    >
+  const renderItems = (disabled) => (
+    <>
       <Form.Item
         label={t('user.email')}
         name="email"
@@ -60,7 +38,7 @@ const RegisterForm = () => {
           { required: true, message: t('user.emailMissing') },
         ]}
       >
-        <Input prefix={<MailOutlined />} />
+        <Input disabled={disabled} prefix={<MailOutlined />} />
       </Form.Item>
 
       <Form.Item
@@ -68,7 +46,7 @@ const RegisterForm = () => {
         name="password"
         rules={[{ required: true, message: t('user.passwordMissing') }]}
       >
-        <Input.Password prefix={<LockOutlined />} />
+        <Input.Password disabled={disabled} prefix={<LockOutlined />} />
       </Form.Item>
 
       <Form.Item
@@ -89,10 +67,38 @@ const RegisterForm = () => {
           }),
         ]}
       >
-        <Input.Password prefix={<LockOutlined />} />
+        <Input.Password disabled={disabled} prefix={<LockOutlined />} />
       </Form.Item>
+    </>
+  )
+
+  return (
+    <UserForm
+      extra={extra}
+      formStateField="registrationFormState"
+      labelCol={{
+        sm: { span: 24 },
+        md: { span: 8 },
+      }}
+      messageTypes={MESSAGE_TYPES_REGISTER}
+      name="registration-form"
+      onFinish={({ email, password }) =>
+        dispatch(registerUser(email, password))
+      }
+      submitIcon={<UserAddOutlined />}
+      submitText={t('user.registerTitle')}
+      submitWrapperCol={{
+        sm: { span: 24, offset: 0 },
+        md: { span: 16, offset: 8 },
+      }}
+      wrapperCol={{
+        sm: { span: 24 },
+        md: { span: 16 },
+      }}
+    >
+      {renderItems}
     </UserForm>
   )
 }
 
-export default RegisterForm
+export default RegistrationForm

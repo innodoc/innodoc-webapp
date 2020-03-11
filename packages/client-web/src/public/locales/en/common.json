@@ -44,7 +44,8 @@
   },
   "userMessage": {
     "levels": {
-      "error": "Error!"
+      "error": "Error!",
+      "success": "Success!"
     },
     "types": {
       "loadManifestFailure": {
@@ -54,6 +55,10 @@
       "loadSectionFailure": {
         "text": "Couldn't load section. The error message was:",
         "title": "Loading section failed!"
+      },
+      "registerUserSuccess": {
+        "text": "A new user account has been created. Please check your emails and confirm the activation mail in order to use your account.",
+        "title": "Account created!"
       }
     }
   },

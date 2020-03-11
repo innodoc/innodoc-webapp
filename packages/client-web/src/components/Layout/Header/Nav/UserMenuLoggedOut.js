@@ -5,13 +5,15 @@ import { LoginOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
-const UserMenu = (props) => {
+const UserMenuLoggedOut = (props) => {
   const { t } = useTranslation()
   const userMenuTitle = (
-    <span>
-      <UserOutlined />
-      <span>{t('user.loginTitle')}</span>
-    </span>
+    <Link href="/login">
+      <a>
+        <UserOutlined />
+        {t('user.loginTitle')}
+      </a>
+    </Link>
   )
   return (
     <Menu.SubMenu
@@ -24,7 +26,7 @@ const UserMenu = (props) => {
         <Link href="/login">
           <a>
             <LoginOutlined />
-            <span>{t('user.loginTitle')}</span>
+            {t('user.loginTitle')}
           </a>
         </Link>
       </Menu.Item>
@@ -32,7 +34,7 @@ const UserMenu = (props) => {
         <Link href="/register">
           <a>
             <UserAddOutlined />
-            <span>{t('user.registerTitle')}</span>
+            {t('user.registerTitle')}
           </a>
         </Link>
       </Menu.Item>
@@ -40,4 +42,4 @@ const UserMenu = (props) => {
   )
 }
 
-export default UserMenu
+export default UserMenuLoggedOut

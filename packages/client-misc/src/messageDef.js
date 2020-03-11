@@ -5,6 +5,7 @@ export const MESSAGE_TYPES_MODAL = [
   'loadManifestFailure',
   'loadPageFailure',
   'loadSectionFailure',
+  'registerUserSuccess',
 ]
 
 export const MESSAGE_TYPES_LOGIN = ['loginUserFailure']

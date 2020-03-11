@@ -44,7 +44,8 @@
   },
   "userMessage": {
     "levels": {
-      "error": "Fehler!"
+      "error": "Fehler!",
+      "success": "Erfolg!"
     },
     "types": {
       "loadManifestFailure": {
@@ -54,6 +55,10 @@
       "loadSectionFailure": {
         "text": "Konnte Abschnitt nicht laden. Die Fehlermeldung war:",
         "title": "Laden des Abschnitts fehlgeschlagen!"
+      },
+      "registerUserSuccess": {
+        "text": "Ein neues Benutzerkonto wurde angelegt. Bitte checke Dein E-Mail-Postfach und bestätige die Aktivierungsmail, um das Konto zu nutzen.",
+        "title": "Konto erstellt!"
       }
     }
   },

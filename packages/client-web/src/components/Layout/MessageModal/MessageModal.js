@@ -22,7 +22,7 @@ const MessageModal = ({
   const subTitle = (
     <>
       {t(`userMessage.types.${type}.text`)}
-      <Input.TextArea disabled value={text} />
+      {text ? <Input.TextArea disabled value={text} /> : null}
     </>
   )
 

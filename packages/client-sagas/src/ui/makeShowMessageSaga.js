@@ -3,12 +3,12 @@ import { put } from 'redux-saga/effects'
 import { showMessage } from '@innodoc/client-store/src/actions/ui'
 
 const makeShowMessageSaga = (level, type, closable) =>
-  function* showMessageSaga({ error }) {
+  function* showMessageSaga({ errorMsg }) {
     yield put(
       showMessage({
         closable,
         level,
-        text: error.message,
+        text: errorMsg,
         type,
       })
     )

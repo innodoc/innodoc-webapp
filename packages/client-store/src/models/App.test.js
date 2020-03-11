@@ -25,6 +25,8 @@ describe('App', () => {
   })
 
   describe('reducer', () => {
+    // TODO
+
     test('setServerConfiguration', () => {
       session.App.reducer(
         setServerConfiguration(

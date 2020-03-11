@@ -48,22 +48,6 @@ const UserForm = ({
     </Form.Item>
   ) : null
 
-  // Add disabled prop to Inputs
-  const updatedChildren = disabled
-    ? React.Children.map(children, (item) =>
-        React.cloneElement(
-          item,
-          {},
-          React.Children.map(item.props.children, (input) =>
-            React.cloneElement(input, {
-              disabled: true,
-              value: form.getFieldValue(item.props.name),
-            })
-          )
-        )
-      )
-    : children
-
   const onFormFinish = (fields) => {
     dispatch(closeMessages(messageTypes))
     onFinish(fields)
@@ -77,7 +61,7 @@ const UserForm = ({
       onFinish={onFormFinish}
       wrapperCol={wrapperCol}
     >
-      {updatedChildren}
+      {children(disabled)}
       <Form.Item wrapperCol={submitWrapperCol}>
         <Button disabled={disabled} htmlType="submit" type="primary">
           {disabled ? <LoadingOutlined /> : submitIcon}
@@ -99,7 +83,7 @@ UserForm.defaultProps = {
 }
 
 UserForm.propTypes = {
-  children: childrenType.isRequired,
+  children: PropTypes.func.isRequired,
   extra: childrenType,
   formStateField: PropTypes.string.isRequired,
   labelCol: PropTypes.objectOf(PropTypes.any),
