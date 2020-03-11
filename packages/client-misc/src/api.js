@@ -19,11 +19,7 @@ const postJson = (url, data) =>
     },
     body: JSON.stringify(data),
   }).then((response) =>
-    response.ok
-      ? response.json()
-      : response
-          .json()
-          .then((respData) => Promise.reject(new Error(respData.result)))
+    response.ok ? response.json() : Promise.reject(new Error(response.status))
   )
 
 export const fetchFragment = (base, language, fragmentId) =>

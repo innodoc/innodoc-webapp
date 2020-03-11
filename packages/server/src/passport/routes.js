@@ -27,7 +27,7 @@ router.post('/register', (req, res, next) => {
 })
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
-  res.redirect('/')
+  res.status(200).json({ result: 'ok' })
 })
 
 router.get('/logout', (req, res) => {

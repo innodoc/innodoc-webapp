@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Link from 'next/link'
-import { Button, Form, Input } from 'antd'
+import { Alert, Button, Form, Input } from 'antd'
 import {
   MailOutlined,
   LoadingOutlined,
@@ -9,8 +9,12 @@ import {
   UserAddOutlined,
 } from '@ant-design/icons'
 
+import { MESSAGE_TYPES_REGISTER } from '@innodoc/client-misc/src/messageDef'
 import { useTranslation, Trans } from '@innodoc/client-misc/src/i18n'
+import { closeMessage } from '@innodoc/client-store/src/actions/ui'
 import { registerUser } from '@innodoc/client-store/src/actions/user'
+
+import useUserMessage from '../../../hooks/useUserMessage'
 
 const LoginLink = () => {
   const { t } = useTranslation()
@@ -25,10 +29,28 @@ const RegisterForm = () => {
   const [disabled, setDisabled] = useState(false)
   const { t } = useTranslation()
   const dispatch = useDispatch()
+  const message = useUserMessage(MESSAGE_TYPES_REGISTER)
   const onFinish = ({ email, password }) => {
-    dispatch(registerUser(email, password))
     setDisabled(true)
+    dispatch(registerUser(email, password))
   }
+
+  const messageItem = message ? (
+    <Form.Item>
+      <Alert
+        afterClose={() => {
+          dispatch(closeMessage(message.id))
+          setDisabled(false)
+        }}
+        closable
+        description={t(`user.${message.type}.description`)}
+        message={t(`user.${message.type}.message`)}
+        showIcon
+        type={message.level}
+      />
+    </Form.Item>
+  ) : null
+
   return (
     <Form
       name="register-form"
@@ -97,6 +119,8 @@ const RegisterForm = () => {
           or <LoginLink /> if you already have an account.
         </Trans>
       </Form.Item>
+
+      {messageItem}
     </Form>
   )
 }

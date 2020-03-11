@@ -2,11 +2,14 @@ import { createSelector } from 'redux-orm'
 
 import orm from '../orm'
 
-const getLatest = createSelector(orm, (session) => {
-  const last = session.UserMessage.last()
-  return last ? last.ref : undefined
-})
+const makeGetLatest = (types) =>
+  createSelector(orm, (session) => {
+    const last = session.UserMessage.filter((msg) =>
+      types.includes(msg.type)
+    ).last()
+    return last ? last.ref : undefined
+  })
 
 export default {
-  getLatest,
+  makeGetLatest,
 }

@@ -71,6 +71,10 @@
     "email": "E-Mail",
     "emailInvalid": "Bitte gültige E-Mail eintragen!",
     "emailMissing": "Bitte E-Mail eintragen!",
+    "loginUserFailure": {
+      "description": "Bitte E-Mail und Passwort überprüfen.",
+      "message": "Login fehlgeschlagen!"
+    },
     "loginTitle": "Login",
     "orCreateAccount": "oder <1></1>",
     "orLogin": "oder <1></1> wenn Du schon ein Konto hast.",

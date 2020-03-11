@@ -13,6 +13,6 @@ export default function* registerUserSaga({ email, password }) {
     yield call(registerUser, appRoot, email, password)
     yield put(registerUserSuccess(email))
   } catch (error) {
-    yield put(registerUserFailure(email, error))
+    yield put(registerUserFailure(email, error.message))
   }
 }

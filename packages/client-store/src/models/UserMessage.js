@@ -22,6 +22,11 @@ export default class UserMessage extends Model {
       case uiActionTypes.CLOSE_MESSAGE:
         UserMessageModel.withId(action.id).delete()
         break
+      case uiActionTypes.CLOSE_MESSAGES:
+        UserMessageModel.filter((msg) =>
+          action.messageTypes.includes(msg.type)
+        ).delete()
+        break
       case uiActionTypes.SHOW_MESSAGE:
         UserMessageModel.create(action.msg)
         break

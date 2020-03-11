@@ -71,6 +71,10 @@
     "email": "Email",
     "emailInvalid": "Please enter valid email!",
     "emailMissing": "Please input your email!",
+    "loginUserFailure": {
+      "description": "Please check your email and password.",
+      "message": "Login failed!"
+    },
     "loginTitle": "Login",
     "orCreateAccount": "or <1></1>",
     "orLogin": "or <1></1> if you already have an account.",

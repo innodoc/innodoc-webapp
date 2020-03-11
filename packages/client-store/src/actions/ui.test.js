@@ -1,7 +1,14 @@
-import { closeMessage, showMessage, toggleSidebar } from './ui'
+import { closeMessage, closeMessages, showMessage, toggleSidebar } from './ui'
 
 test('CLOSE_MESSAGE action', () => {
   expect(closeMessage(6)).toEqual({ type: 'CLOSE_MESSAGE', id: 6 })
+})
+
+test('CLOSE_MESSAGES action', () => {
+  expect(closeMessages(['loginUserFailure'])).toEqual({
+    type: 'CLOSE_MESSAGES',
+    messageTypes: ['loginUserFailure'],
+  })
 })
 
 test('SHOW_MESSAGE action', () => {
