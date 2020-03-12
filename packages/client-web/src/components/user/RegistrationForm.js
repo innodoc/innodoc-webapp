@@ -1,18 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
 import { Form, Input } from 'antd'
 import { MailOutlined, LockOutlined, UserAddOutlined } from '@ant-design/icons'
 
-import { checkEmail } from '@innodoc/client-misc/src/api'
-import { MESSAGE_TYPES_REGISTER } from '@innodoc/client-misc/src/messageDef'
+import { checkEmail, registerUser } from '@innodoc/client-misc/src/api'
 import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
   validatePassword,
 } from '@innodoc/client-misc/src/passwordDef'
 import { useTranslation, Trans } from '@innodoc/client-misc/src/i18n'
-import { registerUser } from '@innodoc/client-store/src/actions/user'
+import { showMessage } from '@innodoc/client-store/src/actions/ui'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import UserForm from './UserForm'
@@ -33,8 +32,39 @@ const PASSWORD_VALIDATION_INTERPOLATIONS = {
 
 const RegistrationForm = () => {
   const { appRoot } = useSelector(appSelectors.getApp)
-  const dispatch = useDispatch()
   const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const [message, setMessage] = useState()
+  const [disabled, setDisabled] = useState(false)
+
+  const onFinish = ({ email, password }) => {
+    setDisabled(true)
+    registerUser(appRoot, email, password)
+      .then(() =>
+        dispatch(
+          showMessage({
+            closable: false,
+            level: 'success',
+            type: 'registerUserSuccess',
+          })
+        )
+      )
+      .catch((error) => {
+        setMessage({
+          afterClose: () => setMessage(),
+          level: 'error',
+          description: (
+            <>
+              {t('user.registration.fail.description')}
+              <br />
+              {error.message}
+            </>
+          ),
+          message: t('user.registration.fail.message'),
+        })
+        setDisabled(false)
+      })
+  }
 
   const extra = (
     <Trans i18nKey="user.registration.orLogin">
@@ -42,7 +72,7 @@ const RegistrationForm = () => {
     </Trans>
   )
 
-  const renderItems = (disabled) => (
+  const items = (
     <>
       <Form.Item
         label={t('user.email')}
@@ -114,17 +144,15 @@ const RegistrationForm = () => {
 
   return (
     <UserForm
+      disabled={disabled}
       extra={extra}
-      formStateField="registrationFormState"
       labelCol={{
         sm: { span: 24 },
         md: { span: 8 },
       }}
-      messageTypes={MESSAGE_TYPES_REGISTER}
+      message={message}
       name="registration-form"
-      onFinish={({ email, password }) =>
-        dispatch(registerUser(email, password))
-      }
+      onFinish={onFinish}
       submitIcon={<UserAddOutlined />}
       submitText={t('user.registration.title')}
       submitWrapperCol={{
@@ -136,7 +164,7 @@ const RegistrationForm = () => {
         md: { span: 16 },
       }}
     >
-      {renderItems}
+      {items}
     </UserForm>
   )
 }

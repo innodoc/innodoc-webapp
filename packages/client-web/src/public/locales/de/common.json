@@ -78,24 +78,26 @@
       "missing": "Bitte E-Mail eintragen!"
     },
     "login": {
-      "orCreateAccount": "oder <1></1>",
-      "signIn": "Einloggen",
-      "title": "Login"
-    },
-    "logout": "Ausloggen",
-    "messages": {
-      "loginUserFailure": {
+      "fail": {
         "description": "Bitte E-Mail und Passwort überprüfen.",
         "message": "Login fehlgeschlagen!"
       },
-      "registerUserFailure": {
-        "description": "Bitte die Daten überprüfen.",
-        "message": "Registrierung fehlgeschlagen!"
-      }
+      "orCreateAccount": "oder <1></1>",
+      "signIn": "Einloggen",
+      "success": {
+        "description": "Deine Ergebnisse werden auf dem Server gespeichert.",
+        "message": "Die Anmeldung war erfolgreich."
+      },
+      "title": "Login"
     },
+    "logout": "Ausloggen",
     "registration": {
       "confirmPassword": "Passwort bestätigen",
       "createAccount": "Konto erstellen",
+      "fail": {
+        "description": "Leider konnte die Registrierung nicht abgeschlossen werden. Fehlermeldung:",
+        "message": "Registrierung fehlgeschlagen!"
+      },
       "orLogin": "oder <1></1> wenn Du schon ein Konto hast.",
       "title": "Konto erstellen"
     },

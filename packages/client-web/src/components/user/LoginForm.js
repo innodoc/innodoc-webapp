@@ -1,12 +1,14 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
 import { Form, Input } from 'antd'
 import { LockOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons'
 
-import { MESSAGE_TYPES_LOGIN } from '@innodoc/client-misc/src/messageDef'
+import { loginUser } from '@innodoc/client-misc/src/api'
 import { useTranslation, Trans } from '@innodoc/client-misc/src/i18n'
-import { loginUser } from '@innodoc/client-store/src/actions/user'
+import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
+import appSelectors from '@innodoc/client-store/src/selectors'
+
 import UserForm from './UserForm'
 
 const CreateAccountLink = () => {
@@ -19,8 +21,26 @@ const CreateAccountLink = () => {
 }
 
 const LoginForm = () => {
+  const { appRoot } = useSelector(appSelectors.getApp)
   const dispatch = useDispatch()
   const { t } = useTranslation()
+  const [message, setMessage] = useState()
+  const [disabled, setDisabled] = useState(false)
+
+  const onFinish = ({ email, password }) => {
+    setDisabled(true)
+    loginUser(appRoot, email, password)
+      .then(() => dispatch(userLoggedIn(email)))
+      .catch(() => {
+        setMessage({
+          afterClose: () => setMessage(),
+          level: 'error',
+          description: t('user.login.fail.description'),
+          message: t('user.login.fail.message'),
+        })
+        setDisabled(false)
+      })
+  }
 
   const extra = (
     <Trans i18nKey="user.login.orCreateAccount">
@@ -28,7 +48,7 @@ const LoginForm = () => {
     </Trans>
   )
 
-  const renderItems = (disabled) => (
+  const items = (
     <>
       <Form.Item
         name="email"
@@ -36,6 +56,7 @@ const LoginForm = () => {
           { required: true, message: t('user.emailValidation.missing') },
           { type: 'email', message: t('user.emailValidation.invalid') },
         ]}
+        validateFirst
       >
         <Input
           disabled={disabled}
@@ -61,15 +82,15 @@ const LoginForm = () => {
 
   return (
     <UserForm
+      disabled={disabled}
       extra={extra}
-      formStateField="loginFormState"
-      messageTypes={MESSAGE_TYPES_LOGIN}
+      message={message}
       name="login-form"
-      onFinish={({ email, password }) => dispatch(loginUser(email, password))}
+      onFinish={onFinish}
       submitIcon={<LoginOutlined />}
       submitText={t('user.login.signIn')}
     >
-      {renderItems}
+      {items}
     </UserForm>
   )
 }

@@ -25,7 +25,7 @@ describe('App', () => {
   })
 
   describe('reducer', () => {
-    // TODO
+    // TODO LOGIN_USER_SUCCESS
 
     test('setServerConfiguration', () => {
       session.App.reducer(

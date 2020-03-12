@@ -5,11 +5,6 @@ import { actionTypes as i18nActionTypes } from '../actions/i18n'
 import { actionTypes as uiActionTypes } from '../actions/ui'
 import { actionTypes as userActionTypes } from '../actions/user'
 
-export const FORM_STATES = {
-  FINISHED: 0,
-  PENDING: 1,
-}
-
 export default class App extends Model {
   static get modelName() {
     return 'App'
@@ -26,8 +21,6 @@ export default class App extends Model {
       }),
       language: attr(),
       loggedInEmail: attr(),
-      loginFormState: attr({ getDefault: () => FORM_STATES.FINISHED }),
-      registrationFormState: attr({ getDefault: () => FORM_STATES.FINISHED }),
       show404: attr({ getDefault: () => false }),
       sidebarVisible: attr({ getDefault: () => false }),
       staticRoot: attr({ getDefault: () => '' }),
@@ -53,20 +46,8 @@ export default class App extends Model {
         case i18nActionTypes.CHANGE_LANGUAGE:
           app.set('language', action.language)
           break
-        case userActionTypes.LOGIN_USER:
-          app.set('loginFormState', FORM_STATES.PENDING)
-          break
-        case userActionTypes.LOGIN_USER_FAILURE:
-          app.set('loginFormState', FORM_STATES.FINISHED)
-          break
-        case userActionTypes.LOGIN_USER_SUCCESS:
+        case userActionTypes.USER_LOGGED_IN:
           app.set('loggedInEmail', action.email)
-          break
-        case userActionTypes.REGISTER_USER:
-          app.set('registrationFormState', FORM_STATES.PENDING)
-          break
-        case userActionTypes.REGISTER_USER_FAILURE:
-          app.set('registrationFormState', FORM_STATES.FINISHED)
           break
         case uiActionTypes.TOGGLE_SIDEBAR: {
           app.set('sidebarVisible', !app.sidebarVisible)

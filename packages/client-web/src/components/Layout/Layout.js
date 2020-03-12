@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Layout as AntLayout } from 'antd'
 
-import { MESSAGE_TYPES_MODAL } from '@innodoc/client-misc/src/messageDef'
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
 import { closeMessage } from '@innodoc/client-store/src/actions/ui'
+import userMessageSelectors from '@innodoc/client-store/src/selectors/userMessage'
 
-import useUserMessage from '../../hooks/useUserMessage'
 import Footer from './Footer'
 import Header from './Header'
 import MessageModal from './MessageModal'
@@ -16,7 +15,7 @@ import Toc from '../Toc'
 import css from './style.sss'
 
 const Layout = ({ children, disableSidebar }) => {
-  const message = useUserMessage(MESSAGE_TYPES_MODAL)
+  const message = useSelector(userMessageSelectors.getLatest)
   const dispatch = useDispatch()
 
   const sidebar = disableSidebar ? null : (

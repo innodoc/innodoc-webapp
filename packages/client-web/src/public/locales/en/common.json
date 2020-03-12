@@ -73,29 +73,31 @@
   "user": {
     "email": "Email",
     "emailValidation": {
-      "alreadyUsed": "This email address is already used by another account!",
+      "alreadyUsed": "This email address is being used by another account!",
       "invalid": "Please enter valid email!",
       "missing": "Please input your email!"
     },
     "login": {
-      "orCreateAccount": "or <1></1>",
-      "signIn": "Sign-in",
-      "title": "Login"
-    },
-    "logout": "Logout",
-    "messages": {
-      "loginUserFailure": {
+      "fail": {
         "description": "Please check your email and password.",
         "message": "Login failed!"
       },
-      "registerUserFailure": {
-        "description": "Please check the entered information.",
-        "message": "Registration failed!"
-      }
+      "orCreateAccount": "or <1></1>",
+      "signIn": "Sign-in",
+      "success": {
+        "description": "Your results are stored on the server.",
+        "message": "Successfully logged in."
+      },
+      "title": "Login"
     },
+    "logout": "Logout",
     "registration": {
       "confirmPassword": "Confirm Password",
       "createAccount": "create account",
+      "fail": {
+        "description": "Unfortunately the account registration did not succeed. Error message:",
+        "message": "Account registration failed!"
+      },
       "orLogin": "or <1></1> if you already have an account.",
       "title": "Create account"
     },

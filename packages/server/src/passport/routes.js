@@ -15,7 +15,6 @@ router.post('/checkEmail', async (req, res) => {
 })
 
 router.post('/register', (req, res, next) => {
-  console.log('register', req.body)
   User.register(
     new User({ email: req.body.email }),
     req.body.password,
@@ -26,6 +25,7 @@ router.post('/register', (req, res, next) => {
         }
         return next(err)
       }
+      // TODO activation?
       passport.authenticate('local')(req, res, () => {
         res.status(200).json({ result: 'ok' })
       })
