@@ -49,6 +49,9 @@ export default class App extends Model {
         case userActionTypes.USER_LOGGED_IN:
           app.set('loggedInEmail', action.email)
           break
+        case userActionTypes.USER_LOGGED_OUT:
+          app.set('loggedInEmail', undefined)
+          break
         case uiActionTypes.TOGGLE_SIDEBAR: {
           app.set('sidebarVisible', !app.sidebarVisible)
           break

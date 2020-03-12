@@ -1,7 +1,5 @@
-import { MESSAGE_TYPES_LOGIN } from '@innodoc/client-misc/src/messageDef'
-
 import orm from '../orm'
-import { closeMessage, closeMessages, showMessage } from '../actions/ui'
+import { closeMessage, showMessage } from '../actions/ui'
 
 describe('UserMessage', () => {
   let session
@@ -30,21 +28,6 @@ describe('UserMessage', () => {
       const id = session.UserMessage.first().getId()
       session.UserMessage.reducer(closeMessage(id), session.UserMessage)
       expect(session.UserMessage.withId(id)).toBeFalsy()
-    })
-
-    test('closeMessages', () => {
-      session.UserMessage.create({
-        type: 'loginUserFailure',
-      })
-      session.UserMessage.create({
-        type: 'registerUserFailure',
-      })
-      expect(session.UserMessage.count()).toBe(2)
-      session.UserMessage.reducer(
-        closeMessages(MESSAGE_TYPES_LOGIN),
-        session.UserMessage
-      )
-      expect(session.UserMessage.count()).toBe(1)
     })
 
     test('showMessage', () => {

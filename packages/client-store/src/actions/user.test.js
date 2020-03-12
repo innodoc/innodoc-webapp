@@ -1,15 +1,12 @@
-import { loginUser, logoutUser } from './user'
+import { userLoggedIn, userLoggedOut } from './user'
 
-test('LOGIN_USER action', () =>
-  expect(loginUser('alice@example.com', 's3cr3t')).toEqual({
-    type: 'LOGIN_USER',
+test('USER_LOGGED_IN action', () =>
+  expect(userLoggedIn('alice@example.com')).toEqual({
+    type: 'USER_LOGGED_IN',
     email: 'alice@example.com',
-    password: 's3cr3t',
   }))
 
-test('LOGOUT_USER action', () =>
-  expect(logoutUser('alice@example.com', 's3cr3t')).toEqual({
-    type: 'LOGOUT_USER',
-    email: 'alice@example.com',
-    password: 's3cr3t',
+test('USER_LOGGED_OUT action', () =>
+  expect(userLoggedOut()).toEqual({
+    type: 'USER_LOGGED_OUT',
   }))

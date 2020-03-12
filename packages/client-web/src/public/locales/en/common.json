@@ -71,6 +71,9 @@
     "inputFeedback": "Input"
   },
   "user": {
+    "changePassword": {
+      "title": "Change password"
+    },
     "email": "Email",
     "emailValidation": {
       "alreadyUsed": "This email address is being used by another account!",

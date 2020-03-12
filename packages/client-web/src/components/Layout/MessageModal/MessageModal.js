@@ -11,9 +11,6 @@ const MessageModal = ({
 }) => {
   const { t } = useTranslation()
 
-  // TODO TMP
-  console.log('MODAL')
-
   const footer = closable
     ? [
         <Button key="ok" onClick={onClose} type="primary">

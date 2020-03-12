@@ -10,8 +10,7 @@ import appSelectors from '@innodoc/client-store/src/selectors'
 import pageSelectors from '@innodoc/client-store/src/selectors/page'
 
 import LanguageSwitcher from './LanguageSwitcher'
-import UserMenuLoggedIn from './UserMenuLoggedIn'
-import UserMenuLoggedOut from './UserMenuLoggedOut'
+import UserMenu from './UserMenu'
 import css from './style.sss'
 import PageIcon from '../../PageIcon'
 import { PageLink } from '../../../content/links'
@@ -38,12 +37,6 @@ const Nav = ({ menuMode }) => {
     </Menu.Item>
   ))
 
-  const userMenu = loggedInEmail ? (
-    <UserMenuLoggedIn email={loggedInEmail} />
-  ) : (
-    <UserMenuLoggedOut />
-  )
-
   return (
     <Menu mode={menuMode} selectable={false} className={css.nav}>
       {pageItems}
@@ -54,7 +47,7 @@ const Nav = ({ menuMode }) => {
         </a>
       </Menu.Item>
       <LanguageSwitcher />
-      {userMenu}
+      <UserMenu email={loggedInEmail} />
     </Menu>
   )
 }
