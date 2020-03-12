@@ -71,27 +71,46 @@
     "inputFeedback": "Eingabe"
   },
   "user": {
-    "confirmPassword": "Passwort bestätigen",
-    "createAccount": "Konto erstellen",
     "email": "E-Mail",
-    "emailInvalid": "Bitte gültige E-Mail eintragen!",
-    "emailMissing": "Bitte E-Mail eintragen!",
-    "loginUserFailure": {
-      "description": "Bitte E-Mail und Passwort überprüfen.",
-      "message": "Login fehlgeschlagen!"
+    "emailValidation": {
+      "alreadyUsed": "Diese E-Mail-Adresse wird schon von einem anderen Konto verwendet!",
+      "invalid": "Bitte gültige E-Mail eintragen!",
+      "missing": "Bitte E-Mail eintragen!"
     },
-    "loginTitle": "Login",
-    "orCreateAccount": "oder <1></1>",
-    "orLogin": "oder <1></1> wenn Du schon ein Konto hast.",
+    "login": {
+      "orCreateAccount": "oder <1></1>",
+      "signIn": "Einloggen",
+      "title": "Login"
+    },
+    "logout": "Ausloggen",
+    "messages": {
+      "loginUserFailure": {
+        "description": "Bitte E-Mail und Passwort überprüfen.",
+        "message": "Login fehlgeschlagen!"
+      },
+      "registerUserFailure": {
+        "description": "Bitte die Daten überprüfen.",
+        "message": "Registrierung fehlgeschlagen!"
+      }
+    },
+    "registration": {
+      "confirmPassword": "Passwort bestätigen",
+      "createAccount": "Konto erstellen",
+      "orLogin": "oder <1></1> wenn Du schon ein Konto hast.",
+      "title": "Konto erstellen"
+    },
     "password": "Passwort",
-    "passwordMismatch": "Beide Passwörter müssen übereinstimmen!",
-    "passwordMissing": "Bitte Passwort eintragen!",
-    "pleaseConfirmPassword": "Bitte Passwort bestätigen!",
-    "registerUserFailure": {
-      "description": "Bitte die Daten überprüfen.",
-      "message": "Registrierung fehlgeschlagen!"
-    },
-    "registerTitle": "Konto erstellen",
-    "signIn": "Einloggen"
+    "passwordValidation": {
+      "confirm": "Bitte Passwort bestätigen!",
+      "digits": "Das Passwort muss mindestens eine Ziffer enthalten!",
+      "lowercase": "Das Passwort muss mindestens einen Kleinbuchstaben enthalten!",
+      "max": "Das Passwort darf höchstens {{max}} Zeichen lang sein!",
+      "min": "Das Passwort muss mindestens {{min}} Zeichen lang sein!",
+      "mismatch": "Beide Passwörter müssen übereinstimmen!",
+      "missing": "Bitte Passwort eintragen!",
+      "spaces": "Das Passwort darf keine Leerzeichen enthalten!",
+      "symbols": "Das Passwort muss mindestens ein Sonderzeichen enthalten!",
+      "uppercase": "Das Passwort muss mindestens einen Großbuchstaben enthalten!"
+    }
   }
 }

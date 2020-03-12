@@ -1,5 +1,6 @@
 import React from 'react'
 import { Row, Col } from 'antd'
+import { UserAddOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
@@ -13,7 +14,9 @@ const RegistrationPage = () => {
     <Layout disableSidebar>
       <Row justify="space-around" align="middle">
         <Col xs={24} sm={20} md={18} lg={16}>
-          <h1 className={css.header}>{t('user.registerTitle')}</h1>
+          <h1 className={css.header}>
+            <UserAddOutlined /> {t('user.registration.title')}
+          </h1>
           <RegistrationForm />
         </Col>
       </Row>

@@ -71,27 +71,46 @@
     "inputFeedback": "Input"
   },
   "user": {
-    "confirmPassword": "Confirm Password",
-    "createAccount": "create account",
     "email": "Email",
-    "emailInvalid": "Please enter valid email!",
-    "emailMissing": "Please input your email!",
-    "loginUserFailure": {
-      "description": "Please check your email and password.",
-      "message": "Login failed!"
+    "emailValidation": {
+      "alreadyUsed": "This email address is already used by another account!",
+      "invalid": "Please enter valid email!",
+      "missing": "Please input your email!"
     },
-    "loginTitle": "Login",
-    "orCreateAccount": "or <1></1>",
-    "orLogin": "or <1></1> if you already have an account.",
+    "login": {
+      "orCreateAccount": "or <1></1>",
+      "signIn": "Sign-in",
+      "title": "Login"
+    },
+    "logout": "Logout",
+    "messages": {
+      "loginUserFailure": {
+        "description": "Please check your email and password.",
+        "message": "Login failed!"
+      },
+      "registerUserFailure": {
+        "description": "Please check the entered information.",
+        "message": "Registration failed!"
+      }
+    },
+    "registration": {
+      "confirmPassword": "Confirm Password",
+      "createAccount": "create account",
+      "orLogin": "or <1></1> if you already have an account.",
+      "title": "Create account"
+    },
     "password": "Password",
-    "passwordMismatch": "The passwords you entered have to match!",
-    "passwordMissing": "Please input your password!",
-    "pleaseConfirmPassword": "Please confirm your password!",
-    "registerUserFailure": {
-      "description": "Please check the entered information.",
-      "message": "Registration failed!"
-    },
-    "registerTitle": "Create account",
-    "signIn": "Sign-in"
+    "passwordValidation": {
+      "confirm": "Please confirm your password!",
+      "digits": "The password must contain at least one digit!",
+      "lowercase": "The password must contain at least one lowercase letter!",
+      "max": "The password can only have a maximum of {{max}} characters!",
+      "min": "The password needs to have a minimum of {{min}} characters!",
+      "mismatch": "The passwords you entered have to match!",
+      "missing": "Please input your password!",
+      "spaces": "The password must not contain spaces!",
+      "symbols": "The password must contain at least one symbol!",
+      "uppercase": "The password must contain at least one uppercase letter!"
+    }
   }
 }

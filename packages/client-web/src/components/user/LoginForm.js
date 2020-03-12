@@ -13,7 +13,7 @@ const CreateAccountLink = () => {
   const { t } = useTranslation()
   return (
     <Link href="/register">
-      <a>{t('user.createAccount')}</a>
+      <a>{t('user.registration.createAccount')}</a>
     </Link>
   )
 }
@@ -23,7 +23,7 @@ const LoginForm = () => {
   const { t } = useTranslation()
 
   const extra = (
-    <Trans i18nKey="user.orCreateAccount">
+    <Trans i18nKey="user.login.orCreateAccount">
       or <CreateAccountLink />.
     </Trans>
   )
@@ -32,7 +32,10 @@ const LoginForm = () => {
     <>
       <Form.Item
         name="email"
-        rules={[{ required: true, message: t('user.emailMissing') }]}
+        rules={[
+          { required: true, message: t('user.emailValidation.missing') },
+          { type: 'email', message: t('user.emailValidation.invalid') },
+        ]}
       >
         <Input
           disabled={disabled}
@@ -42,7 +45,9 @@ const LoginForm = () => {
       </Form.Item>
       <Form.Item
         name="password"
-        rules={[{ required: true, message: t('user.passwordMissing') }]}
+        rules={[
+          { required: true, message: t('user.passwordValidation.missing') },
+        ]}
       >
         <Input
           disabled={disabled}
@@ -62,7 +67,7 @@ const LoginForm = () => {
       name="login-form"
       onFinish={({ email, password }) => dispatch(loginUser(email, password))}
       submitIcon={<LoginOutlined />}
-      submitText={t('user.signIn')}
+      submitText={t('user.login.signIn')}
     >
       {renderItems}
     </UserForm>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Row, Col } from 'antd'
+import { LoginOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
@@ -13,7 +14,9 @@ const LoginPage = () => {
     <Layout disableSidebar>
       <Row justify="space-around" align="middle">
         <Col xs={24} sm={16} md={12} lg={10}>
-          <h1 className={css.header}>{t('user.loginTitle')}</h1>
+          <h1 className={css.header}>
+            <LoginOutlined /> {t('user.login.title')}
+          </h1>
           <LoginForm />
         </Col>
       </Row>

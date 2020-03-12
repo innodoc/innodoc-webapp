@@ -6,6 +6,14 @@ import User from './models/User'
 
 const router = Router()
 
+router.post('/checkEmail', async (req, res) => {
+  if (await User.exists({ email: req.body.email })) {
+    res.status(400).json({ result: 'UserExistsError' })
+  } else {
+    res.status(200).json({ result: 'ok' })
+  }
+})
+
 router.post('/register', (req, res, next) => {
   console.log('register', req.body)
   User.register(

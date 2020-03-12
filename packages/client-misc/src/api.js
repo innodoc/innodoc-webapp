@@ -33,6 +33,9 @@ export const fetchSection = (base, language, sectionId) =>
 export const fetchPage = (base, language, pageId) =>
   getJson(`${base}${language}/_pages/${pageId}.json`)
 
+export const checkEmail = (base, email) =>
+  postJson(`${base}user/checkEmail`, { email })
+
 export const registerUser = (base, email, password) =>
   postJson(`${base}user/register`, { email, password })
 

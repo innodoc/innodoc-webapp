@@ -13,11 +13,11 @@ import { useTranslation } from '@innodoc/client-misc/src/i18n'
 const UserMenuLoggedIn = (props) => {
   const { email, ...restProps } = props
 
-  const { t, Trans } = useTranslation()
+  const { t } = useTranslation()
   const userMenuTitle = (
     <span>
       <UserOutlined />
-      {email}
+      <strong>{email}</strong>
     </span>
   )
   return (

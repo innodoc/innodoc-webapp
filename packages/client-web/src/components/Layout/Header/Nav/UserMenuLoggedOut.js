@@ -4,14 +4,15 @@ import { Menu } from 'antd'
 import { LoginOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import css from './style.sss'
 
 const UserMenuLoggedOut = (props) => {
   const { t } = useTranslation()
   const userMenuTitle = (
     <Link href="/login">
-      <a>
+      <a className={css.loginLink}>
         <UserOutlined />
-        {t('user.loginTitle')}
+        {t('user.login.title')}
       </a>
     </Link>
   )
@@ -26,7 +27,7 @@ const UserMenuLoggedOut = (props) => {
         <Link href="/login">
           <a>
             <LoginOutlined />
-            {t('user.loginTitle')}
+            {t('user.login.title')}
           </a>
         </Link>
       </Menu.Item>
@@ -34,7 +35,7 @@ const UserMenuLoggedOut = (props) => {
         <Link href="/register">
           <a>
             <UserAddOutlined />
-            {t('user.registerTitle')}
+            {t('user.registration.title')}
           </a>
         </Link>
       </Menu.Item>

@@ -40,8 +40,8 @@ const UserForm = ({
       <Alert
         afterClose={() => dispatch(closeMessage(message.id))}
         closable
-        description={t(`user.${message.type}.description`)}
-        message={t(`user.${message.type}.message`)}
+        description={t(`user.messages.${message.type}.description`)}
+        message={t(`user.messages.${message.type}.message`)}
         showIcon
         type={message.level}
       />

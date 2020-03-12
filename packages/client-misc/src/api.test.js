@@ -1,4 +1,5 @@
 import {
+  checkEmail,
   fetchFragment,
   fetchManifest,
   fetchPage,
@@ -88,9 +89,9 @@ describe('postJson', () => {
       it('should fail if response not ok', async () => {
         global.fetch = jest.fn().mockResolvedValue({
           ok: false,
-          json: jest.fn().mockResolvedValue({ result: 'MockError' }),
+          status: 500,
         })
-        await expect(getPromise()).rejects.toEqual(new Error('MockError'))
+        await expect(getPromise()).rejects.toEqual(new Error(500))
       })
 
       it('should fail if fetch promise rejects', async () => {
@@ -112,5 +113,11 @@ describe('postJson', () => {
     () => loginUser('https://app.example.com/', 'foo@example.com', '53cr3t'),
     { email: 'foo@example.com', password: '53cr3t' },
     'https://app.example.com/user/login'
+  )
+  makeTests(
+    'checkEmail',
+    () => checkEmail('https://app.example.com/', 'foo@example.com'),
+    { email: 'foo@example.com' },
+    'https://app.example.com/user/checkEmail'
   )
 })
