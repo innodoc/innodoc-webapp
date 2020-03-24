@@ -27,6 +27,9 @@ module.exports = {
     },
     {
       files: ['src/**/*.test.js'],
+      globals: {
+        waitForComponent: true,
+      },
       rules: {
         'react/prop-types': 'off',
       },
