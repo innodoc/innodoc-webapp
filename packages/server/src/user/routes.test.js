@@ -1,1 +1,11 @@
-// TODO
+describe('userRoutes', () => {
+  it.todo('should have check-email route')
+  it.todo('should have register route')
+  it.todo('should have login route')
+  it.todo('should have logout route')
+  it.todo('should have change-password route')
+  it.todo('should have reset-password route')
+  it.todo('should have verify route')
+  it.todo('should have request-password-reset route')
+  it.todo('should have request-verification route')
+})
