@@ -53,10 +53,10 @@ jest.mock('csurf', () => jest.fn(() => mockCsrf))
 
 const mockExpress = {
   get: jest.fn(() => mockExpress),
-  listen: jest.fn(() => mockExpress),
+  listen: jest.fn(() => Promise.resolve()),
   use: jest.fn(() => mockExpress),
 }
-jest.mock('express', () => jest.fn(() => Promise.resolve(mockExpress)))
+jest.mock('express', () => jest.fn(() => mockExpress))
 
 const mockNextPrepare = jest.fn().mockResolvedValue()
 const mockNextAppRequestHandler = () => {}

@@ -58,7 +58,7 @@ const startServer = async (rootDir) => {
   passport.serializeUser(User.serializeUser())
   passport.deserializeUser(User.deserializeUser())
 
-  const expressApp = await express()
+  const expressApp = express()
   expressApp
     .use(bodyParser.json())
     .use(cookieParser())
@@ -89,8 +89,8 @@ const startServer = async (rootDir) => {
     .use(passportMiddleware)
     .use('/user', userRoutes(config))
     .get('*', nextApp.getRequestHandler())
-    .listen(config.port)
 
+  await expressApp.listen(config.port)
   return config
 }
 
