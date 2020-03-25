@@ -4,8 +4,9 @@ import path from 'path'
 import Dotenv from 'dotenv-safe'
 
 const ensureTrailingSlash = (url) => (url.substr(-1) === '/' ? url : `${url}/`)
+const rootDir = path.resolve(__dirname, '..', '..', '..')
 
-const getConfig = (rootDir) => {
+const getConfig = () => {
   // load Dotenv file
   const dotEnvFile = path.resolve(rootDir, '.env')
   if (!fs.existsSync(dotEnvFile)) {
@@ -37,7 +38,7 @@ const getConfig = (rootDir) => {
     appRoot,
     contentRoot,
     jwtSecret: process.env.JWT_SECRET,
-    mongodbConnectionString: process.env.MONGODB_CONNECTION_STRING,
+    mongoUrl: process.env.MONGO_URL,
     nodeEnv,
     pagePathPrefix: process.env.PAGE_PATH_PREFIX,
     port: parseInt(new URL(appRoot).port, 10),

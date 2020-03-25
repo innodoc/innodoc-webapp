@@ -20,7 +20,7 @@ describe('getConfig', () => {
     process.env.APP_ROOT = 'http://localhost:8123/'
     process.env.CONTENT_ROOT = 'https://example.com/content/'
     process.env.JWT_SECRET = 'jwtsecret123!'
-    process.env.MONGODB_CONNECTION_STRING = 'mongodb://mongohost/coll'
+    process.env.MONGO_URL = 'mongodb://mongohost/coll'
     process.env.NODE_ENV = 'production'
     process.env.PAGE_PATH_PREFIX = 'custompage'
     process.env.SECTION_PATH_PREFIX = 'customsection'
@@ -39,8 +39,8 @@ describe('getConfig', () => {
     getConfig('/mock/root')
     expect(Dotenv.config).toBeCalledTimes(1)
     expect(Dotenv.config).toBeCalledWith({
-      example: '/mock/root/.env.example',
-      path: '/mock/root/.env',
+      example: expect.stringMatching(/\.env\.example$/),
+      path: expect.stringMatching(/\.env$/),
     })
   })
 
@@ -49,7 +49,7 @@ describe('getConfig', () => {
       appRoot: 'http://localhost:8123/',
       contentRoot: 'https://example.com/content/',
       jwtSecret: 'jwtsecret123!',
-      mongodbConnectionString: 'mongodb://mongohost/coll',
+      mongoUrl: 'mongodb://mongohost/coll',
       nodeEnv: 'production',
       pagePathPrefix: 'custompage',
       port: 8123,
@@ -89,7 +89,7 @@ describe('getConfig', () => {
         getConfig('/mock/root')
       }).toThrow('Could not find configuration file')
       expect(fs.existsSync).toBeCalledTimes(1)
-      expect(fs.existsSync).toBeCalledWith('/mock/root/.env')
+      expect(fs.existsSync).toBeCalledWith(expect.stringMatching(/\.env$/))
     })
   })
 })

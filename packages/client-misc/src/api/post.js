@@ -10,10 +10,9 @@ const postJson = (url, { csrfToken, ...data }) =>
     response.ok ? response.json() : Promise.reject(new Error(response.status))
   )
 
-export const changePassword = (base, csrfToken, email, password, oldPassword) =>
+export const changePassword = (base, csrfToken, password, oldPassword) =>
   postJson(`${base}user/change-password`, {
     csrfToken,
-    email,
     password,
     oldPassword,
   })

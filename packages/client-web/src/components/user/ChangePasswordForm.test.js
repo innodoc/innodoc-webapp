@@ -60,7 +60,6 @@ describe('<ChangePasswordForm />', () => {
     expect(changePassword).toBeCalledWith(
       'http://app.example.com/',
       '123csrftoken',
-      'alice@example.com',
       's3cr3t',
       'old_s3cr3t'
     )
@@ -84,7 +83,6 @@ describe('<ChangePasswordForm />', () => {
     expect(changePassword).toBeCalledWith(
       'http://app.example.com/',
       '123csrftoken',
-      'alice@example.com',
       's3cr3t',
       'wrong_s3cr3t'
     )

@@ -1,11 +1,10 @@
-import jwt from 'jsonwebtoken'
 import { Router } from 'express'
 import passport from 'passport'
 
-import User from './User'
-import { resetPasswordMail, verificationMail } from './mails'
+import User from '../models/User'
+import { resetPasswordMail, verificationMail } from '../mails'
 
-const userRoutes = ({ appRoot, jwtSecret, nodeEnv }) => {
+const userController = ({ appRoot, jwtSecret, nodeEnv }) => {
   const router = Router()
 
   router.post('/check-email', async (req, res) => {
@@ -18,12 +17,16 @@ const userRoutes = ({ appRoot, jwtSecret, nodeEnv }) => {
 
   router.post('/register', async (req, res, next) => {
     let user
+    const { email, password } = req.body
     try {
-      const { email, password } = req.body
       user = await User.register(
         new User({ email, emailVerificationToken: User.generateToken() }),
         password
       )
+    } catch (err) {
+      res.status(400).json({ result: 'UserExistsError' })
+    }
+    try {
       await req.app.locals.sendMail(
         verificationMail(
           req.t,
@@ -45,10 +48,7 @@ const userRoutes = ({ appRoot, jwtSecret, nodeEnv }) => {
     '/login',
     passport.authenticate('local', { session: false }),
     async (req, res) => {
-      const accessToken = await jwt.sign({ sub: req.user.email }, jwtSecret, {
-        expiresIn: '30d',
-        issuer: appRoot,
-      })
+      const accessToken = req.user.generateAccessToken(jwtSecret, appRoot)
       res.cookie('accessToken', accessToken, {
         httpOnly: true,
         secure: nodeEnv === 'production',
@@ -74,17 +74,20 @@ const userRoutes = ({ appRoot, jwtSecret, nodeEnv }) => {
     '/change-password',
     passport.authenticate('jwt', { session: false }),
     async (req, res, next) => {
+      const changePwdErr = () =>
+        res.status(400).json({ result: 'ChangePasswordError' })
       try {
-        const { email, oldPassword, password } = req.body
-        const user = await User.findOne({
-          email,
-          emailVerified: true,
-        })
+        const { oldPassword, password } = req.body
+        const user = await User.findByUsername(res.locals.loggedInEmail)
         if (user) {
-          await user.changePassword(oldPassword, password)
-          res.status(200).json({ result: 'ok' })
+          try {
+            await user.changePassword(oldPassword, password)
+            res.status(200).json({ result: 'ok' })
+          } catch {
+            changePwdErr()
+          }
         } else {
-          res.status(400).json({ result: 'ChangePasswordError' })
+          changePwdErr()
         }
       } catch (err) {
         next(err)
@@ -136,14 +139,10 @@ const userRoutes = ({ appRoot, jwtSecret, nodeEnv }) => {
   router.post('/request-password-reset', async (req, res, next) => {
     try {
       const { email } = req.body
-      const user = await User.findOne({
-        email,
-        emailVerified: true,
-      })
+      const user = await User.findByUsername(email)
       if (user) {
         user.passwordResetToken = User.generateToken()
         user.passwordResetExpires = Date.now() + 60 * 60 * 1000 // 1 hour
-        await user.save()
         await req.app.locals.sendMail(
           resetPasswordMail(
             req.t,
@@ -152,6 +151,7 @@ const userRoutes = ({ appRoot, jwtSecret, nodeEnv }) => {
             user.passwordResetToken
           )
         )
+        await user.save()
         res.status(200).json({ result: 'ok' })
       } else {
         res.status(400).json({ result: 'NoMatchingEmailFound' })
@@ -186,7 +186,12 @@ const userRoutes = ({ appRoot, jwtSecret, nodeEnv }) => {
     }
   })
 
+  // eslint-disable-next-line no-unused-vars
+  router.use((err, req, res, next) => {
+    res.status(500).json({ result: err.stack })
+  })
+
   return router
 }
 
-export default userRoutes
+export default userController

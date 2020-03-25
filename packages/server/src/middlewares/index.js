@@ -1,3 +1,4 @@
-export { default as verifyAccessTokenMiddleware } from './verifyAccessTokenMiddleware'
 export { default as passConfigMiddleware } from './passConfigMiddleware'
+export { default as passportMiddleware } from './passportMiddleware'
 export { default as sendMailMiddleware } from './sendMailMiddleware'
+export { default as verifyAccessTokenMiddleware } from './verifyAccessTokenMiddleware'

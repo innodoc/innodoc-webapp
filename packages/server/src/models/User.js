@@ -1,10 +1,14 @@
 import crypto from 'crypto'
 
+import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import passportLocalMongoose from 'passport-local-mongoose'
 
 const TOKEN_LENGTH = 16
-const tokenRegexp = `[a-f0-9]{${TOKEN_LENGTH}}`
+export const tokenRegexp = `[a-f0-9]{${TOKEN_LENGTH}}`
+
+const findByUsername = (model, queryParameters) =>
+  model.findOne({ ...queryParameters, emailVerified: true })
 
 const User = new mongoose.Schema({
   email: {
@@ -16,21 +20,28 @@ const User = new mongoose.Schema({
     default: false,
     type: Boolean,
   },
-  password: String,
   passwordResetExpires: Date,
   passwordResetToken: String,
 })
 
 User.plugin(passportLocalMongoose, {
-  findByUsername: (model, queryParameters) =>
-    model.findOne({ ...queryParameters, emailVerified: true }),
+  findByUsername,
   usernameField: 'email',
   usernameLowerCase: true,
   // TODO: passwordValidator
 })
 
+User.methods.generateAccessToken = function generateAccessToken(
+  jwtSecret,
+  issuer
+) {
+  return jwt.sign({ sub: this.email }, jwtSecret, {
+    expiresIn: '30d',
+    issuer,
+  })
+}
+
 User.statics.generateToken = () =>
   crypto.randomBytes(TOKEN_LENGTH / 2).toString('hex')
 
-export { tokenRegexp }
 export default mongoose.model('User', User)

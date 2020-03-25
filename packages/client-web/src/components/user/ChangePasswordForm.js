@@ -11,18 +11,12 @@ import Link from '../Link'
 import UserForm from './UserForm'
 
 const ChangePasswordForm = () => {
-  const { appRoot, csrfToken, loggedInEmail } = useSelector(appSelectors.getApp)
+  const { appRoot, csrfToken } = useSelector(appSelectors.getApp)
   const { t } = useTranslation()
 
   const onFinish = useCallback(
     ({ 'old-password': oldPassword, password }, setDisabled, setMessage) => {
-      return changePassword(
-        appRoot,
-        csrfToken,
-        loggedInEmail,
-        password,
-        oldPassword
-      )
+      return changePassword(appRoot, csrfToken, password, oldPassword)
         .then(() =>
           setMessage({
             afterClose: () => setMessage(),
@@ -49,7 +43,7 @@ const ChangePasswordForm = () => {
           setDisabled(false)
         })
     },
-    [appRoot, csrfToken, loggedInEmail, t]
+    [appRoot, csrfToken, t]
   )
 
   return (

@@ -11,7 +11,7 @@ const config = {
   jwtSecret: 'jwt123Secret',
 }
 
-describe('passConfigMiddleware', () => {
+describe('verifyAccessTokenMiddleware', () => {
   const middleware = verifyAccessTokenMiddleware(config)
   const nextHandler = jest.fn()
 

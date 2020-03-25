@@ -62,9 +62,8 @@ describe('postJson', () => {
 
   makeTests(
     'changePassword',
-    () =>
-      changePassword(base, csrfToken, 'foo@example.com', '53cr3t', 'oldpwd'),
-    { email: 'foo@example.com', password: '53cr3t', oldPassword: 'oldpwd' },
+    () => changePassword(base, csrfToken, '53cr3t', 'oldpwd'),
+    { password: '53cr3t', oldPassword: 'oldpwd' },
     'https://app.example.com/user/change-password'
   )
 
