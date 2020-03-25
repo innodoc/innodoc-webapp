@@ -139,8 +139,8 @@ test('SET_SERVER_CONFIGURATION action', () => {
     setServerConfiguration(
       'https://app.example.com/',
       'https://content.example.com/',
-      '123csrfToken!',
       'https://cdn.example.com/',
+      '123csrfToken!',
       'section',
       'page'
     )

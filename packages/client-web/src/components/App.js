@@ -67,8 +67,8 @@ class InnoDocApp extends App {
         setServerConfiguration(
           appRoot,
           contentRoot,
-          ctx.req.csrfToken(),
           staticRoot,
+          ctx.req.csrfToken(),
           sectionPathPrefix,
           pagePathPrefix
         )

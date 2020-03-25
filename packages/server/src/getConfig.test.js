@@ -19,6 +19,7 @@ describe('getConfig', () => {
     Dotenv.config.mockClear()
     process.env.APP_ROOT = 'http://localhost:8123/'
     process.env.CONTENT_ROOT = 'https://example.com/content/'
+    process.env.JWT_SECRET = 'jwtsecret123!'
     process.env.MONGODB_CONNECTION_STRING = 'mongodb://mongohost/coll'
     process.env.NODE_ENV = 'production'
     process.env.PAGE_PATH_PREFIX = 'custompage'
@@ -26,8 +27,8 @@ describe('getConfig', () => {
     process.env.SMTP_HOST = 'mail.example.com'
     process.env.SMTP_PASSWORD = 's3cr3t'
     process.env.SMTP_PORT = '587'
-    process.env.SMTP_USER = 'alice'
     process.env.SMTP_SENDER = 'no-reply@example.com'
+    process.env.SMTP_USER = 'alice'
     process.env.STATIC_ROOT = 'https://example.com/static/'
   })
   afterEach(() => {
@@ -47,9 +48,10 @@ describe('getConfig', () => {
     expect(getConfig('/mock/root')).toEqual({
       appRoot: 'http://localhost:8123/',
       contentRoot: 'https://example.com/content/',
-      staticRoot: 'https://example.com/static/',
+      jwtSecret: 'jwtsecret123!',
       mongodbConnectionString: 'mongodb://mongohost/coll',
       nodeEnv: 'production',
+      pagePathPrefix: 'custompage',
       port: 8123,
       sectionPathPrefix: 'customsection',
       smtp: {
@@ -59,7 +61,7 @@ describe('getConfig', () => {
         user: 'alice',
         senderAddress: 'no-reply@example.com',
       },
-      pagePathPrefix: 'custompage',
+      staticRoot: 'https://example.com/static/',
     })
   })
 

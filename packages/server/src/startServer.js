@@ -58,7 +58,8 @@ const startServer = async (rootDir) => {
   passport.serializeUser(User.serializeUser())
   passport.deserializeUser(User.deserializeUser())
 
-  await express()
+  const expressApp = await express()
+  expressApp
     .use(bodyParser.json())
     .use(cookieParser())
     .use(
@@ -78,11 +79,11 @@ const startServer = async (rootDir) => {
       nextApp.render(req, res, '/verify-user', req.params)
     )
     .get(
-      getContentPath(process.env.SECTION_PATH_PREFIX),
+      getContentPath(config.sectionPathPrefix),
       handleCustomRoute(nextApp, '/section')
     )
     .get(
-      getContentPath(process.env.PAGE_PATH_PREFIX),
+      getContentPath(config.pagePathPrefix),
       handleCustomRoute(nextApp, '/page')
     )
     .use(passportMiddleware)

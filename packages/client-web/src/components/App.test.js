@@ -9,6 +9,10 @@ import {
   setServerConfiguration,
 } from '@innodoc/client-store/src/actions/content'
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
+import {
+  actionTypes as userActionTypes,
+  userLoggedIn,
+} from '@innodoc/client-store/src/actions/user'
 
 import { InnoDocApp, waitForCourse } from './App'
 
@@ -94,8 +98,7 @@ describe('<InnoDocApp />', () => {
       })
     })
 
-    it('should dispatch actions (server)', async () => {
-      expect.assertions(4)
+    describe('dispatch actions (server)', () => {
       const ctx = {
         store: mockStore,
         res: {
@@ -107,21 +110,61 @@ describe('<InnoDocApp />', () => {
             pagePathPrefix: 'page',
           },
         },
-        req: { i18n: { language: 'en-US' } },
+        req: {
+          csrfToken: () => '123csrfToken!',
+          i18n: { language: 'en-US' },
+        },
       }
-      await InnoDocApp.getInitialProps({ ctx, Component: () => {} })
-      expect(mockStore.dispatch).toBeCalledTimes(3)
-      expect(mockStore.dispatch).toBeCalledWith(
-        setServerConfiguration(
-          'https://app.example.com/',
-          'https://content.example.com/',
-          'https://cdn.example.com/',
-          'section',
-          'page'
+
+      it('should dispatch setServerConfiguration', async () => {
+        expect.assertions(1)
+        await InnoDocApp.getInitialProps({ ctx, Component: () => {} })
+        expect(mockStore.dispatch).toBeCalledWith(
+          setServerConfiguration(
+            'https://app.example.com/',
+            'https://content.example.com/',
+            'https://cdn.example.com/',
+            '123csrfToken!',
+            'section',
+            'page'
+          )
         )
-      )
-      expect(mockStore.dispatch).toBeCalledWith(languageDetected('en-US'))
-      expect(mockStore.dispatch).toBeCalledWith(loadManifest())
+      })
+
+      it('should dispatch languageDetected', async () => {
+        expect.assertions(1)
+        await InnoDocApp.getInitialProps({ ctx, Component: () => {} })
+        expect(mockStore.dispatch).toBeCalledWith(languageDetected('en-US'))
+      })
+
+      it('should dispatch loadManifest', async () => {
+        expect.assertions(1)
+        await InnoDocApp.getInitialProps({ ctx, Component: () => {} })
+        expect(mockStore.dispatch).toBeCalledWith(loadManifest())
+      })
+
+      it('should dispatch userLoggedIn with loggedInEmail', async () => {
+        expect.assertions(1)
+        const newCtx = {
+          ...ctx,
+          res: {
+            locals: { ...ctx.res.locals, loggedInEmail: 'alice@example.com' },
+          },
+        }
+        await InnoDocApp.getInitialProps({ ctx: newCtx, Component: () => {} })
+        expect(mockStore.dispatch).toBeCalledWith(
+          userLoggedIn('alice@example.com')
+        )
+      })
+
+      it('should not dispatch userLoggedIn w/o loggedInEmail', async () => {
+        expect.assertions(1)
+        await InnoDocApp.getInitialProps({ ctx, Component: () => {} })
+        const actions = mockStore.dispatch.mock.calls.map(
+          (call) => call[0].type
+        )
+        expect(actions).not.toContain(userActionTypes.USER_LOGGED_IN)
+      })
     })
 
     it('should not dispatch anything (client)', async () => {

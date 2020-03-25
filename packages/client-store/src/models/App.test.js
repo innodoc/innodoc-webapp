@@ -32,6 +32,7 @@ describe('App', () => {
           'https://app.example.com/',
           'https://content.example.com/',
           'https://cdn.example.com/',
+          'csrfToken123!',
           'sec',
           'p'
         ),
@@ -41,6 +42,7 @@ describe('App', () => {
       expect(app.appRoot).toEqual('https://app.example.com/')
       expect(app.contentRoot).toEqual('https://content.example.com/')
       expect(app.staticRoot).toEqual('https://cdn.example.com/')
+      expect(app.csrfToken).toEqual('csrfToken123!')
       expect(app.sectionPathPrefix).toEqual('sec')
       expect(app.pagePathPrefix).toEqual('p')
     })
