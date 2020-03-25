@@ -38,6 +38,7 @@ describe('<ErrorPage />', () => {
 
   describe('getInitialProps', () => {
     it('should extract status code from response', async () => {
+      expect.assertions(1)
       const { statusCode } = await ErrorPage.getInitialProps({
         res: { statusCode: 500 },
       })
@@ -45,6 +46,7 @@ describe('<ErrorPage />', () => {
     })
 
     it('should extract status code from error object', async () => {
+      expect.assertions(1)
       const { statusCode } = await ErrorPage.getInitialProps({
         err: { statusCode: 500 },
       })

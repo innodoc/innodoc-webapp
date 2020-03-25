@@ -28,6 +28,7 @@ describe('index', () => {
     })
 
     it('should call startServer', async () => {
+      expect.assertions(3)
       const startServer = await import('./startServer')
       expect(startServer).toHaveBeenCalledTimes(1)
       expect(startServer).toHaveBeenCalledWith('/mock/root')
