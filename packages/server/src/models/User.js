@@ -4,6 +4,8 @@ import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import passportLocalMongoose from 'passport-local-mongoose'
 
+import { validatePassword } from '@innodoc/client-misc/src/passwordDef'
+
 const TOKEN_LENGTH = 16
 export const tokenRegexp = `[a-f0-9]{${TOKEN_LENGTH}}`
 
@@ -28,7 +30,13 @@ User.plugin(passportLocalMongoose, {
   findByUsername,
   usernameField: 'email',
   usernameLowerCase: true,
-  // TODO: passwordValidator
+  passwordValidator: (password, cb) => {
+    const errorList = validatePassword(password)
+    if (errorList.length) {
+      return cb(new Error('passwordValidationError'))
+    }
+    return cb()
+  },
 })
 
 User.methods.generateAccessToken = function generateAccessToken(

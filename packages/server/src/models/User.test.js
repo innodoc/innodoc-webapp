@@ -42,6 +42,14 @@ describe('User', () => {
     expect(user.hash.length).toBeTruthy()
   })
 
+  it('should reject weak password', async () => {
+    expect.assertions(1)
+    const newUser = new User({ email: 'weakpwd-user@example.com' })
+    return expect(newUser.setPassword('123456')).rejects.toThrow(
+      /passwordValidationError/
+    )
+  })
+
   it('should have unique email field', async () => {
     expect.assertions(1)
     const anotherAlice = new User({ email: 'alice-user@example.com' })

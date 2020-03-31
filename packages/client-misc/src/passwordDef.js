@@ -1,9 +1,9 @@
-import PasswordValidator from 'password-validator'
+const PasswordValidator = require('password-validator')
 
-export const PASSWORD_MAX_LENGTH = 100
-export const PASSWORD_MIN_LENGTH = 8
+const PASSWORD_MAX_LENGTH = 100
+const PASSWORD_MIN_LENGTH = 8
 
-export const validatePassword = (value) => {
+const validatePassword = (value) => {
   const schema = new PasswordValidator()
   schema
     .is()
@@ -22,4 +22,10 @@ export const validatePassword = (value) => {
     .not()
     .spaces()
   return schema.validate(value, { list: true })
+}
+
+module.exports = {
+  PASSWORD_MAX_LENGTH,
+  PASSWORD_MIN_LENGTH,
+  validatePassword,
 }

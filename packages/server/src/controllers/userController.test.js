@@ -55,7 +55,7 @@ describe('userController', () => {
       email: 'alice-usercontroller@example.com',
       emailVerified: true,
     })
-    await user.setPassword('s3cr3t')
+    await user.setPassword('g00dPassword!')
     await user.save()
     return user
   }
@@ -129,7 +129,7 @@ describe('userController', () => {
         url: '/user/register',
         params: {
           email: 'alice-usercontroller@example.com',
-          password: 's3cr3t',
+          password: 'g00dPassword!',
         },
         status: 200,
         type: 'json',
@@ -154,7 +154,7 @@ describe('userController', () => {
         url: '/user/register',
         params: {
           email: 'alice-usercontroller@example.com',
-          password: 's3cr3t',
+          password: 'g00dPassword!',
         },
         status: 400,
         type: 'json',
@@ -172,7 +172,7 @@ describe('userController', () => {
         url: '/user/register',
         params: {
           email: 'alice-usercontroller@example.com',
-          password: 's3cr3t',
+          password: 'g00dPassword!',
         },
         status: 500,
         type: 'json',
@@ -187,7 +187,7 @@ describe('userController', () => {
         url: '/user/login',
         params: {
           email: 'alice-usercontroller@example.com',
-          password: 's3cr3t',
+          password: 'g00dPassword!',
         },
         status: 200,
         type: 'json',
@@ -241,7 +241,7 @@ describe('userController', () => {
       const user = await addTestUser()
       return testPost({
         url: '/user/change-password',
-        params: { password: 'newS3cr3t', oldPassword: 's3cr3t' },
+        params: { password: 'newG00dPassword!', oldPassword: 'g00dPassword!' },
         status: 200,
         type: 'json',
         accessTokenCookie: await createAccessTokenCookie({ user }),
@@ -258,7 +258,7 @@ describe('userController', () => {
       const user = await addTestUser()
       return testPost({
         url: '/user/change-password',
-        params: { password: 'newS3cr3t', oldPassword: 'wr0ng_s3cr3t' },
+        params: { password: 'newG00dPassword!', oldPassword: 'wr0ngPassword!' },
         status: 400,
         type: 'json',
         accessTokenCookie: await createAccessTokenCookie({ user }),
@@ -277,7 +277,7 @@ describe('userController', () => {
       await user.delete()
       return testPost({
         url: '/user/change-password',
-        params: { password: 'newS3cr3t', oldPassword: 's3cr3t' },
+        params: { password: 'newG00dPassword!', oldPassword: 'g00dPassword!' },
         status: 400,
         type: 'json',
         accessTokenCookie,
@@ -323,7 +323,7 @@ describe('userController', () => {
           : Date.now() + 60 * 60 * 1000
         await user.save()
       }
-      const params = { password: 'newS3cr3t' }
+      const params = { password: 'newG00dPassword!' }
       if (Object.prototype.hasOwnProperty.call(opts, 'token')) {
         if (opts.token) {
           params.token = opts.token
