@@ -8,6 +8,7 @@ import { childrenType } from '@innodoc/client-misc/src/propTypes'
 const UserForm = ({
   children,
   extra,
+  hide,
   labelCol,
   name,
   onFinish,
@@ -47,6 +48,7 @@ const UserForm = ({
       labelCol={labelCol}
       name={name}
       onFinish={onFormFinish}
+      style={hide ? { display: 'none' } : null}
       wrapperCol={wrapperCol}
     >
       {children(disabled)}
@@ -65,6 +67,7 @@ const UserForm = ({
 
 UserForm.defaultProps = {
   extra: null,
+  hide: false,
   labelCol: null,
   submitWrapperCol: null,
   wrapperCol: null,
@@ -73,6 +76,7 @@ UserForm.defaultProps = {
 UserForm.propTypes = {
   children: PropTypes.func.isRequired,
   extra: childrenType,
+  hide: PropTypes.bool,
   labelCol: PropTypes.objectOf(PropTypes.any),
   name: PropTypes.string.isRequired,
   onFinish: PropTypes.func.isRequired,

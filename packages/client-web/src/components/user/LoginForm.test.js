@@ -1,20 +1,30 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
+import { Result } from 'antd'
 
 import { loginUser } from '@innodoc/client-misc/src/api'
 import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
+import appSelectors from '@innodoc/client-store/src/selectors'
 
 import LoginForm from './LoginForm'
 import UserForm from './UserForm'
 import { EmailField, PasswordField } from './formFields'
 
 const mockDispatch = jest.fn()
+const mockAppSelectors = appSelectors
+let mockLoggedInEmail
 jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
-  useSelector: () => ({
-    appRoot: 'http://app.example.com/',
-    csrfToken: '123csrftoken',
-  }),
+  useSelector: (selector) => {
+    if (selector === mockAppSelectors.getApp) {
+      return {
+        appRoot: 'http://app.example.com/',
+        csrfToken: '123csrftoken',
+        loggedInEmail: mockLoggedInEmail,
+      }
+    }
+    return { homeLink: '/home' }
+  },
 }))
 
 jest.mock('@innodoc/client-misc/src/api', () => ({
@@ -33,6 +43,7 @@ describe('<LoginForm />', () => {
     const wrapper = shallow(<LoginForm />)
     const userForm = wrapper.find(UserForm)
     expect(userForm.prop('name')).toBe('login-form')
+    expect(userForm.prop('hide')).toBe(false)
     const fields = userForm.renderProp('children')(false)
     const emailField = fields.find(EmailField)
     expect(emailField.prop('disabled')).toBe(false)
@@ -43,7 +54,7 @@ describe('<LoginForm />', () => {
   })
 
   it('should render with successful login', async () => {
-    expect.assertions(4)
+    expect.assertions(6)
     loginUser.mockResolvedValue()
     const wrapper = mount(<LoginForm />)
     wrapper.find(UserForm).invoke('onFinish')(
@@ -60,14 +71,20 @@ describe('<LoginForm />', () => {
       'alice@example.com',
       's3cr3t'
     )
+    mockLoggedInEmail = 'alice@example.com'
     await waitForComponent(wrapper)
+    wrapper.setProps({}) // force re-render
     expect(mockDispatch).toBeCalledWith(userLoggedIn('alice@example.com'))
     expect(setMessage).not.toBeCalled()
     expect(setDisabled).not.toBeCalled()
+    const userForm = wrapper.find(UserForm)
+    expect(userForm.prop('hide')).toBe(true)
+    expect(wrapper.find(Result).prop('status')).toBe('success')
   })
 
   it('should render with failed login', async () => {
-    expect.assertions(4)
+    expect.assertions(6)
+    mockLoggedInEmail = undefined
     loginUser.mockRejectedValue()
     const wrapper = mount(<LoginForm />)
     wrapper.find(UserForm).invoke('onFinish')(
@@ -88,5 +105,8 @@ describe('<LoginForm />', () => {
     expect(mockDispatch).not.toBeCalled()
     expect(setMessage.mock.calls[0][0].level).toBe('error')
     expect(setDisabled).toBeCalledWith(false)
+    const userForm = wrapper.find(UserForm)
+    expect(userForm.prop('hide')).toBe(false)
+    expect(wrapper.exists(Result)).toBe(false)
   })
 })

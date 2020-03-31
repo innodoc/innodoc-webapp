@@ -1,13 +1,16 @@
 import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { LoginOutlined } from '@ant-design/icons'
+import { Button, Result } from 'antd'
+import { HomeOutlined, LoginOutlined } from '@ant-design/icons'
 
 import { loginUser } from '@innodoc/client-misc/src/api'
 import { useTranslation, Trans } from '@innodoc/client-misc/src/i18n'
 import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
 import appSelectors from '@innodoc/client-store/src/selectors'
+import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
 import Link from '../Link'
+import { InternalLink } from '../content/links'
 import { EmailField, PasswordField } from './formFields'
 import UserForm from './UserForm'
 
@@ -28,7 +31,8 @@ const ErrorDescription = () => (
 )
 
 const LoginForm = () => {
-  const { appRoot, csrfToken } = useSelector(appSelectors.getApp)
+  const { appRoot, csrfToken, loggedInEmail } = useSelector(appSelectors.getApp)
+  const course = useSelector(courseSelectors.getCurrentCourse)
   const dispatch = useDispatch()
   const { t } = useTranslation()
 
@@ -47,6 +51,23 @@ const LoginForm = () => {
     [appRoot, csrfToken, dispatch, t]
   )
 
+  const result = loggedInEmail ? (
+    <Result
+      status="success"
+      title={t('user.login.success.message')}
+      subTitle={t('user.login.success.description')}
+      extra={
+        course ? (
+          <InternalLink href={course.homeLink}>
+            <Button icon={<HomeOutlined />} type="primary">
+              {t('content.home')}
+            </Button>
+          </InternalLink>
+        ) : null
+      }
+    />
+  ) : null
+
   const extra = (
     <Trans i18nKey="user.login.orCreateAccount">
       or <Link href="/register">create new account</Link>.
@@ -54,20 +75,24 @@ const LoginForm = () => {
   )
 
   return (
-    <UserForm
-      extra={extra}
-      name="login-form"
-      onFinish={onFinish}
-      submitIcon={<LoginOutlined />}
-      submitText={t('user.login.signIn')}
-    >
-      {(disabled) => (
-        <>
-          <EmailField disabled={disabled} hasLabel={false} />
-          <PasswordField disabled={disabled} hasLabel={false} />
-        </>
-      )}
-    </UserForm>
+    <>
+      <UserForm
+        hide={typeof loggedInEmail !== 'undefined'}
+        extra={extra}
+        name="login-form"
+        onFinish={onFinish}
+        submitIcon={<LoginOutlined />}
+        submitText={t('user.login.signIn')}
+      >
+        {(disabled) => (
+          <>
+            <EmailField disabled={disabled} hasLabel={false} />
+            <PasswordField disabled={disabled} hasLabel={false} />
+          </>
+        )}
+      </UserForm>
+      {result}
+    </>
   )
 }
 

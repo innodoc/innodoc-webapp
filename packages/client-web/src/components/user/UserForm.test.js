@@ -73,6 +73,11 @@ describe('<UserForm />', () => {
     expect(wrapper.exists(Alert)).toBe(false)
   })
 
+  it('should render hidden', () => {
+    const wrapper = renderUserForm({ hide: true })
+    expect(wrapper.find(Form).prop('style').display).toBe('none')
+  })
+
   it('should handle form states', (done) => {
     let promise
     let resolve
