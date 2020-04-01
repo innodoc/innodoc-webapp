@@ -17,11 +17,6 @@ describe('ContentAffix', () => {
   it.each([true, false])('should set affixed class (%s)', (affixed) => {
     const wrapper = shallow(<ContentAffix />)
     wrapper.find(Affix).prop('onChange')(affixed)
-    expect(
-      wrapper
-        .find('div')
-        .first()
-        .hasClass(css.affixed)
-    ).toBe(affixed)
+    expect(wrapper.find('div').first().hasClass(css.affixed)).toBe(affixed)
   })
 })

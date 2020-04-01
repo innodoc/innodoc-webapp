@@ -42,13 +42,9 @@ describe('<UserForm />', () => {
     expect(form.find(Form.Item)).toHaveLength(2)
     const submitFormItem = form.find(Form.Item).last()
     expect(submitFormItem.prop('wrapperCol')).toEqual({ xs: 24 })
-    expect(
-      submitFormItem
-        .children(Button)
-        .children()
-        .at(1)
-        .text()
-    ).toBe('Submit')
+    expect(submitFormItem.children(Button).children().at(1).text()).toBe(
+      'Submit'
+    )
     expect(wrapper.exists(Alert)).toBe(false)
   })
 

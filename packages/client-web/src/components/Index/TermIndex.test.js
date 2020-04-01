@@ -79,11 +79,7 @@ describe('<TermIndex />', () => {
     })
 
     it('should have correct titles', () => {
-      const getTitle = (i) =>
-        listItems
-          .at(i)
-          .find(List.Item.Meta)
-          .prop('title')
+      const getTitle = (i) => listItems.at(i).find(List.Item.Meta).prop('title')
       const title0 = getTitle(0)
       expect(
         wrapper.wrap(title0.props.children[0].props.children).text()

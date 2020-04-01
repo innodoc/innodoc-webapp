@@ -61,24 +61,14 @@ describe('<Nav />', () => {
     const menuItem1 = menuItems.at(0)
     expect(menuItem1.find(PageLink).prop('contentId')).toBe('foo')
     expect(menuItem1.find(PageIcon).prop('type')).toBe('foo-icon')
-    expect(
-      menuItem1
-        .find('a')
-        .childAt(1)
-        .text()
-    ).toBe('Foo')
+    expect(menuItem1.find('a').childAt(1).text()).toBe('Foo')
     expect(menuItem1.find('a').prop('title')).toBe('Foo title')
     expect(menuItem1.find('a').hasClass(css.active)).toBe(true)
 
     const menuItem2 = menuItems.at(1)
     expect(menuItem2.find(PageLink).prop('contentId')).toBe('qux')
     expect(menuItem2.find(PageIcon).prop('type')).toBe('qux-icon')
-    expect(
-      menuItem2
-        .find('a')
-        .childAt(1)
-        .text()
-    ).toBe('Qux')
+    expect(menuItem2.find('a').childAt(1).text()).toBe('Qux')
     expect(menuItem2.find('a').prop('title')).toBe('Qux title')
     expect(menuItem2.find('a').hasClass(css.active)).toBe(false)
     expect(wrapper.exists(LanguageSwitcher)).toBe(true)
