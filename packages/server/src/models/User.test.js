@@ -4,38 +4,41 @@ import connectDb from '../db'
 import User, { tokenRegexp } from './User'
 
 describe('User', () => {
-  let user
-
   beforeAll(() =>
     connectDb({ mongoUrl: process.env.MONGO_URL, nodeEnv: 'production' })
   )
+
   afterAll(() => mongoose.disconnect())
 
-  beforeEach(async () => {
-    await User.deleteMany()
-    const newUser = new User({
-      email: 'alice-user@example.com',
+  const getRandEmail = () => {
+    const randString = Math.random().toString(36).substring(2)
+    return `alice-user-${randString}@example.com`
+  }
+
+  const addTestUser = async () => {
+    const user = User({
+      email: getRandEmail(),
       emailVerificationToken: '123vtoken!',
       emailVerified: false,
       passwordResetExpires: Date.now(),
       passwordResetToken: '123ptoken!',
     })
-    await newUser.setPassword('ABC123abc!')
-    await newUser.save()
-    user = await User.findOne({ email: 'alice-user@example.com' }).select(
-      '+salt +hash'
-    )
-  })
+    await user.setPassword('g00dPassword!')
+    await user.save()
+    return user
+  }
 
-  it('should have mongoose schema', () => {
-    expect(user.email).toBe('alice-user@example.com')
+  it('should have mongoose schema', async () => {
+    const user = await addTestUser()
+    expect(user.email).toMatch(/^alice-user-.+@example\.com$/)
     expect(user.emailVerificationToken).toBe('123vtoken!')
     expect(user.emailVerified).toBe(false)
     expect(user.passwordResetExpires.getTime()).toBeLessThanOrEqual(Date.now())
     expect(user.passwordResetToken).toBe('123ptoken!')
   })
 
-  it('should use salt and hash for password', () => {
+  it('should use salt and hash for password', async () => {
+    const user = await addTestUser()
     expect(typeof user.salt).toBe('string')
     expect(user.salt.length).toBeTruthy()
     expect(typeof user.hash).toBe('string')
@@ -52,23 +55,27 @@ describe('User', () => {
 
   it('should have unique email field', async () => {
     expect.assertions(1)
-    const anotherAlice = new User({ email: 'alice-user@example.com' })
+    const user = await addTestUser()
+    const anotherAlice = new User({ email: user.email })
     return expect(anotherAlice.save()).rejects.toThrow(/duplicate/)
   })
 
   it('should force lower-case for email field', async () => {
     expect.assertions(1)
-    const anotherAlice = new User({ email: 'ALICE-USER@EXAMPLE.COM' })
+    const user = await addTestUser()
+    const anotherAlice = new User({ email: user.email.toUpperCase() })
     return expect(anotherAlice.save()).rejects.toThrow(/duplicate/)
   })
 
   it('should have emailVerified=false as default', async () => {
-    await User({ email: 'bob-user@example.com' }).save()
-    const bob = await User.findOne({ email: 'bob-user@example.com' })
-    expect(bob.emailVerified).toBe(false)
+    const email = getRandEmail()
+    await User({ email }).save()
+    const user = await User.findOne({ email })
+    expect(user.emailVerified).toBe(false)
   })
 
-  it('should use passportLocalMongoose plugin', () => {
+  it('should use passportLocalMongoose plugin', async () => {
+    const user = await addTestUser()
     const methods = ['setPassword', 'changePassword']
     methods.forEach((name) => expect(typeof user[name]).toBe('function'))
     const staticMethods = [
@@ -84,6 +91,7 @@ describe('User', () => {
 
   describe('methods', () => {
     test('generateVerificationToken', async () => {
+      const user = await addTestUser()
       const jwt = await user.generateAccessToken(
         'jwtSecret123',
         'https://example.com/'
@@ -96,16 +104,17 @@ describe('User', () => {
 
   describe('static methods', () => {
     test('findByUsername should only return verified users', async () => {
+      const unverifiedUser = await addTestUser()
       const verifiedUser = new User({
-        email: 'bob-user@example.com',
+        email: getRandEmail(),
         emailVerified: true,
       })
       await verifiedUser.save()
 
-      expect((await User.findByUsername('bob-user@example.com')).email).toBe(
-        'bob-user@example.com'
+      expect((await User.findByUsername(verifiedUser.email)).email).toBe(
+        verifiedUser.email
       )
-      expect(await User.findByUsername('alice-user@example.com')).toBeNull()
+      expect(await User.findByUsername(unverifiedUser.email)).toBeNull()
     })
 
     test('generateToken', () => {

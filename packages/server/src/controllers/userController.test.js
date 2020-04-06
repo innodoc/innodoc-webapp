@@ -44,20 +44,21 @@ const config = {
 describe('userController', () => {
   beforeAll(() => connectDb(config))
   afterAll(() => mongoose.disconnect())
+  beforeEach(async () => jest.clearAllMocks())
 
-  beforeEach(async () => {
-    jest.clearAllMocks()
-    await User.deleteMany()
-  })
+  const getRandEmail = () => {
+    const randString = Math.random().toString(36).substring(2)
+    return `alice-usercontroller-${randString}@example.com`
+  }
 
   const addTestUser = async () => {
     const user = User({
-      email: 'alice-usercontroller@example.com',
+      email: getRandEmail(),
       emailVerified: true,
     })
     await user.setPassword('g00dPassword!')
     await user.save()
-    return user
+    return user.email
   }
 
   const createAccessTokenCookie = async (opts) => {
@@ -108,15 +109,15 @@ describe('userController', () => {
     test("200 if email doesn't exist", () =>
       testPost({
         url: '/user/check-email',
-        params: { email: 'alice-usercontroller@example.com' },
+        params: { email: 'alice-usercontroller-does-not-exist@example.com' },
         status: 200,
       }))
 
     test('400 if email already exists', async () => {
-      await addTestUser()
+      const email = await addTestUser()
       return testPost({
         url: '/user/check-email',
-        params: { email: 'alice-usercontroller@example.com' },
+        params: { email },
         status: 400,
         type: 'json',
       }).then((res) => expect(res.body.result).toBe('UserExistsError'))
@@ -124,11 +125,12 @@ describe('userController', () => {
   })
 
   describe('POST /user/register', () => {
-    test('200', () =>
-      testPost({
+    test('200', () => {
+      const email = getRandEmail()
+      return testPost({
         url: '/user/register',
         params: {
-          email: 'alice-usercontroller@example.com',
+          email,
           password: 'g00dPassword!',
         },
         status: 200,
@@ -138,57 +140,49 @@ describe('userController', () => {
         expect(mail).toMatchObject({
           subject: expect.any(String),
           text: expect.any(String),
-          to: 'alice-usercontroller@example.com',
+          to: email,
         })
-        expect(await User.count()).toBe(1)
-        const user = await User.findOne({
-          email: 'alice-usercontroller@example.com',
-        })
+        const user = await User.findOne({ email })
         expect(user.emailVerified).toBe(false)
         expect(user.emailVerificationToken).toMatch(tokenRegexp)
-      }))
+      })
+    })
 
     test('400 if email exists', async () => {
-      await addTestUser()
+      const email = await addTestUser()
       return testPost({
         url: '/user/register',
-        params: {
-          email: 'alice-usercontroller@example.com',
-          password: 'g00dPassword!',
-        },
+        params: { email, password: 'g00dPassword!' },
         status: 400,
         type: 'json',
       }).then(async (res) => {
         expect(res.body.result).toBe('UserExistsError')
-        expect(await User.count()).toBe(1)
       })
     })
 
-    test('500 if sending email fails', () => {
+    test('500 if sending email fails', async () => {
+      const email = getRandEmail()
       mockSendMail.mockImplementation(() => {
         throw Error('Sending mail failed')
       })
       return testPost({
         url: '/user/register',
         params: {
-          email: 'alice-usercontroller@example.com',
+          email,
           password: 'g00dPassword!',
         },
         status: 500,
         type: 'json',
-      }).then(async () => expect(await User.count()).toBe(0))
+      }).then(async () => expect(await User.findOne({ email })).toBeNull())
     })
   })
 
   describe('POST /user/login', () => {
     test('200 with valid credentials', async () => {
-      await addTestUser()
+      const email = await addTestUser()
       return testPost({
         url: '/user/login',
-        params: {
-          email: 'alice-usercontroller@example.com',
-          password: 'g00dPassword!',
-        },
+        params: { email, password: 'g00dPassword!' },
         status: 200,
         type: 'json',
       }).then((res) => {
@@ -218,7 +212,8 @@ describe('userController', () => {
 
   describe('POST /user/logout', () => {
     test('200 with valid access token', async () => {
-      const user = await addTestUser()
+      const email = await addTestUser()
+      const user = await User.findOne({ email })
       return testPost({
         url: '/user/logout',
         status: 200,
@@ -238,7 +233,8 @@ describe('userController', () => {
 
   describe('POST /user/change-password', () => {
     test('200 with valid access token', async () => {
-      const user = await addTestUser()
+      const email = await addTestUser()
+      const user = await User.findOne({ email })
       return testPost({
         url: '/user/change-password',
         params: { password: 'newG00dPassword!', oldPassword: 'g00dPassword!' },
@@ -246,16 +242,15 @@ describe('userController', () => {
         type: 'json',
         accessTokenCookie: await createAccessTokenCookie({ user }),
       }).then(async () => {
-        const updatedUser = await User.findOne({
-          email: 'alice-usercontroller@example.com',
-        }).select('hash salt')
+        const updatedUser = await User.findOne({ email }).select('hash salt')
         expect(updatedUser.hash).not.toEqual(user.hash)
         expect(updatedUser.salt).not.toEqual(user.salt)
       })
     })
 
     test('400 with valid access token but wrong old password', async () => {
-      const user = await addTestUser()
+      const email = await addTestUser()
+      const user = await User.findOne({ email }).select('+hash +salt')
       return testPost({
         url: '/user/change-password',
         params: { password: 'newG00dPassword!', oldPassword: 'wr0ngPassword!' },
@@ -263,16 +258,16 @@ describe('userController', () => {
         type: 'json',
         accessTokenCookie: await createAccessTokenCookie({ user }),
       }).then(async () => {
-        const updatedUser = await User.findOne({
-          email: 'alice-usercontroller@example.com',
-        }).select('hash salt')
+        const updatedUser = await User.findOne({ email }).select('hash salt')
+        // console.log(updatedUser)
         expect(updatedUser.hash).toEqual(user.hash)
         expect(updatedUser.salt).toEqual(user.salt)
       })
     })
 
     test("400 if user doesn't exist", async () => {
-      const user = await addTestUser()
+      const email = await addTestUser()
+      const user = await User.findOne({ email })
       const accessTokenCookie = await createAccessTokenCookie({ user })
       await user.delete()
       return testPost({
@@ -316,7 +311,8 @@ describe('userController', () => {
       const token = User.generateToken()
       let user
       if (!opts.noUser) {
-        user = await addTestUser()
+        const email = await addTestUser()
+        user = await User.findOne({ email }).select('+hash +salt')
         user.passwordResetToken = token
         user.passwordResetExpires = opts.expires
           ? opts.expires
@@ -338,9 +334,9 @@ describe('userController', () => {
         type: 'json',
       }).then(async () => {
         if (user) {
-          const updatedUser = await User.findOne({
-            email: 'alice-usercontroller@example.com',
-          }).select('+hash +salt')
+          const updatedUser = await User.findOne({ email: user.email }).select(
+            '+hash +salt'
+          )
           expFunc(user, updatedUser)
         }
       })
@@ -358,7 +354,8 @@ describe('userController', () => {
       const token = User.generateToken()
       let user
       if (!opts.noUser) {
-        user = await addTestUser()
+        const email = await addTestUser()
+        user = await User.findOne({ email })
         user.emailVerificationToken = token
         user.emailVerified = opts.emailVerified || false
         await user.save()
@@ -378,9 +375,7 @@ describe('userController', () => {
         type: 'json',
       }).then(async () => {
         if (user) {
-          const updatedUser = await User.findOne({
-            email: 'alice-usercontroller@example.com',
-          })
+          const updatedUser = await User.findOne({ email: user.email })
           expect(updatedUser.emailVerified).toBe(verified)
         }
       })
@@ -395,7 +390,7 @@ describe('userController', () => {
       expect(mail).toMatchObject({
         subject: expect.any(String),
         text: expect.any(String),
-        to: 'alice-usercontroller@example.com',
+        to: user.email,
       })
     }
 
@@ -424,7 +419,8 @@ describe('userController', () => {
       }
       let user
       if (!opts.noUser) {
-        user = await addTestUser()
+        const email = await addTestUser()
+        user = await User.findOne({ email })
         if (Object.prototype.hasOwnProperty.call(opts, 'emailVerified')) {
           user.emailVerified = opts.emailVerified
           await user.save()
@@ -437,9 +433,7 @@ describe('userController', () => {
         type: 'json',
       }).then(async () => {
         if (user) {
-          const updatedUser = await User.findOne({
-            email: 'alice-usercontroller@example.com',
-          })
+          const updatedUser = await User.findOne({ email: user.email })
           expFunc(updatedUser, opts)
         }
       })
@@ -447,12 +441,12 @@ describe('userController', () => {
   })
 
   describe('POST /user/request-verification', () => {
-    const expSuccess = () => {
+    const expSuccess = (user) => {
       const mail = mockSendMail.mock.calls[0][0]
       expect(mail).toMatchObject({
         subject: expect.any(String),
         text: expect.any(String),
-        to: 'alice-usercontroller@example.com',
+        to: user.email,
       })
     }
     const expFailure = (user, { emailSendingFails }) => {
@@ -476,7 +470,8 @@ describe('userController', () => {
       }
       let user
       if (!opts.noUser) {
-        user = await addTestUser()
+        const email = await addTestUser()
+        user = await User.findOne({ email })
         user.emailVerificationToken = User.generateToken()
         user.emailVerified = opts.emailVerified || false
         await user.save()
@@ -488,9 +483,7 @@ describe('userController', () => {
         type: 'json',
       }).then(async () => {
         if (user) {
-          const updatedUser = await User.findOne({
-            email: 'alice-usercontroller@example.com',
-          })
+          const updatedUser = await User.findOne({ email: user.email })
           expFunc(updatedUser, opts)
         }
       })
