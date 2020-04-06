@@ -347,7 +347,7 @@ describe('userController', () => {
     test.each([
       [200, 'with valid token', true, {}],
       [400, 'with invalid token', false, { token: 'wr0ng' }],
-      [400, 'w/o token', false, { token: undefined }],
+      [400, 'w/o token', false, { noToken: true }],
       [400, 'if already verified', true, { emailVerified: true }],
       [400, "if user doesn't exist", false, { noUser: true }],
     ])('%s %s', async (status, _, verified, opts) => {
@@ -361,12 +361,8 @@ describe('userController', () => {
         await user.save()
       }
       const params = {}
-      if (Object.prototype.hasOwnProperty.call(opts, 'token')) {
-        if (opts.token) {
-          params.token = opts.token
-        }
-      } else {
-        params.token = token
+      if (!opts.noToken) {
+        params.token = opts.token || token
       }
       return testPost({
         url: '/user/verify',

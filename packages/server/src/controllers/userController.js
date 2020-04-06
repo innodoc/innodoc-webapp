@@ -119,17 +119,20 @@ const userController = ({ appRoot, jwtSecret, nodeEnv }) => {
 
   router.post('/verify', async (req, res, next) => {
     try {
-      const { token: emailVerificationToken } = req.body
-      const user = await User.findOne({
-        emailVerificationToken,
-        emailVerified: false,
-      })
-      if (user) {
-        user.emailVerified = true
-        await user.save()
-        res.status(200).json({ result: 'ok' })
-      } else {
+      if (!req.body.token) {
         res.status(400).json({ result: 'NoMatchingTokenFound' })
+      } else {
+        const user = await User.findOne({
+          emailVerificationToken: req.body.token,
+          emailVerified: false,
+        })
+        if (user) {
+          user.emailVerified = true
+          await user.save()
+          res.status(200).json({ result: 'ok' })
+        } else {
+          res.status(400).json({ result: 'NoMatchingTokenFound' })
+        }
       }
     } catch (err) {
       next(err)
