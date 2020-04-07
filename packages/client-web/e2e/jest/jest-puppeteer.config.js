@@ -1,5 +1,5 @@
 const fs = require('fs')
-const path = require('path')
+const { resolve } = require('path')
 
 // chromium launch options
 const headless = process.env.PUPPETEER_HEADLESS !== 'false'
@@ -13,33 +13,46 @@ if (fs.existsSync('/etc/alpine-release')) {
   launch.args = ['--no-sandbox', '--disable-dev-shm-usage']
 }
 
-// setup application and content server
+const rootPath = resolve(__dirname, '..', '..', '..', '..')
+const clientWebPath = resolve(rootPath, 'packages', 'client-web')
+const usedPortAction = 'kill'
 const launchTimeout = 60000
-const protocol = 'http'
-const usedPortAction = 'error'
+
+// in-memory mongodb
+const startMongodScript = resolve(__dirname, 'startMongod.js')
+const mongoUrl = process.env.MONGO_URL
+const mongoCmd = `node ${startMongodScript} ${mongoUrl}`
+
+// setup application and content server
 const serverEnvVars = [
   // force configuration in case .env is customized
   'SECTION_PATH_PREFIX=section',
   'PAGE_PATH_PREFIX=page',
 ].join(' ')
-const rootPath = path.resolve(__dirname, '..', '..')
 const serverCmd = `cd ${rootPath} && ${serverEnvVars} yarn start`
 const contentPort = parseInt(new URL(process.env.CONTENT_ROOT).port, 10)
-const testCmd = `cd ${__dirname} && CONTENT_PORT=${contentPort} yarn run test:e2e:content`
+const testCmd = `cd ${clientWebPath} && CONTENT_PORT=${contentPort} yarn run test:e2e:content`
 
 const server = [
+  {
+    command: mongoCmd,
+    launchTimeout,
+    port: parseInt(mongoUrl, 10),
+    protocol: 'tcp',
+    usedPortAction,
+  },
   {
     command: serverCmd,
     launchTimeout,
     port: parseInt(new URL(process.env.APP_ROOT).port, 10),
-    protocol,
+    protocol: 'http',
     usedPortAction,
   },
   {
     command: testCmd,
     launchTimeout,
     port: contentPort,
-    protocol,
+    protocol: 'http',
     usedPortAction,
   },
 ]
