@@ -19,7 +19,7 @@ const createExpressApp = (config, nextApp) =>
     .use(cookieParser())
     .use(
       csrf({
-        cookie: { secure: config.nodeEnv === 'production' },
+        cookie: { secure: new URL(config.appRoot).protocol === 'https' },
         value: (req) => req.headers['csrf-token'],
       })
     )

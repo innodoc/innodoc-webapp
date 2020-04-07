@@ -57,6 +57,7 @@ jest.mock('./middlewares', () => ({
 }))
 
 const config = {
+  appRoot: 'http://app.example.com/',
   nodeEnv: 'production',
   smtp: {},
 }
@@ -89,7 +90,7 @@ describe('createExpressApp', () => {
     describe('csrf', () => {
       it('should use csrf', () => {
         expect(csrf).toBeCalledWith({
-          cookie: { secure: true },
+          cookie: { secure: false },
           value: expect.any(Function),
         })
         expect(mockExpressApp.use).toBeCalledWith(mockCsrf)

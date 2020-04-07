@@ -5,7 +5,7 @@ const { resolve } = require('path')
 const headless = process.env.PUPPETEER_HEADLESS !== 'false'
 const launch = {
   headless,
-  slowMo: headless ? 0 : 250,
+  slowMo: headless ? 0 : 50,
 }
 if (fs.existsSync('/etc/alpine-release')) {
   // only for CI
@@ -15,7 +15,7 @@ if (fs.existsSync('/etc/alpine-release')) {
 
 const rootPath = resolve(__dirname, '..', '..', '..', '..')
 const clientWebPath = resolve(rootPath, 'packages', 'client-web')
-const usedPortAction = 'kill'
+const usedPortAction = 'error'
 const launchTimeout = 60000
 
 // in-memory mongodb
@@ -26,8 +26,9 @@ const mongoCmd = `node ${startMongodScript} ${mongoUrl}`
 // setup application and content server
 const serverEnvVars = [
   // force configuration in case .env is customized
-  'SECTION_PATH_PREFIX=section',
   'PAGE_PATH_PREFIX=page',
+  'SECTION_PATH_PREFIX=section',
+  'SMTP_SKIP_MAILS=yes',
 ].join(' ')
 const serverCmd = `cd ${rootPath} && ${serverEnvVars} yarn start`
 const contentPort = parseInt(new URL(process.env.CONTENT_ROOT).port, 10)

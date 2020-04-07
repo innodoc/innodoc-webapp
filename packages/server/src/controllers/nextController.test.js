@@ -41,6 +41,7 @@ jest.mock('../middlewares', () => ({
 }))
 
 const config = {
+  appRoot: 'http://app.example.com/',
   pagePathPrefix: 'page',
   sectionPathPrefix: 'section',
 }

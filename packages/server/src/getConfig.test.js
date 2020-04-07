@@ -29,6 +29,7 @@ describe('getConfig', () => {
     process.env.SMTP_PORT = '587'
     process.env.SMTP_SENDER = 'no-reply@example.com'
     process.env.SMTP_USER = 'alice'
+    process.env.SMTP_SKIP_MAILS = false
     process.env.STATIC_ROOT = 'https://example.com/static/'
   })
   afterEach(() => {
@@ -60,6 +61,7 @@ describe('getConfig', () => {
         port: 587,
         user: 'alice',
         senderAddress: 'no-reply@example.com',
+        skipMails: false,
       },
       staticRoot: 'https://example.com/static/',
     })

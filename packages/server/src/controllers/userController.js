@@ -4,8 +4,9 @@ import passport from 'passport'
 import User from '../models/User'
 import { resetPasswordMail, verificationMail } from '../mails'
 
-const userController = ({ appRoot, jwtSecret, nodeEnv }) => {
+const userController = ({ appRoot, jwtSecret }) => {
   const router = Router()
+  const secureCookie = new URL(appRoot).protocol === 'https'
 
   router.post('/check-email', async (req, res) => {
     if (await User.exists({ email: req.body.email })) {
@@ -51,7 +52,7 @@ const userController = ({ appRoot, jwtSecret, nodeEnv }) => {
       const accessToken = req.user.generateAccessToken(jwtSecret, appRoot)
       res.cookie('accessToken', accessToken, {
         httpOnly: true,
-        secure: nodeEnv === 'production',
+        secure: secureCookie,
       })
       res.status(200).json({ result: 'ok' })
     }
@@ -64,7 +65,7 @@ const userController = ({ appRoot, jwtSecret, nodeEnv }) => {
       req.logout()
       res.clearCookie('accessToken', {
         httpOnly: true,
-        secure: nodeEnv === 'production',
+        secure: secureCookie,
       })
       res.status(200).json({ result: 'ok' })
     }

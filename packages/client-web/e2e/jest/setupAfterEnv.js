@@ -1,8 +1,12 @@
 import { setDefaultOptions } from 'expect-puppeteer'
 import registerScreenshotReporter from './screenshotReporter'
 
-setDefaultOptions({ timeout: 5000 }) // for a single puppeteer command
-jest.setTimeout(15000) // for a single test
+const headless = process.env.PUPPETEER_HEADLESS !== 'false'
+
+// for a single puppeteer command
+setDefaultOptions({ timeout: headless ? 15000 : 120000 })
+// for a single test
+jest.setTimeout(headless ? 60000 : 1000 * 60 * 10)
 
 // take screenshots on failed tests for better debugging
 registerScreenshotReporter()

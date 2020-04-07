@@ -64,3 +64,19 @@ describe('sendMailMiddleware', () => {
     ).rejects.toThrow('Test error')
   })
 })
+
+describe('sendMailMiddleware (skipMails=true)', () => {
+  const middleware = sendMailMiddleware({ skipMails: true })
+  const req = { app: { locals: {} } }
+  const next = jest.fn()
+  beforeEach(() => {
+    jest.clearAllMocks()
+    middleware(req, {}, next)
+  })
+
+  it('should not call createTransport', () => {
+    expect(req.app.locals.sendMail).toBeInstanceOf(Function)
+    expect(nodemailer.createTransport).not.toBeCalled()
+    expect(next).toBeCalled()
+  })
+})

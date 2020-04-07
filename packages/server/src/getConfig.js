@@ -49,6 +49,7 @@ const getConfig = () => {
       user: process.env.SMTP_USER,
       password: process.env.SMTP_PASSWORD,
       senderAddress: process.env.SMTP_SENDER,
+      skipMails: process.env.SMTP_SKIP_MAILS === 'yes',
     },
     staticRoot,
   }
