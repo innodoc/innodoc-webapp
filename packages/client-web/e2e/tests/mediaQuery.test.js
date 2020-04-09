@@ -1,43 +1,36 @@
-describe('Media query', () => {
-  beforeEach(async () => {
-    await page.goto(getUrl())
-    await page.setViewport({ width: 400, height: 600 })
-  })
+beforeEach(resetBrowser)
 
+describe('Media query', () => {
   it('should toggle drawer menu', async () => {
-    expect.assertions(5)
-    await expect(page).not.toMatchElement('.ant-drawer')
-    await expect(page).toClick('[class*=mobileMenuButton]')
-    const drawer = await expect(page).toMatchElement('.ant-drawer', {
-      visible: true,
-    })
-    await page.waitFor(500) // animation?
-    await expect(drawer).toClick('.ant-drawer-close')
-    await page.waitFor(500)
-    expect(
-      await page.$eval(
-        '.ant-drawer',
-        (elem) => window.getComputedStyle(elem).width
-      )
-    ).toBe('0px')
+    await openUrl('', { viewport: { width: 320, height: 600 } })
+    await browser.assert.not.visible('.ant-drawer')
+    await browser.click('[class*=mobileMenuButton]')
+    await browser.waitFor(500)
+    await browser.assert.textContains('.ant-drawer', 'Menu')
+    const mobileMenu = await browser.query('.ant-drawer ul[class*="nav___"]')
+    await browser.assert.textContains(mobileMenu, 'About')
+    await browser.assert.textContains(mobileMenu, 'Language')
+    await browser.assert.textContains(mobileMenu, 'Login')
+    await browser.click('button.ant-drawer-close')
+    await browser.waitFor(
+      (s) => {
+        const { width } = window.getComputedStyle(document.querySelector(s))
+        return width === '0px'
+      },
+      2000,
+      '.ant-drawer'
+    )
   })
 
   describe('mobile menu button', () => {
     it('should show on small viewport', async () => {
-      expect.assertions(1)
-      await expect(page).toMatchElement('[class*=mobileMenuButton]', {
-        visible: true,
-      })
+      await openUrl('', { viewport: { width: 320, height: 600 } })
+      await browser.assert.visible('[class*=mobileMenuButton]')
     })
 
     it('should hide on wide viewport', async () => {
-      expect.assertions(1)
-      await page.setViewport({ width: 800, height: 600 })
-      const val = await page.$eval(
-        '[class*=mobileMenuButton]',
-        (elem) => window.getComputedStyle(elem).display
-      )
-      expect(val).toBe('none')
+      await openUrl('', { viewport: { width: 800, height: 600 } })
+      await browser.assert.not.visible('[class*=mobileMenuButton]')
     })
   })
 })

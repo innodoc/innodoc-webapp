@@ -1,23 +1,21 @@
-describe('Cascading should override Antd styles', () => {
-  beforeEach(async () => {
-    await page.goto(getUrl())
-  })
+beforeEach(resetBrowser)
 
+describe('Cascading should override Antd styles', () => {
   it('should have toggleButton w/o border', async () => {
-    expect.assertions(1)
-    const val = await page.$eval(
-      '[class*=sidebarToggle] [class*=toggleButton]',
-      (elem) => window.getComputedStyle(elem)['border-width']
+    await openUrl()
+    await browser.assert.style(
+      '[class*="sidebarToggle"] [class*="toggleButton"]',
+      'border-width',
+      '0px'
     )
-    expect(val).toBe('0px')
   })
 
   it('should have list item in footer w/o bottom border', async () => {
-    expect.assertions(1)
-    const val = await page.$eval(
+    await openUrl()
+    await browser.assert.style(
       '[class*=footer] .ant-list-item',
-      (elem) => window.getComputedStyle(elem)['border-bottom-width']
+      'border-bottom-width',
+      '0px'
     )
-    expect(val).toBe('0px')
   })
 })

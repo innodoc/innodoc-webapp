@@ -3,11 +3,11 @@
     "jest": true
   },
   "globals": {
-    "page": true,
     "browser": true,
-    "context": true,
-    "jestPuppeteer": true,
-    "getUrl": true
+    "getUrl": true,
+    "hoverNavItem": true,
+    "openUrl": true,
+    "resetBrowser": true
   },
   "rules": {
     "import/no-extraneous-dependencies": 0

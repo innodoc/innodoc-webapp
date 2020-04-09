@@ -1,3 +1,5 @@
+beforeEach(resetBrowser)
+
 describe.each([
   'path-does-not-exist',
   'page',
@@ -8,16 +10,22 @@ describe.each([
   'section/does-not-exist',
 ])('should receive "404" from server', (path) => {
   test(path, async () => {
-    expect.assertions(2)
-    const resp = await page.goto(getUrl(path))
-    expect(resp.status()).toBe(404)
-    await expect(page).toMatch('This page could not be found')
+    await openUrl(path)
+    await browser.assert.textContains(
+      '[class*=content___] .ant-result',
+      'This page could not be found'
+    )
+    const [req] = await browser.requests.all()
+    expect(req.response().status()).toBe(404)
   })
 })
 
 it('should render "404" client-side', async () => {
-  expect.assertions(2)
-  await page.goto(getUrl('section/02-elements/04-links/01-internal'))
-  await expect(page).toClick('[href*=does-not-exist]')
-  await expect(page).toMatch('This page could not be found')
+  await openUrl('section/02-elements/04-links/01-internal')
+  await browser.click('[href*=does-not-exist]')
+  await browser.waitFor('[class*=content___] .ant-result')
+  await browser.assert.textContains(
+    '[class*=content___] .ant-result',
+    'This page could not be found'
+  )
 })
