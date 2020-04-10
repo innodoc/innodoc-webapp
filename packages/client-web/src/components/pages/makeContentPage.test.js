@@ -8,6 +8,10 @@ import Layout from '../Layout'
 
 let mockApp
 jest.mock('react-redux', () => ({ useSelector: () => mockApp }))
+let mockServerContext
+jest.mock('next-server-context', () => ({
+  useServerContext: () => mockServerContext,
+}))
 jest.mock('@innodoc/client-store/src/selectors', () => ({
   getApp: () => mockApp,
   makeMakeGetContentLink: () => {},
@@ -21,6 +25,7 @@ describe('makeContentPage', () => {
 
   beforeEach(() => {
     mockApp = { language: 'en' }
+    mockServerContext = { response: {} }
     ContentPage = makeContentPage(ContentComponent, loadContent)
   })
 
@@ -59,5 +64,11 @@ describe('makeContentPage', () => {
     const wrapper = shallow(<ContentPage />)
     expect(wrapper.find(ErrorPage).prop('statusCode')).toBe(404)
     expect(wrapper.find(Layout).exists()).toBe(false)
+  })
+
+  it('should set status code to 404 in server context', () => {
+    mockApp = { show404: true }
+    shallow(<ContentPage />)
+    expect(mockServerContext.response.statusCode).toBe(404)
   })
 })

@@ -8421,6 +8421,14 @@ next-redux-wrapper@^5.0.0:
   resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-5.0.0.tgz#0f36f94ea00581fbdc94f2405594f6360beb08dc"
   integrity sha512-jw893pPRJ4DCwskChp8iB+OjzfvblkEEw7frO3+u/jgZxlQ2yLaTAIRyEBjdCxTf7AOQGYb8aiWdC5toZOHJjg==
 
+next-server-context@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/next-server-context/-/next-server-context-1.0.0.tgz#c8f938985e80ad6e242379597bbb76450b596245"
+  integrity sha512-gnUG74hwo75mBsc3Q8EIJZq7PLy7yblQnj15xrYmj3qrL/S44waEw4JBQ8cZWWtNywmwhZpOzMzjRT0NRBwgJg==
+  dependencies:
+    "@babel/runtime" "^7.8.4"
+    object-assign "^4.1.1"
+
 next-sugarss@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/next-sugarss/-/next-sugarss-1.1.5.tgz#3e811cc5a6433634a3f09f490879c22d9c37131a"

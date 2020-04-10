@@ -7,6 +7,7 @@ import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 import { insert } from 'mathjax-full/js/util/Options'
 import MathJax from '@innodoc/react-mathjax-node'
+import { withServerContext } from 'next-server-context'
 
 import '@innodoc/client-web/src/style/lato-font.sss'
 
@@ -169,7 +170,9 @@ export default withRedux(
 )(
   appWithTranslation(
     withReduxSaga(
-      connect(null, { dispatchRouteChangeStart: routeChangeStart })(InnoDocApp)
+      connect(null, { dispatchRouteChangeStart: routeChangeStart })(
+        withServerContext(InnoDocApp)
+      )
     )
   )
 )
