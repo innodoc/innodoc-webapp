@@ -7,12 +7,12 @@
 # Sync puppeteer version to corresponding Chromium version!
 # Check corresponding versions: https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md
 # Alpine Chromium version: https://pkgs.alpinelinux.org/packages?name=chromium
-ARG PUPPETEER_VERSION=1.19.0
+ARG PUPPETEER_VERSION=2.0.0
 
 ARG BUILD_IMAGE=innodoc/innodoc-webapp
 FROM $BUILD_IMAGE AS build
 
-FROM alpine:3.10
+FROM alpine:3.11
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 WORKDIR /innodoc-webapp
 
