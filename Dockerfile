@@ -28,6 +28,9 @@ RUN set -xe && \
 # copy app
 WORKDIR /innodoc-webapp
 COPY --from=build --chown=innodocuser:innodocuser /innodoc-webapp .
+RUN set -xe && \
+  mkdir coverage && \
+  chown innodocuser.innodocuser coverage
 USER innodocuser
 
 # run web app

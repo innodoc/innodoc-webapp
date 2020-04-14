@@ -62,12 +62,20 @@ describe('Account interactions', () => {
   }
 
   describe('Registration', () => {
-    test('Verification > Login > Logout', async () => {
+    test('Verification > Login > About > Logout', async () => {
       const email = getRandEmail()
       await openUrl()
       await register(email)
       await activate(email)
       await login(email, pwd)
+      await browser.waitFor(
+        '[class*=header___] ul[class*=nav___] a[href="/page/about"]'
+      )
+      await browser.click(
+        '[class*=header___] ul[class*=nav___] a[href="/page/about"]'
+      )
+      await browser.waitForNavigation()
+      expect(await browser.text('h1')).toContain('About this course')
       await logout(email)
     })
 

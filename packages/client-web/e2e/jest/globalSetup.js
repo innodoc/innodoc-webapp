@@ -4,7 +4,8 @@ const { setup: setupServer } = require('jest-dev-server')
 
 const rootPath = resolve(__dirname, '..', '..', '..', '..')
 const clientWebPath = resolve(rootPath, 'packages', 'client-web')
-const usedPortAction = 'kill'
+const isCI = existsSync('/etc/alpine-release')
+const usedPortAction = 'error'
 const launchTimeout = 60000
 
 // application server
@@ -43,8 +44,7 @@ const servers = [
   },
 ]
 
-// Don't spawn MongoDB in CI
-if (!existsSync('/etc/alpine-release')) {
+if (!isCI) {
   servers.push({
     command: mongoCmd,
     launchTimeout,

@@ -15,12 +15,12 @@ class WendigoEnvironment extends NodeEnvironment {
     // Browser launch options
     const headless = process.env.PUPPETEER_HEADLESS !== 'false'
     const wendigoOpts = {
-      defaultTimeout: 2000,
+      defaultTimeout: 10000,
       incognito: true,
     }
     if (isCI) {
       wendigoOpts.args = ['--no-sandbox', '--disable-dev-shm-usage']
-      wendigoOpts.defaultTimeout = 10000
+      wendigoOpts.defaultTimeout = 30000
       wendigoOpts.executablePath = '/usr/bin/chromium-browser'
     }
     if (!headless) {
