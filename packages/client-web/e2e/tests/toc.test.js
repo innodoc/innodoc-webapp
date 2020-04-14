@@ -27,6 +27,7 @@ describe('TOC', () => {
     await openUrl()
     await waitForSiderClosed()
     await browser.click('[class*=content___] [class*=toggleButton]')
+    await browser.waitFor(500)
     await waitForSiderOpen()
     await browser.waitFor(500)
     await browser.assert.textContains('.ant-layout-sider', [
@@ -41,6 +42,7 @@ describe('TOC', () => {
     await openUrl('section/01-project')
     await browser.waitFor('[class*=content___] [class*=toggleButton]')
     await browser.click('[class*=content___] [class*=toggleButton]')
+    await browser.waitFor(500)
     await waitForSiderOpen()
 
     await browser.assert.textContains('.ant-layout-sider', [
@@ -78,6 +80,7 @@ describe('TOC', () => {
     await openUrl('section/01-project/04-building')
     await browser.waitFor('[class*=content___] [class*=toggleButton]')
     await browser.click('[class*=content___] [class*=toggleButton]')
+    await browser.waitFor(500)
     await waitForSiderOpen()
     await browser.click(
       '[class*=sectionAffix___] a[title*="2 Content elements"]'
@@ -90,8 +93,10 @@ describe('TOC', () => {
     await openUrl()
     await waitForSiderClosed()
     await browser.click('[class*=content___] [class*=toggleButton]')
+    await browser.waitFor(500)
     await waitForSiderOpen()
     await browser.click('[class*=content___] [class*=toggleButton]')
+    await browser.waitFor(500)
     await waitForSiderClosed()
   })
 
@@ -99,8 +104,10 @@ describe('TOC', () => {
     await openUrl()
     await waitForSiderClosed()
     await browser.click('[class*=content___] [class*=toggleButton]')
+    await browser.waitFor(500)
     await waitForSiderOpen()
     await browser.click('.ant-layout-sider [class*=closeButton] button')
+    await browser.waitFor(500)
     await waitForSiderClosed()
   })
 })
