@@ -65,15 +65,16 @@ class WendigoEnvironment extends NodeEnvironment {
     // Browser launch options
     const headless = process.env.PUPPETEER_HEADLESS !== 'false'
     const launchOpts = {
+      defaultTimeout: 2000,
       headless,
       incognito: true,
       slowMo: headless ? 0 : 50,
     }
     if (fs.existsSync('/etc/alpine-release')) {
       // only for CI
-      launchOpts.executablePath = '/usr/bin/chromium-browser'
       launchOpts.args = ['--no-sandbox', '--disable-dev-shm-usage']
-      // TODO handle mongo in CI
+      launchOpts.defaultTimeout = 5000
+      launchOpts.executablePath = '/usr/bin/chromium-browser'
     }
 
     // Provide globals
