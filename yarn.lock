@@ -8197,7 +8197,7 @@ mongodb-memory-server-core@6.4.1:
   optionalDependencies:
     mongodb "^3.5.4"
 
-mongodb-memory-server-core@6.5.2:
+mongodb-memory-server-core@^6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/mongodb-memory-server-core/-/mongodb-memory-server-core-6.5.2.tgz#21c96b6e3104b999905ecb232f83d2432467a0f5"
   integrity sha512-Cs1wB+GrL2KconDD2emk6ptU1OqdYia11I7fw5sOqnEWc8stTQ4rtptbRcLmHyTcTgRYC/fsQQvzbbd7DBf4DQ==
@@ -8237,13 +8237,6 @@ mongodb-memory-server@6.4.1:
   integrity sha512-RNQfI7DE5vinMIF7Uusna4AUoKPxQqB62wF+vEybSHkuzK6j3snGpeTXmZiqojqnNzeNQIDGHNkLKLq4NSbqmA==
   dependencies:
     mongodb-memory-server-core "6.4.1"
-
-mongodb-memory-server@^6.5.2:
-  version "6.5.2"
-  resolved "https://registry.yarnpkg.com/mongodb-memory-server/-/mongodb-memory-server-6.5.2.tgz#47f4c19ab830f63ee6119629072eee2df7d8957a"
-  integrity sha512-PUCiWcHGwyqQiZF3J4iCy1DXqPjoNtehV2qMFJ26rhNBFzmc5SW+9/FUQwGNLge5/Lm1dEwcraJD5PUe8m9Kdg==
-  dependencies:
-    mongodb-memory-server-core "6.5.2"
 
 mongodb@3.5.5, mongodb@^3.5.4, mongodb@^3.5.5:
   version "3.5.5"

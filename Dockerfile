@@ -1,5 +1,5 @@
 # Official Alpine-based Dockerfile for innodoc-webapp
-ARG BASE_IMAGE=node:alpine
+ARG BASE_IMAGE=node:13.12-alpine3.11
 FROM $BASE_IMAGE AS build
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
@@ -15,7 +15,8 @@ RUN set -xe && \
   ln -s .env.example .env && \
   yarn install --pure-lockfile && \
   yarn add --no-lockfile --ignore-workspace-root-check pm2 && \
-  yarn build
+  yarn build && \
+  npx next telemetry disable
 
 FROM $BASE_IMAGE
 

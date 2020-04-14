@@ -38,13 +38,6 @@ const mongoCmd = `node ${startMongodScript} ${mongoUrl}`
 
 const server = [
   {
-    command: mongoCmd,
-    launchTimeout,
-    port: parseInt(mongoUrl, 10),
-    protocol: 'tcp',
-    usedPortAction,
-  },
-  {
     command: serverCmd,
     launchTimeout,
     port: parseInt(new URL(process.env.APP_ROOT).port, 10),
@@ -73,7 +66,14 @@ class WendigoEnvironment extends NodeEnvironment {
       // only for CI
       launchOpts.executablePath = '/usr/bin/chromium-browser'
       launchOpts.args = ['--no-sandbox', '--disable-dev-shm-usage']
-      // TODO handle mongo in CI
+    } else {
+      server.push({
+        command: mongoCmd,
+        launchTimeout,
+        port: parseInt(mongoUrl, 10),
+        protocol: 'tcp',
+        usedPortAction,
+      })
     }
 
     // Provide globals
