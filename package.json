@@ -44,5 +44,8 @@
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^25.2.7",
     "prettier": "^2.0.3"
+  },
+  "resolutions": {
+    "mongodb-memory-server": "6.5.2"
   }
 }

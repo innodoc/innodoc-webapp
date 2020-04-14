@@ -4,6 +4,7 @@
   },
   "globals": {
     "browser": true,
+    "DEFAULT_TIMEOUT": true,
     "getUrl": true,
     "hoverNavItem": true,
     "openUrl": true,

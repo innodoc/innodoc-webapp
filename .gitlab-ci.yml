@@ -19,13 +19,16 @@ variables:
   # taken from https://github.com/semver/semver/issues/232#issue-48635632
   SEMVER_REGEXP: '^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$'
 
+.docker-base-login-script: &docker-base-login-script echo "$CI_JOB_TOKEN" | docker login --username gitlab-ci-token --password-stdin "$CI_REGISTRY"
+.docker-base-logout-script: &docker-base-logout-script docker logout "$CI_REGISTRY"
+
 .docker-base: &docker-base
   services:
     - docker:dind
   before_script:
-    - echo "$CI_JOB_TOKEN" | docker login --username gitlab-ci-token --password-stdin "$CI_REGISTRY"
+    - *docker-base-login-script
   after_script:
-    - docker logout "$CI_REGISTRY"
+    - *docker-base-logout-script
   variables:
     <<: *docker-default-vars
 
@@ -47,14 +50,20 @@ Linting:
   stage: test
   script:
     - docker pull "$IMAGE_TAG"
-    - docker run "$IMAGE_TAG" yarn lint
+    - docker run --rm "$IMAGE_TAG" yarn lint
 
 Unit tests:
   <<: *docker-base
   stage: test
   script:
     - docker pull "$IMAGE_TAG"
-    - docker run "$IMAGE_TAG" yarn test:unit:coverage
+    - docker run --rm --env MONGO_URL=mongodb://localhost/innodoc-test --network container:mongodb-in-memory "$IMAGE_TAG" yarn test:unit:coverage --coverageDirectory=/tmp/coverage
+  before_script:
+    - *docker-base-login-script
+    - docker run --rm --name mongodb-in-memory -d mongo:bionic --noauth --storageEngine ephemeralForTest
+  after_script:
+    - docker stop mongodb-in-memory
+    - *docker-base-logout-script
   coverage: '/^All files\s+\|\s+([0-9.]+)\s+\|\s+/'
 
 E2E tests:
@@ -66,7 +75,13 @@ E2E tests:
     - docker build --pull --cache-from "$IMAGE_TAG" --cache-from "$IMAGE_E2E_CACHE_TAG" --tag "$IMAGE_E2E_TAG" --build-arg BUILD_IMAGE="$IMAGE_TAG" -f Dockerfile.e2e .
     - docker tag "$IMAGE_E2E_TAG" "$IMAGE_E2E_CACHE_TAG"
     - docker push "$IMAGE_E2E_CACHE_TAG"
-    - docker run "$IMAGE_E2E_TAG"
+    - docker run --rm --env MONGO_URL=mongodb://localhost/innodoc-e2e --network container:mongodb-in-memory "$IMAGE_E2E_TAG"
+  before_script:
+    - *docker-base-login-script
+    - docker run --rm --name mongodb-in-memory -d mongo:bionic --noauth --storageEngine ephemeralForTest
+  after_script:
+    - docker stop mongodb-in-memory
+    - *docker-base-logout-script
   variables:
     <<: *docker-default-vars
     GIT_STRATEGY: fetch

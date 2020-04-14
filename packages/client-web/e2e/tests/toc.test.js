@@ -4,7 +4,7 @@ const waitForSiderWidth = async (width) =>
       const styleW = document.querySelector('.ant-layout-sider').style.width
       return parseInt(styleW.slice(0, -2), 10) === w
     },
-    1000,
+    DEFAULT_TIMEOUT,
     width
   )
 const waitForSiderClosed = () => waitForSiderWidth(0)
@@ -12,7 +12,7 @@ const waitForSiderOpen = () => waitForSiderWidth(300)
 const waitForHeader = (text) =>
   browser.waitFor(
     (t) => document.querySelector('[class*=content___] h1').innerText === t,
-    2000,
+    DEFAULT_TIMEOUT,
     text
   )
 const expectSwitcherAmount = async (type, n) =>
