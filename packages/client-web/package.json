@@ -84,7 +84,7 @@
     "jest-environment-enzyme": "^7.1.2",
     "jest-enzyme": "^7.1.2",
     "less-plugin-variables-output": "^1.2.0",
-    "mongodb-memory-server-core": "^6.5.2",
+    "mongodb-memory-server": "6.5.2",
     "sugarss": "^2.0.0",
     "wendigo": "^2.11.3"
   }

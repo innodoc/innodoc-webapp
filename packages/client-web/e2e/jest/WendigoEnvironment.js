@@ -68,6 +68,14 @@ class WendigoEnvironment extends NodeEnvironment {
       launchOpts.args = ['--no-sandbox', '--disable-dev-shm-usage']
       launchOpts.defaultTimeout = 5000
       launchOpts.executablePath = '/usr/bin/chromium-browser'
+    } else {
+      server.push({
+        command: mongoCmd,
+        launchTimeout,
+        port: parseInt(mongoUrl, 10),
+        protocol: 'tcp',
+        usedPortAction,
+      })
     }
 
     // Provide globals
