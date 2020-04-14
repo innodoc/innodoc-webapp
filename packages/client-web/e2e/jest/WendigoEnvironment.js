@@ -38,13 +38,6 @@ const mongoCmd = `node ${startMongodScript} ${mongoUrl}`
 
 const server = [
   {
-    command: mongoCmd,
-    launchTimeout,
-    port: parseInt(mongoUrl, 10),
-    protocol: 'tcp',
-    usedPortAction,
-  },
-  {
     command: serverCmd,
     launchTimeout,
     port: parseInt(new URL(process.env.APP_ROOT).port, 10),
