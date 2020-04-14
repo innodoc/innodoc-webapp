@@ -8,21 +8,24 @@ const escapeXPathString = (str) => {
   return `concat('${splitedQuotes}', '')`
 }
 
+const isCI = existsSync('/etc/alpine-release')
+
 class WendigoEnvironment extends NodeEnvironment {
   async setup() {
     // Browser launch options
     const headless = process.env.PUPPETEER_HEADLESS !== 'false'
-    const launchOpts = {
+    const wendigoOpts = {
       defaultTimeout: 2000,
-      headless,
       incognito: true,
-      slowMo: headless ? 0 : 50,
     }
-    if (existsSync('/etc/alpine-release')) {
-      // only for CI
-      launchOpts.args = ['--no-sandbox', '--disable-dev-shm-usage']
-      launchOpts.defaultTimeout = 5000
-      launchOpts.executablePath = '/usr/bin/chromium-browser'
+    if (isCI) {
+      wendigoOpts.args = ['--no-sandbox', '--disable-dev-shm-usage']
+      wendigoOpts.defaultTimeout = 10000
+      wendigoOpts.executablePath = '/usr/bin/chromium-browser'
+    }
+    if (!headless) {
+      wendigoOpts.headless = false
+      wendigoOpts.slowMo = 50
     }
 
     // Provide globals
@@ -55,10 +58,8 @@ class WendigoEnvironment extends NodeEnvironment {
       if (this.global.browser) {
         await this.global.browser.close()
       }
-      this.global.browser = await Wendigo.createBrowser(launchOpts)
+      this.global.browser = await Wendigo.createBrowser(wendigoOpts)
     }
-
-    // Launch browser
     await this.global.resetBrowser()
   }
 

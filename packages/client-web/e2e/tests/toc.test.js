@@ -89,10 +89,8 @@ describe('TOC', () => {
   it('should be toggleable using content button', async () => {
     await openUrl()
     await waitForSiderClosed()
-    await browser.waitFor('[class*=content___] [class*=toggleButton]')
     await browser.click('[class*=content___] [class*=toggleButton]')
     await waitForSiderOpen()
-    await browser.waitFor('[class*=content___] [class*=toggleButton]')
     await browser.click('[class*=content___] [class*=toggleButton]')
     await waitForSiderClosed()
   })
@@ -100,10 +98,8 @@ describe('TOC', () => {
   it('should be closeable using sider button', async () => {
     await openUrl()
     await waitForSiderClosed()
-    await browser.waitFor('[class*=content___] [class*=toggleButton]')
     await browser.click('[class*=content___] [class*=toggleButton]')
     await waitForSiderOpen()
-    await browser.waitFor('.ant-layout-sider [class*=closeButton] button')
     await browser.click('.ant-layout-sider [class*=closeButton] button')
     await waitForSiderClosed()
   })

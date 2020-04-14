@@ -19,13 +19,19 @@ variables:
   # taken from https://github.com/semver/semver/issues/232#issue-48635632
   SEMVER_REGEXP: '^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$'
 
+.docker-base-before-script: &docker-base-before-script
+  - echo "$CI_JOB_TOKEN" | docker login --username gitlab-ci-token --password-stdin "$CI_REGISTRY"
+
+.docker-base-after-script: &docker-base-after-script
+  - docker logout "$CI_REGISTRY"
+
 .docker-base: &docker-base
   services:
     - docker:dind
   before_script:
-    - echo "$CI_JOB_TOKEN" | docker login --username gitlab-ci-token --password-stdin "$CI_REGISTRY"
+    <<: *docker-base-before-script
   after_script:
-    - docker logout "$CI_REGISTRY"
+    <<: *docker-base-after-script
   variables:
     <<: *docker-default-vars
 
@@ -54,8 +60,12 @@ Unit tests:
   stage: test
   script:
     - docker pull "$IMAGE_TAG"
-    - docker run --rm --name mongodb-in-memory -d mongo:bionic --noauth --storageEngine ephemeralForTest
     - docker run --rm --env MONGO_URL=mongodb://localhost/innodoc-test --network container:mongodb-in-memory "$IMAGE_TAG" yarn test:unit:coverage
+  before_script:
+    <<: *docker-base-before-script
+    - docker run --rm --name mongodb-in-memory -d mongo:bionic --noauth --storageEngine ephemeralForTest
+  after_script:
+    <<: *docker-base-after-script
     - docker stop mongodb-in-memory
   coverage: '/^All files\s+\|\s+([0-9.]+)\s+\|\s+/'
 
@@ -68,8 +78,12 @@ E2E tests:
     - docker build --pull --cache-from "$IMAGE_TAG" --cache-from "$IMAGE_E2E_CACHE_TAG" --tag "$IMAGE_E2E_TAG" --build-arg BUILD_IMAGE="$IMAGE_TAG" -f Dockerfile.e2e .
     - docker tag "$IMAGE_E2E_TAG" "$IMAGE_E2E_CACHE_TAG"
     - docker push "$IMAGE_E2E_CACHE_TAG"
-    - docker run --rm --name mongodb-in-memory -d mongo:bionic --noauth --storageEngine ephemeralForTest
     - docker run --rm --env MONGO_URL=mongodb://localhost/innodoc-e2e --network container:mongodb-in-memory "$IMAGE_E2E_TAG"
+  before_script:
+    <<: *docker-base-before-script
+    - docker run --rm --name mongodb-in-memory -d mongo:bionic --noauth --storageEngine ephemeralForTest
+  after_script:
+    <<: *docker-base-after-script
     - docker stop mongodb-in-memory
   variables:
     <<: *docker-default-vars
