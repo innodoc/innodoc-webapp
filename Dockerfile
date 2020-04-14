@@ -13,7 +13,7 @@ RUN set -xe && \
 COPY . .
 RUN set -xe && \
   ln -s .env.example .env && \
-  yarn install --pure-lockfile && \
+  MONGOMS_DISABLE_POSTINSTALL=1 yarn install --pure-lockfile && \
   yarn add --no-lockfile --ignore-workspace-root-check pm2 && \
   npx next telemetry disable && \
   yarn build

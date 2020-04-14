@@ -54,7 +54,9 @@ Unit tests:
   stage: test
   script:
     - docker pull "$IMAGE_TAG"
-    - docker run --rm "$IMAGE_TAG" yarn test:unit:coverage
+    - docker run --rm --name mongodb-in-memory -d mongo:bionic --noauth --storageEngine ephemeralForTest
+    - docker run --rm --env MONGO_URL=mongodb://localhost/innodoc-test --network container:mongodb-in-memory "$IMAGE_TAG" yarn test:unit:coverage
+    - docker stop mongodb-in-memory
   coverage: '/^All files\s+\|\s+([0-9.]+)\s+\|\s+/'
 
 E2E tests:
@@ -66,14 +68,12 @@ E2E tests:
     - docker build --pull --cache-from "$IMAGE_TAG" --cache-from "$IMAGE_E2E_CACHE_TAG" --tag "$IMAGE_E2E_TAG" --build-arg BUILD_IMAGE="$IMAGE_TAG" -f Dockerfile.e2e .
     - docker tag "$IMAGE_E2E_TAG" "$IMAGE_E2E_CACHE_TAG"
     - docker push "$IMAGE_E2E_CACHE_TAG"
-    - docker run --rm --env MONGO_URL=mongodb://mongodb-in-memory/innodoc-e2e "$IMAGE_E2E_TAG"
+    - docker run --rm --name mongodb-in-memory -d mongo:bionic --noauth --storageEngine ephemeralForTest
+    - docker run --rm --env MONGO_URL=mongodb://localhost/innodoc-e2e --network container:mongodb-in-memory "$IMAGE_E2E_TAG"
+    - docker stop mongodb-in-memory
   variables:
     <<: *docker-default-vars
     GIT_STRATEGY: fetch
-  services:
-    - name: mongo:bionic
-    - alias: mongodb-in-memory
-    - command: ["--noauth", "--storageEngine", "ephemeralForTest"]
 
 Push to GitLab registry (staging):
   <<: *docker-base
