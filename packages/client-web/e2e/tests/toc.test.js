@@ -1,5 +1,6 @@
-const waitForSiderWidth = async (width) =>
-  browser.waitFor(
+const waitForSiderWidth = async (width) => {
+  await browser.wait(500)
+  await browser.waitFor(
     (w) => {
       const styleW = document.querySelector('.ant-layout-sider').style.width
       return parseInt(styleW.slice(0, -2), 10) === w
@@ -7,6 +8,7 @@ const waitForSiderWidth = async (width) =>
     DEFAULT_TIMEOUT,
     width
   )
+}
 const waitForSiderClosed = () => waitForSiderWidth(0)
 const waitForSiderOpen = () => waitForSiderWidth(300)
 const waitForHeader = (text) =>
@@ -26,10 +28,8 @@ describe('TOC', () => {
   it('should have TOC with working link', async () => {
     await openUrl()
     await waitForSiderClosed()
-    await browser.click('[class*=content___] [class*=toggleButton]')
-    await browser.waitFor(500)
+    await browser.waitAndClick('[class*=content___] [class*=toggleButton]')
     await waitForSiderOpen()
-    await browser.waitFor(500)
     await browser.assert.textContains('.ant-layout-sider', [
       '1 Project structure',
       '2 Content elements',
@@ -40,9 +40,7 @@ describe('TOC', () => {
 
   it('should have TOC with collapsible nodes', async () => {
     await openUrl('section/01-project')
-    await browser.waitFor('[class*=content___] [class*=toggleButton]')
-    await browser.click('[class*=content___] [class*=toggleButton]')
-    await browser.waitFor(500)
+    await browser.waitAndClick('[class*=content___] [class*=toggleButton]')
     await waitForSiderOpen()
 
     await browser.assert.textContains('.ant-layout-sider', [
@@ -62,9 +60,8 @@ describe('TOC', () => {
     await expectSwitcherAmount('_open', 1)
     await expectSwitcherAmount('_close', 2)
 
-    await browser.waitFor(500)
     await browser.clickText('.ant-layout-sider', '1.2 Files')
-    await browser.waitFor(500)
+    await browser.wait(500)
 
     await expectSwitcherAmount('', 8)
     await expectSwitcherAmount('_open', 2)
@@ -78,11 +75,9 @@ describe('TOC', () => {
 
   it('should have TOC nodes responding to section change', async () => {
     await openUrl('section/01-project/04-building')
-    await browser.waitFor('[class*=content___] [class*=toggleButton]')
-    await browser.click('[class*=content___] [class*=toggleButton]')
-    await browser.waitFor(500)
+    await browser.waitAndClick('[class*=content___] [class*=toggleButton]')
     await waitForSiderOpen()
-    await browser.click(
+    await browser.waitAndClick(
       '[class*=sectionAffix___] a[title*="2 Content elements"]'
     )
     await waitForHeader('2 Content elements')
@@ -92,22 +87,18 @@ describe('TOC', () => {
   it('should be toggleable using content button', async () => {
     await openUrl()
     await waitForSiderClosed()
-    await browser.click('[class*=content___] [class*=toggleButton]')
-    await browser.waitFor(500)
+    await browser.waitAndClick('[class*=content___] [class*=toggleButton]')
     await waitForSiderOpen()
-    await browser.click('[class*=content___] [class*=toggleButton]')
-    await browser.waitFor(500)
+    await browser.waitAndClick('[class*=content___] [class*=toggleButton]')
     await waitForSiderClosed()
   })
 
   it('should be closeable using sider button', async () => {
     await openUrl()
     await waitForSiderClosed()
-    await browser.click('[class*=content___] [class*=toggleButton]')
-    await browser.waitFor(500)
+    await browser.waitAndClick('[class*=content___] [class*=toggleButton]')
     await waitForSiderOpen()
-    await browser.click('.ant-layout-sider [class*=closeButton] button')
-    await browser.waitFor(500)
+    await browser.waitAndClick('.ant-layout-sider [class*=closeButton] button')
     await waitForSiderClosed()
   })
 })

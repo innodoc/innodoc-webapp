@@ -5,7 +5,7 @@ describe('Media query', () => {
     await openUrl('', { viewport: { width: 320, height: 600 } })
     await browser.assert.not.visible('.ant-drawer')
     await browser.click('[class*=mobileMenuButton]')
-    await browser.waitFor(500)
+    await browser.wait(500)
     await browser.assert.textContains('.ant-drawer', 'Menu')
     const mobileMenu = await browser.query('.ant-drawer ul[class*="nav___"]')
     await browser.assert.textContains(mobileMenu, 'About')
