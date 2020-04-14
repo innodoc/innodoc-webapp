@@ -30,7 +30,7 @@ describe('Account interactions', () => {
     await browser.clickText('Create account')
     await browser.waitFor('.ant-result')
     await browser.assert.textContains('.ant-result', 'Account created!')
-    await browser.waitFor(500)
+    await browser.wait(500)
   }
 
   const activate = async (email) => {
