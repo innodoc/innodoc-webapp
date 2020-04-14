@@ -12,15 +12,16 @@ const isCI = existsSync('/etc/alpine-release')
 
 class WendigoEnvironment extends NodeEnvironment {
   async setup() {
+    const defaultTimeout = isCI ? 30000 : 10000
+
     // Browser launch options
     const headless = process.env.PUPPETEER_HEADLESS !== 'false'
     const wendigoOpts = {
-      defaultTimeout: 10000,
+      defaultTimeout,
       incognito: true,
     }
     if (isCI) {
       wendigoOpts.args = ['--no-sandbox', '--disable-dev-shm-usage']
-      wendigoOpts.defaultTimeout = 30000
       wendigoOpts.executablePath = '/usr/bin/chromium-browser'
     }
     if (!headless) {
@@ -29,6 +30,7 @@ class WendigoEnvironment extends NodeEnvironment {
     }
 
     // Provide globals
+    this.global.DEFAULT_TIMEOUT = defaultTimeout
     this.global.getUrl = (rest = '') => `${process.env.APP_ROOT}${rest}`
     this.global.openUrl = async (urlFragment, opts) => {
       await this.global.browser.open(this.global.getUrl(urlFragment), {

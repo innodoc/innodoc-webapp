@@ -17,7 +17,7 @@ describe('Media query', () => {
         const { width } = window.getComputedStyle(document.querySelector(s))
         return width === '0px'
       },
-      2000,
+      DEFAULT_TIMEOUT,
       '.ant-drawer'
     )
   })
