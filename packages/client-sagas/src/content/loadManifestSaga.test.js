@@ -3,7 +3,6 @@ import * as matchers from 'redux-saga-test-plan/matchers'
 import { throwError } from 'redux-saga-test-plan/providers'
 import { select } from 'redux-saga/effects'
 
-import { actionTypes as uiActionTypes } from '@innodoc/client-store/src/actions/ui'
 import {
   actionTypes as contentActionTypes,
   loadManifestFailure,
