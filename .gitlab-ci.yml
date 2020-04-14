@@ -85,6 +85,10 @@ E2E tests:
   variables:
     <<: *docker-default-vars
     GIT_STRATEGY: fetch
+  retry:
+    max: 2
+    when:
+      - script_failure
 
 Push to GitLab registry (staging):
   <<: *docker-base
