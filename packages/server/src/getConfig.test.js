@@ -17,7 +17,8 @@ describe('getConfig', () => {
   beforeEach(() => {
     fs.existsSync.mockReset().mockReturnValue(true)
     Dotenv.config.mockClear()
-    process.env.APP_ROOT = 'http://localhost:8123/'
+    process.env.APP_PORT = '8000'
+    process.env.APP_ROOT = 'https://app.example.com/'
     process.env.CONTENT_ROOT = 'https://example.com/content/'
     process.env.JWT_SECRET = 'jwtsecret123!'
     process.env.MONGO_URL = 'mongodb://mongohost/coll'
@@ -47,13 +48,13 @@ describe('getConfig', () => {
 
   it('should return config', () => {
     expect(getConfig('/mock/root')).toEqual({
-      appRoot: 'http://localhost:8123/',
+      appRoot: 'https://app.example.com/',
       contentRoot: 'https://example.com/content/',
       jwtSecret: 'jwtsecret123!',
       mongoUrl: 'mongodb://mongohost/coll',
       nodeEnv: 'production',
       pagePathPrefix: 'custompage',
-      port: 8123,
+      port: 8000,
       sectionPathPrefix: 'customsection',
       smtp: {
         host: 'mail.example.com',

@@ -41,7 +41,7 @@ const getConfig = () => {
     mongoUrl: process.env.MONGO_URL,
     nodeEnv,
     pagePathPrefix: process.env.PAGE_PATH_PREFIX,
-    port: parseInt(new URL(appRoot).port, 10),
+    port: parseInt(process.env.APP_PORT, 10),
     sectionPathPrefix: process.env.SECTION_PATH_PREFIX,
     smtp: {
       host: process.env.SMTP_HOST,

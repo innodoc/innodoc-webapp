@@ -9,9 +9,11 @@ const usedPortAction = 'error'
 const launchTimeout = 60000
 
 // application server
-
 const serverEnvVars = [
   // force configuration in case .env is customized
+  'APP_ROOT=http://localhost:6123/',
+  'APP_PORT=6123',
+  'JWT_SECRET=jwtsecret123',
   'PAGE_PATH_PREFIX=page',
   'SECTION_PATH_PREFIX=section',
   'SMTP_SKIP_MAILS=yes',
@@ -31,7 +33,7 @@ const servers = [
   {
     command: serverCmd,
     launchTimeout,
-    port: parseInt(new URL(process.env.APP_ROOT).port, 10),
+    port: parseInt(process.env.APP_PORT, 10),
     protocol: 'http',
     usedPortAction,
   },
