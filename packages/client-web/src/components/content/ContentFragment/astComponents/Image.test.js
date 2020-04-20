@@ -36,4 +36,10 @@ describe('<Image />', () => {
     const wrapper = shallow(<Image data={getData('test.png', null)} />)
     expect(wrapper.find('img').prop('alt')).toBe('foo content')
   })
+
+  it('should not render with invalid data', () => {
+    const data = [['foo-caption', [], null], [{ t: 'Str', c: 'foo content' }]]
+    const wrapper = shallow(<Image data={data} />)
+    expect(wrapper.isEmptyRender()).toBe(true)
+  })
 })

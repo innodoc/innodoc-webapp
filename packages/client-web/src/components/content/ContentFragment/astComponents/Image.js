@@ -7,12 +7,15 @@ import { astToString } from '@innodoc/client-misc/src/util'
 
 const Image = ({ data }) => {
   const { staticRoot } = useSelector(appSelectors.getApp)
-  const [[id], content, [src, alt]] = data
 
-  const imgSrc = /^https?:\/\//i.test(src) ? src : `${staticRoot}${src}`
-  const imgAlt = alt || astToString(content)
-
-  return <img id={id} src={imgSrc} alt={imgAlt} />
+  try {
+    const [[id], content, [src, alt]] = data
+    const imgSrc = /^https?:\/\//i.test(src) ? src : `${staticRoot}${src}`
+    const imgAlt = alt || astToString(content)
+    return <img id={id} src={imgSrc} alt={imgAlt} />
+  } catch (err) {
+    return null
+  }
 }
 
 Image.propTypes = {
