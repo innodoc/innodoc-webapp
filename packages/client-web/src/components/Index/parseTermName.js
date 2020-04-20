@@ -24,7 +24,13 @@ const parseTermName = (term) => {
       if (match) {
         // Math token
         const [, content] = match
-        name.push(<MathJax.Span key={index} texCode={content} />)
+        name.push(
+          <MathJax.MathJaxNode
+            displayType="inline"
+            key={index}
+            texCode={content}
+          />
+        )
         remain = remain.slice(content.length + 2)
         index += 1
       } else {

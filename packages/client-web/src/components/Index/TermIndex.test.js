@@ -89,7 +89,8 @@ describe('<TermIndex />', () => {
         wrapper.wrap(title1.props.children[0].props.children).text()
       ).toMatch('Term 2 ')
       const mathJaxSpan = wrapper.wrap(title1.props.children[1])
-      expect(mathJaxSpan.type()).toBe(MathJax.Span)
+      expect(mathJaxSpan.type()).toBe(MathJax.MathJaxNode)
+      expect(mathJaxSpan.prop('displayType')).toBe('inline')
       expect(mathJaxSpan.prop('texCode')).toBe('x^2')
     })
 

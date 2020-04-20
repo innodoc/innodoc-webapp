@@ -22,9 +22,10 @@ const InputPopover = ({ children, messages, userInput }) => {
     <>
       <div className={css.mathJaxWrapper}>
         <MathJax.Provider>
-          <MathJax.Div
+          <MathJax.MathJaxNode
             classNameHide={fadeInCss.hide}
             classNameShow={fadeInCss.show}
+            displayType="display"
             texCode={userInput}
           />
         </MathJax.Provider>

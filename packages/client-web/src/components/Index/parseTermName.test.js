@@ -10,19 +10,19 @@ const wrap = (termName) => {
 }
 
 const goodTerms = [
-  ['$f(x)=x^2$', [[MathJax.Span, 'f(x)=x^2']]],
+  ['$f(x)=x^2$', [[MathJax.MathJaxNode, 'f(x)=x^2']]],
   ['Foo', [['span', 'Foo']]],
   [
     'Foo $x^2$',
     [
       ['span', 'Foo '],
-      [MathJax.Span, 'x^2'],
+      [MathJax.MathJaxNode, 'x^2'],
     ],
   ],
   [
     '$x^2$ Foo',
     [
-      [MathJax.Span, 'x^2'],
+      [MathJax.MathJaxNode, 'x^2'],
       ['span', ' Foo'],
     ],
   ],
@@ -30,23 +30,23 @@ const goodTerms = [
     'Foo $x^2$ Bar',
     [
       ['span', 'Foo '],
-      [MathJax.Span, 'x^2'],
+      [MathJax.MathJaxNode, 'x^2'],
       ['span', ' Bar'],
     ],
   ],
   [
     '$x^2$$x$',
     [
-      [MathJax.Span, 'x^2'],
-      [MathJax.Span, 'x'],
+      [MathJax.MathJaxNode, 'x^2'],
+      [MathJax.MathJaxNode, 'x'],
     ],
   ],
   [
     '$x^2$ $x$',
     [
-      [MathJax.Span, 'x^2'],
+      [MathJax.MathJaxNode, 'x^2'],
       ['span', ' '],
-      [MathJax.Span, 'x'],
+      [MathJax.MathJaxNode, 'x'],
     ],
   ],
   ['10 \\$', [['span', '10 $']]],
@@ -54,11 +54,11 @@ const goodTerms = [
   [
     '$10$ \\$',
     [
-      [MathJax.Span, '10'],
+      [MathJax.MathJaxNode, '10'],
       ['span', ' $'],
     ],
   ],
-  ['$$', [[MathJax.Span, '']]],
+  ['$$', [[MathJax.MathJaxNode, '']]],
 ]
 
 const badTerms = [
@@ -77,9 +77,12 @@ describe('parseTermName', () => {
       wrapper.forEach((token, i) => {
         const [type, content] = result[i]
         expect(token.type()).toBe(type)
-        expect(type === 'span' ? token.text() : token.prop('texCode')).toBe(
-          content
-        )
+        if (type === 'span') {
+          expect(token.text()).toBe(content)
+        } else {
+          expect(token.prop('displayType')).toBe('inline')
+          expect(token.prop('texCode')).toBe(content)
+        }
       })
     })
   })

@@ -4,9 +4,12 @@ import MathJax from '@innodoc/react-mathjax-node'
 
 const Math = ({ data }) => {
   const [{ t: mathType }, texCode] = data
-  const MathJaxComponent =
-    mathType === 'InlineMath' ? MathJax.Span : MathJax.Div
-  return <MathJaxComponent texCode={texCode} />
+  return (
+    <MathJax.MathJaxNode
+      displayType={mathType === 'InlineMath' ? 'inline' : 'display'}
+      texCode={texCode}
+    />
+  )
 }
 
 Math.propTypes = {
