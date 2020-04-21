@@ -1,10 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { InfoCircleOutlined, CopyrightOutlined } from '@ant-design/icons'
+import {
+  CopyrightOutlined,
+  FileExclamationOutlined,
+  InfoCircleOutlined,
+  TeamOutlined,
+} from '@ant-design/icons'
 
 const iconTypeComponentMap = {
-  'info-circle': InfoCircleOutlined,
   copyright: CopyrightOutlined,
+  'info-circle': InfoCircleOutlined,
+  liability: FileExclamationOutlined,
+  team: TeamOutlined,
 }
 
 const PageIcon = ({ type }) => {
