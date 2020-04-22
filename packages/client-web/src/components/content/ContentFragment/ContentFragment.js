@@ -14,6 +14,7 @@ import {
   Div,
   Emph,
   Header,
+  HorizontalRule,
   Image,
   LineBreak,
   Link,
@@ -40,6 +41,7 @@ const contentTypeComponentMap = {
   Div,
   Emph,
   Header,
+  HorizontalRule,
   Image,
   LineBreak,
   Link,
@@ -52,9 +54,9 @@ const contentTypeComponentMap = {
   Space,
   Span,
   Str,
+  Strikeout,
   Strong,
   Table,
-  Strikeout,
 }
 
 const mapContentTypeToComponent = (name) => {
