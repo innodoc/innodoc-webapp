@@ -12,6 +12,7 @@ import TestCard from '../cards/TestCard'
 import QuestionGroup from '../questions/QuestionGroup'
 import VerifyInfoButton from '../questions/VerifyInfoButton'
 import Figure from './Figure'
+import Row from './Row'
 import UnknownType from './UnknownType'
 
 const mapClassNameToComponent = getClassNameToComponentMapper({
@@ -21,6 +22,7 @@ const mapClassNameToComponent = getClassNameToComponentMapper({
   figure: Figure,
   hint: Hint,
   'hint-text': InputHint,
+  row: Row,
   test: TestCard,
   'question-group': QuestionGroup, // TODO: remove?
   'verify-input-button': VerifyInfoButton,
