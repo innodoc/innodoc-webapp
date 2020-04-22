@@ -48,6 +48,10 @@
     "menu": "Menü",
     "searchPlaceholder": "Suche…"
   },
+  "index": {
+    "emptyText": "Keine Stichwörter gefunden!",
+    "searchPlaceholder": "Stichwort suchen…"
+  },
   "languages": {
     "de": "Deutsch",
     "en": "English"

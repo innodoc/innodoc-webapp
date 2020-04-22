@@ -2,6 +2,7 @@
 module.exports = [
   '@innodoc/react-mathjax-node',
   'antd',
+  'lodash-es',
   'css-animation',
   'rc-animate',
   'rc-calendar',

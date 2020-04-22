@@ -57,19 +57,25 @@ const makeMockProvider = (typesetDone) => ({ children }) => {
 
 describe('<TermIndex />', () => {
   describe.each([true, false])('render (typesetDone=%s)', (typesetDone) => {
-    const MockProvider = makeMockProvider(typesetDone)
-    const wrapper = mount(
-      <MockProvider>
-        <TermIndex />
-      </MockProvider>
-    )
-    const listItems = wrapper.find(List.Item)
+    let MockProvider
+    let wrapper
+    let listItems
+
+    beforeEach(() => {
+      MockProvider = makeMockProvider(typesetDone)
+      wrapper = mount(
+        <MockProvider>
+          <TermIndex />
+        </MockProvider>
+      )
+      listItems = wrapper.find(List.Item)
+    })
 
     it('should have correct CSS class', () => {
       expect(
         wrapper
           .find('div')
-          .first()
+          .at(1)
           .hasClass(typesetDone ? fadeInCss.show : fadeInCss.hide)
       ).toBe(true)
     })
@@ -112,6 +118,23 @@ describe('<TermIndex />', () => {
       expect(sectionLinks.at(4).prop('contentId')).toBe(
         'section-3#index-term-term2-0'
       )
+    })
+  })
+
+  describe('search', () => {
+    it('should filter list', async () => {
+      const MockProvider = makeMockProvider(true)
+      const wrapper = mount(
+        <MockProvider>
+          <TermIndex />
+        </MockProvider>
+      )
+      const searchInput = wrapper.find('input')
+      searchInput.instance().value = 'term 1'
+      searchInput.simulate('change')
+      const listItems = wrapper.find('li')
+      expect(listItems.at(0).prop('style')).toBeFalsy()
+      expect(listItems.at(1).prop('style').display).toBe('none')
     })
   })
 })
