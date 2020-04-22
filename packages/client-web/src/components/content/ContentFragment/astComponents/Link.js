@@ -8,10 +8,18 @@ import Video from './Video'
 
 const Link = ({ data }) => {
   const [[, classes], content, [href, title]] = data
-  const contentAvailable = content && content.length
 
   if (classes.includes('video')) {
     return <Video data={data} />
+  }
+
+  // mailto link
+  if (href.startsWith('mailto:')) {
+    return (
+      <a href={href} title={title}>
+        <ContentFragment content={content} />
+      </a>
+    )
   }
 
   // External link
@@ -36,7 +44,7 @@ const Link = ({ data }) => {
   }
 
   // Internal link
-  return contentAvailable ? (
+  return content && content.length ? (
     <InternalLink href={href}>
       <a>
         <ContentFragment content={content} />

@@ -68,6 +68,21 @@ describe('<Link />', () => {
     })
   })
 
+  it('should render mailto link', () => {
+    const content = [{ t: 'Str', c: 'Foo bar' }]
+    const data = [
+      [null, [], null],
+      content,
+      ['mailto:alice@example.com', 'alice@example.com'],
+    ]
+    const wrapper = shallow(<Link data={data} />)
+    expect(wrapper.exists(InternalLink)).toBe(false)
+    const a = wrapper.find('a')
+    expect(a.prop('href')).toBe('mailto:alice@example.com')
+    expect(a.prop('title')).toBe('alice@example.com')
+    expect(wrapper.find(ContentFragment).prop('content')).toBe(content)
+  })
+
   it('should render video component', () => {
     const data = [
       [null, ['video', 'video-youtube'], null],
