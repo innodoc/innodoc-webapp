@@ -12,20 +12,33 @@ import TermIndex from './TermIndex'
 const mockTerms = [
   {
     id: 'term1',
-    language: 'en',
     locations: [
-      'section-1/subsection-1#index-term-term1-0',
-      'section-1/subsection-1#index-term-term1-1',
-      'section-2#index-term-term1-0',
+      {
+        id: 'en/section-1/subsection-1#index-term-term1-0',
+        contentId: 'section-1/subsection-1#index-term-term1-0',
+      },
+      {
+        id: 'en/section-1/subsection-1#index-term-term1-1',
+        contentId: 'section-1/subsection-1#index-term-term1-1',
+      },
+      {
+        id: 'en/section-2#index-term-term1-0',
+        contentId: 'section-2#index-term-term1-0',
+      },
     ],
     name: 'Term 1',
   },
   {
     id: 'term2',
-    language: 'en',
     locations: [
-      'section-1/subsection-1#index-term-term2-0',
-      'section-3#index-term-term2-0',
+      {
+        id: 'en/section-1/subsection-1#index-term-term2-0',
+        contentId: 'section-1/subsection-1#index-term-term2-0',
+      },
+      {
+        id: 'en/section-3#index-term-term2-0',
+        contentId: 'section-3#index-term-term2-0',
+      },
     ],
     name: 'Term 2 $x^2$',
   },
@@ -100,7 +113,7 @@ describe('<TermIndex />', () => {
       expect(mathJaxSpan.prop('texCode')).toBe('x^2')
     })
 
-    it('should have secion links', () => {
+    it('should have section links', () => {
       const sectionLinks = wrapper.find(SectionLink)
       expect(sectionLinks).toHaveLength(5)
       expect(sectionLinks.at(0).prop('contentId')).toBe(

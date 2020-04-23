@@ -6,14 +6,16 @@ import orm from '../orm'
 import { selectId } from '.'
 
 const getIndexTerms = createSelector(orm, selectId, (session, language) =>
-  session.IndexTerm.all()
-    .filter((term) => term.language === language)
+  session.IndexTerm.filter((term) => term.name[language])
     .toModelArray()
     .map((term) => {
-      const { ref } = term
       return {
-        ...ref,
-        locations: term.locations.toRefArray().map((location) => location.id),
+        id: term.ref.id,
+        name: term.ref.name[language],
+        locations: term.locations
+          .filter({ language })
+          .toModelArray()
+          .map((loc) => ({ id: loc.id, contentId: loc.getContentId() })),
       }
     })
     .sort(intSortArray(language))

@@ -10,7 +10,6 @@ export default class IndexTerm extends Model {
   static get fields() {
     return {
       id: attr(),
-      language: attr(),
       name: attr(),
     }
   }
@@ -24,13 +23,25 @@ export default class IndexTerm extends Model {
             const indexTermLang = indexTerms[language]
             Object.keys(indexTermLang).forEach((indexTermId) => {
               const [name, locations] = indexTermLang[indexTermId]
-              IndexTermModel.upsert({ id: indexTermId, language, name })
+              const indexTerm = IndexTermModel.withId(indexTermId)
+              if (indexTerm) {
+                indexTerm.set('name', {
+                  ...indexTerm.name,
+                  [language]: name,
+                })
+              } else {
+                IndexTermModel.upsert({
+                  id: indexTermId,
+                  name: { [language]: name },
+                })
+              }
               if (locations) {
                 locations.forEach(([sectionId, anchorId]) => {
                   session.IndexTermLocation.upsert({
-                    id: `${sectionId}#index-term-${anchorId}`,
+                    id: `${language}/${sectionId}#index-term-${anchorId}`,
                     anchorId,
                     indexTermId,
+                    language,
                     sectionId,
                   })
                 })

@@ -10,7 +10,12 @@ export default class IndexTermLocation extends Model {
       id: attr(),
       anchorId: attr(),
       indexTermId: fk('IndexTerm', 'locations'),
+      language: attr(),
       sectionId: fk('Section', 'indexTermLocations'),
     }
+  }
+
+  getContentId() {
+    return `${this.sectionId.id}#index-term-${this.anchorId}`
   }
 }

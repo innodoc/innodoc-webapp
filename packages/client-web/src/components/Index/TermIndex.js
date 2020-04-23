@@ -17,9 +17,9 @@ import parseTermName from './parseTermName'
 
 const renderTerm = ([term, show]) => {
   const title = <strong>{parseTermName(term.name)}</strong>
-  const links = term.locations.map((id) => (
+  const links = term.locations.map(({ id, contentId }) => (
     <Tag key={id}>
-      <SectionLink contentId={id} />
+      <SectionLink contentId={contentId} />
     </Tag>
   ))
   const style = show ? null : { display: 'none' }
