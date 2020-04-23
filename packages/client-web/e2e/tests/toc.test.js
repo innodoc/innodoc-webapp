@@ -81,7 +81,7 @@ describe('TOC', () => {
       '[class*=sectionAffix___] a[title*="2 Content elements"]'
     )
     await waitForHeader('2 Content elements')
-    await expectSwitcherAmount('', 16)
+    await expectSwitcherAmount('', 17)
   })
 
   it('should be toggleable using content button', async () => {
