@@ -16,4 +16,28 @@ describe('IndexPage', () => {
     const [link2] = await browser.findByText(list, '1.2.2 Content files')
     expect(await browser.tag(link2)).toBe('a')
   })
+
+  it('should filter term list', async () => {
+    await openUrl('index-page')
+    const allCount = (
+      await browser.queryAll('div[class^=content___] li.ant-list-item')
+    ).length
+    await browser.waitAndType(
+      'div[class^=content___] input',
+      'table of contents'
+    )
+    await browser.wait(500)
+    const entries = await browser.queryAll(
+      'div[class^=content___] li.ant-list-item'
+    )
+    const entriesVisible = await Promise.all(
+      entries.map((entry) =>
+        browser.evaluate((el) => WendigoUtils.isVisible(el), entry)
+      )
+    )
+    const visible = entriesVisible.filter((v) => v)
+    const notVisible = entriesVisible.filter((v) => !v)
+    expect(visible).toHaveLength(1)
+    expect(notVisible).toHaveLength(allCount - 1)
+  })
 })

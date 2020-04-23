@@ -8,7 +8,8 @@
     "getUrl": true,
     "hoverNavItem": true,
     "openUrl": true,
-    "resetBrowser": true
+    "resetBrowser": true,
+    "WendigoUtils": true
   },
   "rules": {
     "import/no-extraneous-dependencies": 0
