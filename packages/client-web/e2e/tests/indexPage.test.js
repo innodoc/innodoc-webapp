@@ -1,7 +1,7 @@
 beforeEach(resetBrowser)
 
 describe('IndexPage', () => {
-  it('shows an index and index terms', async () => {
+  it('should show an index and index terms', async () => {
     await openUrl('index-page')
     const content = await browser.query('div[class^=content___]')
     const [h1] = await browser.findByText(content, 'Index')
@@ -39,5 +39,18 @@ describe('IndexPage', () => {
     const notVisible = entriesVisible.filter((v) => !v)
     expect(visible).toHaveLength(1)
     expect(notVisible).toHaveLength(allCount - 1)
+  })
+
+  it('should should have same term count for each language', async () => {
+    await openUrl('index-page', { headers: { 'Accept-Language': 'en' } })
+    const enCount = (
+      await browser.queryAll('div[class^=content___] li.ant-list-item')
+    ).length
+    await resetBrowser()
+    await openUrl('index-page', { headers: { 'Accept-Language': 'de' } })
+    const deCount = (
+      await browser.queryAll('div[class^=content___] li.ant-list-item')
+    ).length
+    expect(enCount).toBe(deCount)
   })
 })
