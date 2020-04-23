@@ -3,7 +3,7 @@ beforeEach(resetBrowser)
 describe('Basic layout', () => {
   it('should have a page title', async () => {
     await openUrl()
-    expect(await browser.title()).toContain('innoDoc')
+    expect(await browser.title()).toBe('About this course · innoDoc')
   })
 
   it('should have content', async () => {

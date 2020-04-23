@@ -17,6 +17,7 @@ describe.each([
     )
     const [req] = await browser.requests.all()
     expect(req.response().status()).toBe(404)
+    expect(await browser.title()).toBe('404 Not found · innoDoc')
   })
 })
 
@@ -28,4 +29,5 @@ it('should render "404" client-side', async () => {
     '[class*=content___] .ant-result',
     'This page could not be found'
   )
+  expect(await browser.title()).toBe('404 Not found · innoDoc')
 })

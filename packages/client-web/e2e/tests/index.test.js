@@ -10,5 +10,6 @@ describe('Index', () => {
     expect(redirectResponse.status()).toBe(301)
     expect(redirectResponse.headers().location).toBe('/page/about')
     expect(await browser.text('h1')).toContain('About this course')
+    expect(await browser.title()).toBe('About this course · innoDoc')
   })
 })

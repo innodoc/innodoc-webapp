@@ -3,6 +3,7 @@ beforeEach(resetBrowser)
 describe('IndexPage', () => {
   it('should show an index and index terms', async () => {
     await openUrl('index-page')
+    expect(await browser.title()).toBe('Index · innoDoc')
     const content = await browser.query('div[class^=content___]')
     const [h1] = await browser.findByText(content, 'Index')
     expect(await browser.tag(h1)).toBe('h1')

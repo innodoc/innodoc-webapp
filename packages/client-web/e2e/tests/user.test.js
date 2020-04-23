@@ -27,6 +27,7 @@ describe('Account interactions', () => {
     await browser.waitAndType('input#registration-form_email', email)
     await browser.type('input#registration-form_password', pwd)
     await browser.type('input#registration-form_confirm-password', pwd)
+    expect(await browser.title()).toBe('Create account · innoDoc')
     await browser.clickText('Create account')
     await browser.waitFor('.ant-result')
     await browser.assert.textContains('.ant-result', 'Account created!')
@@ -39,12 +40,14 @@ describe('Account interactions', () => {
     await openUrl(`verify-user/${user.emailVerificationToken}`)
     await browser.waitFor('.ant-result')
     await browser.assert.textContains('.ant-result', 'Account activated')
+    expect(await browser.title()).toBe('Account activated · innoDoc')
   }
 
   const login = async (email, _pwd) => {
     await browser.waitAndClick('[class*=nav___] a[href="/login"]')
     await browser.waitAndType('input#login-form_email', email)
     await browser.type('input#login-form_password', _pwd)
+    expect(await browser.title()).toBe('Login · innoDoc')
     await browser.clickText('Sign-in')
     await browser.waitFor('.ant-result')
     await browser.assert.textContains('.ant-result', 'Successfully logged in.')
@@ -171,6 +174,7 @@ describe('Account interactions', () => {
     await browser.waitAndType('input#change-password-form_old-password', pwd)
     await browser.type('input#change-password-form_password', newPwd)
     await browser.type('input#change-password-form_confirm-password', newPwd)
+    expect(await browser.title()).toBe('Change password · innoDoc')
     const submitBtn = await browser.query(
       'form#change-password-form button[type=submit]'
     )
@@ -198,6 +202,7 @@ describe('Account interactions', () => {
     )
     await browser.click(pwdResetLink)
     await browser.waitAndType('input#request-password-reset-form_email', email)
+    expect(await browser.title()).toBe('Reset password · innoDoc')
     await browser.clickText('Request')
     await browser.waitFor('.ant-alert')
     await browser.assert.textContains('.ant-alert', 'Password reset mail sent.')

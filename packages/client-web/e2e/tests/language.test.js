@@ -8,6 +8,7 @@ describe('Content translation', () => {
     'should load content in language (%s)',
     async (lang, tocText, linkText) => {
       await openUrl('toc', { headers: { 'Accept-Language': lang } })
+      expect(await browser.title()).toBe(`${tocText} · innoDoc`)
       await browser.assert.text('h1', tocText)
       await browser.assert.text('a', linkText)
     }
@@ -15,6 +16,7 @@ describe('Content translation', () => {
 
   it('should switch language w/o page reload', async () => {
     await openUrl('section/01-project')
+    expect(await browser.title()).toBe('1 Project structure · innoDoc')
     await browser.assert.text('h1', '1 Project structure')
     await browser.assert.textContains(
       'p',
@@ -34,6 +36,7 @@ describe('Content translation', () => {
           null
         ).singleNodeValue
     )
+    expect(await browser.title()).toBe('1 Projektstruktur · innoDoc')
   })
 })
 
