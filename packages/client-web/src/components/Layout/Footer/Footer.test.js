@@ -96,7 +96,7 @@ describe('<Footer />', () => {
     expect(otherLink2.prop('active')).toBe(false)
     expect(otherLink2.prop('icon')).toEqual(<BarsOutlined />)
     expect(otherLink2.prop('renderLink')().props.href).toBe('/index-page')
-    expect(otherLink2.prop('title')).toBe('common.index')
+    expect(otherLink2.prop('title')).toBe('index.title')
   })
 
   it.each(['A', 'B'])('should render custom footer %s', (footer) => {

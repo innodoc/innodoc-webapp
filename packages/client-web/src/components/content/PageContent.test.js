@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import PageTitle from '../PageTitle'
 import PageContent from './PageContent'
 import ContentFragment from './ContentFragment'
 
@@ -18,5 +19,6 @@ describe('<PageContent />', () => {
     const wrapper = shallow(<PageContent />)
     expect(wrapper.find('h1').text()).toEqual('Foo page')
     expect(wrapper.find(ContentFragment).prop('content')).toBe(mockContent)
+    expect(wrapper.find(PageTitle).prop('children')).toBe('Foo page')
   })
 })

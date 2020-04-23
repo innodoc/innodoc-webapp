@@ -42,7 +42,7 @@ const Footer = () => {
 
   const otherPageItems = [
     ['/toc', 'common.toc', ReadOutlined],
-    ['/index-page', 'common.index', BarsOutlined],
+    ['/index-page', 'index.title', BarsOutlined],
   ].map(([href, translateKey, Icon]) => (
     <FooterLink
       active={router.asPath === href}

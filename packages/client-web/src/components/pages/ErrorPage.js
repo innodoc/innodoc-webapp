@@ -5,15 +5,19 @@ import { Button, Result } from 'antd'
 import { HomeOutlined } from '@ant-design/icons'
 
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
-
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
-import { InternalLink } from '../content/links'
 
+import { InternalLink } from '../content/links'
 import Layout from '../Layout'
+import PageTitle from '../PageTitle'
 
 const ErrorPage = ({ statusCode }) => {
   const { t } = useTranslation()
   const course = useSelector(courseSelectors.getCurrentCourse)
+  const title = t([
+    `errorPage.${statusCode}.title`,
+    'errorPage.unspecific.title',
+  ])
 
   const resultExtra = course ? (
     <InternalLink href={course.homeLink}>
@@ -24,20 +28,20 @@ const ErrorPage = ({ statusCode }) => {
   ) : null
 
   return (
-    <Layout>
-      <Result
-        status={statusCode.toString()}
-        title={t([
-          `errorPage.${statusCode}.title`,
-          'errorPage.unspecific.title',
-        ])}
-        subTitle={t([
-          `errorPage.${statusCode}.msg`,
-          'errorPage.unspecific.msg',
-        ])}
-        extra={resultExtra}
-      />
-    </Layout>
+    <>
+      <PageTitle>{title}</PageTitle>
+      <Layout>
+        <Result
+          status={statusCode.toString()}
+          title={title}
+          subTitle={t([
+            `errorPage.${statusCode}.msg`,
+            'errorPage.unspecific.msg',
+          ])}
+          extra={resultExtra}
+        />
+      </Layout>
+    </>
   )
 }
 

@@ -1,10 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import IndexPage from './IndexPage'
 import Layout from '../Layout'
 import Index from '../Index'
+import PageTitle from '../PageTitle'
 import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
+import IndexPage from './IndexPage'
 
 describe('<IndexPage />', () => {
   it('should render', () => {
@@ -14,5 +15,6 @@ describe('<IndexPage />', () => {
     expect(layout.prop('disableSidebar')).toBe(false)
     expect(layout.find(Index).exists()).toBe(true)
     expect(wrapper.exists(SidebarToggleButton)).toBe(true)
+    expect(wrapper.find(PageTitle).prop('children')).toBe('index.title')
   })
 })

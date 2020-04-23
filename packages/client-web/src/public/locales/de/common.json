@@ -1,7 +1,6 @@
 {
   "common": {
     "hideToc": "Inhaltsverzeichnis schließen",
-    "index": "Stichwortverzeichnis",
     "ok": "OK",
     "showToc": "Inhaltsverzeichnis öffnen",
     "toc": "Inhaltsverzeichnis"
@@ -50,7 +49,8 @@
   },
   "index": {
     "emptyText": "Keine Stichwörter gefunden!",
-    "searchPlaceholder": "Stichwort suchen…"
+    "searchPlaceholder": "Stichwort suchen…",
+    "title": "Stichwortverzeichnis"
   },
   "languages": {
     "de": "Deutsch",

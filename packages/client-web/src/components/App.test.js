@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { Provider } from 'react-redux'
-import Head from 'next/head'
 import Router from 'next/router'
 
 import {
@@ -15,6 +14,7 @@ import {
 } from '@innodoc/client-store/src/actions/user'
 
 import { InnoDocApp, waitForCourse } from './App'
+import PageTitle from './PageTitle'
 
 jest.mock('next/router', () => ({
   events: { on: jest.fn() },
@@ -58,7 +58,7 @@ describe('<InnoDocApp />', () => {
           router={{}}
         />
       )
-      expect(wrapper.find(Head).exists()).toBe(true)
+      expect(wrapper.find(PageTitle).exists()).toBe(true)
       expect(wrapper.find(Provider).exists()).toBe(true)
       expect(wrapper.find(DummyComponent).exists()).toBe(true)
     })

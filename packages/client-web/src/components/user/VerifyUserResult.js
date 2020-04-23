@@ -9,10 +9,14 @@ import { verifyUser } from '@innodoc/client-misc/src/api'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
+import PageTitle from '../PageTitle'
+
 const VerifyUserResult = ({ token }) => {
   const { appRoot, csrfToken } = useSelector(appSelectors.getApp)
   const [status, setStatus] = useState('pending')
   const { t } = useTranslation()
+  const title = t(`user.verification.${status}.title`)
+
   useEffect(() => {
     verifyUser(appRoot, csrfToken, token)
       .then(() => setStatus('success'))
@@ -31,13 +35,16 @@ const VerifyUserResult = ({ token }) => {
   const icon = status === 'pending' ? <LoadingOutlined /> : null
 
   return (
-    <Result
-      extra={extra}
-      icon={icon}
-      status={status !== 'pending' ? status : 'info'}
-      subTitle={t(`user.verification.${status}.subTitle`)}
-      title={t(`user.verification.${status}.title`)}
-    />
+    <>
+      <PageTitle>{title}</PageTitle>
+      <Result
+        extra={extra}
+        icon={icon}
+        status={status !== 'pending' ? status : 'info'}
+        subTitle={t(`user.verification.${status}.subTitle`)}
+        title={title}
+      />
+    </>
   )
 }
 

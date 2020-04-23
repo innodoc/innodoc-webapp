@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 
 import TocPage from './TocPage'
 import Layout from '../Layout'
+import PageTitle from '../PageTitle'
 import Toc from '../Toc'
 
 describe('<TocPage />', () => {
@@ -14,5 +15,6 @@ describe('<TocPage />', () => {
     const toc = layout.find(Toc)
     expect(toc.exists()).toBe(true)
     expect(toc.prop('expandAll')).toBe(true)
+    expect(wrapper.find(PageTitle).prop('children')).toBe('common.toc')
   })
 })

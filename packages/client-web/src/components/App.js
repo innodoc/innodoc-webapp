@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect, Provider } from 'react-redux'
-import Head from 'next/head'
 import App from 'next/app'
 import Router from 'next/router'
 import withRedux from 'next-redux-wrapper'
@@ -23,6 +22,8 @@ import {
 } from '@innodoc/client-store/src/actions/content'
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
 import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
+
+import PageTitle from './PageTitle'
 
 const DEFAULT_MATHJAX_FONT_URL = `${
   process.browser ? window.location.origin : ''
@@ -140,20 +141,17 @@ class InnoDocApp extends App {
   render() {
     const { Component, pageProps, store } = this.props
     const { mathJaxOptions, ...pagePropsRest } = pageProps
+
     return (
-      <>
-        <Head>
-          <title key="title">innoDoc web app</title>
-        </Head>
-        <Provider store={store}>
-          <MathJax.ConfigProvider options={mathJaxOptions}>
-            <Component
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...pagePropsRest}
-            />
-          </MathJax.ConfigProvider>
-        </Provider>
-      </>
+      <Provider store={store}>
+        <PageTitle />
+        <MathJax.ConfigProvider options={mathJaxOptions}>
+          <Component
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...pagePropsRest}
+          />
+        </MathJax.ConfigProvider>
+      </Provider>
     )
   }
 }
@@ -163,6 +161,10 @@ const nextReduxWrapperDebug =
   process.env.NEXT_REDUX_WRAPPER_DEBUG === 'true'
 const withReduxConfig = { debug: nextReduxWrapperDebug }
 
+const mapDispatchToProps = {
+  dispatchRouteChangeStart: routeChangeStart,
+}
+
 export { InnoDocApp, waitForCourse } // for testing
 export default withRedux(
   makeMakeStore(rootSaga),
@@ -170,9 +172,7 @@ export default withRedux(
 )(
   appWithTranslation(
     withReduxSaga(
-      connect(null, { dispatchRouteChangeStart: routeChangeStart })(
-        withServerContext(InnoDocApp)
-      )
+      connect(null, mapDispatchToProps)(withServerContext(InnoDocApp))
     )
   )
 )

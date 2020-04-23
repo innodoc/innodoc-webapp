@@ -3,8 +3,9 @@ import React from 'react'
 import pageSelectors from '@innodoc/client-store/src/selectors/page'
 
 import useContentPane from '../../hooks/useContentPane'
-import ContentFragment from './ContentFragment'
+import PageTitle from '../PageTitle'
 import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
+import ContentFragment from './ContentFragment'
 import css from './style.sss'
 
 const PageContent = () => {
@@ -12,13 +13,16 @@ const PageContent = () => {
     pageSelectors.getCurrentPage
   )
   return (
-    <div className={fadeInClassName} id="content">
-      <div className={css.sidebarToggle}>
-        <SidebarToggleButton />
+    <>
+      <PageTitle>{title}</PageTitle>
+      <div className={fadeInClassName} id="content">
+        <div className={css.sidebarToggle}>
+          <SidebarToggleButton />
+        </div>
+        <h1 className={css.header}>{title}</h1>
+        <ContentFragment content={content} />
       </div>
-      <h1 className={css.header}>{title}</h1>
-      <ContentFragment content={content} />
-    </div>
+    </>
   )
 }
 

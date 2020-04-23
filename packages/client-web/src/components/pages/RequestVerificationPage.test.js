@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 
 import RequestVerificationPage from './RequestVerificationPage'
 import Layout from '../Layout'
+import PageTitle from '../PageTitle'
 import RequestVerificationForm from '../user/RequestVerificationForm'
 
 describe('<RequestVerificationPage />', () => {
@@ -12,5 +13,8 @@ describe('<RequestVerificationPage />', () => {
     expect(layout.exists()).toBe(true)
     expect(layout.prop('disableSidebar')).toBe(true)
     expect(layout.find(RequestVerificationForm).exists()).toBe(true)
+    expect(wrapper.find(PageTitle).prop('children')).toBe(
+      'user.requestVerification.title'
+    )
   })
 })

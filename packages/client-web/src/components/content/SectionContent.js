@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import useContentPane from '../../hooks/useContentPane'
-
+import PageTitle from '../PageTitle'
 import css from './style.sss'
 import ContentFragment from './ContentFragment'
 import ContentAffix from './ContentAffix'
@@ -23,6 +23,7 @@ const Content = () => {
 
   return (
     <>
+      <PageTitle>{title}</PageTitle>
       <ContentAffix />
       <div className={fadeInClassName} id="content">
         <h1 className={css.header}>{title}</h1>

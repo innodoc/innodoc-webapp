@@ -4,6 +4,7 @@ import { Button, Result } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
 import { verifyUser } from '@innodoc/client-misc/src/api'
+import PageTitle from '../PageTitle'
 import VerifyUserResult from './VerifyUserResult'
 
 jest.mock('react-redux', () => ({
@@ -17,6 +18,8 @@ jest.mock('@innodoc/client-misc/src/api', () => ({
   verifyUser: jest.fn(),
 }))
 
+jest.mock('../PageTitle', () => () => null)
+
 describe('<VerifyUserResult />', () => {
   it('should render', () => {
     const wrapper = shallow(<VerifyUserResult token="123token" />)
@@ -24,10 +27,13 @@ describe('<VerifyUserResult />', () => {
     expect(result.prop('extra')).toBeNull()
     expect(result.prop('icon')).toEqual(<LoadingOutlined />)
     expect(result.prop('status')).toEqual('info')
+    expect(wrapper.find(PageTitle).prop('children')).toBe(
+      'user.verification.pending.title'
+    )
   })
 
   it('should render with successful verify', async () => {
-    expect.assertions(5)
+    expect.assertions(6)
     verifyUser.mockResolvedValue()
     const wrapper = mount(<VerifyUserResult token="123verifytoken" />)
     await waitForComponent(wrapper)
@@ -43,10 +49,13 @@ describe('<VerifyUserResult />', () => {
     const extra = shallow(<Extra />)
     expect(extra.prop('href')).toBe('/login')
     expect(extra.exists(Button)).toBe(true)
+    expect(wrapper.find(PageTitle).prop('children')).toBe(
+      'user.verification.success.title'
+    )
   })
 
   it('should render with failed verify', async () => {
-    expect.assertions(3)
+    expect.assertions(4)
     verifyUser.mockRejectedValue()
     const wrapper = mount(<VerifyUserResult token="123verifytoken" />)
     await waitForComponent(wrapper)
@@ -54,5 +63,8 @@ describe('<VerifyUserResult />', () => {
     expect(result.prop('extra')).toBeNull()
     expect(result.prop('icon')).toBeNull()
     expect(result.prop('status')).toBe('error')
+    expect(wrapper.find(PageTitle).prop('children')).toBe(
+      'user.verification.error.title'
+    )
   })
 })

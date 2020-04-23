@@ -1,7 +1,6 @@
 {
   "common": {
     "hideToc": "Close table of contents",
-    "index": "Index",
     "ok": "OK",
     "showToc": "Show Table of Contents",
     "toc": "Table of contents"
@@ -50,7 +49,8 @@
   },
   "index": {
     "emptyText": "No keywords found!",
-    "searchPlaceholder": "Search keyword…"
+    "searchPlaceholder": "Search keyword…",
+    "title": "Index"
   },
   "languages": {
     "de": "Deutsch",

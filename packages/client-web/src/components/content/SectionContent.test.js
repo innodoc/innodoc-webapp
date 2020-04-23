@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
+import PageTitle from '../PageTitle'
 import SectionContent from './SectionContent'
 import SubsectionList from './SubsectionList'
 import ContentAffix from './ContentAffix'
@@ -53,7 +54,8 @@ describe('<SectionContent />', () => {
   it('should render', () => {
     const wrapper = shallow(<SectionContent />)
     expect(wrapper.exists(ContentAffix)).toBe(true)
-    expect(wrapper.find('h1').text()).toEqual('1 Foo section')
+    expect(wrapper.find('h1').text()).toBe('1 Foo section')
+    expect(wrapper.find(PageTitle).prop('children')).toBe('1 Foo section')
     expect(wrapper.find(ContentFragment).prop('content')).toBe(mockContent)
     expect(wrapper.exists(SubsectionList)).toBe(true)
   })

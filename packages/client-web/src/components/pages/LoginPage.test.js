@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 
 import LoginPage from './LoginPage'
 import Layout from '../Layout'
+import PageTitle from '../PageTitle'
 import LoginForm from '../user/LoginForm'
 
 describe('<LoginPage />', () => {
@@ -12,5 +13,6 @@ describe('<LoginPage />', () => {
     expect(layout.exists()).toBe(true)
     expect(layout.prop('disableSidebar')).toBe(true)
     expect(layout.find(LoginForm).exists()).toBe(true)
+    expect(wrapper.find(PageTitle).prop('children')).toBe('user.login.title')
   })
 })

@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 
 import ResetPasswordPage from './ResetPasswordPage'
 import Layout from '../Layout'
+import PageTitle from '../PageTitle'
 import ResetPasswordForm from '../user/ResetPasswordForm'
 
 describe('<ResetPasswordPage />', () => {
@@ -12,6 +13,9 @@ describe('<ResetPasswordPage />', () => {
     expect(layout.exists()).toBe(true)
     expect(layout.prop('disableSidebar')).toBe(true)
     expect(layout.find(ResetPasswordForm).prop('token')).toBe('123Token!')
+    expect(wrapper.find(PageTitle).prop('children')).toBe(
+      'user.resetPassword.title'
+    )
   })
 
   describe('getInitialProps', () => {
