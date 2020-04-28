@@ -1,17 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { Typography } from 'antd'
 
 import ContentFragment from '..'
-import css from '../../style.sss'
 
 const Header = ({ data }) => {
   const [level, [id, classes], content] = data
-  const HeaderTag = `h${level}`
   return (
-    <HeaderTag id={id} className={classNames(classes, css.header)}>
+    <Typography.Title id={id} className={classNames(classes)} level={level}>
       <ContentFragment content={content} />
-    </HeaderTag>
+    </Typography.Title>
   )
 }
 

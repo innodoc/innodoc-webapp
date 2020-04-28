@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { Typography } from 'antd'
 
 import ContentFragment from '../ContentFragment'
 import InputHint from '../cards/InputHint'
@@ -65,7 +66,9 @@ describe('<Span />', () => {
   describe('unknown span', () => {
     it('should render debug component for unknown span', () => {
       const data = [[null, ['does-not-exist'], []], content]
-      expect(shallow(<Span data={data} />).text()).toMatch('Unknown span')
+      const typography = shallow(<Span data={data} />).find(Typography.Text)
+      expect(typography.prop('type')).toBe('danger')
+      expect(typography.children().text()).toMatch('Unknown span')
     })
 
     it('should not render unknown span in production', () => {

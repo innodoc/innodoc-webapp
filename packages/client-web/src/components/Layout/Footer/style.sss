@@ -1,7 +1,6 @@
 @import '@innodoc/client-web/src/style/antd-theme.sss'
 
 .footer
-  color: $text-color-dark
   padding-top: calc(2 * $padding-lg)
   padding-bottom: calc(2 * $padding-lg)
 
@@ -10,9 +9,11 @@
     &:hover, &:active
       color: $blue-3
 
-  h4
-    font-weight: bold
-    color: $heading-color-dark
+  :global(.ant-typography)
+    color: $text-color-dark
+
+    &h1, &h2, &h3, &h4, &h5, &h6
+      color: $heading-color-dark
 
   :global(.ant-list-item)
     padding-top: 0

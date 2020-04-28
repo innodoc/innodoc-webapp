@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Col, Layout as AntLayout } from 'antd'
+import { Col, Layout as AntLayout, Typography } from 'antd'
 import { BarsOutlined, ReadOutlined } from '@ant-design/icons'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
@@ -62,7 +62,7 @@ describe('<Footer />', () => {
   it('should render', () => {
     const wrapper = shallow(<Footer />)
     expect(wrapper.find(AntLayout.Footer).exists()).toBe(true)
-    expect(wrapper.find('h4').text()).toBe('Test Course')
+    expect(wrapper.find(Typography.Title).children().text()).toBe('Test Course')
   })
 
   it('should render custom page links', () => {

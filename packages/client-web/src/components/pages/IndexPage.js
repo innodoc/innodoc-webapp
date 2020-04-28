@@ -1,5 +1,5 @@
 import React from 'react'
-import classNames from 'classnames'
+import { Typography } from 'antd'
 import MathJax from '@innodoc/react-mathjax-node'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
@@ -20,7 +20,7 @@ const IndexPage = () => {
         <div className={css.sidebarToggle}>
           <SidebarToggleButton />
         </div>
-        <h1 className={classNames(css.header, 'clearfix')}>{title}</h1>
+        <Typography.Title>{title}</Typography.Title>
         <MathJax.Provider>
           <Index />
         </MathJax.Provider>

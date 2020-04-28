@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { Typography } from 'antd'
 
 import Video, { StaticVideo, YouTubeVideo } from './Video'
 
@@ -57,6 +58,8 @@ describe('<YouTubeVideo />', () => {
       <YouTubeVideo src="https://vimeo.com/119230629" title="Broken URL" />
     )
     expect(wrapper.exists('iframe')).toBe(false)
-    expect(wrapper.text()).toMatch(/error/i)
+    const errorMsg = wrapper.find(Typography.Text)
+    expect(errorMsg.prop('type')).toBe('danger')
+    expect(errorMsg.children().text()).toMatch(/error/i)
   })
 })

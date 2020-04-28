@@ -1,15 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-
-import css from './style.sss'
+import { Typography } from 'antd'
 
 const Code = ({ data }) => {
   const [[id, classNames], content] = data
   return (
-    <code id={id} className={classnames(css.code, classNames)}>
+    <Typography.Text code id={id} className={classnames(classNames)}>
       {content}
-    </code>
+    </Typography.Text>
   )
 }
 

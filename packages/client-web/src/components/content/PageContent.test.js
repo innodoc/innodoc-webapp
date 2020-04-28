@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { Typography } from 'antd'
 
 import PageTitle from '../PageTitle'
 import PageContent from './PageContent'
@@ -17,7 +18,7 @@ jest.mock('../../hooks/useContentPane', () => () => ({
 describe('<PageContent />', () => {
   it('should render', () => {
     const wrapper = shallow(<PageContent />)
-    expect(wrapper.find('h1').text()).toEqual('Foo page')
+    expect(wrapper.find(Typography.Title).children().text()).toBe('Foo page')
     expect(wrapper.find(ContentFragment).prop('content')).toBe(mockContent)
     expect(wrapper.find(PageTitle).prop('children')).toBe('Foo page')
   })

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
+import { Typography } from 'antd'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'
@@ -31,9 +32,9 @@ const YouTubeVideo = ({ src, title }) => {
   const match = ytIdRegexp.exec(src)
   if (!match) {
     return (
-      <span className={css.errorBGColor}>
+      <Typography.Text type="danger">
         {t('content.ytIdError', { src })}
-      </span>
+      </Typography.Text>
     )
   }
   const ytId = match[5]

@@ -1,13 +1,14 @@
 import React from 'react'
+import { Typography } from 'antd'
 
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 
 import ContentFragment from '..'
 
 const Strikeout = ({ data }) => (
-  <s>
+  <Typography.Text delete>
     <ContentFragment content={data} />
-  </s>
+  </Typography.Text>
 )
 
 Strikeout.propTypes = { data: contentType.isRequired }

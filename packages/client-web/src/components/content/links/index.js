@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Typography } from 'antd'
 
 import { parseLink } from '@innodoc/client-misc/src/util'
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
@@ -7,7 +8,6 @@ import pageSelectors from '@innodoc/client-store/src/selectors/page'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import makeContentLink from './makeContentLink'
-import css from './style.sss'
 
 const PageLink = makeContentLink(pageSelectors.makeGetPageLink, 'page')
 const SectionLink = makeContentLink(
@@ -24,9 +24,9 @@ const InternalLink = ({ children, href }) => {
   } catch {
     if (process.env.NODE_ENV !== 'production') {
       return (
-        <span className={css.unhandled}>
+        <Typography.Text type="danger">
           {children} (Unhandled internal link: <code>{href}</code>)
-        </span>
+        </Typography.Text>
       )
     }
     return children
