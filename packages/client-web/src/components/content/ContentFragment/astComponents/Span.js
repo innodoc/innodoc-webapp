@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Typography } from 'antd'
 
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 import { attributesToObject } from '@innodoc/client-misc/src/util'
@@ -7,7 +8,6 @@ import { attributesToObject } from '@innodoc/client-misc/src/util'
 import ContentFragment from '..'
 import InputHint from '../cards/InputHint'
 import Question from '../questions'
-import css from './style.sss'
 
 const IndexSpan = ({ id, indexTerm, content }) => (
   <span className="index-term" data-index-term={indexTerm} id={id}>
@@ -64,7 +64,7 @@ const Span = ({ data }) => {
     const msg = `Unknown span: classes=${classNames} attrs=${attributes} content-length=${content.length}`
     return (
       <span>
-        <span className={css.errorBGColor}>{msg}</span>
+        <Typography.Text type="danger">{msg}</Typography.Text>
         <ContentFragment content={content} />
       </span>
     )

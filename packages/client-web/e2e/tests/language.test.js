@@ -19,7 +19,7 @@ describe('Content translation', () => {
     expect(await browser.title()).toBe('1 Project structure · innoDoc')
     await browser.assert.text('h1', '1 Project structure')
     await browser.assert.textContains(
-      'p',
+      'div',
       'A course consists of a number of chapters, sections and subsections.'
     )
     await hoverNavItem('Language')
@@ -29,7 +29,7 @@ describe('Content translation', () => {
     await browser.waitFor(
       () =>
         document.evaluate(
-          '//p[text()[contains(.,"Ein Kurs besteht aus einer Anzahl von Kapiteln")]]',
+          '//div[text()[contains(.,"Ein Kurs besteht aus einer Anzahl von Kapiteln")]]',
           document,
           null,
           XPathResult.FIRST_ORDERED_NODE_TYPE,

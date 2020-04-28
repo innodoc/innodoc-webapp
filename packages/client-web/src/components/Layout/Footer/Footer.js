@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Col, Layout as AntLayout, List, Row } from 'antd'
+import { Col, Layout as AntLayout, List, Typography, Row } from 'antd'
 import { BarsOutlined, ReadOutlined } from '@ant-design/icons'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
@@ -71,7 +71,7 @@ const Footer = () => {
       <Row>
         <Col xs={24} sm={24} md={6} lg={6} xl={6} className={css.footerCol}>
           <div className={css.footerSegment}>
-            <h4>{title}</h4>
+            <Typography.Title level={4}>{title}</Typography.Title>
             <List>{customPageItems}</List>
             <List>{otherPageItems}</List>
           </div>

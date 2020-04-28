@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { Typography } from 'antd'
 
 import css from './style.sss'
 
@@ -23,9 +24,7 @@ const UnknownType = ({ data, name }) => {
     >
       <span>
         {showData ? '➖' : '➕'} Unknown component:{' '}
-        <strong>
-          <code>{name}</code>
-        </strong>
+        <Typography.Text code>{name}</Typography.Text>
       </span>
       {showData ? <UnknownTypeData data={data} /> : null}
     </span>

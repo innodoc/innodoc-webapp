@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { Typography } from 'antd'
 
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
@@ -54,7 +55,9 @@ describe('<SectionContent />', () => {
   it('should render', () => {
     const wrapper = shallow(<SectionContent />)
     expect(wrapper.exists(ContentAffix)).toBe(true)
-    expect(wrapper.find('h1').text()).toBe('1 Foo section')
+    expect(wrapper.find(Typography.Title).children().text()).toBe(
+      '1 Foo section'
+    )
     expect(wrapper.find(PageTitle).prop('children')).toBe('1 Foo section')
     expect(wrapper.find(ContentFragment).prop('content')).toBe(mockContent)
     expect(wrapper.exists(SubsectionList)).toBe(true)

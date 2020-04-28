@@ -1,4 +1,5 @@
 import React from 'react'
+import { Typography } from 'antd'
 
 import pageSelectors from '@innodoc/client-store/src/selectors/page'
 
@@ -19,7 +20,7 @@ const PageContent = () => {
         <div className={css.sidebarToggle}>
           <SidebarToggleButton />
         </div>
-        <h1 className={css.header}>{title}</h1>
+        <Typography.Title>{title}</Typography.Title>
         <ContentFragment content={content} />
       </div>
     </>

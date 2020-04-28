@@ -46,12 +46,8 @@
   tr:hover > td
     background-color: transparent !important
 
-.code
-  background-color: rgba(0, 0, 0, 0.05)
-  color: $heading-color
-
 .codeblock
-  @extend .code
+  background: rgba(0, 0, 0, 0.06)
   border-left: $border-color-base $border-style-base calc(3 * $border-width-base)
   padding-left: $padding-sm
 
@@ -89,11 +85,8 @@
   p > img
     width: 100%
 
-.errorBGColor
-  background-color: $color-error
-
 .unknownComponent
-  @extend .errorBGColor
+  background-color: $color-error
   display: block
 
   .toggler

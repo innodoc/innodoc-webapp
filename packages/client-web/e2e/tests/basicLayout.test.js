@@ -10,7 +10,7 @@ describe('Basic layout', () => {
     await openUrl()
     await browser.assert.exists('[class*=content___]')
     expect(await browser.text('h1')).toContain('About this course')
-    expect(await browser.text('p')).toContain(
+    expect(await browser.text('div')).toContain(
       'This content is a showcase for the innoDoc software package. It was ' +
         'developed at innoCampus, Technische Universität Berlin.'
     )
@@ -54,20 +54,16 @@ describe('Basic layout', () => {
     expect(await browser.evaluate((el) => el.textContent, heading2)).toBe(
       'About this course'
     )
-    const paras2 = await segments[1].queryAll('p')
-    expect(paras2).toHaveLength(2)
-    expect(await browser.evaluate((el) => el.textContent, paras2[0])).toContain(
-      'This content is a showcase'
-    )
+    expect(
+      await browser.evaluate((el) => el.textContent, segments[1])
+    ).toContain('This content is a showcase')
 
     const heading3 = await segments[2].query('h4')
     expect(await browser.evaluate((el) => el.textContent, heading3)).toBe(
       'License'
     )
-    const paras3 = await segments[2].queryAll('p')
-    expect(paras3).toHaveLength(2)
-    expect(await browser.evaluate((el) => el.textContent, paras3[0])).toContain(
-      'The components of this course are licensed under the'
-    )
+    expect(
+      await browser.evaluate((el) => el.textContent, segments[2])
+    ).toContain('The components of this course are licensed under the')
   })
 })

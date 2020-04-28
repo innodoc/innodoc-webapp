@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { Typography } from 'antd'
 
 import { InternalLink, PageLink, SectionLink } from '.'
 
@@ -18,7 +19,12 @@ describe('<InternalLink />', () => {
     const wrapper = shallow(<InternalLink href="/foo/bar">Foo</InternalLink>)
     expect(wrapper.exists(PageLink)).toBe(false)
     expect(wrapper.exists(SectionLink)).toBe(false)
-    expect(wrapper.text()).toMatch('Unhandled internal link: /foo/bar')
+    const typography = wrapper.find(Typography.Text)
+    expect(typography.prop('type')).toBe('danger')
+    expect(typography.children().at(1).text()).toMatch(
+      'Unhandled internal link:'
+    )
+    expect(typography.children().at(2).text()).toMatch('/foo/bar')
   })
 
   it('should render with malformed href (production)', () => {

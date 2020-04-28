@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col } from 'antd'
+import { Row, Col, Typography } from 'antd'
 import { UserAddOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
@@ -7,7 +7,6 @@ import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 import RegistrationForm from '../user/RegistrationForm'
-import css from '../content/style.sss'
 
 const RegistrationPage = () => {
   const { t } = useTranslation()
@@ -18,9 +17,9 @@ const RegistrationPage = () => {
       <Layout disableSidebar>
         <Row justify="space-around" align="middle">
           <Col xs={24} sm={20} md={18} lg={16}>
-            <h1 className={css.header}>
+            <Typography.Title>
               <UserAddOutlined /> {title}
-            </h1>
+            </Typography.Title>
             <RegistrationForm />
           </Col>
         </Row>

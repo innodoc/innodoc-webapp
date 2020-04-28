@@ -1,13 +1,14 @@
 import React from 'react'
+import { Typography } from 'antd'
 
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 
 import ContentFragment from '..'
 
 const Para = ({ data }) => (
-  <p>
+  <Typography.Paragraph>
     <ContentFragment content={data} />
-  </p>
+  </Typography.Paragraph>
 )
 Para.propTypes = { data: contentType.isRequired }
 
