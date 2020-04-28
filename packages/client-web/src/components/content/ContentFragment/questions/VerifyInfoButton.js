@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Button, Divider } from 'antd'
 import { CheckOutlined } from '@ant-design/icons'
 
@@ -15,7 +15,8 @@ const VerifyInfoButton = ({ content }) => {
     setUserTriggeredVerify,
     userTriggeredVerify,
   } = useContext(ExerciseContext)
-  setAutoVerify(false)
+  useEffect(() => setAutoVerify(false), [setAutoVerify])
+
   return (
     <>
       <Divider />
