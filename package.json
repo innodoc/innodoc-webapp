@@ -8,7 +8,7 @@
     "dev": "yarn workspace @innodoc/server dev",
     "format": "prettier --write \"*.js\" \"packages/**/*.js\"",
     "lint": "eslint .",
-    "prepush": "yarn lint && yarn test:unit && yarn build && yarn test:e2e",
+    "prepush": "yarn build && yarn lint && yarn test:unit && yarn test:e2e",
     "server:build": "yarn workspace @innodoc/server build",
     "start": "yarn workspace @innodoc/server start",
     "test:e2e:content": "yarn workspace @innodoc/client-web test:e2e:content",
