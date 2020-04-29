@@ -70,8 +70,10 @@ module.exports = (config, { dev, isServer }) => {
         {
           loader: 'less-loader',
           options: {
-            javascriptEnabled: true,
-            modifyVars,
+            lessOptions: {
+              javascriptEnabled: true,
+              modifyVars,
+            },
           },
         },
       ].filter(Boolean)
