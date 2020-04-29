@@ -23,12 +23,16 @@ const VerifyUserResult = ({ token }) => {
       .catch(() => setStatus('error'))
   }, [appRoot, csrfToken, token])
 
+  // Wrap inside <>
+  // https://github.com/zeit/next.js/issues/7915#issuecomment-573397162
   const extra =
     status === 'success' ? (
       <Link href="/login">
-        <Button icon={<LoginOutlined />} type="primary" key="console">
-          {t('user.login.title')}
-        </Button>
+        <>
+          <Button icon={<LoginOutlined />} type="primary" key="console">
+            {t('user.login.title')}
+          </Button>
+        </>
       </Link>
     ) : null
 
