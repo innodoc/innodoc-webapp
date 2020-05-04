@@ -42,6 +42,7 @@
     "ignore-loader": "^0.1.2",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
+    "less-plugin-variables-output": "^1.2.0",
     "lodash-es": "^4.17.15",
     "mathjax-full": "^3.0.1",
     "md5": "^2.2.1",
@@ -84,7 +85,6 @@
     "jest-dev-server": "^4.4.0",
     "jest-environment-enzyme": "^7.1.2",
     "jest-enzyme": "^7.1.2",
-    "less-plugin-variables-output": "^1.2.0",
     "mongodb-memory-server": "6.5.2",
     "sugarss": "^2.0.0",
     "wendigo": "^2.11.3"
