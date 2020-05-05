@@ -9,6 +9,7 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 RUN set -xe && \
   apk add --no-cache \
     build-base \
+    git \
     python
 COPY . .
 RUN set -xe && \
