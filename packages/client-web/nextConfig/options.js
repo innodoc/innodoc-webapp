@@ -1,3 +1,4 @@
+const nextBuildId = require('next-build-id')
 const webpack = require('./webpack')
 
 module.exports = {
@@ -11,5 +12,7 @@ module.exports = {
     importLoaders: 1,
     localIdentName: '[local]___[hash:base64:5]',
   },
+  // Bind build ID to git commit
+  generateBuildId: () => nextBuildId({ dir: __dirname }),
   webpack,
 }
