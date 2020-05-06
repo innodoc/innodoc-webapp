@@ -11,7 +11,7 @@ const startServer = async () => {
     const nextApp = await createNextApp(config)
     await connectDb(config)
     const expressApp = createExpressApp(config, nextApp)
-    await expressApp.listen(config.port)
+    await expressApp.listen(config.port, config.host)
     console.info(`Started ${config.nodeEnv} server on port ${config.port}.`)
   } catch (err) {
     console.error(err)

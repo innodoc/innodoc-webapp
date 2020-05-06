@@ -17,6 +17,7 @@ describe('getConfig', () => {
   beforeEach(() => {
     fs.existsSync.mockReset().mockReturnValue(true)
     Dotenv.config.mockClear()
+    process.env.APP_HOST = 'localhost'
     process.env.APP_PORT = '8000'
     process.env.APP_ROOT = 'https://app.example.com/'
     process.env.CONTENT_ROOT = 'https://example.com/content/'
@@ -54,6 +55,7 @@ describe('getConfig', () => {
       mongoUrl: 'mongodb://mongohost/coll',
       nodeEnv: 'production',
       pagePathPrefix: 'custompage',
+      host: 'localhost',
       port: 8000,
       sectionPathPrefix: 'customsection',
       smtp: {
