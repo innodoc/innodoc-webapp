@@ -14,7 +14,7 @@ RUN set -xe && \
 COPY . .
 RUN set -xe && \
   ln -s .env.example .env && \
-  MONGOMS_DISABLE_POSTINSTALL=1 yarn install --pure-lockfile && \
+  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 MONGOMS_DISABLE_POSTINSTALL=1 yarn install --freeze-lockfile && \
   yarn add --no-lockfile --ignore-workspace-root-check pm2 && \
   npx next telemetry disable && \
   yarn build
