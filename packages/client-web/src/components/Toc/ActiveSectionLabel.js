@@ -6,7 +6,11 @@ import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 import css from './style.sss'
 
 const ActiveSectionLabel = ({ sectionId }) => {
-  const getSectionLink = useMemo(sectionSelectors.makeGetSectionLink, [])
+  const getSectionLink = useMemo(
+    (state, _sectionId) =>
+      sectionSelectors.makeGetSectionLink(state, _sectionId),
+    []
+  )
   const { title } = useSelector((state) => getSectionLink(state, sectionId))
   return <span className={css.active}>{title}</span>
 }

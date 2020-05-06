@@ -41,7 +41,10 @@ const getQuestionId = (sectionId, id, attributes) => {
 const Question = ({ attributes, id, questionClasses }) => {
   const { id: sectionId } = useSelector(sectionSelectors.getCurrentSection)
   const globalQuestionId = getQuestionId(sectionId, id, attributes)
-  const getQuestion = useMemo(questionSelectors.makeGetQuestion, [])
+  const getQuestion = useMemo(
+    (state, questionId) => questionSelectors.makeGetQuestion(state, questionId),
+    []
+  )
   const { answer, correct } = useSelector((state) =>
     getQuestion(state, globalQuestionId)
   )
