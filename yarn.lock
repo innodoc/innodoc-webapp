@@ -8193,40 +8193,6 @@ moment@^2.24.0:
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
-mongodb-memory-server-core@6.4.1:
-  version "6.4.1"
-  resolved "https://registry.yarnpkg.com/mongodb-memory-server-core/-/mongodb-memory-server-core-6.4.1.tgz#c7c650eb9640b7af719cb6de8b6cd8d2921d6c26"
-  integrity sha512-bnSI8AHoumtDjQ2oSkdVGqm8o4CPUkn0/GW6Cn6dRxGpen3EJapLOEWtNzAizmWRDrnIVjVBcNB8tryLgIWx+A==
-  dependencies:
-    "@types/cross-spawn" "^6.0.1"
-    "@types/debug" "^4.1.5"
-    "@types/dedent" "^0.7.0"
-    "@types/find-cache-dir" "^3.2.0"
-    "@types/find-package-json" "^1.1.1"
-    "@types/get-port" "^4.0.1"
-    "@types/lockfile" "^1.0.1"
-    "@types/md5-file" "^4.0.1"
-    "@types/mkdirp" "^1.0.0"
-    "@types/tmp" "0.1.0"
-    "@types/uuid" "7.0.0"
-    camelcase "^5.3.1"
-    cross-spawn "^7.0.1"
-    debug "^4.1.1"
-    dedent "^0.7.0"
-    find-cache-dir "3.3.1"
-    find-package-json "^1.2.0"
-    get-port "5.1.1"
-    https-proxy-agent "5.0.0"
-    lockfile "^1.0.4"
-    md5-file "^4.0.0"
-    mkdirp "^1.0.3"
-    tar-stream "^2.1.1"
-    tmp "^0.1.0"
-    uuid "^7.0.2"
-    yauzl "^2.10.0"
-  optionalDependencies:
-    mongodb "^3.5.4"
-
 mongodb-memory-server-core@6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/mongodb-memory-server-core/-/mongodb-memory-server-core-6.5.2.tgz#21c96b6e3104b999905ecb232f83d2432467a0f5"
@@ -8261,14 +8227,7 @@ mongodb-memory-server-core@6.5.2:
   optionalDependencies:
     mongodb "^3.5.4"
 
-mongodb-memory-server@6.4.1:
-  version "6.4.1"
-  resolved "https://registry.yarnpkg.com/mongodb-memory-server/-/mongodb-memory-server-6.4.1.tgz#13c882a9a907edb02267e73062f19fcb2a146aff"
-  integrity sha512-RNQfI7DE5vinMIF7Uusna4AUoKPxQqB62wF+vEybSHkuzK6j3snGpeTXmZiqojqnNzeNQIDGHNkLKLq4NSbqmA==
-  dependencies:
-    mongodb-memory-server-core "6.4.1"
-
-mongodb-memory-server@6.5.2:
+mongodb-memory-server@6.4.1, mongodb-memory-server@6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/mongodb-memory-server/-/mongodb-memory-server-6.5.2.tgz#47f4c19ab830f63ee6119629072eee2df7d8957a"
   integrity sha512-PUCiWcHGwyqQiZF3J4iCy1DXqPjoNtehV2qMFJ26rhNBFzmc5SW+9/FUQwGNLge5/Lm1dEwcraJD5PUe8m9Kdg==
