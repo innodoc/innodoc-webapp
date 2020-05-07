@@ -7,8 +7,12 @@ import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
 const PageTitle = ({ children }) => {
-  const { title } = useSelector(courseSelectors.getCurrentCourse)
+  const course = useSelector(courseSelectors.getCurrentCourse)
   const { language } = useSelector(appSelectors.getApp)
+  if (!course) {
+    return null
+  }
+  const { title } = course
   const courseTitle = title[language]
   const pageTitle = children ? `${children} · ${courseTitle}` : courseTitle
 
