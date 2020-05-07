@@ -86,6 +86,7 @@
     "jest-environment-enzyme": "^7.1.2",
     "jest-enzyme": "^7.1.2",
     "mongodb-memory-server": "6.5.2",
+    "nanoid": "^3.1.5",
     "next-build-id": "^3.0.0",
     "sugarss": "^2.0.0",
     "wendigo": "^2.12.0"
