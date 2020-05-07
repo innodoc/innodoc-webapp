@@ -32,6 +32,17 @@ variables:
   variables:
     <<: *docker-default-vars
 
+.docker-mongo-base: &docker-mongo-base
+  <<: *docker-base
+  before_script:
+    - *docker-base-login-script
+    - docker network create testbridge
+    - docker run --rm --name mongodb-in-memory --network testbridge -d mongo:bionic --noauth --storageEngine ephemeralForTest
+  after_script:
+    - docker stop mongodb-in-memory
+    - docker network rm testbridge
+    - *docker-base-logout-script
+
 Build image:
   <<: *docker-base
   stage: build
@@ -53,21 +64,15 @@ Linting:
     - docker run --rm "$IMAGE_TAG" yarn lint
 
 Unit tests:
-  <<: *docker-base
+  <<: *docker-mongo-base
   stage: test
   script:
     - docker pull "$IMAGE_TAG"
-    - docker run --rm --env MONGO_URL=mongodb://localhost/innodoc-test --network container:mongodb-in-memory "$IMAGE_TAG" yarn test:unit:coverage --coverageDirectory=/tmp/coverage
-  before_script:
-    - *docker-base-login-script
-    - docker run --rm --name mongodb-in-memory -d mongo:bionic --noauth --storageEngine ephemeralForTest
-  after_script:
-    - docker stop mongodb-in-memory
-    - *docker-base-logout-script
+    - docker run --rm --env MONGO_URL=mongodb://mongodb-in-memory/innodoc-test --network testbridge "$IMAGE_TAG" yarn test:unit:coverage --coverageDirectory=/tmp/coverage
   coverage: '/^All files\s+\|\s+([0-9.]+)\s+\|\s+/'
 
 E2E tests:
-  <<: *docker-base
+  <<: *docker-mongo-base
   stage: test
   script:
     - docker pull "$IMAGE_TAG"
@@ -75,13 +80,7 @@ E2E tests:
     - docker build --pull --cache-from "$IMAGE_TAG" --cache-from "$IMAGE_E2E_CACHE_TAG" --tag "$IMAGE_E2E_TAG" --build-arg BUILD_IMAGE="$IMAGE_TAG" --build-arg BUILD_ID="$CI_COMMIT_SHA" -f Dockerfile.e2e .
     - docker tag "$IMAGE_E2E_TAG" "$IMAGE_E2E_CACHE_TAG"
     - docker push "$IMAGE_E2E_CACHE_TAG"
-    - docker run --rm --env MONGO_URL=mongodb://localhost/innodoc-e2e --network container:mongodb-in-memory "$IMAGE_E2E_TAG"
-  before_script:
-    - *docker-base-login-script
-    - docker run --rm --name mongodb-in-memory -d mongo:bionic --noauth --storageEngine ephemeralForTest
-  after_script:
-    - docker stop mongodb-in-memory
-    - *docker-base-logout-script
+    - docker run --rm --env MONGO_URL=mongodb://mongodb-in-memory/innodoc-e2e --network testbridge "$IMAGE_E2E_TAG"
   variables:
     <<: *docker-default-vars
     GIT_STRATEGY: fetch
