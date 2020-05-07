@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-import connectDb from '../db'
+import { connectDb } from '../db'
 import User, { tokenRegexp } from './User'
 
 describe('User', () => {

@@ -1,9 +1,23 @@
 /* eslint-disable no-console */
+import { createHttpTerminator } from 'http-terminator'
 
 import createExpressApp from './createExpressApp'
 import createNextApp from './createNextApp'
-import connectDb from './db'
+import { connectDb, disconnectDb } from './db'
 import getConfig from './getConfig'
+
+let httpTerminator
+
+const shutdown = async () => {
+  await disconnectDb()
+  if (httpTerminator) {
+    await httpTerminator.terminate()
+  }
+  process.exit(0)
+}
+
+process.on('SIGTERM', shutdown)
+process.on('SIGINT', shutdown)
 
 const startServer = async () => {
   try {
@@ -11,7 +25,8 @@ const startServer = async () => {
     const nextApp = await createNextApp(config)
     await connectDb(config)
     const expressApp = createExpressApp(config, nextApp)
-    await expressApp.listen(config.port, config.host)
+    const server = await expressApp.listen(config.port, config.host)
+    httpTerminator = createHttpTerminator({ server })
     console.info(`Started ${config.nodeEnv} server on port ${config.port}.`)
   } catch (err) {
     console.error(err)
@@ -23,4 +38,5 @@ if (require.main === module) {
   startServer()
 }
 
+export { shutdown } // for testing
 export default startServer

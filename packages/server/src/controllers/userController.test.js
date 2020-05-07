@@ -1,8 +1,7 @@
-import mongoose from 'mongoose'
 import request from 'supertest'
 
 import createExpressApp from '../createExpressApp'
-import connectDb from '../db'
+import { connectDb, disconnectDb } from '../db'
 import User, { tokenRegexp as tokenRegexpString } from '../models/User'
 
 const mockNoopMiddleware = (req, res, next) => next()
@@ -43,7 +42,7 @@ const config = {
 
 describe('userController', () => {
   beforeAll(() => connectDb(config))
-  afterAll(() => mongoose.disconnect())
+  afterAll(disconnectDb)
   beforeEach(async () => jest.clearAllMocks())
 
   const getRandEmail = () => {

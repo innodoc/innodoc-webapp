@@ -1,19 +1,31 @@
-import startServer from './index'
+import { createHttpTerminator } from 'http-terminator'
+
+import startServer, { shutdown } from './index'
 import createExpressApp from './createExpressApp'
 import createNextApp from './createNextApp'
-import connectDb from './db'
+import { connectDb, disconnectDb } from './db'
 import getConfig from './getConfig'
 
+const mockHttpTerminator = { terminate: jest.fn() }
+jest.mock('http-terminator', () => ({
+  createHttpTerminator: jest.fn(() => mockHttpTerminator),
+}))
+
+const mockServer = {}
 const mockConfig = {
+  host: 'localhost',
   port: 7654,
   nodeEnv: 'production',
 }
-const mockExpressApp = { listen: jest.fn().mockResolvedValue() }
+const mockExpressApp = { listen: jest.fn().mockResolvedValue(mockServer) }
 const mockNextApp = {}
 
 jest.mock('./createExpressApp', () => jest.fn(() => mockExpressApp))
 jest.mock('./createNextApp', () => jest.fn(() => Promise.resolve(mockNextApp)))
-jest.mock('./db', () => jest.fn())
+jest.mock('./db', () => ({
+  connectDb: jest.fn(),
+  disconnectDb: jest.fn(),
+}))
 jest.mock('./getConfig', () => jest.fn(() => mockConfig))
 
 const mocks = { createExpressApp, createNextApp, connectDb, getConfig }
@@ -38,9 +50,7 @@ describe('startServer', () => {
   })
 
   describe('successful startup', () => {
-    beforeEach(async () => {
-      await startServer()
-    })
+    beforeEach(startServer)
 
     it('should get config', () => {
       expect(mocks.getConfig).toHaveBeenCalledTimes(1)
@@ -56,6 +66,12 @@ describe('startServer', () => {
       expect(mocks.connectDb).toHaveBeenCalledWith(mockConfig)
     })
 
+    it('should not call process.exit', () =>
+      expect(mockExit).not.toHaveBeenCalled())
+
+    it('should instantiate httpTerminator', () =>
+      expect(createHttpTerminator.mock.calls[0][0].server).toBe(mockServer))
+
     describe('express app', () => {
       it('should create express app', () => {
         expect(mocks.createExpressApp).toHaveBeenCalledTimes(1)
@@ -67,7 +83,10 @@ describe('startServer', () => {
 
       it('should start listening to port', () => {
         expect(mockExpressApp.listen).toHaveBeenCalledTimes(1)
-        expect(mockExpressApp.listen).toHaveBeenCalledWith(mockConfig.port)
+        expect(mockExpressApp.listen).toHaveBeenCalledWith(
+          mockConfig.port,
+          mockConfig.host
+        )
       })
     })
 
@@ -82,9 +101,16 @@ describe('startServer', () => {
       it('should not print error messages', () =>
         expect(mockErrorLog).not.toHaveBeenCalled())
     })
+  })
 
-    it('should not call process.exit', () =>
-      expect(mockExit).not.toHaveBeenCalled())
+  describe('shutdown', () => {
+    beforeEach(shutdown)
+
+    it('should call disconnectDb()', () =>
+      expect(disconnectDb).toHaveBeenCalled())
+
+    it('should call httpTerminator.terminate()', () =>
+      expect(mockHttpTerminator.terminate).toHaveBeenCalled())
   })
 
   describe('failed startup', () => {
