@@ -8,4 +8,11 @@ const connectDb = async ({ mongoUrl, nodeEnv }) => {
   mongoose.set('debug', nodeEnv === 'development')
 }
 
-export default connectDb
+const disconnectDb = () => {
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection.close()
+  }
+  return Promise.resolve()
+}
+
+export { connectDb, disconnectDb }
