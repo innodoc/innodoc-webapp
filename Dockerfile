@@ -2,6 +2,8 @@
 ARG BASE_IMAGE=node:13.12-alpine3.11
 FROM $BASE_IMAGE AS build
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
+ARG BUILD_ID
+ENV NEXTJS_WEBAPP_BUILD_ID=$BUILD_ID
 
 # build
 WORKDIR /innodoc-webapp
