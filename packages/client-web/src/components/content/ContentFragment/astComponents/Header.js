@@ -7,8 +7,13 @@ import ContentFragment from '..'
 
 const Header = ({ data }) => {
   const [level, [id, classes], content] = data
+  // antd only accepts level <= 4
   return (
-    <Typography.Title id={id} className={classNames(classes)} level={level}>
+    <Typography.Title
+      id={id}
+      className={classNames(classes)}
+      level={Math.min(4, level)}
+    >
       <ContentFragment content={content} />
     </Typography.Title>
   )
