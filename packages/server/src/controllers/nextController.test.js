@@ -53,9 +53,7 @@ const mockNextApp = {
 }
 
 describe('nextController', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
+  beforeEach(jest.clearAllMocks)
 
   const testGet = async (url) =>
     request(await createExpressApp(config, mockNextApp)).get(url)
@@ -103,10 +101,9 @@ describe('nextController', () => {
   })
 
   describe('GET *', () => {
-    it('it should use next.getRequestHandler()', () => {
+    it('it should use next.getRequestHandler()', () =>
       testGet('/some-other-route').then(() => {
         expect(mockRequestHandler).toBeCalled()
-      })
-    })
+      }))
   })
 })
