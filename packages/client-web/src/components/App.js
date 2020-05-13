@@ -1,6 +1,6 @@
 import React from 'react'
-import { connect, Provider } from 'react-redux'
-import App from 'next/app'
+import PropTypes from 'prop-types'
+import { Provider } from 'react-redux'
 import Router from 'next/router'
 import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
@@ -51,128 +51,104 @@ const waitForCourse = (store) =>
     }
   })
 
-class InnoDocApp extends App {
-  static async getInitialProps({ Component, ctx }) {
-    // ctx.req/ctx.res not present when statically exported
-    if (ctx.req && ctx.res) {
-      const { dispatch } = ctx.store
+const InnoDocApp = ({ Component, pageProps, store }) => {
+  const { mathJaxOptions, ...pagePropsRest } = pageProps
 
-      // set initial content URLs (passed from server/app configuration)
-      const {
+  return (
+    <Provider store={store}>
+      <PageTitle />
+      <MathJax.ConfigProvider options={mathJaxOptions}>
+        <Component
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...pagePropsRest}
+        />
+      </MathJax.ConfigProvider>
+    </Provider>
+  )
+}
+
+InnoDocApp.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  pageProps: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired,
+}
+
+InnoDocApp.getInitialProps = async ({ Component, ctx }) => {
+  if (ctx.req && ctx.res) {
+    const { dispatch } = ctx.store
+
+    // Set initial content URLs (passed from server/app configuration)
+    const {
+      appRoot,
+      contentRoot,
+      staticRoot,
+      sectionPathPrefix,
+      pagePathPrefix,
+    } = ctx.res.locals
+    dispatch(
+      setServerConfiguration(
         appRoot,
         contentRoot,
         staticRoot,
+        ctx.req.csrfToken(),
         sectionPathPrefix,
-        pagePathPrefix,
-      } = ctx.res.locals
-      dispatch(
-        setServerConfiguration(
-          appRoot,
-          contentRoot,
-          staticRoot,
-          ctx.req.csrfToken(),
-          sectionPathPrefix,
-          pagePathPrefix
-        )
+        pagePathPrefix
       )
-
-      // pass detected language to store
-      if (ctx.req.i18n) {
-        dispatch(languageDetected(ctx.req.i18n.language))
-      }
-
-      // load content manifest on start-up
-      dispatch(loadManifest())
-
-      // server verified access token
-      if (ctx.res.locals.loggedInEmail) {
-        dispatch(userLoggedIn(ctx.res.locals.loggedInEmail))
-      }
-    }
-
-    // build custom MathJax options
-    const defaultMathJaxOptions = {
-      chtml: { fontURL: DEFAULT_MATHJAX_FONT_URL },
-    }
-    let mathJaxOptions
-    let course
-    try {
-      course = await Promise.race([
-        waitForCourse(ctx.store),
-        new Promise((resolve, reject) => {
-          const timeoutId = setTimeout(() => {
-            clearTimeout(timeoutId)
-            reject()
-          }, 1000)
-        }),
-      ])
-      mathJaxOptions = insert(
-        defaultMathJaxOptions,
-        course.mathJaxOptions,
-        false
-      )
-    } catch (error) {
-      mathJaxOptions = defaultMathJaxOptions
-    }
-
-    // page props
-    const pageProps = Component.getInitialProps
-      ? await Component.getInitialProps(ctx)
-      : {}
-
-    return {
-      pageProps: {
-        ...pageProps,
-        namespacesRequired: ['common'],
-        mathJaxOptions,
-      },
-    }
-  }
-
-  componentDidMount() {
-    // Notify store about route change
-    Router.events.on('routeChangeStart', this.props.dispatchRouteChangeStart)
-  }
-
-  componentWillUnmount() {
-    Router.events.off('routeChangeStart', this.props.dispatchRouteChangeStart)
-  }
-
-  render() {
-    const { Component, pageProps, store } = this.props
-    const { mathJaxOptions, ...pagePropsRest } = pageProps
-
-    return (
-      <Provider store={store}>
-        <PageTitle />
-        <MathJax.ConfigProvider options={mathJaxOptions}>
-          <Component
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...pagePropsRest}
-          />
-        </MathJax.ConfigProvider>
-      </Provider>
     )
+
+    // Pass detected language to store
+    if (ctx.req.i18n) {
+      dispatch(languageDetected(ctx.req.i18n.language))
+    }
+
+    // Load content manifest on start-up
+    dispatch(loadManifest())
+
+    // Server verified access token
+    if (ctx.res.locals.loggedInEmail) {
+      dispatch(userLoggedIn(ctx.res.locals.loggedInEmail))
+    }
+
+    // Notify store about route changes
+    Router.events.on('routeChangeStart', () => dispatch(routeChangeStart()))
   }
-}
 
-const nextReduxWrapperDebug =
-  process.env.NODE_ENV !== 'production' &&
-  process.env.NEXT_REDUX_WRAPPER_DEBUG === 'true'
-const withReduxConfig = { debug: nextReduxWrapperDebug }
+  // Wait for course manifest
+  const course = await Promise.race([
+    waitForCourse(ctx.store),
+    new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => {
+        clearTimeout(timeoutId)
+        reject()
+      }, 1000)
+    }),
+  ])
 
-const mapDispatchToProps = {
-  dispatchRouteChangeStart: routeChangeStart,
+  // Build custom MathJax options
+  const defaultMathJaxOptions = {
+    chtml: { fontURL: DEFAULT_MATHJAX_FONT_URL },
+  }
+  let mathJaxOptions
+  try {
+    mathJaxOptions = insert(defaultMathJaxOptions, course.mathJaxOptions, false)
+  } catch (error) {
+    mathJaxOptions = defaultMathJaxOptions
+  }
+
+  const pageProps = Component.getInitialProps
+    ? await Component.getInitialProps(ctx)
+    : {}
+
+  return {
+    pageProps: {
+      ...pageProps,
+      namespacesRequired: ['common'],
+      mathJaxOptions,
+    },
+  }
 }
 
 export { InnoDocApp, waitForCourse } // for testing
-export default withRedux(
-  makeMakeStore(rootSaga),
-  withReduxConfig
-)(
-  appWithTranslation(
-    withReduxSaga(
-      connect(null, mapDispatchToProps)(withServerContext(InnoDocApp))
-    )
-  )
+export default withRedux(makeMakeStore(rootSaga))(
+  appWithTranslation(withReduxSaga(withServerContext(InnoDocApp)))
 )

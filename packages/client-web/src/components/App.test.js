@@ -3,6 +3,8 @@ import { shallow } from 'enzyme'
 import { Provider } from 'react-redux'
 import Router from 'next/router'
 
+// TODO: check this tests
+
 import {
   loadManifest,
   setServerConfiguration,
