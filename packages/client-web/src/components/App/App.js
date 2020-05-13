@@ -22,8 +22,9 @@ import {
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
 import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
 
-import withWaitForManifest from './hoc/withWaitForManifest'
-import PageTitle from './PageTitle'
+import PageTitle from '../PageTitle'
+import withIndexRedirect from './withIndexRedirect'
+import withWaitForManifest from './withWaitForManifest'
 
 const DEFAULT_MATHJAX_FONT_URL = `${
   process.browser ? window.location.origin : ''
@@ -52,9 +53,10 @@ InnoDocApp.propTypes = {
 }
 
 InnoDocApp.getInitialProps = async ({ Component, ctx }) => {
-  if (ctx.req && ctx.res) {
-    const { dispatch } = ctx.store
+  const { dispatch } = ctx.store
 
+  // on server
+  if (ctx.req && ctx.res) {
     // Set initial content URLs (passed from server/app configuration)
     const {
       appRoot,
@@ -86,7 +88,9 @@ InnoDocApp.getInitialProps = async ({ Component, ctx }) => {
     if (ctx.res.locals.loggedInEmail) {
       dispatch(userLoggedIn(ctx.res.locals.loggedInEmail))
     }
-
+  }
+  // on client
+  else {
     // Notify store about route changes
     Router.events.on('routeChangeStart', () => dispatch(routeChangeStart()))
   }
@@ -119,6 +123,8 @@ InnoDocApp.getInitialProps = async ({ Component, ctx }) => {
 export { InnoDocApp } // for testing
 export default withRedux(makeMakeStore(rootSaga))(
   withWaitForManifest(
-    appWithTranslation(withReduxSaga(withServerContext(InnoDocApp)))
+    withIndexRedirect(
+      appWithTranslation(withReduxSaga(withServerContext(InnoDocApp)))
+    )
   )
 )

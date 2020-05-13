@@ -3,10 +3,9 @@ import { shallow } from 'enzyme'
 import { Provider } from 'react-redux'
 import Router from 'next/router'
 
-// TODO: check this tests
-
 import {
   loadManifest,
+  routeChangeStart,
   setServerConfiguration,
 } from '@innodoc/client-store/src/actions/content'
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
@@ -15,8 +14,8 @@ import {
   userLoggedIn,
 } from '@innodoc/client-store/src/actions/user'
 
-import { InnoDocApp, waitForCourse } from './App'
-import PageTitle from './PageTitle'
+import { InnoDocApp } from './App'
+import PageTitle from '../PageTitle'
 
 jest.mock('next/router', () => ({
   events: { on: jest.fn() },
@@ -27,22 +26,7 @@ jest.mock('@innodoc/client-store/src/selectors/course', () => ({
   getCurrentCourse: () => mockGetCurrentCourse(),
 }))
 
-let mockGetApp
-jest.mock('@innodoc/client-store/src/selectors', () => {
-  const actualSelectors = jest.requireActual(
-    '@innodoc/client-store/src/selectors'
-  )
-  return {
-    ...actualSelectors,
-    getApp: () => mockGetApp(),
-  }
-})
-
 describe('<InnoDocApp />', () => {
-  beforeEach(() => {
-    mockGetApp = () => ({})
-  })
-
   describe('render', () => {
     const DummyComponent = () => {}
     const mockStore = {
@@ -63,22 +47,6 @@ describe('<InnoDocApp />', () => {
       expect(wrapper.find(PageTitle).exists()).toBe(true)
       expect(wrapper.find(Provider).exists()).toBe(true)
       expect(wrapper.find(DummyComponent).exists()).toBe(true)
-    })
-
-    it('should subscribe to Router.routeChangeStart', () => {
-      const dispatchRouteChangeStart = () => {}
-      Router.events.on.mockClear()
-      shallow(
-        <InnoDocApp
-          Component={DummyComponent}
-          dispatchRouteChangeStart={dispatchRouteChangeStart}
-          pageProps={{}}
-          store={mockStore}
-        />
-      )
-      expect(Router.events.on).toBeCalledTimes(1)
-      expect(Router.events.on.mock.calls[0][0]).toBe('routeChangeStart')
-      expect(Router.events.on.mock.calls[0][1]).toBe(dispatchRouteChangeStart)
     })
   })
 
@@ -169,11 +137,17 @@ describe('<InnoDocApp />', () => {
       })
     })
 
-    it('should not dispatch anything (client)', async () => {
-      expect.assertions(1)
+    it('should subscribe to Router.routeChangeStart (client)', async () => {
+      expect.assertions(5)
       const ctx = { store: mockStore }
       await InnoDocApp.getInitialProps({ ctx, Component: () => {} })
-      expect(mockStore.dispatch).not.toHaveBeenCalled()
+      expect(Router.events.on).toBeCalledTimes(1)
+      const [eventName, eventFunc] = Router.events.on.mock.calls[0]
+      expect(eventName).toBe('routeChangeStart')
+      expect(eventFunc).toEqual(expect.any(Function))
+      eventFunc()
+      expect(mockStore.dispatch).toHaveBeenCalledTimes(1)
+      expect(mockStore.dispatch).toHaveBeenCalledWith(routeChangeStart())
     })
 
     describe('pageProps', () => {
@@ -229,59 +203,5 @@ describe('<InnoDocApp />', () => {
         expect(pageProps.foo).toEqual('bar')
       })
     })
-  })
-})
-
-describe('waitForCourse', () => {
-  let storeCallback
-  const mockStore = {
-    getState: () => {},
-    subscribe: jest.fn((cb) => {
-      storeCallback = cb
-      return () => {}
-    }),
-    fakeUpdate: () => {
-      storeCallback()
-    },
-  }
-  const course = { mockCourse: 'foo' }
-  const getCurrentCourse = () => course
-
-  beforeEach(() => {
-    storeCallback = undefined
-    mockStore.subscribe.mockClear()
-    mockGetCurrentCourse = getCurrentCourse
-    mockGetApp = () => ({})
-  })
-
-  it("should return course if it's immediately available", async () => {
-    expect.assertions(2)
-    const returnedCourse = await waitForCourse(mockStore)
-    expect(returnedCourse).toBe(course)
-    expect(mockStore.subscribe).not.toHaveBeenCalled()
-  })
-
-  it('should return when course becomes available', async () => {
-    expect.assertions(2)
-    mockGetCurrentCourse = () => {}
-    const waitForCoursePromise = waitForCourse(mockStore)
-    mockStore.fakeUpdate()
-    mockStore.fakeUpdate()
-    mockGetCurrentCourse = getCurrentCourse
-    mockStore.fakeUpdate()
-    const returnedCourse = await waitForCoursePromise
-    expect(returnedCourse).toBe(course)
-    expect(mockStore.subscribe).toBeCalledTimes(1)
-  })
-
-  it('should reject with error', async () => {
-    expect.assertions(2)
-    const error = new Error('foo')
-    mockGetApp = () => ({ error })
-    mockGetCurrentCourse = () => {}
-    const waitForCoursePromise = waitForCourse(mockStore)
-    mockStore.fakeUpdate()
-    await expect(waitForCoursePromise).rejects.toBe(error)
-    expect(mockStore.subscribe).toBeCalledTimes(1)
   })
 })

@@ -3,6 +3,8 @@ import React from 'react'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
+import { getDisplayName, getWrappedComponentProps } from './util'
+
 const waitForManifest = (store) =>
   new Promise((resolve, reject) => {
     let course = courseSelectors.getCurrentCourse(store.getState())
@@ -29,14 +31,15 @@ const withWaitForManifest = (WrappedComponent) => {
   // eslint-disable-next-line react/jsx-props-no-spreading
   const WithWaitForManifest = (props) => <WrappedComponent {...props} />
 
-  WithWaitForManifest.getInitialProps = async (ctx) => {
-    let wrappedComponentProps = { pageProps: {} }
-    if (WrappedComponent.getInitialProps) {
-      wrappedComponentProps = await WrappedComponent.getInitialProps(ctx)
-    }
+  WithWaitForManifest.getInitialProps = async (context) => {
+    const { ctx } = context
+    const wrappedComponentProps = await getWrappedComponentProps(
+      WrappedComponent,
+      context
+    )
 
     await Promise.race([
-      waitForManifest(ctx.ctx.store),
+      waitForManifest(ctx.store),
       new Promise((resolve, reject) => {
         const timeoutId = setTimeout(() => {
           clearTimeout(timeoutId)
@@ -45,17 +48,15 @@ const withWaitForManifest = (WrappedComponent) => {
       }),
     ])
 
-    return {
-      ...wrappedComponentProps,
-    }
+    return wrappedComponentProps
   }
 
-  const wrappedDisplayName =
-    WrappedComponent.displayName || WrappedComponent.name || 'Component'
-  WithWaitForManifest.displayName = `WithInnodocPreparation(${wrappedDisplayName})`
-
+  WithWaitForManifest.displayName = getDisplayName(
+    'WithWaitForManifest',
+    WrappedComponent
+  )
   return WithWaitForManifest
 }
 
-export { waitForManifest } // for testing
+export { waitForManifest }
 export default withWaitForManifest
