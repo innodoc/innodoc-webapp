@@ -15,6 +15,7 @@ describe('connectDb', () => {
       nodeEnv: 'development',
     })
     expect(mongoose.connect).toBeCalledWith('mongodb://mongohost/coll', {
+      useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
