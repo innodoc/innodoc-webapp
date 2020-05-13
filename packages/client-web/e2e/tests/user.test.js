@@ -79,7 +79,7 @@ describe('Account interactions', () => {
         '[class*=header___] ul[class*=nav___] a[href="/page/about"]'
       )
       await browser.waitForNavigation()
-      expect(await browser.text('h1')).toContain('About this course')
+      await browser.waitForText('About this course')
       await logout(email)
     })
 
