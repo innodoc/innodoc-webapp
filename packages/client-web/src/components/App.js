@@ -12,7 +12,6 @@ import '@innodoc/client-web/src/style/lato-font.sss'
 
 import { appWithTranslation } from '@innodoc/client-misc/src/i18n'
 import rootSaga from '@innodoc/client-sagas'
-import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import makeMakeStore from '@innodoc/client-store/src/store'
 import {
@@ -23,33 +22,12 @@ import {
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
 import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
 
+import withWaitForManifest from './hoc/withWaitForManifest'
 import PageTitle from './PageTitle'
 
 const DEFAULT_MATHJAX_FONT_URL = `${
   process.browser ? window.location.origin : ''
 }/fonts/mathjax-woff-v2`
-
-const waitForCourse = (store) =>
-  new Promise((resolve, reject) => {
-    let course = courseSelectors.getCurrentCourse(store.getState())
-    if (course) {
-      resolve(course)
-    } else {
-      const unsubscribe = store.subscribe(() => {
-        course = courseSelectors.getCurrentCourse(store.getState())
-        if (course) {
-          unsubscribe()
-          resolve(course)
-        } else {
-          const { error } = appSelectors.getApp(store.getState())
-          if (error) {
-            unsubscribe()
-            reject(error)
-          }
-        }
-      })
-    }
-  })
 
 const InnoDocApp = ({ Component, pageProps, store }) => {
   const { mathJaxOptions, ...pagePropsRest } = pageProps
@@ -113,18 +91,8 @@ InnoDocApp.getInitialProps = async ({ Component, ctx }) => {
     Router.events.on('routeChangeStart', () => dispatch(routeChangeStart()))
   }
 
-  // Wait for course manifest
-  const course = await Promise.race([
-    waitForCourse(ctx.store),
-    new Promise((resolve, reject) => {
-      const timeoutId = setTimeout(() => {
-        clearTimeout(timeoutId)
-        reject()
-      }, 1000)
-    }),
-  ])
-
   // Build custom MathJax options
+  const course = courseSelectors.getCurrentCourse(ctx.store.getState())
   const defaultMathJaxOptions = {
     chtml: { fontURL: DEFAULT_MATHJAX_FONT_URL },
   }
@@ -148,7 +116,9 @@ InnoDocApp.getInitialProps = async ({ Component, ctx }) => {
   }
 }
 
-export { InnoDocApp, waitForCourse } // for testing
+export { InnoDocApp } // for testing
 export default withRedux(makeMakeStore(rootSaga))(
-  appWithTranslation(withReduxSaga(withServerContext(InnoDocApp)))
+  withWaitForManifest(
+    appWithTranslation(withReduxSaga(withServerContext(InnoDocApp)))
+  )
 )
