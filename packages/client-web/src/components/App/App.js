@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
-import Router from 'next/router'
 import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 import { insert } from 'mathjax-full/js/util/Options'
@@ -16,13 +15,13 @@ import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import makeMakeStore from '@innodoc/client-store/src/store'
 import {
   loadManifest,
-  routeChangeStart,
   setServerConfiguration,
 } from '@innodoc/client-store/src/actions/content'
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
 import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
 
 import PageTitle from '../PageTitle'
+import RouteNotifier from './RouteNotifier'
 import withIndexRedirect from './withIndexRedirect'
 import withWaitForManifest from './withWaitForManifest'
 
@@ -42,6 +41,7 @@ const InnoDocApp = ({ Component, pageProps, store }) => {
           {...pagePropsRest}
         />
       </MathJax.ConfigProvider>
+      <RouteNotifier />
     </Provider>
   )
 }
@@ -88,11 +88,6 @@ InnoDocApp.getInitialProps = async ({ Component, ctx }) => {
     if (ctx.res.locals.loggedInEmail) {
       dispatch(userLoggedIn(ctx.res.locals.loggedInEmail))
     }
-  }
-  // on client
-  else {
-    // Notify store about route changes
-    Router.events.on('routeChangeStart', () => dispatch(routeChangeStart()))
   }
 
   // Build custom MathJax options
