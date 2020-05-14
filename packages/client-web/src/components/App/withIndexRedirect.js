@@ -20,9 +20,6 @@ const withIndexRedirect = (WrappedComponent) => {
 
     if (ctx.store && ctx.res && ctx.asPath === '/') {
       const course = courseSelectors.getCurrentCourse(ctx.store.getState())
-      if (!course) {
-        throw new Error('Could not retrieve course!')
-      }
 
       let parsedHomeLink
       try {
