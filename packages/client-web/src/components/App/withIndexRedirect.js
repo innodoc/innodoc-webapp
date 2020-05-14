@@ -5,9 +5,11 @@ import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import getLinkInfo from '../../getLinkInfo'
 import createHoc from './createHoc'
 
-const withIndexRedirect = createHoc('WithIndexRedirect', async (ctx) => {
-  if (ctx.store && ctx.res && ctx.asPath === '/') {
-    const course = courseSelectors.getCurrentCourse(ctx.store.getState())
+const withIndexRedirect = createHoc('WithIndexRedirect', (ctx) => {
+  if (ctx.asPath === '/') {
+    const state = ctx.store.getState()
+    const course = courseSelectors.getCurrentCourse(state)
+    const { pagePathPrefix, sectionPathPrefix } = appSelectors.getApp(state)
 
     let parsedHomeLink
     try {
@@ -17,12 +19,10 @@ const withIndexRedirect = createHoc('WithIndexRedirect', async (ctx) => {
     }
     const [contentType, contentId] = parsedHomeLink
 
-    const { pagePathPrefix, sectionPathPrefix } = appSelectors.getApp(
-      ctx.store.getState()
-    )
     const pathPrefix =
       contentType === 'page' ? pagePathPrefix : sectionPathPrefix
     const linkInfo = getLinkInfo(pathPrefix, contentId)
+
     ctx.res.writeHead(301, { Location: linkInfo.as.pathname })
     ctx.res.end()
   }

@@ -1,15 +1,14 @@
 import React from 'react'
 
-const createHoc = (displayName, getInitialProps) => (WrappedComponent) => {
+const createHoc = (displayName, getProps) => (WrappedComponent) => {
   // eslint-disable-next-line react/jsx-props-no-spreading
   const WithHoc = (props) => <WrappedComponent {...props} />
 
   WithHoc.getInitialProps = async (context) => {
-    const { ctx } = context
+    const props = await getProps(context.ctx)
     const wrappedComponentProps = WrappedComponent.getInitialProps
-      ? WrappedComponent.getInitialProps(context)
+      ? await WrappedComponent.getInitialProps(context)
       : { pageProps: {} }
-    const props = await getInitialProps(ctx)
     return props
       ? { ...wrappedComponentProps, ...props }
       : wrappedComponentProps

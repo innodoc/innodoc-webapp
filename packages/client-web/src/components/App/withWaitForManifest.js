@@ -1,3 +1,4 @@
+import { loadManifest } from '@innodoc/client-store/src/actions/content'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
@@ -7,13 +8,13 @@ const waitForManifest = (store) =>
   new Promise((resolve, reject) => {
     let course = courseSelectors.getCurrentCourse(store.getState())
     if (course) {
-      resolve(course)
+      resolve()
     } else {
       const unsubscribe = store.subscribe(() => {
         course = courseSelectors.getCurrentCourse(store.getState())
         if (course) {
           unsubscribe()
-          resolve(course)
+          resolve()
         } else {
           const { error } = appSelectors.getApp(store.getState())
           if (error) {
@@ -25,8 +26,9 @@ const waitForManifest = (store) =>
     }
   })
 
-const withWaitForManifest = createHoc('WithWaitForManifest', async (ctx) => {
-  await Promise.race([
+const withWaitForManifest = createHoc('WithWaitForManifest', (ctx) => {
+  ctx.store.dispatch(loadManifest())
+  return Promise.race([
     waitForManifest(ctx.store),
     new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
