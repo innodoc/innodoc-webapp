@@ -22,6 +22,7 @@ describe('withIndexRedirect', () => {
         end: jest.fn(),
         writeHead: jest.fn(),
       },
+      req: { i18n: {} },
     },
   })
 
@@ -31,7 +32,7 @@ describe('withIndexRedirect', () => {
   })
 
   it('should redirect index to homeLink', async () => {
-    expect.assertions(4)
+    expect.assertions(5)
     const context = getContext('/')
     await WithIndexRedirect.getInitialProps(context)
     expect(context.ctx.res.writeHead).toHaveBeenCalledTimes(1)
@@ -39,13 +40,15 @@ describe('withIndexRedirect', () => {
     expect(httpCode).toBe(301)
     expect(headers.Location).toBe('/page/home')
     expect(context.ctx.res.end).toHaveBeenCalledTimes(1)
+    expect(context.ctx.req.i18n).toBeUndefined()
   })
 
   it('should not redirect otherwise', async () => {
-    expect.assertions(2)
+    expect.assertions(3)
     const context = getContext('/some/path')
     await WithIndexRedirect.getInitialProps(context)
     expect(context.ctx.res.writeHead).not.toHaveBeenCalled()
     expect(context.ctx.res.end).not.toHaveBeenCalled()
+    expect(context.ctx.req.i18n).toBeDefined()
   })
 })

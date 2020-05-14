@@ -1,3 +1,4 @@
+import { loadManifest } from '@innodoc/client-store/src/actions/content'
 import withWaitForManifest, { waitForManifest } from './withWaitForManifest'
 
 let mockGetCurrentCourse
@@ -18,6 +19,7 @@ jest.mock('@innodoc/client-store/src/selectors', () => {
 
 let storeCallback
 const mockStore = {
+  dispatch: jest.fn(),
   getState: () => {},
   subscribe: jest.fn((cb) => {
     storeCallback = cb
@@ -39,14 +41,13 @@ beforeEach(() => {
 })
 
 describe('waitForManifest', () => {
-  it("should return course if it's immediately available", async () => {
+  it('should resolve when course is immediately available', async () => {
     expect.assertions(2)
-    const returnedCourse = await waitForManifest(mockStore)
-    expect(returnedCourse).toBe(course)
+    await expect(waitForManifest(mockStore)).resolves.toBeUndefined()
     expect(mockStore.subscribe).not.toHaveBeenCalled()
   })
 
-  it('should return when course becomes available', async () => {
+  it('should resolve once course becomes available', async () => {
     expect.assertions(2)
     mockGetCurrentCourse = () => {}
     const waitForManifestPromise = waitForManifest(mockStore)
@@ -54,8 +55,7 @@ describe('waitForManifest', () => {
     mockStore.fakeUpdate()
     mockGetCurrentCourse = getCurrentCourse
     mockStore.fakeUpdate()
-    const returnedCourse = await waitForManifestPromise
-    expect(returnedCourse).toBe(course)
+    await expect(waitForManifestPromise).resolves.toBeUndefined()
     expect(mockStore.subscribe).toBeCalledTimes(1)
   })
 
@@ -72,23 +72,31 @@ describe('waitForManifest', () => {
 })
 
 describe('withWaitForManifest', () => {
-  it('should wait for course', async () => {
-    expect.assertions(1)
-    const Component = () => null
-    const WithWaitForManifest = withWaitForManifest(Component)
-    const context = { ctx: { store: mockStore } }
-    return expect(
-      WithWaitForManifest.getInitialProps(context)
-    ).resolves.toBeDefined()
+  const Component = () => null
+  const context = { ctx: { store: mockStore } }
+  let WithWaitForManifest
+
+  beforeEach(() => {
+    WithWaitForManifest = withWaitForManifest(Component)
   })
 
-  it('should reject on error', async () => {
+  it('should trigger loading of course manifest', async () => {
+    expect.assertions(1)
+    await WithWaitForManifest.getInitialProps(context)
+    expect(mockStore.dispatch).toHaveBeenCalledWith(loadManifest())
+  })
+
+  it('should wait for course', () => {
+    expect.assertions(1)
+    return expect(
+      WithWaitForManifest.getInitialProps(context)
+    ).resolves.toEqual(expect.any(Object))
+  })
+
+  it('should reject on error', () => {
     expect.assertions(1)
     mockGetApp = () => ({ error: new Error() })
     mockGetCurrentCourse = () => {}
-    const Component = () => null
-    const WithWaitForManifest = withWaitForManifest(Component)
-    const context = { ctx: { store: mockStore } }
     return expect(
       WithWaitForManifest.getInitialProps(context)
     ).rejects.toThrow()

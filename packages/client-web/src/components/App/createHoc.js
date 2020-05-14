@@ -8,7 +8,7 @@ const createHoc = (displayName, getProps) => (WrappedComponent) => {
     const props = await getProps(context.ctx)
     const wrappedComponentProps = WrappedComponent.getInitialProps
       ? await WrappedComponent.getInitialProps(context)
-      : { pageProps: {} }
+      : {}
     return props
       ? { ...wrappedComponentProps, ...props }
       : wrappedComponentProps
