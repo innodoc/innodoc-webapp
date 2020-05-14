@@ -1,9 +1,7 @@
-import React from 'react'
-
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
-import { getDisplayName, getWrappedComponentProps } from './util'
+import createHoc from './createHoc'
 
 const waitForManifest = (store) =>
   new Promise((resolve, reject) => {
@@ -27,36 +25,17 @@ const waitForManifest = (store) =>
     }
   })
 
-const withWaitForManifest = (WrappedComponent) => {
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  const WithWaitForManifest = (props) => <WrappedComponent {...props} />
-
-  WithWaitForManifest.getInitialProps = async (context) => {
-    const { ctx } = context
-    const wrappedComponentProps = await getWrappedComponentProps(
-      WrappedComponent,
-      context
-    )
-
-    await Promise.race([
-      waitForManifest(ctx.store),
-      new Promise((resolve, reject) => {
-        const timeoutId = setTimeout(() => {
-          clearTimeout(timeoutId)
-          reject(new Error('Could not retrieve course manifest!'))
-        }, 2000)
-      }),
-    ])
-
-    return wrappedComponentProps
-  }
-
-  WithWaitForManifest.displayName = getDisplayName(
-    'WithWaitForManifest',
-    WrappedComponent
-  )
-  return WithWaitForManifest
-}
+const withWaitForManifest = createHoc('WithWaitForManifest', async (ctx) => {
+  await Promise.race([
+    waitForManifest(ctx.store),
+    new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => {
+        clearTimeout(timeoutId)
+        reject(new Error('Could not retrieve course manifest!'))
+      }, 2000)
+    }),
+  ])
+})
 
 export { waitForManifest }
 export default withWaitForManifest

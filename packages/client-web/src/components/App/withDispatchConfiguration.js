@@ -1,5 +1,3 @@
-import React from 'react'
-
 import {
   loadManifest,
   setServerConfiguration,
@@ -7,19 +5,11 @@ import {
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
 import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
 
-import { getDisplayName, getWrappedComponentProps } from './util'
+import createHoc from './createHoc'
 
-const withDispatchConfiguration = (WrappedComponent) => {
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  const WithDispatchConfiguration = (props) => <WrappedComponent {...props} />
-
-  WithDispatchConfiguration.getInitialProps = async (context) => {
-    const { ctx } = context
-    const wrappedComponentProps = await getWrappedComponentProps(
-      WrappedComponent,
-      context
-    )
-
+const withDispatchConfiguration = createHoc(
+  'WithDispatchConfiguration',
+  async (ctx) => {
     // Only on server
     if (ctx.req && ctx.res) {
       const { dispatch } = ctx.store
@@ -49,15 +39,7 @@ const withDispatchConfiguration = (WrappedComponent) => {
       // Load content manifest on start-up
       dispatch(loadManifest())
     }
-
-    return wrappedComponentProps
   }
-
-  WithDispatchConfiguration.displayName = getDisplayName(
-    'WithDispatchConfiguration',
-    WrappedComponent
-  )
-  return WithDispatchConfiguration
-}
+)
 
 export default withDispatchConfiguration
