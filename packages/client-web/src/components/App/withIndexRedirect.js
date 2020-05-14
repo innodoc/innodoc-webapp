@@ -25,6 +25,9 @@ const withIndexRedirect = createHoc('WithIndexRedirect', (ctx) => {
 
     ctx.res.writeHead(301, { Location: linkInfo.as.pathname })
     ctx.res.end()
+
+    // Remove i18next, otherwise it would try to send headers
+    ctx.req.i18n = undefined
   }
 })
 
