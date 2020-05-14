@@ -13,15 +13,10 @@ import { appWithTranslation } from '@innodoc/client-misc/src/i18n'
 import rootSaga from '@innodoc/client-sagas'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import makeMakeStore from '@innodoc/client-store/src/store'
-import {
-  loadManifest,
-  setServerConfiguration,
-} from '@innodoc/client-store/src/actions/content'
-import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
-import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
 
 import PageTitle from '../PageTitle'
 import RouteNotifier from './RouteNotifier'
+import withDispatchConfiguration from './withDispatchConfiguration'
 import withIndexRedirect from './withIndexRedirect'
 import withWaitForManifest from './withWaitForManifest'
 
@@ -53,43 +48,6 @@ InnoDocApp.propTypes = {
 }
 
 InnoDocApp.getInitialProps = async ({ Component, ctx }) => {
-  const { dispatch } = ctx.store
-
-  // on server
-  if (ctx.req && ctx.res) {
-    // Set initial content URLs (passed from server/app configuration)
-    const {
-      appRoot,
-      contentRoot,
-      staticRoot,
-      sectionPathPrefix,
-      pagePathPrefix,
-    } = ctx.res.locals
-    dispatch(
-      setServerConfiguration(
-        appRoot,
-        contentRoot,
-        staticRoot,
-        ctx.req.csrfToken(),
-        sectionPathPrefix,
-        pagePathPrefix
-      )
-    )
-
-    // Pass detected language to store
-    if (ctx.req.i18n) {
-      dispatch(languageDetected(ctx.req.i18n.language))
-    }
-
-    // Load content manifest on start-up
-    dispatch(loadManifest())
-
-    // Server verified access token
-    if (ctx.res.locals.loggedInEmail) {
-      dispatch(userLoggedIn(ctx.res.locals.loggedInEmail))
-    }
-  }
-
   // Build custom MathJax options
   const course = courseSelectors.getCurrentCourse(ctx.store.getState())
   const defaultMathJaxOptions = {
@@ -119,7 +77,9 @@ export { InnoDocApp } // for testing
 export default withRedux(makeMakeStore(rootSaga))(
   withWaitForManifest(
     withIndexRedirect(
-      appWithTranslation(withReduxSaga(withServerContext(InnoDocApp)))
+      withDispatchConfiguration(
+        appWithTranslation(withReduxSaga(withServerContext(InnoDocApp)))
+      )
     )
   )
 )
