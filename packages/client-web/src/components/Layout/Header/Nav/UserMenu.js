@@ -38,7 +38,7 @@ const UserMenu = (props) => {
           <Link href="/results">
             <a>
               <LineChartOutlined />
-              {t('user.resultsTitle')} {/* TODO */}
+              {t('results.title')}
             </a>
           </Link>
         </Menu.Item>,

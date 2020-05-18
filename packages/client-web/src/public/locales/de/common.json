@@ -84,6 +84,9 @@
     },
     "inputFeedback": "Eingabe"
   },
+  "results": {
+    "title": "Ergebnisse"
+  },
   "user": {
     "changePassword": {
       "error": {

@@ -84,6 +84,9 @@
     },
     "inputFeedback": "Input"
   },
+  "results": {
+    "title": "Results"
+  },
   "user": {
     "changePassword": {
       "error": {
