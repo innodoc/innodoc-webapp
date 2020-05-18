@@ -21,17 +21,21 @@ const findAndRemove = (links, q, rel) => {
   return undefined
 }
 
+const sortLinks = (links) => {
+  return SEARCH_STRINGS.reduce((acc, searchStr) => {
+    for (;;) {
+      const plLink = findAndRemove(links, searchStr, 'preload')
+      if (!plLink) break
+      const sLink = findAndRemove(links, plLink.props.href, 'stylesheet')
+      acc.push(plLink, sLink)
+    }
+    return acc
+  }, [])
+}
+
+export { sortLinks } // for testing
 export default class Head extends NextHead {
   getCssLinks() {
-    const links = super.getCssLinks()
-    return SEARCH_STRINGS.reduce((acc, searchStr) => {
-      for (;;) {
-        const plLink = findAndRemove(links, searchStr, 'preload')
-        if (!plLink) break
-        const sLink = findAndRemove(links, plLink.props.href, 'stylesheet')
-        acc.push(plLink, sLink)
-      }
-      return acc
-    }, [])
+    return sortLinks(super.getCssLinks())
   }
 }
