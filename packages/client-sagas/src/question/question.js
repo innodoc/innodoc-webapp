@@ -10,8 +10,8 @@ export const QUESTION_ANSWER_THROTTLE = 500
 
 export function* handleQuestionAnswered({ data }) {
   const { questionId, attributes, answer } = data
-  const { questionType, solution, ...remainingAttrs } = attributes
-  const checker = checkers[questionType]
+  const { solution, validation, ...remainingAttrs } = attributes
+  const checker = checkers[validation]
   if (checker) {
     const correct = yield call(checker, answer, solution, remainingAttrs)
     yield put(questionSolved({ questionId, answer, correct }))

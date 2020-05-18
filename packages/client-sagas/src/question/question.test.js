@@ -17,7 +17,7 @@ describe('handleQuestionAnswered', () => {
       questionId: 'foo/bar#Q1',
       answer: '41',
       attributes: {
-        questionType: 'exact',
+        validation: 'exact',
         solution: '42',
       },
     }
@@ -38,7 +38,7 @@ describe('handleQuestionAnswered', () => {
       questionId: 'foo/bar#Q1',
       answer: '41',
       attributes: {
-        questionType: 'this-checker-does-not-exist',
+        validation: 'this-checker-does-not-exist',
         solution: '42',
       },
     }
