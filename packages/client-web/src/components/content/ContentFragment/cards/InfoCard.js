@@ -3,15 +3,16 @@ import PropTypes from 'prop-types'
 import { InfoCircleOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
-import { contentType } from '@innodoc/client-misc/src/propTypes'
+import { attributeType, contentType } from '@innodoc/client-misc/src/propTypes'
+import { getNumberedTitle } from '@innodoc/client-misc/src/util'
 
 import Card from './Card'
 
-const InfoCard = ({ content, id }) => {
+const InfoCard = ({ attributes, content, id }) => {
   const { t } = useTranslation()
   return (
     <Card
-      title={t('content.info')}
+      title={getNumberedTitle(t('content.info'), attributes)}
       cardType="info"
       icon={<InfoCircleOutlined />}
       content={content}
@@ -21,6 +22,7 @@ const InfoCard = ({ content, id }) => {
 }
 
 InfoCard.propTypes = {
+  attributes: attributeType.isRequired,
   content: contentType.isRequired,
   id: PropTypes.string,
 }

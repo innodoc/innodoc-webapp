@@ -3,15 +3,16 @@ import PropTypes from 'prop-types'
 import { EyeOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
-import { contentType } from '@innodoc/client-misc/src/propTypes'
+import { attributeType, contentType } from '@innodoc/client-misc/src/propTypes'
+import { getNumberedTitle } from '@innodoc/client-misc/src/util'
 
 import Card from './Card'
 
-const ExampleCard = ({ content, id }) => {
+const ExampleCard = ({ attributes, content, id }) => {
   const { t } = useTranslation()
   return (
     <Card
-      title={t('content.example')}
+      title={getNumberedTitle(t('content.example'), attributes)}
       cardType="example"
       icon={<EyeOutlined />}
       content={content}
@@ -21,6 +22,7 @@ const ExampleCard = ({ content, id }) => {
 }
 
 ExampleCard.propTypes = {
+  attributes: attributeType.isRequired,
   content: contentType.isRequired,
   id: PropTypes.string,
 }

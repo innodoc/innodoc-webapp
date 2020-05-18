@@ -36,6 +36,13 @@ const getClassNameToComponentMapper = (classNameComponentMap) => {
   }
 }
 
+// Generate numbered title from attributes (e.g. "Example 1.2.1")
+const getNumberedTitle = (title, attributes) => {
+  const attrsObj = attributesToObject(attributes)
+  const number = attrsObj['data-number']
+  return number ? `${title} ${number}` : title
+}
+
 // Sort an obejct (using name key) in an alphanumerical way considering umlauts/accents etc.
 const intSortArray = (lang) => {
   const { compare } = new Intl.Collator(lang)
@@ -67,6 +74,7 @@ export {
   astToString,
   attributesToObject,
   getClassNameToComponentMapper,
+  getNumberedTitle,
   intSortArray,
   parseContentId,
   parseLink,

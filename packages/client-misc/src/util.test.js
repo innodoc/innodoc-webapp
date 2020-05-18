@@ -2,6 +2,7 @@ import {
   astToString,
   attributesToObject,
   getClassNameToComponentMapper,
+  getNumberedTitle,
   parseContentId,
   parseLink,
   intSortArray,
@@ -65,6 +66,18 @@ describe('getClassNameToComponentMapper', () => {
     expect(mapper('foo')).toBe(Foo)
     expect(mapper('bar')).toBe(Bar)
     expect(mapper('baz')).toBe(null)
+  })
+})
+
+describe('getNumberedTitle', () => {
+  it('should generate numbered title from title and attributes', () => {
+    expect(getNumberedTitle('Foo', [['data-number', '1.2.3']])).toBe(
+      'Foo 1.2.3'
+    )
+  })
+
+  it('should just return title if "data-number" attribute is not present', () => {
+    expect(getNumberedTitle('Foo', [['bar', 'baz']])).toBe('Foo')
   })
 })
 

@@ -3,17 +3,18 @@ import PropTypes from 'prop-types'
 import { FormOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
-import { contentType } from '@innodoc/client-misc/src/propTypes'
+import { attributeType, contentType } from '@innodoc/client-misc/src/propTypes'
+import { getNumberedTitle } from '@innodoc/client-misc/src/util'
 
 import Card from '../Card'
 import ExerciseProvider from './ExerciseProvider'
 
-const ExerciseCard = ({ content, id }) => {
+const ExerciseCard = ({ attributes, content, id }) => {
   const { t } = useTranslation()
   return (
     <ExerciseProvider>
       <Card
-        title={t('content.exercise')}
+        title={getNumberedTitle(t('content.exercise'), attributes)}
         cardType="exercise"
         icon={<FormOutlined />}
         content={content}
@@ -24,6 +25,7 @@ const ExerciseCard = ({ content, id }) => {
 }
 
 ExerciseCard.propTypes = {
+  attributes: attributeType.isRequired,
   content: contentType.isRequired,
   id: PropTypes.string,
 }
