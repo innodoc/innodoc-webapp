@@ -13,6 +13,7 @@ describe('makeStore', () => {
     expect(store).toBeDefined()
     const state = store.getState()
     expect(state.orm.App).toBeDefined()
+    expect(state.orm.Box).toBeDefined()
     expect(state.orm.Course).toBeDefined()
     expect(state.orm.Fragment).toBeDefined()
     expect(state.orm.IndexTerm).toBeDefined()
