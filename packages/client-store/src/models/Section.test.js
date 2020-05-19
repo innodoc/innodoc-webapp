@@ -43,7 +43,7 @@ const loadToc = (state) => {
   return session.state
 }
 
-describe('Page', () => {
+describe('Section', () => {
   let session
 
   beforeEach(() => {
@@ -85,7 +85,7 @@ describe('Page', () => {
     })
   })
 
-  describe('Section.getDisplaytitle', () => {
+  describe('getDisplaytitle()', () => {
     it.each([
       [[0], '1 Test title'],
       [[0, 0], '1.1 Test title'],
