@@ -75,20 +75,12 @@ const getState = () => ({ orm: session.state })
 describe('sectionSelectors', () => {
   beforeEach(() => setCurrentSection('test/child1'))
 
-  test.each([
-    ['test/child1/child11', true],
-    ['does/not/exist', false],
-  ])('sectionExists: %s', (sectionId, exists) =>
-    expect(sectionSelectors.sectionExists(getState(), sectionId)).toBe(exists)
-  )
-
-  test.each(['test/child1', 'test/child1/child12'])(
-    'getSection: %s',
-    (sectionId) =>
-      expect(sectionSelectors.getSection(getState(), sectionId)).toEqual(
-        sections[sectionId]
-      )
-  )
+  test('getChapters', () => {
+    const chapters = sectionSelectors
+      .getChapters(getState())
+      .map((model) => model.ref)
+    expect(chapters).toEqual([sections.test])
+  })
 
   test('getCurrentSection', () =>
     expect(sectionSelectors.getCurrentSection(getState())).toEqual(
@@ -105,60 +97,77 @@ describe('sectionSelectors', () => {
     expect(sectionSelectors.getCurrentTitle(getState())).toEqual(
       '1.1 test child1 title'
     ))
-})
 
-describe('getBreadcrumbSections', () => {
+  test.each(['test/child1', 'test/child1/child12'])(
+    'getSection: %s',
+    (sectionId) =>
+      expect(sectionSelectors.getSection(getState(), sectionId)).toEqual(
+        sections[sectionId]
+      )
+  )
+
+  describe('makeGetSectionLink', () => {
+    it('calls makeMakeGetContentLink', () => {
+      expect(makeMakeGetContentLink).toBeCalledTimes(1)
+      expect(makeMakeGetContentLink).toBeCalledWith('Section')
+    })
+  })
+
   test.each([
-    ['test', [{ id: 'test', title: '1 test title' }]],
-    [
-      'test/child1',
+    ['test/child1/child11', true],
+    ['does/not/exist', false],
+  ])('sectionExists: %s', (sectionId, exists) =>
+    expect(sectionSelectors.sectionExists(getState(), sectionId)).toBe(exists)
+  )
+
+  describe('getBreadcrumbSections', () => {
+    test.each([
+      ['test', [{ id: 'test', title: '1 test title' }]],
       [
-        { id: 'test', title: '1 test title' },
-        { id: 'test/child1', title: '1.1 test child1 title' },
+        'test/child1',
+        [
+          { id: 'test', title: '1 test title' },
+          { id: 'test/child1', title: '1.1 test child1 title' },
+        ],
       ],
-    ],
-    [
-      'test/child1/child12',
       [
-        { id: 'test', title: '1 test title' },
-        { id: 'test/child1', title: '1.1 test child1 title' },
-        { id: 'test/child1/child12', title: '1.1.2 test child12 title' },
+        'test/child1/child12',
+        [
+          { id: 'test', title: '1 test title' },
+          { id: 'test/child1', title: '1.1 test child1 title' },
+          { id: 'test/child1/child12', title: '1.1.2 test child12 title' },
+        ],
       ],
-    ],
-  ])('%s', (sectionId, crumbs) => {
-    setCurrentSection(sectionId)
-    expect(sectionSelectors.getBreadcrumbSections(getState())).toEqual(crumbs)
+    ])('%s', (sectionId, crumbs) => {
+      setCurrentSection(sectionId)
+      expect(sectionSelectors.getBreadcrumbSections(getState())).toEqual(crumbs)
+    })
   })
-})
 
-describe('getNextPrevSections', () => {
-  test.each([
-    ['test', undefined, 'test/child1'],
-    ['test/child1', 'test', 'test/child1/child11'],
-    ['test/child1/child12', 'test/child1/child11', 'test/child2'],
-    ['test/child2', 'test/child1/child12', undefined],
-  ])('%s', (sectionId, expPrevId, expNextId) => {
-    setCurrentSection(sectionId)
-    const { prevId, nextId } = sectionSelectors.getNextPrevSections(getState())
-    expect(prevId).toEqual(expPrevId)
-    expect(nextId).toEqual(expNextId)
+  describe('getNextPrevSections', () => {
+    test.each([
+      ['test', undefined, 'test/child1'],
+      ['test/child1', 'test', 'test/child1/child11'],
+      ['test/child1/child12', 'test/child1/child11', 'test/child2'],
+      ['test/child2', 'test/child1/child12', undefined],
+    ])('%s', (sectionId, expPrevId, expNextId) => {
+      setCurrentSection(sectionId)
+      const { prevId, nextId } = sectionSelectors.getNextPrevSections(
+        getState()
+      )
+      expect(prevId).toEqual(expPrevId)
+      expect(nextId).toEqual(expNextId)
+    })
   })
-})
 
-describe('getToc', () => {
-  test('getToc', () => {
-    const toc = sectionSelectors.getToc(getState())
-    expect(toc[0].id).toEqual('test')
-    expect(toc[0].children[0].id).toEqual('test/child1')
-    expect(toc[0].children[0].children[0].id).toEqual('test/child1/child11')
-    expect(toc[0].children[0].children[1].id).toEqual('test/child1/child12')
-    expect(toc[0].children[1].id).toEqual('test/child2')
-  })
-})
-
-describe('makeGetSectionLink', () => {
-  it('calls makeMakeGetContentLink', () => {
-    expect(makeMakeGetContentLink).toBeCalledTimes(1)
-    expect(makeMakeGetContentLink).toBeCalledWith('Section')
+  describe('getToc', () => {
+    test('getToc', () => {
+      const toc = sectionSelectors.getToc(getState())
+      expect(toc[0].id).toEqual('test')
+      expect(toc[0].children[0].id).toEqual('test/child1')
+      expect(toc[0].children[0].children[0].id).toEqual('test/child1/child11')
+      expect(toc[0].children[0].children[1].id).toEqual('test/child1/child12')
+      expect(toc[0].children[1].id).toEqual('test/child2')
+    })
   })
 })

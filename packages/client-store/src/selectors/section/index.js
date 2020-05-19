@@ -7,16 +7,9 @@ import getBreadcrumbSections from './breadcrumb'
 import getNextPrevSections from './next-prev'
 import getToc from './toc'
 
-// Check if section exists
-const sectionExists = createSelector(orm, selectId, (session, id) =>
-  session.Section.idExists(id)
-)
-
-// Return section by ID
-const getSection = createSelector(
-  orm,
-  selectId,
-  (session, id) => session.Section.withId(id).ref
+// Return all chapters (=level 1 sections)
+const getChapters = createSelector(orm, (session) =>
+  session.Section.filter((section) => !section.parentId).toModelArray()
 )
 
 // Return current section
@@ -44,6 +37,7 @@ const getCurrentSubsections = createSelector(
       : []
 )
 
+// Return current section title
 const getCurrentTitle = createSelector(
   orm,
   appSelectors.getApp,
@@ -54,16 +48,30 @@ const getCurrentTitle = createSelector(
   }
 )
 
+// Return section by ID
+const getSection = createSelector(
+  orm,
+  selectId,
+  (session, id) => session.Section.withId(id).ref
+)
+
 const makeGetSectionLink = makeMakeGetContentLink('Section')
 
+// Check if section exists
+const sectionExists = createSelector(orm, selectId, (session, id) =>
+  session.Section.idExists(id)
+)
+
 export default {
-  getBreadcrumbSections,
+  getChapters,
   getCurrentSection,
   getCurrentSubsections,
   getCurrentTitle,
-  getNextPrevSections,
   getSection,
-  getToc,
   makeGetSectionLink,
   sectionExists,
+  // re-exported
+  getBreadcrumbSections,
+  getNextPrevSections,
+  getToc,
 }
