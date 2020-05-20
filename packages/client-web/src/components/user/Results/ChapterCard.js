@@ -20,28 +20,24 @@ const getStatusTest = (percent) => {
   return 'normal'
 }
 
-const ChapterCard = ({ sectionId, title }) => {
+const ChapterCard = ({ minScore, progress, sectionId, title }) => {
   const { t } = useTranslation()
   const screens = Grid.useBreakpoint()
   const wideLayout =
     screens && Object.hasOwnProperty.call(screens, 'md') ? screens.md : true
 
-  // dummy values for now
-  const complete = true
-  const chartData = [
-    ['moduleUnits', 1, 15],
-    ['exercises', 2811, 2840],
-    ['finalTest', 90, 100],
-  ].map(([key, value, total]) => {
+  const chartData = ['moduleUnits', 'exercises', 'finalTest'].map((key) => {
+    const [value, total] = progress[key]
     const percent = Math.ceil((100 * value) / total)
-    return [
+    return {
       key,
       value,
       total,
       percent,
-      key === 'finalTest' ? getStatusTest(percent) : getStatus(percent),
-    ]
+      status: key === 'finalTest' ? getStatusTest(percent) : getStatus(percent),
+    }
   })
+  const completed = chartData[2].percent >= minScore
 
   const cardTitle = (
     <SectionLink contentId={sectionId}>
@@ -52,7 +48,7 @@ const ChapterCard = ({ sectionId, title }) => {
   )
 
   const completeText = t('results.chapterComplete')
-  const extra = complete ? (
+  const extra = completed ? (
     <>
       <Typography.Text className={css.complete} strong>
         {completeText}
@@ -64,7 +60,7 @@ const ChapterCard = ({ sectionId, title }) => {
     </>
   ) : null
 
-  const pieCharts = chartData.map(([key, value, total, percent, status]) => {
+  const pieCharts = chartData.map(({ key, value, total, percent, status }) => {
     const tKey = `results.pieCharts.${key}`
     const description = (
       <Trans i18nKey={`${tKey}.description`}>
@@ -91,6 +87,12 @@ const ChapterCard = ({ sectionId, title }) => {
 }
 
 ChapterCard.propTypes = {
+  minScore: PropTypes.number.isRequired,
+  progress: PropTypes.shape({
+    moduleUnits: PropTypes.array.isRequired,
+    exercises: PropTypes.array.isRequired,
+    finalTest: PropTypes.array.isRequired,
+  }).isRequired,
   sectionId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 }

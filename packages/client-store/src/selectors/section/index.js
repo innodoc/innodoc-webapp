@@ -14,16 +14,10 @@ const getChapters = createSelector(
   (session, { language }) =>
     session.Section.filter((section) => !section.parentId)
       .toModelArray()
-      .map((section) => {
-        const totalSections = 10
-        const visitedSections = 5
-        return {
-          id: section.id,
-          title: section.getDisplayTitle(language),
-          totalSections,
-          visitedSections,
-        }
-      })
+      .map((section) => ({
+        id: section.id,
+        title: section.getDisplayTitle(language),
+      }))
 )
 
 // Return current section
