@@ -8,7 +8,7 @@ import FeedbackIcon from './FeedbackIcon'
 import Question from './Question'
 import InputQuestion from './InputQuestion'
 import CheckboxQuestion from './CheckboxQuestion'
-import ExerciseContext from '../cards/ExerciseCard/ExerciseContext'
+import { ExerciseContext } from '../ExerciseContext'
 import css from './style.sss'
 
 let mockQuestion = {}

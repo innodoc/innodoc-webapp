@@ -3,8 +3,8 @@ import { shallow } from 'enzyme'
 import { FormOutlined } from '@ant-design/icons'
 
 import ExerciseCard from './ExerciseCard'
-import ExerciseProvider from './ExerciseProvider'
-import Card from '../Card'
+import { ExerciseProvider } from './ExerciseContext'
+import Card from '../cards/Card'
 
 describe('<ExerciseCard />', () => {
   it('should render', () => {

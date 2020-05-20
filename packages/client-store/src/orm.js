@@ -1,8 +1,8 @@
 import { ORM } from 'redux-orm'
 
 import App from './models/App'
-import Box from './models/Box'
 import Course from './models/Course'
+import Exercise from './models/Exercise'
 import Fragment from './models/Fragment'
 import IndexTerm from './models/IndexTerm'
 import IndexTermLocation from './models/IndexTermLocation'
@@ -14,8 +14,8 @@ import UserMessage from './models/UserMessage'
 const orm = new ORM({ stateSelector: (state) => state.orm })
 orm.register(
   App,
-  Box,
   Course,
+  Exercise,
   Fragment,
   IndexTerm,
   IndexTermLocation,

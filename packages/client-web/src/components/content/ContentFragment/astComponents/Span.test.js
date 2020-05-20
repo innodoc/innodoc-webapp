@@ -4,7 +4,7 @@ import { Typography } from 'antd'
 
 import ContentFragment from '../ContentFragment'
 import InputHint from '../cards/InputHint'
-import Question from '../questions'
+import Question from '../exercises/questions'
 import Span, { IndexSpan } from './Span'
 
 const content = [{ content: 'foo' }]

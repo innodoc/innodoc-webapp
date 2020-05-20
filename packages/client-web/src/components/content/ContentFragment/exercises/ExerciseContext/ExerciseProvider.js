@@ -1,30 +1,31 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
+import {
+  addQuestion,
+  questionAnswered,
+} from '@innodoc/client-store/src/actions/question'
+import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import ExerciseContext from './ExerciseContext'
 
-const addToIds = (id, ids, setIds) => {
-  if (!ids.includes(id)) {
-    setIds(ids.concat(id))
-  }
-}
-
 // All questions inside an ExerciseCard are connected using this
 // Context.Provider.
-
-const ExerciseProvider = ({ children }) => {
-  // keep track of encountered and answered question IDs
-  const [questionIds, setQuestionIds] = useState([])
-  const [answeredIds, setAnsweredIds] = useState([])
+const ExerciseProvider = ({ children, id }) => {
+  const dispatch = useDispatch()
+  const { id: sectionId } = useSelector(sectionSelectors.getCurrentSection)
+  const globalId = `${sectionId}#${id}`
 
   const [autoVerify, setAutoVerify] = useState(true)
   const [userTriggeredVerify, setUserTriggeredVerify] = useState(false)
 
   const value = {
-    addQuestion: (id) => addToIds(id, questionIds, setQuestionIds),
-    addQuestionAnswered: (id) => addToIds(id, answeredIds, setAnsweredIds),
-    allAnswered: () => questionIds.length === answeredIds.length,
+    addQuestion: (qId, points) => dispatch(addQuestion(globalId, qId, points)),
+    allAnswered: () => true, // TODO
+    questionAnswered: (qId, answer, attrs) =>
+      dispatch(questionAnswered(qId, answer, attrs)),
     getShowResult: () => autoVerify || userTriggeredVerify,
     setAutoVerify,
     setUserTriggeredVerify,
@@ -39,6 +40,7 @@ const ExerciseProvider = ({ children }) => {
 
 ExerciseProvider.propTypes = {
   children: childrenType.isRequired,
+  id: PropTypes.string.isRequired,
 }
 
 export default ExerciseProvider

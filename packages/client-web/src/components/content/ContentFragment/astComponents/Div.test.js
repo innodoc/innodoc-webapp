@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import Div from './Div'
 import UnknownType from './UnknownType'
-import ExerciseCard from '../cards/ExerciseCard'
+import ExerciseCard from '../exercises/ExerciseCard'
 import Figure from './Figure'
 
 describe('<Div />', () => {

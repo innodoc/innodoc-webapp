@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, Grid, Row, Typography } from 'antd'
+import { Card, Col, Grid, Row, Typography } from 'antd'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 
 import { Trans, useTranslation } from '@innodoc/client-misc/src/i18n'
@@ -27,15 +27,20 @@ const ChapterCard = ({ minScore, progress, sectionId, title }) => {
     screens && Object.hasOwnProperty.call(screens, 'md') ? screens.md : true
 
   const chartData = ['moduleUnits', 'exercises', 'finalTest'].map((key) => {
-    const [value, total] = progress[key]
-    const percent = Math.ceil((100 * value) / total)
-    return {
-      key,
-      value,
-      total,
-      percent,
-      status: key === 'finalTest' ? getStatusTest(percent) : getStatus(percent),
+    const keyData = progress[key]
+    if (keyData) {
+      const [value, total] = keyData
+      const percent = Math.ceil((100 * value) / total)
+      return {
+        key,
+        value,
+        total,
+        percent,
+        status:
+          key === 'finalTest' ? getStatusTest(percent) : getStatus(percent),
+      }
     }
+    return { key, value: undefined }
   })
   const completed = chartData[2].percent >= minScore
 
@@ -46,6 +51,28 @@ const ChapterCard = ({ minScore, progress, sectionId, title }) => {
       </a>
     </SectionLink>
   )
+
+  const pieCharts = chartData.map(({ key, value, total, percent, status }) => {
+    if (typeof value !== 'undefined') {
+      const tKey = `results.pieCharts.${key}`
+      const description = (
+        <Trans i18nKey={`${tKey}.description`}>
+          Scored <strong>{{ value }}</strong> of <strong>{{ total }}</strong>.
+        </Trans>
+      )
+      return (
+        <ChapterPieChart
+          description={description}
+          key={key}
+          percent={percent}
+          status={status}
+          title={t(`${tKey}.title`)}
+          wideLayout={wideLayout}
+        />
+      )
+    }
+    return <Col key={key} xs={24} sm={24} md={8} />
+  })
 
   const completeText = t('results.chapterComplete')
   const extra = completed ? (
@@ -60,25 +87,6 @@ const ChapterCard = ({ minScore, progress, sectionId, title }) => {
     </>
   ) : null
 
-  const pieCharts = chartData.map(({ key, value, total, percent, status }) => {
-    const tKey = `results.pieCharts.${key}`
-    const description = (
-      <Trans i18nKey={`${tKey}.description`}>
-        Scored <strong>{{ value }}</strong> of <strong>{{ total }}</strong>.
-      </Trans>
-    )
-    return (
-      <ChapterPieChart
-        description={description}
-        key={key}
-        percent={percent}
-        status={status}
-        title={t(`${tKey}.title`)}
-        wideLayout={wideLayout}
-      />
-    )
-  })
-
   return (
     <Card className={css.resultCard} extra={extra} title={cardTitle}>
       <Row justify="space-between">{pieCharts}</Row>
@@ -90,8 +98,8 @@ ChapterCard.propTypes = {
   minScore: PropTypes.number.isRequired,
   progress: PropTypes.shape({
     moduleUnits: PropTypes.array.isRequired,
-    exercises: PropTypes.array.isRequired,
-    finalTest: PropTypes.array.isRequired,
+    exercises: PropTypes.array,
+    finalTest: PropTypes.array,
   }).isRequired,
   sectionId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

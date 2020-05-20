@@ -1,7 +1,6 @@
 import { createSelector } from 'redux-orm'
 
 import orm from '../orm'
-import appSelectors from '.'
 import sectionSelectors from './section'
 
 const getProgress = createSelector(
@@ -18,29 +17,42 @@ const getProgress = createSelector(
           section.id.startsWith(sectionIdStart) || section.id === chapter.id
       )
       const visitedSections = sections.filter((section) => section.visited)
+      const moduleUnits = [visitedSections.count(), sections.count()]
 
       // exercises
       // TODO:
       // - exclude final test exercises
-      // - sum total points & scored points
-      const exercises = session.Box.all().filter(
-        (box) =>
-          box.type === 'exercise' && box.sectionId.startsWith(sectionIdStart)
-      )
+      const chapterExercises = session.Exercise.all()
+        .filter((ex) => ex.sectionId.startsWith(sectionIdStart))
+        .toModelArray()
+      let exercises
+      if (chapterExercises.length) {
+        // Sum over total points
+        const total = chapterExercises.reduce((acc, ex) => acc + ex.points, 0)
+        // Sum over scored points
+        const scored = chapterExercises.reduce(
+          (eAcc, ex) =>
+            eAcc +
+            ex.questions
+              .toRefArray()
+              .reduce((qAcc, q) => qAcc + (q.correct ? q.points : 0), 0),
+          0
+        )
+        exercises = [scored, total]
+      } else {
+        exercises = null
+      }
 
-      // finalTest TODO
+      // finalTest
       // TODO:
       // - include only final test exercises
       // - sum total points & scored points
+      const finalTest = [80, 100]
 
       return {
         id: chapter.id,
         title: chapter.title,
-        progress: {
-          moduleUnits: [visitedSections.count(), sections.count()],
-          exercises: [1344, exercises.count()],
-          finalTest: [80, 100],
-        },
+        progress: { moduleUnits, exercises, finalTest },
       }
     })
 )

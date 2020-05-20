@@ -4,9 +4,9 @@ import React from 'react'
 // outside of an ExerciseCard
 const ExerciseContext = React.createContext({
   addQuestion: () => {},
-  addQuestionAnswered: () => {},
   allAnswered: () => true,
   getShowResult: () => true,
+  questionAnswered: () => {},
   setAutoVerify: () => {},
   setUserTriggeredVerify: () => {},
   userTriggeredVerify: false,

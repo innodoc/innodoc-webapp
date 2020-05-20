@@ -4,9 +4,9 @@ import { CheckOutlined } from '@ant-design/icons'
 
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 import { unwrapPara } from '@innodoc/client-misc/src/util'
-import ExerciseContext from '../cards/ExerciseCard/ExerciseContext'
+import { ExerciseContext } from '../ExerciseContext'
 
-import ContentFragment from '..'
+import ContentFragment from '../..'
 
 const VerifyInfoButton = ({ content }) => {
   const {

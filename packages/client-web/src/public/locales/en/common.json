@@ -99,11 +99,11 @@
       },
       "exercises": {
         "title": "Exercises",
-        "description": "Scored <1>{{value}}</1> out of <3>{{total}}</3>."
+        "description": "Scored <1>{{value}}</1> out of <3>{{total}}</3> points."
       },
       "finalTest": {
         "title": "Final test",
-        "description": "Scored <1>{{value}}</1> out of <3>{{total}}</3>."
+        "description": "Scored <1>{{value}}</1> out of <3>{{total}}</3> points."
       }
     }
   },

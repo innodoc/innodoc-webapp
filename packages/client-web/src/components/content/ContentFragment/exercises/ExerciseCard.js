@@ -6,13 +6,13 @@ import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { attributeType, contentType } from '@innodoc/client-misc/src/propTypes'
 import { getNumberedTitle } from '@innodoc/client-misc/src/util'
 
-import Card from '../Card'
-import ExerciseProvider from './ExerciseProvider'
+import Card from '../cards/Card'
+import { ExerciseProvider } from './ExerciseContext'
 
 const ExerciseCard = ({ attributes, content, id }) => {
   const { t } = useTranslation()
   return (
-    <ExerciseProvider>
+    <ExerciseProvider id={id}>
       <Card
         title={getNumberedTitle(t('content.exercise'), attributes)}
         cardType="exercise"

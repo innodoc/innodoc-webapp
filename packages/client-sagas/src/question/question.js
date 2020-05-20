@@ -8,13 +8,12 @@ import {
 
 export const QUESTION_ANSWER_THROTTLE = 500
 
-export function* handleQuestionAnswered({ data }) {
-  const { questionId, attributes, answer } = data
+export function* handleQuestionAnswered({ id, answer, attributes }) {
   const { solution, validation, ...remainingAttrs } = attributes
   const checker = checkers[validation]
   if (checker) {
     const correct = yield call(checker, answer, solution, remainingAttrs)
-    yield put(questionSolved({ questionId, answer, correct }))
+    yield put(questionSolved(id, correct))
   }
 }
 

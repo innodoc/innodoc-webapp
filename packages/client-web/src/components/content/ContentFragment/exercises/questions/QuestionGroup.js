@@ -2,7 +2,7 @@ import React from 'react'
 
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 
-import ContentFragment from '..'
+import ContentFragment from '../..'
 
 // TODO: Remove this?
 

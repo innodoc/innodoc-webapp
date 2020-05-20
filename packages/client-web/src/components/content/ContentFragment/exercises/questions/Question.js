@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import classNames from 'classnames'
 import objectHash from 'object-hash'
 
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
-import { questionAnswered } from '@innodoc/client-store/src/actions/question'
 import questionSelectors from '@innodoc/client-store/src/selectors/question'
 import {
   attributesToObject,
@@ -13,7 +12,7 @@ import {
 } from '@innodoc/client-misc/src/util'
 import { attributeType } from '@innodoc/client-misc/src/propTypes'
 
-import ExerciseContext from '../cards/ExerciseCard/ExerciseContext'
+import { ExerciseContext } from '../ExerciseContext'
 import CheckboxQuestion from './CheckboxQuestion'
 import InputQuestion from './InputQuestion'
 import FeedbackIcon from './FeedbackIcon'
@@ -39,31 +38,25 @@ const getQuestionId = (sectionId, id, attributes) => {
 }
 
 const Question = ({ attributes, id, questionClasses }) => {
+  const attrsObj = attributesToObject(attributes)
   const { id: sectionId } = useSelector(sectionSelectors.getCurrentSection)
   const globalQuestionId = getQuestionId(sectionId, id, attributes)
   const getQuestion = useMemo(
     (state, questionId) => questionSelectors.makeGetQuestion(state, questionId),
     []
   )
-  const { answer, correct } = useSelector((state) =>
-    getQuestion(state, globalQuestionId)
-  )
-  const dispatch = useDispatch()
-  const { addQuestion, addQuestionAnswered, getShowResult } = useContext(
-    ExerciseContext
-  )
+  const question = useSelector((state) => getQuestion(state, globalQuestionId))
+  const exerciseContext = useContext(ExerciseContext)
+  const { addQuestion, getShowResult, questionAnswered } = exerciseContext
 
-  // Notify exercise context about this question
   useEffect(() => {
-    addQuestion(globalQuestionId)
-    if (answer) {
-      addQuestionAnswered(globalQuestionId)
-    }
-  }, [addQuestion, addQuestionAnswered, answer, globalQuestionId])
+    // Notify exercise context about this question
+    addQuestion(globalQuestionId, parseInt(attrsObj.points, 10) || 0)
+  }, [addQuestion, attrsObj.points, globalQuestionId])
 
   const QuestionComponent = mapClassNameToComponent(questionClasses)
   if (QuestionComponent) {
-    const attrsObj = attributesToObject(attributes)
+    const { answer, correct } = question
     const showResult = correct !== null && getShowResult()
     const feedbackIcon = <FeedbackIcon correct={showResult ? correct : null} />
     const className = showResult
@@ -77,15 +70,7 @@ const Question = ({ attributes, id, questionClasses }) => {
         attributes={attrsObj}
         className={className}
         icon={feedbackIcon}
-        onChange={(val) =>
-          dispatch(
-            questionAnswered({
-              answer: val,
-              attributes: attrsObj,
-              questionId: globalQuestionId,
-            })
-          )
-        }
+        onChange={(val) => questionAnswered(globalQuestionId, val, attrsObj)}
         value={answer}
       />
     )
