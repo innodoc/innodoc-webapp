@@ -85,7 +85,27 @@
     "inputFeedback": "Eingabe"
   },
   "results": {
-    "title": "Ergebnisse"
+    "title": "Ergebnisse",
+    "chapter": "Kapitel",
+    "chapterComplete": "Abgeschlossen",
+    "introduction": {
+      "description": "Der Bearbeitungsstand der Kursmodule wird aufgrund der bearbeiteten Übungsaufgaben sowie der Ergebnisse der Abschlusstests gemessen. Der Kurs gilt als erfolgreich absolviert, wenn sämtliche Abschlusstests mit mindestens {{minScore}} % der Punkte bestanden wurden.",
+      "message": "Bewertung"
+    },
+    "pieCharts": {
+      "moduleUnits": {
+        "title": "Lerneinheiten",
+        "description": "<1>{{value}}</1> von <3>{{total}}</3> besucht."
+      },
+      "exercises": {
+        "title": "Aufgaben",
+        "description": "<1>{{value}}</1> von <3>{{total}}</3> Punkte erreicht."
+      },
+      "finalTest": {
+        "title": "Abschlusstest",
+        "description": "<1>{{value}}</1> von <3>{{total}}</3> Punkte erreicht."
+      }
+    }
   },
   "user": {
     "changePassword": {

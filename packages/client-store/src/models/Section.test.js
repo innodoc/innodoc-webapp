@@ -2,6 +2,8 @@ import orm from '../orm'
 
 import { loadManifestSuccess, loadSectionSuccess } from '../actions/content'
 
+// TODO update
+
 const toc = [
   {
     id: 'test',

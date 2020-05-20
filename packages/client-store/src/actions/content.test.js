@@ -15,6 +15,7 @@ import {
   loadSectionFailure,
   loadSectionSuccess,
   routeChangeStart,
+  sectionVisit,
   setServerConfiguration,
 } from './content'
 
@@ -133,6 +134,12 @@ test('ROUTE_CHANGE_START action', () => {
     type: actionTypes.ROUTE_CHANGE_START,
   })
 })
+
+test('SECTION_VISIT action', () =>
+  expect(sectionVisit('foo/bar')).toEqual({
+    type: 'SECTION_VISIT',
+    sectionId: 'foo/bar',
+  }))
 
 test('SET_SERVER_CONFIGURATION action', () => {
   expect(

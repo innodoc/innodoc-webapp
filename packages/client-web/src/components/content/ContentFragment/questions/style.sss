@@ -1,13 +1,9 @@
 @import '@innodoc/client-web/src/style/antd-theme.sss'
-
-$color-correct: $green-6
-$color-incorrect: $red-6
-$color-correct-bg: fade-out($color-correct, 0.9)
-$color-incorrect-bg: fade-out($color-incorrect, 0.9)
+@import '@innodoc/client-web/src/style/posneg-colors.sss'
 
 :export
-  color-correct: $color-correct
-  color-incorrect: $color-incorrect
+  color-correct: $color-positive
+  color-incorrect: $color-negative
 
 .inputQuestion
   margin-right: $padding-xs
@@ -23,14 +19,14 @@ $color-incorrect-bg: fade-out($color-incorrect, 0.9)
 .correct
 
   input[type=text]
-    border-color: $color-correct
-    background-color: $color-correct-bg
+    border-color: $color-positive
+    background-color: $color-positive-bg
 
 .incorrect
 
   input[type=text]
-    border-color: $color-incorrect
-    background-color: $color-incorrect-bg
+    border-color: $color-negative
+    background-color: $color-negative-bg
 
 .unknownQuestion
   background-color: $color-error

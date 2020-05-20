@@ -1,24 +1,38 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { Alert } from 'antd'
 
-// import appSelectors from '@innodoc/client-store/src/selectors'
-// import sectionSelectors from '@innodoc/client-store/src/selectors/section'
-import boxSelectors from '@innodoc/client-store/src/selectors/box'
+import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import sectionSelectors from '@innodoc/client-store/src/selectors/section'
+import css from './style.sss'
 
-import ChapterResults from './ChapterResults'
+import ChapterCard from './ChapterCard'
 
 const Results = () => {
-  // const { language } = useSelector(appSelectors.getApp)
-  // const chapters = useSelector(sectionSelectors.getChapters)
-  const chapters = useSelector(boxSelectors.getExerciseBoxesByChapter)
+  const { t } = useTranslation()
+  const chapters = useSelector(sectionSelectors.getChapters)
+  const minScore = 90 // TODO: make minScore configurable through app
 
-  return chapters.map((chapter) => (
-    <ChapterResults
-      boxes={chapter.boxes}
+  const chapterCards = chapters.map((chapter) => (
+    <ChapterCard
       key={chapter.id.toString()}
+      sectionId={chapter.id}
       title={chapter.title}
     />
   ))
+
+  return (
+    <>
+      <Alert
+        className={css.info}
+        description={t('results.introduction.description', { minScore })}
+        message={t('results.introduction.message')}
+        type="info"
+        showIcon
+      />
+      {chapterCards}
+    </>
+  )
 }
 
 export default Results

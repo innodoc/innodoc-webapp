@@ -16,6 +16,7 @@ export const actionTypes = makeActions([
   'LOAD_SECTION_SUCCESS',
   'LOAD_SECTION',
   'ROUTE_CHANGE_START',
+  'SECTION_VISIT',
   'SET_SERVER_CONFIGURATION',
 ])
 
@@ -91,6 +92,11 @@ export const loadSection = (contentId, prevLanguage = undefined) => ({
 
 export const routeChangeStart = () => ({
   type: actionTypes.ROUTE_CHANGE_START,
+})
+
+export const sectionVisit = (sectionId) => ({
+  type: actionTypes.SECTION_VISIT,
+  sectionId,
 })
 
 export const setServerConfiguration = (

@@ -16,6 +16,8 @@ const stdContent = {
   title: { en: 'Foo title' },
 }
 
+// TODO update
+
 const mockGetApp = appSelectors.getApp
 let mockApp
 let mockContent

@@ -8,8 +8,22 @@ import getNextPrevSections from './next-prev'
 import getToc from './toc'
 
 // Return all chapters (=level 1 sections)
-const getChapters = createSelector(orm, (session) =>
-  session.Section.filter((section) => !section.parentId).toModelArray()
+const getChapters = createSelector(
+  orm,
+  appSelectors.getApp,
+  (session, { language }) =>
+    session.Section.filter((section) => !section.parentId)
+      .toModelArray()
+      .map((section) => {
+        const totalSections = 10
+        const visitedSections = 5
+        return {
+          id: section.id,
+          title: section.getDisplayTitle(language),
+          totalSections,
+          visitedSections,
+        }
+      })
 )
 
 // Return current section

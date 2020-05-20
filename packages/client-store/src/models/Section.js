@@ -14,6 +14,7 @@ export default class Section extends Model {
       title: attr(),
       content: attr(),
       parentId: fk('Section', 'children'),
+      visited: attr({ getDefault: () => false }),
     }
   }
 
@@ -46,6 +47,9 @@ export default class Section extends Model {
             [action.data.language]: action.data.content,
           },
         })
+        break
+      case actionTypes.SECTION_VISIT:
+        SectionModel.withId(action.sectionId).set('visited', true)
         break
       default:
         break

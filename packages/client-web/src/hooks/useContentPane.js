@@ -32,6 +32,7 @@ const useContentPane = (getCurrent) => {
   })
 
   return {
+    id: loading ? null : current.id,
     content: loading ? [] : current.content[language],
     fadeInClassName,
     language,

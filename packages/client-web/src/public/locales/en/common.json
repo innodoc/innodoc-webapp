@@ -85,7 +85,27 @@
     "inputFeedback": "Input"
   },
   "results": {
-    "title": "Results"
+    "title": "Results",
+    "chapter": "Chapter",
+    "chapterComplete": "Completed",
+    "introduction": {
+      "description": "Your progress on course modules is assessed based on completed exercises and the results of the final tests. The course is considered completed once you have passed all final tests with at least a {{minScore}} % score.",
+      "message": "Assessment"
+    },
+    "pieCharts": {
+      "moduleUnits": {
+        "title": "Module units",
+        "description": "Visited <1>{{value}}</1> out of <3>{{total}}</3>."
+      },
+      "exercises": {
+        "title": "Exercises",
+        "description": "Scored <1>{{value}}</1> out of <3>{{total}}</3>."
+      },
+      "finalTest": {
+        "title": "Final test",
+        "description": "Scored <1>{{value}}</1> out of <3>{{total}}</3>."
+      }
+    }
   },
   "user": {
     "changePassword": {

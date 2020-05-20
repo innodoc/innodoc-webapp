@@ -16,6 +16,8 @@ let mockContent
 let mockCurrentSubsections
 let mockCurrentTitle
 
+// TODO update
+
 jest.mock('react-redux', () => ({
   useSelector: (selector) => {
     if (selector === mockGetCurrentSubsections) {

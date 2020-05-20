@@ -5,15 +5,17 @@ import { Typography } from 'antd'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import useContentPane from '../../hooks/useContentPane'
+import useTrackVisit from '../../hooks/useTrackVisit'
 import PageTitle from '../PageTitle'
 import ContentFragment from './ContentFragment'
 import ContentAffix from './ContentAffix'
 import SubsectionList from './SubsectionList'
 
 const Content = () => {
-  const { content, fadeInClassName } = useContentPane(
+  const { content, fadeInClassName, id } = useContentPane(
     sectionSelectors.getCurrentSection
   )
+  useTrackVisit(id)
   const subsections = useSelector(sectionSelectors.getCurrentSubsections)
   const title = useSelector(sectionSelectors.getCurrentTitle)
 
