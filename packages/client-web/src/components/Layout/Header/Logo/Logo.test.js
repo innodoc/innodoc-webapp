@@ -27,15 +27,16 @@ jest.mock('react-redux', () => ({
 describe('<Logo />', () => {
   it('should render', () => {
     const wrapper = shallow(<Logo />)
-    const logoImg = wrapper.find('img')
-    expect(logoImg.prop('alt')).toBe('Foo course')
-    expect(logoImg.prop('src')).toBe('https://example.com/_static/logo.png')
+    const logoDiv = wrapper.children('div')
+    expect(logoDiv.prop('style').backgroundImage).toMatch(
+      'https://example.com/_static/logo.png'
+    )
     expect(wrapper.find('span').text()).toBe('Foo course')
   })
 
   it('should render w/o logo', () => {
     mockCurrentCourse = { title: { en: 'Foo course' } }
     const wrapper = shallow(<Logo />)
-    expect(wrapper.exists('img')).toBe(false)
+    expect(wrapper.children('div')).toHaveLength(0)
   })
 })

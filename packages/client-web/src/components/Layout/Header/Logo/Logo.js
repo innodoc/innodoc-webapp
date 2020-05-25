@@ -12,10 +12,13 @@ const Logo = () => {
   const title = course ? course.title[language] : ''
   const logoFilename = course ? course.logo : ''
   const logoImg = logoFilename ? (
-    <img alt={title} src={`${staticRoot}${logoFilename}`} />
+    <div
+      className={css.headerLogoImg}
+      style={{ backgroundImage: `url("${staticRoot}${logoFilename}")` }}
+    />
   ) : null
   return (
-    <div className={css.headerLogoWrapper}>
+    <div className={css.headerLogoWrapper} title={title}>
       {logoImg}
       <span>{title}</span>
     </div>
