@@ -1,5 +1,7 @@
 import { createSelector } from 'redux-orm'
 
+import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+
 import orm from '../orm'
 import { selectId } from '.'
 
@@ -10,9 +12,10 @@ const makeGetQuestion = () =>
     return question
       ? question.ref
       : {
-          answer: undefined,
-          correct: undefined,
           id: undefined,
+          answer: undefined,
+          messages: [],
+          result: RESULT_VALUE.NEUTRAL,
         }
   })
 

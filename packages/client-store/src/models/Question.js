@@ -1,5 +1,7 @@
 import { Model, attr, fk } from 'redux-orm'
 
+import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+
 import { actionTypes } from '../actions/question'
 
 export default class Question extends Model {
@@ -11,9 +13,11 @@ export default class Question extends Model {
     return {
       id: attr(),
       answer: attr(),
-      correct: attr(),
+      result: attr({ getDefault: () => RESULT_VALUE.NEUTRAL }),
       points: attr({ getDefault: () => 0 }),
       exerciseId: fk('Exercise', 'questions'),
+      messages: attr({ getDefault: () => [] }),
+      latexCode: attr(),
     }
   }
 
@@ -32,10 +36,12 @@ export default class Question extends Model {
           answer: action.answer,
         })
         break
-      case actionTypes.QUESTION_SOLVED:
+      case actionTypes.QUESTION_EVALUATED:
         QuestionModel.upsert({
           id: action.id,
-          correct: action.correct,
+          messages: action.messages,
+          result: action.result,
+          latexCode: action.latexCode,
         })
         break
       default:

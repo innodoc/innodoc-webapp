@@ -10,6 +10,7 @@ const config = withSugarSS(
   withTranspileModules([
     // Monorepo modules
     '@innodoc/client-misc',
+    '@innodoc/client-question-validators',
     '@innodoc/client-sagas',
     '@innodoc/client-store',
     // ES6 node modules

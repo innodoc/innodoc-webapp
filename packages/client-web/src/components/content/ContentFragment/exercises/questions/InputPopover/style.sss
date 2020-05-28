@@ -1,19 +1,18 @@
 @import '@innodoc/client-web/src/style/antd-theme.sss'
 
 .popover
-  $color-title: $normal-color
 
-  .mathJaxWrapper
-    text-align: center
-    min-height: 2em
+  .mathJaxPreview
+    border: $border-width-base $border-style-base $border-color-base
+    background-color: $background-color-base
+    border-radius: $border-radius-sm
+    min-height: 40px
 
-  .messageList
-    padding-left: $padding-xs
-    margin-bottom: 0
+    mjx-container
+      margin: $padding-sm 0 !important
 
-  :global(.ant-popover-title)
-    background-color: $color-title
+  .messageItem, .mathJaxPreview
+    margin-bottom: $padding-xs
 
-  :global(.ant-popover-arrow)
-    border-top-color: $color-title !important
-    border-left-color: $color-title !important
+    &:last-child
+      margin-bottom: 0

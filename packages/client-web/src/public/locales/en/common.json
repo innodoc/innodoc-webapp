@@ -78,11 +78,40 @@
   },
   "questions": {
     "feedback": {
+      "correct-answer": "This is a correct solution.",
+      "exact-fraction": {
+        "denominator-not-integer": "Denominator should be integer.",
+        "denominator-not-positive": "Denominator should be positive.",
+        "fraction-not-reduced": "Fraction should be reduced.",
+        "numerator-not-integer": "Numerator should be integer.",
+        "only-integer": "Only integer allowed."
+      },
+      "incorrect-interval": "Incorrect interval",
+      "incorrect-solution-set": "Incorrect solution set",
+      "incorrect-value": "Incorrect value",
+      "malformed-input": "The input is malformed.",
+      "simplification": {
+        "abs": "Use <1>{{need}}</1> instead of <4>{{got}}</4>.",
+        "backslash": "Backslash notation used.",
+        "case-differentiation-required": "Write absolute value using case distinction.",
+        "exp": "Use <1>{{need}}</1> instead of <4>{{got}}</4>.",
+        "exponentiation-not-combined": "Powers are not combined.",
+        "fraction-not-combined": "Fraction is not combined",
+        "natural-number-required": "Must be a natural number.",
+        "no-denominator-or-exponentiation": "Must not contain denominators or powers.",
+        "product-brackets": "Use <1>{{need}}</1> instead of <4>{{got}}</4>.",
+        "product-form": "Write products like <1>{{need}}</1> instead of <4>{{got}}</4>.",
+        "resolve-denominators-and-factors": "Denominators and factors should be resolved.",
+        "roots-as-exponents": "Roots should be written as exponents.",
+        "solution-not-simplified": "Solution is not simplified."
+      },
+      "still-incorrect-answer": "Input is not yet correct."
+    },
+    "feedbackIcon": {
       "correct": "Input correct",
       "incorrect": "Input incorrect",
       "indeterminate": "No result yet"
-    },
-    "inputFeedback": "Input"
+    }
   },
   "results": {
     "title": "Results",

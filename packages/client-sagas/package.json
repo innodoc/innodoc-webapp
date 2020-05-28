@@ -17,6 +17,7 @@
   "main": "src/index.js",
   "dependencies": {
     "@innodoc/client-misc": "*",
+    "@innodoc/client-question-validators": "*",
     "@innodoc/client-store": "*",
     "redux-saga": "^1.1.3"
   },

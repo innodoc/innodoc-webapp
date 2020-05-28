@@ -1,6 +1,6 @@
-import makeActions from './makeActions'
+import { makeSymbolObj } from '@innodoc/client-misc/src/util'
 
-export const actionTypes = makeActions([
+export const actionTypes = makeSymbolObj([
   'CHANGE_COURSE',
   'CONTENT_NOT_FOUND',
   'LOAD_FRAGMENT_FAILURE',

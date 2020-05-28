@@ -2,7 +2,7 @@ import { expectSaga, testSaga } from 'redux-saga-test-plan'
 
 import {
   actionTypes as questionActionTypes,
-  questionSolved,
+  questionEvaluated,
 } from '@innodoc/client-store/src/actions/question'
 import checkers from '@innodoc/client-misc/src/questionCheckers'
 
@@ -12,7 +12,7 @@ import watchQuestionChange, {
 } from './question'
 
 describe('handleQuestionAnswered', () => {
-  it('should call the checker and put questionSolved', () => {
+  it('should call the checker and put questionEvaluated', () => {
     const data = {
       questionId: 'foo/bar#Q1',
       answer: '41',
@@ -24,7 +24,7 @@ describe('handleQuestionAnswered', () => {
     return expectSaga(handleQuestionAnswered, { data })
       .call.like({ fn: checkers.exact })
       .put(
-        questionSolved({
+        questionEvaluated({
           questionId: 'foo/bar#Q1',
           answer: '41',
           correct: false,
@@ -33,7 +33,7 @@ describe('handleQuestionAnswered', () => {
       .run()
   })
 
-  it('should not put questionSolved with unknown checker', () => {
+  it('should not put questionEvaluated with unknown checker', () => {
     const data = {
       questionId: 'foo/bar#Q1',
       answer: '41',
@@ -43,7 +43,7 @@ describe('handleQuestionAnswered', () => {
       },
     }
     return expectSaga(handleQuestionAnswered, { data })
-      .not.put.actionType(questionActionTypes.QUESTION_SOLVED)
+      .not.put.actionType(questionActionTypes.QUESTION_EVALUATED)
       .run()
   })
 })

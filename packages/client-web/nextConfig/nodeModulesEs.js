@@ -4,6 +4,7 @@ module.exports = [
   'antd',
   'lodash-es',
   'css-animation',
+  'mathjs',
   'rc-animate',
   'rc-calendar',
   'rc-pagination',

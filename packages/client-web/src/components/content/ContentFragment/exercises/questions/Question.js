@@ -11,6 +11,7 @@ import {
   getClassNameToComponentMapper,
 } from '@innodoc/client-misc/src/util'
 import { attributeType } from '@innodoc/client-misc/src/propTypes'
+import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 
 import { ExerciseContext } from '../ExerciseContext'
 import CheckboxQuestion from './CheckboxQuestion'
@@ -56,13 +57,15 @@ const Question = ({ attributes, id, questionClasses }) => {
 
   const QuestionComponent = mapClassNameToComponent(questionClasses)
   if (QuestionComponent) {
-    const { answer, correct } = question
-    const showResult = correct !== null && getShowResult()
-    const feedbackIcon = <FeedbackIcon correct={showResult ? correct : null} />
+    const { answer, result, messages, latexCode } = question
+    const showResult = result !== RESULT_VALUE.NEUTRAL && getShowResult()
+    const feedbackIcon = (
+      <FeedbackIcon result={showResult ? result : RESULT_VALUE.NEUTRAL} />
+    )
     const className = showResult
       ? classNames({
-          [css.correct]: correct,
-          [css.incorrect]: !correct,
+          [css.correct]: result === RESULT_VALUE.CORRECT,
+          [css.incorrect]: result === RESULT_VALUE.INCORRECT,
         })
       : null
     return (
@@ -70,6 +73,8 @@ const Question = ({ attributes, id, questionClasses }) => {
         attributes={attrsObj}
         className={className}
         icon={feedbackIcon}
+        latexCode={latexCode}
+        messages={messages}
         onChange={(val) => questionAnswered(globalQuestionId, val, attrsObj)}
         value={answer}
       />

@@ -4,12 +4,10 @@ import { Typography } from 'antd'
 
 import css from './style.sss'
 
-const dataType = PropTypes.arrayOf(PropTypes.object)
-
 const UnknownTypeData = ({ data }) => (
   <span className={css.componentData}>{JSON.stringify(data, null, 2)}</span>
 )
-UnknownTypeData.propTypes = { data: dataType.isRequired }
+UnknownTypeData.propTypes = { data: PropTypes.any.isRequired }
 
 const UnknownType = ({ data, name }) => {
   const [showData, setShowData] = useState(false)

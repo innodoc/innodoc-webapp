@@ -51,6 +51,11 @@ const intSortArray = (lang) => {
   return (a, b) => compare(normalize(a.name), normalize(b.name))
 }
 
+// Create an object of symbols, protecting it from code manglers
+// (e.g. { SYMBOL: "SYMBOL" })
+const makeSymbolObj = (symbolList = []) =>
+  symbolList.reduce((acc, symbol) => ({ ...acc, [symbol]: symbol }), {})
+
 const parseContentId = (contentId) => contentId.split('#')
 
 const parseLink = (href) => {
@@ -81,6 +86,7 @@ export {
   getClassNameToComponentMapper,
   getNumberedTitle,
   intSortArray,
+  makeSymbolObj,
   parseContentId,
   parseLink,
   toTwoLetterCode,

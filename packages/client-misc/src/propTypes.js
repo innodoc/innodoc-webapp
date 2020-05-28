@@ -1,24 +1,33 @@
 import PropTypes from 'prop-types'
 
 import { MESSAGE_LEVELS, MESSAGE_TYPES } from './messageDef'
+import RESULT_VALUE from './resultDef'
 
-const attributeType = PropTypes.PropTypes.arrayOf(PropTypes.array)
+export const attributeType = PropTypes.PropTypes.arrayOf(PropTypes.array)
 
-const childrenType = PropTypes.oneOfType([
+export const childrenType = PropTypes.oneOfType([
   PropTypes.arrayOf(PropTypes.node),
   PropTypes.node,
 ])
 
-const contentType = PropTypes.arrayOf(PropTypes.object)
+export const contentType = PropTypes.arrayOf(PropTypes.object)
 
-const messageType = PropTypes.shape({
+export const feedbackMessageType = PropTypes.exact({
+  msg: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(['success', 'error', 'warning', 'info']).isRequired,
+  interp: PropTypes.object,
+})
+
+export const feedbackMessagesType = PropTypes.arrayOf(feedbackMessageType)
+
+export const messageType = PropTypes.shape({
   closable: PropTypes.bool.isRequired,
   level: PropTypes.oneOf(MESSAGE_LEVELS).isRequired,
   text: PropTypes.string,
   type: PropTypes.oneOf(MESSAGE_TYPES).isRequired,
 })
 
-const sectionType = PropTypes.shape({
+export const sectionType = PropTypes.shape({
   content: PropTypes.objectOf(contentType),
   id: PropTypes.string.isRequired,
   ord: PropTypes.arrayOf(PropTypes.number).isRequired,
@@ -26,4 +35,4 @@ const sectionType = PropTypes.shape({
   title: PropTypes.objectOf(PropTypes.string).isRequired,
 })
 
-export { attributeType, childrenType, contentType, messageType, sectionType }
+export const resultType = PropTypes.oneOf(Object.values(RESULT_VALUE))

@@ -1,45 +1,46 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Popover } from 'antd'
-import MathJax from '@innodoc/react-mathjax-node'
+import { Grid, Popover } from 'antd'
 
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
-import { childrenType } from '@innodoc/client-misc/src/propTypes'
+import {
+  childrenType,
+  feedbackMessagesType,
+} from '@innodoc/client-misc/src/propTypes'
 
-import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
+import MathJaxPreview from './MathJaxPreview'
+import Messages from './Messages'
 import css from './style.sss'
 
-const InputPopover = ({ children, messages, userInput }) => {
-  const { t } = useTranslation()
-  const messageItems = messages.map((message, i) => (
-    <li key={i.toString()}>{message}</li>
-  ))
-  const messageList = messageItems.length ? (
-    <ul className={css.messageList}>{messageItems}</ul>
+const InputPopover = ({
+  children,
+  focus,
+  messages,
+  showPreview,
+  userInput,
+}) => {
+  const { lg } = Grid.useBreakpoint()
+  const hasData = Boolean(messages.length) || Boolean(userInput.length)
+
+  const preview = showPreview ? (
+    <div className={css.mathJaxPreview}>
+      <MathJaxPreview texCode={userInput || ''} />
+    </div>
   ) : null
 
   const content = (
     <>
-      <div className={css.mathJaxWrapper}>
-        <MathJax.Provider>
-          <MathJax.MathJaxNode
-            classNameHide={fadeInCss.hide}
-            classNameShow={fadeInCss.show}
-            displayType="display"
-            texCode={userInput}
-          />
-        </MathJax.Provider>
-      </div>
-      {messageList}
+      {preview}
+      <Messages messages={messages} />
     </>
   )
+
   return (
     <Popover
       content={content}
-      placement="bottom"
-      title={t('questions.inputFeedback')}
-      trigger={['focus']}
+      placement={lg ? 'rightTop' : 'bottom'}
+      trigger={[]}
       overlayClassName={css.popover}
+      visible={hasData && focus}
     >
       {children}
     </Popover>
@@ -48,13 +49,14 @@ const InputPopover = ({ children, messages, userInput }) => {
 
 InputPopover.propTypes = {
   children: childrenType.isRequired,
-  messages: PropTypes.arrayOf(PropTypes.string),
-  userInput: PropTypes.string,
+  focus: PropTypes.bool.isRequired,
+  messages: feedbackMessagesType,
+  showPreview: PropTypes.bool.isRequired,
+  userInput: PropTypes.string.isRequired,
 }
 
 InputPopover.defaultProps = {
   messages: [],
-  userInput: '',
 }
 
 export default InputPopover

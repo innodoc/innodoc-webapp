@@ -78,11 +78,40 @@
   },
   "questions": {
     "feedback": {
+      "correct-answer": "Dies ist eine richtige Lösung.",
+      "exact-fraction": {
+        "denominator-not-integer": "Nenner soll ganze Zahl sein.",
+        "denominator-not-positive": "Nenner soll positiv sein.",
+        "fraction-not-reduced": "Bruch soll maximal gekürzt sein.",
+        "numerator-not-integer": "Numerator should be integer.",
+        "only-integer": "Nur ganze Zahl erlaubt."
+      },
+      "incorrect-interval": "Falsches Intervall",
+      "incorrect-solution-set": "Falsche Lösungsmenge",
+      "incorrect-value": "Falscher Wert",
+      "malformed-input": "Die Form der Eingabe ist fehlerhaft.",
+      "simplification": {
+        "abs": "<1>{{need}}</1> anstatt <4>{{got}}</4>",
+        "backslash": "Backslash-Notation verwendet.",
+        "case-differentiation-required": "Betragsstriche sollen durch eine Fallunterscheidung geschrieben werden.",
+        "exp": "<1>{{need}}</1> anstatt <4>{{got}}</4>",
+        "exponentiation-not-combined": "Potenzen sind nicht zusammengefasst.",
+        "fraction-not-combined": "Bruch ist nicht zusammengefasst.",
+        "natural-number-required": "Soll eine natürliche Zahl sein.",
+        "no-denominator-or-exponentiation": "Darf keine Nenner oder Potenzen enthalten.",
+        "product-brackets": "<1>{{need}}</1> anstatt <4>{{got}}</4>",
+        "product-form": "Produkte in Form <1>{{need}}</1> statt <4>{{got}}</4>.",
+        "resolve-denominators-and-factors": "Nenner und Faktoren sollen aufgelöst werden.",
+        "roots-as-exponents": "Wurzeln sollen als Exponenten geschrieben werden.",
+        "solution-not-simplified": "Lösung ist nicht vereinfacht."
+      },
+      "still-incorrect-answer": "Eingabe ist noch nicht richtig."
+    },
+    "feedbackIcon": {
       "correct": "Eingabe richtig",
       "incorrect": "Eingabe falsch",
       "indeterminate": "Noch kein Ergebnis"
-    },
-    "inputFeedback": "Eingabe"
+    }
   },
   "results": {
     "title": "Ergebnisse",

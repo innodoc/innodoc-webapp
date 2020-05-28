@@ -31,13 +31,14 @@ const CheckboxQuestion = ({ className, onChange, icon, value }) => {
 
 CheckboxQuestion.propTypes = {
   className: PropTypes.string,
-  icon: PropTypes.element.isRequired,
+  icon: PropTypes.element,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
 }
 
 CheckboxQuestion.defaultProps = {
   className: '',
+  icon: null,
   value: null,
 }
 

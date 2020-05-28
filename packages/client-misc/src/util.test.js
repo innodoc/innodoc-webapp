@@ -6,6 +6,7 @@ import {
   parseContentId,
   parseLink,
   intSortArray,
+  makeSymbolObj,
   toTwoLetterCode,
   unwrapPara,
 } from './util'
@@ -129,6 +130,20 @@ describe('intSortArray', () => {
       { name: 'Éclair' },
       { name: 'Zug' },
     ])
+  })
+})
+
+describe('makeSymbolObj', () => {
+  it('should create actions object', () => {
+    expect(makeSymbolObj(['DO_THIS', 'DO_THAT'])).toEqual({
+      DO_THIS: 'DO_THIS',
+      DO_THAT: 'DO_THAT',
+    })
+  })
+
+  it('should create empty actions object', () => {
+    expect(makeSymbolObj()).toEqual({})
+    expect(makeSymbolObj([])).toEqual({})
   })
 })
 

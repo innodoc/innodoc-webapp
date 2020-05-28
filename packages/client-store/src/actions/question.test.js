@@ -1,4 +1,4 @@
-import { actionTypes, questionAnswered, questionSolved } from './question'
+import { actionTypes, questionAnswered, questionEvaluated } from './question'
 
 test('QUESTION_ANSWERED', () => {
   const data = { foo: 'bar' }
@@ -8,10 +8,10 @@ test('QUESTION_ANSWERED', () => {
   })
 })
 
-test('QUESTION_SOLVED', () => {
+test('QUESTION_EVALUATED', () => {
   const data = { foo: 'bar' }
-  expect(questionSolved(data)).toEqual({
-    type: actionTypes.QUESTION_SOLVED,
+  expect(questionEvaluated(data)).toEqual({
+    type: actionTypes.QUESTION_EVALUATED,
     data,
   })
 })

@@ -1,9 +1,9 @@
-import makeActions from './makeActions'
+import { makeSymbolObj } from '@innodoc/client-misc/src/util'
 
-export const actionTypes = makeActions([
+export const actionTypes = makeSymbolObj([
   'ADD_QUESTION',
   'QUESTION_ANSWERED',
-  'QUESTION_SOLVED',
+  'QUESTION_EVALUATED',
 ])
 
 export const addQuestion = (exerciseId, questionId, points) => ({
@@ -20,8 +20,10 @@ export const questionAnswered = (id, answer, attributes) => ({
   attributes,
 })
 
-export const questionSolved = (id, correct) => ({
-  type: actionTypes.QUESTION_SOLVED,
+export const questionEvaluated = (id, result, messages, latexCode) => ({
+  type: actionTypes.QUESTION_EVALUATED,
   id,
-  correct,
+  latexCode,
+  messages,
+  result,
 })

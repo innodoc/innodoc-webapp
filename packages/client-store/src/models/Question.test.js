@@ -1,6 +1,6 @@
 import orm from '../orm'
 
-import { questionAnswered, questionSolved } from '../actions/question'
+import { questionAnswered, questionEvaluated } from '../actions/question'
 
 describe('Question', () => {
   let session
@@ -30,13 +30,13 @@ describe('Question', () => {
       expect(questions[0].correct).toBeUndefined()
     })
 
-    test('questionSolved', () => {
+    test('questionEvaluated', () => {
       session.Question.reducer(
         questionAnswered({ questionId: 'foo/bar#EX01', answer: '42' }),
         session.Question
       )
       session.Question.reducer(
-        questionSolved({ questionId: 'foo/bar#EX01', correct: true }),
+        questionEvaluated({ questionId: 'foo/bar#EX01', correct: true }),
         session.Question
       )
       const questions = session.Question.all().toRefArray()
