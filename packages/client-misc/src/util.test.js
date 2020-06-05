@@ -140,13 +140,26 @@ describe('toTwoLetterCode', () => {
 })
 
 describe('unwrapPara', () => {
-  it('should unwrap', () => {
+  it('should unwrap single Para', () => {
     const unwrapped = unwrapPara([{ t: 'Para', c: ['foo'] }])
     expect(unwrapped).toEqual(['foo'])
   })
 
-  it('should not unwrap without Para', () => {
+  it('should not unwrap single Plain', () => {
     const unwrapped = unwrapPara([{ t: 'Plain', c: ['foo'] }])
     expect(unwrapped).toEqual([{ t: 'Plain', c: ['foo'] }])
   })
+
+  it('should unwrap list of items', () => {
+    const items = [
+      { t: 'Para', c: ['foo'] },
+      { t: 'Div', c: ['bar'] },
+      { t: 'Para', c: ['baz'] },
+    ]
+    const unwrapped = unwrapPara(items)
+    expect(unwrapped).toEqual([['foo'], { t: 'Div', c: ['bar'] }, ['baz']])
+  })
+
+  it('should return empty list for empty list', () =>
+    expect(unwrapPara([])).toEqual([]))
 })

@@ -67,8 +67,13 @@ const parseLink = (href) => {
 const toTwoLetterCode = (lang) =>
   lang.length > 2 ? lang.substring(0, 2) : lang
 
-const unwrapPara = (content) =>
-  content && content[0].t === 'Para' ? content[0].c : content
+// Unwraps all Paras in a list of content elements
+const unwrapPara = (content) => {
+  if (content.length === 1) {
+    return content[0].t === 'Para' ? content[0].c : content
+  }
+  return content.map((item) => (item.t === 'Para' ? item.c : item))
+}
 
 export {
   astToString,
