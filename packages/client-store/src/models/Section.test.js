@@ -1,8 +1,10 @@
 import orm from '../orm'
 
-import { loadManifestSuccess, loadSectionSuccess } from '../actions/content'
-
-// TODO update
+import {
+  loadManifestSuccess,
+  loadSectionSuccess,
+  sectionVisit,
+} from '../actions/content'
 
 const toc = [
   {
@@ -79,6 +81,15 @@ describe('Section', () => {
       expectedSession.Section.withId('test/child1').set('content', {
         en: 'test child1 content',
       })
+      expect(session.state).toEqual(expectedSession.state)
+    })
+
+    test('sectionVisit', () => {
+      session = orm.session(loadToc(session.state))
+      const action = sectionVisit('test/child1')
+      session.Section.reducer(action, session.Section)
+      const expectedSession = orm.session(loadToc(orm.getEmptyState()))
+      expectedSession.Section.withId('test/child1').set('visited', true)
       expect(session.state).toEqual(expectedSession.state)
     })
 
