@@ -53,4 +53,5 @@ Messages.propTypes = {
   messages: feedbackMessagesType.isRequired,
 }
 
+export { Message } // for testing
 export default Messages
