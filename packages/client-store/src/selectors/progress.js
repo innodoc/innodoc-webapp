@@ -1,5 +1,7 @@
 import { createSelector } from 'redux-orm'
 
+import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+
 import orm from '../orm'
 import sectionSelectors from './section'
 
@@ -35,7 +37,11 @@ const getProgress = createSelector(
             eAcc +
             ex.questions
               .toRefArray()
-              .reduce((qAcc, q) => qAcc + (q.correct ? q.points : 0), 0),
+              .reduce(
+                (qAcc, q) =>
+                  qAcc + (q.result === RESULT_VALUE.CORRECT ? q.points : 0),
+                0
+              ),
           0
         )
         exercises = [scored, total]
