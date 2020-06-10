@@ -4,6 +4,7 @@ import { Typography } from 'antd'
 
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
+import useTrackVisit from '../../hooks/useTrackVisit'
 import PageTitle from '../PageTitle'
 import SectionContent from './SectionContent'
 import SubsectionList from './SubsectionList'
@@ -16,7 +17,7 @@ let mockContent
 let mockCurrentSubsections
 let mockCurrentTitle
 
-// TODO update
+jest.mock('../../hooks/useTrackVisit', () => jest.fn())
 
 jest.mock('react-redux', () => ({
   useSelector: (selector) => {
@@ -31,11 +32,13 @@ const mockRef = React.createRef()
 jest.mock('../../hooks/useContentPane', () => () => ({
   content: mockContent,
   fadeInClassName: 'show',
+  id: 'foo',
   mathJaxElem: mockRef,
 }))
 
 describe('<SectionContent />', () => {
   beforeEach(() => {
+    jest.clearAllMocks()
     mockContent = [{ t: 'Str', c: 'A nice string' }]
     mockCurrentSubsections = [
       {
@@ -63,6 +66,11 @@ describe('<SectionContent />', () => {
     expect(wrapper.find(PageTitle).prop('children')).toBe('1 Foo section')
     expect(wrapper.find(ContentFragment).prop('content')).toBe(mockContent)
     expect(wrapper.exists(SubsectionList)).toBe(true)
+  })
+
+  it('should track visit', () => {
+    shallow(<SectionContent />)
+    expect(useTrackVisit).toBeCalledWith('foo')
   })
 
   describe('missing data', () => {
