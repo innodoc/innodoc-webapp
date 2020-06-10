@@ -1,12 +1,38 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import {
+  addQuestion,
+  questionAnswered,
+} from '@innodoc/client-store/src/actions/question'
+import exerciseSelectors from '@innodoc/client-store/src/selectors/exercise'
+import sectionSelectors from '@innodoc/client-store/src/selectors/section'
+
 import ExerciseContext from './ExerciseContext'
 import ExerciseProvider from './ExerciseProvider'
 
+const mockDispatch = jest.fn()
+const mockExerciseSelectors = exerciseSelectors
+const mockSectionSelectors = sectionSelectors
+let mockAllAnswered = false
+let mockAllCorrect = false
+
+jest.mock('react-redux', () => ({
+  useDispatch: () => mockDispatch,
+  useSelector: (sel) => {
+    if (sel === mockSectionSelectors.getCurrentSection) {
+      return { id: 'foo/bar' }
+    }
+    if (sel === mockExerciseSelectors.getExerciseAnswered) {
+      return mockAllAnswered
+    }
+    return mockAllCorrect
+  },
+}))
+
 const createContext = () => {
   const wrapper = shallow(
-    <ExerciseProvider>
+    <ExerciseProvider id="EX0">
       <div />
     </ExerciseProvider>
   )
@@ -14,22 +40,33 @@ const createContext = () => {
 }
 
 describe('<ExerciseProvider />', () => {
+  beforeEach(() => jest.clearAllMocks())
+
   describe('question tracking', () => {
-    it('detects all answered', () => {
-      const getContext = createContext()
-      getContext().addQuestion('foo/bar#EX0')
-      getContext().addQuestionAnswered('foo/bar#EX0')
-      getContext().addQuestion('foo/bar#EX1')
-      getContext().addQuestionAnswered('foo/bar#EX1')
-      expect(getContext().allAnswered()).toBe(true)
+    it('dispatches addQuestion', () => {
+      createContext()().addQuestion('foo/bar#Q0', 4)
+      expect(mockDispatch).toBeCalledWith(
+        addQuestion('foo/bar#EX0', 'foo/bar#Q0', 4)
+      )
     })
 
-    it('detects not all answered', () => {
-      const getContext = createContext()
-      getContext().addQuestion('foo/bar#EX0')
-      getContext().addQuestionAnswered('foo/bar#EX0')
-      getContext().addQuestion('foo/bar#EX1')
-      expect(getContext().allAnswered()).toBe(false)
+    it('dispatches questionAnswered', () => {
+      createContext()().questionAnswered('foo/bar#Q0', 'foo', {
+        precision: 4,
+      })
+      expect(mockDispatch).toBeCalledWith(
+        questionAnswered('foo/bar#Q0', 'foo', { precision: 4 })
+      )
+    })
+
+    it.each([true, false])('detects all answered (%s)', (val) => {
+      mockAllAnswered = val
+      expect(createContext()().answered).toBe(val)
+    })
+
+    it.each([true, false])('detects all correct (%s)', (val) => {
+      mockAllCorrect = val
+      expect(createContext()().correct).toBe(val)
     })
   })
 

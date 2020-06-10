@@ -10,7 +10,7 @@ import ContentFragment from '../..'
 
 const VerifyInfoButton = ({ content }) => {
   const {
-    allAnswered,
+    answered,
     setAutoVerify,
     setUserTriggeredVerify,
     userTriggeredVerify,
@@ -21,7 +21,7 @@ const VerifyInfoButton = ({ content }) => {
     <>
       <Divider />
       <Button
-        disabled={!allAnswered() || userTriggeredVerify}
+        disabled={!answered || userTriggeredVerify}
         icon={<CheckOutlined />}
         onClick={() => setUserTriggeredVerify(true)}
       >

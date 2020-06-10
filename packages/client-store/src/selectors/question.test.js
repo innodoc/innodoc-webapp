@@ -1,3 +1,4 @@
+import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 import orm from '../orm'
 import questionSelectors from './question'
 
@@ -16,10 +17,14 @@ const dummyState = () => {
     id: 0,
     currentCourse: session.Course.first(),
   })
+  session.Exercise.create({
+    id: 'foo/bar#E01',
+  })
   session.Question.create({
     answer: '42',
-    correct: true,
-    id: 'foo/bar#baz',
+    result: RESULT_VALUE.CORRECT,
+    id: 'foo/bar#Q01',
+    exerciseId: 'foo/bar#E01',
   })
   return { orm: state }
 }
@@ -27,9 +32,9 @@ const dummyState = () => {
 describe('questionSelectors', () => {
   test('makeGetQuestion', () => {
     const state = dummyState()
-    const question = questionSelectors.makeGetQuestion()(state, 'foo/bar#baz')
+    const question = questionSelectors.makeGetQuestion()(state, 'foo/bar#Q01')
     expect(question.answer).toBe('42')
-    expect(question.correct).toBe(true)
-    expect(question.id).toEqual('foo/bar#baz')
+    expect(question.result).toBe(RESULT_VALUE.CORRECT)
+    expect(question.id).toEqual('foo/bar#Q01')
   })
 })

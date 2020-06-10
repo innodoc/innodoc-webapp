@@ -7,6 +7,7 @@ import {
   addQuestion,
   questionAnswered,
 } from '@innodoc/client-store/src/actions/question'
+import exerciseSelectors from '@innodoc/client-store/src/selectors/exercise'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import ExerciseContext from './ExerciseContext'
@@ -16,6 +17,8 @@ import ExerciseContext from './ExerciseContext'
 const ExerciseProvider = ({ children, id }) => {
   const dispatch = useDispatch()
   const { id: sectionId } = useSelector(sectionSelectors.getCurrentSection)
+  const answered = useSelector(exerciseSelectors.getExerciseAnswered)
+  const correct = useSelector(exerciseSelectors.getExerciseCorrect)
   const globalId = `${sectionId}#${id}`
 
   const [autoVerify, setAutoVerify] = useState(true)
@@ -23,7 +26,8 @@ const ExerciseProvider = ({ children, id }) => {
 
   const value = {
     addQuestion: (qId, points) => dispatch(addQuestion(globalId, qId, points)),
-    allAnswered: () => true, // TODO
+    answered,
+    correct,
     questionAnswered: (qId, answer, attrs) =>
       dispatch(questionAnswered(qId, answer, attrs)),
     getShowResult: () => autoVerify || userTriggeredVerify,

@@ -10,9 +10,10 @@ describe('<ExerciseContext />', () => {
       return (
         <div
           addQuestion={c.addQuestion}
-          addQuestionAnswered={c.addQuestionAnswered}
-          allAnswered={c.allAnswered}
+          answered={c.answered}
+          correct={c.correct}
           getShowResult={c.getShowResult}
+          questionAnswered={c.questionAnswered}
           setAutoVerify={c.setAutoVerify}
           setUserTriggeredVerify={c.setUserTriggeredVerify}
           userTriggeredVerify={c.userTriggeredVerify}
@@ -21,9 +22,10 @@ describe('<ExerciseContext />', () => {
     }
     const div = shallow(<MyComponent />)
     expect(div.invoke('addQuestion')()).toBeUndefined()
-    expect(div.invoke('addQuestionAnswered')()).toBeUndefined()
-    expect(div.invoke('allAnswered')()).toBe(true)
+    expect(div.prop('answered')).toBe(false)
+    expect(div.prop('correct')).toBe(false)
     expect(div.invoke('getShowResult')()).toBe(true)
+    expect(div.invoke('questionAnswered')()).toBeUndefined()
     expect(div.invoke('setAutoVerify')()).toBeUndefined()
     expect(div.invoke('setUserTriggeredVerify')()).toBeUndefined()
     expect(div.prop('userTriggeredVerify')).toBe(false)

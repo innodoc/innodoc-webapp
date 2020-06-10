@@ -4,7 +4,8 @@ import React from 'react'
 // outside of an ExerciseCard
 const ExerciseContext = React.createContext({
   addQuestion: () => {},
-  allAnswered: () => true,
+  answered: false,
+  correct: false,
   getShowResult: () => true,
   questionAnswered: () => {},
   setAutoVerify: () => {},
