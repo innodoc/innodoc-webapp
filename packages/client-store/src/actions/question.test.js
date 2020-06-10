@@ -1,17 +1,35 @@
-import { actionTypes, questionAnswered, questionEvaluated } from './question'
+import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 
-test('QUESTION_ANSWERED', () => {
-  const data = { foo: 'bar' }
-  expect(questionAnswered(data)).toEqual({
+import {
+  actionTypes,
+  addQuestion,
+  questionAnswered,
+  questionEvaluated,
+} from './question'
+
+test('ADD_QUESTION', () =>
+  expect(addQuestion('EX_01', 'Q_01', 17)).toEqual({
+    type: actionTypes.ADD_QUESTION,
+    exerciseId: 'EX_01',
+    questionId: 'Q_01',
+    points: 17,
+  }))
+
+test('QUESTION_ANSWERED', () =>
+  expect(questionAnswered('Q_01', 'Foo', { precision: 5 })).toEqual({
     type: actionTypes.QUESTION_ANSWERED,
-    data,
-  })
-})
+    id: 'Q_01',
+    answer: 'Foo',
+    attributes: { precision: 5 },
+  }))
 
-test('QUESTION_EVALUATED', () => {
-  const data = { foo: 'bar' }
-  expect(questionEvaluated(data)).toEqual({
+test('QUESTION_EVALUATED', () =>
+  expect(
+    questionEvaluated('Q_01', RESULT_VALUE.CORRECT, ['foo'], 'x^2')
+  ).toEqual({
     type: actionTypes.QUESTION_EVALUATED,
-    data,
-  })
-})
+    id: 'Q_01',
+    latexCode: 'x^2',
+    messages: ['foo'],
+    result: RESULT_VALUE.CORRECT,
+  }))
