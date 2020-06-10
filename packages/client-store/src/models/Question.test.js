@@ -1,6 +1,11 @@
+import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 import orm from '../orm'
 
-import { questionAnswered, questionEvaluated } from '../actions/question'
+import {
+  addQuestion,
+  questionAnswered,
+  questionEvaluated,
+} from '../actions/question'
 
 describe('Question', () => {
   let session
@@ -14,34 +19,53 @@ describe('Question', () => {
   it('should instantiate', () => {
     session.Question.create({ id: 'foo/bar#EX01' })
     expect(session.Question.all().count()).toEqual(1)
+    expect(session.Question.first().result).toEqual(RESULT_VALUE.NEUTRAL)
   })
 
   describe('reducer', () => {
-    test('questionAnswered', () => {
+    test('addQuestion', () => {
       expect(session.Question.all().toRefArray()).toHaveLength(0)
       session.Question.reducer(
-        questionAnswered({ questionId: 'foo/bar#EX01', answer: '42' }),
+        addQuestion('foo/bar#EX01', 'foo/bar#Q01', 5),
         session.Question
       )
       const questions = session.Question.all().toRefArray()
       expect(questions).toHaveLength(1)
-      expect(questions[0].id).toBe('foo/bar#EX01')
+      expect(questions[0].id).toBe('foo/bar#Q01')
+      expect(questions[0].exerciseId).toBe('foo/bar#EX01')
+      expect(questions[0].answer).toBeUndefined()
+      expect(questions[0].points).toBe(5)
+    })
+
+    test('questionAnswered', () => {
+      session.Question.create({ id: 'foo/bar#Q01' })
+      session.Question.reducer(
+        questionAnswered('foo/bar#Q01', '42', {}),
+        session.Question
+      )
+      const questions = session.Question.all().toRefArray()
+      expect(questions).toHaveLength(1)
+      expect(questions[0].id).toBe('foo/bar#Q01')
       expect(questions[0].answer).toBe('42')
-      expect(questions[0].correct).toBeUndefined()
     })
 
     test('questionEvaluated', () => {
+      session.Question.create({ id: 'foo/bar#Q01', answer: 'x^2' })
       session.Question.reducer(
-        questionAnswered({ questionId: 'foo/bar#EX01', answer: '42' }),
-        session.Question
-      )
-      session.Question.reducer(
-        questionEvaluated({ questionId: 'foo/bar#EX01', correct: true }),
+        questionEvaluated(
+          'foo/bar#Q01',
+          RESULT_VALUE.CORRECT,
+          ['foo'],
+          'x^{2}'
+        ),
         session.Question
       )
       const questions = session.Question.all().toRefArray()
       expect(questions).toHaveLength(1)
-      expect(questions[0].correct).toBe(true)
+      expect(questions[0].messages).toHaveLength(1)
+      expect(questions[0].messages[0]).toBe('foo')
+      expect(questions[0].result).toBe(RESULT_VALUE.CORRECT)
+      expect(questions[0].latexCode).toBe('x^{2}')
     })
 
     test('no-op action', () => {
