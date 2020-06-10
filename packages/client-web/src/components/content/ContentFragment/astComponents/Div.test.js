@@ -14,7 +14,7 @@ describe('<Div />', () => {
     'should map className "%s" to correct Component',
     (className, Component) => {
       const content = [{ foo: 'foo' }, { bar: 'bar' }]
-      const wrapper = shallow(<Div data={[[null, [className]], content]} />)
+      const wrapper = shallow(<Div data={[[null, [className], []], content]} />)
       expect(wrapper.is(Component)).toBe(true)
       expect(wrapper.prop('content')).toBe(content)
     }
