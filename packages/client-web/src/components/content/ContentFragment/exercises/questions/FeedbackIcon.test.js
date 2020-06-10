@@ -6,6 +6,8 @@ import {
   EllipsisOutlined,
 } from '@ant-design/icons'
 
+import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+
 import FeedbackIcon from './FeedbackIcon'
 import css from './style.sss'
 
@@ -20,20 +22,21 @@ describe('<FeedbackIcon />', () => {
     jest.clearAllMocks()
   })
 
-  it('should render (correct=not set)', () => {
-    const wrapper = shallow(<FeedbackIcon />)
+  it('should render (result=NEUTRAL)', () => {
+    const wrapper = shallow(<FeedbackIcon result={RESULT_VALUE.NEUTRAL} />)
     expect(wrapper.find(EllipsisOutlined).prop('title')).toBe(
-      'questions.feedback.indeterminate'
+      'questions.feedbackIcon.indeterminate'
     )
   })
 
   it.each([
-    [true, CheckCircleTwoTone, 'correct'],
-    [false, CloseCircleTwoTone, 'incorrect'],
-  ])('should render (correct=true)', (correct, Icon, correctString) => {
-    const wrapper = shallow(<FeedbackIcon correct={correct} />)
+    [true, CheckCircleTwoTone, RESULT_VALUE.CORRECT],
+    [false, CloseCircleTwoTone, RESULT_VALUE.INCORRECT],
+  ])('should render (correct=%s)', (correct, Icon, result) => {
+    const wrapper = shallow(<FeedbackIcon result={result} />)
     const icon = wrapper.find(Icon)
-    expect(icon.prop('twoToneColor')).toBe(css[`color-${correctString}`])
-    expect(icon.prop('title')).toBe(`questions.feedback.${correctString}`)
+    const correctStr = correct ? 'correct' : 'incorrect'
+    expect(icon.prop('twoToneColor')).toBe(css[`color-${correctStr}`])
+    expect(icon.prop('title')).toBe(`questions.feedbackIcon.${correctStr}`)
   })
 })
