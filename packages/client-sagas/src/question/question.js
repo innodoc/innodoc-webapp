@@ -10,21 +10,17 @@ export const QUESTION_ANSWER_THROTTLE = 500
 
 export function* handleQuestionAnswered({ id, answer, attributes }) {
   const { solution, validation, ...remainingAttrs } = attributes
-  const checker = validators[validation]
+  const validator = validators[validation]
 
-  if (typeof checker !== 'function') {
-    throw new Error(
-      `Encountered unknown question validation check: ${validation}`
+  if (typeof validator === 'function') {
+    const [result, messages, latexCode] = yield call(
+      validator,
+      answer,
+      solution,
+      remainingAttrs
     )
+    yield put(questionEvaluated(id, result, messages, latexCode))
   }
-
-  const [result, messages, latexCode] = yield call(
-    checker,
-    answer,
-    solution,
-    remainingAttrs
-  )
-  yield put(questionEvaluated(id, result, messages, latexCode))
 }
 
 export default function* watchQuestionChange() {
