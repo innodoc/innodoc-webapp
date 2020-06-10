@@ -10,6 +10,7 @@ const sections = {
     title: { en: 'test title' },
     content: { en: 'test content' },
     parentId: undefined,
+    visited: false,
   },
   'test/child1': {
     id: 'test/child1',
@@ -17,6 +18,7 @@ const sections = {
     title: { en: 'test child1 title' },
     content: { en: 'test child1 content' },
     parentId: 'test',
+    visited: false,
   },
   'test/child2': {
     id: 'test/child2',
@@ -24,6 +26,7 @@ const sections = {
     title: { en: 'test child2 title' },
     content: { en: 'test child2 content' },
     parentId: 'test',
+    visited: false,
   },
   'test/child1/child11': {
     id: 'test/child1/child11',
@@ -31,6 +34,7 @@ const sections = {
     title: { en: 'test child11 title' },
     content: { en: 'test child11 content' },
     parentId: 'test/child1',
+    visited: false,
   },
   'test/child1/child12': {
     id: 'test/child1/child12',
@@ -38,6 +42,7 @@ const sections = {
     title: { en: 'test child12 title' },
     content: { en: 'test child12 content' },
     parentId: 'test/child1',
+    visited: false,
   },
 }
 
@@ -76,10 +81,13 @@ describe('sectionSelectors', () => {
   beforeEach(() => setCurrentSection('test/child1'))
 
   test('getChapters', () => {
-    const chapters = sectionSelectors
-      .getChapters(getState())
-      .map((model) => model.ref)
-    expect(chapters).toEqual([sections.test])
+    const chapters = sectionSelectors.getChapters(getState())
+    expect(chapters).toEqual([
+      {
+        id: 'test',
+        title: '1 test title',
+      },
+    ])
   })
 
   test('getCurrentSection', () =>
