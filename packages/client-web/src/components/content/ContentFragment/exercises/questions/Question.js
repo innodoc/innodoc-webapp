@@ -47,8 +47,9 @@ const Question = ({ attributes, id, questionClasses }) => {
     []
   )
   const question = useSelector((state) => getQuestion(state, globalQuestionId))
-  const exerciseContext = useContext(ExerciseContext)
-  const { addQuestion, getShowResult, questionAnswered } = exerciseContext
+  const { addQuestion, getShowResult, questionAnswered } = useContext(
+    ExerciseContext
+  )
 
   useEffect(() => {
     // Notify exercise context about this question
@@ -59,15 +60,15 @@ const Question = ({ attributes, id, questionClasses }) => {
   if (QuestionComponent) {
     const { answer, result, messages, latexCode } = question
     const showResult = result !== RESULT_VALUE.NEUTRAL && getShowResult()
-    const feedbackIcon = (
-      <FeedbackIcon result={showResult ? result : RESULT_VALUE.NEUTRAL} />
-    )
+    const iconResult = showResult ? result : RESULT_VALUE.NEUTRAL
+    const feedbackIcon = <FeedbackIcon result={iconResult} />
     const className = showResult
       ? classNames({
           [css.correct]: result === RESULT_VALUE.CORRECT,
           [css.incorrect]: result === RESULT_VALUE.INCORRECT,
         })
       : null
+
     return (
       <QuestionComponent
         attributes={attrsObj}

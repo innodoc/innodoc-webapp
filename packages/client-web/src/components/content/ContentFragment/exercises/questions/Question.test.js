@@ -1,10 +1,9 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 
+import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
-import { questionAnswered } from '@innodoc/client-store/src/actions/question'
 
-import FeedbackIcon from './FeedbackIcon'
 import Question from './Question'
 import InputQuestion from './InputQuestion'
 import CheckboxQuestion from './CheckboxQuestion'
@@ -18,211 +17,169 @@ jest.mock('@innodoc/client-store/src/selectors/question', () => ({
 
 const mockGetCurrentSection = sectionSelectors.getCurrentSection
 const mockSection = { id: 'foo/bar' }
-const mockDispatch = jest.fn()
 jest.mock('react-redux', () => ({
   useSelector: (selector) =>
     selector === mockGetCurrentSection ? mockSection : selector(),
-  useDispatch: () => mockDispatch,
 }))
+
+let addQuestion
+let questionAnswered
+let getShowResult
+const MockProvider = ({ children }) => (
+  <ExerciseContext.Provider
+    value={{ addQuestion, questionAnswered, getShowResult }}
+  >
+    {children}
+  </ExerciseContext.Provider>
+)
 
 describe('<Question />', () => {
   beforeEach(() => {
-    mockQuestion = {}
-    mockDispatch.mockClear()
+    mockQuestion = {
+      answer: '42',
+      result: RESULT_VALUE.NEUTRAL,
+      messages: [],
+      latexCode: '42',
+    }
+    addQuestion = () => {}
+    questionAnswered = () => false
+    getShowResult = () => true
   })
 
-  describe('should dispatch questionAnswered', () => {
-    it('with generated question ID', () => {
-      const wrapper = shallow(
-        <Question attributes={[['foo', 'bar']]} questionClasses={['text']} />
-      )
-      const questionComponent = wrapper.find(InputQuestion)
-      questionComponent.prop('onChange')('42')
-      expect(mockDispatch).toBeCalledWith(
-        questionAnswered({
-          answer: '42',
-          attributes: { foo: 'bar' },
-          questionId: 'foo/bar#a919274e942118402ebe65d40c483793a494ac01',
-        })
-      )
-    })
-
-    it('with given question ID', () => {
-      mockQuestion = { answer: '41', correct: false }
-      const wrapper = shallow(
+  it.each([
+    ['correct', RESULT_VALUE.CORRECT],
+    ['incorrect', RESULT_VALUE.INCORRECT],
+  ])('should render %s', (correct, result) => {
+    mockQuestion = { ...mockQuestion, answer: '42', result }
+    const wrapper = mount(
+      <MockProvider>
         <Question
-          attributes={[['fooKey', 'fooValue']]}
-          id="EX01"
+          attributes={[['points', '10']]}
+          id="Q01"
           questionClasses={['text']}
         />
-      )
-      const questionComponent = wrapper.find(InputQuestion)
-      expect(questionComponent.prop('value')).toBe('41')
-      questionComponent.prop('onChange')('42')
-      expect(mockDispatch).toBeCalledWith(
-        questionAnswered({
-          answer: '42',
-          attributes: { fooKey: 'fooValue' },
-          questionId: 'foo/bar#EX01',
-        })
-      )
-    })
-  })
-
-  describe('ExerciseContext', () => {
-    const addQuestion = jest.fn()
-    const addQuestionAnswered = jest.fn()
-    const getShowResult = jest.fn()
-    const MockProvider = ({ children }) => (
-      <ExerciseContext.Provider
-        value={{ addQuestion, addQuestionAnswered, getShowResult }}
-      >
-        {children}
-      </ExerciseContext.Provider>
+      </MockProvider>
     )
+    const inputQuestion = wrapper.find(InputQuestion)
+    expect(inputQuestion).toHaveLength(1)
+    expect(inputQuestion.prop('attributes')).toEqual({ points: '10' })
+    const cssCls = correct === 'correct' ? css.correct : css.incorrect
+    expect(inputQuestion.hasClass(cssCls)).toBe(true)
+    const IconComp = () => inputQuestion.prop('icon')
+    expect(shallow(<IconComp />).prop('result')).toBe(result)
+    expect(inputQuestion.prop('value')).toBe('42')
+  })
 
-    beforeEach(() => {
-      addQuestion.mockClear()
-      addQuestionAnswered.mockClear()
-      getShowResult.mockClear()
-    })
-
-    it('should add question to context', () => {
+  describe('ExerciseContext functions', () => {
+    it('should call addQuestion', () => {
+      addQuestion = jest.fn()
       mount(
         <MockProvider>
           <Question
-            attributes={[['foo', 'bar']]}
-            id="EX99"
+            attributes={[['points', '10']]}
+            id="Q99"
             questionClasses={['text']}
           />
         </MockProvider>
       )
       expect(addQuestion).toBeCalledTimes(1)
-      expect(addQuestion).toBeCalledWith('foo/bar#EX99')
-      expect(addQuestionAnswered).not.toBeCalled()
+      expect(addQuestion).toBeCalledWith('foo/bar#Q99', 10)
     })
 
-    it('should add answered question to context', () => {
-      mockQuestion = { answer: 'foo' }
-      mount(
-        <MockProvider>
-          <Question
-            attributes={[['foo', 'bar']]}
-            id="EX91"
-            questionClasses={['text']}
-          />
-        </MockProvider>
-      )
-      expect(addQuestion).toBeCalledTimes(1)
-      expect(addQuestion).toBeCalledWith('foo/bar#EX91')
-      expect(addQuestionAnswered).toBeCalledTimes(1)
-      expect(addQuestionAnswered).toBeCalledWith('foo/bar#EX91')
-    })
-
-    describe('getShowResult', () => {
-      it.each([
-        [true, null, false, undefined],
-        [true, true, true, css.correct],
-        [true, false, true, css.incorrect],
-        [false, null, false, undefined],
-        [false, true, false, undefined],
-        [false, false, false, undefined],
-      ])(
-        'getShowResult=%s correct=%s showsResult=%s className=%s',
-        (getShowResultValue, correctValue, expShowResult, expClassName) => {
-          mockQuestion = { answer: 'foo', correct: correctValue }
-          getShowResult.mockReturnValue(getShowResultValue)
-          const wrapper = mount(
-            <MockProvider>
-              <Question
-                attributes={[['foo', 'bar']]}
-                id="EX91"
-                questionClasses={['text']}
-              />
-            </MockProvider>
-          )
-          const inputQuestion = wrapper.find(InputQuestion)
-          if (expShowResult) {
-            expect(inputQuestion.hasClass(expClassName)).toBe(true)
-          } else {
-            expect(inputQuestion.hasClass(css.correct)).toBe(false)
-            expect(inputQuestion.hasClass(css.incorrect)).toBe(false)
-          }
-        }
-      )
-    })
-  })
-
-  describe('should render', () => {
-    it('is correct', () => {
-      mockQuestion = { answer: '42', correct: true }
-      const wrapper = shallow(
-        <Question
-          attributes={[['foo', 'bar']]}
-          id="EX01"
-          questionClasses={['text']}
-        />
-      )
-      const inputQuestion = wrapper.find(InputQuestion)
-      expect(inputQuestion).toHaveLength(1)
-      expect(inputQuestion.prop('attributes')).toEqual({ foo: 'bar' })
-      expect(inputQuestion.hasClass(css.correct)).toBe(true)
-      expect(inputQuestion.prop('icon')).toEqual(<FeedbackIcon correct />)
-      expect(inputQuestion.prop('value')).toBe('42')
-    })
-
-    it('is incorrect', () => {
-      mockQuestion = { answer: '41', correct: false }
-      const wrapper = shallow(
-        <Question attributes={[]} id="EX02" questionClasses={['text']} />
-      )
-      const inputQuestion = wrapper.find(InputQuestion)
-      expect(inputQuestion).toHaveLength(1)
-      expect(inputQuestion.prop('attributes')).toEqual({})
-      expect(inputQuestion.hasClass(css.incorrect)).toBe(true)
-      expect(inputQuestion.prop('icon')).toEqual(
-        <FeedbackIcon correct={false} />
-      )
-      expect(inputQuestion.prop('value')).toBe('41')
-    })
-  })
-
-  describe('mapClassNameToComponent', () => {
-    it.each([
-      ['text', InputQuestion],
-      ['checkbox', CheckboxQuestion],
-    ])(
-      'should map className (%s) to correct Component',
-      (className, Component) => {
-        const wrapper = shallow(
-          <Question attributes={[]} id="EX01" questionClasses={[className]} />
+    it.each([['Q91'], [undefined]])(
+      'should call questionAnswered on change',
+      (qId) => {
+        questionAnswered = jest.fn()
+        mockQuestion = { ...mockQuestion, answer: 'foo' }
+        const wrapper = mount(
+          <MockProvider>
+            <Question
+              attributes={[['points', '8']]}
+              id={qId}
+              questionClasses={['text']}
+            />
+          </MockProvider>
         )
-        expect(wrapper.is(Component)).toBe(true)
+        wrapper.find(InputQuestion).invoke('onChange')('42')
+        expect(questionAnswered).toBeCalledTimes(1)
+        expect(questionAnswered).toBeCalledWith(
+          expect.stringContaining('foo/bar#'),
+          '42',
+          { points: '8' }
+        )
       }
     )
+  })
 
-    it('should render unknownQuestion for unknown component className (non-production)', () => {
-      const wrapper = shallow(
-        <Question
-          attributes={[]}
-          id="EX01"
-          questionClasses={['this-component-does-not-exist']}
-        />
-      )
-      expect(wrapper.type()).toBe('span')
-      expect(wrapper.hasClass(css.unknownQuestion)).toBe(true)
-    })
+  describe('getShowResult', () => {
+    it.each([
+      [true, RESULT_VALUE.NEUTRAL, false, undefined],
+      [true, RESULT_VALUE.CORRECT, true, css.correct],
+      [true, RESULT_VALUE.INCORRECT, true, css.incorrect],
+      [false, RESULT_VALUE.NEUTRAL, false, undefined],
+      [false, RESULT_VALUE.CORRECT, false, undefined],
+      [false, RESULT_VALUE.INCORRECT, false, undefined],
+    ])(
+      'getShowResult=%s correct=%s showsResult=%s className=%s',
+      (getShowResultValue, result, expShowResult, expClassName) => {
+        mockQuestion = { ...mockQuestion, answer: 'foo', result }
+        getShowResult = () => getShowResultValue
+        const wrapper = mount(
+          <MockProvider>
+            <Question
+              attributes={[['foo', 'bar']]}
+              id="Q91"
+              questionClasses={['text']}
+            />
+          </MockProvider>
+        )
+        const inputQuestion = wrapper.find(InputQuestion)
+        if (expShowResult) {
+          expect(inputQuestion.hasClass(expClassName)).toBe(true)
+        } else {
+          expect(inputQuestion.hasClass(css.correct)).toBe(false)
+          expect(inputQuestion.hasClass(css.incorrect)).toBe(false)
+        }
+      }
+    )
+  })
+})
 
-    it('should render empty for unknown component className (production)', () => {
-      process.env.NODE_ENV = 'production'
+describe('mapClassNameToComponent', () => {
+  it.each([
+    ['text', InputQuestion],
+    ['checkbox', CheckboxQuestion],
+  ])(
+    'should map className (%s) to correct Component',
+    (className, Component) => {
       const wrapper = shallow(
-        <Question
-          attributes={[]}
-          id="EX01"
-          questionClasses={['this-component-does-not-exist']}
-        />
+        <Question attributes={[]} id="Q01" questionClasses={[className]} />
       )
-      expect(wrapper.isEmptyRender()).toBe(true)
-    })
+      expect(wrapper.is(Component)).toBe(true)
+    }
+  )
+
+  it('should render unknownQuestion for unknown component className (non-production)', () => {
+    const wrapper = shallow(
+      <Question
+        attributes={[]}
+        id="Q01"
+        questionClasses={['this-component-does-not-exist']}
+      />
+    )
+    expect(wrapper.type()).toBe('span')
+    expect(wrapper.hasClass(css.unknownQuestion)).toBe(true)
+  })
+
+  it('should render empty for unknown component className (production)', () => {
+    process.env.NODE_ENV = 'production'
+    const wrapper = shallow(
+      <Question
+        attributes={[]}
+        id="Q01"
+        questionClasses={['this-component-does-not-exist']}
+      />
+    )
+    expect(wrapper.isEmptyRender()).toBe(true)
   })
 })
