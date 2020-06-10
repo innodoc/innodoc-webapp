@@ -2,9 +2,12 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Input } from 'antd'
 
+import InputPopover from './InputPopover'
 import InputQuestion from './InputQuestion'
 
 const Icon = () => null
+
+const messages = [{ msg: 'foo', type: 'success' }]
 
 describe('<InputQuestion />', () => {
   it.each([
@@ -14,13 +17,21 @@ describe('<InputQuestion />', () => {
     const onChange = jest.fn()
     const wrapper = shallow(
       <InputQuestion
-        attributes={{}}
+        attributes={{ validation: 'parsed' }}
         className="customClass"
         icon={<Icon />}
+        messages={messages}
         onChange={onChange}
         value={value}
       />
     )
+
+    const inputPopover = wrapper.find(InputPopover)
+    expect(inputPopover.prop('focus')).toBe(false)
+    expect(inputPopover.prop('messages')).toBe(messages)
+    expect(inputPopover.prop('showPreview')).toBe(true)
+    expect(inputPopover.prop('userInput')).toBe('')
+
     const input = wrapper.find(Input)
     expect(input.hasClass('inputQuestion')).toBe(true)
     expect(input.hasClass('customClass')).toBe(true)
@@ -34,7 +45,12 @@ describe('<InputQuestion />', () => {
     ['36ch', { length: '30' }],
   ])('should add width style (expecting %s)', (expWidth, attrs) => {
     const wrapper = shallow(
-      <InputQuestion attributes={attrs} icon={<Icon />} onChange={() => {}} />
+      <InputQuestion
+        attributes={attrs}
+        icon={<Icon />}
+        messages={[{ msg: 'foo', type: 'success' }]}
+        onChange={() => {}}
+      />
     )
     const input = wrapper.find(Input)
     expect(input.prop('style').width).toBe(expWidth)
