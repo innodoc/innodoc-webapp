@@ -83,7 +83,7 @@
         "denominator-not-integer": "Nenner soll ganze Zahl sein.",
         "denominator-not-positive": "Nenner soll positiv sein.",
         "fraction-not-reduced": "Bruch soll maximal gekürzt sein.",
-        "numerator-not-integer": "Numerator should be integer.",
+        "numerator-not-integer": "Zähler soll ganze Zahl sein.",
         "only-integer": "Nur ganze Zahl erlaubt."
       },
       "incorrect-interval": "Falsches Intervall",
