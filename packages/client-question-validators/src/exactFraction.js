@@ -1,6 +1,11 @@
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 
-import { notationParserIn, rawParse, outsideDistance } from './util'
+import {
+  notationParserIn,
+  outsideDistance,
+  rawParse,
+  rawParseWithLatex,
+} from './util'
 
 // Find greatest common divisor
 const gcd = (a, b) => (b ? gcd(b, a % b) : a)
@@ -17,6 +22,7 @@ const exactFraction = (input, solution, attrs) => {
 
   const { precision } = attrs
   const s = solution
+  let latexCode
   let b = notationParserIn(input)
 
   let ok
@@ -29,7 +35,7 @@ const exactFraction = (input, solution, attrs) => {
     ok = RESULT_VALUE.INCORRECT
     messages.push({ msg: 'still-incorrect-answer', type: 'error' })
   } else {
-    l = rawParse(b)
+    ;[l, latexCode] = rawParseWithLatex(b)
     sp = rawParse(s)
     ok = RESULT_VALUE.CORRECT
   }
@@ -126,8 +132,7 @@ const exactFraction = (input, solution, attrs) => {
     messages.push({ msg: 'correct-answer', type: 'success' })
   }
 
-  // TODO latexcode
-  return [ok, messages]
+  return [ok, messages, latexCode]
 }
 
 export default exactFraction

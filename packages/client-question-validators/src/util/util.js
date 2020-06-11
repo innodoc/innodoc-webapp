@@ -22,14 +22,24 @@ export const notationParserIn = (s) => {
   return r
 }
 
-// Help function that encapsulates convertMathInput for the case that only a
-// simple translation and no error processing and LaTeX representation is necessary.
+// Help function that encapsulates convertMathInput.
 // The expression must be evaluable to a fixed number.
 export const rawParse = (input) => {
   try {
     return mathJS.compile(convertMathInput(input, 2).mathjs).evaluate()
   } catch (e) {
     return NaN
+  }
+}
+
+// Help function that encapsulates convertMathInput, preserves LaTeX representation.
+// The expression must be evaluable to a fixed number.
+export const rawParseWithLatex = (input) => {
+  try {
+    const ret = convertMathInput(input, 2)
+    return [mathJS.compile(ret.mathjs).evaluate(), ret.latex]
+  } catch (e) {
+    return [NaN, undefined]
   }
 }
 

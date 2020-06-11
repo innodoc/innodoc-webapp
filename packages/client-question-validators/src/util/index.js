@@ -3,6 +3,7 @@ import {
   notationParserIn,
   outsideDistance,
   rawParse,
+  rawParseWithLatex,
   withinDistance,
 } from './util'
 import mathJSFunctions, { mathJS } from './mathJSFunctions'
@@ -14,5 +15,6 @@ export {
   notationParserIn,
   outsideDistance,
   rawParse,
+  rawParseWithLatex,
   withinDistance,
 }
