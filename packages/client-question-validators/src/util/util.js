@@ -35,12 +35,16 @@ export const rawParse = (input) => {
 // Help function that encapsulates convertMathInput, preserves LaTeX representation.
 // The expression must be evaluable to a fixed number.
 export const rawParseWithLatex = (input) => {
+  let latex
+  let result
   try {
     const ret = convertMathInput(input, 2)
-    return [mathJS.compile(ret.mathjs).evaluate(), ret.latex]
+    latex = ret.latex
+    result = mathJS.compile(ret.mathjs).evaluate()
   } catch (e) {
-    return [NaN, undefined]
+    result = NaN
   }
+  return [result, latex]
 }
 
 const extround = (number, nPos) => {
