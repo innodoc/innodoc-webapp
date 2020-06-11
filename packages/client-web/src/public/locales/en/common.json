@@ -111,7 +111,8 @@
       "correct": "Input correct",
       "incorrect": "Input incorrect",
       "indeterminate": "No result yet"
-    }
+    },
+    "preview": "Preview"
   },
   "results": {
     "title": "Results",

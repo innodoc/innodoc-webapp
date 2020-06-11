@@ -1,12 +1,21 @@
 @import '@innodoc/client-web/src/style/antd-theme.sss'
 
 .popover
+  max-width: 340px
 
   .mathJaxPreview
-    border: $border-width-base $border-style-base $border-color-base
     background-color: $background-color-base
     border-radius: $border-radius-sm
+    border: $border-width-base $border-style-base $border-color-base
     min-height: 40px
+    position: relative
+
+    .previewLabel
+      font-size: 75%
+      font-variant: small-caps
+      left: 4px
+      position: absolute
+      top: 1px
 
     mjx-container
       margin: $padding-sm 0 !important
