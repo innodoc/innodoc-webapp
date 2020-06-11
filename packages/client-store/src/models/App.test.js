@@ -23,6 +23,8 @@ describe('App', () => {
     expect(app.id).toBe(0)
     expect(app.contentRoot).toBe('')
     expect(app.staticRoot).toBe('')
+    expect(app.show404).toBe(false)
+    expect(app.sidebarVisible).toBe(false)
   })
 
   describe('reducer', () => {

@@ -10,8 +10,8 @@ import ChapterPieChart from './ChapterPieChart'
 import css from './style.sss'
 
 const getStatus = (percent) => (percent === 100 ? 'success' : 'normal')
-const getStatusTest = (percent) => {
-  if (percent >= 90) {
+const getStatusTest = (percent, minScore) => {
+  if (percent >= minScore) {
     return 'success'
   }
   if (percent > 0) {
@@ -37,7 +37,9 @@ const ChapterCard = ({ minScore, progress, sectionId, title }) => {
         total,
         percent,
         status:
-          key === 'finalTest' ? getStatusTest(percent) : getStatus(percent),
+          key === 'finalTest'
+            ? getStatusTest(percent, minScore)
+            : getStatus(percent),
       }
     }
     return { key, value: undefined }

@@ -50,6 +50,7 @@ describe('Course', () => {
       const manifest = {
         home_link: '/section/bar',
         languages: ['en'],
+        min_score: 50,
         title: { en: 'foobar' },
         toc: [
           { id: 'foo', title: { en: 'foo' } },
@@ -68,6 +69,7 @@ describe('Course', () => {
           languages: ['en'],
           logo: undefined,
           mathJaxOptions: {},
+          minScore: 50,
           title: { en: 'foobar' },
           id: 0,
         })
@@ -84,6 +86,7 @@ describe('Course', () => {
           languages: ['en'],
           logo: undefined,
           mathJaxOptions: {},
+          minScore: 50,
           title: { en: 'foobar' },
           id: 0,
         })

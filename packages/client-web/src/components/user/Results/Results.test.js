@@ -2,6 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Alert } from 'antd'
 
+import courseSelectors from '@innodoc/client-store/src/selectors/course'
+
 import ChapterCard from './ChapterCard'
 import Results from './Results'
 
@@ -18,8 +20,12 @@ const mockChapters = [
   },
 ]
 
+const mockCourse = { minScore: 90 }
+
+const mockCourseSelectors = courseSelectors
 jest.mock('react-redux', () => ({
-  useSelector: () => mockChapters,
+  useSelector: (sel) =>
+    sel === mockCourseSelectors.getCurrentCourse ? mockCourse : mockChapters,
 }))
 
 describe('<Results />', () => {
