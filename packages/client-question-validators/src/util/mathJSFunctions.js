@@ -7,6 +7,7 @@
  *  (see www.ve-und-mint.de).
  * */
 
+// TODO: Create custom MathJS build (incrementally removing items from 'all')
 import { create, all } from 'mathjs/number'
 
 const mathJS = create(all)
