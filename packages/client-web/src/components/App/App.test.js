@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { END } from 'redux-saga'
 
 import MathJax from '@innodoc/react-mathjax-node'
 
@@ -47,6 +48,7 @@ describe('<InnoDocApp />', () => {
     const mockStore = {
       dispatch: jest.fn(),
       getState: () => {},
+      sagaTask: { toPromise: jest.fn().mockResolvedValue() },
       subscribe: jest.fn((cb) => {
         cb()
         return () => {}
@@ -54,8 +56,7 @@ describe('<InnoDocApp />', () => {
     }
 
     beforeEach(() => {
-      mockStore.dispatch.mockClear()
-      mockStore.subscribe.mockClear()
+      jest.clearAllMocks()
       mockGetCurrentCourse = () => ({
         mathJaxOptions: {},
       })
@@ -85,6 +86,26 @@ describe('<InnoDocApp />', () => {
         expect(Page.getInitialProps).toBeCalledTimes(1)
         expect(Page.getInitialProps).toBeCalledWith(ctx)
         expect(pageProps.foo).toEqual('bar')
+      })
+
+      describe('end sagas', () => {
+        it('should dispatch END and wait for sagas on server', async () => {
+          expect.assertions(2)
+          const ctx = { store: mockStore, req: {} }
+          const Page = () => {}
+          await InnoDocApp.getInitialProps({ ctx, Component: Page })
+          expect(mockStore.dispatch).toBeCalledWith(END)
+          await expect(mockStore.sagaTask.toPromise).toBeCalled()
+        })
+
+        it('should not dispatch END and wait for sagas on client', async () => {
+          expect.assertions(2)
+          const ctx = { store: mockStore }
+          const Page = () => {}
+          await InnoDocApp.getInitialProps({ ctx, Component: Page })
+          expect(mockStore.dispatch).not.toBeCalledWith(END)
+          await expect(mockStore.sagaTask.toPromise).not.toBeCalled()
+        })
       })
     })
   })
