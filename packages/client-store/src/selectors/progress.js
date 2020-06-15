@@ -22,8 +22,7 @@ const getProgress = createSelector(
       const moduleUnits = [visitedSections.count(), sections.count()]
 
       // exercises
-      // TODO:
-      // - exclude final test exercises
+      // TODO: exclude final test exercises
       const chapterExercises = session.Exercise.all()
         .filter((ex) => ex.sectionId.startsWith(sectionIdStart))
         .toModelArray()
@@ -50,9 +49,7 @@ const getProgress = createSelector(
       }
 
       // finalTest
-      // TODO:
-      // - include only final test exercises
-      // - sum total points & scored points
+      // TODO: only final test exercises, sum total points & scored points
       const finalTest = [80, 100]
 
       return {
