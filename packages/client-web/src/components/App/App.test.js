@@ -4,8 +4,11 @@ import { END } from 'redux-saga'
 
 import MathJax from '@innodoc/react-mathjax-node'
 
-import { InnoDocApp } from './App'
+import useRouteNotifier from '../../hooks/useRouteNotifier'
 import PageTitle from '../PageTitle'
+import { InnoDocApp } from './App'
+
+jest.mock('../../hooks/useRouteNotifier', () => jest.fn())
 
 jest.mock('next/router', () => ({
   events: { on: jest.fn() },
@@ -17,6 +20,10 @@ jest.mock('@innodoc/client-store/src/selectors/course', () => ({
 }))
 
 describe('<InnoDocApp />', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   describe('render', () => {
     const DummyComponent = () => {}
     const mockStore = {
@@ -41,6 +48,19 @@ describe('<InnoDocApp />', () => {
         mathJaxOptions
       )
       expect(wrapper.find(DummyComponent).exists()).toBe(true)
+    })
+
+    it('should useRouteNotifier', () => {
+      shallow(
+        <InnoDocApp
+          Component={DummyComponent}
+          mathJaxOptions={{}}
+          pageProps={{}}
+          store={mockStore}
+          router={{}}
+        />
+      )
+      expect(useRouteNotifier).toBeCalled()
     })
   })
 

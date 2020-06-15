@@ -10,24 +10,26 @@ import '@innodoc/client-web/src/style/lato-font.sss'
 import { appWithTranslation as withTranslation } from '@innodoc/client-misc/src/i18n'
 
 import PageTitle from '../PageTitle'
-import RouteNotifier from './RouteNotifier'
+import useRouteNotifier from '../../hooks/useRouteNotifier'
 import withDispatchConfiguration from './withDispatchConfiguration'
 import withIndexRedirect from './withIndexRedirect'
 import withMathJaxOptions from './withMathJaxOptions'
 import withNextRedux from './withNextRedux'
 import withWaitForManifest from './withWaitForManifest'
 
-const InnoDocApp = ({ Component, mathJaxOptions, pageProps }) => (
-  <>
-    <PageTitle />
-    <MathJax.ConfigProvider options={mathJaxOptions}>
-      <Component
-        {...pageProps} // eslint-disable-line react/jsx-props-no-spreading
-      />
-    </MathJax.ConfigProvider>
-    <RouteNotifier />
-  </>
-)
+const InnoDocApp = ({ Component, mathJaxOptions, pageProps }) => {
+  useRouteNotifier() // Notify store about Next.js route changes
+  return (
+    <>
+      <PageTitle />
+      <MathJax.ConfigProvider options={mathJaxOptions}>
+        <Component
+          {...pageProps} // eslint-disable-line react/jsx-props-no-spreading
+        />
+      </MathJax.ConfigProvider>
+    </>
+  )
+}
 
 InnoDocApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
