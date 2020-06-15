@@ -1,4 +1,4 @@
-import defaultInitialState from '../defaultInitialState'
+import initialState from '../initialState'
 import orm from '../orm'
 import pageSelectors from './page'
 import { makeMakeGetContentLink } from '.'
@@ -53,7 +53,7 @@ const pages = {
 let state
 let session
 beforeEach(() => {
-  session = orm.mutableSession(defaultInitialState().orm)
+  session = orm.mutableSession(initialState().orm)
   const app = session.App.first()
   const course = session.Course.create({
     languages: ['en'],

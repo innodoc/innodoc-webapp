@@ -1,4 +1,4 @@
-import defaultInitialState from '../../defaultInitialState'
+import initialState from '../../initialState'
 import orm from '../../orm'
 import sectionSelectors from '.'
 import { makeMakeGetContentLink } from '..'
@@ -61,7 +61,7 @@ jest.mock('..', () => {
 // let state
 let session
 beforeEach(() => {
-  session = orm.mutableSession(defaultInitialState().orm)
+  session = orm.mutableSession(initialState().orm)
   const app = session.App.first()
   const course = session.Course.create({
     homeLink: '/section/test',

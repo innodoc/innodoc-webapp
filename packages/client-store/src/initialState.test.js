@@ -1,9 +1,9 @@
-import defaultInitialState from './defaultInitialState'
+import initialState from './initialState'
 import orm from './orm'
 
-describe('defaultInitialState', () => {
-  it('should return a proper initial state', () => {
-    const state = defaultInitialState()
+describe('initialState', () => {
+  it('should return initial state', () => {
+    const state = initialState()
     expect(state).toHaveProperty('orm')
     expect(state.orm).toHaveProperty('App')
     expect(state.orm).toHaveProperty('Course')

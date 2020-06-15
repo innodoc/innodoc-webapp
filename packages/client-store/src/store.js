@@ -2,7 +2,7 @@ import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { createReducer } from 'redux-orm'
 import createSagaMiddleware from 'redux-saga'
 
-import defaultInitialState from './defaultInitialState'
+import initialState from './initialState'
 import orm from './orm'
 
 // add redux devtools
