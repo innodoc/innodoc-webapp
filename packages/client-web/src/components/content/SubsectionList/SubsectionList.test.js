@@ -25,6 +25,9 @@ describe('<Content />', () => {
     const wrapper = shallow(<SubsectionList subsections={subsections} />)
     const list = wrapper.find(List)
     expect(list.prop('dataSource')).toBe(subsections)
+    const HeaderComp = () => wrapper.prop('header')
+    const headerWrapper = shallow(<HeaderComp />)
+    expect(headerWrapper.children().text()).toBe('content.subsections')
   })
 })
 

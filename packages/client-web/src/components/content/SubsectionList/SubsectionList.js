@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { List } from 'antd'
+import { List, Typography } from 'antd'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { sectionType } from '@innodoc/client-misc/src/propTypes'
@@ -18,7 +18,12 @@ Subsection.propTypes = sectionType.isRequired
 
 const SubsectionList = ({ subsections }) => {
   const { t } = useTranslation()
-  const header = <h2 className={css.listheader}>{t('content.subsections')}</h2>
+  const header = (
+    <Typography.Title className={css.listheader} level={2}>
+      {t('content.subsections')}
+    </Typography.Title>
+  )
+
   return (
     <List
       size="small"
