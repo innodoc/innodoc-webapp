@@ -15,22 +15,33 @@
     transform: translateY(2px)
 
   :global(.ant-menu-item)
-    &, &:hover
-      @extend %remove-border
+    @extend %remove-border
 
   :global(.ant-menu-submenu)
-    &, &:hover
-      @extend %remove-border
+    @extend %remove-border
 
   :global(.ant-menu-item-selected)
-    &, &:hover
-      background-color: $menu-highlight-color
+    background-color: $menu-highlight-color
 
-      a
-        color: white
-        text-decoration: underline
+    a
+      color: white
+      text-decoration: underline
 
-.active, .active:hover
+  :global(.ant-menu-item):hover
+    @extend %remove-border
+
+  :global(.ant-menu-submenu):hover
+    @extend %remove-border
+
+  :global(.ant-menu-item-selected):hover
+    background-color: $menu-highlight-color
+
+    a
+      color: white
+      text-decoration: underline
+
+.active,
+.active:hover
   text-decoration: underline
 
 :global(.ant-drawer) .nav

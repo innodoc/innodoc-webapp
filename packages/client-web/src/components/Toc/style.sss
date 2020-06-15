@@ -1,5 +1,9 @@
 @import '@innodoc/client-web/src/style/antd-theme.sss'
 
+.disableExpand
+  :global(.ant-tree-switcher)
+    display: none !important
+
 .tocWrapper
   margin-bottom: $padding-lg
 
@@ -10,7 +14,3 @@
   .active
     color: $heading-color
     text-decoration: underline
-
-.disableExpand
-  :global(.ant-tree-switcher)
-    display: none !important

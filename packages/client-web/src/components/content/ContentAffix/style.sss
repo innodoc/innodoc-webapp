@@ -28,10 +28,9 @@ html
       padding: 0
       border-bottom: none
 
-      button
-        &:after
-          // supress click animation
-          animation: none
+      // supress click animation
+      button::after
+        animation: none
 
   &.affixed
     height: $affix-height

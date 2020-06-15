@@ -16,6 +16,7 @@
   "scripts": {
     "build:bundle-analyze": "BUNDLE_ANALYZE=both yarn build",
     "build": "next build src",
+    "lint:stylelint": "stylelint 'src/**/*.sss'",
     "test:e2e:content": "http-server e2e/content -a localhost -p ${CONTENT_PORT:-8001} --cors",
     "test:e2e": "APP_ROOT=${APP_ROOT:-http://localhost:6123/} CONTENT_ROOT=${CONTENT_ROOT:-http://localhost:6124/} MONGO_URL=${MONGO_URL:-mongodb://localhost:6125/innodoc-e2e} jest --runInBand --forceExit --detectOpenHandles --config e2e/jest/jest.config.js"
   },
@@ -87,6 +88,9 @@
     "jest-enzyme": "^7.1.2",
     "mongodb-memory-server": "6.5.2",
     "next-build-id": "^3.0.0",
+    "stylelint": "^13.6.0",
+    "stylelint-config-css-modules": "^2.2.0",
+    "stylelint-config-standard": "^20.0.0",
     "sugarss": "^2.0.0",
     "wendigo": "^2.12.0"
   }
