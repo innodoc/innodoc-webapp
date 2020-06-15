@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Provider } from 'react-redux'
+
+import MathJax from '@innodoc/react-mathjax-node'
 
 import { InnoDocApp } from './App'
 import PageTitle from '../PageTitle'
@@ -24,17 +25,20 @@ describe('<InnoDocApp />', () => {
     }
 
     it('should render', () => {
+      const mathJaxOptions = { foo: 'bar' }
       const wrapper = shallow(
         <InnoDocApp
           Component={DummyComponent}
-          mathJaxOptions={{}}
+          mathJaxOptions={mathJaxOptions}
           pageProps={{}}
           store={mockStore}
           router={{}}
         />
       )
       expect(wrapper.find(PageTitle).exists()).toBe(true)
-      expect(wrapper.find(Provider).exists()).toBe(true)
+      expect(wrapper.find(MathJax.ConfigProvider).prop('options')).toBe(
+        mathJaxOptions
+      )
       expect(wrapper.find(DummyComponent).exists()).toBe(true)
     })
   })
