@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Button, Drawer, Layout as AntLayout } from 'antd'
+import { Button, Drawer, Grid, Layout as AntLayout } from 'antd'
 
 import { InternalLink } from '../../content/links'
 import Header from './Header'
@@ -12,13 +12,14 @@ let mockCourse
 jest.mock('react-redux', () => ({
   useSelector: () => mockCourse,
 }))
-let mockUseIsNarrowerThan
-jest.mock('../../../hooks/useIsNarrowerThan', () => () => mockUseIsNarrowerThan)
+
+let mockMd
+Grid.useBreakpoint = jest.fn(() => ({ md: mockMd }))
 
 describe('<Header />', () => {
   beforeEach(() => {
     mockCourse = { homeLink: '/section/foo' }
-    mockUseIsNarrowerThan = false
+    mockMd = true
   })
 
   it('should render', () => {
@@ -39,7 +40,7 @@ describe('<Header />', () => {
 
   describe('mobile menu', () => {
     beforeEach(() => {
-      mockUseIsNarrowerThan = true
+      mockMd = false
     })
 
     it('should render', () => {

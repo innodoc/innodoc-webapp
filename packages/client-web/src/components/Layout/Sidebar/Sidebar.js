@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Layout as AntLayout } from 'antd'
+import { Button, Grid, Layout as AntLayout } from 'antd'
 import { DoubleLeftOutlined } from '@ant-design/icons'
 
 import { toggleSidebar } from '@innodoc/client-store/src/actions/ui'
@@ -8,7 +8,6 @@ import appSelectors from '@innodoc/client-store/src/selectors'
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
-import useIsNarrowerThan from '../../../hooks/useIsNarrowerThan'
 import css from './style.sss'
 
 const WIDTHS = [300, 400] // width change on breakpoint
@@ -17,8 +16,8 @@ const Sidebar = ({ children }) => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const { sidebarVisible } = useSelector(appSelectors.getApp)
-  const isNarrowerThanXl = useIsNarrowerThan('xl')
-  const width = isNarrowerThanXl ? WIDTHS[0] : WIDTHS[1]
+  const { xl } = Grid.useBreakpoint()
+  const width = xl ? WIDTHS[1] : WIDTHS[0]
 
   return (
     <AntLayout.Sider

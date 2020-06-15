@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Button, Layout as AntLayout } from 'antd'
+import { Button, Grid, Layout as AntLayout } from 'antd'
 
 import { toggleSidebar } from '@innodoc/client-store/src/actions/ui'
 
@@ -13,14 +13,14 @@ jest.mock('react-redux', () => ({
   useSelector: () => mockApp,
 }))
 
-let mockIsNarrowerThan
-jest.mock('../../../hooks/useIsNarrowerThan', () => () => mockIsNarrowerThan)
+let mockXl
+Grid.useBreakpoint = jest.fn(() => ({ xl: mockXl }))
 
 describe('<Sidebar />', () => {
   beforeEach(() => {
     mockApp = { sidebarVisible: true }
     mockDispatch.mockClear()
-    mockIsNarrowerThan = true
+    mockXl = false
   })
 
   describe('should render', () => {
@@ -52,7 +52,7 @@ describe('<Sidebar />', () => {
     })
 
     it('should be 400 for wide screen', () => {
-      mockIsNarrowerThan = false
+      mockXl = true
       const wrapper = shallow(<Sidebar />)
       expect(wrapper.find(AntLayout.Sider).prop('width')).toBe(400)
     })

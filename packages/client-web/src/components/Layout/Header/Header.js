@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
-import { Button, Col, Drawer, Layout as AntLayout, Row } from 'antd'
+import { Button, Col, Drawer, Grid, Layout as AntLayout, Row } from 'antd'
 import { MenuOutlined } from '@ant-design/icons'
 
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
@@ -12,12 +12,11 @@ import Logo from './Logo'
 import SearchInput from './SearchInput'
 import { InternalLink } from '../../content/links'
 import css from './style.sss'
-import useIsNarrowerThan from '../../../hooks/useIsNarrowerThan'
 
 const Header = () => {
   const { t } = useTranslation()
   const [showMobileMenu, setShowMobileMenu] = useState(false)
-  const isNarrowerThanMd = useIsNarrowerThan('md')
+  const { md } = Grid.useBreakpoint()
   const course = useSelector(courseSelectors.getCurrentCourse)
 
   const logoWrapper =
@@ -57,7 +56,7 @@ const Header = () => {
       <Drawer
         onClose={() => setShowMobileMenu(false)}
         title={t('header.menu')}
-        visible={isNarrowerThanMd && showMobileMenu}
+        visible={!md && showMobileMenu}
       >
         <SearchInput className={css.searchInputMenu} />
         <Nav menuMode="inline" />
