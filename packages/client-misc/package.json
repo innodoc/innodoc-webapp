@@ -17,7 +17,7 @@
   "main": "src/index.js",
   "dependencies": {
     "isomorphic-unfetch": "^3.0.0",
-    "next-i18next": "^4.4.1",
+    "next-i18next": "^4.4.2",
     "password-validator": "^5.0.3",
     "prop-types": "^15.7.2"
   }
