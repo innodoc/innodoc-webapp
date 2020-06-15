@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Provider } from 'react-redux'
-import withRedux from 'next-redux-wrapper'
+import { createWrapper, HYDRATE } from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
+import { END } from 'redux-saga'
 import MathJax from '@innodoc/react-mathjax-node'
 import { withServerContext } from 'next-server-context'
 
@@ -19,8 +19,8 @@ import withIndexRedirect from './withIndexRedirect'
 import withMathJaxOptions from './withMathJaxOptions'
 import withWaitForManifest from './withWaitForManifest'
 
-const InnoDocApp = ({ Component, mathJaxOptions, pageProps, store }) => (
-  <Provider store={store}>
+const InnoDocApp = ({ Component, mathJaxOptions, pageProps }) => (
+  <>
     <PageTitle />
     <MathJax.ConfigProvider options={mathJaxOptions}>
       <Component
@@ -28,20 +28,26 @@ const InnoDocApp = ({ Component, mathJaxOptions, pageProps, store }) => (
       />
     </MathJax.ConfigProvider>
     <RouteNotifier />
-  </Provider>
+  </>
 )
 
 InnoDocApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   mathJaxOptions: PropTypes.object.isRequired,
   pageProps: PropTypes.object.isRequired,
-  store: PropTypes.object.isRequired,
 }
 
 InnoDocApp.getInitialProps = async ({ Component, ctx }) => {
   const pageProps = Component.getInitialProps
     ? await Component.getInitialProps(ctx)
     : {}
+
+  // Stop the saga if on server
+  if (ctx.req) {
+    ctx.store.dispatch(END)
+    await ctx.store.sagaTask.toPromise()
+  }
+
   return {
     pageProps: {
       ...pageProps,
@@ -49,6 +55,15 @@ InnoDocApp.getInitialProps = async ({ Component, ctx }) => {
     },
   }
 }
+
+// next-redux-wrapper needs HYDRATE action to be handled
+const getRootReducer = (innerReducer) => (state, action) =>
+  action.type === HYDRATE
+    ? { ...state, ...action.payload }
+    : innerReducer(state, action)
+
+const makeStore = makeMakeStore(rootSaga, getRootReducer)
+const { withRedux } = createWrapper(makeStore)
 
 const hocs = [
   withTranslation,
@@ -63,7 +78,7 @@ const hocs = [
       ]
     : []),
   withReduxSaga,
-  withRedux(makeMakeStore(rootSaga)),
+  withRedux,
 ]
 
 export { InnoDocApp } // for testing
