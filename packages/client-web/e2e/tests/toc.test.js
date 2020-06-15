@@ -1,22 +1,20 @@
 const waitForSiderWidth = async (width) => {
   await browser.wait(500)
-  await browser.waitFor(
-    (w) => {
-      const styleW = document.querySelector('.ant-layout-sider').style.width
-      return parseInt(styleW.slice(0, -2), 10) === w
-    },
-    DEFAULT_TIMEOUT,
-    width
-  )
+  await browser.waitFor('.ant-layout-sider')
+  const styles = await browser.styles('.ant-layout-sider')
+  const sidebarWidth = parseInt(styles.width.slice(0, -2), 10)
+  expect(sidebarWidth).toBe(width)
 }
 const waitForSiderClosed = () => waitForSiderWidth(0)
-const waitForSiderOpen = () => waitForSiderWidth(300)
+const waitForSiderOpen = () => waitForSiderWidth(400)
+
 const waitForHeader = (text) =>
   browser.waitFor(
     (t) => document.querySelector('[class*=content___] h1').innerText === t,
     DEFAULT_TIMEOUT,
     text
   )
+
 const expectSwitcherAmount = async (type, n) =>
   expect(
     await browser.queryAll(`.ant-layout-sider .ant-tree-switcher${type}`)
