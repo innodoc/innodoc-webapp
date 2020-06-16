@@ -1,8 +1,5 @@
 @import '@innodoc/client-web/src/style/antd-theme.sss'
 
-.disabled
-  color: $disabled-color
-
 $affix-height: 38px
 
 html
@@ -14,23 +11,14 @@ html
   border-bottom: $border-width-base $border-style-base transparent
   transition: background-color $animation-duration-slow, border-color $animation-duration-slow
 
+  .affixButton
+    align-self: center
+    margin-left: $padding-xs
+
   :global(.ant-breadcrumb)
     line-height: $line-height-base
     flex-grow: 1
     transition: none
-
-  :global(.ant-menu)
-    line-height: $affix-height
-    border-bottom: none
-
-    :global(.ant-menu-item)
-      top: 0
-      padding: 0
-      border-bottom: none
-
-      // supress click animation
-      button::after
-        animation: none
 
   &.affixed
     height: $affix-height

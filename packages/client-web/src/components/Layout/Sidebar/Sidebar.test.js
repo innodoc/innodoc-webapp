@@ -1,10 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Button, Grid, Layout as AntLayout } from 'antd'
-
-import { toggleSidebar } from '@innodoc/client-store/src/actions/ui'
+import { Grid, Layout as AntLayout } from 'antd'
 
 import Sidebar from './Sidebar'
+import ToggleButton from './ToggleButton'
 
 let mockApp
 const mockDispatch = jest.fn()
@@ -37,12 +36,11 @@ describe('<Sidebar />', () => {
       expect(wrapper.find(AntLayout.Sider).prop('collapsed')).toBe(true)
       expect(mockDispatch).not.toBeCalled()
     })
-  })
 
-  it('should dispatch toggleSidebar', () => {
-    const wrapper = shallow(<Sidebar>Foo</Sidebar>)
-    wrapper.find(Button).invoke('onClick')()
-    expect(mockDispatch).toBeCalledWith(toggleSidebar())
+    test('with <ToggleButton />', () => {
+      const wrapper = shallow(<Sidebar>Foo</Sidebar>)
+      expect(wrapper.exists(ToggleButton)).toBe(true)
+    })
   })
 
   describe('responsive width', () => {

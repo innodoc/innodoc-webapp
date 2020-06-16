@@ -19,13 +19,24 @@ beforeEach(() => {
 })
 
 describe('<ToggleButton />', () => {
+  it('renders', () => {
+    const CustomIcon = () => 'BarIcon'
+    const wrapper = shallow(
+      <ToggleButton className="foo" icon={<CustomIcon />} />
+    )
+    expect(wrapper.hasClass('foo')).toBe(true)
+    const IconComp = () => wrapper.prop('icon')
+    const iconWrapper = shallow(<IconComp />)
+    expect(iconWrapper.type()).toBe(CustomIcon)
+  })
+
   it.each([
-    ['enabled', true],
-    ['disabled', false],
-  ])('renders with %s sidebar', (_, sidebarVisible) => {
+    ['enabled', true, 'common.hideToc'],
+    ['disabled', false, 'common.showToc'],
+  ])('renders with %s sidebar', (_, sidebarVisible, title) => {
     mockApp = { sidebarVisible }
     const wrapper = shallow(<ToggleButton />)
-    expect(wrapper.find(Button).hasClass('active')).toBe(sidebarVisible)
+    expect(wrapper.find(Button).prop('title')).toBe(title)
   })
 
   it('dispatches toggleSidebar', () => {

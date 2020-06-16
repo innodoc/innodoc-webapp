@@ -1,15 +1,6 @@
 beforeEach(resetBrowser)
 
 describe('Cascading should override Antd styles', () => {
-  it('should have toggleButton w/o border', async () => {
-    await openUrl()
-    await browser.assert.style(
-      '[class*="sidebarToggle"] [class*="toggleButton"]',
-      'border-width',
-      '0px'
-    )
-  })
-
   it('should have list item in footer w/o bottom border', async () => {
     await openUrl()
     await browser.assert.style(
