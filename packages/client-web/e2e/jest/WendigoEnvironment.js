@@ -19,6 +19,8 @@ class WendigoEnvironment extends NodeEnvironment {
     const wendigoOpts = {
       defaultTimeout,
       incognito: true,
+      userAgent:
+        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36',
     }
     if (isCI) {
       wendigoOpts.args = ['--no-sandbox', '--disable-dev-shm-usage']
@@ -31,8 +33,10 @@ class WendigoEnvironment extends NodeEnvironment {
 
     // Provide globals
     this.global.DEFAULT_TIMEOUT = defaultTimeout
+
     this.global.getUrl = (rest = '') => `${process.env.APP_ROOT}${rest}`
-    this.global.openUrl = async (urlFragment, opts) => {
+
+    this.global.openUrl = async (urlFragment, opts = {}) => {
       await this.global.browser.open(this.global.getUrl(urlFragment), {
         headers: { 'Accept-Language': 'en-US' },
         viewport: { width: 1200, height: 600 },
@@ -48,6 +52,7 @@ class WendigoEnvironment extends NodeEnvironment {
         '//footer[contains(@class, "footer___")]/*'
       )
     }
+
     this.global.hoverNavItem = async (text) => {
       const escaped = escapeXPathString(text)
       await this.global.browser.page.mouse.move(0, 0)
@@ -56,12 +61,14 @@ class WendigoEnvironment extends NodeEnvironment {
       )
       await this.global.browser.wait(200)
     }
+
     this.global.resetBrowser = async () => {
       if (this.global.browser) {
         await this.global.browser.close()
       }
       this.global.browser = await Wendigo.createBrowser(wendigoOpts)
     }
+
     await this.global.resetBrowser()
   }
 
