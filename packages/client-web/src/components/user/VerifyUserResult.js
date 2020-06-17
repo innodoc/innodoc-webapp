@@ -28,11 +28,11 @@ const VerifyUserResult = ({ token }) => {
   const extra =
     status === 'success' ? (
       <Link href="/login">
-        <>
+        <div>
           <Button icon={<LoginOutlined />} type="primary" key="console">
             {t('user.login.title')}
           </Button>
-        </>
+        </div>
       </Link>
     ) : null
 
