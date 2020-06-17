@@ -94,7 +94,7 @@ describe('startServer', () => {
       it('should log info message', () => {
         expect(mockInfoLog).toHaveBeenCalledTimes(1)
         expect(mockInfoLog.mock.calls[0][0].toString()).toMatch(
-          'Started production server on port 7654'
+          'Started production server on localhost:7654'
         )
       })
 

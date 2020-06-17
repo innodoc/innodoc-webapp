@@ -27,7 +27,8 @@ const startServer = async () => {
     const expressApp = createExpressApp(config, nextApp)
     const server = await expressApp.listen(config.port, config.host)
     httpTerminator = createHttpTerminator({ server })
-    console.info(`Started ${config.nodeEnv} server on port ${config.port}.`)
+    const msg = `Started ${config.nodeEnv} server on ${config.host}:${config.port}.`
+    console.info(msg)
   } catch (err) {
     console.error(err)
     process.exit(1)
