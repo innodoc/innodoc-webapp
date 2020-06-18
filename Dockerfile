@@ -1,5 +1,5 @@
 # Official Alpine-based Dockerfile for innodoc-webapp
-ARG BASE_IMAGE=node:13.12-alpine3.11
+ARG BASE_IMAGE=node:14-alpine3.12
 FROM $BASE_IMAGE AS build
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 ARG BUILD_ID
