@@ -1,11 +1,8 @@
 # This image is used for E2E testing.
 # BUILD_IMAGE is set to current build in CI pipeline
 
-# Puppeteer in Docker can be tricky:
-# https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#running-on-alpine
-
 # Sync puppeteer version to corresponding Chromium version!
-# Check corresponding versions: https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md
+# Check corresponding versions: https://github.com/GoogleChrome/puppeteer/blob/main/docs/api.md
 # Alpine Chromium version: https://pkgs.alpinelinux.org/packages?name=chromium
 ARG PUPPETEER_VERSION=2.0.0
 
