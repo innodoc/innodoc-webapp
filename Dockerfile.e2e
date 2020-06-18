@@ -51,4 +51,4 @@ RUN yarn add --no-lockfile --ignore-workspace-root-check --exact puppeteer@$PUPP
 # run e2e script
 USER innodocuser
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["yarn", "run", "test:e2e"]
+CMD ["yarn", "run", "test:e2e", "--color"]
