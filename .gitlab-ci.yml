@@ -11,7 +11,7 @@ variables:
   IMAGE_RELEASE_TAG: $CI_REGISTRY_IMAGE:latest
 
 .docker-default-vars: &docker-default-vars
-  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_TLS_CERTDIR: '/certs'
   GIT_STRATEGY: none
   IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
   IMAGE_E2E_CACHE_TAG: $CI_REGISTRY_IMAGE/e2e:cache
@@ -130,13 +130,13 @@ Deploy (staging):
   before_script:
     - apk add --no-cache openssh-client
     - mkdir -p ~/.ssh
-    - echo "$STAGING_PRIVKEY" | tr -d '\r' > ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
+    - echo "$STAGING_PRIVKEY" | tr -d '\r' > ~/.ssh/id_ecdsa
+    - chmod 600 ~/.ssh/id_ecdsa
     - echo "$STAGING_SERVER_PUBKEY" > ~/.ssh/known_hosts
   script:
-    - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_rsa "$STAGING_SERVER_USER"@"$STAGING_SERVER" "$STAGING_DEPLOY_CMD"
+    - ssh -o PasswordAuthentication=no -o PreferredAuthentications=publickey -i ~/.ssh/id_ecdsa "$STAGING_SERVER_USER"@"$STAGING_SERVER" "$STAGING_DEPLOY_CMD"
   after_script:
-    - rm -f ~/.ssh/id_rsa
+    - rm -f ~/.ssh/id_ecdsa
   only:
     - dev
   variables:
