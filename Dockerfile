@@ -12,7 +12,7 @@ RUN set -xe && \
   apk add --no-cache \
     build-base \
     git \
-    python
+    python3
 COPY . .
 RUN set -xe && \
   ln -s .env.example .env && \
