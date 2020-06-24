@@ -101,7 +101,6 @@ E2E tests:
       --cache-from "$IMAGE_E2E_CACHE_TAG"
       --tag "$IMAGE_E2E_TAG"
       --build-arg BUILD_IMAGE="$IMAGE_TAG"
-      --build-arg BUILD_ID="$CI_COMMIT_SHA"
       -f Dockerfile.e2e
       .
     - docker tag "$IMAGE_E2E_TAG" "$IMAGE_E2E_CACHE_TAG"
