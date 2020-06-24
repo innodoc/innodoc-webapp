@@ -208,3 +208,55 @@ Deploy innodoc (production):
       -i ~/.ssh/id_ecdsa
       $PRODUCTION_DESTINATION
       webapp-innodoc-production
+
+Deploy m4r (staging):
+  <<: *deploy-staging-base
+  environment:
+    name: m4r-staging
+    url: https://m4r-staging.innocampus.tu-berlin.de/
+  script:
+    - ssh
+      -o PasswordAuthentication=no
+      -o PreferredAuthentications=publickey
+      -i ~/.ssh/id_ecdsa
+      $STAGING_DESTINATION
+      webapp-m4r-staging
+
+Deploy m4r (production):
+  <<: *deploy-production-base
+  environment:
+    name: m4r-production
+    url: https://m4r.innocampus.tu-berlin.de/
+  script:
+    - ssh
+      -o PasswordAuthentication=no
+      -o PreferredAuthentications=publickey
+      -i ~/.ssh/id_ecdsa
+      $PRODUCTION_DESTINATION
+      webapp-m4r-production
+
+Deploy vorkurs-mathematik (staging):
+  <<: *deploy-staging-base
+  environment:
+    name: vorkurs-mathematik-staging
+    url: https://vorkurs-mathematik-staging.innocampus.tu-berlin.de/
+  script:
+    - ssh
+      -o PasswordAuthentication=no
+      -o PreferredAuthentications=publickey
+      -i ~/.ssh/id_ecdsa
+      $STAGING_DESTINATION
+      webapp-vorkurs-mathematik-staging
+
+Deploy vorkurs-mathematik (production):
+  <<: *deploy-production-base
+  environment:
+    name: vorkurs-mathematik-production
+    url: https://vorkurs-mathematik.innocampus.tu-berlin.de/
+  script:
+    - ssh
+      -o PasswordAuthentication=no
+      -o PreferredAuthentications=publickey
+      -i ~/.ssh/id_ecdsa
+      $PRODUCTION_DESTINATION
+      webapp-vorkurs-mathematik-production
