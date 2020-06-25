@@ -12,7 +12,8 @@
     > :global(.ant-card-head)
       background-color: $color-head
 
-    > :global(.ant-card-body) *:last-child
+    > :global(.ant-card-body) > *:last-child,
+    > :global(.ant-card-body) > div > *:last-child
       margin-bottom: 0
 
 .exercise :global(.ant-list-item)
