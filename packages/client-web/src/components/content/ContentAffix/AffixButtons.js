@@ -39,11 +39,11 @@ SectionButton.propTypes = {
 const AffixButtons = () => {
   const { prevId, nextId } = useSelector(sectionSelectors.getNextPrevSections)
   return (
-    <>
+    <div className={css.affixButtons}>
       <SectionButton direction="left" sectionId={prevId} />
       <SidebarToggleButton className={css.affixButton} />
       <SectionButton direction="right" sectionId={nextId} />
-    </>
+    </div>
   )
 }
 

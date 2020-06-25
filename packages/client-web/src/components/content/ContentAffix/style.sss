@@ -12,9 +12,12 @@ html
   margin-bottom: $padding-xs
   transition: background-color $animation-duration-slow, border-color $animation-duration-slow
 
-  .affixButton
-    align-self: center
-    margin-left: $padding-xs
+  .affixButtons
+    align-self: flex-start
+    white-space: nowrap
+
+    .affixButton
+      margin-left: $padding-xs
 
   :global(.ant-breadcrumb)
     line-height: $line-height-base
@@ -25,6 +28,9 @@ html
     height: $affix-height
     background-color: $body-background
     border-bottom-color: $border-color-split
+
+    .affixButtons
+      align-self: center
 
     :global(.ant-breadcrumb)
       height: $affix-height
