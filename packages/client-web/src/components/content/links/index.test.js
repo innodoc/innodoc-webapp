@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import Link from 'next/link'
 import { Typography } from 'antd'
 
 import { InternalLink, PageLink, SectionLink } from '.'
@@ -13,6 +14,16 @@ describe('<InternalLink />', () => {
     const linkComponent = wrapper.find(LinkComponent)
     expect(linkComponent).toHaveLength(1)
     expect(linkComponent.prop('contentId')).toBe('foo/bar')
+  })
+
+  it.each([
+    ['___INDEX_PAGE___', '/index-page', 'index.title'],
+    ['___TOC___', '/toc', 'common.toc'],
+  ])('should render special links (%s)', (href, pageHref, title) => {
+    const wrapper = shallow(<InternalLink href={href} />)
+    const link = wrapper.find(Link)
+    expect(link.prop('href')).toBe(pageHref)
+    expect(link.children().text()).toBe(title)
   })
 
   it('should render with malformed href (development)', () => {

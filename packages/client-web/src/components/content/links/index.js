@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Link from 'next/link'
 import { Typography } from 'antd'
 
+import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { parseLink } from '@innodoc/client-misc/src/util'
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
 import pageSelectors from '@innodoc/client-store/src/selectors/page'
@@ -15,10 +17,30 @@ const SectionLink = makeContentLink(
   'section'
 )
 
+const specialPages = {
+  ___INDEX_PAGE___: ['/index-page', 'index.title'],
+  ___TOC___: ['/toc', 'common.toc'],
+}
+
 // takes href like '/section/...' or '/page/...'
 const InternalLink = ({ children, href }) => {
+  const { t } = useTranslation()
   let contentType
   let contentId
+
+  if (Object.keys(specialPages).includes(href)) {
+    const [pageHref, i18nKey] = specialPages[href]
+    const title = t(i18nKey)
+
+    const newChildren = children ? (
+      React.cloneElement(children, { title })
+    ) : (
+      <a>{title}</a>
+    )
+
+    return <Link href={pageHref}>{newChildren}</Link>
+  }
+
   try {
     ;[contentType, contentId] = parseLink(href)
   } catch {
