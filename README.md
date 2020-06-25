@@ -11,28 +11,17 @@ HTML viewer for interactive educational content.
 The easiest way to get started is to use the prebuilt image.
 
 ```sh
-$ docker run \
-  --detach \
+docker run \
+  --rm \
   --publish 8000:8000 \
   --env CONTENT_ROOT="https://example.com/content/" \
+  --env MONGO_URL=mongodb://mongodb/innodoc-test \
+  --network innodocbridge
   innodoc/innodoc-webapp
 ```
 
-#### Building the Docker image
-
-You can also use the provided `Dockerfile` to build the Docker image yourself.
-First clone the repository. Inside the repository directory run the following
-command.
-
-```sh
-$ docker build
-    --tag innodoc-webapp . && \
-  docker run \
-    --detach \
-    --publish 8000:8000 \
-    --env CONTENT_ROOT="https://example.com/content/" \
-    innodoc-webapp
-```
+**Note:** You still need a MongoDB instance and content for the app to do
+anything useful.
 
 ### Manually building the application
 
@@ -49,25 +38,16 @@ systems might work, but your mileage may vary.
 
 #### 1. Install dependencies
 
-Clone the repository and change into the repository directory.
-
 Install node packages.
 
 ```sh
 $ yarn install
 ```
 
-Install the MathJax submodule.
+#### 2. Configuration
 
-```sh
-$ git submodule init
-$ git submodule update --remote
-```
-
-#### 2. Configure the content root URL
-
-Copy the example configuration `.env.example` to `.env` and edit it to your
-liking. You should at least enter a value for [CONTENT_ROOT](#content_root).
+Copy the example configuration `.env.example` to `.env` and edit to your
+liking.
 
 #### 3. Build the application
 
@@ -75,12 +55,12 @@ liking. You should at least enter a value for [CONTENT_ROOT](#content_root).
 $ yarn build
 ```
 
-The optimized production build can be found in the directory
+An optimized production build can be found in the directory
 `packages/client-web/src/.next`.
 
 #### 4. Start the production server
 
-This will start the server that will bootstrap the web application.
+This will start the web server that serves the web application.
 
 ```sh
 $ yarn start
@@ -93,59 +73,20 @@ For the application to do anything useful, you will need content to display.
 Content is static data in the shape of JSON and image files. To produce such
 content a separate program
 [innoConv](https://gitlab.tu-berlin.de/innodoc/innoconv) can be used. The
-content needs to be served from a location and can be configured using
-[`CONTENT_ROOT`](#content_root). Don't forget to configure the
-[CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
+content needs to be served via HTTP(S) (see [`CONTENT_ROOT`](#content_root)).
+Don't forget to send [CORS
+headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) if needed.
 
 ### Configuration options
 
 Configuration options are set in the `.env` file. You can use `.env.example` as
-a basis. When using Docker you need to specify variables using the `--env`
-argument.
-
-#### `APP_ROOT`
-
-> The location the app will be served from.
-
-**Example:** `https://app.example.com/`
-
-#### `CONTENT_ROOT`
-
-> The application will look for `manifest.json` in this location. It will also
-serve as the base URL for content files unless `STATIC_ROOT` is specified.
-
-**Example:** `https://example.com/content/`
-
-#### `STATIC_ROOT`
-
-> Location for static files. Can be used when static assets are served from
-another location (e.g. a CDN).
-
-**Example:** `https://cdn.example.com/`  
-**Default:** `${CONTENT_ROOT}_static/`
-
-#### `SECTION_PATH_PREFIX`
-
-> The first URL component for sections. Having a section `foo/bar` the default
-results in the URL `example.com/section/foo/bar` while
-`SECTION_PATH_PREFIX=s` would result in `example.com/s/foo/bar`.
-
-**Example:** `s`  
-**Default:** `section`
-
-#### `PAGE_PATH_PREFIX`
-
-> Similar to [`SECTION_PATH_PREFIX`](#section_path_prefix) this can be used to
-customize the first URL component for pages.
-
-**Example:** `p`  
-**Default:** `page`
+a basis. For `docker run` you might want to use `--env` or `--env-file`.
 
 ## Deployment
 
 Web applications usually run behind a reverse proxy to provide features such as
-TLS termination, static asset serving or load balancing. The web provides
-plenty of excellent guides on how this is achieved.
+TLS termination, static asset serving or load balancing. Details on how to do
+that is not in the scope of this document.
 
 Static assets are stored in the directory `/innodoc-webapp/src/.next/static`
 in the Docker container.
