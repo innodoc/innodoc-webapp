@@ -237,15 +237,15 @@
     },
     "verification": {
       "error": {
-        "description": "Dein neues Konto konnte nicht aktiviert werden.",
+        "subTitle": "Dein neues Konto konnte nicht aktiviert werden.",
         "title": "Aktivierung fehlgeschlagen!"
       },
       "pending": {
-        "description": "Dein neues Konto wird nun aktiviert. Bitte warten…",
+        "subTitle": "Dein neues Konto wird nun aktiviert. Bitte warten…",
         "title": "Aktivierung Deines Kontos"
       },
       "success": {
-        "description": "Dein neues Konto wurde erfolgreich aktiviert und kann nun genutzt werden.",
+        "subTitle": "Dein neues Konto wurde erfolgreich aktiviert und kann nun genutzt werden.",
         "title": "Konto aktiviert"
       }
     }
