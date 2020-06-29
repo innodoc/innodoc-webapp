@@ -15,8 +15,8 @@ const ChangePasswordForm = () => {
   const { t } = useTranslation()
 
   const onFinish = useCallback(
-    ({ 'old-password': oldPassword, password }, setDisabled, setMessage) => {
-      return changePassword(appRoot, csrfToken, password, oldPassword)
+    ({ 'old-password': oldPassword, password }, setDisabled, setMessage) =>
+      changePassword(appRoot, csrfToken, password, oldPassword)
         .then(() =>
           setMessage({
             afterClose: () => setMessage(),
@@ -41,8 +41,7 @@ const ChangePasswordForm = () => {
             message: t('user.changePassword.error.message'),
           })
           setDisabled(false)
-        })
-    },
+        }),
     [appRoot, csrfToken, t]
   )
 
