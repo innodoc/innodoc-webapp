@@ -1,4 +1,4 @@
-import { call, put, throttle } from 'redux-saga/effects'
+import { call, debounce, put } from 'redux-saga/effects'
 
 import validators from '@innodoc/client-question-validators'
 import {
@@ -6,9 +6,9 @@ import {
   questionEvaluated,
 } from '@innodoc/client-store/src/actions/question'
 
-export const QUESTION_ANSWER_THROTTLE = 500
+export const QUESTION_ANSWER_DEBOUNCE_TIME = 500
 
-export function* handleQuestionAnswered({ id, answer, attributes }) {
+export function* handleQuestionAnsweredSaga({ id, answer, attributes }) {
   const { solution, validation, ...remainingAttrs } = attributes
   const validator = validators[validation]
 
@@ -23,10 +23,10 @@ export function* handleQuestionAnswered({ id, answer, attributes }) {
   }
 }
 
-export default function* watchQuestionChange() {
-  yield throttle(
-    QUESTION_ANSWER_THROTTLE,
+export default function* watchQuestionChangeSaga() {
+  yield debounce(
+    QUESTION_ANSWER_DEBOUNCE_TIME,
     actionTypes.QUESTION_ANSWERED,
-    handleQuestionAnswered
+    handleQuestionAnsweredSaga
   )
 }

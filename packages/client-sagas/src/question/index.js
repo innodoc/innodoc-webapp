@@ -1,5 +1,5 @@
 import { fork } from 'redux-saga/effects'
 
-import watchQuestionChange from './question'
+import watchQuestionChangeSaga from './question'
 
-export default [fork(watchQuestionChange)]
+export default [fork(watchQuestionChangeSaga)]

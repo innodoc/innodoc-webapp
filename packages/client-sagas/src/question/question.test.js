@@ -1,4 +1,5 @@
 import { expectSaga, testSaga } from 'redux-saga-test-plan'
+import { debounce } from 'redux-saga/effects'
 
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 import validators from '@innodoc/client-question-validators'
@@ -7,9 +8,9 @@ import {
   questionEvaluated,
 } from '@innodoc/client-store/src/actions/question'
 
-import watchQuestionChange, {
-  handleQuestionAnswered,
-  QUESTION_ANSWER_THROTTLE,
+import watchQuestionChangeSaga, {
+  handleQuestionAnsweredSaga,
+  QUESTION_ANSWER_DEBOUNCE_TIME,
 } from './question'
 
 const mockExactRet = [RESULT_VALUE.INCORRECT, ['foo'], '41']
@@ -17,7 +18,7 @@ jest.mock('@innodoc/client-question-validators', () => ({
   exact: () => mockExactRet,
 }))
 
-describe('handleQuestionAnswered', () => {
+describe('handleQuestionAnsweredSaga', () => {
   it('should call validator and put questionEvaluated', () => {
     const data = {
       id: 'foo/bar#Q1',
@@ -27,7 +28,7 @@ describe('handleQuestionAnswered', () => {
         solution: '42',
       },
     }
-    return expectSaga(handleQuestionAnswered, data)
+    return expectSaga(handleQuestionAnsweredSaga, data)
       .call.like({ fn: validators.exact })
       .put(
         questionEvaluated('foo/bar#Q1', RESULT_VALUE.INCORRECT, ['foo'], '41')
@@ -44,20 +45,22 @@ describe('handleQuestionAnswered', () => {
         solution: '42',
       },
     }
-    return expectSaga(handleQuestionAnswered, data)
+    return expectSaga(handleQuestionAnsweredSaga, data)
       .not.put.actionType(questionActionTypes.QUESTION_EVALUATED)
       .run()
   })
 })
 
-describe('watchQuestionChange', () => {
-  it('should throttle handleQuestionAnswered saga on QUESTION_ANSWERED', () => {
-    testSaga(watchQuestionChange)
+describe('watchQuestionChangeSaga', () => {
+  it('should debounce handleQuestionAnsweredSaga on QUESTION_ANSWERED', () => {
+    testSaga(watchQuestionChangeSaga)
       .next()
-      .throttle(
-        QUESTION_ANSWER_THROTTLE,
-        questionActionTypes.QUESTION_ANSWERED,
-        handleQuestionAnswered
+      .is(
+        debounce(
+          QUESTION_ANSWER_DEBOUNCE_TIME,
+          questionActionTypes.QUESTION_ANSWERED,
+          handleQuestionAnsweredSaga
+        )
       )
       .next()
       .isDone()
