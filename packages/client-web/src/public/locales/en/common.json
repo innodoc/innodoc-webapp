@@ -62,6 +62,10 @@
       "success": "Success!"
     },
     "types": {
+      "deleteAccountSuccess": {
+        "text": "Your account has been successfully deleted and your personal data removed from our servers.",
+        "title": "Account deleted!"
+      },
       "loadManifestFailure": {
         "text": "Couldn't load the course manifest. The error message was:",
         "title": "Loading manifest failed!"
@@ -153,6 +157,19 @@
       "title": "Change password"
     },
     "confirmPassword": "Confirm Password",
+    "deleteAccount": {
+      "error": {
+        "description": "There was an error deleting your account. Please contact staff.",
+        "message": "Account deletion failed!"
+      },
+      "hint": "If you wish to continue, please enter your password and confirm.",
+      "title": "Delete account",
+      "submit": "Delete account permanently",
+      "warning": {
+        "description": "Once your account is deleted, you can not reactivate. Your personal data including e-mail and all progress is removed from our servers.",
+        "message": "Account deletion is final!"
+      }
+    },
     "email": "Email",
     "emailValidation": {
       "alreadyUsed": "This email address is being used by another account!",

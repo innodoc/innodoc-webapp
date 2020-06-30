@@ -14,6 +14,7 @@ const UserForm = ({
   onFinish,
   submitIcon,
   submitText,
+  submitType,
   submitWrapperCol,
   wrapperCol,
 }) => {
@@ -53,7 +54,7 @@ const UserForm = ({
     >
       {children(disabled)}
       <Form.Item wrapperCol={submitWrapperCol}>
-        <Button disabled={disabled} htmlType="submit" type="primary">
+        <Button disabled={disabled} htmlType="submit" type={submitType}>
           {loading ? <LoadingOutlined /> : submitIcon}
           {submitText}
         </Button>
@@ -69,6 +70,7 @@ UserForm.defaultProps = {
   extra: null,
   hide: false,
   labelCol: null,
+  submitType: 'primary',
   submitWrapperCol: null,
   wrapperCol: null,
 }
@@ -82,6 +84,7 @@ UserForm.propTypes = {
   onFinish: PropTypes.func.isRequired,
   submitIcon: PropTypes.node.isRequired,
   submitText: PropTypes.string.isRequired,
+  submitType: PropTypes.string,
   submitWrapperCol: PropTypes.objectOf(PropTypes.any),
   wrapperCol: PropTypes.objectOf(PropTypes.any),
 }

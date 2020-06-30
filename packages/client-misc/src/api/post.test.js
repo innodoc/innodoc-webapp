@@ -1,6 +1,7 @@
 import {
   changePassword,
   checkEmail,
+  deleteAccount,
   loginUser,
   logoutUser,
   registerUser,
@@ -72,6 +73,13 @@ describe('postJson', () => {
     () => checkEmail(base, csrfToken, 'foo@example.com'),
     { email: 'foo@example.com' },
     'https://app.example.com/user/check-email'
+  )
+
+  makeTests(
+    'deleteAccount',
+    () => deleteAccount(base, csrfToken, 'abcABC123!'),
+    { password: 'abcABC123!' },
+    'https://app.example.com/user/delete-account'
   )
 
   makeTests(

@@ -16,6 +16,40 @@ const userController = ({ appRoot, jwtSecret }) => {
     }
   })
 
+  router.post(
+    '/delete-account',
+    passport.authenticate('jwt', { session: false }),
+    async (req, res) => {
+      const deleteAccountErr = () =>
+        res.status(400).json({ result: 'DeleteAccountError' })
+      const { loggedInEmail } = res.locals
+      if (loggedInEmail) {
+        try {
+          const { user } = await User.authenticate()(
+            loggedInEmail,
+            req.body.password
+          )
+          if (user) {
+            // TODO delete user progress
+            await user.delete()
+            req.logout()
+            res.clearCookie('accessToken', {
+              httpOnly: true,
+              secure: secureCookie,
+            })
+            res.status(200).json({ result: 'ok' })
+          } else {
+            deleteAccountErr()
+          }
+        } catch {
+          deleteAccountErr()
+        }
+      } else {
+        deleteAccountErr()
+      }
+    }
+  )
+
   router.post('/register', async (req, res, next) => {
     let user
     const { email, password } = req.body

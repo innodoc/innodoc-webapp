@@ -8,6 +8,7 @@ import {
   LoginOutlined,
   LogoutOutlined,
   UserAddOutlined,
+  UserDeleteOutlined,
   UserOutlined,
 } from '@ant-design/icons'
 
@@ -47,6 +48,14 @@ const UserMenu = (props) => {
             <a>
               <LockOutlined />
               {t('user.changePassword.title')}
+            </a>
+          </Link>
+        </Menu.Item>,
+        <Menu.Item key="delete-account">
+          <Link href="/delete-account">
+            <a>
+              <UserDeleteOutlined />
+              {t('user.deleteAccount.title')}
             </a>
           </Link>
         </Menu.Item>,

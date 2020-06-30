@@ -123,6 +123,43 @@ describe('userController', () => {
     })
   })
 
+  describe('POST /user/delete-account', () => {
+    test('200', async () => {
+      const email = await addTestUser()
+      const user = await User.findOne({ email })
+      return testPost({
+        url: '/user/delete-account',
+        params: { password: 'g00dPassword!' },
+        status: 200,
+        type: 'json',
+        accessTokenCookie: await createAccessTokenCookie({ user }),
+      }).then(async (res) => {
+        expect(
+          res.headers['set-cookie'].some((cookie) =>
+            cookie.includes('accessToken=;')
+          )
+        ).toBe(true)
+        expect(await User.findOne({ email })).toBeFalsy()
+      })
+    })
+
+    test('400 with wrong password', async () => {
+      const email = await addTestUser()
+      const user = await User.findOne({ email })
+      return testPost({
+        url: '/user/delete-account',
+        params: { password: 'BadPassword!' },
+        status: 400,
+        type: 'json',
+        accessTokenCookie: await createAccessTokenCookie({ user }),
+      }).then((res) => {
+        expect(res.body.result).toBe('DeleteAccountError')
+      })
+    })
+
+    expectJwt401('/user/delete-account')
+  })
+
   describe('POST /user/register', () => {
     test('200', () => {
       const email = getRandEmail()

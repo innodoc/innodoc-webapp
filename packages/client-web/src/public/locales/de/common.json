@@ -62,6 +62,10 @@
       "success": "Erfolg!"
     },
     "types": {
+      "deleteAccountSuccess": {
+        "text": "Das Konto wurde inklusive aller persönlichen Daten erfolgreich gelöscht.",
+        "title": "Konto gelöscht!"
+      },
       "loadManifestFailure": {
         "text": "Konnte Kurs-Manifest nicht laden. Die Fehlermeldung war:",
         "title": "Laden des Manifests fehlgeschlagen!"
@@ -153,6 +157,19 @@
       "title": "Password ändern"
     },
     "confirmPassword": "Passwort bestätigen",
+    "deleteAccount": {
+      "error": {
+        "description": "Das Konto konnte leider nicht gelöscht werden. Bitte beim Support melden.",
+        "message": "Löschung des Kontos fehlgeschlagen!"
+      },
+      "hint": "Zum Fortfahren bitte Passwort eingeben und bestätigen.",
+      "title": "Konto löschen",
+      "submit": "Konto unwiderruflich löschen",
+      "warning": {
+        "description": "Sobald das Konto gelöscht ist, kann es nicht mehr reaktiviert werden. Alle persönlichen Daten einschließlich E-Mail und Fortschritte werden von unseren Servern entfernt.",
+        "message": "Die Löschung des Kontos ist endgültig!"
+      }
+    },
     "email": "E-Mail",
     "emailValidation": {
       "alreadyUsed": "Diese E-Mail-Adresse wird schon von einem anderen Konto verwendet!",

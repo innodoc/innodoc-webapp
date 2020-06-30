@@ -58,12 +58,102 @@ describe('Account interactions', () => {
     await hoverNavItem(email)
     await browser.waitForText('Logout')
     await browser.clickText('Logout')
-    await browser.waitFor('.ant-result')
-    await browser.assert.textContains(
-      '.ant-result',
-      'You have been logged out.'
-    )
+    await browser.waitForText('You have been logged out.')
   }
+
+  test('Change password', async () => {
+    const email = getRandEmail()
+    await openUrl()
+    await register(email)
+    await activate(email)
+    await login(email, pwd)
+
+    const newPwd = '123ABCabc!new'
+    await hoverNavItem(email)
+    await browser.waitForText('Change password')
+    await browser.clickText('Change password')
+    await browser.waitAndType('input#change-password-form_old-password', pwd)
+    await browser.type('input#change-password-form_password', newPwd)
+    await browser.type('input#change-password-form_confirm-password', newPwd)
+    expect(await browser.title()).toBe('Change password · innoDoc')
+    const submitBtn = await browser.query(
+      'form#change-password-form button[type=submit]'
+    )
+    await browser.click(submitBtn)
+    await browser.waitForText('Password changed.')
+
+    await logout(email)
+    await login(email, newPwd)
+  })
+
+  test('Request password', async () => {
+    const email = getRandEmail()
+    await openUrl()
+    await register(email)
+    await activate(email)
+    // Request password reset
+    await browser.click('a[href="/login"]')
+    await browser.waitAndType('input#login-form_email', email)
+    await browser.type('input#login-form_password', 'wrongPwd')
+    await browser.clickText('Sign-in')
+    await browser.waitFor('.ant-alert')
+    const pwdResetLink = await browser.query(
+      '.ant-alert a[href="/request-password-reset"]'
+    )
+    await browser.click(pwdResetLink)
+    await browser.waitAndType('input#request-password-reset-form_email', email)
+    expect(await browser.title()).toBe('Reset password · innoDoc')
+    await browser.clickText('Request')
+    await browser.waitForText('Password reset mail sent.')
+    // Reset password
+    const newPwd = '123ABCabcStr0ng!'
+    const user = await User.findOne({ email })
+    expect(user).toBeTruthy()
+    await openUrl(`reset-password/${user.passwordResetToken}`)
+    await browser.waitAndType('input#reset-password-form_password', newPwd)
+    await browser.type('input#reset-password-form_confirm-password', newPwd)
+    await browser.clickText('Set new password')
+    await browser.waitForText('New password set.')
+    await login(email, newPwd)
+  })
+
+  test('Request verification mail', async () => {
+    const email = getRandEmail()
+    await openUrl()
+    await register(email)
+    await openUrl('login')
+    await browser.waitAndType('input#login-form_email', email)
+    await browser.type('input#login-form_password', 'wrongPwd')
+    await browser.clickText('Sign-in')
+    await browser.waitFor('.ant-alert')
+    const requestVerificationLink = await browser.query(
+      '.ant-alert a[href="/request-verification"]'
+    )
+    await browser.click(requestVerificationLink)
+    await browser.waitAndType('input#request-verification-form_email', email)
+    await browser.clickText('Request')
+    await browser.waitForText('Confirmation mail was sent.')
+  })
+
+  test('Account deletion', async () => {
+    const email = getRandEmail()
+    await openUrl()
+    await register(email)
+    await activate(email)
+    await login(email, pwd)
+    await openUrl('delete-account')
+    await browser.waitAndType('input#delete-account-form_password', pwd)
+    await browser.clickText('Delete account permanently')
+    await browser.waitFor('.ant-result')
+    await browser.assert.textContains('.ant-result', 'Account deleted!')
+    await openUrl()
+    await browser.waitForText('Login') // makes sure we're logged out
+    await openUrl('login')
+    await browser.waitAndType('input#login-form_email', email)
+    await browser.type('input#login-form_password', pwd)
+    await browser.clickText('Sign-in')
+    await browser.waitForText('Login failed!')
+  })
 
   describe('Registration', () => {
     test('Verification > Login > About > Logout', async () => {
@@ -135,8 +225,7 @@ describe('Account interactions', () => {
       await browser.waitAndType('input#login-form_email', email)
       await browser.type('input#login-form_password', pwd)
       await browser.clickText('Sign-in')
-      await browser.waitFor('.ant-alert')
-      await browser.assert.textContains('.ant-alert', 'Login failed!')
+      await browser.waitForText('Login failed!')
     })
 
     test('fails due to bad credentials', async () => {
@@ -146,8 +235,7 @@ describe('Account interactions', () => {
       await browser.waitAndType('input#login-form_email', email)
       await browser.type('input#login-form_password', 'wrongPwd')
       await browser.clickText('Sign-in')
-      await browser.waitFor('.ant-alert')
-      await browser.assert.textContains('.ant-alert', 'Login failed!')
+      await browser.waitForText('Login failed!')
     })
 
     test('using JWT cookie', async () => {
@@ -159,86 +247,5 @@ describe('Account interactions', () => {
       await openUrl()
       await browser.assert.textContains('[class*=nav___]', email)
     })
-  })
-
-  test('Change password', async () => {
-    const email = getRandEmail()
-    await openUrl()
-    await register(email)
-    await activate(email)
-    await login(email, pwd)
-
-    const newPwd = '123ABCabc!new'
-    await hoverNavItem(email)
-    await browser.waitForText('Change password')
-    await browser.clickText('Change password')
-    await browser.waitAndType('input#change-password-form_old-password', pwd)
-    await browser.type('input#change-password-form_password', newPwd)
-    await browser.type('input#change-password-form_confirm-password', newPwd)
-    expect(await browser.title()).toBe('Change password · innoDoc')
-    const submitBtn = await browser.query(
-      'form#change-password-form button[type=submit]'
-    )
-    await browser.click(submitBtn)
-    await browser.waitFor('.ant-alert')
-    await browser.assert.textContains('.ant-alert', 'Password changed.')
-
-    await logout(email)
-    await login(email, newPwd)
-  })
-
-  test('Request password', async () => {
-    const email = getRandEmail()
-    await openUrl()
-    await register(email)
-    await activate(email)
-    // Request password reset
-    await browser.click('a[href="/login"]')
-    await browser.waitAndType('input#login-form_email', email)
-    await browser.type('input#login-form_password', 'wrongPwd')
-    await browser.clickText('Sign-in')
-    await browser.waitFor('.ant-alert')
-    const pwdResetLink = await browser.query(
-      '.ant-alert a[href="/request-password-reset"]'
-    )
-    await browser.click(pwdResetLink)
-    await browser.waitAndType('input#request-password-reset-form_email', email)
-    expect(await browser.title()).toBe('Reset password · innoDoc')
-    await browser.clickText('Request')
-    await browser.waitFor('.ant-alert')
-    await browser.assert.textContains('.ant-alert', 'Password reset mail sent.')
-    // Reset password
-    const newPwd = '123ABCabcStr0ng!'
-    const user = await User.findOne({ email })
-    expect(user).toBeTruthy()
-    await openUrl(`reset-password/${user.passwordResetToken}`)
-    await browser.waitAndType('input#reset-password-form_password', newPwd)
-    await browser.type('input#reset-password-form_confirm-password', newPwd)
-    await browser.clickText('Set new password')
-    await browser.waitFor('.ant-alert')
-    await browser.assert.textContains('.ant-alert', 'New password set.')
-    await login(email, newPwd)
-  })
-
-  test('Request verification mail', async () => {
-    const email = getRandEmail()
-    await openUrl()
-    await register(email)
-    await openUrl('login')
-    await browser.waitAndType('input#login-form_email', email)
-    await browser.type('input#login-form_password', 'wrongPwd')
-    await browser.clickText('Sign-in')
-    await browser.waitFor('.ant-alert')
-    const requestVerificationLink = await browser.query(
-      '.ant-alert a[href="/request-verification"]'
-    )
-    await browser.click(requestVerificationLink)
-    await browser.waitAndType('input#request-verification-form_email', email)
-    await browser.clickText('Request')
-    await browser.waitFor('.ant-alert')
-    await browser.assert.textContains(
-      '.ant-alert',
-      'Confirmation mail was sent.'
-    )
   })
 })

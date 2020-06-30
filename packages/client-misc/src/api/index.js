@@ -4,6 +4,7 @@ import { fetchFragment, fetchManifest, fetchPage, fetchSection } from './get'
 import {
   changePassword,
   checkEmail,
+  deleteAccount,
   loginUser,
   logoutUser,
   registerUser,
@@ -16,6 +17,7 @@ import {
 export {
   changePassword,
   checkEmail,
+  deleteAccount,
   fetchFragment,
   fetchManifest,
   fetchPage,

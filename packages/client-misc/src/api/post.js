@@ -20,6 +20,9 @@ export const changePassword = (base, csrfToken, password, oldPassword) =>
 export const checkEmail = (base, csrfToken, email) =>
   postJson(`${base}user/check-email`, { csrfToken, email })
 
+export const deleteAccount = (base, csrfToken, password) =>
+  postJson(`${base}user/delete-account`, { csrfToken, password })
+
 export const loginUser = (base, csrfToken, email, password) =>
   postJson(`${base}user/login`, { csrfToken, email, password })
 
