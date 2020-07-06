@@ -30,6 +30,7 @@ describe('passportMiddleware', () => {
       {
         issuer: 'http://app.example.com/',
         jwtFromRequest,
+        passReqToCallback: true,
         secretOrKey: 'jwtsecret123',
       },
       verify
@@ -57,27 +58,19 @@ describe('jwtStrategy', () => {
   })
 
   describe('verify', () => {
-    it('should call done with sub', () => {
-      const ret = {}
-      const done = jest.fn(() => ret)
-      expect(verify({ sub: 'alice@example.com' }, done)).toBe(ret)
+    it('should pass user', () => {
+      const done = jest.fn()
+      const user = { email: 'alice@example.com' }
+      verify({ user }, { sub: 'alice@example.com' }, done)
       expect(done).toBeCalledTimes(1)
-      expect(done).toBeCalledWith(null, 'alice@example.com')
+      expect(done).toBeCalledWith(null, user)
     })
 
-    it('should call done with error', () => {
-      const err = new Error()
-      const ret = {}
-      const done = jest
-        .fn()
-        .mockImplementationOnce(() => {
-          throw err
-        })
-        .mockImplementationOnce(() => ret)
-      expect(verify({ sub: 'alice@example.com' }, done)).toBe(ret)
-      expect(done).toBeCalledTimes(2)
-      expect(done).toBeCalledWith(null, 'alice@example.com')
-      expect(done).toBeCalledWith(err)
+    it('should pass false without user', () => {
+      const done = jest.fn()
+      verify({}, undefined, done)
+      expect(done).toBeCalledTimes(1)
+      expect(done).toBeCalledWith(null, false)
     })
   })
 })

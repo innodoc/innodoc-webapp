@@ -4,7 +4,7 @@ import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
 
 import createHoc from './createHoc'
 
-const withDispatchConfiguration = createHoc('WithDispatchConfiguration', async (ctx) => {
+const withServerVars = createHoc('withServerVars', async (ctx) => {
   const { dispatch } = ctx.store
 
   // Pass initial configuration from express app
@@ -24,10 +24,10 @@ const withDispatchConfiguration = createHoc('WithDispatchConfiguration', async (
     dispatch(languageDetected(ctx.req.i18n.language))
   }
 
-  // Server verified access token
-  if (ctx.res.locals.loggedInEmail) {
-    dispatch(userLoggedIn(ctx.res.locals.loggedInEmail))
+  // Express/passport sets req.user on successful auth
+  if (ctx.req.user) {
+    dispatch(userLoggedIn(ctx.req.user.email))
   }
 })
 
-export default withDispatchConfiguration
+export default withServerVars

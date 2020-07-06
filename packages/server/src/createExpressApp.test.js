@@ -9,7 +9,7 @@ import {
   passConfigMiddleware,
   passportMiddleware,
   sendMailMiddleware,
-  verifyAccessTokenMiddleware,
+  lookupUserMiddleware,
 } from './middlewares'
 import { nextController, userController } from './controllers'
 
@@ -41,12 +41,12 @@ jest.mock('./controllers', () => ({
 const mockPassConfigMiddleware = {}
 const mockPassportMiddleware = {}
 const mockSendMailMiddleware = {}
-const mockVerifyAccessTokenMiddleware = {}
+const mockLookupUserMiddleware = {}
 jest.mock('./middlewares', () => ({
   passConfigMiddleware: jest.fn(() => mockPassConfigMiddleware),
   passportMiddleware: jest.fn(() => mockPassportMiddleware),
   sendMailMiddleware: jest.fn(() => mockSendMailMiddleware),
-  verifyAccessTokenMiddleware: jest.fn(() => mockVerifyAccessTokenMiddleware),
+  lookupUserMiddleware: jest.fn(() => mockLookupUserMiddleware),
 }))
 
 const defaultConfig = {
@@ -120,9 +120,9 @@ describe.each(['production', 'development'])('createExpressApp (%s)', (nodeEnv) 
         expect(mockExpressApp.use).toBeCalledWith(mockSendMailMiddleware)
       })
 
-      it('should use verifyAccessTokenMiddleware', () => {
-        expect(verifyAccessTokenMiddleware).toBeCalledWith(config)
-        expect(mockExpressApp.use).toBeCalledWith(mockVerifyAccessTokenMiddleware)
+      it('should use lookupUserMiddleware', () => {
+        expect(lookupUserMiddleware).toBeCalledWith(config)
+        expect(mockExpressApp.use).toBeCalledWith(mockLookupUserMiddleware)
       })
 
       it('should use passportMiddleware', () => {

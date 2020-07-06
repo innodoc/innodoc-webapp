@@ -4,6 +4,7 @@ import {
   deleteAccount,
   loginUser,
   logoutUser,
+  persistProgress,
   registerUser,
   requestPasswordReset,
   requestVerification,
@@ -94,6 +95,13 @@ describe('postJson', () => {
     () => logoutUser(base, csrfToken),
     {},
     'https://app.example.com/user/logout'
+  )
+
+  makeTests(
+    'persistProgress',
+    () => persistProgress(base, csrfToken, { foo: 'progress' }),
+    { progress: { foo: 'progress' } },
+    'https://app.example.com/user/progress'
   )
 
   makeTests(

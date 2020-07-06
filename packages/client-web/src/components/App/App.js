@@ -13,7 +13,7 @@ import { appWithTranslation } from '@innodoc/client-misc/src/i18n'
 
 import PageTitle from '../PageTitle'
 import useRouteNotifier from '../../hooks/useRouteNotifier'
-import withDispatchConfiguration from './withDispatchConfiguration'
+import withServerVars from './withServerVars'
 import withIndexRedirect from './withIndexRedirect'
 import withMathJaxOptions from './withMathJaxOptions'
 import withNextRedux from './withNextRedux'
@@ -67,7 +67,7 @@ const hocs = [
         // Only server-side
         withIndexRedirect,
         withWaitForManifest,
-        withDispatchConfiguration,
+        withServerVars,
       ]
     : []),
   appWithTranslation,

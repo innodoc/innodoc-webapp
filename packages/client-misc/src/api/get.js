@@ -15,5 +15,7 @@ export const fetchManifest = (base) => getJson(`${base}manifest.json`)
 export const fetchPage = (base, language, pageId) =>
   getJson(`${base}${language}/_pages/${pageId}.json`)
 
+export const fetchProgress = (base) => getJson(`${base}user/progress`)
+
 export const fetchSection = (base, language, sectionId) =>
   getJson(`${base}${language}/${sectionId}/content.json`)

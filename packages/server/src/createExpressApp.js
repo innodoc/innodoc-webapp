@@ -10,7 +10,7 @@ import {
   passConfigMiddleware,
   passportMiddleware,
   sendMailMiddleware,
-  verifyAccessTokenMiddleware,
+  lookupUserMiddleware,
 } from './middlewares'
 
 const createExpressApp = (config, nextApp) => {
@@ -31,10 +31,10 @@ const createExpressApp = (config, nextApp) => {
     )
     .use(passConfigMiddleware(config))
     .use(sendMailMiddleware(config.smtp))
-    .use(verifyAccessTokenMiddleware(config))
     .use(passportMiddleware(config))
-    .use(nextController(config, nextApp))
+    .use(lookupUserMiddleware(config))
     .use('/user', userController(config))
+    .use(nextController(config, nextApp))
     .use(errorHandler(config))
 }
 

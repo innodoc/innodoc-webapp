@@ -137,16 +137,19 @@ const questions = [
   },
   {
     exerciseId: 'ch2/sec1#EX_01',
+    answer: '23',
     result: RESULT_VALUE.INCORRECT,
     points: 4,
   },
   {
     exerciseId: 'ch2/sec1#EX_01',
+    answer: 'foo',
     result: RESULT_VALUE.INCORRECT,
     points: 4,
   },
   {
     exerciseId: 'ch2/sec1#EX_02',
+    answer: '42',
     result: RESULT_VALUE.CORRECT,
     points: 2,
   },
@@ -157,26 +160,31 @@ const questions = [
   },
   {
     exerciseId: 'ch2/test#EX_01',
+    answer: '1',
     result: RESULT_VALUE.CORRECT,
     points: 11,
   },
   {
     exerciseId: 'ch2/test#EX_02',
+    answer: 'x/2',
     result: RESULT_VALUE.INCORRECT,
     points: 4,
   },
   {
     exerciseId: 'ch2/test#EX_02',
+    answer: 'x',
     result: RESULT_VALUE.CORRECT,
     points: 4,
   },
   {
     exerciseId: 'ch2/test#EX_03',
+    answer: '{5}',
     result: RESULT_VALUE.INCORRECT,
     points: 5,
   },
   {
     exerciseId: 'ch2/test#EX_03',
+    answer: '1',
     result: RESULT_VALUE.INCORRECT,
     points: 5,
   },
@@ -218,5 +226,24 @@ describe('progressSelectors', () => {
     expect(chap3.progress.moduleUnits).toEqual([2, 2])
     expect(chap3.progress.exercises).toEqual([0, 0])
     expect(chap3.progress.finalTest).toEqual([0, 0])
+  })
+
+  test('getPersistedProgress', () => {
+    const state = dummyState()
+    const p = progressSelectors.getPersistedProgress(state)
+    expect(p.visitedSections).toHaveLength(5)
+    expect(p.visitedSections).toContain('ch2')
+    expect(p.visitedSections).toContain('ch2/sec1')
+    expect(p.visitedSections).toContain('ch2/test')
+    expect(p.visitedSections).toContain('ch3')
+    expect(p.visitedSections).toContain('ch3/sec1')
+    expect(p.answeredQuestions).toHaveLength(8)
+    const expQuestions = [1, 2, 3, 5, 6, 7, 8, 9]
+    expQuestions.forEach((i) =>
+      expect(p.answeredQuestions).toContainEqual({
+        id: expect.any(Number),
+        ...questions[i],
+      })
+    )
   })
 })

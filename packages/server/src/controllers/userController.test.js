@@ -3,6 +3,7 @@ import request from 'supertest'
 import createExpressApp from '../createExpressApp'
 import { connectDb, disconnectDb } from '../db'
 import User, { tokenRegexp as tokenRegexpString } from '../models/User'
+import UserProgress from '../models/UserProgress'
 
 const mockNoopMiddleware = (req, res, next) => next()
 
@@ -53,13 +54,21 @@ describe('userController', () => {
     return `alice-usercontroller-${randString}@example.com`
   }
 
-  const addTestUser = async () => {
+  const addTestUser = async (addProgress = true) => {
     const user = User({
       email: getRandEmail(),
       emailVerified: true,
     })
     await user.setPassword('g00dPassword!')
     await user.save()
+    if (addProgress) {
+      const userProgress = UserProgress({
+        user_id: user._id,
+        answeredQuestions: [],
+        visitedSections: ['section/foo'],
+      })
+      await userProgress.save()
+    }
     return user.email
   }
 
@@ -69,9 +78,10 @@ describe('userController', () => {
     return `accessToken=${accessToken};HttpOnly`
   }
 
-  const testPost = async ({ url, params, status, type, accessTokenCookie }) =>
-    request(await createExpressApp(config, {}))
-      .post(url)
+  const testReq = async ({ accessTokenCookie, method, params, status, type, url }) => {
+    let req = request(await createExpressApp(config, {}))
+    req = method === 'get' ? req.get(url) : req.post(url)
+    return req
       .set('Cookie', [accessTokenCookie])
       .set('X-Requested-With', type === 'json' ? 'XMLHttpRequest' : null)
       .send(params)
@@ -94,11 +104,16 @@ describe('userController', () => {
         }
         return res
       })
+  }
 
-  const expectJwt401 = (url) => {
+  const testGet = (args) => testReq({ method: 'get', ...args })
+  const testPost = (args) => testReq({ method: 'post', ...args })
+
+  const expectJwt401 = (url, method = 'post') => {
     test('401 w/o access token', async () => {
       await addTestUser()
-      return testPost({
+      return testReq({
+        method,
         url,
         status: 401,
       })
@@ -106,7 +121,8 @@ describe('userController', () => {
 
     test('401 with invalid access token', async () => {
       await addTestUser()
-      return testPost({
+      return testReq({
+        method,
         url,
         status: 401,
         accessTokenCookie: await createAccessTokenCookie({
@@ -115,6 +131,90 @@ describe('userController', () => {
       })
     })
   }
+
+  describe('GET /user/progress', () => {
+    test('200 with progress', async () => {
+      const email = await addTestUser()
+      const user = await User.findOne({ email })
+      return testGet({
+        url: '/user/progress',
+        accessTokenCookie: await createAccessTokenCookie({ user }),
+        status: 200,
+        type: 'json',
+      }).then((res) => {
+        expect(res.body).toEqual({
+          result: 'ok',
+          progress: {
+            answeredQuestions: [],
+            visitedSections: ['section/foo'],
+          },
+        })
+      })
+    })
+
+    test('200 w/o progress', async () => {
+      const email = await addTestUser(false)
+      const user = await User.findOne({ email })
+      return testGet({
+        accessTokenCookie: await createAccessTokenCookie({ user }),
+        status: 200,
+        type: 'json',
+        url: '/user/progress',
+      }).then((res) => {
+        expect(res.body).toEqual({
+          result: 'ok',
+          progress: null,
+        })
+      })
+    })
+
+    expectJwt401('/user/progress', 'get')
+  })
+
+  describe('POST /user/progress', () => {
+    test('200', async () => {
+      const email = await addTestUser(false)
+      const user = await User.findOne({ email })
+      return testPost({
+        accessTokenCookie: await createAccessTokenCookie({ user }),
+        params: {
+          progress: {
+            answeredQuestions: [],
+            visitedSections: ['section/foo', 'section/bar'],
+          },
+        },
+        status: 200,
+        type: 'json',
+        url: '/user/progress',
+      }).then(async () => {
+        const progress = await UserProgress.find({ user_id: user._id })
+        expect(progress).toHaveLength(1)
+        expect(progress[0].visitedSections).toHaveLength(2)
+        expect(progress[0].visitedSections[0]).toBe('section/foo')
+        expect(progress[0].visitedSections[1]).toBe('section/bar')
+      })
+    })
+
+    test('400 with malformed data', async () => {
+      const email = await addTestUser(false)
+      const user = await User.findOne({ email })
+      return testPost({
+        accessTokenCookie: await createAccessTokenCookie({ user }),
+        params: {
+          progress: { answeredQuestions: [] },
+        },
+        status: 400,
+        type: 'json',
+        url: '/user/progress',
+      }).then(async (res) => {
+        const progress = await UserProgress.find({ user_id: user._id })
+        expect(progress).toHaveLength(0)
+        expect(res.body.result).toBe('MalformedRequest')
+      })
+    })
+
+    expectJwt401('/user/progress')
+  })
 
   describe('POST /user/check-email', () => {
     test("200 if email doesn't exist", () =>
@@ -139,6 +239,7 @@ describe('userController', () => {
     test('200', async () => {
       const email = await addTestUser()
       const user = await User.findOne({ email })
+      const userId = user._id
       return testPost({
         url: '/user/delete-account',
         params: { password: 'g00dPassword!' },
@@ -150,6 +251,7 @@ describe('userController', () => {
           true
         )
         expect(await User.findOne({ email })).toBeFalsy()
+        expect(await UserProgress.findOne({ user_id: userId })).toBeFalsy()
       })
     })
 
@@ -297,13 +399,12 @@ describe('userController', () => {
         accessTokenCookie: await createAccessTokenCookie({ user }),
       }).then(async () => {
         const updatedUser = await User.findOne({ email }).select('hash salt')
-        // console.log(updatedUser)
         expect(updatedUser.hash).toEqual(user.hash)
         expect(updatedUser.salt).toEqual(user.salt)
       })
     })
 
-    test("400 if user doesn't exist", async () => {
+    test("401 if user doesn't exist", async () => {
       const email = await addTestUser()
       const user = await User.findOne({ email })
       const accessTokenCookie = await createAccessTokenCookie({ user })
@@ -311,8 +412,7 @@ describe('userController', () => {
       return testPost({
         url: '/user/change-password',
         params: { password: 'newG00dPassword!', oldPassword: 'g00dPassword!' },
-        status: 400,
-        type: 'json',
+        status: 401,
         accessTokenCookie,
       })
     })

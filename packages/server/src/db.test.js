@@ -16,6 +16,7 @@ describe('connectDb', () => {
     })
     expect(mongoose.connect).toBeCalledWith('mongodb://mongohost/coll', {
       useCreateIndex: true,
+      useFindAndModify: false,
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })

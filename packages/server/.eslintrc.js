@@ -6,5 +6,6 @@ module.exports = {
   rules: {
     ...baseConfig.rules,
     ...eslintNoExtraneousDependenciesConfig(__dirname),
+    'no-underscore-dangle': ['error', { allow: ['_id'] }], // for mongoose
   },
 }

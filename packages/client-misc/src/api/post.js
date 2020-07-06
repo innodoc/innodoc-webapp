@@ -28,6 +28,9 @@ export const loginUser = (base, csrfToken, email, password) =>
 
 export const logoutUser = (base, csrfToken) => postJson(`${base}user/logout`, { csrfToken })
 
+export const persistProgress = (base, csrfToken, progress) =>
+  postJson(`${base}user/progress`, { csrfToken, progress })
+
 export const registerUser = (base, csrfToken, email, password) =>
   postJson(`${base}user/register`, { csrfToken, email, password })
 

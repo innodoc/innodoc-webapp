@@ -1,6 +1,7 @@
 import { Model, attr, fk } from 'redux-orm'
 
-import { actionTypes } from '../actions/content'
+import { actionTypes as contentActionTypes } from '../actions/content'
+import { actionTypes as userActionTypes } from '../actions/user'
 
 export default class Section extends Model {
   static get modelName() {
@@ -37,12 +38,13 @@ export default class Section extends Model {
 
   static reducer(action, SectionModel) {
     switch (action.type) {
-      case actionTypes.LOAD_MANIFEST_SUCCESS:
+      case contentActionTypes.LOAD_MANIFEST_SUCCESS:
         action.data.content.toc.forEach((node, idx) =>
           Section.parseTOC([], [idx], node, SectionModel)
         )
         break
-      case actionTypes.LOAD_SECTION_SUCCESS:
+
+      case contentActionTypes.LOAD_SECTION_SUCCESS:
         SectionModel.upsert({
           id: action.data.contentId,
           content: {
@@ -50,9 +52,26 @@ export default class Section extends Model {
           },
         })
         break
-      case actionTypes.SECTION_VISIT:
+
+      case contentActionTypes.SECTION_VISIT:
         SectionModel.withId(action.sectionId).set('visited', true)
         break
+
+      case userActionTypes.CLEAR_PROGRESS:
+        SectionModel.all()
+          .toModelArray()
+          .forEach((section) => section.set('visited', false))
+        break
+
+      case userActionTypes.LOAD_PROGRESS:
+        action.visitedSections.forEach((id) => {
+          const section = SectionModel.withId(id)
+          if (section) {
+            section.set('visited', true)
+          }
+        })
+        break
+
       default:
         break
     }

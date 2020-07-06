@@ -5,19 +5,15 @@ import User from '../models/User'
 
 export const jwtFromRequest = (req) => (req && req.cookies ? req.cookies.accessToken : undefined)
 
-export const verify = ({ sub }, done) => {
-  try {
-    return done(null, sub)
-  } catch (error) {
-    return done(error)
-  }
-}
+// User lookup already done in lookupUserMiddleware
+export const verify = (req, jwtPayload, done) => done(null, req.user ? req.user : false)
 
 const passportMiddleware = ({ appRoot, jwtSecret }) => {
   const jwtStrategy = new JwtStrategy(
     {
       issuer: appRoot,
       jwtFromRequest,
+      passReqToCallback: true,
       secretOrKey: jwtSecret,
     },
     verify

@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 const connectDb = async ({ mongoUrl, nodeEnv }) => {
   await mongoose.connect(mongoUrl, {
     useCreateIndex: true,
+    useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

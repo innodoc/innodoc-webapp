@@ -76,7 +76,7 @@ describe('<ChapterCard />', () => {
     )
     const ExtraComp = () => wrapper.find(Card).prop('extra')
     const extra = shallow(<ExtraComp />)
-    expect(extra.find(Typography.Text).at(0).prop('children')).toBe('results.chapterComplete')
+    expect(extra.find(Typography.Text).at(0).prop('children')).toBe('progress.chapterComplete')
     expect(extra.exists(CheckCircleTwoTone)).toBe(true)
   })
 })

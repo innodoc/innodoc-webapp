@@ -11,6 +11,8 @@ jest.mock('mongoose', () => ({
     }
 
     plugin() {} // eslint-disable-line class-methods-use-this
+
+    static Types = { ObjectId: {} }
   },
   model: (name, schema) => ({
     generateToken: schema.statics.generateToken,
@@ -43,6 +45,7 @@ const mockNoopMiddleware = (req, res, next) => next()
 jest.mock('../middlewares', () => ({
   i18nMiddleware: () => mockNoopMiddleware,
   verifyAccessTokenMiddleware: () => mockNoopMiddleware,
+  lookupUserMiddleware: () => mockNoopMiddleware,
   passConfigMiddleware: () => mockNoopMiddleware,
   passportMiddleware: () => mockNoopMiddleware,
   sendMailMiddleware: () => mockNoopMiddleware,

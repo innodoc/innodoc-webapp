@@ -2,7 +2,8 @@ import { Model, attr, fk } from 'redux-orm'
 
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 
-import { actionTypes } from '../actions/question'
+import { actionTypes as questionActionTypes } from '../actions/question'
+import { actionTypes as userActionTypes } from '../actions/user'
 
 export default class Question extends Model {
   static get modelName() {
@@ -23,7 +24,7 @@ export default class Question extends Model {
 
   static reducer(action, QuestionModel) {
     switch (action.type) {
-      case actionTypes.ADD_QUESTION:
+      case questionActionTypes.ADD_QUESTION:
         QuestionModel.upsert({
           id: action.questionId,
           exerciseId: action.exerciseId,
@@ -31,20 +32,37 @@ export default class Question extends Model {
         })
         break
 
-      case actionTypes.QUESTION_ANSWERED:
+      case questionActionTypes.QUESTION_ANSWERED:
         QuestionModel.upsert({
           id: action.id,
           answer: action.answer,
         })
         break
 
-      case actionTypes.QUESTION_EVALUATED:
+      case questionActionTypes.QUESTION_EVALUATED:
         QuestionModel.upsert({
           id: action.id,
           messages: action.messages,
           result: action.result,
           latexCode: action.latexCode,
         })
+        break
+
+      case userActionTypes.CLEAR_PROGRESS:
+        QuestionModel.all()
+          .toModelArray()
+          .forEach((section) =>
+            section.update({
+              answer: null,
+              result: RESULT_VALUE.NEUTRAL,
+              messages: [],
+              latexCode: null,
+            })
+          )
+        break
+
+      case userActionTypes.LOAD_PROGRESS:
+        action.answeredQuestions.forEach((q) => QuestionModel.upsert(q))
         break
 
       default:

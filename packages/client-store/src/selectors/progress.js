@@ -44,4 +44,26 @@ const getProgress = createSelector(orm, sectionSelectors.getChapters, (session, 
   })
 )
 
-export default { getProgress }
+// Create progress object for persistance
+const getPersistedProgress = createSelector(orm, (session) => {
+  const questions = session.Question.filter((q) => q.result !== RESULT_VALUE.NEUTRAL)
+    .toRefArray()
+    .map((q) => ({
+      id: q.id,
+      exerciseId: q.exerciseId,
+      answer: q.answer,
+      result: q.result,
+      points: q.points,
+    }))
+
+  const sections = session.Section.filter((s) => s.visited)
+    .toRefArray()
+    .map((s) => s.id)
+
+  return {
+    answeredQuestions: questions,
+    visitedSections: sections,
+  }
+})
+
+export default { getProgress, getPersistedProgress }

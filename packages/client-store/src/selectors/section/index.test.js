@@ -58,7 +58,6 @@ jest.mock('..', () => {
   }
 })
 
-// let state
 let session
 beforeEach(() => {
   session = orm.mutableSession(initialState().orm)

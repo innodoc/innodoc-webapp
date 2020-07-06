@@ -1,4 +1,4 @@
-import { fetchFragment, fetchManifest, fetchPage, fetchSection } from './get'
+import { fetchFragment, fetchManifest, fetchPage, fetchProgress, fetchSection } from './get'
 
 const fetchOrig = global.fetch
 
@@ -7,7 +7,8 @@ afterEach(() => {
 })
 
 const mockData = { foo: 'bar' }
-const base = 'https://content.example.com/'
+const appBase = 'https://app.example.com/'
+const contentBase = 'https://content.example.com/'
 
 describe('getJson', () => {
   const makeTests = (name, getPromise, apiUrl) => {
@@ -41,21 +42,27 @@ describe('getJson', () => {
 
   makeTests(
     'fetchFragment',
-    () => fetchFragment(base, 'en', '_frag01'),
+    () => fetchFragment(contentBase, 'en', '_frag01'),
     'https://content.example.com/en/_frag01.json'
   )
 
-  makeTests('fetchManifest', () => fetchManifest(base), 'https://content.example.com/manifest.json')
-
   makeTests(
-    'fetchSection',
-    () => fetchSection(base, 'fr', 'foo/bar'),
-    'https://content.example.com/fr/foo/bar/content.json'
+    'fetchManifest',
+    () => fetchManifest(contentBase),
+    'https://content.example.com/manifest.json'
   )
 
   makeTests(
+    'fetchSection',
+    () => fetchSection(contentBase, 'fr', 'foo/bar'),
+    'https://content.example.com/fr/foo/bar/content.json'
+  )
+
+  makeTests('fetchProgress', () => fetchProgress(appBase), 'https://app.example.com/user/progress')
+
+  makeTests(
     'fetchPage',
-    () => fetchPage(base, 'it', 'about'),
+    () => fetchPage(contentBase, 'it', 'about'),
     'https://content.example.com/it/_pages/about.json'
   )
 })

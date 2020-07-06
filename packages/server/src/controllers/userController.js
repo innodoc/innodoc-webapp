@@ -5,6 +5,7 @@ import i18nextHttpMiddleware from 'i18next-http-middleware'
 import nextI18next from '@innodoc/client-misc/src/i18n'
 import getLogger from '../logger'
 import User from '../models/User'
+import UserProgress from '../models/UserProgress'
 import { resetPasswordMail, verificationMail } from '../mails'
 
 const userController = ({ appRoot, jwtSecret }) => {
@@ -12,6 +13,64 @@ const userController = ({ appRoot, jwtSecret }) => {
   const logger = getLogger('user')
   const secureCookie = new URL(appRoot).protocol === 'https'
   router.use(i18nextHttpMiddleware.handle(nextI18next.i18n))
+
+  router.get(
+    '/progress',
+    passport.authenticate('jwt', { session: false }),
+    async (req, res, next) => {
+      try {
+        const progress = await UserProgress.findOne({
+          user_id: req.user._id,
+        }).lean()
+        res.status(200).json({
+          result: 'ok',
+          progress: progress
+            ? {
+                answeredQuestions: progress.answeredQuestions.map((q) => ({
+                  id: q.id,
+                  exerciseId: q.exerciseId,
+                  answer: q.answer,
+                  result: q.result,
+                  points: q.points,
+                })),
+                visitedSections: progress.visitedSections,
+              }
+            : null,
+        })
+      } catch (err) {
+        next(err)
+      }
+    }
+  )
+
+  router.post(
+    '/progress',
+    passport.authenticate('jwt', { session: false }),
+    async (req, res, next) => {
+      const { progress } = req.body
+      if (
+        !progress ||
+        !Array.isArray(progress.answeredQuestions) ||
+        !Array.isArray(progress.visitedSections)
+      ) {
+        res.status(400).json({ result: 'MalformedRequest' })
+        return
+      }
+
+      try {
+        const filter = { user_id: req.user._id }
+        const update = {
+          answeredQuestions: progress.answeredQuestions,
+          visitedSections: progress.visitedSections,
+        }
+        const opts = { upsert: true }
+        await UserProgress.findOneAndUpdate(filter, update, opts)
+        res.status(200).json({ result: 'ok' })
+      } catch (err) {
+        next(err)
+      }
+    }
+  )
 
   router.post('/check-email', async (req, res) => {
     if (await User.exists({ email: req.body.email })) {
@@ -24,30 +83,24 @@ const userController = ({ appRoot, jwtSecret }) => {
   router.post(
     '/delete-account',
     passport.authenticate('jwt', { session: false }),
-    async (req, res) => {
-      const deleteAccountErr = () => res.status(400).json({ result: 'DeleteAccountError' })
-      const { loggedInEmail } = res.locals
-      if (loggedInEmail) {
-        try {
-          const { user } = await User.authenticate()(loggedInEmail, req.body.password)
-          if (user) {
-            // TODO delete user progress
-            await user.delete()
-            req.logout()
-            res.clearCookie('accessToken', {
-              httpOnly: true,
-              secure: secureCookie,
-            })
-            logger.info(`Account deleted: ${user.email}`)
-            res.status(200).json({ result: 'ok' })
-          } else {
-            deleteAccountErr()
-          }
-        } catch {
-          deleteAccountErr()
+    async (req, res, next) => {
+      try {
+        const { user } = await User.authenticate()(req.user.email, req.body.password)
+        if (user) {
+          await UserProgress.deleteOne({ user_id: req.user._id })
+          req.logout()
+          res.clearCookie('accessToken', {
+            httpOnly: true,
+            secure: secureCookie,
+          })
+          await user.delete()
+          logger.info(`Account deleted: ${user.email}`)
+          res.status(200).json({ result: 'ok' })
+        } else {
+          res.status(400).json({ result: 'DeleteAccountError' })
         }
-      } else {
-        deleteAccountErr()
+      } catch (err) {
+        next(err)
       }
     }
   )
@@ -60,7 +113,7 @@ const userController = ({ appRoot, jwtSecret }) => {
         new User({ email, emailVerificationToken: User.generateToken() }),
         password
       )
-    } catch (err) {
+    } catch {
       res.status(400).json({ result: 'UserExistsError' })
     }
     try {
@@ -98,23 +151,13 @@ const userController = ({ appRoot, jwtSecret }) => {
   router.post(
     '/change-password',
     passport.authenticate('jwt', { session: false }),
-    async (req, res, next) => {
-      const changePwdErr = () => res.status(400).json({ result: 'ChangePasswordError' })
+    async (req, res) => {
+      const { oldPassword, password } = req.body
       try {
-        const { oldPassword, password } = req.body
-        const user = await User.findByUsername(res.locals.loggedInEmail)
-        if (user) {
-          try {
-            await user.changePassword(oldPassword, password)
-            res.status(200).json({ result: 'ok' })
-          } catch {
-            changePwdErr()
-          }
-        } else {
-          changePwdErr()
-        }
-      } catch (err) {
-        next(err)
+        await req.user.changePassword(oldPassword, password)
+        res.status(200).json({ result: 'ok' })
+      } catch {
+        res.status(400).json({ result: 'ChangePasswordError' })
       }
     }
   )

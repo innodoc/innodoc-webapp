@@ -5,10 +5,10 @@ import {
   userLoggedIn,
 } from '@innodoc/client-store/src/actions/user'
 
-import withDispatchConfiguration from './withDispatchConfiguration'
+import withServerVars from './withServerVars'
 
-describe('withDispatchConfiguration', () => {
-  let WithDispatchConfiguration
+describe('withServerVars', () => {
+  let WithServerVars
   const dispatch = jest.fn()
   const getContext = (loggedIn = true) => ({
     ctx: {
@@ -16,12 +16,12 @@ describe('withDispatchConfiguration', () => {
       req: {
         csrfToken: () => '123Token!',
         i18n: { language: 'en' },
+        user: loggedIn ? { email: 'alice@example.com' } : undefined,
       },
       res: {
         locals: {
           appRoot: 'https://app.example.com/',
           contentRoot: 'https://static.example.com/content/',
-          loggedInEmail: loggedIn ? 'alice@example.com' : undefined,
           pagePathPrefix: 'page',
           sectionPathPrefix: 'section',
           staticRoot: 'https://static.example.com/',
@@ -32,12 +32,12 @@ describe('withDispatchConfiguration', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-    WithDispatchConfiguration = withDispatchConfiguration(() => null)
+    WithServerVars = withServerVars(() => null)
   })
 
   it('should pass server configuration', async () => {
     expect.assertions(1)
-    await WithDispatchConfiguration.getInitialProps(getContext())
+    await WithServerVars.getInitialProps(getContext())
     expect(dispatch).toHaveBeenCalledWith(
       setServerConfiguration(
         'https://app.example.com/',
@@ -52,20 +52,20 @@ describe('withDispatchConfiguration', () => {
 
   it('should login user with loggedInEmail', async () => {
     expect.assertions(1)
-    await WithDispatchConfiguration.getInitialProps(getContext())
+    await WithServerVars.getInitialProps(getContext())
     expect(dispatch).toHaveBeenCalledWith(userLoggedIn('alice@example.com'))
   })
 
   it('should not login user w/o loggedInEmail', async () => {
     expect.assertions(1)
-    await WithDispatchConfiguration.getInitialProps(getContext(false))
+    await WithServerVars.getInitialProps(getContext(false))
     const actions = dispatch.mock.calls.map((call) => call[0].type)
     expect(actions).not.toContain(userActionTypes.USER_LOGGED_IN)
   })
 
   it('should pass language to store', async () => {
     expect.assertions(1)
-    await WithDispatchConfiguration.getInitialProps(getContext())
+    await WithServerVars.getInitialProps(getContext())
     expect(dispatch).toHaveBeenCalledWith(languageDetected('en'))
   })
 })

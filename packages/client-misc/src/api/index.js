@@ -1,12 +1,13 @@
 import 'isomorphic-unfetch'
 
-import { fetchFragment, fetchManifest, fetchPage, fetchSection } from './get'
+import { fetchFragment, fetchManifest, fetchPage, fetchProgress, fetchSection } from './get'
 import {
   changePassword,
   checkEmail,
   deleteAccount,
   loginUser,
   logoutUser,
+  persistProgress,
   registerUser,
   requestPasswordReset,
   requestVerification,
@@ -21,9 +22,11 @@ export {
   fetchFragment,
   fetchManifest,
   fetchPage,
+  fetchProgress,
   fetchSection,
   loginUser,
   logoutUser,
+  persistProgress,
   registerUser,
   requestPasswordReset,
   requestVerification,
