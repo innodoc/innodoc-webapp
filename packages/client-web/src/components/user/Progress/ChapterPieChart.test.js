@@ -21,4 +21,13 @@ describe('<ChapterPieChart />', () => {
     expect(wrapper.find(Typography.Text).prop('children')).toBe('Title')
     expect(wrapper.find(Col).at(2).prop('children')[2]).toMatch('Description')
   })
+
+  it('should render disabled', () => {
+    const wrapper = shallow(<ChapterPieChart disabled title="Title" wideLayout />)
+    const progress = wrapper.find(Progress)
+    expect(progress.prop('showInfo')).toBe(false)
+    expect(progress.prop('status')).toBe('normal')
+    expect(wrapper.find(Typography.Text).prop('children')).toBe('Title')
+    expect(wrapper.find(Col).at(2).prop('children')[2]).toBe('')
+  })
 })

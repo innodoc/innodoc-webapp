@@ -1,13 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, Col, Grid, Row, Typography } from 'antd'
+import dynamic from 'next/dynamic'
+import { Card, Grid, Row, Typography } from 'antd'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 
 import { Trans, useTranslation } from '@innodoc/client-misc/src/i18n'
 
 import { SectionLink } from '../../content/links'
-import ChapterPieChart from './ChapterPieChart'
 import css from './style.sss'
+
+const DynamicChapterPieChart = dynamic(() => import('./ChapterPieChart'), {
+  ssr: false,
+})
 
 const getStatus = (percent) => (percent === 100 ? 'success' : 'normal')
 const getStatusTest = (percent, minScore) => {
@@ -51,25 +55,24 @@ const ChapterCard = ({ minScore, progress, sectionId, title }) => {
   )
 
   const pieCharts = chartData.map(({ key, value, total, percent, status }) => {
-    if (typeof value !== 'undefined') {
-      const tKey = `progress.pieCharts.${key}`
-      const description = (
-        <Trans i18nKey={`${tKey}.description`}>
-          Scored <strong>{{ value }}</strong> of <strong>{{ total }}</strong>.
-        </Trans>
-      )
-      return (
-        <ChapterPieChart
-          description={description}
-          key={key}
-          percent={percent}
-          status={status}
-          title={t(`${tKey}.title`)}
-          wideLayout={wideLayout}
-        />
-      )
-    }
-    return <Col key={key} xs={24} sm={24} md={8} />
+    const disabled = typeof value === 'undefined'
+    const tKey = `progress.pieCharts.${key}`
+    const description = disabled ? undefined : (
+      <Trans i18nKey={`${tKey}.description`}>
+        Scored <strong>{{ value }}</strong> of <strong>{{ total }}</strong>.
+      </Trans>
+    )
+    return (
+      <DynamicChapterPieChart
+        description={description}
+        disabled={disabled}
+        key={key}
+        percent={percent}
+        status={status}
+        title={t(`${tKey}.${disabled ? 'titleDisabled' : 'title'}`)}
+        wideLayout={wideLayout}
+      />
+    )
   })
 
   const completeText = t('progress.chapterComplete')
@@ -100,4 +103,5 @@ ChapterCard.propTypes = {
   title: PropTypes.string.isRequired,
 }
 
+export { DynamicChapterPieChart } // for testing
 export default ChapterCard

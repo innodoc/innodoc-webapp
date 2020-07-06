@@ -143,17 +143,19 @@
       "message": "Bewertung"
     },
     "pieCharts": {
-      "moduleUnits": {
-        "title": "Lerneinheiten",
-        "description": "<1>{{value}}</1> von <3>{{total}}</3> besucht."
-      },
       "exercises": {
+        "description": "<1>{{value}}</1> von <3>{{total}}</3> Punkte erreicht.",
         "title": "Aufgaben",
-        "description": "<1>{{value}}</1> von <3>{{total}}</3> Punkte erreicht."
+        "titleDisabled": "Keine Aufgaben"
       },
       "finalTest": {
+        "description": "<1>{{value}}</1> von <3>{{total}}</3> Punkte erreicht.",
         "title": "Abschlusstest",
-        "description": "<1>{{value}}</1> von <3>{{total}}</3> Punkte erreicht."
+        "titleDisabled": "Keine Abschlusstest"
+      },
+      "moduleUnits": {
+        "description": "<1>{{value}}</1> von <3>{{total}}</3> besucht.",
+        "title": "Lerneinheiten"
       }
     }
   },

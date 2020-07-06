@@ -4,8 +4,7 @@ import { Card, Typography } from 'antd'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 
 import { SectionLink } from '../../content/links'
-import ChapterCard from './ChapterCard'
-import ChapterPieChart from './ChapterPieChart'
+import ChapterCard, { DynamicChapterPieChart } from './ChapterCard'
 
 describe('<ChapterCard />', () => {
   it('should render', () => {
@@ -44,7 +43,7 @@ describe('<ChapterCard />', () => {
         title="Foo"
       />
     )
-    const charts = wrapper.find(ChapterPieChart)
+    const charts = wrapper.find(DynamicChapterPieChart)
     expect(charts).toHaveLength(3)
 
     const chartsExp = [

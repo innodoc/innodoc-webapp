@@ -143,17 +143,19 @@
       "message": "Assessment"
     },
     "pieCharts": {
-      "moduleUnits": {
-        "title": "Module units",
-        "description": "Visited <1>{{value}}</1> out of <3>{{total}}</3>."
-      },
       "exercises": {
+        "description": "Scored <1>{{value}}</1> out of <3>{{total}}</3> points.",
         "title": "Exercises",
-        "description": "Scored <1>{{value}}</1> out of <3>{{total}}</3> points."
+        "titleDisabled": "No exercises"
       },
       "finalTest": {
+        "description": "Scored <1>{{value}}</1> out of <3>{{total}}</3> points.",
         "title": "Final test",
-        "description": "Scored <1>{{value}}</1> out of <3>{{total}}</3> points."
+        "titleDisabled": "No final test"
+      },
+      "moduleUnits": {
+        "description": "Visited <1>{{value}}</1> out of <3>{{total}}</3>.",
+        "title": "Module units"
       }
     }
   },
