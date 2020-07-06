@@ -5,7 +5,7 @@ import { Alert } from 'antd'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
 import ChapterCard from './ChapterCard'
-import Results from './Results'
+import Progress from './Progress'
 
 const mockChapters = [
   {
@@ -27,9 +27,9 @@ jest.mock('react-redux', () => ({
   useSelector: (sel) => (sel === mockCourseSelectors.getCurrentCourse ? mockCourse : mockChapters),
 }))
 
-describe('<Results />', () => {
+describe('<Progress />', () => {
   it('should render', () => {
-    const wrapper = shallow(<Results />)
+    const wrapper = shallow(<Progress />)
     const cards = wrapper.find(ChapterCard)
     expect(cards).toHaveLength(2)
     expect(cards.at(0).prop('progress')).toBe(mockChapters[0].progress)
@@ -39,7 +39,7 @@ describe('<Results />', () => {
     expect(cards.at(1).prop('sectionId')).toBe('bar')
     expect(cards.at(1).prop('title')).toBe('Bar')
     const alert = wrapper.find(Alert)
-    expect(alert.prop('description')).toBe('results.introduction.description')
-    expect(alert.prop('message')).toBe('results.introduction.message')
+    expect(alert.prop('description')).toBe('progress.introduction.description')
+    expect(alert.prop('message')).toBe('progress.introduction.message')
   })
 })

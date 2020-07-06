@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import { Menu } from 'antd'
 import {
-  LineChartOutlined,
   LockOutlined,
   LoginOutlined,
   LogoutOutlined,
@@ -35,14 +34,6 @@ const UserMenu = (props) => {
 
   const items = email
     ? [
-        <Menu.Item key="results">
-          <Link href="/results">
-            <a>
-              <LineChartOutlined />
-              {t('results.title')}
-            </a>
-          </Link>
-        </Menu.Item>,
         <Menu.Item key="changePassword">
           <Link href="/change-password">
             <a>

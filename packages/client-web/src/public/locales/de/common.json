@@ -134,8 +134,8 @@
     },
     "preview": "Vorschau"
   },
-  "results": {
-    "title": "Ergebnisse",
+  "progress": {
+    "title": "Fortschritt",
     "chapter": "Kapitel",
     "chapterComplete": "Abgeschlossen",
     "introduction": {

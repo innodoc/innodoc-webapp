@@ -1,20 +1,20 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import ResultsPage from './ResultsPage'
+import ProgressPage from './ProgressPage'
 import Layout from '../Layout'
 import PageTitle from '../PageTitle'
-import UserResults from '../user/Results'
+import UserProgress from '../user/Progress'
 import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
 
-describe('<ResultsPage />', () => {
+describe('<ProgressPage />', () => {
   it('should render', () => {
-    const wrapper = shallow(<ResultsPage />)
+    const wrapper = shallow(<ProgressPage />)
     const layout = wrapper.find(Layout)
     expect(layout.exists()).toBe(true)
     expect(layout.prop('disableSidebar')).toBe(false)
-    expect(wrapper.find(PageTitle).prop('children')).toBe('results.title')
-    expect(layout.find(UserResults).exists()).toBe(true)
+    expect(wrapper.find(PageTitle).prop('children')).toBe('progress.title')
+    expect(layout.find(UserProgress).exists()).toBe(true)
     expect(wrapper.exists(SidebarToggleButton)).toBe(true)
   })
 })

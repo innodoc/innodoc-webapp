@@ -45,14 +45,14 @@ const ChapterCard = ({ minScore, progress, sectionId, title }) => {
   const cardTitle = (
     <SectionLink contentId={sectionId}>
       <a>
-        {t('results.chapter')} {title}
+        {t('progress.chapter')} {title}
       </a>
     </SectionLink>
   )
 
   const pieCharts = chartData.map(({ key, value, total, percent, status }) => {
     if (typeof value !== 'undefined') {
-      const tKey = `results.pieCharts.${key}`
+      const tKey = `progress.pieCharts.${key}`
       const description = (
         <Trans i18nKey={`${tKey}.description`}>
           Scored <strong>{{ value }}</strong> of <strong>{{ total }}</strong>.
@@ -72,7 +72,7 @@ const ChapterCard = ({ minScore, progress, sectionId, title }) => {
     return <Col key={key} xs={24} sm={24} md={8} />
   })
 
-  const completeText = t('results.chapterComplete')
+  const completeText = t('progress.chapterComplete')
   const extra = completed ? (
     <>
       <Typography.Text className={css.complete} strong>

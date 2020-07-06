@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { Menu } from 'antd'
-import { FilePdfOutlined } from '@ant-design/icons'
+import { FilePdfOutlined, LineChartOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'
@@ -47,6 +48,14 @@ const Nav = ({ menuMode }) => {
         </a>
       </Menu.Item>
       <LanguageSwitcher />
+      <Menu.Item key="progress">
+        <Link href="/progress">
+          <a>
+            <LineChartOutlined />
+            {t('progress.title')}
+          </a>
+        </Link>
+      </Menu.Item>
       <UserMenu email={loggedInEmail} />
     </Menu>
   )

@@ -27,7 +27,7 @@ describe('<ChapterCard />', () => {
     const title = shallow(<TitleComp />)
     const titleLink = title.find(SectionLink)
     expect(titleLink.prop('contentId')).toBe('foo')
-    expect(titleLink.find('a').text()).toBe('results.chapter Foo')
+    expect(titleLink.find('a').text()).toBe('progress.chapter Foo')
     expect(card.prop('extra')).toBeNull()
   })
 
@@ -55,10 +55,10 @@ describe('<ChapterCard />', () => {
     chartsExp.forEach(([chart, key, percent, status]) => {
       const DescrComp = () => chart.prop('description')
       const descr = shallow(<DescrComp />)
-      expect(descr.prop('i18nKey')).toBe(`results.pieCharts.${key}.description`)
+      expect(descr.prop('i18nKey')).toBe(`progress.pieCharts.${key}.description`)
       expect(chart.prop('percent')).toBe(percent)
       expect(chart.prop('status')).toBe(status)
-      expect(chart.prop('title')).toBe(`results.pieCharts.${key}.title`)
+      expect(chart.prop('title')).toBe(`progress.pieCharts.${key}.title`)
     })
   })
 

@@ -56,7 +56,7 @@ describe('<Nav />', () => {
     const wrapper = shallow(<Nav menuMode="vertical" />)
     expect(wrapper.find(Menu).prop('mode')).toBe('vertical')
     const menuItems = wrapper.find(Menu.Item)
-    expect(menuItems).toHaveLength(3)
+    expect(menuItems).toHaveLength(4)
 
     const menuItem1 = menuItems.at(0)
     expect(menuItem1.find(PageLink).prop('contentId')).toBe('foo')

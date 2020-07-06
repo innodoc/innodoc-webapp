@@ -9,7 +9,7 @@ import css from './style.sss'
 
 import ChapterCard from './ChapterCard'
 
-const Results = () => {
+const Progress = () => {
   const { t } = useTranslation()
   const { minScore } = useSelector(courseSelectors.getCurrentCourse)
   const chapters = useSelector(progressSelectors.getProgress)
@@ -28,8 +28,8 @@ const Results = () => {
     <>
       <Alert
         className={css.info}
-        description={t('results.introduction.description', { minScore })}
-        message={t('results.introduction.message')}
+        description={t('progress.introduction.description', { minScore })}
+        message={t('progress.introduction.message')}
         type="info"
         showIcon
       />
@@ -38,4 +38,4 @@ const Results = () => {
   )
 }
 
-export default Results
+export default Progress
