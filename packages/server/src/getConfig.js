@@ -17,6 +17,7 @@ const getConfig = () => {
   Dotenv.config({
     path: dotEnvFile,
     example: path.resolve(rootDir, '.env.example'),
+    allowEmptyValues: true,
   })
 
   // node environment
