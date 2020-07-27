@@ -42,6 +42,7 @@ describe('getConfig', () => {
     getConfig('/mock/root')
     expect(Dotenv.config).toBeCalledTimes(1)
     expect(Dotenv.config).toBeCalledWith({
+      allowEmptyValues: true,
       example: expect.stringMatching(/\.env\.example$/),
       path: expect.stringMatching(/\.env$/),
     })
