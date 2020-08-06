@@ -7,9 +7,18 @@
 .tocWrapper
   margin-bottom: $padding-lg
 
+  .sectionIcon
+    color: $heading-color
+    cursor: auto
+    margin-left: $padding-xs
+
   :global(.ant-tree-node-content-wrapper:hover)
     background-color: transparent
     color: $primary-5
+    cursor: auto
+
+    .sectionIcon
+      color: $heading-color
 
   .active
     color: $heading-color

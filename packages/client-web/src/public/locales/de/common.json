@@ -2,6 +2,10 @@
   "common": {
     "hideToc": "Inhaltsverzeichnis schließen",
     "ok": "OK",
+    "sectionTypes": {
+      "exercises": "Aufgaben",
+      "test": "Test"
+    },
     "showToc": "Inhaltsverzeichnis öffnen",
     "toc": "Inhaltsverzeichnis"
   },

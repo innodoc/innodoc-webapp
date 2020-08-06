@@ -12,6 +12,7 @@ export default class Section extends Model {
       id: attr(),
       ord: attr(),
       title: attr(),
+      type: attr(),
       content: attr(),
       parentId: fk('Section', 'children'),
       visited: attr({ getDefault: () => false }),
@@ -29,6 +30,7 @@ export default class Section extends Model {
       id: currentPath.join('/'),
       ord,
       title: node.title,
+      type: node.type || 'regular',
       parentId: path.length ? path.join('/') : undefined,
     })
   }

@@ -2,6 +2,10 @@
   "common": {
     "hideToc": "Close table of contents",
     "ok": "OK",
+    "sectionTypes": {
+      "exercises": "Exercises",
+      "test": "Test"
+    },
     "showToc": "Show table of contents",
     "toc": "Table of contents"
   },

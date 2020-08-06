@@ -18,6 +18,7 @@ const toc = [
       {
         id: 'child2',
         title: { en: 'test child2 title' },
+        type: 'exercises',
       },
     ],
   },
@@ -31,18 +32,21 @@ const loadToc = (state) => {
     ord: [0, 0],
     title: { en: 'test child1 title' },
     parentId: 'test',
+    type: 'regular',
   })
   Section.create({
     id: 'test/child2',
     ord: [0, 1],
     title: { en: 'test child2 title' },
     parentId: 'test',
+    type: 'exercises',
   })
   Section.create({
     id: 'test',
     ord: [0],
     title: { en: 'test title' },
     parentId: undefined,
+    type: 'regular',
   })
   return session.state
 }
