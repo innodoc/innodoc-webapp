@@ -19,9 +19,7 @@ export default class InnodocDocument extends Document {
     const { language } = this.props
     return (
       <html lang={language}>
-        <Head>
-          <meta content="initial-scale=1.0, width=device-width" key="viewport" name="viewport" />
-        </Head>
+        <Head />
         <body>
           <Main />
           <NextScript />

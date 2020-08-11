@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Head from 'next/head'
 import withReduxSaga from 'next-redux-saga'
 import { END } from 'redux-saga'
 import MathJax from '@innodoc/react-mathjax-node'
@@ -21,6 +22,9 @@ const InnoDocApp = ({ Component, mathJaxOptions, pageProps }) => {
   useRouteNotifier() // Notify store about Next.js route changes
   return (
     <>
+      <Head>
+        <meta content="initial-scale=1.0, width=device-width" key="viewport" name="viewport" />
+      </Head>
       <PageTitle />
       <MathJax.ConfigProvider options={mathJaxOptions}>
         <Component

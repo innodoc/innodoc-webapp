@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import Head from 'next/head'
 import { END } from 'redux-saga'
 
 import MathJax from '@innodoc/react-mathjax-node'
@@ -43,6 +44,12 @@ describe('<InnoDocApp />', () => {
           router={{}}
         />
       )
+      const head = wrapper.find(Head)
+      expect(head.exists()).toBe(true)
+      const viewportMeta = head.find('meta')
+      expect(viewportMeta.exists()).toBe(true)
+      expect(viewportMeta.prop('content')).toBe('initial-scale=1.0, width=device-width')
+      expect(viewportMeta.prop('name')).toBe('viewport')
       expect(wrapper.find(PageTitle).exists()).toBe(true)
       expect(wrapper.find(MathJax.ConfigProvider).prop('options')).toBe(mathJaxOptions)
       expect(wrapper.find(DummyComponent).exists()).toBe(true)
