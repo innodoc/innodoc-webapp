@@ -18,7 +18,7 @@
   "dependencies": {
     "@innodoc/client-misc": "*",
     "redux": "^4.0.5",
-    "redux-orm": "^0.16.1",
+    "redux-orm": "^0.16.2",
     "redux-saga": "^1.1.3"
   },
   "devDependencies": {

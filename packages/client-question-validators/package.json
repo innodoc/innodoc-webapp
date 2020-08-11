@@ -16,6 +16,6 @@
   "license": "GPL-3.0-or-later",
   "main": "src/index.js",
   "dependencies": {
-    "mathjs": "^7.0.2"
+    "mathjs": "^7.1.0"
   }
 }
