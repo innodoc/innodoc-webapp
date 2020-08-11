@@ -5,59 +5,43 @@ import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 import orm from '../orm'
 import sectionSelectors from './section'
 
-const getProgress = createSelector(
-  orm,
-  sectionSelectors.getChapters,
-  (session, chapters) =>
-    // Progress is calculated per chapter (1st-level section)
-    chapters.map((chapter) => {
-      const sectionIdStart = `${chapter.id}/`
+const getSectionExercises = (session, sections) =>
+  sections.reduce((acc, sec) => [...acc, ...sec.exercises.toModelArray()], [])
 
-      // moduleUnits (visited sections)
-      const sections = session.Section.all().filter(
-        (section) =>
-          section.id.startsWith(sectionIdStart) || section.id === chapter.id
-      )
-      const visitedSections = sections.filter((section) => section.visited)
-      const moduleUnits = [visitedSections.count(), sections.count()]
+const getTotalPoints = (exercises) => exercises.reduce((acc, ex) => acc + ex.points, 0)
 
-      // exercises
-      // TODO: exclude final test exercises
-      const chapterExercises = session.Exercise.all()
-        .filter((ex) => ex.sectionId.startsWith(sectionIdStart))
-        .toModelArray()
-      let exercises
-      if (chapterExercises.length) {
-        // Sum over total points
-        const total = chapterExercises.reduce((acc, ex) => acc + ex.points, 0)
-        // Sum over scored points
-        const scored = chapterExercises.reduce(
-          (eAcc, ex) =>
-            eAcc +
-            ex.questions
-              .toRefArray()
-              .reduce(
-                (qAcc, q) =>
-                  qAcc + (q.result === RESULT_VALUE.CORRECT ? q.points : 0),
-                0
-              ),
-          0
-        )
-        exercises = [scored, total]
-      } else {
-        exercises = null
-      }
+const getScoredPoints = (exercises) =>
+  exercises.reduce(
+    (eAcc, ex) =>
+      eAcc +
+      ex.questions
+        .toRefArray()
+        .reduce((qAcc, q) => qAcc + (q.result === RESULT_VALUE.CORRECT ? q.points : 0), 0),
+    0
+  )
 
-      // finalTest
-      // TODO: only final test exercises, sum total points & scored points
-      const finalTest = [80, 100]
-
-      return {
-        id: chapter.id,
-        title: chapter.title,
-        progress: { moduleUnits, exercises, finalTest },
-      }
-    })
+const getProgress = createSelector(orm, sectionSelectors.getChapters, (session, chapters) =>
+  // Progress is calculated per chapter (1st-level section)
+  chapters.map((chapter) => {
+    const sectionIdStart = `${chapter.id}/`
+    const chapterSections = session.Section.all().filter(
+      (section) => section.id.startsWith(sectionIdStart) || section.id === chapter.id
+    )
+    const moduleSections = chapterSections.filter((section) => section.type !== 'test')
+    const visitedSections = moduleSections.filter((section) => section.visited)
+    const chapterExercises = getSectionExercises(session, moduleSections.toModelArray())
+    const testSections = chapterSections.filter((section) => section.type === 'test')
+    const testExercises = getSectionExercises(session, testSections.toModelArray())
+    return {
+      id: chapter.id,
+      title: chapter.title,
+      progress: {
+        moduleUnits: [visitedSections.count(), moduleSections.count()],
+        exercises: [getScoredPoints(chapterExercises), getTotalPoints(chapterExercises)],
+        finalTest: [getScoredPoints(testExercises), getTotalPoints(testExercises)],
+      },
+    }
+  })
 )
 
 export default { getProgress }
