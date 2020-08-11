@@ -2,9 +2,6 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import csrf from 'csurf'
 import express from 'express'
-import nextI18NextMiddleware from 'next-i18next/middleware'
-
-import nextI18next from '@innodoc/client-misc/src/i18n'
 
 import createExpressApp from './createExpressApp'
 import {
@@ -30,11 +27,6 @@ const mockExpressApp = {
   use: jest.fn(() => mockExpressApp),
 }
 jest.mock('express', () => jest.fn(() => mockExpressApp))
-
-const mockNextI18NextMiddleware = {}
-jest.mock('next-i18next/middleware', () => jest.fn(() => mockNextI18NextMiddleware))
-
-jest.mock('@innodoc/client-misc/src/i18n', () => ({}))
 
 const mockNextController = {}
 const mockUserController = {}
@@ -101,11 +93,6 @@ describe('createExpressApp', () => {
         const extractCsrfToken = csrf.mock.calls[0][0].value
         expect(extractCsrfToken({ headers })).toBe(token)
       })
-    })
-
-    it('should use nextI18NextMiddleware', () => {
-      expect(nextI18NextMiddleware).toBeCalledWith(nextI18next)
-      expect(mockExpressApp.use).toBeCalledWith(mockNextI18NextMiddleware)
     })
 
     describe('innodoc middleswares', () => {

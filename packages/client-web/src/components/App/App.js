@@ -8,7 +8,7 @@ import { withServerContext } from 'next-server-context'
 
 import '@innodoc/client-web/src/style/lato-font.sss'
 
-import { appWithTranslation as withTranslation } from '@innodoc/client-misc/src/i18n'
+import { appWithTranslation } from '@innodoc/client-misc/src/i18n'
 
 import PageTitle from '../PageTitle'
 import useRouteNotifier from '../../hooks/useRouteNotifier'
@@ -59,7 +59,6 @@ InnoDocApp.getInitialProps = async ({ Component, ctx }) => {
 }
 
 const hocs = [
-  withTranslation,
   withServerContext,
   withMathJaxOptions,
   ...(typeof window === 'undefined'
@@ -70,6 +69,7 @@ const hocs = [
         withDispatchConfiguration,
       ]
     : []),
+  appWithTranslation,
   withReduxSaga,
   withNextRedux,
 ]

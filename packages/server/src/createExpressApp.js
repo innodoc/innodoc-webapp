@@ -2,9 +2,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import csrf from 'csurf'
 import express from 'express'
-import nextI18NextMiddleware from 'next-i18next/middleware'
 
-import nextI18next from '@innodoc/client-misc/src/i18n'
 import { nextController, userController } from './controllers'
 import {
   passConfigMiddleware,
@@ -23,7 +21,6 @@ const createExpressApp = (config, nextApp) =>
         value: (req) => req.headers['csrf-token'],
       })
     )
-    .use(nextI18NextMiddleware(nextI18next))
     .use(passConfigMiddleware(config))
     .use(sendMailMiddleware(config.smtp))
     .use(verifyAccessTokenMiddleware(config))
