@@ -1,12 +1,15 @@
 import { Router } from 'express'
 import passport from 'passport'
+import i18nextHttpMiddleware from 'i18next-http-middleware'
 
+import nextI18next from '@innodoc/client-misc/src/i18n'
 import User from '../models/User'
 import { resetPasswordMail, verificationMail } from '../mails'
 
 const userController = ({ appRoot, jwtSecret }) => {
   const router = Router()
   const secureCookie = new URL(appRoot).protocol === 'https'
+  router.use(i18nextHttpMiddleware.handle(nextI18next.i18n))
 
   router.post('/check-email', async (req, res) => {
     if (await User.exists({ email: req.body.email })) {
@@ -198,6 +201,7 @@ const userController = ({ appRoot, jwtSecret }) => {
 
   // eslint-disable-next-line no-unused-vars
   router.use((err, req, res, next) => {
+    // TODO proper error handling
     res.status(500).json({ result: err.stack })
   })
 

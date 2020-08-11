@@ -17,10 +17,16 @@ jest.mock('mongoose', () => ({
   }),
 }))
 
-const mockNoopMiddleware = (req, res, next) => next()
-jest.mock('next-i18next/middleware', () => () => mockNoopMiddleware)
+jest.mock('@innodoc/client-misc/src/i18n', () => ({
+  i18n: { t: (s) => s },
+}))
 
-jest.mock('@innodoc/client-misc/src/i18n', () => {})
+jest.mock('i18next-http-middleware', () => ({
+  handle: (i18n) => (req, res, next) => {
+    req.t = i18n.t
+    next()
+  },
+}))
 
 const mockStatus200 = (req, res) => res.status(200).end()
 
@@ -33,7 +39,9 @@ jest.mock('./util', () => ({
   handleCustomRoute: jest.fn((nextApp, type) => mockHandlers[type.substr(1)]),
 }))
 
+const mockNoopMiddleware = (req, res, next) => next()
 jest.mock('../middlewares', () => ({
+  i18nMiddleware: () => mockNoopMiddleware,
   verifyAccessTokenMiddleware: () => mockNoopMiddleware,
   passConfigMiddleware: () => mockNoopMiddleware,
   passportMiddleware: () => mockNoopMiddleware,

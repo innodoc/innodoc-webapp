@@ -8,15 +8,18 @@ const mockNoopMiddleware = (req, res, next) => next()
 
 jest.mock('csurf', () => () => mockNoopMiddleware)
 
-const mockT = jest.fn((s) => s)
-jest.mock('next-i18next/middleware', () => () => (req, res, next) => {
-  req.t = mockT
-  next()
-})
-
-jest.mock('@innodoc/client-misc/src/i18n', () => {})
-
 jest.mock('./nextController', () => () => mockNoopMiddleware)
+
+jest.mock('@innodoc/client-misc/src/i18n', () => ({
+  i18n: { t: (s) => s },
+}))
+
+jest.mock('i18next-http-middleware', () => ({
+  handle: (i18n) => (req, res, next) => {
+    req.t = i18n.t
+    next()
+  },
+}))
 
 const mockSendMail = jest.fn().mockResolvedValue()
 jest.mock('../middlewares/sendMailMiddleware', () => () => (req, res, next) => {
@@ -72,6 +75,15 @@ describe('userController', () => {
       .set('Cookie', [accessTokenCookie])
       .send(params)
       .then((res) => {
+        if (res.status !== status) {
+          let errorResult
+          try {
+            errorResult = JSON.parse(res.text).result
+          } catch {
+            errorResult = res.text
+          }
+          console.error(`${res.error.message}\n${errorResult}`) // eslint-disable-line no-console
+        }
         expect(res.status).toBe(status)
         if (type) {
           expect(res.type).toMatch(new RegExp(type))

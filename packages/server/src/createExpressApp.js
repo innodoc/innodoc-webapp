@@ -25,7 +25,7 @@ const createExpressApp = (config, nextApp) =>
     .use(sendMailMiddleware(config.smtp))
     .use(verifyAccessTokenMiddleware(config))
     .use(passportMiddleware(config))
-    .use('/user', userController(config))
     .use(nextController(config, nextApp))
+    .use('/user', userController(config))
 
 export default createExpressApp
