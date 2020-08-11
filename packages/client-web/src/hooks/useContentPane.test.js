@@ -32,9 +32,7 @@ jest.mock('react-redux', () => ({
 }))
 
 const ContentComponent = () => {
-  const { content, fadeInClassName, id, language, title } = useContentPane(
-    mockSelector
-  )
+  const { content, fadeInClassName, id, language, title } = useContentPane(mockSelector)
   return (
     <>
       <h1>{title}</h1>
@@ -52,9 +50,7 @@ const makeMockProvider = (
   addCallback = () => {},
   removeCallback = () => {}
 ) => ({ children }) => (
-  <MathJax.Context.Provider
-    value={{ addCallback, removeCallback, typesetDone }}
-  >
+  <MathJax.Context.Provider value={{ addCallback, removeCallback, typesetDone }}>
     {children}
   </MathJax.Context.Provider>
 )
@@ -116,22 +112,19 @@ describe('useContentPane', () => {
       ['out', false, {}, stdContent],
       ['out', false, stdApp, null],
       ['out', false, stdApp, { content: { de: contentArr } }],
-    ])(
-      'should fade %s depending on content load state',
-      (_, show, app, content) => {
-        mockApp = app
-        mockContent = content
-        const MockProvider = makeMockProvider()
-        const wrapper = mount(
-          <MockProvider>
-            <ContentComponent />
-          </MockProvider>
-        )
-        const div = wrapper.find('div')
-        expect(div.hasClass(fadeInCss.show)).toBe(show)
-        expect(div.hasClass(fadeInCss.hide)).toBe(!show)
-      }
-    )
+    ])('should fade %s depending on content load state', (_, show, app, content) => {
+      mockApp = app
+      mockContent = content
+      const MockProvider = makeMockProvider()
+      const wrapper = mount(
+        <MockProvider>
+          <ContentComponent />
+        </MockProvider>
+      )
+      const div = wrapper.find('div')
+      expect(div.hasClass(fadeInCss.show)).toBe(show)
+      expect(div.hasClass(fadeInCss.hide)).toBe(!show)
+    })
   })
 })
 

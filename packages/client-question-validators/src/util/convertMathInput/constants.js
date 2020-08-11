@@ -534,14 +534,7 @@ export const TO_REPLACE_BRACKETS = [
     },
   },
   {
-    expr: [
-      'factorial',
-      'Factorial',
-      'fakultaet',
-      'Fakultaet',
-      'fakultät',
-      'Fakultät',
-    ],
+    expr: ['factorial', 'Factorial', 'fakultaet', 'Fakultaet', 'fakultät', 'Fakultät'],
     replace: {
       latex: {
         1: '{($1)!}',

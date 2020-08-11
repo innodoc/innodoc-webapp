@@ -9,13 +9,10 @@ const createHoc = (displayName, getProps) => (WrappedComponent) => {
     const wrappedComponentProps = WrappedComponent.getInitialProps
       ? await WrappedComponent.getInitialProps(context)
       : {}
-    return props
-      ? { ...wrappedComponentProps, ...props }
-      : wrappedComponentProps
+    return props ? { ...wrappedComponentProps, ...props } : wrappedComponentProps
   }
 
-  const wrappedDisplayName =
-    WrappedComponent.displayName || WrappedComponent.name || 'Component'
+  const wrappedDisplayName = WrappedComponent.displayName || WrappedComponent.name || 'Component'
   WithHoc.displayName = `${displayName}(${wrappedDisplayName})`
 
   return WithHoc

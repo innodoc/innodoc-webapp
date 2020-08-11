@@ -6,10 +6,7 @@ import objectHash from 'object-hash'
 
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 import questionSelectors from '@innodoc/client-store/src/selectors/question'
-import {
-  attributesToObject,
-  getClassNameToComponentMapper,
-} from '@innodoc/client-misc/src/util'
+import { attributesToObject, getClassNameToComponentMapper } from '@innodoc/client-misc/src/util'
 import { attributeType } from '@innodoc/client-misc/src/propTypes'
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 
@@ -47,9 +44,7 @@ const Question = ({ attributes, id, questionClasses }) => {
     []
   )
   const question = useSelector((state) => getQuestion(state, globalQuestionId))
-  const { addQuestion, getShowResult, questionAnswered } = useContext(
-    ExerciseContext
-  )
+  const { addQuestion, getShowResult, questionAnswered } = useContext(ExerciseContext)
 
   useEffect(() => {
     // Notify exercise context about this question

@@ -32,15 +32,10 @@ const getNextPrevSections = createSelector(
   courseSelectors.getCurrentCourse,
   getSortedSections,
   (session, course, sortedSections) => {
-    const idx = sortedSections.findIndex(
-      (section) => section.id === course.currentSectionId
-    )
+    const idx = sortedSections.findIndex((section) => section.id === course.currentSectionId)
     return {
       prevId: idx > 0 ? sortedSections[idx - 1].id : undefined,
-      nextId:
-        idx < sortedSections.length - 1
-          ? sortedSections[idx + 1].id
-          : undefined,
+      nextId: idx < sortedSections.length - 1 ? sortedSections[idx + 1].id : undefined,
     }
   }
 )

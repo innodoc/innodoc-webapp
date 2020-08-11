@@ -12,10 +12,7 @@ import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 import makeContentLink from './makeContentLink'
 
 const PageLink = makeContentLink(pageSelectors.makeGetPageLink, 'page')
-const SectionLink = makeContentLink(
-  sectionSelectors.makeGetSectionLink,
-  'section'
-)
+const SectionLink = makeContentLink(sectionSelectors.makeGetSectionLink, 'section')
 
 const specialPages = {
   ___INDEX_PAGE___: ['/index-page', 'index.title'],
@@ -32,11 +29,7 @@ const InternalLink = ({ children, href }) => {
     const [pageHref, i18nKey] = specialPages[href]
     const title = t(i18nKey)
 
-    const newChildren = children ? (
-      React.cloneElement(children, { title })
-    ) : (
-      <a>{title}</a>
-    )
+    const newChildren = children ? React.cloneElement(children, { title }) : <a>{title}</a>
 
     return <Link href={pageHref}>{newChildren}</Link>
   }

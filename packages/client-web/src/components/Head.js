@@ -11,9 +11,7 @@ import { Head as NextHead } from 'next/document'
 const SEARCH_STRINGS = ['_app.js', '/css/', '/chunks/']
 
 const findAndRemove = (links, q, rel) => {
-  const link = links.find(
-    (l) => l.props.href.includes(q) && l.props.rel === rel
-  )
+  const link = links.find((l) => l.props.href.includes(q) && l.props.rel === rel)
   if (link) {
     links.splice(links.indexOf(link), 1)
     return link

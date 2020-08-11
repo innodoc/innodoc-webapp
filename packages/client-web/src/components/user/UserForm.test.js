@@ -42,9 +42,7 @@ describe('<UserForm />', () => {
     expect(form.find(Form.Item)).toHaveLength(2)
     const submitFormItem = form.find(Form.Item).last()
     expect(submitFormItem.prop('wrapperCol')).toEqual({ xs: 24 })
-    expect(submitFormItem.children(Button).children().at(1).text()).toBe(
-      'Submit'
-    )
+    expect(submitFormItem.children(Button).children().at(1).text()).toBe('Submit')
     expect(wrapper.exists(Alert)).toBe(false)
   })
 
@@ -100,9 +98,7 @@ describe('<UserForm />', () => {
     promise.finally(() => {
       submitButton = wrapper.find(Button)
       submitIcon = submitButton.childAt(0)
-      expect(submitIcon.containsMatchingElement(<LoadingOutlined />)).toBe(
-        false
-      )
+      expect(submitIcon.containsMatchingElement(<LoadingOutlined />)).toBe(false)
       expect(submitIcon.containsMatchingElement(<Icon />)).toBe(true)
       done()
     })

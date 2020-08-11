@@ -1,10 +1,6 @@
 import { put, select } from 'redux-saga/effects'
 
-import {
-  loadFragment,
-  loadPage,
-  loadSection,
-} from '@innodoc/client-store/src/actions/content'
+import { loadFragment, loadPage, loadSection } from '@innodoc/client-store/src/actions/content'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
 // When the language changes we may need to (re-)load content.

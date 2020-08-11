@@ -39,17 +39,13 @@ User.plugin(passportLocalMongoose, {
   },
 })
 
-User.methods.generateAccessToken = function generateAccessToken(
-  jwtSecret,
-  issuer
-) {
+User.methods.generateAccessToken = function generateAccessToken(jwtSecret, issuer) {
   return jwt.sign({ sub: this.email }, jwtSecret, {
     expiresIn: '30d',
     issuer,
   })
 }
 
-User.statics.generateToken = () =>
-  crypto.randomBytes(TOKEN_LENGTH / 2).toString('hex')
+User.statics.generateToken = () => crypto.randomBytes(TOKEN_LENGTH / 2).toString('hex')
 
 export default mongoose.model('User', User)

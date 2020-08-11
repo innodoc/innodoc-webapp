@@ -32,9 +32,7 @@ export default (ContentComponent, load) => {
 
   ContentPage.getInitialProps = ({ query, store }) => {
     const { language } = appSelectors.getApp(store.getState())
-    store.dispatch(
-      query.contentId ? load(query.contentId, language) : contentNotFound()
-    )
+    store.dispatch(query.contentId ? load(query.contentId, language) : contentNotFound())
     return {}
   }
 

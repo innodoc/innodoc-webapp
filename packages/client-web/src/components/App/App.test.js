@@ -44,9 +44,7 @@ describe('<InnoDocApp />', () => {
         />
       )
       expect(wrapper.find(PageTitle).exists()).toBe(true)
-      expect(wrapper.find(MathJax.ConfigProvider).prop('options')).toBe(
-        mathJaxOptions
-      )
+      expect(wrapper.find(MathJax.ConfigProvider).prop('options')).toBe(mathJaxOptions)
       expect(wrapper.find(DummyComponent).exists()).toBe(true)
     })
 

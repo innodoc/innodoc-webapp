@@ -21,8 +21,7 @@ const UnknownType = ({ data, name }) => {
       tabIndex={0}
     >
       <span>
-        {showData ? '➖' : '➕'} Unknown component:{' '}
-        <Typography.Text code>{name}</Typography.Text>
+        {showData ? '➖' : '➕'} Unknown component: <Typography.Text code>{name}</Typography.Text>
       </span>
       {showData ? <UnknownTypeData data={data} /> : null}
     </span>

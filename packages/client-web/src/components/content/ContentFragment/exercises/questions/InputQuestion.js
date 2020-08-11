@@ -10,32 +10,14 @@ import InputPopover from './InputPopover'
 
 const DEFAULT_INPUT_LENGTH = 10
 
-const InputQuestion = ({
-  attributes,
-  className,
-  icon,
-  latexCode,
-  messages,
-  onChange,
-  value,
-}) => {
+const InputQuestion = ({ attributes, className, icon, latexCode, messages, onChange, value }) => {
   const [focus, setFocus] = useState(false)
   const length = parseInt(attributes.length, 10) || DEFAULT_INPUT_LENGTH
   const { validation } = attributes
-  const showPreview = [
-    'exact-fraction',
-    'function',
-    'interval',
-    'parsed',
-  ].includes(validation)
+  const showPreview = ['exact-fraction', 'function', 'interval', 'parsed'].includes(validation)
 
   return (
-    <InputPopover
-      focus={focus}
-      messages={messages}
-      showPreview={showPreview}
-      userInput={latexCode}
-    >
+    <InputPopover focus={focus} messages={messages} showPreview={showPreview} userInput={latexCode}>
       <Input
         className={classNames(css.inputQuestion, className)}
         maxLength={length}

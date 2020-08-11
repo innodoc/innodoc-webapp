@@ -13,9 +13,7 @@ const parseTermName = (term) => {
       // string token
       const [, content] = match
       name.push(
-        <span key={index}>
-          {content.replace(new RegExp(ESCAPED_DOLLARSIGN, 'g'), '$')}
-        </span>
+        <span key={index}>{content.replace(new RegExp(ESCAPED_DOLLARSIGN, 'g'), '$')}</span>
       )
       remain = remain.slice(content.length)
       index += 1
@@ -24,13 +22,7 @@ const parseTermName = (term) => {
       if (match) {
         // Math token
         const [, content] = match
-        name.push(
-          <MathJax.MathJaxNode
-            displayType="inline"
-            key={index}
-            texCode={content}
-          />
-        )
+        name.push(<MathJax.MathJaxNode displayType="inline" key={index} texCode={content} />)
         remain = remain.slice(content.length + 2)
         index += 1
       } else {

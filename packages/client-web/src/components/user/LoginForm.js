@@ -18,13 +18,11 @@ const ErrorDescription = () => (
   <Trans i18nKey="user.login.error.description">
     Please check your email and password.
     <br />
-    <Link href="/request-password-reset">
-      I don&apos;t remember my password
-    </Link>
+    <Link href="/request-password-reset">I don&apos;t remember my password</Link>
     <br />
     <br />
-    Remember that you need to activate your account by clicking the link in your
-    confirmation mail before you can login.
+    Remember that you need to activate your account by clicking the link in your confirmation mail
+    before you can login.
     <br />
     <Link href="/request-verification">Request confirmation mail</Link>
   </Trans>

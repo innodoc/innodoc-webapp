@@ -13,8 +13,6 @@ describe('<DeleteAccountPage />', () => {
     expect(layout.exists()).toBe(true)
     expect(layout.prop('disableSidebar')).toBe(true)
     expect(layout.find(DeleteAccountForm).exists()).toBe(true)
-    expect(wrapper.find(PageTitle).prop('children')).toBe(
-      'user.deleteAccount.title'
-    )
+    expect(wrapper.find(PageTitle).prop('children')).toBe('user.deleteAccount.title')
   })
 })

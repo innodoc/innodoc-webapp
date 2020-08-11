@@ -18,8 +18,7 @@ const bindMiddleware = (middleware) => {
 
 const ormReducer = combineReducers({ orm: createReducer(orm) })
 
-const defaultRootReducer = (innerReducer) => (state, action) =>
-  innerReducer(state, action)
+const defaultRootReducer = (innerReducer) => (state, action) => innerReducer(state, action)
 
 // create store and run root saga
 const makeMakeStore = (rootSaga, getRootReducer = defaultRootReducer) => () => {

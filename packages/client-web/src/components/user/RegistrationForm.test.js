@@ -58,9 +58,7 @@ describe('<RegistrationForm />', () => {
         .childAt(0)
         .prop('rules')[0]
       expect(rule.validateTrigger).toBe('onFinish')
-      await expect(rule.validator(rule, 'alice@example.com')).resolves.toBe(
-        true
-      )
+      await expect(rule.validator(rule, 'alice@example.com')).resolves.toBe(true)
       expect(checkEmail).toBeCalledWith(
         'http://app.example.com/',
         '123csrftoken',

@@ -43,10 +43,7 @@ describe('exerciseSelectors', () => {
       [false, [RESULT_VALUE.NEUTRAL, RESULT_VALUE.CORRECT]],
     ])('%s', (exp, values) => {
       const state = dummyState(values)
-      const allAnswered = exerciseSelectors.getExerciseAnswered(
-        state,
-        'foo/bar#E01'
-      )
+      const allAnswered = exerciseSelectors.getExerciseAnswered(state, 'foo/bar#E01')
       expect(allAnswered).toBe(exp)
     })
   })

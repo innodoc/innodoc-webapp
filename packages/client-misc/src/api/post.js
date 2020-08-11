@@ -26,8 +26,7 @@ export const deleteAccount = (base, csrfToken, password) =>
 export const loginUser = (base, csrfToken, email, password) =>
   postJson(`${base}user/login`, { csrfToken, email, password })
 
-export const logoutUser = (base, csrfToken) =>
-  postJson(`${base}user/logout`, { csrfToken })
+export const logoutUser = (base, csrfToken) => postJson(`${base}user/logout`, { csrfToken })
 
 export const registerUser = (base, csrfToken, email, password) =>
   postJson(`${base}user/register`, { csrfToken, email, password })

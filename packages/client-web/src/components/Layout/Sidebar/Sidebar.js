@@ -31,10 +31,7 @@ const Sidebar = ({ children }) => {
           className={css.animation}
           style={{ transform: `translateX(${sidebarVisible ? 0 : -width}px)` }}
         >
-          <div
-            className={css.closeButton}
-            style={{ marginLeft: `${width - 48}px` }}
-          >
+          <div className={css.closeButton} style={{ marginLeft: `${width - 48}px` }}>
             <ToggleButton icon={<DoubleLeftOutlined />} />
           </div>
           <div className={css.sticky} style={{ minWidth: width }}>

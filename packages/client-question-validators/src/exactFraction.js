@@ -1,11 +1,6 @@
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 
-import {
-  notationParserIn,
-  outsideDistance,
-  rawParse,
-  rawParseWithLatex,
-} from './util'
+import { notationParserIn, outsideDistance, rawParse, rawParseWithLatex } from './util'
 
 // Find greatest common divisor
 const gcd = (a, b) => (b ? gcd(b, a % b) : a)

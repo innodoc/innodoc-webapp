@@ -44,10 +44,7 @@ describe('loadFragmentSaga', () => {
 
   it('should get content from cache', () =>
     expectSaga(loadFragmentSaga, loadFragment(contentId))
-      .provide([
-        [select(fragmentSelectors.getFragment, contentId), fragment],
-        ...defaultProvides,
-      ])
+      .provide([[select(fragmentSelectors.getFragment, contentId), fragment], ...defaultProvides])
       .not.call.fn(fetchFragment)
       .put(
         loadFragmentSuccess({
@@ -61,10 +58,7 @@ describe('loadFragmentSaga', () => {
   it('should put loadFragmentFailure if fetch fails', () => {
     const error = new Error('mock error')
     return expectSaga(loadFragmentSaga, loadFragment(contentId))
-      .provide([
-        [matchers.call.fn(fetchFragment), throwError(error)],
-        ...defaultProvides,
-      ])
+      .provide([[matchers.call.fn(fetchFragment), throwError(error)], ...defaultProvides])
       .put(loadFragmentFailure(error))
       .not.put.actionType(actionTypes.LOAD_FRAGMENT_SUCCESS)
       .run()

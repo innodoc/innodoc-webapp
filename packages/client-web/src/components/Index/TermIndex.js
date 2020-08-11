@@ -33,19 +33,12 @@ const renderTerm = ([term, show]) => {
 
 const EmptyList = () => {
   const { t } = useTranslation()
-  return (
-    <Empty
-      description={t('index.emptyText')}
-      image={Empty.PRESENTED_IMAGE_SIMPLE}
-    />
-  )
+  return <Empty description={t('index.emptyText')} image={Empty.PRESENTED_IMAGE_SIMPLE} />
 }
 
 const Index = () => {
   const { language } = useSelector(appSelectors.getApp)
-  const allIndexTerms = useSelector((state) =>
-    indexTermSelectors.getIndexTerms(state, language)
-  )
+  const allIndexTerms = useSelector((state) => indexTermSelectors.getIndexTerms(state, language))
   const { typesetDone } = useContext(MathJax.Context)
   const fadeInClassName = classNames({
     [fadeInCss.show]: typesetDone,
@@ -53,10 +46,7 @@ const Index = () => {
   })
   const { t } = useTranslation()
   const [q, setQ] = useState('')
-  const indexTerms = allIndexTerms.map((term) => [
-    term,
-    term.name.toLowerCase().indexOf(q) >= 0,
-  ])
+  const indexTerms = allIndexTerms.map((term) => [term, term.name.toLowerCase().indexOf(q) >= 0])
   const empty = indexTerms.every(([, show]) => !show)
   const onChange = debounce((e) => setQ(e.target.value.toLowerCase()), 150, {
     leading: true,
@@ -64,18 +54,10 @@ const Index = () => {
 
   return (
     <>
-      <Input.Search
-        allowClear
-        placeholder={t('index.searchPlaceholder')}
-        onChange={onChange}
-      />
+      <Input.Search allowClear placeholder={t('index.searchPlaceholder')} onChange={onChange} />
       <Divider />
       <div className={fadeInClassName}>
-        <List
-          dataSource={indexTerms}
-          locale={{ emptyText: null }}
-          renderItem={renderTerm}
-        />
+        <List dataSource={indexTerms} locale={{ emptyText: null }} renderItem={renderTerm} />
         {empty ? <EmptyList /> : null}
       </div>
     </>

@@ -22,18 +22,8 @@ describe('Course', () => {
 
   describe('reducer', () => {
     test.each([
-      [
-        'loadSectionSuccess',
-        loadSectionSuccess({ contentId: 'bar' }),
-        'bar',
-        undefined,
-      ],
-      [
-        'loadPageSuccess',
-        loadPageSuccess({ contentId: 'baz' }),
-        undefined,
-        'baz',
-      ],
+      ['loadSectionSuccess', loadSectionSuccess({ contentId: 'bar' }), 'bar', undefined],
+      ['loadPageSuccess', loadPageSuccess({ contentId: 'baz' }), undefined, 'baz'],
     ])('%s', (_, action, currentSectionId, currentPageId) => {
       const course = session.Course.create({
         currentSection: session.Section.create({ id: 'foo', title: 'Foo' }),
@@ -59,10 +49,7 @@ describe('Course', () => {
       }
 
       test('loadManifestSuccess', () => {
-        session.Course.reducer(
-          loadManifestSuccess({ content: manifest }),
-          session.Course
-        )
+        session.Course.reducer(loadManifestSuccess({ content: manifest }), session.Course)
         expect(session.Course.first().ref).toEqual({
           currentSectionId: undefined,
           homeLink: '/section/bar',
@@ -93,22 +80,19 @@ describe('Course', () => {
       })
     })
 
-    test.each(['currentSectionId', 'currentPageId'])(
-      'routeChangeStart (%s)',
-      (field) => {
-        const section = session.Section.create({ id: 'foo', title: 'Foo' })
-        const page = session.Page.create({ id: 'bar', title: 'Bar' })
-        const course = session.Course.create({
-          currentSectionId: section.getId(),
-          currentPageId: page.getId(),
-          homeLink: 'foo',
-          languages: ['en'],
-          title: 'Foo course',
-        })
-        session.Course.reducer(routeChangeStart(), session.Course)
-        expect(course.ref[field]).toBe(undefined)
-      }
-    )
+    test.each(['currentSectionId', 'currentPageId'])('routeChangeStart (%s)', (field) => {
+      const section = session.Section.create({ id: 'foo', title: 'Foo' })
+      const page = session.Page.create({ id: 'bar', title: 'Bar' })
+      const course = session.Course.create({
+        currentSectionId: section.getId(),
+        currentPageId: page.getId(),
+        homeLink: 'foo',
+        languages: ['en'],
+        title: 'Foo course',
+      })
+      session.Course.reducer(routeChangeStart(), session.Course)
+      expect(course.ref[field]).toBe(undefined)
+    })
 
     test('no-op action', () => {
       session.Course.reducer({ type: 'DOES-NOT-EXIST' }, session.Course)

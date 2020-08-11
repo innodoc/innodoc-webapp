@@ -2,18 +2,11 @@
 
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 
-import {
-  convertMathInput,
-  mathJS,
-  mathJSFunctions,
-  rawParse,
-  withinDistance,
-} from './util'
+import { convertMathInput, mathJS, mathJSFunctions, rawParse, withinDistance } from './util'
 
 // taken from jQuery-3.1.1
 const isNumeric = (obj) =>
-  (typeof obj === 'number' || typeof obj === 'string') &&
-  !Number.isNaN(obj - parseFloat(obj))
+  (typeof obj === 'number' || typeof obj === 'string') && !Number.isNaN(obj - parseFloat(obj))
 
 function isProperNumber(str) {
   if (
@@ -192,9 +185,7 @@ const func = (input, solution, attrs) => {
   const varia = attrs.variables.split(',')
   const { precision, 'supporting-points': spoints } = attrs
   const simplification =
-    typeof attrs.simplification === 'string'
-      ? attrs.simplification.split(',')
-      : []
+    typeof attrs.simplification === 'string' ? attrs.simplification.split(',') : []
 
   let ok = RESULT_VALUE.CORRECT
 

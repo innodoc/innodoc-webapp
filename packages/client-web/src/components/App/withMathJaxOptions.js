@@ -14,11 +14,7 @@ const withMathJaxOptions = createHoc('WithMathJaxOptions', (ctx) => {
     chtml: { fontURL: DEFAULT_MATHJAX_FONT_URL },
   }
   try {
-    props.mathJaxOptions = insert(
-      defaultMathJaxOptions,
-      course.mathJaxOptions,
-      false
-    )
+    props.mathJaxOptions = insert(defaultMathJaxOptions, course.mathJaxOptions, false)
   } catch (error) {
     props.mathJaxOptions = defaultMathJaxOptions
   }

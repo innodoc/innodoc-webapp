@@ -16,19 +16,12 @@ const Toc = ({ expandAll }) => {
   const course = useSelector(courseSelectors.getCurrentCourse)
   const tocData = useSelector(sectionSelectors.getToc)
   const currentSectionId = course ? course.currentSectionId : undefined
-  const [expandedKeys, setExpandedKeys] = useState(
-    currentSectionId ? [currentSectionId] : []
-  )
+  const [expandedKeys, setExpandedKeys] = useState(currentSectionId ? [currentSectionId] : [])
   const treeData = getTreeData(tocData, currentSectionId, t)
   useAutoExpand(currentSectionId, expandAll, expandedKeys, setExpandedKeys)
 
   const tree = expandAll ? (
-    <Tree
-      className={css.disableExpand}
-      defaultExpandAll
-      selectable={false}
-      treeData={treeData}
-    />
+    <Tree className={css.disableExpand} defaultExpandAll selectable={false} treeData={treeData} />
   ) : (
     <Tree
       expandedKeys={expandAll ? null : expandedKeys}

@@ -28,13 +28,7 @@ const antdThemeFilename = path.resolve(
 )
 
 // Output path for antd default vars
-const antdVarsFilename = path.resolve(
-  __dirname,
-  '..',
-  'src',
-  'style',
-  'antd-vars.json'
-)
+const antdVarsFilename = path.resolve(__dirname, '..', 'src', 'style', 'antd-vars.json')
 
 const extractAntdDefaultVariables = () =>
   less
@@ -50,13 +44,7 @@ const extractAntdDefaultVariables = () =>
     })
 
 // Overridden antd variables
-const antdVarsOverrideFilename = path.resolve(
-  __dirname,
-  '..',
-  'src',
-  'style',
-  'antd-theme.sss'
-)
+const antdVarsOverrideFilename = path.resolve(__dirname, '..', 'src', 'style', 'antd-theme.sss')
 
 const generateVarsForAntd = () =>
   postcssrc(

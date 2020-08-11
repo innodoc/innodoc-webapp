@@ -18,17 +18,14 @@ jest.mock('@innodoc/client-store/src/selectors/question', () => ({
 const mockGetCurrentSection = sectionSelectors.getCurrentSection
 const mockSection = { id: 'foo/bar' }
 jest.mock('react-redux', () => ({
-  useSelector: (selector) =>
-    selector === mockGetCurrentSection ? mockSection : selector(),
+  useSelector: (selector) => (selector === mockGetCurrentSection ? mockSection : selector()),
 }))
 
 let addQuestion
 let questionAnswered
 let getShowResult
 const MockProvider = ({ children }) => (
-  <ExerciseContext.Provider
-    value={{ addQuestion, questionAnswered, getShowResult }}
-  >
+  <ExerciseContext.Provider value={{ addQuestion, questionAnswered, getShowResult }}>
     {children}
   </ExerciseContext.Provider>
 )
@@ -53,11 +50,7 @@ describe('<Question />', () => {
     mockQuestion = { ...mockQuestion, answer: '42', result }
     const wrapper = mount(
       <MockProvider>
-        <Question
-          attributes={[['points', '10']]}
-          id="Q01"
-          questionClasses={['text']}
-        />
+        <Question attributes={[['points', '10']]} id="Q01" questionClasses={['text']} />
       </MockProvider>
     )
     const inputQuestion = wrapper.find(InputQuestion)
@@ -75,40 +68,27 @@ describe('<Question />', () => {
       addQuestion = jest.fn()
       mount(
         <MockProvider>
-          <Question
-            attributes={[['points', '10']]}
-            id="Q99"
-            questionClasses={['text']}
-          />
+          <Question attributes={[['points', '10']]} id="Q99" questionClasses={['text']} />
         </MockProvider>
       )
       expect(addQuestion).toBeCalledTimes(1)
       expect(addQuestion).toBeCalledWith('foo/bar#Q99', 10)
     })
 
-    it.each([['Q91'], [undefined]])(
-      'should call questionAnswered on change',
-      (qId) => {
-        questionAnswered = jest.fn()
-        mockQuestion = { ...mockQuestion, answer: 'foo' }
-        const wrapper = mount(
-          <MockProvider>
-            <Question
-              attributes={[['points', '8']]}
-              id={qId}
-              questionClasses={['text']}
-            />
-          </MockProvider>
-        )
-        wrapper.find(InputQuestion).invoke('onChange')('42')
-        expect(questionAnswered).toBeCalledTimes(1)
-        expect(questionAnswered).toBeCalledWith(
-          expect.stringContaining('foo/bar#'),
-          '42',
-          { points: '8' }
-        )
-      }
-    )
+    it.each([['Q91'], [undefined]])('should call questionAnswered on change', (qId) => {
+      questionAnswered = jest.fn()
+      mockQuestion = { ...mockQuestion, answer: 'foo' }
+      const wrapper = mount(
+        <MockProvider>
+          <Question attributes={[['points', '8']]} id={qId} questionClasses={['text']} />
+        </MockProvider>
+      )
+      wrapper.find(InputQuestion).invoke('onChange')('42')
+      expect(questionAnswered).toBeCalledTimes(1)
+      expect(questionAnswered).toBeCalledWith(expect.stringContaining('foo/bar#'), '42', {
+        points: '8',
+      })
+    })
   })
 
   describe('getShowResult', () => {
@@ -126,11 +106,7 @@ describe('<Question />', () => {
         getShowResult = () => getShowResultValue
         const wrapper = mount(
           <MockProvider>
-            <Question
-              attributes={[['foo', 'bar']]}
-              id="Q91"
-              questionClasses={['text']}
-            />
+            <Question attributes={[['foo', 'bar']]} id="Q91" questionClasses={['text']} />
           </MockProvider>
         )
         const inputQuestion = wrapper.find(InputQuestion)
@@ -149,23 +125,14 @@ describe('mapClassNameToComponent', () => {
   it.each([
     ['text', InputQuestion],
     ['checkbox', CheckboxQuestion],
-  ])(
-    'should map className (%s) to correct Component',
-    (className, Component) => {
-      const wrapper = shallow(
-        <Question attributes={[]} id="Q01" questionClasses={[className]} />
-      )
-      expect(wrapper.is(Component)).toBe(true)
-    }
-  )
+  ])('should map className (%s) to correct Component', (className, Component) => {
+    const wrapper = shallow(<Question attributes={[]} id="Q01" questionClasses={[className]} />)
+    expect(wrapper.is(Component)).toBe(true)
+  })
 
   it('should render unknownQuestion for unknown component className (non-production)', () => {
     const wrapper = shallow(
-      <Question
-        attributes={[]}
-        id="Q01"
-        questionClasses={['this-component-does-not-exist']}
-      />
+      <Question attributes={[]} id="Q01" questionClasses={['this-component-does-not-exist']} />
     )
     expect(wrapper.type()).toBe('span')
     expect(wrapper.hasClass(css.unknownQuestion)).toBe(true)
@@ -174,11 +141,7 @@ describe('mapClassNameToComponent', () => {
   it('should render empty for unknown component className (production)', () => {
     process.env.NODE_ENV = 'production'
     const wrapper = shallow(
-      <Question
-        attributes={[]}
-        id="Q01"
-        questionClasses={['this-component-does-not-exist']}
-      />
+      <Question attributes={[]} id="Q01" questionClasses={['this-component-does-not-exist']} />
     )
     expect(wrapper.isEmptyRender()).toBe(true)
   })

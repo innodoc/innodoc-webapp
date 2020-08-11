@@ -34,9 +34,7 @@ describe('<DeleteAccountForm />', () => {
     expect(alerts).toHaveLength(2)
     const warning = alerts.at(0)
     expect(warning.prop('type')).toBe('warning')
-    expect(warning.prop('description')).toBe(
-      'user.deleteAccount.warning.description'
-    )
+    expect(warning.prop('description')).toBe('user.deleteAccount.warning.description')
     expect(warning.prop('message')).toBe('user.deleteAccount.warning.message')
     const info = alerts.at(1)
     expect(info.prop('type')).toBe('info')
@@ -66,11 +64,7 @@ describe('<DeleteAccountForm />', () => {
       const { setDisabled, setMessage, onFinishPromise } = prepare()
       await expect(onFinishPromise).resolves.toBeUndefined()
       expect(deleteAccount).toBeCalledTimes(1)
-      expect(deleteAccount).toBeCalledWith(
-        'http://app.example.com/',
-        '123csrftoken',
-        'abc123ABC!'
-      )
+      expect(deleteAccount).toBeCalledWith('http://app.example.com/', '123csrftoken', 'abc123ABC!')
       expect(mockDispatch).toBeCalledTimes(2)
       expect(mockDispatch).toBeCalledWith(
         showMessage({
@@ -90,11 +84,7 @@ describe('<DeleteAccountForm />', () => {
       const { setDisabled, setMessage, onFinishPromise } = prepare()
       await expect(onFinishPromise).resolves.toBeUndefined()
       expect(deleteAccount).toBeCalledTimes(1)
-      expect(deleteAccount).toBeCalledWith(
-        'http://app.example.com/',
-        '123csrftoken',
-        'abc123ABC!'
-      )
+      expect(deleteAccount).toBeCalledWith('http://app.example.com/', '123csrftoken', 'abc123ABC!')
       expect(mockDispatch).not.toBeCalled()
       expect(setMessage).toBeCalledTimes(1)
       expect(setMessage).toBeCalledWith({

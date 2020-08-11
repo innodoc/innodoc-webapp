@@ -12,17 +12,9 @@ import { SectionLink } from '../links'
 import css from './style.sss'
 
 const SectionButton = ({ direction, sectionId }) => {
-  const icon =
-    direction === 'left' ? <ArrowLeftOutlined /> : <ArrowRightOutlined />
+  const icon = direction === 'left' ? <ArrowLeftOutlined /> : <ArrowRightOutlined />
   const disabled = !sectionId
-  const button = (
-    <Button
-      className={css.affixButton}
-      disabled={disabled}
-      icon={icon}
-      size="small"
-    />
-  )
+  const button = <Button className={css.affixButton} disabled={disabled} icon={icon} size="small" />
   if (disabled) {
     return button
   }

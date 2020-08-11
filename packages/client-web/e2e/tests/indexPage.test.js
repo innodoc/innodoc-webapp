@@ -20,21 +20,12 @@ describe('IndexPage', () => {
 
   it('should filter term list', async () => {
     await openUrl('index-page')
-    const allCount = (
-      await browser.queryAll('div[class^=content___] li.ant-list-item')
-    ).length
-    await browser.waitAndType(
-      'div[class^=content___] input',
-      'table of contents'
-    )
+    const allCount = (await browser.queryAll('div[class^=content___] li.ant-list-item')).length
+    await browser.waitAndType('div[class^=content___] input', 'table of contents')
     await browser.wait(500)
-    const entries = await browser.queryAll(
-      'div[class^=content___] li.ant-list-item'
-    )
+    const entries = await browser.queryAll('div[class^=content___] li.ant-list-item')
     const entriesVisible = await Promise.all(
-      entries.map((entry) =>
-        browser.evaluate((el) => WendigoUtils.isVisible(el), entry)
-      )
+      entries.map((entry) => browser.evaluate((el) => WendigoUtils.isVisible(el), entry))
     )
     const visible = entriesVisible.filter((v) => v)
     const notVisible = entriesVisible.filter((v) => !v)
@@ -44,14 +35,10 @@ describe('IndexPage', () => {
 
   it('should should have same term count for each language', async () => {
     await openUrl('index-page', { headers: { 'Accept-Language': 'en' } })
-    const enCount = (
-      await browser.queryAll('div[class^=content___] li.ant-list-item')
-    ).length
+    const enCount = (await browser.queryAll('div[class^=content___] li.ant-list-item')).length
     await resetBrowser()
     await openUrl('index-page', { headers: { 'Accept-Language': 'de' } })
-    const deCount = (
-      await browser.queryAll('div[class^=content___] li.ant-list-item')
-    ).length
+    const deCount = (await browser.queryAll('div[class^=content___] li.ant-list-item')).length
     expect(enCount).toBe(deCount)
   })
 })

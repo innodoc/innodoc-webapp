@@ -20,15 +20,11 @@ const userController = ({ appRoot, jwtSecret }) => {
     '/delete-account',
     passport.authenticate('jwt', { session: false }),
     async (req, res) => {
-      const deleteAccountErr = () =>
-        res.status(400).json({ result: 'DeleteAccountError' })
+      const deleteAccountErr = () => res.status(400).json({ result: 'DeleteAccountError' })
       const { loggedInEmail } = res.locals
       if (loggedInEmail) {
         try {
-          const { user } = await User.authenticate()(
-            loggedInEmail,
-            req.body.password
-          )
+          const { user } = await User.authenticate()(loggedInEmail, req.body.password)
           if (user) {
             // TODO delete user progress
             await user.delete()
@@ -63,12 +59,7 @@ const userController = ({ appRoot, jwtSecret }) => {
     }
     try {
       await req.app.locals.sendMail(
-        verificationMail(
-          req.t,
-          res.locals.appRoot,
-          email,
-          user.emailVerificationToken
-        )
+        verificationMail(req.t, res.locals.appRoot, email, user.emailVerificationToken)
       )
       res.status(200).json({ result: 'ok' })
     } catch (err) {
@@ -79,38 +70,29 @@ const userController = ({ appRoot, jwtSecret }) => {
     }
   })
 
-  router.post(
-    '/login',
-    passport.authenticate('local', { session: false }),
-    async (req, res) => {
-      const accessToken = req.user.generateAccessToken(jwtSecret, appRoot)
-      res.cookie('accessToken', accessToken, {
-        httpOnly: true,
-        secure: secureCookie,
-      })
-      res.status(200).json({ result: 'ok' })
-    }
-  )
+  router.post('/login', passport.authenticate('local', { session: false }), async (req, res) => {
+    const accessToken = req.user.generateAccessToken(jwtSecret, appRoot)
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: secureCookie,
+    })
+    res.status(200).json({ result: 'ok' })
+  })
 
-  router.post(
-    '/logout',
-    passport.authenticate('jwt', { session: false }),
-    (req, res) => {
-      req.logout()
-      res.clearCookie('accessToken', {
-        httpOnly: true,
-        secure: secureCookie,
-      })
-      res.status(200).json({ result: 'ok' })
-    }
-  )
+  router.post('/logout', passport.authenticate('jwt', { session: false }), (req, res) => {
+    req.logout()
+    res.clearCookie('accessToken', {
+      httpOnly: true,
+      secure: secureCookie,
+    })
+    res.status(200).json({ result: 'ok' })
+  })
 
   router.post(
     '/change-password',
     passport.authenticate('jwt', { session: false }),
     async (req, res, next) => {
-      const changePwdErr = () =>
-        res.status(400).json({ result: 'ChangePasswordError' })
+      const changePwdErr = () => res.status(400).json({ result: 'ChangePasswordError' })
       try {
         const { oldPassword, password } = req.body
         const user = await User.findByUsername(res.locals.loggedInEmail)
@@ -182,12 +164,7 @@ const userController = ({ appRoot, jwtSecret }) => {
         user.passwordResetToken = User.generateToken()
         user.passwordResetExpires = Date.now() + 60 * 60 * 1000 // 1 hour
         await req.app.locals.sendMail(
-          resetPasswordMail(
-            req.t,
-            res.locals.appRoot,
-            email,
-            user.passwordResetToken
-          )
+          resetPasswordMail(req.t, res.locals.appRoot, email, user.passwordResetToken)
         )
         await user.save()
         res.status(200).json({ result: 'ok' })
@@ -208,12 +185,7 @@ const userController = ({ appRoot, jwtSecret }) => {
       })
       if (user) {
         await req.app.locals.sendMail(
-          verificationMail(
-            req.t,
-            res.locals.appRoot,
-            email,
-            user.emailVerificationToken
-          )
+          verificationMail(req.t, res.locals.appRoot, email, user.emailVerificationToken)
         )
         res.status(200).json({ result: 'ok' })
       } else {

@@ -7,10 +7,7 @@ module.exports = postcss.plugin('postcss-import-json', () => (root) => {
   const rulePromises = []
   root.walkAtRules('import-json', (rule) => {
     const importParam = rule.params.replace(/^['"](.+)['"]$/, '$1')
-    const importFilepath = path.resolve(
-      path.dirname(rule.source.input.file),
-      importParam
-    )
+    const importFilepath = path.resolve(path.dirname(rule.source.input.file), importParam)
     rulePromises.push(
       new Promise((resolve, reject) =>
         readFile(importFilepath, (err, fileData) => {

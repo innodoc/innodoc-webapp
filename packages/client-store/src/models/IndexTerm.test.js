@@ -107,11 +107,7 @@ describe('IndexTerm', () => {
       })
 
       test('missing index_terms key', () => {
-        session.IndexTerm.reducer(
-          loadManifestSuccess({ content: {} }),
-          session.IndexTerm,
-          session
-        )
+        session.IndexTerm.reducer(loadManifestSuccess({ content: {} }), session.IndexTerm, session)
         expect(session.IndexTerm.count()).toBe(0)
       })
     })

@@ -4,9 +4,7 @@ import { connectDb } from '../db'
 import User, { tokenRegexp } from './User'
 
 describe('User', () => {
-  beforeAll(() =>
-    connectDb({ mongoUrl: process.env.MONGO_URL, nodeEnv: 'production' })
-  )
+  beforeAll(() => connectDb({ mongoUrl: process.env.MONGO_URL, nodeEnv: 'production' }))
 
   afterAll(() => mongoose.disconnect())
 
@@ -48,9 +46,7 @@ describe('User', () => {
   it('should reject weak password', async () => {
     expect.assertions(1)
     const newUser = new User({ email: 'weakpwd-user@example.com' })
-    return expect(newUser.setPassword('123456')).rejects.toThrow(
-      /passwordValidationError/
-    )
+    return expect(newUser.setPassword('123456')).rejects.toThrow(/passwordValidationError/)
   })
 
   it('should have unique email field', async () => {
@@ -92,13 +88,8 @@ describe('User', () => {
   describe('methods', () => {
     test('generateVerificationToken', async () => {
       const user = await addTestUser()
-      const jwt = await user.generateAccessToken(
-        'jwtSecret123',
-        'https://example.com/'
-      )
-      expect(jwt).toMatch(
-        /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/
-      )
+      const jwt = await user.generateAccessToken('jwtSecret123', 'https://example.com/')
+      expect(jwt).toMatch(/^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/)
     })
   })
 
@@ -111,9 +102,7 @@ describe('User', () => {
       })
       await verifiedUser.save()
 
-      expect((await User.findByUsername(verifiedUser.email)).email).toBe(
-        verifiedUser.email
-      )
+      expect((await User.findByUsername(verifiedUser.email)).email).toBe(verifiedUser.email)
       expect(await User.findByUsername(unverifiedUser.email)).toBeNull()
     })
 

@@ -2,10 +2,7 @@ import React from 'react'
 import { Alert, Typography } from 'antd'
 
 import { useTranslation, Trans } from '@innodoc/client-misc/src/i18n'
-import {
-  feedbackMessageType,
-  feedbackMessagesType,
-} from '@innodoc/client-misc/src/propTypes'
+import { feedbackMessageType, feedbackMessagesType } from '@innodoc/client-misc/src/propTypes'
 
 import css from './style.sss'
 

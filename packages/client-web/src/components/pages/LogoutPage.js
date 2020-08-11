@@ -38,11 +38,7 @@ const LogoutPage = () => {
           <Col xs={24} sm={16} md={12} lg={10}>
             <Result
               icon={logoutState === 'pending' ? <LoadingOutlined /> : null}
-              status={
-                ['error', 'success'].includes(logoutState)
-                  ? logoutState
-                  : 'info'
-              }
+              status={['error', 'success'].includes(logoutState) ? logoutState : 'info'}
               title={title}
               extra={
                 course ? (

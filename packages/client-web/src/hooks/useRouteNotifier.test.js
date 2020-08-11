@@ -38,10 +38,7 @@ describe('useRouteNotifier', () => {
     expect.assertions(1)
     const wrapper = mount(<Component />)
     await waitForComponent(wrapper)
-    expect(Router.events.on).toBeCalledWith(
-      'routeChangeStart',
-      expect.any(Function)
-    )
+    expect(Router.events.on).toBeCalledWith('routeChangeStart', expect.any(Function))
   })
 
   it('should unsubscribe on unmount', async () => {
@@ -50,9 +47,6 @@ describe('useRouteNotifier', () => {
     expect(Router.events.off).not.toBeCalled()
     wrapper.unmount()
     await waitForComponent(wrapper)
-    expect(Router.events.off).toBeCalledWith(
-      'routeChangeStart',
-      expect.any(Function)
-    )
+    expect(Router.events.off).toBeCalledWith('routeChangeStart', expect.any(Function))
   })
 })

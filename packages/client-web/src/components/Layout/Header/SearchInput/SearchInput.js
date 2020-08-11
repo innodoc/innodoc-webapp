@@ -6,12 +6,7 @@ import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
 const SearchInput = ({ classNames }) => {
   const { t } = useTranslation()
-  return (
-    <Input.Search
-      className={classNames}
-      placeholder={t('header.searchPlaceholder')}
-    />
-  )
+  return <Input.Search className={classNames} placeholder={t('header.searchPlaceholder')} />
 }
 
 SearchInput.defaultProps = { classNames: '' }

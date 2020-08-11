@@ -60,9 +60,7 @@ describe('<SectionContent />', () => {
   it('should render', () => {
     const wrapper = shallow(<SectionContent />)
     expect(wrapper.exists(ContentAffix)).toBe(true)
-    expect(wrapper.find(Typography.Title).children().text()).toBe(
-      '1 Foo section'
-    )
+    expect(wrapper.find(Typography.Title).children().text()).toBe('1 Foo section')
     expect(wrapper.find(PageTitle).prop('children')).toBe('1 Foo section')
     expect(wrapper.find(ContentFragment).prop('content')).toBe(mockContent)
     expect(wrapper.exists(SubsectionList)).toBe(true)

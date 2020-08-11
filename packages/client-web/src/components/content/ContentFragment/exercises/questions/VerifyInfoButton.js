@@ -9,12 +9,9 @@ import { ExerciseContext } from '../ExerciseContext'
 import ContentFragment from '../..'
 
 const VerifyInfoButton = ({ content }) => {
-  const {
-    answered,
-    setAutoVerify,
-    setUserTriggeredVerify,
-    userTriggeredVerify,
-  } = useContext(ExerciseContext)
+  const { answered, setAutoVerify, setUserTriggeredVerify, userTriggeredVerify } = useContext(
+    ExerciseContext
+  )
   useEffect(() => setAutoVerify(false), [setAutoVerify])
 
   return (

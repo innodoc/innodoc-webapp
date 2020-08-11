@@ -17,8 +17,6 @@ describe('IndexTermLocation', () => {
       language: 'en',
       sectionId: 'section-0/subsection-1',
     })
-    expect(indexTermLoc.getContentId()).toEqual(
-      'section-0/subsection-1#index-term-foo-0'
-    )
+    expect(indexTermLoc.getContentId()).toEqual('section-0/subsection-1#index-term-foo-0')
   })
 })

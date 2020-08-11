@@ -48,9 +48,7 @@ describe('getTreeData', () => {
               {
                 children: [],
                 key: 'section-1/section-1-1/section-1-1-1',
-                title: (
-                  <SectionLink contentId="section-1/section-1-1/section-1-1-1" />
-                ),
+                title: <SectionLink contentId="section-1/section-1-1/section-1-1-1" />,
               },
               {
                 children: [],
@@ -71,10 +69,7 @@ describe('getTreeData', () => {
                 title: (
                   <>
                     <SectionLink contentId="section-1/section-1-1/test-1-1-3" />
-                    <AuditOutlined
-                      className={css.sectionIcon}
-                      title="common.sectionTypes.test"
-                    />
+                    <AuditOutlined className={css.sectionIcon} title="common.sectionTypes.test" />
                   </>
                 ),
               },

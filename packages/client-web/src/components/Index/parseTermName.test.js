@@ -61,13 +61,7 @@ const goodTerms = [
   ['$$', [[MathJax.MathJaxNode, '']]],
 ]
 
-const badTerms = [
-  '\\$ $',
-  '$ \\$',
-  '10 $',
-  'Foo $$ bar $ baz',
-  '10 \\$ 20\\$ 30$ 40 Euro',
-]
+const badTerms = ['\\$ $', '$ \\$', '10 $', 'Foo $$ bar $ baz', '10 \\$ 20\\$ 30$ 40 Euro']
 
 describe('parseTermName', () => {
   describe('good', () => {

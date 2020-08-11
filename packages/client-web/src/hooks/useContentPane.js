@@ -17,9 +17,7 @@ const useContentPane = (getCurrent) => {
   const { language } = useSelector(appSelectors.getApp)
   const current = useSelector(getCurrent)
   const loading = !language || !current || !current.content[language]
-  const { addCallback, removeCallback, typesetDone } = useContext(
-    MathJax.Context
-  )
+  const { addCallback, removeCallback, typesetDone } = useContext(MathJax.Context)
   const show = !loading && typesetDone
   const fadeInClassName = show ? fadeInCss.show : fadeInCss.hide
   const title = loading ? null : current.title[language]

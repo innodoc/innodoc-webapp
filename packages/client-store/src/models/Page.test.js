@@ -60,10 +60,7 @@ describe('Page', () => {
 
   describe('reducer', () => {
     test('loadManifestSuccess', () => {
-      session.Page.reducer(
-        loadManifestSuccess({ content: { pages } }),
-        session.Page
-      )
+      session.Page.reducer(loadManifestSuccess({ content: { pages } }), session.Page)
       expect(session.state).toEqual(loadedPages)
     })
 

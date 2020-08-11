@@ -24,8 +24,7 @@ const ResetPasswordForm = ({ token }) => {
             level: 'success',
             description: (
               <Trans i18nKey="user.resetPassword.success.description">
-                A new password has been set. You can now{' '}
-                <Link href="/login">sign in</Link>.
+                A new password has been set. You can now <Link href="/login">sign in</Link>.
               </Trans>
             ),
             message: t('user.resetPassword.success.message'),

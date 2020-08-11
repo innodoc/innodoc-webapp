@@ -1,9 +1,6 @@
 import { call, put, take } from 'redux-saga/effects'
 
-import {
-  actionTypes,
-  changeLanguage,
-} from '@innodoc/client-store/src/actions/i18n'
+import { actionTypes, changeLanguage } from '@innodoc/client-store/src/actions/i18n'
 import nextI18next from '@innodoc/client-misc/src/i18n'
 import { toTwoLetterCode } from '@innodoc/client-misc/src/util'
 
@@ -14,9 +11,7 @@ export function* notifyI18next({ language }) {
 
 // Wait for i18next to detect language.
 export function* waitForDetectedLanguage() {
-  const { language: detectedLanguage } = yield take(
-    actionTypes.LANGUAGE_DETECTED
-  )
+  const { language: detectedLanguage } = yield take(actionTypes.LANGUAGE_DETECTED)
   const language = yield call(toTwoLetterCode, detectedLanguage)
   yield put(changeLanguage(language))
 }

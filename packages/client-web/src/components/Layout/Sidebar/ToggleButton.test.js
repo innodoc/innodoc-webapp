@@ -21,9 +21,7 @@ beforeEach(() => {
 describe('<ToggleButton />', () => {
   it('renders', () => {
     const CustomIcon = () => 'BarIcon'
-    const wrapper = shallow(
-      <ToggleButton className="foo" icon={<CustomIcon />} />
-    )
+    const wrapper = shallow(<ToggleButton className="foo" icon={<CustomIcon />} />)
     expect(wrapper.hasClass('foo')).toBe(true)
     const IconComp = () => wrapper.prop('icon')
     const iconWrapper = shallow(<IconComp />)

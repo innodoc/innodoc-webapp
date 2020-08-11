@@ -7,11 +7,7 @@ import ContentFragment from '..'
 
 describe('<Header />', () => {
   it('should render', () => {
-    const data = [
-      1,
-      ['foo-caption', 'caption', null],
-      [{ t: 'Str', c: 'foo content' }],
-    ]
+    const data = [1, ['foo-caption', 'caption', null], [{ t: 'Str', c: 'foo content' }]]
     const wrapper = shallow(<Header data={data} />)
     const header = wrapper.find(Typography.Title)
     expect(header).toHaveLength(1)
@@ -22,11 +18,7 @@ describe('<Header />', () => {
   })
 
   it('should not accept heading level > 4', () => {
-    const data = [
-      5,
-      ['foo-caption', 'caption', null],
-      [{ t: 'Str', c: 'foo content' }],
-    ]
+    const data = [5, ['foo-caption', 'caption', null], [{ t: 'Str', c: 'foo content' }]]
     const wrapper = shallow(<Header data={data} />)
     const header = wrapper.find(Typography.Title)
     expect(header.prop('level')).toEqual(4)

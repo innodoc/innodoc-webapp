@@ -9,9 +9,7 @@ describe('<InfoCard />', () => {
   it('renders', () => {
     const attrs = [['data-number', '2.1.16']]
     const content = []
-    const wrapper = shallow(
-      <InfoCard attributes={attrs} content={content} id="foo-card" />
-    )
+    const wrapper = shallow(<InfoCard attributes={attrs} content={content} id="foo-card" />)
     const card = wrapper.find(Card)
     expect(card).toHaveLength(1)
     expect(card.prop('cardType')).toBe('info')

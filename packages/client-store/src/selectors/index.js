@@ -14,26 +14,21 @@ const selectLinkInfo = (state, contentIdHash) => {
 }
 
 const makeMakeGetContentLink = (modelName) => () =>
-  createSelector(
-    orm,
-    getApp,
-    selectLinkInfo,
-    (session, { language }, linkInfo) => {
-      const { hash, contentId } = linkInfo
-      if (session[modelName].idExists(contentId)) {
-        const content = session[modelName].withId(contentId)
-        return {
-          hash,
-          contentId,
-          title: content.getDisplayTitle(language),
-        }
-      }
+  createSelector(orm, getApp, selectLinkInfo, (session, { language }, linkInfo) => {
+    const { hash, contentId } = linkInfo
+    if (session[modelName].idExists(contentId)) {
+      const content = session[modelName].withId(contentId)
       return {
+        hash,
         contentId,
-        title: `UNKNOWN CONTENT ID: ${contentId} (${modelName})`,
+        title: content.getDisplayTitle(language),
       }
     }
-  )
+    return {
+      contentId,
+      title: `UNKNOWN CONTENT ID: ${contentId} (${modelName})`,
+    }
+  })
 
 export { makeMakeGetContentLink, selectId }
 export default { getApp }

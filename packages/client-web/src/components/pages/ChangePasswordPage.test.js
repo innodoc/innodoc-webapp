@@ -13,8 +13,6 @@ describe('<ChangePasswordPage />', () => {
     expect(layout.exists()).toBe(true)
     expect(layout.prop('disableSidebar')).toBe(true)
     expect(layout.find(ChangePasswordForm).exists()).toBe(true)
-    expect(wrapper.find(PageTitle).prop('children')).toBe(
-      'user.changePassword.title'
-    )
+    expect(wrapper.find(PageTitle).prop('children')).toBe('user.changePassword.title')
   })
 })

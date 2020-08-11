@@ -8,9 +8,7 @@ jest.mock('@innodoc/client-store/src/selectors/course', () => ({
 
 let mockGetApp
 jest.mock('@innodoc/client-store/src/selectors', () => {
-  const actualSelectors = jest.requireActual(
-    '@innodoc/client-store/src/selectors'
-  )
+  const actualSelectors = jest.requireActual('@innodoc/client-store/src/selectors')
   return {
     ...actualSelectors,
     getApp: () => mockGetApp(),
@@ -88,17 +86,13 @@ describe('withWaitForManifest', () => {
 
   it('should wait for course', () => {
     expect.assertions(1)
-    return expect(
-      WithWaitForManifest.getInitialProps(context)
-    ).resolves.toEqual(expect.any(Object))
+    return expect(WithWaitForManifest.getInitialProps(context)).resolves.toEqual(expect.any(Object))
   })
 
   it('should reject on error', () => {
     expect.assertions(1)
     mockGetApp = () => ({ error: new Error() })
     mockGetCurrentCourse = () => {}
-    return expect(
-      WithWaitForManifest.getInitialProps(context)
-    ).rejects.toThrow()
+    return expect(WithWaitForManifest.getInitialProps(context)).rejects.toThrow()
   })
 })

@@ -1,10 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import {
-  CheckCircleTwoTone,
-  CloseCircleTwoTone,
-  EllipsisOutlined,
-} from '@ant-design/icons'
+import { CheckCircleTwoTone, CloseCircleTwoTone, EllipsisOutlined } from '@ant-design/icons'
 
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 

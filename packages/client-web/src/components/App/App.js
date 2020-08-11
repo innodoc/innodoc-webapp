@@ -38,9 +38,7 @@ InnoDocApp.propTypes = {
 }
 
 InnoDocApp.getInitialProps = async ({ Component, ctx }) => {
-  const pageProps = Component.getInitialProps
-    ? await Component.getInitialProps(ctx)
-    : {}
+  const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {}
 
   // Stop the saga if on server
   if (ctx.req) {

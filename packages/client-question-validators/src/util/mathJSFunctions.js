@@ -90,10 +90,7 @@ mathJSFunctions.konstrukt = (args, mathJSInstance, scopeOrig) => {
             intStepSize
           )
         ) // middle sum
-      stepSize = mathJSInstance.divide(
-        mathJSInstance.subtract(upper, lower),
-        steps
-      )
+      stepSize = mathJSInstance.divide(mathJSInstance.subtract(upper, lower), steps)
       value = 0
       break
     default:
@@ -110,10 +107,7 @@ mathJSFunctions.konstrukt = (args, mathJSInstance, scopeOrig) => {
   let next
   for (let i = 0; i < steps; i += 1) {
     next = calculate(
-      mathJSInstance.add(
-        lower,
-        mathJSInstance.multiply(mathJSInstance.add(i, 1), stepSize)
-      )
+      mathJSInstance.add(lower, mathJSInstance.multiply(mathJSInstance.add(i, 1), stepSize))
     )
     value = operation(value, current, next, stepSize)
     current = next
@@ -173,10 +167,7 @@ mathJSFunctions.binomial = (nOrig, kOrig) => {
   }
   let result = mathJS.add(mathJS.subtract(n, k), 1) // result = n-k + 1
   for (let i = 2; i <= k; i = mathJS.add(i, 1)) {
-    result = mathJS.divide(
-      mathJS.multiply(result, mathJS.add(mathJS.subtract(n, k), i)),
-      i
-    ) // result *= (n - k + i)/i
+    result = mathJS.divide(mathJS.multiply(result, mathJS.add(mathJS.subtract(n, k), i)), i) // result *= (n - k + i)/i
   }
   return result
 }

@@ -17,11 +17,7 @@ const Card = ({ title, icon, cardType, content, id }) => {
   )
 
   return (
-    <AntCard
-      id={id}
-      className={classNames(cardType, css[cardType])}
-      title={titleFragment}
-    >
+    <AntCard id={id} className={classNames(cardType, css[cardType])} title={titleFragment}>
       <div>
         <ContentFragment content={content} />
       </div>

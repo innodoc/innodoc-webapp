@@ -10,9 +10,7 @@ import ContentFragment from './ContentFragment'
 import css from './style.sss'
 
 const PageContent = () => {
-  const { content, fadeInClassName, title } = useContentPane(
-    pageSelectors.getCurrentPage
-  )
+  const { content, fadeInClassName, title } = useContentPane(pageSelectors.getCurrentPage)
   return (
     <>
       <PageTitle>{title}</PageTitle>

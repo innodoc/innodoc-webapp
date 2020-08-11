@@ -25,10 +25,7 @@ const Layout = ({ children, disableSidebar }) => {
   )
 
   const modal = message ? (
-    <MessageModal
-      message={message}
-      onClose={() => dispatch(closeMessage(message.id))}
-    />
+    <MessageModal message={message} onClose={() => dispatch(closeMessage(message.id))} />
   ) : null
 
   return (

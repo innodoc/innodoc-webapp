@@ -24,12 +24,8 @@ describe('<EmailField />', () => {
 
   it.each([true, false])('should render hasLabel=%s', (val) => {
     const wrapper = shallow(<EmailField hasLabel={val} />)
-    expect(wrapper.find(Form.Item).prop('label')).toBe(
-      val ? 'user.email' : undefined
-    )
-    expect(wrapper.find(Input).prop('placeholder')).toBe(
-      val ? undefined : 'user.email'
-    )
+    expect(wrapper.find(Form.Item).prop('label')).toBe(val ? 'user.email' : undefined)
+    expect(wrapper.find(Input).prop('placeholder')).toBe(val ? undefined : 'user.email')
   })
 
   it('should use extra rules', () => {

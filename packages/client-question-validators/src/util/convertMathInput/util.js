@@ -1,9 +1,4 @@
-import {
-  BRACKET_PAIRS,
-  DIFFERENTIALS,
-  TO_REPLACE,
-  TO_REPLACE_BRACKETS,
-} from './constants'
+import { BRACKET_PAIRS, DIFFERENTIALS, TO_REPLACE, TO_REPLACE_BRACKETS } from './constants'
 
 // escape strings for use in regular expressions
 export const regexEscape = (input) => {
@@ -43,8 +38,7 @@ export function replaceAllMatches(input, regex, replaceString) {
  * Returns the key to a given value in an associative array.
  * This only works correclty if the the value is only used once.
  * */
-const getObjKey = (obj, value) =>
-  Object.keys(obj).find((key) => obj[key] === value)
+const getObjKey = (obj, value) => Object.keys(obj).find((key) => obj[key] === value)
 
 /*
  * Replaces everything from 'start' to 'end' in 'input' by 'replace'.
@@ -75,8 +69,7 @@ function replaceWord(input, word, replacement) {
       // found
       if (
         searchPos === word.length &&
-        (output.length <= pos + searchPos ||
-          !letter.test(output[pos + searchPos]))
+        (output.length <= pos + searchPos || !letter.test(output[pos + searchPos]))
       ) {
         output = replaceByPos(output, pos, pos + searchPos, replacement)
         pos += replacement.length
@@ -170,12 +163,7 @@ function findBrackets(input, bracketPos) {
  * NOTICE: Treats all bracket's equally. It doesn't check if they actually match
  * (possible improvement: Make this distinction possible)
  * */
-function findAtBracketLevel(
-  input,
-  searchString,
-  bracketLevel = 0,
-  startPos = 0
-) {
+function findAtBracketLevel(input, searchString, bracketLevel = 0, startPos = 0) {
   let output = input
 
   // abort if "searchString" is empty
@@ -199,8 +187,7 @@ function findAtBracketLevel(
       let searchPos
       for (
         searchPos = 0;
-        searchPos < searchStr.length &&
-        searchStr[searchPos] === output[pos + searchPos];
+        searchPos < searchStr.length && searchStr[searchPos] === output[pos + searchPos];
         searchPos += 1
       ) {
         // not found
@@ -259,18 +246,12 @@ export function bracketReplace(input, mode, errorList) {
 
     // Split content of the brackets using comma
     let nextComma = findAtBracketLevel(output, ',', 0, openIdx + 1)
-    for (
-      let pos = openIdx + 1;
-      pos > 0 && pos < closeIdx;
-      pos = nextComma + 1
-    ) {
+    for (let pos = openIdx + 1; pos > 0 && pos < closeIdx; pos = nextComma + 1) {
       nextComma = findAtBracketLevel(output, ',', 0, pos)
       if (nextComma === -1 || nextComma > closeIdx) {
         nextComma = closeIdx
       }
-      contentArr.push(
-        bracketReplace(output.slice(pos, nextComma), mode, errorList)
-      )
+      contentArr.push(bracketReplace(output.slice(pos, nextComma), mode, errorList))
     }
 
     // Strings in front of and after the expression
@@ -299,9 +280,7 @@ export function bracketReplace(input, mode, errorList) {
           if (match !== null) {
             front = front.replace(rex, '$1') // remove expression from 'front'
             // is a replacement with the given number of commas defined?
-            if (
-              typeof exprObj.replace[mode][contentArr.length] !== 'undefined'
-            ) {
+            if (typeof exprObj.replace[mode][contentArr.length] !== 'undefined') {
               content = exprObj.replace[mode][contentArr.length]
             } else if (typeof exprObj.replace[mode][0] !== 'undefined') {
               // is there a replacement for an arbitrary number of parameters?
@@ -310,13 +289,10 @@ export function bracketReplace(input, mode, errorList) {
               // concatenate replacement string
               content = replaceObject.begin
               for (let k = 1; k < contentArr.length; k += 1) {
-                content +=
-                  replaceObject.argument.replace('$i', `$${k}`) +
-                  replaceObject.divider
+                content += replaceObject.argument.replace('$i', `$${k}`) + replaceObject.divider
               }
               content +=
-                replaceObject.argument.replace('$i', `$${contentArr.length}`) +
-                replaceObject.end
+                replaceObject.argument.replace('$i', `$${contentArr.length}`) + replaceObject.end
             } else {
               errorList.push('incorrectBracketsOrNumberOfCommas')
               return output
@@ -380,10 +356,7 @@ export function encloseFunctions(input, bracket, errorList) {
       errorList.push('missingClosingBracket')
       break
     }
-    const functionCall = output.slice(
-      match.index + match[1].length,
-      bracketClosePos + 1
-    )
+    const functionCall = output.slice(match.index + match[1].length, bracketClosePos + 1)
     output = replaceByPos(
       output,
       match.index + match[1].length,
@@ -426,10 +399,7 @@ export function encloseLatexConstructs(input, errorList) {
   let output = input
 
   // regex for finding the beginning of constructs that aren't in curly braces yet
-  const rex = RegExp(
-    `(^|[^${CHAR_CLASS_OPEN}]\\s*)\\\\(int|prod|sum)\\s*(\\^|_)`,
-    ''
-  )
+  const rex = RegExp(`(^|[^${CHAR_CLASS_OPEN}]\\s*)\\\\(int|prod|sum)\\s*(\\^|_)`, '')
 
   // process all constructs
   let match = rex.exec(output)
@@ -472,10 +442,7 @@ export function encloseLatexConstructs(input, errorList) {
         errorList.push('incorrectBrackets')
       }
 
-      if (
-        pos + 1 < output.length &&
-        RegExp(`[${CHAR_CLASS_OPEN}]`, 'g').test(output[pos + 1])
-      ) {
+      if (pos + 1 < output.length && RegExp(`[${CHAR_CLASS_OPEN}]`, 'g').test(output[pos + 1])) {
         endPos = findBrackets(output, pos + 1)
       } else {
         endPos = (output, ',', 0, pos + 1)
@@ -622,11 +589,7 @@ export function encloseLatexPower(input, errorList) {
 export function latexFractions(input, errorList) {
   let output = input
   // process all '/' in the input
-  for (
-    let slashPos = output.search('/');
-    slashPos !== -1;
-    slashPos = output.search('/')
-  ) {
+  for (let slashPos = output.search('/'); slashPos !== -1; slashPos = output.search('/')) {
     let start = output.slice(0, slashPos)
     let end = output.slice(slashPos + 1)
 
@@ -742,10 +705,7 @@ export function swapBoundaries(input, errorList) {
         const upperBound = end.slice(upperBoundStart + 2, upperBoundEnd)
         const restEnd = end.slice(upperBoundEnd + 1) // remaining part of 'end' that doesn't belong to the upper bound
         // return the string without swapping
-        return (
-          `${start}_(${lowerBound})` +
-          `^(${upperBound})${swapBoundaries(restEnd, errorList)}`
-        )
+        return `${start}_(${lowerBound})^(${upperBound})${swapBoundaries(restEnd, errorList)}`
       }
       errorList.push('incorrectUpperBound')
       return output
@@ -760,10 +720,7 @@ export function swapBoundaries(input, errorList) {
         const startFront = start.slice(0, upperBoundStart)
         return (
           `${startFront}_(${swapBoundaries(lowerBound, errorList)})` +
-          `^(${swapBoundaries(upperBound, errorList)})${swapBoundaries(
-            end,
-            errorList
-          )}`
+          `^(${swapBoundaries(upperBound, errorList)})${swapBoundaries(end, errorList)}`
         )
       }
       errorList.push('missingUpperBound')
@@ -880,11 +837,7 @@ export function replaceConstructs(input, integrationSteps, errorList) {
       return input
     }
     regex = RegExp(`(^|[^a-zA-Z_])${variableEscaped}($|[^a-zA-Z])`, '')
-    content = replaceAllMatches(
-      content,
-      regex,
-      `$1(supportvar_${variableEscaped})$2`
-    )
+    content = replaceAllMatches(content, regex, `$1(supportvar_${variableEscaped})$2`)
 
     // recursive call to process nested constructs
     const lowerObj = replaceConstructs(lower, integrationSteps, errorList)
@@ -893,11 +846,9 @@ export function replaceConstructs(input, integrationSteps, errorList) {
     const restObj = replaceConstructs(rest, integrationSteps, errorList)
 
     // create result object
-    result.mathjs = `${front}konstrukt(${typ},${variable},${lowerObj.mathjs},${
-      upperObj.mathjs
-    },${contentObj.mathjs}${typ === 'int' ? `,${integrationSteps}` : ''})${
-      restObj.mathjs
-    }`
+    result.mathjs = `${front}konstrukt(${typ},${variable},${lowerObj.mathjs},${upperObj.mathjs},${
+      contentObj.mathjs
+    }${typ === 'int' ? `,${integrationSteps}` : ''})${restObj.mathjs}`
   }
 
   return result

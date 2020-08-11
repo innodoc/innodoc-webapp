@@ -17,11 +17,7 @@ describe('astToString', () => {
   })
 
   it('should convert AST to string', () => {
-    const ast = [
-      { t: 'Str', c: 'Hello' },
-      { t: 'Space' },
-      { t: 'Str', c: 'World' },
-    ]
+    const ast = [{ t: 'Str', c: 'Hello' }, { t: 'Space' }, { t: 'Str', c: 'World' }]
     expect(astToString(ast)).toBe('Hello World')
   })
 })
@@ -72,9 +68,7 @@ describe('getClassNameToComponentMapper', () => {
 
 describe('getNumberedTitle', () => {
   it('should generate numbered title from title and attributes', () => {
-    expect(getNumberedTitle('Foo', [['data-number', '1.2.3']])).toBe(
-      'Foo 1.2.3'
-    )
+    expect(getNumberedTitle('Foo', [['data-number', '1.2.3']])).toBe('Foo 1.2.3')
   })
 
   it('should just return title if "data-number" attribute is not present', () => {
@@ -175,6 +169,5 @@ describe('unwrapPara', () => {
     expect(unwrapped).toEqual([['foo'], { t: 'Div', c: ['bar'] }, ['baz']])
   })
 
-  it('should return empty list for empty list', () =>
-    expect(unwrapPara([])).toEqual([]))
+  it('should return empty list for empty list', () => expect(unwrapPara([])).toEqual([]))
 })

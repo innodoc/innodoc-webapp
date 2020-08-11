@@ -9,21 +9,14 @@ createTests('function', func, [
       ['2*alpha^2', '2 {\\cdot} {\\alpha^{2}}'],
       ['alpha^2*2', '{\\alpha^{2}} {\\cdot} 2'],
       ['alpha^2+alpha^2', '{\\alpha^{2}}+{\\alpha^{2}}'],
-      [
-        'alpha*alpha+alpha*alpha',
-        '\\alpha {\\cdot} \\alpha+\\alpha {\\cdot} \\alpha',
-      ],
+      ['alpha*alpha+alpha*alpha', '\\alpha {\\cdot} \\alpha+\\alpha {\\cdot} \\alpha'],
       ['2*alpha*alpha', '2 {\\cdot} \\alpha {\\cdot} \\alpha'],
       ['2*(alpha^(2))', '2 {\\cdot} \\left({\\alpha^{2}}\\right)'],
     ],
     incorrect: [
       ['alpha^2', '{\\alpha^{2}}', ['still-incorrect-answer']],
       ['alpha^', undefined, ['malformed-input']],
-      [
-        '2alpha^2',
-        '2{\\alpha^{2}}',
-        ['correct-answer', 'simplification.product-form'],
-      ],
+      ['2alpha^2', '2{\\alpha^{2}}', ['correct-answer', 'simplification.product-form']],
     ],
     attrs: { 'supporting-points': '5', variables: 'alpha', precision: '5' },
   },
@@ -38,11 +31,7 @@ createTests('function', func, [
     incorrect: [
       ['alpha^2', '{\\alpha^{2}}', ['still-incorrect-answer']],
       ['t(t+2)+5', '{t\\left(t+2\\right)}+5', ['malformed-input']],
-      [
-        't^2+2t+5',
-        '{t^{2}}+2t+5',
-        ['correct-answer', 'simplification.product-form'],
-      ],
+      ['t^2+2t+5', '{t^{2}}+2t+5', ['correct-answer', 'simplification.product-form']],
     ],
     attrs: { 'supporting-points': '5', variables: 't', precision: '5' },
   },
@@ -65,9 +54,7 @@ createTests('function', func, [
       ['1', '1'],
       ['\\1', '1', ['simplification.backslash']],
     ],
-    incorrect: [
-      ['\\2', '2', ['still-incorrect-answer', 'simplification.backslash']],
-    ],
+    incorrect: [['\\2', '2', ['still-incorrect-answer', 'simplification.backslash']]],
   },
   {
     solution: '(2)*(3)',
@@ -86,9 +73,7 @@ createTests('function', func, [
   {
     solution: '1*x',
     correct: [['1*x', '1 {\\cdot} x']],
-    incorrect: [
-      ['1x', '1x', ['correct-answer', 'simplification.product-form']],
-    ],
+    incorrect: [['1x', '1x', ['correct-answer', 'simplification.product-form']]],
     attrs: { 'supporting-points': '5', variables: 'x', precision: '5' },
   },
 
@@ -97,10 +82,7 @@ createTests('function', func, [
   {
     solution: 'a*(b+c)+c*(a+b)',
     correct: [
-      [
-        'a*b+a*c+c*a+c*b',
-        'a {\\cdot} b+a {\\cdot} c+c {\\cdot} a+c {\\cdot} b',
-      ],
+      ['a*b+a*c+c*a+c*b', 'a {\\cdot} b+a {\\cdot} c+c {\\cdot} a+c {\\cdot} b'],
       ['a*b+2*a*c+c*b', 'a {\\cdot} b+2 {\\cdot} a {\\cdot} c+c {\\cdot} b'],
     ],
     incorrect: [
@@ -199,10 +181,7 @@ createTests('function', func, [
       [
         'abs(x-4)',
         '\\left|x-4\\right|',
-        [
-          'still-incorrect-answer',
-          'simplification.case-differentiation-required',
-        ],
+        ['still-incorrect-answer', 'simplification.case-differentiation-required'],
       ],
       ['|x-4|', undefined, ['simplification.abs']],
     ],
@@ -220,11 +199,7 @@ createTests('function', func, [
       ['5*5*5', '5 {\\cdot} 5 {\\cdot} 5'],
     ],
     incorrect: [
-      [
-        '5^3',
-        '{5^{3}}',
-        ['correct-answer', 'simplification.no-denominator-or-exponentiation'],
-      ],
+      ['5^3', '{5^{3}}', ['correct-answer', 'simplification.no-denominator-or-exponentiation']],
       ['5', '5', ['still-incorrect-answer']],
     ],
     attrs: {
@@ -269,11 +244,7 @@ createTests('function', func, [
     solution: '1010025',
     correct: [['1010025', '1010025']],
     incorrect: [
-      [
-        '1005^2',
-        '{1005^{2}}',
-        ['correct-answer', 'simplification.natural-number-required'],
-      ],
+      ['1005^2', '{1005^{2}}', ['correct-answer', 'simplification.natural-number-required']],
     ],
     attrs: {
       'supporting-points': '5',

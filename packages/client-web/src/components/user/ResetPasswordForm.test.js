@@ -44,11 +44,7 @@ describe('<ResetPasswordForm />', () => {
     expect.assertions(3)
     resetPassword.mockResolvedValue()
     const wrapper = mount(<ResetPasswordForm token="123token" />)
-    wrapper.find(UserForm).invoke('onFinish')(
-      { password: 's3cr3t' },
-      setDisabled,
-      setMessage
-    )
+    wrapper.find(UserForm).invoke('onFinish')({ password: 's3cr3t' }, setDisabled, setMessage)
     expect(resetPassword).toBeCalledWith(
       'http://app.example.com/',
       '123csrftoken',
@@ -64,11 +60,7 @@ describe('<ResetPasswordForm />', () => {
     expect.assertions(3)
     resetPassword.mockRejectedValue()
     const wrapper = mount(<ResetPasswordForm token="123token" />)
-    wrapper.find(UserForm).invoke('onFinish')(
-      { password: 's3cr3t' },
-      setDisabled,
-      setMessage
-    )
+    wrapper.find(UserForm).invoke('onFinish')({ password: 's3cr3t' }, setDisabled, setMessage)
     expect(resetPassword).toBeCalledWith(
       'http://app.example.com/',
       '123csrftoken',

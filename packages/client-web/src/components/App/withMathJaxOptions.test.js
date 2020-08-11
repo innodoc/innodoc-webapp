@@ -16,21 +16,16 @@ describe('withMathJaxOptions', () => {
     WithMathJaxOptions = withMathJaxOptions(Component)
   })
 
-  it.each(['default', 'custom'])(
-    'should inject %s mathJaxOptions',
-    async (optionType) => {
-      expect.assertions(1)
-      mockCurrentCourse =
-        optionType === 'custom'
-          ? { mathJaxOptions: { chtml: { fontURL: 'foo' } } }
-          : {}
-      const props = await WithMathJaxOptions.getInitialProps(context)
-      const { fontURL } = props.mathJaxOptions.chtml
-      if (optionType === 'default') {
-        expect(fontURL).toMatch('/fonts/mathjax-woff-v2')
-      } else {
-        expect(fontURL).toBe('foo')
-      }
+  it.each(['default', 'custom'])('should inject %s mathJaxOptions', async (optionType) => {
+    expect.assertions(1)
+    mockCurrentCourse =
+      optionType === 'custom' ? { mathJaxOptions: { chtml: { fontURL: 'foo' } } } : {}
+    const props = await WithMathJaxOptions.getInitialProps(context)
+    const { fontURL } = props.mathJaxOptions.chtml
+    if (optionType === 'default') {
+      expect(fontURL).toMatch('/fonts/mathjax-woff-v2')
+    } else {
+      expect(fontURL).toBe('foo')
     }
-  )
+  })
 })

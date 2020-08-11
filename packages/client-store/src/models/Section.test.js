@@ -1,10 +1,6 @@
 import orm from '../orm'
 
-import {
-  loadManifestSuccess,
-  loadSectionSuccess,
-  sectionVisit,
-} from '../actions/content'
+import { loadManifestSuccess, loadSectionSuccess, sectionVisit } from '../actions/content'
 
 const toc = [
   {
@@ -66,10 +62,7 @@ describe('Section', () => {
   describe('reducer', () => {
     test('loadManifestSuccess', () => {
       const resultState = loadToc(session.state)
-      session.Section.reducer(
-        loadManifestSuccess({ content: { toc } }),
-        session.Section
-      )
+      session.Section.reducer(loadManifestSuccess({ content: { toc } }), session.Section)
       expect(session.state).toEqual(resultState)
     })
 
@@ -108,17 +101,14 @@ describe('Section', () => {
       [[0, 0], '1.1 Test title'],
       [[0, 0, 0], '1.1.1 Test title'],
       [[4, 5, 3], '5.6.4 Test title'],
-    ])(
-      'should generate displayTitle (ord="%s" -> "%s")',
-      (ord, expectedDisplayTitle) => {
-        const section = session.Section.create({
-          id: 'test',
-          ord,
-          title: { en: 'Test title' },
-          parentId: undefined,
-        })
-        expect(section.getDisplayTitle('en')).toBe(expectedDisplayTitle)
-      }
-    )
+    ])('should generate displayTitle (ord="%s" -> "%s")', (ord, expectedDisplayTitle) => {
+      const section = session.Section.create({
+        id: 'test',
+        ord,
+        title: { en: 'Test title' },
+        parentId: undefined,
+      })
+      expect(section.getDisplayTitle('en')).toBe(expectedDisplayTitle)
+    })
   })
 })

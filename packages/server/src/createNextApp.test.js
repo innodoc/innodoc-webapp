@@ -9,15 +9,12 @@ jest.mock('next', () =>
 )
 
 describe('createNextApp', () => {
-  it.each(['production', 'development'])(
-    'should instantiate next.js (%s)',
-    async (nodeEnv) => {
-      const nextApp = await createNextApp({ nodeEnv })
-      expect(next).toBeCalledWith({
-        dir: expect.stringMatching(/packages\/client-web\/src$/),
-        dev: nodeEnv === 'development',
-      })
-      expect(nextApp.prepare).toBeCalled()
-    }
-  )
+  it.each(['production', 'development'])('should instantiate next.js (%s)', async (nodeEnv) => {
+    const nextApp = await createNextApp({ nodeEnv })
+    expect(next).toBeCalledWith({
+      dir: expect.stringMatching(/packages\/client-web\/src$/),
+      dev: nodeEnv === 'development',
+    })
+    expect(nextApp.prepare).toBeCalled()
+  })
 })

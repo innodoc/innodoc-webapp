@@ -1,12 +1,9 @@
 import { getContentPath, handleCustomRoute } from './util'
 
 describe('getContentPath', () => {
-  it.each(['section', 'page'])(
-    'should return prefixed contentPath (%s)',
-    (prefix) => {
-      expect(getContentPath(prefix).startsWith(`/${prefix}/`)).toBe(true)
-    }
-  )
+  it.each(['section', 'page'])('should return prefixed contentPath (%s)', (prefix) => {
+    expect(getContentPath(prefix).startsWith(`/${prefix}/`)).toBe(true)
+  })
 })
 
 describe('handleCustomRoute', () => {

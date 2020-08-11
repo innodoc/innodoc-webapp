@@ -14,23 +14,13 @@ import changeLanguageSaga from './changeLanguageSaga'
 describe('changeLanguageSaga', () => {
   it('should reload section content', () =>
     expectSaga(changeLanguageSaga, changeLanguage('pl', 'fr'))
-      .provide([
-        [
-          select(courseSelectors.getCurrentCourse),
-          { id: 0, currentSectionId: 'foo' },
-        ],
-      ])
+      .provide([[select(courseSelectors.getCurrentCourse), { id: 0, currentSectionId: 'foo' }]])
       .put(loadSection('foo', 'fr'))
       .run())
 
   it('should reload page content', () =>
     expectSaga(changeLanguageSaga, changeLanguage('pl', 'fr'))
-      .provide([
-        [
-          select(courseSelectors.getCurrentCourse),
-          { id: 0, currentPageId: 'bar' },
-        ],
-      ])
+      .provide([[select(courseSelectors.getCurrentCourse), { id: 0, currentPageId: 'bar' }]])
       .put(loadPage('bar', 'fr'))
       .run())
 

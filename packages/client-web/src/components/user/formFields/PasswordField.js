@@ -10,24 +10,14 @@ import {
   validatePassword,
 } from '@innodoc/client-misc/src/passwordDef'
 
-const PasswordField = ({
-  disabled,
-  hasLabel,
-  isConfirm,
-  label,
-  name,
-  validate,
-}) => {
+const PasswordField = ({ disabled, hasLabel, isConfirm, label, name, validate }) => {
   const { t } = useTranslation()
-  const passwordLabel =
-    label || t(`user.${isConfirm ? 'confirmPassword' : 'password'}`)
+  const passwordLabel = label || t(`user.${isConfirm ? 'confirmPassword' : 'password'}`)
 
   const rules = [
     {
       required: true,
-      message: t(
-        `user.passwordValidation.${isConfirm ? 'confirm' : 'missing'}`
-      ),
+      message: t(`user.passwordValidation.${isConfirm ? 'confirm' : 'missing'}`),
     },
   ]
 

@@ -76,9 +76,7 @@ describe('Account interactions', () => {
     await browser.type('input#change-password-form_password', newPwd)
     await browser.type('input#change-password-form_confirm-password', newPwd)
     expect(await browser.title()).toBe('Change password · innoDoc')
-    const submitBtn = await browser.query(
-      'form#change-password-form button[type=submit]'
-    )
+    const submitBtn = await browser.query('form#change-password-form button[type=submit]')
     await browser.click(submitBtn)
     await browser.waitForText('Password changed.')
 
@@ -97,9 +95,7 @@ describe('Account interactions', () => {
     await browser.type('input#login-form_password', 'wrongPwd')
     await browser.clickText('Sign-in')
     await browser.waitFor('.ant-alert')
-    const pwdResetLink = await browser.query(
-      '.ant-alert a[href="/request-password-reset"]'
-    )
+    const pwdResetLink = await browser.query('.ant-alert a[href="/request-password-reset"]')
     await browser.click(pwdResetLink)
     await browser.waitAndType('input#request-password-reset-form_email', email)
     expect(await browser.title()).toBe('Reset password · innoDoc')
@@ -162,12 +158,8 @@ describe('Account interactions', () => {
       await register(email)
       await activate(email)
       await login(email, pwd)
-      await browser.waitFor(
-        '[class*=header___] ul[class*=nav___] a[href="/page/about"]'
-      )
-      await browser.click(
-        '[class*=header___] ul[class*=nav___] a[href="/page/about"]'
-      )
+      await browser.waitFor('[class*=header___] ul[class*=nav___] a[href="/page/about"]')
+      await browser.click('[class*=header___] ul[class*=nav___] a[href="/page/about"]')
       await browser.waitForNavigation()
       await browser.waitForText('About this course')
       await logout(email)
@@ -176,22 +168,13 @@ describe('Account interactions', () => {
     describe('Field validation', () => {
       it('should validate email', async () => {
         await openUrl('register')
-        await browser.waitAndType(
-          'input#registration-form_email',
-          'no-valid-email@'
-        )
+        await browser.waitAndType('input#registration-form_email', 'no-valid-email@')
         await browser.waitForText('Please enter valid email!')
       })
 
       it.each([
-        [
-          'abcabc123!',
-          'The password must contain at least one uppercase letter!',
-        ],
-        [
-          'AAAAAA1!',
-          'The password must contain at least one lowercase letter!',
-        ],
+        ['abcabc123!', 'The password must contain at least one uppercase letter!'],
+        ['AAAAAA1!', 'The password must contain at least one lowercase letter!'],
         ['Aa1!', 'The password needs to have a minimum of 8 characters!'],
         ['aaaaAAA!', 'The password must contain at least one digit!'],
         ['aaaaAAA1', 'The password must contain at least one symbol!'],
@@ -203,14 +186,8 @@ describe('Account interactions', () => {
 
       it('should validate passwords match', async () => {
         await openUrl('register')
-        await browser.waitAndType(
-          'input#registration-form_password',
-          'pa55w0rd!'
-        )
-        await browser.type(
-          'input#registration-form_confirm-password',
-          'pa55w0rd'
-        )
+        await browser.waitAndType('input#registration-form_password', 'pa55w0rd!')
+        await browser.type('input#registration-form_confirm-password', 'pa55w0rd')
         await browser.waitForText('The passwords you entered have to match!')
       })
     })

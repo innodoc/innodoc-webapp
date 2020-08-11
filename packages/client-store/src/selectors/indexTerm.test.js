@@ -76,22 +76,14 @@ describe('indexTermSelectors', () => {
     expect(term1.id).toBe('term-1')
     expect(term1.name).toBe('Term 1 (de)')
     expect(term1.locations).toHaveLength(1)
-    expect(term1.locations[0].id).toEqual(
-      'de/section-0/subsection-1#index-term-term-1-0'
-    )
-    expect(term1.locations[0].contentId).toEqual(
-      'section-0/subsection-1#index-term-term-1-0'
-    )
+    expect(term1.locations[0].id).toEqual('de/section-0/subsection-1#index-term-term-1-0')
+    expect(term1.locations[0].contentId).toEqual('section-0/subsection-1#index-term-term-1-0')
 
     expect(term2.id).toBe('term-2')
     expect(term2.name).toBe('Term 2 (de)')
     expect(term2.locations).toHaveLength(1)
-    expect(term2.locations[0].id).toEqual(
-      'de/section-1/subsection-2#index-term-term-2-0'
-    )
-    expect(term2.locations[0].contentId).toEqual(
-      'section-1/subsection-2#index-term-term-2-0'
-    )
+    expect(term2.locations[0].id).toEqual('de/section-1/subsection-2#index-term-term-2-0')
+    expect(term2.locations[0].contentId).toEqual('section-1/subsection-2#index-term-term-2-0')
   })
 
   test("getIndexTerms('en')", () => {
@@ -121,11 +113,7 @@ describe('indexTermSelectors', () => {
     expect(term1.id).toBe('term-1')
     expect(term1.name).toBe('Term 1 (en)')
     expect(term1.locations).toHaveLength(1)
-    expect(term1.locations[0].id).toBe(
-      'en/section-0/subsection-1#index-term-term-1-0'
-    )
-    expect(term1.locations[0].contentId).toBe(
-      'section-0/subsection-1#index-term-term-1-0'
-    )
+    expect(term1.locations[0].id).toBe('en/section-0/subsection-1#index-term-term-1-0')
+    expect(term1.locations[0].contentId).toBe('section-0/subsection-1#index-term-term-1-0')
   })
 })

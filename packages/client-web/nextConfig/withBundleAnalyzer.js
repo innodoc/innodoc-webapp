@@ -5,12 +5,8 @@ const nextBundleAnalyzer = require('@zeit/next-bundle-analyzer')
 module.exports = (config) => {
   const newConfig = { ...config }
   const bundleAnalyzerBasePath = path.join(__dirname, '..', 'bundle-analyzer')
-  newConfig.analyzeServer = ['server', 'both'].includes(
-    process.env.BUNDLE_ANALYZE
-  )
-  newConfig.analyzeBrowser = ['browser', 'both'].includes(
-    process.env.BUNDLE_ANALYZE
-  )
+  newConfig.analyzeServer = ['server', 'both'].includes(process.env.BUNDLE_ANALYZE)
+  newConfig.analyzeBrowser = ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE)
   newConfig.bundleAnalyzerConfig = {
     server: {
       analyzerMode: 'static',

@@ -62,8 +62,7 @@ describe('userController', () => {
 
   const createAccessTokenCookie = async (opts) => {
     const accessToken =
-      opts.accessToken ||
-      opts.user.generateAccessToken(config.jwtSecret, config.appRoot)
+      opts.accessToken || opts.user.generateAccessToken(config.jwtSecret, config.appRoot)
     return `accessToken=${accessToken};HttpOnly`
   }
 
@@ -134,11 +133,9 @@ describe('userController', () => {
         type: 'json',
         accessTokenCookie: await createAccessTokenCookie({ user }),
       }).then(async (res) => {
-        expect(
-          res.headers['set-cookie'].some((cookie) =>
-            cookie.includes('accessToken=;')
-          )
-        ).toBe(true)
+        expect(res.headers['set-cookie'].some((cookie) => cookie.includes('accessToken=;'))).toBe(
+          true
+        )
         expect(await User.findOne({ email })).toBeFalsy()
       })
     })
@@ -223,19 +220,13 @@ describe('userController', () => {
         type: 'json',
       }).then((res) => {
         const cookie = res.headers['set-cookie'][0]
-        expect(cookie).toMatch(
-          /accessToken=[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*/
-        )
+        expect(cookie).toMatch(/accessToken=[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*/)
         expect(cookie).toMatch('HttpOnly')
       })
     })
 
     test.each([
-      [
-        'w/o valid',
-        { email: 'alice-usercontroller@example.com', password: 'secret' },
-        401,
-      ],
+      ['w/o valid', { email: 'alice-usercontroller@example.com', password: 'secret' }, 401],
       ['w/o', {}, 400],
       ['with password only', { password: 'secret' }, 400],
     ])('400 %s credentials', async (_, params, status) => {
@@ -256,11 +247,9 @@ describe('userController', () => {
         type: 'json',
         accessTokenCookie: await createAccessTokenCookie({ user }),
       }).then((res) => {
-        expect(
-          res.headers['set-cookie'].some((cookie) =>
-            cookie.includes('accessToken=;')
-          )
-        ).toBe(true)
+        expect(res.headers['set-cookie'].some((cookie) => cookie.includes('accessToken=;'))).toBe(
+          true
+        )
       })
     })
 
@@ -336,12 +325,7 @@ describe('userController', () => {
       [200, 'with valid token', expectPwdChanged, undefined],
       [400, 'with invalid token', expectPwdUnchanged, { token: 'wr0ng' }],
       [400, 'w/o token', expectPwdUnchanged, { token: undefined }],
-      [
-        400,
-        'with expired token',
-        expectPwdUnchanged,
-        { expires: Date.now() - 60 * 1000 },
-      ],
+      [400, 'with expired token', expectPwdUnchanged, { expires: Date.now() - 60 * 1000 }],
       [400, "if user doesn't exist", () => {}, { noUser: true }],
     ])('%s %s', async (status, _, expFunc, opts = {}) => {
       const token = User.generateToken()
@@ -350,9 +334,7 @@ describe('userController', () => {
         const email = await addTestUser()
         user = await User.findOne({ email }).select('+hash +salt')
         user.passwordResetToken = token
-        user.passwordResetExpires = opts.expires
-          ? opts.expires
-          : Date.now() + 60 * 60 * 1000
+        user.passwordResetExpires = opts.expires ? opts.expires : Date.now() + 60 * 60 * 1000
         await user.save()
       }
       const params = { password: 'newG00dPassword!' }
@@ -370,9 +352,7 @@ describe('userController', () => {
         type: 'json',
       }).then(async () => {
         if (user) {
-          const updatedUser = await User.findOne({ email: user.email }).select(
-            '+hash +salt'
-          )
+          const updatedUser = await User.findOne({ email: user.email }).select('+hash +salt')
           expFunc(user, updatedUser)
         }
       })

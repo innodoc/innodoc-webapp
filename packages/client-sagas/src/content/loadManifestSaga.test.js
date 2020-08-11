@@ -37,10 +37,7 @@ describe('loadManifestSaga', () => {
 
   it('should get manifest from cache', () =>
     expectSaga(loadManifestSaga)
-      .provide([
-        [select(courseSelectors.getCurrentCourse), course],
-        ...defaultProvides,
-      ])
+      .provide([[select(courseSelectors.getCurrentCourse), course], ...defaultProvides])
       .not.put.actionType(contentActionTypes.LOAD_MANIFEST_SUCCESS)
       .not.put.actionType(contentActionTypes.LOAD_MANIFEST_FAILURE)
       .run())
@@ -48,10 +45,7 @@ describe('loadManifestSaga', () => {
   it('should put loadManifestFailure if fetch fails', () => {
     const error = new Error('mock error')
     return expectSaga(loadManifestSaga)
-      .provide([
-        [matchers.call.fn(fetchManifest), throwError(error)],
-        ...defaultProvides,
-      ])
+      .provide([[matchers.call.fn(fetchManifest), throwError(error)], ...defaultProvides])
       .put(loadManifestFailure(error))
       .not.put.actionType(contentActionTypes.LOAD_MANIFEST_SUCCESS)
       .run()

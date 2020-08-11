@@ -10,13 +10,7 @@ describe('<Card />', () => {
   it('renders', () => {
     const content = [{ t: 'Str', c: 'Bar' }]
     const wrapper = mount(
-      <Card
-        title="foo"
-        icon={<FileOutlined />}
-        cardType="info"
-        content={content}
-        id="foo-id"
-      />
+      <Card title="foo" icon={<FileOutlined />} cardType="info" content={content} id="foo-id" />
     )
     const antCard = wrapper.find(AntCard)
     expect(antCard).toHaveLength(1)

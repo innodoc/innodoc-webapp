@@ -22,12 +22,7 @@ describe('<InputPopover />', () => {
 
   it('should render', () => {
     const wrapper = shallow(
-      <InputPopover
-        focus
-        messages={messages}
-        showPreview={false}
-        userInput="Foo"
-      >
+      <InputPopover focus messages={messages} showPreview={false} userInput="Foo">
         <div>Test</div>
       </InputPopover>
     )
@@ -43,12 +38,7 @@ describe('<InputPopover />', () => {
 
   it('should not be visible w/o focus', () => {
     const wrapper = shallow(
-      <InputPopover
-        focus={false}
-        messages={messages}
-        showPreview={false}
-        userInput="Foo"
-      >
+      <InputPopover focus={false} messages={messages} showPreview={false} userInput="Foo">
         <div>Test</div>
       </InputPopover>
     )

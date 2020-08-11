@@ -29,36 +29,28 @@ const waitForHeader = (text) =>
   )
 
 const expectSwitcherAmount = async (n, type = '') =>
-  expect(
-    await browser.queryAll(`.ant-layout-sider .ant-tree-switcher${type}`)
-  ).toHaveLength(n)
+  expect(await browser.queryAll(`.ant-layout-sider .ant-tree-switcher${type}`)).toHaveLength(n)
 
 beforeEach(resetBrowser)
 
 describe('TOC', () => {
   it('should have working section link', async () => {
     await openUrl()
-    await browser.waitAndClick(
-      '[class*=content___] button[title="Show table of contents"]'
-    )
+    await browser.waitAndClick('[class*=content___] button[title="Show table of contents"]')
     await waitForSiderOpen()
     await browser.assert.textContains('.ant-layout-sider', [
       '1 Project structure',
       '2 Content elements',
     ])
     await browser.wait(100) // no idea why this is needed... :|
-    await browser.waitAndClick(
-      '.ant-layout-sider a[href="/section/01-project"]'
-    )
+    await browser.waitAndClick('.ant-layout-sider a[href="/section/01-project"]')
     await browser.waitForNavigation()
     await waitForHeader('1 Project structure')
   })
 
   it('should have collapsible nodes', async () => {
     await openUrl('section/01-project')
-    await browser.waitAndClick(
-      '[class*=content___] button[title="Show table of contents"]'
-    )
+    await browser.waitAndClick('[class*=content___] button[title="Show table of contents"]')
     await waitForSiderOpen()
 
     await browser.assert.textContains('.ant-layout-sider', [
@@ -95,14 +87,10 @@ describe('TOC', () => {
 
   it('should respond to section change', async () => {
     await openUrl('section/01-project/04-building')
-    await browser.waitAndClick(
-      '[class*=content___] button[title="Show table of contents"]'
-    )
+    await browser.waitAndClick('[class*=content___] button[title="Show table of contents"]')
     await waitForSiderOpen()
     await expectSwitcherAmount(6)
-    await browser.waitAndClick(
-      '[class*=sectionAffix___] button[title="2 Content elements"]'
-    )
+    await browser.waitAndClick('[class*=sectionAffix___] button[title="2 Content elements"]')
     await waitForHeader('2 Content elements')
     await expectSwitcherAmount(17)
   })
@@ -110,26 +98,18 @@ describe('TOC', () => {
   it('should be toggleable using content button', async () => {
     await openUrl()
     await waitForSiderClosed()
-    await browser.waitAndClick(
-      '[class*=content___] button[title="Show table of contents"]'
-    )
+    await browser.waitAndClick('[class*=content___] button[title="Show table of contents"]')
     await waitForSiderOpen()
-    await browser.waitAndClick(
-      '[class*=content___] button[title="Close table of contents"]'
-    )
+    await browser.waitAndClick('[class*=content___] button[title="Close table of contents"]')
     await waitForSiderClosed()
   })
 
   it('should be closeable using sider button', async () => {
     await openUrl()
     await waitForSiderClosed()
-    await browser.waitAndClick(
-      '[class*=content___] button[title="Show table of contents"]'
-    )
+    await browser.waitAndClick('[class*=content___] button[title="Show table of contents"]')
     await waitForSiderOpen()
-    await browser.waitAndClick(
-      '.ant-layout-sider button[title="Close table of contents"]'
-    )
+    await browser.waitAndClick('.ant-layout-sider button[title="Close table of contents"]')
     await waitForSiderClosed()
   })
 })

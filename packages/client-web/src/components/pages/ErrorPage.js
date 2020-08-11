@@ -14,10 +14,7 @@ import PageTitle from '../PageTitle'
 const ErrorPage = ({ statusCode }) => {
   const { t } = useTranslation()
   const course = useSelector(courseSelectors.getCurrentCourse)
-  const title = t([
-    `errorPage.${statusCode}.title`,
-    'errorPage.unspecific.title',
-  ])
+  const title = t([`errorPage.${statusCode}.title`, 'errorPage.unspecific.title'])
 
   const resultExtra = course ? (
     <InternalLink href={course.homeLink}>
@@ -34,10 +31,7 @@ const ErrorPage = ({ statusCode }) => {
         <Result
           status={statusCode.toString()}
           title={title}
-          subTitle={t([
-            `errorPage.${statusCode}.msg`,
-            'errorPage.unspecific.msg',
-          ])}
+          subTitle={t([`errorPage.${statusCode}.msg`, 'errorPage.unspecific.msg'])}
           extra={resultExtra}
         />
       </Layout>

@@ -4,15 +4,12 @@ describe('Content translation', () => {
   it.each([
     ['en', 'Table of contents', '1 Project structure'],
     ['de', 'Inhaltsverzeichnis', '1 Projektstruktur'],
-  ])(
-    'should load content in language (%s)',
-    async (lang, tocText, linkText) => {
-      await openUrl('toc', { headers: { 'Accept-Language': lang } })
-      expect(await browser.title()).toBe(`${tocText} · innoDoc`)
-      await browser.assert.text('h1', tocText)
-      await browser.assert.text('a', linkText)
-    }
-  )
+  ])('should load content in language (%s)', async (lang, tocText, linkText) => {
+    await openUrl('toc', { headers: { 'Accept-Language': lang } })
+    expect(await browser.title()).toBe(`${tocText} · innoDoc`)
+    await browser.assert.text('h1', tocText)
+    await browser.assert.text('a', linkText)
+  })
 
   it('should switch language w/o page reload', async () => {
     await openUrl('section/01-project')

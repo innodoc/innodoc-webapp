@@ -13,8 +13,6 @@ describe('<RequestPasswordResetPage />', () => {
     expect(layout.exists()).toBe(true)
     expect(layout.prop('disableSidebar')).toBe(true)
     expect(layout.find(RequestPasswordResetForm).exists()).toBe(true)
-    expect(wrapper.find(PageTitle).prop('children')).toBe(
-      'user.requestPasswordReset.title'
-    )
+    expect(wrapper.find(PageTitle).prop('children')).toBe('user.requestPasswordReset.title')
   })
 })

@@ -4,19 +4,9 @@ import { Col, Row, Progress, Typography } from 'antd'
 
 import css from './style.sss'
 
-const ChapterPieChart = ({
-  description,
-  percent,
-  status,
-  title,
-  wideLayout,
-}) => (
+const ChapterPieChart = ({ description, percent, status, title, wideLayout }) => (
   <Col xs={24} sm={24} md={8}>
-    <Row
-      justify="space-between"
-      align="middle"
-      gutter={[0, wideLayout ? 0 : 16]}
-    >
+    <Row justify="space-between" align="middle" gutter={[0, wideLayout ? 0 : 16]}>
       <Col className={css.centerCol} xs={8} sm={6} md={24}>
         <Progress
           format={(p) => `${p} %`}

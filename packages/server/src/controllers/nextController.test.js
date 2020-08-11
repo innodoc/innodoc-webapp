@@ -55,8 +55,7 @@ const mockNextApp = {
 describe('nextController', () => {
   beforeEach(jest.clearAllMocks)
 
-  const testGet = async (url) =>
-    request(await createExpressApp(config, mockNextApp)).get(url)
+  const testGet = async (url) => request(await createExpressApp(config, mockNextApp)).get(url)
 
   describe('Instantiation', () => {
     beforeEach(() => createExpressApp(config, mockNextApp))
@@ -72,22 +71,19 @@ describe('nextController', () => {
     })
   })
 
-  describe.each(['reset-password', 'verify-user'])(
-    `GET /%s/:token(${tokenRegexp})`,
-    (pageName) => {
-      it('should use next.render()', () => {
-        const token = User.generateToken()
-        return testGet(`/${pageName}/${token}`).then(() => {
-          expect(mockNextApp.render).toBeCalledWith(
-            expect.any(Object),
-            expect.any(Object),
-            `/${pageName}`,
-            { token }
-          )
-        })
+  describe.each(['reset-password', 'verify-user'])(`GET /%s/:token(${tokenRegexp})`, (pageName) => {
+    it('should use next.render()', () => {
+      const token = User.generateToken()
+      return testGet(`/${pageName}/${token}`).then(() => {
+        expect(mockNextApp.render).toBeCalledWith(
+          expect.any(Object),
+          expect.any(Object),
+          `/${pageName}`,
+          { token }
+        )
       })
-    }
-  )
+    })
+  })
 
   describe.each([
     [getContentPath(config.sectionPathPrefix), 'section'],

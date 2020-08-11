@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  CheckCircleTwoTone,
-  CloseCircleTwoTone,
-  EllipsisOutlined,
-} from '@ant-design/icons'
+import { CheckCircleTwoTone, CloseCircleTwoTone, EllipsisOutlined } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
@@ -14,9 +10,7 @@ import css from './style.sss'
 const FeedbackIcon = ({ result }) => {
   const { t } = useTranslation()
   if (result === RESULT_VALUE.NEUTRAL) {
-    return (
-      <EllipsisOutlined title={t('questions.feedbackIcon.indeterminate')} />
-    )
+    return <EllipsisOutlined title={t('questions.feedbackIcon.indeterminate')} />
   }
   const correct = result === RESULT_VALUE.CORRECT
   const Icon = correct ? CheckCircleTwoTone : CloseCircleTwoTone

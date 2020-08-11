@@ -1,10 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import {
-  addQuestion,
-  questionAnswered,
-} from '@innodoc/client-store/src/actions/question'
+import { addQuestion, questionAnswered } from '@innodoc/client-store/src/actions/question'
 import exerciseSelectors from '@innodoc/client-store/src/selectors/exercise'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
@@ -45,18 +42,14 @@ describe('<ExerciseProvider />', () => {
   describe('question tracking', () => {
     it('dispatches addQuestion', () => {
       createContext()().addQuestion('foo/bar#Q0', 4)
-      expect(mockDispatch).toBeCalledWith(
-        addQuestion('foo/bar#EX0', 'foo/bar#Q0', 4)
-      )
+      expect(mockDispatch).toBeCalledWith(addQuestion('foo/bar#EX0', 'foo/bar#Q0', 4))
     })
 
     it('dispatches questionAnswered', () => {
       createContext()().questionAnswered('foo/bar#Q0', 'foo', {
         precision: 4,
       })
-      expect(mockDispatch).toBeCalledWith(
-        questionAnswered('foo/bar#Q0', 'foo', { precision: 4 })
-      )
+      expect(mockDispatch).toBeCalledWith(questionAnswered('foo/bar#Q0', 'foo', { precision: 4 }))
     })
 
     it.each([true, false])('detects all answered (%s)', (val) => {

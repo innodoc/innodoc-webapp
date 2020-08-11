@@ -52,12 +52,7 @@ const DeleteAccountForm = () => {
         showIcon
         type="warning"
       />
-      <Alert
-        className={css.alert}
-        message={t('user.deleteAccount.hint')}
-        showIcon
-        type="info"
-      />
+      <Alert className={css.alert} message={t('user.deleteAccount.hint')} showIcon type="info" />
       <UserForm
         labelCol={{
           sm: { span: 24 },

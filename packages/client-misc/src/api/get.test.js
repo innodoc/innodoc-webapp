@@ -24,9 +24,7 @@ describe('getJson', () => {
 
       it('should fail if response not ok', async () => {
         expect.assertions(1)
-        global.fetch = jest
-          .fn()
-          .mockResolvedValue({ ok: false, status: 404, json: () => mockData })
+        global.fetch = jest.fn().mockResolvedValue({ ok: false, status: 404, json: () => mockData })
         await expect(getPromise()).rejects.toEqual(
           new Error(`Could not fetch JSON data. (Status: 404 URL: ${apiUrl})`)
         )
@@ -47,11 +45,7 @@ describe('getJson', () => {
     'https://content.example.com/en/_frag01.json'
   )
 
-  makeTests(
-    'fetchManifest',
-    () => fetchManifest(base),
-    'https://content.example.com/manifest.json'
-  )
+  makeTests('fetchManifest', () => fetchManifest(base), 'https://content.example.com/manifest.json')
 
   makeTests(
     'fetchSection',

@@ -26,11 +26,7 @@ export default (
 
     // Do not load exact same content another time
     const currentContent = yield select(getCurrentContent)
-    if (
-      currentContent &&
-      currentContent.id === contentId &&
-      language === prevLanguage
-    ) {
+    if (currentContent && currentContent.id === contentId && language === prevLanguage) {
       return
     }
 
@@ -51,12 +47,7 @@ export default (
         try {
           yield put(
             loadContentSuccess({
-              content: yield call(
-                fetchContent,
-                contentRoot,
-                language,
-                contentId
-              ),
+              content: yield call(fetchContent, contentRoot, language, contentId),
               contentId,
               language,
             })

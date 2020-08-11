@@ -53,9 +53,7 @@ const extround = (number, nPos) => {
 }
 
 export const outsideDistance = (a, b, precision) =>
-  Math.abs(extround(a, precision) - extround(b, precision)) >
-  10 ** ((precision + 2) * -1)
+  Math.abs(extround(a, precision) - extround(b, precision)) > 10 ** ((precision + 2) * -1)
 
 export const withinDistance = (a, b, precision) =>
-  Math.abs(extround(a, precision) - extround(b, precision)) <=
-  10 ** ((precision + 2) * -1)
+  Math.abs(extround(a, precision) - extround(b, precision)) <= 10 ** ((precision + 2) * -1)

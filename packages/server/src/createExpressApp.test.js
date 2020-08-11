@@ -32,9 +32,7 @@ const mockExpressApp = {
 jest.mock('express', () => jest.fn(() => mockExpressApp))
 
 const mockNextI18NextMiddleware = {}
-jest.mock('next-i18next/middleware', () =>
-  jest.fn(() => mockNextI18NextMiddleware)
-)
+jest.mock('next-i18next/middleware', () => jest.fn(() => mockNextI18NextMiddleware))
 
 jest.mock('@innodoc/client-misc/src/i18n', () => ({}))
 
@@ -123,9 +121,7 @@ describe('createExpressApp', () => {
 
       it('should use verifyAccessTokenMiddleware', () => {
         expect(verifyAccessTokenMiddleware).toBeCalledWith(config)
-        expect(mockExpressApp.use).toBeCalledWith(
-          mockVerifyAccessTokenMiddleware
-        )
+        expect(mockExpressApp.use).toBeCalledWith(mockVerifyAccessTokenMiddleware)
       })
 
       it('should use passportMiddleware', () => {

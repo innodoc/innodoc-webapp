@@ -12,16 +12,12 @@ import ContentAffix from './ContentAffix'
 import SubsectionList from './SubsectionList'
 
 const Content = () => {
-  const { content, fadeInClassName, id } = useContentPane(
-    sectionSelectors.getCurrentSection
-  )
+  const { content, fadeInClassName, id } = useContentPane(sectionSelectors.getCurrentSection)
   useTrackVisit(id)
   const subsections = useSelector(sectionSelectors.getCurrentSubsections)
   const title = useSelector(sectionSelectors.getCurrentTitle)
 
-  const subsectionList = subsections.length ? (
-    <SubsectionList subsections={subsections} />
-  ) : null
+  const subsectionList = subsections.length ? <SubsectionList subsections={subsections} /> : null
 
   return (
     <>

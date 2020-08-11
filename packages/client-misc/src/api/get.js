@@ -3,9 +3,7 @@ const getJson = (url) =>
     response.ok
       ? response.json()
       : Promise.reject(
-          new Error(
-            `Could not fetch JSON data. (Status: ${response.status} URL: ${url})`
-          )
+          new Error(`Could not fetch JSON data. (Status: ${response.status} URL: ${url})`)
         )
   )
 

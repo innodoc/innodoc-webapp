@@ -43,9 +43,7 @@ describe('<LogoutPage />', () => {
     const layout = wrapper.find(Layout)
     expect(layout.exists()).toBe(true)
     expect(layout.prop('disableSidebar')).toBe(true)
-    expect(wrapper.find(PageTitle).prop('children')).toBe(
-      'user.logout.pendingMessage'
-    )
+    expect(wrapper.find(PageTitle).prop('children')).toBe('user.logout.pendingMessage')
     const result = layout.find(Result)
     expect(result.prop('status')).toBe('info')
     expect(result.prop('icon')).toEqual(<LoadingOutlined />)

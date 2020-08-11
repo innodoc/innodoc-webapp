@@ -7,8 +7,7 @@ import css from './style.sss'
 
 const ActiveSectionLabel = ({ sectionId }) => {
   const getSectionLink = useMemo(
-    (state, _sectionId) =>
-      sectionSelectors.makeGetSectionLink(state, _sectionId),
+    (state, _sectionId) => sectionSelectors.makeGetSectionLink(state, _sectionId),
     []
   )
   const { title } = useSelector((state) => getSectionLink(state, sectionId))

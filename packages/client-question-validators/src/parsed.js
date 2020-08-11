@@ -1,11 +1,6 @@
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 
-import {
-  convertMathInput,
-  notationParserIn,
-  rawParse,
-  withinDistance,
-} from './util'
+import { convertMathInput, notationParserIn, rawParse, withinDistance } from './util'
 
 // Input field with real solution, parsed, exactly up to precision places after the comma
 // solution formats:
@@ -42,11 +37,7 @@ const parsed = (input, solution, attrs) => {
   if (soluta.length === 1 && solleer === 0) {
     // An element without set brackets is required
     valuta = notationParserIn(input).split(',')
-    if (
-      valuta.length !== 1 ||
-      valuta[0].indexOf('{') !== -1 ||
-      valuta[0].indexOf('}') !== -1
-    ) {
+    if (valuta.length !== 1 || valuta[0].indexOf('{') !== -1 || valuta[0].indexOf('}') !== -1) {
       ok = RESULT_VALUE.INCORRECT
     }
     const result = convertMathInput(input)

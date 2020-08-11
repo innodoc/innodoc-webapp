@@ -3,8 +3,7 @@ import { Strategy as JwtStrategy } from 'passport-jwt'
 
 import User from '../models/User'
 
-export const jwtFromRequest = (req) =>
-  req && req.cookies ? req.cookies.accessToken : undefined
+export const jwtFromRequest = (req) => (req && req.cookies ? req.cookies.accessToken : undefined)
 
 export const verify = ({ sub }, done) => {
   try {

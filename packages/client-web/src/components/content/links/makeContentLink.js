@@ -11,19 +11,11 @@ import getLinkInfo from '../../../getLinkInfo'
 const makeContentLink = (makeGetContentLink, prefixName) => {
   const ContentLink = ({ children, contentId: contentIdHash }) => {
     const getContentLink = useMemo(makeGetContentLink, [])
-    const { contentId, hash, title } = useSelector((state) =>
-      getContentLink(state, contentIdHash)
-    )
-    const pathPrefix = useSelector(appSelectors.getApp)[
-      `${prefixName}PathPrefix`
-    ]
+    const { contentId, hash, title } = useSelector((state) => getContentLink(state, contentIdHash))
+    const pathPrefix = useSelector(appSelectors.getApp)[`${prefixName}PathPrefix`]
     const { href, as } = getLinkInfo(pathPrefix, contentId, hash)
 
-    const newChildren = children ? (
-      React.cloneElement(children, { title })
-    ) : (
-      <a>{title}</a>
-    )
+    const newChildren = children ? React.cloneElement(children, { title }) : <a>{title}</a>
 
     return (
       <Link href={href} as={as}>

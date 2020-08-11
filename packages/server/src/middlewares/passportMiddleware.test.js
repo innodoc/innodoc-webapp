@@ -1,10 +1,7 @@
 import passport from 'passport'
 import { Strategy as JwtStrategy } from 'passport-jwt'
 
-import passportMiddleware, {
-  jwtFromRequest,
-  verify,
-} from './passportMiddleware'
+import passportMiddleware, { jwtFromRequest, verify } from './passportMiddleware'
 
 const mockJwtStrategy = {}
 jest.mock('passport-jwt', () => ({

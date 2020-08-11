@@ -25,8 +25,6 @@ describe('<PageTitle>', () => {
 
   it('should prefix page title', () => {
     const wrapper = shallow(<PageTitle>Sub page</PageTitle>)
-    expect(wrapper.find('title').prop('children')).toBe(
-      'Sub page · CourseTitle'
-    )
+    expect(wrapper.find('title').prop('children')).toBe('Sub page · CourseTitle')
   })
 })

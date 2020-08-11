@@ -31,11 +31,7 @@ const YouTubeVideo = ({ src, title }) => {
   const { t } = useTranslation()
   const match = ytIdRegexp.exec(src)
   if (!match) {
-    return (
-      <Typography.Text type="danger">
-        {t('content.ytIdError', { src })}
-      </Typography.Text>
-    )
+    return <Typography.Text type="danger">{t('content.ytIdError', { src })}</Typography.Text>
   }
   const ytId = match[5]
   return (

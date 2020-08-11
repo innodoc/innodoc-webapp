@@ -5,10 +5,7 @@ import RESULT_VALUE from './resultDef'
 
 export const attributeType = PropTypes.PropTypes.arrayOf(PropTypes.array)
 
-export const childrenType = PropTypes.oneOfType([
-  PropTypes.arrayOf(PropTypes.node),
-  PropTypes.node,
-])
+export const childrenType = PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
 
 export const contentType = PropTypes.arrayOf(PropTypes.object)
 

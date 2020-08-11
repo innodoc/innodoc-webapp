@@ -83,8 +83,7 @@ describe('pageSelectors', () => {
     expect(pageSelectors.getCurrentPage(state)).toEqual(currentPage)
   })
 
-  test('getPage', () =>
-    expect(pageSelectors.getPage(state, 'foo')).toEqual(pages.foo))
+  test('getPage', () => expect(pageSelectors.getPage(state, 'foo')).toEqual(pages.foo))
 
   test('getFooterPages', () =>
     expect(pageSelectors.getFooterPages(state)).toEqual([pages.bar, pages.baz]))

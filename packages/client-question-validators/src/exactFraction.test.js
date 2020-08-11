@@ -10,11 +10,7 @@ createTests('exactFraction', exactFraction, [
       ['5/6.0', '{\\frac{5}{6.0}}', ['exact-fraction.denominator-not-integer']],
       ['15/18', '{\\frac{15}{18}}', ['exact-fraction.fraction-not-reduced']],
       ['5//6', '5//6', ['malformed-input']],
-      [
-        '0.8333333333333334',
-        '0.8333333333333334',
-        ['exact-fraction.only-integer'],
-      ],
+      ['0.8333333333333334', '0.8333333333333334', ['exact-fraction.only-integer']],
       ['alpha^2', '{\\alpha^{2}}', ['exact-fraction.only-integer']],
     ],
     attrs: { precision: '5' },
@@ -25,9 +21,7 @@ createTests('exactFraction', exactFraction, [
       ['2', '2'],
       ['2/1', '{\\frac{2}{1}}'],
     ],
-    incorrect: [
-      ['20/10', '{\\frac{20}{10}}', ['exact-fraction.fraction-not-reduced']],
-    ],
+    incorrect: [['20/10', '{\\frac{20}{10}}', ['exact-fraction.fraction-not-reduced']]],
     attrs: { precision: '5' },
   },
 ])

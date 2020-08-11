@@ -45,12 +45,8 @@ class WendigoEnvironment extends NodeEnvironment {
       await this.global.browser.waitFor(
         '//div[contains(@class, "header")]/./span[text()[contains(.,"innoDoc")]]'
       )
-      await this.global.browser.waitFor(
-        '//div[contains(@class, "content___")]/*'
-      )
-      await this.global.browser.waitFor(
-        '//footer[contains(@class, "footer___")]/*'
-      )
+      await this.global.browser.waitFor('//div[contains(@class, "content___")]/*')
+      await this.global.browser.waitFor('//footer[contains(@class, "footer___")]/*')
     }
 
     this.global.hoverNavItem = async (text) => {

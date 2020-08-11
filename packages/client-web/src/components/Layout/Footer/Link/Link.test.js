@@ -8,9 +8,7 @@ import css from './style.sss'
 
 describe('<Footer />', () => {
   it('should render', () => {
-    const wrapper = shallow(
-      <Link renderLink={() => <span />} title="Foo link" />
-    )
+    const wrapper = shallow(<Link renderLink={() => <span />} title="Foo link" />)
     expect(wrapper.exists(List.Item)).toBe(true)
     expect(wrapper.exists(BorderOutlined)).toBe(true)
     const a = wrapper.find('a')
@@ -20,9 +18,7 @@ describe('<Footer />', () => {
   })
 
   it('should render with active class', () => {
-    const wrapper = shallow(
-      <Link active renderLink={() => <span />} title="Foo" />
-    )
+    const wrapper = shallow(<Link active renderLink={() => <span />} title="Foo" />)
     expect(wrapper.find('a').hasClass(css.active)).toBe(true)
   })
 
@@ -35,11 +31,7 @@ describe('<Footer />', () => {
 
   it('should render with short title', () => {
     const wrapper = shallow(
-      <Link
-        renderLink={() => <span />}
-        shortTitle="shortshort"
-        title="longlong"
-      />
+      <Link renderLink={() => <span />} shortTitle="shortshort" title="longlong" />
     )
     const a = wrapper.find('a')
     expect(a.prop('title')).toBe('longlong')

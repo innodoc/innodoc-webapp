@@ -1,5 +1,4 @@
-export const getContentPath = (prefix) =>
-  `/${prefix}/:contentId([A-Za-z0-9_/:-]+)`
+export const getContentPath = (prefix) => `/${prefix}/:contentId([A-Za-z0-9_/:-]+)`
 
 export const handleCustomRoute = (app, dest) => (req, res) => {
   if (req.params.contentId.endsWith('/')) {

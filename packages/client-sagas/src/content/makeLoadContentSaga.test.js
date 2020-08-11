@@ -66,19 +66,13 @@ describe('makeLoadContentSaga', () => {
 
   it('should loadManifest without currentCourse', () =>
     expectSaga(loadContentSaga, loadContent(contentIdHash))
-      .provide([
-        [select(courseSelectors.getCurrentCourse), null],
-        ...defaultProvides,
-      ])
+      .provide([[select(courseSelectors.getCurrentCourse), null], ...defaultProvides])
       .call(loadManifestSaga)
       .silentRun(0))
 
   it("should do nothing if content didn't actually change", () =>
     expectSaga(loadContentSaga, loadContent(contentIdHash, 'en'))
-      .provide([
-        [select(getCurrentContent), { id: 'foo/bar' }],
-        ...defaultProvides,
-      ])
+      .provide([[select(getCurrentContent), { id: 'foo/bar' }], ...defaultProvides])
       .not.call.fn(fetchContent)
       .not.put.actionType('LOAD_CONTENT_SUCCESS')
       .not.put.actionType('LOAD_CONTENT_FAILURE')
@@ -109,10 +103,7 @@ describe('makeLoadContentSaga', () => {
   it('should put loadContentFailure if fetch fails', () => {
     const error = new Error('mock error')
     return expectSaga(loadContentSaga, loadContent(contentIdHash))
-      .provide([
-        [matchers.call.fn(fetchContent), throwError(error)],
-        ...defaultProvides,
-      ])
+      .provide([[matchers.call.fn(fetchContent), throwError(error)], ...defaultProvides])
       .put(loadContentFailure(error))
       .not.put.actionType('LOAD_CONTENT_SUCCESS')
       .run()

@@ -14,11 +14,7 @@ createTests('interval', interval, [
     incorrect: [
       ['[3;3[', '\\left[3;3\\right)', ['incorrect-interval']],
       ['[3;infty]', '\\left[3;\\infty\\right]', ['incorrect-interval']],
-      [
-        '[2.99999,infty)',
-        '\\left[2.99999;\\infty\\right)',
-        ['incorrect-interval'],
-      ],
+      ['[2.99999,infty)', '\\left[2.99999;\\infty\\right)', ['incorrect-interval']],
     ],
     attrs: { precision: 5 },
   },
@@ -32,11 +28,7 @@ createTests('interval', interval, [
       [']-infty;1+5/6[', '\\left({-\\infty};1+{\\frac{5}{6}}\\right)'],
     ],
     incorrect: [
-      [
-        '(-3;11/6)',
-        '\\left({-3};{\\frac{11}{6}}\\right)',
-        ['incorrect-interval'],
-      ],
+      ['(-3;11/6)', '\\left({-3};{\\frac{11}{6}}\\right)', ['incorrect-interval']],
       [']3;11/6[', '\\left(3;{\\frac{11}{6}}\\right)', ['incorrect-interval']],
     ],
     attrs: { precision: 3 },
@@ -65,9 +57,7 @@ createTests('interval', interval, [
       ['(0.3819660;2.6180339)', '\\left(0.3819660;2.6180339\\right)'],
       ['(0.3819660,2.6180339)', '\\left(0.3819660;2.6180339\\right)'],
     ],
-    incorrect: [
-      ['(0.39;2.6180)', '\\left(0.39;2.6180\\right)', ['incorrect-interval']],
-    ],
+    incorrect: [['(0.39;2.6180)', '\\left(0.39;2.6180\\right)', ['incorrect-interval']]],
     attrs: { precision: 3 },
   },
 ])

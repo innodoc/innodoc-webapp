@@ -25,13 +25,7 @@ const Span = ({ data }) => {
   const attrObj = attributesToObject(attributes)
 
   if (Object.keys(attrObj).includes('data-index-term')) {
-    return (
-      <IndexSpan
-        content={content}
-        id={id}
-        indexTerm={attrObj['data-index-term']}
-      />
-    )
+    return <IndexSpan content={content} id={id} indexTerm={attrObj['data-index-term']} />
   }
 
   if (classNames.length === 0 && attributes.length === 0) {
@@ -48,16 +42,8 @@ const Span = ({ data }) => {
   }
 
   if (classNames.includes('question')) {
-    const questionClasses = classNames.filter(
-      (className) => className !== 'question'
-    )
-    return (
-      <Question
-        id={id}
-        questionClasses={questionClasses}
-        attributes={attributes}
-      />
-    )
+    const questionClasses = classNames.filter((className) => className !== 'question')
+    return <Question id={id} questionClasses={questionClasses} attributes={attributes} />
   }
 
   if (process.env.NODE_ENV !== 'production') {

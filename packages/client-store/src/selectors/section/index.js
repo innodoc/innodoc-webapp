@@ -8,16 +8,13 @@ import getNextPrevSections from './next-prev'
 import getToc from './toc'
 
 // Return all chapters (=level 1 sections)
-const getChapters = createSelector(
-  orm,
-  appSelectors.getApp,
-  (session, { language }) =>
-    session.Section.filter((section) => !section.parentId)
-      .toModelArray()
-      .map((section) => ({
-        id: section.id,
-        title: section.getDisplayTitle(language),
-      }))
+const getChapters = createSelector(orm, appSelectors.getApp, (session, { language }) =>
+  session.Section.filter((section) => !section.parentId)
+    .toModelArray()
+    .map((section) => ({
+      id: section.id,
+      title: section.getDisplayTitle(language),
+    }))
 )
 
 // Return current section
@@ -57,18 +54,12 @@ const getCurrentTitle = createSelector(
 )
 
 // Return section by ID
-const getSection = createSelector(
-  orm,
-  selectId,
-  (session, id) => session.Section.withId(id).ref
-)
+const getSection = createSelector(orm, selectId, (session, id) => session.Section.withId(id).ref)
 
 const makeGetSectionLink = makeMakeGetContentLink('Section')
 
 // Check if section exists
-const sectionExists = createSelector(orm, selectId, (session, id) =>
-  session.Section.idExists(id)
-)
+const sectionExists = createSelector(orm, selectId, (session, id) => session.Section.idExists(id))
 
 export default {
   getChapters,

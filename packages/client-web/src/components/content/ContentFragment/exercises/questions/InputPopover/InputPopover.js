@@ -3,22 +3,13 @@ import PropTypes from 'prop-types'
 import { Grid, Popover } from 'antd'
 
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
-import {
-  childrenType,
-  feedbackMessagesType,
-} from '@innodoc/client-misc/src/propTypes'
+import { childrenType, feedbackMessagesType } from '@innodoc/client-misc/src/propTypes'
 
 import MathJaxPreview from './MathJaxPreview'
 import Messages from './Messages'
 import css from './style.sss'
 
-const InputPopover = ({
-  children,
-  focus,
-  messages,
-  showPreview,
-  userInput,
-}) => {
+const InputPopover = ({ children, focus, messages, showPreview, userInput }) => {
   const { t } = useTranslation()
   const { lg } = Grid.useBreakpoint()
   const hasData = Boolean(messages.length) || Boolean(userInput.length)

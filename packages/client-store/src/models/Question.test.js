@@ -1,11 +1,7 @@
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 import orm from '../orm'
 
-import {
-  addQuestion,
-  questionAnswered,
-  questionEvaluated,
-} from '../actions/question'
+import { addQuestion, questionAnswered, questionEvaluated } from '../actions/question'
 
 describe('Question', () => {
   let session
@@ -25,10 +21,7 @@ describe('Question', () => {
   describe('reducer', () => {
     test('addQuestion', () => {
       expect(session.Question.all().toRefArray()).toHaveLength(0)
-      session.Question.reducer(
-        addQuestion('foo/bar#EX01', 'foo/bar#Q01', 5),
-        session.Question
-      )
+      session.Question.reducer(addQuestion('foo/bar#EX01', 'foo/bar#Q01', 5), session.Question)
       const questions = session.Question.all().toRefArray()
       expect(questions).toHaveLength(1)
       expect(questions[0].id).toBe('foo/bar#Q01')
@@ -39,10 +32,7 @@ describe('Question', () => {
 
     test('questionAnswered', () => {
       session.Question.create({ id: 'foo/bar#Q01' })
-      session.Question.reducer(
-        questionAnswered('foo/bar#Q01', '42', {}),
-        session.Question
-      )
+      session.Question.reducer(questionAnswered('foo/bar#Q01', '42', {}), session.Question)
       const questions = session.Question.all().toRefArray()
       expect(questions).toHaveLength(1)
       expect(questions[0].id).toBe('foo/bar#Q01')
@@ -52,12 +42,7 @@ describe('Question', () => {
     test('questionEvaluated', () => {
       session.Question.create({ id: 'foo/bar#Q01', answer: 'x^2' })
       session.Question.reducer(
-        questionEvaluated(
-          'foo/bar#Q01',
-          RESULT_VALUE.CORRECT,
-          ['foo'],
-          'x^{2}'
-        ),
+        questionEvaluated('foo/bar#Q01', RESULT_VALUE.CORRECT, ['foo'], 'x^{2}'),
         session.Question
       )
       const questions = session.Question.all().toRefArray()

@@ -48,10 +48,7 @@ describe('UserMessage', () => {
     })
 
     test('no-op action', () => {
-      session.UserMessage.reducer(
-        { type: 'DOES-NOT-EXIST' },
-        session.UserMessage
-      )
+      session.UserMessage.reducer({ type: 'DOES-NOT-EXIST' }, session.UserMessage)
     })
   })
 })

@@ -1,10 +1,6 @@
 import jwt from 'jsonwebtoken'
 
-const verifyAccessTokenMiddleware = ({ appRoot, jwtSecret }) => (
-  req,
-  res,
-  next
-) => {
+const verifyAccessTokenMiddleware = ({ appRoot, jwtSecret }) => (req, res, next) => {
   if (req.cookies.accessToken) {
     try {
       const { sub } = jwt.verify(req.cookies.accessToken, jwtSecret, {

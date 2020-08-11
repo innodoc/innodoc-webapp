@@ -24,8 +24,7 @@ const mockCourse = { minScore: 90 }
 
 const mockCourseSelectors = courseSelectors
 jest.mock('react-redux', () => ({
-  useSelector: (sel) =>
-    sel === mockCourseSelectors.getCurrentCourse ? mockCourse : mockChapters,
+  useSelector: (sel) => (sel === mockCourseSelectors.getCurrentCourse ? mockCourse : mockChapters),
 }))
 
 describe('<Results />', () => {

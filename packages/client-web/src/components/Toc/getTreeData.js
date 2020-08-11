@@ -18,10 +18,7 @@ const getTreeNode = (section, currentSectionId, t) => {
   if (['exercises', 'test'].includes(section.type)) {
     const Icon = section.type === 'exercises' ? FormOutlined : AuditOutlined
     const icon = (
-      <Icon
-        className={css.sectionIcon}
-        title={t(`common.sectionTypes.${section.type}`)}
-      />
+      <Icon className={css.sectionIcon} title={t(`common.sectionTypes.${section.type}`)} />
     )
     title = (
       <>

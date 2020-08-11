@@ -71,9 +71,7 @@ const convertMathInput = (input_, integrationSteps = 1000) => {
 
   // Enclose negative numbers in brackets to ease parsing
   rex = RegExp(
-    `([+\\-*/]|^)(-\\\\?[a-z]+|-[0-9]+(?:\\.[0-9]+)?)([^a-z${regexEscape(
-      CHAR_CLASS_OPEN
-    )}]|$)`,
+    `([+\\-*/]|^)(-\\\\?[a-z]+|-[0-9]+(?:\\.[0-9]+)?)([^a-z${regexEscape(CHAR_CLASS_OPEN)}]|$)`,
     'gi'
   )
   latex = replaceAllMatches(latex, rex, '$1{$2}$3')

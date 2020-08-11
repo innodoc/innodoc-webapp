@@ -5,10 +5,7 @@ import { Button, Input, Modal, Result } from 'antd'
 import { messageType } from '@innodoc/client-misc/src/propTypes'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
-const MessageModal = ({
-  message: { closable, level, text, type },
-  onClose,
-}) => {
+const MessageModal = ({ message: { closable, level, text, type }, onClose }) => {
   const { t } = useTranslation()
 
   const footer = closable
@@ -37,11 +34,7 @@ const MessageModal = ({
       title={t(`userMessage.levels.${level}`)}
       visible
     >
-      <Result
-        status={level}
-        title={t(`userMessage.types.${type}.title`)}
-        subTitle={subTitle}
-      />
+      <Result status={level} title={t(`userMessage.types.${type}.title`)} subTitle={subTitle} />
     </Modal>
   )
 }

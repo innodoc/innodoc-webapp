@@ -19,8 +19,7 @@ const withIndexRedirect = createHoc('WithIndexRedirect', (ctx) => {
     }
     const [contentType, contentId] = parsedHomeLink
 
-    const pathPrefix =
-      contentType === 'page' ? pagePathPrefix : sectionPathPrefix
+    const pathPrefix = contentType === 'page' ? pagePathPrefix : sectionPathPrefix
     const linkInfo = getLinkInfo(pathPrefix, contentId)
 
     ctx.res.writeHead(301, { Location: linkInfo.as.pathname })

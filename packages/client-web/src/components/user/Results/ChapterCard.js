@@ -23,8 +23,7 @@ const getStatusTest = (percent, minScore) => {
 const ChapterCard = ({ minScore, progress, sectionId, title }) => {
   const { t } = useTranslation()
   const screens = Grid.useBreakpoint()
-  const wideLayout =
-    screens && Object.hasOwnProperty.call(screens, 'md') ? screens.md : true
+  const wideLayout = screens && Object.hasOwnProperty.call(screens, 'md') ? screens.md : true
 
   const chartData = ['moduleUnits', 'exercises', 'finalTest'].map((key) => {
     const keyData = progress[key]
@@ -36,10 +35,7 @@ const ChapterCard = ({ minScore, progress, sectionId, title }) => {
         value,
         total,
         percent,
-        status:
-          key === 'finalTest'
-            ? getStatusTest(percent, minScore)
-            : getStatus(percent),
+        status: key === 'finalTest' ? getStatusTest(percent, minScore) : getStatus(percent),
       }
     }
     return { key, value: undefined }
@@ -82,10 +78,7 @@ const ChapterCard = ({ minScore, progress, sectionId, title }) => {
       <Typography.Text className={css.complete} strong>
         {completeText}
       </Typography.Text>{' '}
-      <CheckCircleTwoTone
-        title={completeText}
-        twoToneColor={css['color-complete']}
-      />
+      <CheckCircleTwoTone title={completeText} twoToneColor={css['color-complete']} />
     </>
   ) : null
 

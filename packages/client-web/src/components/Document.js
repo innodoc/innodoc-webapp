@@ -20,11 +20,7 @@ export default class InnodocDocument extends Document {
     return (
       <html lang={language}>
         <Head>
-          <meta
-            content="initial-scale=1.0, width=device-width"
-            key="viewport"
-            name="viewport"
-          />
+          <meta content="initial-scale=1.0, width=device-width" key="viewport" name="viewport" />
         </Head>
         <body>
           <Main />

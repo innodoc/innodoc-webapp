@@ -66,8 +66,7 @@ describe('startServer', () => {
       expect(mocks.connectDb).toHaveBeenCalledWith(mockConfig)
     })
 
-    it('should not call process.exit', () =>
-      expect(mockExit).not.toHaveBeenCalled())
+    it('should not call process.exit', () => expect(mockExit).not.toHaveBeenCalled())
 
     it('should instantiate httpTerminator', () =>
       expect(createHttpTerminator.mock.calls[0][0].server).toBe(mockServer))
@@ -75,18 +74,12 @@ describe('startServer', () => {
     describe('express app', () => {
       it('should create express app', () => {
         expect(mocks.createExpressApp).toHaveBeenCalledTimes(1)
-        expect(mocks.createExpressApp).toHaveBeenCalledWith(
-          mockConfig,
-          mockNextApp
-        )
+        expect(mocks.createExpressApp).toHaveBeenCalledWith(mockConfig, mockNextApp)
       })
 
       it('should start listening to port', () => {
         expect(mockExpressApp.listen).toHaveBeenCalledTimes(1)
-        expect(mockExpressApp.listen).toHaveBeenCalledWith(
-          mockConfig.port,
-          mockConfig.host
-        )
+        expect(mockExpressApp.listen).toHaveBeenCalledWith(mockConfig.port, mockConfig.host)
       })
     })
 
@@ -98,45 +91,41 @@ describe('startServer', () => {
         )
       })
 
-      it('should not print error messages', () =>
-        expect(mockErrorLog).not.toHaveBeenCalled())
+      it('should not print error messages', () => expect(mockErrorLog).not.toHaveBeenCalled())
     })
   })
 
   describe('shutdown', () => {
     beforeEach(shutdown)
 
-    it('should call disconnectDb()', () =>
-      expect(disconnectDb).toHaveBeenCalled())
+    it('should call disconnectDb()', () => expect(disconnectDb).toHaveBeenCalled())
 
     it('should call httpTerminator.terminate()', () =>
       expect(mockHttpTerminator.terminate).toHaveBeenCalled())
   })
 
   describe('failed startup', () => {
-    describe.each([
-      'createExpressApp',
-      'createNextApp',
-      'connectDb',
-      'getConfig',
-    ])('%s', (mockName) => {
-      beforeEach(async () => {
-        mocks[mockName].mockImplementationOnce(() => {
-          throw new Error(mockName)
+    describe.each(['createExpressApp', 'createNextApp', 'connectDb', 'getConfig'])(
+      '%s',
+      (mockName) => {
+        beforeEach(async () => {
+          mocks[mockName].mockImplementationOnce(() => {
+            throw new Error(mockName)
+          })
+          await startServer()
         })
-        await startServer()
-      })
 
-      it('should process.exit with return code', () => {
-        expect(mockExit).toHaveBeenCalledTimes(1)
-        expect(mockExit).toHaveBeenCalledWith(1)
-      })
+        it('should process.exit with return code', () => {
+          expect(mockExit).toHaveBeenCalledTimes(1)
+          expect(mockExit).toHaveBeenCalledWith(1)
+        })
 
-      it('should log error', () => {
-        expect(mockErrorLog).toHaveBeenCalledTimes(1)
-        expect(mockErrorLog.mock.calls[0][0].toString()).toMatch(mockName)
-        expect(mockInfoLog).not.toHaveBeenCalled()
-      })
-    })
+        it('should log error', () => {
+          expect(mockErrorLog).toHaveBeenCalledTimes(1)
+          expect(mockErrorLog.mock.calls[0][0].toString()).toMatch(mockName)
+          expect(mockInfoLog).not.toHaveBeenCalled()
+        })
+      }
+    )
   })
 })

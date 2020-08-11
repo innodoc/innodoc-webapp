@@ -29,9 +29,7 @@ describe('<SectionButton />', () => {
     ['prev', 'left', ArrowLeftOutlined],
     ['next', 'right', ArrowRightOutlined],
   ])('should render %s button', (_, dir, Icon) => {
-    const wrapper = shallow(
-      <SectionButton direction={dir} sectionId="foo/bar" />
-    )
+    const wrapper = shallow(<SectionButton direction={dir} sectionId="foo/bar" />)
     expect(wrapper.find(SectionLink).prop('contentId')).toBe('foo/bar')
     const button = wrapper.find(Button)
     expect(button.prop('disabled')).toBe(false)

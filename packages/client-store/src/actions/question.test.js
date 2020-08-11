@@ -1,11 +1,6 @@
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 
-import {
-  actionTypes,
-  addQuestion,
-  questionAnswered,
-  questionEvaluated,
-} from './question'
+import { actionTypes, addQuestion, questionAnswered, questionEvaluated } from './question'
 
 test('ADD_QUESTION', () =>
   expect(addQuestion('EX_01', 'Q_01', 17)).toEqual({
@@ -24,9 +19,7 @@ test('QUESTION_ANSWERED', () =>
   }))
 
 test('QUESTION_EVALUATED', () =>
-  expect(
-    questionEvaluated('Q_01', RESULT_VALUE.CORRECT, ['foo'], 'x^2')
-  ).toEqual({
+  expect(questionEvaluated('Q_01', RESULT_VALUE.CORRECT, ['foo'], 'x^2')).toEqual({
     type: actionTypes.QUESTION_EVALUATED,
     id: 'Q_01',
     latexCode: 'x^2',

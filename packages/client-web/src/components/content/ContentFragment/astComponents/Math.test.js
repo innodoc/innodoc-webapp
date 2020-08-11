@@ -11,9 +11,7 @@ describe('<Math />', () => {
     const wrapper = shallow(<Math data={getData(mathType)} />)
     const component = wrapper.find(MathJax.MathJaxNode)
     expect(component).toHaveLength(1)
-    expect(component.prop('displayType')).toBe(
-      mathType === 'InlineMath' ? 'inline' : 'display'
-    )
+    expect(component.prop('displayType')).toBe(mathType === 'InlineMath' ? 'inline' : 'display')
     expect(component.prop('texCode')).toBe('x^2')
   })
 })

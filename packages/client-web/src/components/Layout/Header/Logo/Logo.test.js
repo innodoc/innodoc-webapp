@@ -28,9 +28,7 @@ describe('<Logo />', () => {
   it('should render', () => {
     const wrapper = shallow(<Logo />)
     const logoDiv = wrapper.children('div')
-    expect(logoDiv.prop('style').backgroundImage).toMatch(
-      'https://example.com/_static/logo.png'
-    )
+    expect(logoDiv.prop('style').backgroundImage).toMatch('https://example.com/_static/logo.png')
     expect(wrapper.find('span').text()).toBe('Foo course')
   })
 

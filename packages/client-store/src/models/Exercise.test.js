@@ -52,10 +52,7 @@ describe('Exercise', () => {
 
   describe('reducer', () => {
     test('loadManifestSuccess', () => {
-      session.Exercise.reducer(
-        loadManifestSuccess({ content: { boxes } }),
-        session.Exercise
-      )
+      session.Exercise.reducer(loadManifestSuccess({ content: { boxes } }), session.Exercise)
       expect(session.state).toEqual(loadedExercises)
     })
 

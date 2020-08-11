@@ -32,9 +32,7 @@ describe('<InternalLink />', () => {
     expect(wrapper.exists(SectionLink)).toBe(false)
     const typography = wrapper.find(Typography.Text)
     expect(typography.prop('type')).toBe('danger')
-    expect(typography.children().at(1).text()).toMatch(
-      'Unhandled internal link:'
-    )
+    expect(typography.children().at(1).text()).toMatch('Unhandled internal link:')
     expect(typography.children().at(2).text()).toMatch('/foo/bar')
   })
 

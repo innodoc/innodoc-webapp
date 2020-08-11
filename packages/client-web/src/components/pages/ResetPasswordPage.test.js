@@ -13,9 +13,7 @@ describe('<ResetPasswordPage />', () => {
     expect(layout.exists()).toBe(true)
     expect(layout.prop('disableSidebar')).toBe(true)
     expect(layout.find(ResetPasswordForm).prop('token')).toBe('123Token!')
-    expect(wrapper.find(PageTitle).prop('children')).toBe(
-      'user.resetPassword.title'
-    )
+    expect(wrapper.find(PageTitle).prop('children')).toBe('user.resetPassword.title')
   })
 
   describe('getInitialProps', () => {

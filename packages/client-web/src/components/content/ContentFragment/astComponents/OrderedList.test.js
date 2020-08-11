@@ -7,11 +7,7 @@ import OrderedList from './OrderedList'
 
 const listData = [
   [],
-  [
-    [{ t: 'Str', c: 'data 1' }],
-    [{ t: 'Str', c: 'data 2' }],
-    [{ t: 'Str', c: 'data 3' }],
-  ],
+  [[{ t: 'Str', c: 'data 1' }], [{ t: 'Str', c: 'data 2' }], [{ t: 'Str', c: 'data 3' }]],
 ]
 
 describe('<OrderedList />', () => {

@@ -13,8 +13,6 @@ describe('<RequestVerificationPage />', () => {
     expect(layout.exists()).toBe(true)
     expect(layout.prop('disableSidebar')).toBe(true)
     expect(layout.find(RequestVerificationForm).exists()).toBe(true)
-    expect(wrapper.find(PageTitle).prop('children')).toBe(
-      'user.requestVerification.title'
-    )
+    expect(wrapper.find(PageTitle).prop('children')).toBe('user.requestVerification.title')
   })
 })

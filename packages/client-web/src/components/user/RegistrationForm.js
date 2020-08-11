@@ -81,9 +81,7 @@ const RegistrationForm = () => {
               {
                 validator: (rule, value) =>
                   checkEmail(appRoot, csrfToken, value).catch(() =>
-                    Promise.reject(
-                      new Error(t('user.emailValidation.alreadyUsed'))
-                    )
+                    Promise.reject(new Error(t('user.emailValidation.alreadyUsed')))
                   ),
                 validateTrigger: 'onFinish',
               },

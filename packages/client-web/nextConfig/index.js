@@ -18,6 +18,4 @@ const config = withSugarSS(
   ])(options)
 )
 
-module.exports = process.env.BUNDLE_ANALYZE
-  ? withBundleAnalyzer(config)
-  : config
+module.exports = process.env.BUNDLE_ANALYZE ? withBundleAnalyzer(config) : config

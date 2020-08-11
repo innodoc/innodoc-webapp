@@ -93,8 +93,6 @@ describe('<Toc />', () => {
       currentSectionId: 'section-1/section-1-1/section-1-1-1',
     }
     const wrapper = shallow(<Toc />)
-    expect(wrapper.find(Tree).prop('expandedKeys')).toEqual([
-      'section-1/section-1-1/section-1-1-1',
-    ])
+    expect(wrapper.find(Tree).prop('expandedKeys')).toEqual(['section-1/section-1-1/section-1-1-1'])
   })
 })

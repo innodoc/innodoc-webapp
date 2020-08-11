@@ -30,9 +30,7 @@ describe('handleQuestionAnsweredSaga', () => {
     }
     return expectSaga(handleQuestionAnsweredSaga, data)
       .call.like({ fn: validators.exact })
-      .put(
-        questionEvaluated('foo/bar#Q1', RESULT_VALUE.INCORRECT, ['foo'], '41')
-      )
+      .put(questionEvaluated('foo/bar#Q1', RESULT_VALUE.INCORRECT, ['foo'], '41'))
       .run()
   })
 

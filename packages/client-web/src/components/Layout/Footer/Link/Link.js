@@ -16,10 +16,7 @@ const FooterLink = ({ active, icon, renderLink, shortTitle, title }) => {
   )
 
   const children = (
-    <a
-      className={classNames(css.pageLink, { [css.active]: active })}
-      title={title}
-    >
+    <a className={classNames(css.pageLink, { [css.active]: active })} title={title}>
       {iconSpan}
       <span>{shortTitle || title}</span>
     </a>

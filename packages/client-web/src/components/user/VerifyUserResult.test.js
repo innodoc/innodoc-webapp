@@ -27,9 +27,7 @@ describe('<VerifyUserResult />', () => {
     expect(result.prop('extra')).toBeNull()
     expect(result.prop('icon')).toEqual(<LoadingOutlined />)
     expect(result.prop('status')).toEqual('info')
-    expect(wrapper.find(PageTitle).prop('children')).toBe(
-      'user.verification.pending.title'
-    )
+    expect(wrapper.find(PageTitle).prop('children')).toBe('user.verification.pending.title')
   })
 
   it('should render with successful verify', async () => {
@@ -37,11 +35,7 @@ describe('<VerifyUserResult />', () => {
     verifyUser.mockResolvedValue()
     const wrapper = mount(<VerifyUserResult token="123verifytoken" />)
     await waitForComponent(wrapper)
-    expect(verifyUser).toBeCalledWith(
-      'http://app.example.com/',
-      '123csrftoken',
-      '123verifytoken'
-    )
+    expect(verifyUser).toBeCalledWith('http://app.example.com/', '123csrftoken', '123verifytoken')
     const result = wrapper.find(Result)
     expect(result.prop('icon')).toBeNull()
     expect(result.prop('status')).toBe('success')
@@ -49,9 +43,7 @@ describe('<VerifyUserResult />', () => {
     const extra = shallow(<Extra />)
     expect(extra.prop('href')).toBe('/login')
     expect(extra.exists(Button)).toBe(true)
-    expect(wrapper.find(PageTitle).prop('children')).toBe(
-      'user.verification.success.title'
-    )
+    expect(wrapper.find(PageTitle).prop('children')).toBe('user.verification.success.title')
   })
 
   it('should render with failed verify', async () => {
@@ -63,8 +55,6 @@ describe('<VerifyUserResult />', () => {
     expect(result.prop('extra')).toBeNull()
     expect(result.prop('icon')).toBeNull()
     expect(result.prop('status')).toBe('error')
-    expect(wrapper.find(PageTitle).prop('children')).toBe(
-      'user.verification.error.title'
-    )
+    expect(wrapper.find(PageTitle).prop('children')).toBe('user.verification.error.title')
   })
 })

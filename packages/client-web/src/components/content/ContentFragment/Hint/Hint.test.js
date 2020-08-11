@@ -14,8 +14,6 @@ describe('<Hint />', () => {
     const contentFragment = wrapper.find(ContentFragment)
     expect(contentFragment).toHaveLength(1)
     expect(contentFragment.prop('content')).toBe(content)
-    expect(
-      wrapper.find(Collapse.Panel).prop('header').props.children
-    ).toContain('Solution')
+    expect(wrapper.find(Collapse.Panel).prop('header').props.children).toContain('Solution')
   })
 })

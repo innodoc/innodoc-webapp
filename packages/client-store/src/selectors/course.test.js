@@ -23,12 +23,10 @@ describe('courseSelectors', () => {
     state = { orm: state }
   })
 
-  test('getCourses', () =>
-    expect(courseSelectors.getCourses(state)).toEqual([courseData]))
+  test('getCourses', () => expect(courseSelectors.getCourses(state)).toEqual([courseData]))
 
   describe('getCurrentCourse', () => {
-    test('course exists', () =>
-      expect(courseSelectors.getCurrentCourse(state)).toEqual(courseData))
+    test('course exists', () => expect(courseSelectors.getCurrentCourse(state)).toEqual(courseData))
 
     test("course doesn't exist", () => {
       app.set('currentCourseId', undefined)

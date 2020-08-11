@@ -43,11 +43,7 @@ describe('<Link />', () => {
       })
 
       it('should render (without content)', () => {
-        const data = [
-          [null, [], null],
-          null,
-          [`/${contentType}/foo/bar`, 'link title'],
-        ]
+        const data = [[null, [], null], null, [`/${contentType}/foo/bar`, 'link title']]
         const wrapper = shallow(<Link data={data} />)
         const internalLink = wrapper.find(InternalLink)
         expect(internalLink).toHaveLength(1)
@@ -58,11 +54,7 @@ describe('<Link />', () => {
     })
 
     it('should render link with only hash', () => {
-      const data = [
-        [null, [], null],
-        [{ t: 'Str', c: 'Foo bar' }],
-        ['#my-id', 'link title'],
-      ]
+      const data = [[null, [], null], [{ t: 'Str', c: 'Foo bar' }], ['#my-id', 'link title']]
       const wrapper = shallow(<Link data={data} />)
       expect(wrapper.find('a').prop('href')).toBe('#my-id')
     })
@@ -70,11 +62,7 @@ describe('<Link />', () => {
 
   it('should render mailto link', () => {
     const content = [{ t: 'Str', c: 'Foo bar' }]
-    const data = [
-      [null, [], null],
-      content,
-      ['mailto:alice@example.com', 'alice@example.com'],
-    ]
+    const data = [[null, [], null], content, ['mailto:alice@example.com', 'alice@example.com']]
     const wrapper = shallow(<Link data={data} />)
     expect(wrapper.exists(InternalLink)).toBe(false)
     const a = wrapper.find('a')

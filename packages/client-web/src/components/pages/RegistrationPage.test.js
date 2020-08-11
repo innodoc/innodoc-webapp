@@ -14,8 +14,6 @@ describe('<RegistrationPage />', () => {
     expect(layout.prop('disableSidebar')).toBe(true)
     const registerForm = layout.find(RegistrationForm)
     expect(registerForm.exists()).toBe(true)
-    expect(wrapper.find(PageTitle).prop('children')).toBe(
-      'user.registration.title'
-    )
+    expect(wrapper.find(PageTitle).prop('children')).toBe('user.registration.title')
   })
 })

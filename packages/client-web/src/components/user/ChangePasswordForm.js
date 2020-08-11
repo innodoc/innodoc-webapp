@@ -33,9 +33,7 @@ const ChangePasswordForm = () => {
               <Trans i18nKey="user.changePassword.error.description">
                 Your password could not be changed.
                 <br />
-                <Link href="/request-password-reset">
-                  I don&apos;t remember my password
-                </Link>
+                <Link href="/request-password-reset">I don&apos;t remember my password</Link>
               </Trans>
             ),
             message: t('user.changePassword.error.message'),
