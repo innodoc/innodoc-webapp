@@ -5,7 +5,7 @@ module.exports = new NextI18Next({
   defaultLanguage: 'en',
   load: 'languageOnly',
   localePath: process.browser
-    ? 'locales'
+    ? '/locales'
     : path.join('..', 'client-web', 'src', 'public', 'locales'),
   otherLanguages: ['de'],
   saveMissing: !process.browser && process.env.NODE_ENV !== 'production',
