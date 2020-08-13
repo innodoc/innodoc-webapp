@@ -3,10 +3,8 @@ beforeEach(resetBrowser)
 describe.each([
   'path-does-not-exist',
   'page',
-  'page/',
   'page/does-not-exist',
   'section',
-  'section/',
   'section/does-not-exist',
 ])('should receive "404" from server', (path) => {
   test(path, async () => {
@@ -17,6 +15,24 @@ describe.each([
     )
     const [req] = await browser.requests.all()
     expect(req.response().status()).toBe(404)
+    expect(await browser.title()).toBe('404 Not found · innoDoc')
+  })
+})
+
+describe.each(['page/', 'section/'])('should receive "308" from server', (path) => {
+  test(path, async () => {
+    await openUrl(path)
+    const [req] = await browser.requests.all()
+    expect(req.response().status()).toBe(308)
+    const chain = req.redirectChain()
+    expect(chain).toHaveLength(1)
+    const redirectResponse = await chain[0].response()
+    expect(redirectResponse.headers().location).toBe(`/${path.slice(0, -1)}`)
+    await browser.assert.requests.status(404)
+    await browser.assert.textContains(
+      '[class*=content___] .ant-result',
+      'This page could not be found'
+    )
     expect(await browser.title()).toBe('404 Not found · innoDoc')
   })
 })
