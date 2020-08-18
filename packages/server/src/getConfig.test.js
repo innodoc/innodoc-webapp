@@ -22,6 +22,8 @@ describe('getConfig', () => {
     process.env.APP_ROOT = 'https://app.example.com/'
     process.env.CONTENT_ROOT = 'https://example.com/content/'
     process.env.JWT_SECRET = 'jwtsecret123!'
+    process.env.LOG_ERROR_EMAIL = 'webmaster@example.com'
+    process.env.LOG_FILE = '/var/log/webapp.log'
     process.env.MONGO_URL = 'mongodb://mongohost/coll'
     process.env.NODE_ENV = 'production'
     process.env.PAGE_PATH_PREFIX = 'custompage'
@@ -53,6 +55,8 @@ describe('getConfig', () => {
       appRoot: 'https://app.example.com/',
       contentRoot: 'https://example.com/content/',
       jwtSecret: 'jwtsecret123!',
+      logErrorEmail: 'webmaster@example.com',
+      logFile: '/var/log/webapp.log',
       mongoUrl: 'mongodb://mongohost/coll',
       nodeEnv: 'production',
       pagePathPrefix: 'custompage',

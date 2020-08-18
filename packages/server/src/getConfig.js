@@ -35,10 +35,16 @@ const getConfig = () => {
     ? ensureTrailingSlash(process.env.STATIC_ROOT)
     : `${contentRoot}_static/`
 
+  const logFile = path.isAbsolute(process.env.LOG_FILE)
+    ? process.env.LOG_FILE
+    : path.resolve(rootDir, process.env.LOG_FILE)
+
   return {
     appRoot,
     contentRoot,
     jwtSecret: process.env.JWT_SECRET,
+    logErrorEmail: process.env.LOG_ERROR_EMAIL,
+    logFile,
     mongoUrl: process.env.MONGO_URL,
     nodeEnv,
     pagePathPrefix: process.env.PAGE_PATH_PREFIX,

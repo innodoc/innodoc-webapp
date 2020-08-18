@@ -2,6 +2,8 @@ import nodemailer from 'nodemailer'
 
 import sendMailMiddleware from './sendMailMiddleware'
 
+// TODO update
+
 let mockSendMail
 jest.mock('nodemailer', () => ({
   createTransport: jest.fn(() => ({

@@ -3,11 +3,13 @@ import passport from 'passport'
 import i18nextHttpMiddleware from 'i18next-http-middleware'
 
 import nextI18next from '@innodoc/client-misc/src/i18n'
+import getLogger from '../logger'
 import User from '../models/User'
 import { resetPasswordMail, verificationMail } from '../mails'
 
 const userController = ({ appRoot, jwtSecret }) => {
   const router = Router()
+  const logger = getLogger('user')
   const secureCookie = new URL(appRoot).protocol === 'https'
   router.use(i18nextHttpMiddleware.handle(nextI18next.i18n))
 
@@ -36,6 +38,7 @@ const userController = ({ appRoot, jwtSecret }) => {
               httpOnly: true,
               secure: secureCookie,
             })
+            logger.info(`Account deleted: ${user.email}`)
             res.status(200).json({ result: 'ok' })
           } else {
             deleteAccountErr()
@@ -64,6 +67,7 @@ const userController = ({ appRoot, jwtSecret }) => {
       await req.app.locals.sendMail(
         verificationMail(req.t, res.locals.appRoot, email, user.emailVerificationToken)
       )
+      logger.info(`Account registered: ${user.email}`)
       res.status(200).json({ result: 'ok' })
     } catch (err) {
       if (user) {
@@ -197,12 +201,6 @@ const userController = ({ appRoot, jwtSecret }) => {
     } catch (err) {
       next(err)
     }
-  })
-
-  // eslint-disable-next-line no-unused-vars
-  router.use((err, req, res, next) => {
-    // TODO proper error handling
-    res.status(500).json({ result: err.stack })
   })
 
   return router
