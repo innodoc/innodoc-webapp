@@ -5,6 +5,7 @@ import createExpressApp from './createExpressApp'
 import createNextApp from './createNextApp'
 import { connectDb, disconnectDb } from './db'
 import getConfig from './getConfig'
+import getLogger, { configureLogger } from './logger'
 
 const mockHttpTerminator = { terminate: jest.fn() }
 jest.mock('http-terminator', () => ({
@@ -15,11 +16,13 @@ const mockServer = {}
 const mockConfig = {
   host: 'localhost',
   port: 7654,
+  logFile: '/var/log/foo.log',
   nodeEnv: 'production',
 }
 const mockExpressApp = { listen: jest.fn().mockResolvedValue(mockServer) }
 const mockNextApp = {}
 
+jest.mock('./logger')
 jest.mock('./createExpressApp', () => jest.fn(() => mockExpressApp))
 jest.mock('./createNextApp', () => jest.fn(() => Promise.resolve(mockNextApp)))
 jest.mock('./db', () => ({
@@ -31,21 +34,14 @@ jest.mock('./getConfig', () => jest.fn(() => mockConfig))
 const mocks = { createExpressApp, createNextApp, connectDb, getConfig }
 
 describe('startServer', () => {
-  let mockInfoLog
-  let mockErrorLog
   let mockExit
 
   beforeEach(() => {
     jest.clearAllMocks()
-
-    mockInfoLog = jest.spyOn(console, 'info').mockImplementation(() => {})
-    mockErrorLog = jest.spyOn(console, 'error').mockImplementation(() => {})
     mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {})
   })
 
   afterEach(() => {
-    mockInfoLog.mockRestore()
-    mockErrorLog.mockRestore()
     mockExit.mockRestore()
   })
 
@@ -84,14 +80,27 @@ describe('startServer', () => {
     })
 
     describe('logging', () => {
+      it('should configure logging', () => {
+        expect(configureLogger).toHaveBeenCalledTimes(1)
+        expect(configureLogger.mock.calls[0][0].nodeEnv).toBe('production')
+        expect(configureLogger.mock.calls[0][0].logFile).toBe('/var/log/foo.log')
+      })
+
+      it('should get logger', () => {
+        expect(getLogger).toHaveBeenCalledTimes(1)
+        expect(getLogger.mock.calls[0][0]).toBe('appserver')
+      })
+
       it('should log info message', () => {
-        expect(mockInfoLog).toHaveBeenCalledTimes(1)
-        expect(mockInfoLog.mock.calls[0][0].toString()).toMatch(
+        const logger = getLogger('appserver')
+        expect(logger.info).toHaveBeenCalledTimes(1)
+        expect(logger.info.mock.calls[0][0].toString()).toMatch(
           'Started production server on localhost:7654'
         )
       })
 
-      it('should not print error messages', () => expect(mockErrorLog).not.toHaveBeenCalled())
+      it('should not print error messages', () =>
+        expect(getLogger('appserver').error).not.toHaveBeenCalled())
     })
   })
 
@@ -102,6 +111,9 @@ describe('startServer', () => {
 
     it('should call httpTerminator.terminate()', () =>
       expect(mockHttpTerminator.terminate).toHaveBeenCalled())
+
+    it('should log shutdown', () =>
+      expect(getLogger('appserver').info).toHaveBeenCalledWith('App server shut down.'))
   })
 
   describe('failed startup', () => {
@@ -121,9 +133,10 @@ describe('startServer', () => {
         })
 
         it('should log error', () => {
-          expect(mockErrorLog).toHaveBeenCalledTimes(1)
-          expect(mockErrorLog.mock.calls[0][0].toString()).toMatch(mockName)
-          expect(mockInfoLog).not.toHaveBeenCalled()
+          const logger = getLogger('appserver')
+          expect(logger.error).toHaveBeenCalledTimes(1)
+          expect(logger.error.mock.calls[0][0].toString()).toMatch(mockName)
+          expect(logger.info).not.toHaveBeenCalled()
         })
       }
     )

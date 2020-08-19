@@ -16,7 +16,7 @@ const shutdown = async () => {
     await httpTerminator.terminate()
   }
   if (logger) {
-    logger.info('App server was shut down.')
+    logger.info('App server shut down.')
   }
   process.exit(0)
 }
