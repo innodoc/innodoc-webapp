@@ -11,10 +11,9 @@ const configureLogger = ({ logFile, nodeEnv }) => {
       filename: logFile,
       maxLogSize: 1024 * 1024 * 10, // 10 MiB
     }
-    categories.default = { appenders: ['logfile'], level: 'info' }
+    categories.default = { appenders: ['logfile'], level: 'info', enableCallStack: true }
   } else {
     appenders.console = { type: 'stdout', layout: { type: 'basic' } }
-    categories.request = { appenders: ['console'], level: 'debug', enableCallStack: true }
     categories.default = { appenders: ['console'], level: 'debug', enableCallStack: true }
   }
 
