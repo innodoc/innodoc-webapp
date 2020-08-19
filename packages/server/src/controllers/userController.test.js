@@ -73,6 +73,7 @@ describe('userController', () => {
     request(await createExpressApp(config, {}))
       .post(url)
       .set('Cookie', [accessTokenCookie])
+      .set('X-Requested-With', type === 'json' ? 'XMLHttpRequest' : null)
       .send(params)
       .then((res) => {
         if (res.status !== status) {
