@@ -1,0 +1,8 @@
+{
+  "search.exclude": {
+    "packages/client-web/bundle-analyzer": true,
+    "packages/client-web/src/.next": true,
+    "packages/client-web/src/public/locales/*/*.missing.json": true,
+    "packages/server/dist": true
+  }
+}
