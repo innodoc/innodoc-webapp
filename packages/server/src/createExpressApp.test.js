@@ -3,9 +3,8 @@ import cookieParser from 'cookie-parser'
 import csrf from 'csurf'
 import express from 'express'
 
-// TODO update
-
 import createExpressApp from './createExpressApp'
+import { requestLoggerMiddleware } from './logger'
 import {
   passConfigMiddleware,
   passportMiddleware,
@@ -30,6 +29,8 @@ const mockExpressApp = {
 }
 jest.mock('express', () => jest.fn(() => mockExpressApp))
 
+jest.mock('./logger')
+
 const mockNextController = {}
 const mockUserController = {}
 jest.mock('./controllers', () => ({
@@ -48,18 +49,20 @@ jest.mock('./middlewares', () => ({
   verifyAccessTokenMiddleware: jest.fn(() => mockVerifyAccessTokenMiddleware),
 }))
 
-const config = {
+const defaultConfig = {
   appRoot: 'http://app.example.com/',
   nodeEnv: 'production',
   smtp: {},
 }
+let config
 
-describe('createExpressApp', () => {
+describe.each(['production', 'development'])('createExpressApp (%s)', (nodeEnv) => {
   const mockNextApp = {}
   let returnedExpressApp
 
   beforeEach(() => {
     jest.clearAllMocks()
+    config = { ...defaultConfig, nodeEnv }
     returnedExpressApp = createExpressApp(config, mockNextApp)
   })
 
@@ -69,6 +72,15 @@ describe('createExpressApp', () => {
   })
 
   describe('middlewares', () => {
+    it(`should ${nodeEnv === 'production' ? 'not ' : ''}use request logger`, () => {
+      if (nodeEnv === 'production') {
+        expect(requestLoggerMiddleware).not.toBeCalled()
+      } else {
+        expect(requestLoggerMiddleware).toBeCalled()
+      }
+      expect(mockExpressApp.use).toBeCalledWith(mockBodyParserJson)
+    })
+
     it('should use bodyParser.json', () => {
       expect(bodyParser.json).toBeCalled()
       expect(mockExpressApp.use).toBeCalledWith(mockBodyParserJson)

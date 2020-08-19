@@ -13,7 +13,7 @@ const getLogger = jest.fn((name) => {
 
 const configureLogger = jest.fn(() => ({ getLogger }))
 
-const requestLoggerMiddleware = (req, res, next) => next()
+const requestLoggerMiddleware = jest.fn().mockReturnValue((req, res, next) => next())
 
 export { configureLogger, requestLoggerMiddleware }
 export default getLogger
