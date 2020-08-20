@@ -30,7 +30,7 @@ export default (
       return
     }
 
-    // Check if constent exists
+    // Check if content exists
     if (yield select(contentExists, contentId)) {
       // Check if fetched already
       const content = yield select(getContent, contentId)
