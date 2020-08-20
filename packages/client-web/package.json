@@ -66,6 +66,7 @@
     "precss": "^4.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-cookies": "^0.1.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
     "redux-saga": "^1.1.3",

@@ -7,6 +7,8 @@ import Header from './Header'
 import Footer from './Footer'
 import MessageModal from './MessageModal'
 
+// TODO update
+
 let mockLatestMessage
 const mockDispatch = jest.fn()
 jest.mock('react-redux', () => ({

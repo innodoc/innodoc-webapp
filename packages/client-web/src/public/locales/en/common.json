@@ -1,6 +1,7 @@
 {
   "common": {
     "hideToc": "Close table of contents",
+    "language": "Language",
     "ok": "OK",
     "sectionTypes": {
       "exercises": "Exercises",
@@ -42,10 +43,21 @@
     },
     "backHome": "Back home"
   },
+  "dataProtectionConsent": {
+    "cookies": {
+      "text": "This website only uses functional cookies. The cookies do not store any personally identifiable information. Examples of the use of cookies are session authentication or language preference. Third party cookies are not used.",
+      "title": "Cookie usage"
+    },
+    "dataProtection": {
+      "text": "This website operates according to the principle of privacy by design. Personally identifiable information is only collected and stored if absolutely necessary. In the case of account creation, an e-mail address is stored on our server, which is used to log in and to reset the password. Data is not shared with third parties.",
+      "title": "Data protection"
+    },
+    "text": "In order to use this website, you must confirm the policies on data protection and cookie usage.",
+    "title": "Cookies und data protection"
+  },
   "header": {
     "downloadPDF": "PDF",
     "downloadPDFTitle": "Download PDF",
-    "language": "Language",
     "linkDE": "German",
     "linkEN": "English",
     "menu": "Menu",

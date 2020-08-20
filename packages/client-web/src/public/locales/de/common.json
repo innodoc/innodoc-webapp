@@ -1,6 +1,7 @@
 {
   "common": {
     "hideToc": "Inhaltsverzeichnis schließen",
+    "language": "Sprache",
     "ok": "OK",
     "sectionTypes": {
       "exercises": "Aufgaben",
@@ -42,10 +43,21 @@
     },
     "backHome": "Zurück zu Home"
   },
+  "dataProtectionConsent": {
+    "cookies": {
+      "text": "Diese Website verwendet ausschließlich funktionale Cookies. Diese speichern keine persönlich identifizierenden Informationen. Beispiele für die Verwendung von Cookies sind Sitzungsauthentifizierung oder Sprachpräferenz. Cookies von Drittanbietern werden nicht verwendet.",
+      "title": "Cookies"
+    },
+    "dataProtection": {
+      "text": "Diese Website arbeitet nach dem Prinzip der Datensparsamkeit. Persönlich identifizierende Informationen werden nur erfasst und gespeichert, falls absolut notwending. Im Falle einer Kontoerstellung wird eine E-Mail-Adresse gespeichert, die zum Anmelden sowie zum Zurücksetzen des Kennwortes verwendet wird. Daten werden nicht mit Dritten geteilt.",
+      "title": "Persönliche Daten"
+    },
+    "text": "Um diese Website nutzen zu können, müssen die Richtlinien zum Datenschutz und zur Verwendung von Cookies bestätigt werden.",
+    "title": "Cookies und Verwendung persönlicher Daten"
+  },
   "header": {
     "downloadPDF": "PDF",
     "downloadPDFTitle": "PDF herunterladen",
-    "language": "Sprache",
     "linkDE": "Deutsch",
     "linkEN": "Englisch",
     "menu": "Menü",

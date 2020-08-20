@@ -1,22 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { Layout as AntLayout } from 'antd'
+import cookie from 'react-cookies'
 
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
 import { closeMessage } from '@innodoc/client-store/src/actions/ui'
+import appSelectors from '@innodoc/client-store/src/selectors'
 import userMessageSelectors from '@innodoc/client-store/src/selectors/userMessage'
 
 import Footer from './Footer'
+import DataProtectionModal from './DataProtectionModal'
 import Header from './Header'
 import MessageModal from './MessageModal'
 import Sidebar from './Sidebar'
 import Toc from '../Toc'
 import css from './style.sss'
 
+const DATA_CONSENT_ACCESS_COOKIE = 'data-consent'
+
 const Layout = ({ children, disableSidebar }) => {
+  const { loggedInEmail } = useSelector(appSelectors.getApp)
   const message = useSelector(userMessageSelectors.getLatest)
   const dispatch = useDispatch()
+  const [showConsentModal, setShowConsent] = useState(false)
+  const [consentGiven, setConsentGiven] = useState(false)
+
+  useEffect(() => {
+    if (!loggedInEmail && !cookie.load(DATA_CONSENT_ACCESS_COOKIE)) {
+      setShowConsent(true)
+    }
+  }, [loggedInEmail])
+  useEffect(() => {
+    if (consentGiven) {
+      const now = new Date()
+      const expires = new Date(now.getFullYear() + 100, now.getMonth(), now.getDate())
+      cookie.save(DATA_CONSENT_ACCESS_COOKIE, true, {
+        expires,
+        maxAge: Math.round(expires - now / 1000),
+        path: '/',
+        httpOnly: false,
+      })
+      setShowConsent(false)
+    }
+  }, [consentGiven])
 
   const sidebar = disableSidebar ? null : (
     <Sidebar>
@@ -25,7 +52,11 @@ const Layout = ({ children, disableSidebar }) => {
   )
 
   const modal = message ? (
-    <MessageModal message={message} onClose={() => dispatch(closeMessage(message.id))} />
+    <MessageModal message={message} onAccept={() => dispatch(closeMessage(message.id))} />
+  ) : null
+
+  const dataProtectionModal = showConsentModal ? (
+    <DataProtectionModal onAccept={() => setConsentGiven(true)} />
   ) : null
 
   return (
@@ -41,6 +72,7 @@ const Layout = ({ children, disableSidebar }) => {
         <Footer />
       </AntLayout>
       {modal}
+      {dataProtectionModal}
     </>
   )
 }

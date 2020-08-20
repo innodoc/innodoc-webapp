@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import classNames from 'classnames'
-import { Menu } from 'antd'
-import { GlobalOutlined } from '@ant-design/icons'
+import { Button, Dropdown, Menu } from 'antd'
+import { DownOutlined, GlobalOutlined } from '@ant-design/icons'
 
 import { changeLanguage } from '@innodoc/client-store/src/actions/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'
@@ -11,18 +11,11 @@ import { useTranslation } from '@innodoc/client-misc/src/i18n'
 
 import css from './style.sss'
 
-const LanguageSwitcher = (props) => {
+const LanguageSwitcher = () => {
   const { t } = useTranslation()
   const course = useSelector(courseSelectors.getCurrentCourse)
   const { language: currentLanguage } = useSelector(appSelectors.getApp)
   const dispatch = useDispatch()
-
-  const title = (
-    <span>
-      <GlobalOutlined />
-      <span>{t('common.language')}</span>
-    </span>
-  )
 
   const languageList = course && course.languages ? course.languages : []
   const languageOptions = languageList.map((lang) => (
@@ -35,14 +28,14 @@ const LanguageSwitcher = (props) => {
     </Menu.Item>
   ))
 
+  const menu = <Menu>{languageOptions}</Menu>
+
   return (
-    <Menu.SubMenu
-      title={title}
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-    >
-      {languageOptions}
-    </Menu.SubMenu>
+    <Dropdown overlay={menu} trigger={['click']}>
+      <Button icon={<GlobalOutlined />}>
+        {t('common.language')} <DownOutlined />
+      </Button>
+    </Dropdown>
   )
 }
 
