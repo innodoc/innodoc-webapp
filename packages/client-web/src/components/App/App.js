@@ -7,6 +7,7 @@ import MathJax from '@innodoc/react-mathjax-node'
 import { withServerContext } from 'next-server-context'
 
 import '@innodoc/client-web/src/style/lato-font.sss'
+import '@innodoc/client-web/src/style/svg-icons-stroke.sss'
 
 import { appWithTranslation } from '@innodoc/client-misc/src/i18n'
 

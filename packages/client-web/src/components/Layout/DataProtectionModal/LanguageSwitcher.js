@@ -2,7 +2,8 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import classNames from 'classnames'
 import { Button, Dropdown, Menu } from 'antd'
-import { DownOutlined, GlobalOutlined } from '@ant-design/icons'
+import Icon, { DownOutlined } from '@ant-design/icons'
+import LanguageOutlineSvg from 'ionicons/dist/svg/language-outline.svg'
 
 import { changeLanguage } from '@innodoc/client-store/src/actions/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'
@@ -32,7 +33,7 @@ const LanguageSwitcher = () => {
 
   return (
     <Dropdown overlay={menu} trigger={['click']}>
-      <Button icon={<GlobalOutlined />}>
+      <Button icon={<Icon component={LanguageOutlineSvg} />}>
         {t('common.language')} <DownOutlined />
       </Button>
     </Dropdown>

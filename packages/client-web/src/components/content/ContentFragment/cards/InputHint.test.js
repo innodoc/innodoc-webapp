@@ -2,12 +2,12 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Icon from '@ant-design/icons'
 
-import KeyboardSvg from '../../../../public/img/keyboard-o.svg'
+import KeyboardSvg from '@fortawesome/fontawesome-free/svgs/regular/keyboard.svg'
 import Card from './Card'
 import InputHint from './InputHint'
 
 // @svgr/webpack does not work inside tests
-jest.mock('../../../../public/img/keyboard-o.svg', () => () => null)
+jest.mock('@fortawesome/fontawesome-free/svgs/regular/keyboard.svg', () => () => null)
 
 describe('<InputHint />', () => {
   it('renders', () => {

@@ -5,7 +5,7 @@ import Icon from '@ant-design/icons'
 import { useTranslation } from '@innodoc/client-misc/src/i18n'
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 
-import KeyboardSvg from '../../../../public/img/keyboard-o.svg'
+import KeyboardSvg from '@fortawesome/fontawesome-free/svgs/regular/keyboard.svg'
 import Card from './Card'
 
 const InputHintCard = ({ content, id }) => {

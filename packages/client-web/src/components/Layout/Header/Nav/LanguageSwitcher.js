@@ -2,7 +2,8 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import classNames from 'classnames'
 import { Menu } from 'antd'
-import { GlobalOutlined } from '@ant-design/icons'
+import Icon from '@ant-design/icons'
+import LanguageOutlineSvg from 'ionicons/dist/svg/language-outline.svg'
 
 import { changeLanguage } from '@innodoc/client-store/src/actions/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'
@@ -19,7 +20,7 @@ const LanguageSwitcher = (props) => {
 
   const title = (
     <span>
-      <GlobalOutlined />
+      <Icon component={LanguageOutlineSvg} />
       <span>{t('common.language')}</span>
     </span>
   )
