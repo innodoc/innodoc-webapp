@@ -7,7 +7,7 @@ import { parseContentId } from '@innodoc/client-misc/src/util'
 
 import loadManifestSaga from './loadManifestSaga'
 
-export default (
+const makeLoadContentSaga = (
   getCurrentContent,
   contentExists,
   getContent,
@@ -60,3 +60,5 @@ export default (
       yield put(contentNotFound())
     }
   }
+
+export default makeLoadContentSaga
