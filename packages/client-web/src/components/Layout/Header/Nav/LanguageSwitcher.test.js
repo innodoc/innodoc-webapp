@@ -2,8 +2,12 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Menu } from 'antd'
 
-import LanguageSwitcher from './LanguageSwitcher'
+import appSelectors from '@innodoc/client-store/src/selectors'
 
+import LanguageSwitcher from './LanguageSwitcher'
+import css from './style.sss'
+
+const mockApp = { language: 'de' }
 const mockCourse = {
   currentSectionId: 'foo',
   homeLink: '/section/foo',
@@ -11,22 +15,20 @@ const mockCourse = {
   title: { en: ['Foobar'] },
 }
 const mockDispatch = jest.fn()
+const mockAppSelectors = appSelectors
 jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
-  useSelector: () => mockCourse,
+  useSelector: (selector) => (selector === mockAppSelectors.getApp ? mockApp : mockCourse),
 }))
 
 describe('<LanguageSwitcher />', () => {
-  describe('render', () => {
+  it('should render', () => {
     const wrapper = shallow(<LanguageSwitcher />)
-
-    it('should render dropdown', () => {
-      expect(wrapper.find(Menu.SubMenu).exists()).toBe(true)
-    })
-
-    it('should have 2 items', () => {
-      expect(wrapper.find(Menu.Item)).toHaveLength(2)
-    })
+    expect(wrapper.find(Menu.SubMenu).exists()).toBe(true)
+    const items = wrapper.find(Menu.Item)
+    expect(items).toHaveLength(2)
+    expect(items.at(0).hasClass(css.active)).toBe(true)
+    expect(items.at(1).hasClass(css.active)).toBe(false)
   })
 
   describe.each(mockCourse.languages)('language %s', (lang) => {
