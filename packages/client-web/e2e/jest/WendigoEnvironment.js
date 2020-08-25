@@ -37,10 +37,17 @@ class WendigoEnvironment extends NodeEnvironment {
     this.global.getUrl = (rest = '') => `${process.env.APP_ROOT}${rest}`
 
     this.global.openUrl = async (urlFragment, opts = {}) => {
+      const mergedOpts = { skipDataConsent: true, ...opts }
+      if (mergedOpts.skipDataConsent) {
+        await this.global.browser.cookies.set('data-consent', {
+          url: this.global.getUrl(),
+          value: 'true',
+        })
+      }
       await this.global.browser.open(this.global.getUrl(urlFragment), {
         headers: { 'Accept-Language': 'en-US' },
         viewport: { width: 1200, height: 600 },
-        ...opts,
+        ...mergedOpts,
       })
       await this.global.browser.waitFor(
         '//div[contains(@class, "header")]/./span[text()[contains(.,"innoDoc")]]'
