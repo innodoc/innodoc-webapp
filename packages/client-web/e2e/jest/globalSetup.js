@@ -13,6 +13,8 @@ const serverEnvVars = [
   // force configuration in case .env is customized
   'APP_ROOT=http://localhost:6123/',
   'APP_PORT=6123',
+  'LOG_ERROR_EMAIL=admin@example.com',
+  'LOG_FILE=/var/log/innodoc-webapp.log',
   'JWT_SECRET=jwtsecret123',
   'PAGE_PATH_PREFIX=page',
   'SECTION_PATH_PREFIX=section',
