@@ -136,13 +136,22 @@ jest.mock('next/router', () => ({
 }))
 
 describe('scrollToHash', () => {
-  beforeEach(() => Router.router.scrollToHash.mockClear())
+  let windowSpy
+
+  beforeEach(() => {
+    windowSpy = jest.spyOn(global, 'window', 'get')
+    Router.router.scrollToHash.mockClear()
+  })
+  afterEach(() => {
+    windowSpy.mockRestore()
+  })
+
   it.each([
     ['browser', true],
-    ['server', false],
-  ])('should scroll to hash (%s)', (_, browser) => {
-    process.browser = browser
+    ['server', undefined],
+  ])('should scroll to hash (%s)', (_, isBrowser) => {
+    windowSpy.mockImplementation(() => (isBrowser ? {} : undefined))
     scrollToHash()
-    expect(Router.router.scrollToHash.mock.calls).toHaveLength(browser ? 1 : 0)
+    expect(Router.router.scrollToHash.mock.calls).toHaveLength(isBrowser ? 1 : 0)
   })
 })

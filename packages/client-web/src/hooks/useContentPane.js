@@ -8,7 +8,7 @@ import appSelectors from '@innodoc/client-store/src/selectors'
 import fadeInCss from '../style/fade-in.sss'
 
 const scrollToHash = () => {
-  if (process.browser) {
+  if (typeof window !== 'undefined') {
     Router.router.scrollToHash(Router.router.asPath)
   }
 }

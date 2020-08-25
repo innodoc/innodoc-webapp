@@ -1,26 +1,36 @@
 import path from 'path'
 import fs from 'fs'
 
-let i18n
+jest.mock('next-i18next', () => ({
+  default: jest.fn().mockImplementation((config) => ({ config })),
+}))
+
 let NextI18Next
-const processBrowserOrig = process.browser
+let i18n
+let windowSpy
 
 describe.each(['server', 'client'])('i18n (%s)', (environment) => {
   beforeEach(() => {
     jest.resetModules()
-    process.browser = environment === 'client'
+    jest.clearAllMocks()
+    if (environment === 'server') {
+      windowSpy = jest.spyOn(global, 'window', 'get')
+      windowSpy.mockImplementation(() => undefined)
+    }
     /* eslint-disable global-require */
-    i18n = require('./i18n')
     NextI18Next = require('next-i18next').default
+    i18n = require('./i18n')
     /* eslint-enable global-require */
   })
 
   afterEach(() => {
-    process.browser = processBrowserOrig
+    if (environment === 'server') {
+      windowSpy.mockRestore()
+    }
   })
 
-  it('should be an instance of NextI18Next', () => {
-    expect(i18n).toBeInstanceOf(NextI18Next)
+  it('should call NextI18Next constructor', () => {
+    expect(NextI18Next).toHaveBeenCalledTimes(1)
   })
 
   it('should have default language en', () => {
