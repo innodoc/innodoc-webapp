@@ -51,6 +51,7 @@ export default class IndexTerm extends Model {
         }
         break
       }
+
       default:
         break
     }

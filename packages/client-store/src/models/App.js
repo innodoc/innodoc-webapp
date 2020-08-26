@@ -35,28 +35,36 @@ export default class App extends Model {
         case contentActionTypes.SET_SERVER_CONFIGURATION:
           app.update(action.config)
           break
+
         case contentActionTypes.CHANGE_COURSE:
           app.set('currentCourseId', action.course.id)
           break
+
         case contentActionTypes.CONTENT_NOT_FOUND:
           app.set('show404', true)
           break
+
         case contentActionTypes.ROUTE_CHANGE_START:
           app.set('show404', false)
           break
+
         case i18nActionTypes.CHANGE_LANGUAGE:
           app.set('language', action.language)
           break
+
         case userActionTypes.USER_LOGGED_IN:
           app.set('loggedInEmail', action.email)
           break
+
         case userActionTypes.USER_LOGGED_OUT:
           app.set('loggedInEmail', undefined)
           break
+
         case uiActionTypes.TOGGLE_SIDEBAR: {
           app.set('sidebarVisible', !app.sidebarVisible)
           break
         }
+
         default:
           break
       }

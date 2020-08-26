@@ -30,12 +30,14 @@ export default class Question extends Model {
           points: action.points,
         })
         break
+
       case actionTypes.QUESTION_ANSWERED:
         QuestionModel.upsert({
           id: action.id,
           answer: action.answer,
         })
         break
+
       case actionTypes.QUESTION_EVALUATED:
         QuestionModel.upsert({
           id: action.id,
@@ -44,6 +46,7 @@ export default class Question extends Model {
           latexCode: action.latexCode,
         })
         break
+
       default:
         break
     }

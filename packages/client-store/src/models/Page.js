@@ -37,6 +37,7 @@ export default class Page extends Model {
           })
         }
         break
+
       case actionTypes.LOAD_PAGE_SUCCESS:
         PageModel.upsert({
           id: action.data.contentId,
@@ -45,6 +46,7 @@ export default class Page extends Model {
           },
         })
         break
+
       default:
         break
     }

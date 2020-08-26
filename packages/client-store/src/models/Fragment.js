@@ -24,6 +24,7 @@ export default class Fragment extends Model {
           },
         })
         break
+
       default:
         break
     }

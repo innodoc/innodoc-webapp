@@ -35,6 +35,7 @@ export default class Course extends Model {
         })
         break
       }
+
       case contentActionTypes.LOAD_PAGE_SUCCESS: {
         const course = CourseModel.first()
         if (course) {
@@ -45,6 +46,7 @@ export default class Course extends Model {
         }
         break
       }
+
       case contentActionTypes.LOAD_SECTION_SUCCESS: {
         const course = CourseModel.first()
         if (course) {
@@ -55,6 +57,7 @@ export default class Course extends Model {
         }
         break
       }
+
       case contentActionTypes.ROUTE_CHANGE_START: {
         const course = CourseModel.first()
         if (course) {
@@ -65,6 +68,7 @@ export default class Course extends Model {
         }
         break
       }
+
       default:
         break
     }
