@@ -11,36 +11,59 @@ import {
 import appSelectors from '@innodoc/client-store/src/selectors'
 import progressSelectors from '@innodoc/client-store/src/selectors/progress'
 
+export const LOCAL_STORAGE_KEY = 'user-progress'
 export const PERSIST_DEBOUNCE_TIME = 2000
 
 export function* persistSaga() {
   const { appRoot, csrfToken, loggedInEmail } = yield select(appSelectors.getApp)
+  const progress = yield select(progressSelectors.getPersistedProgress)
 
   if (loggedInEmail) {
-    const progress = yield select(progressSelectors.getPersistedProgress)
+    // From server
     yield call(persistProgress, appRoot, csrfToken, progress)
+  } else {
+    // localStorage
+    const serializedProgress = yield call([JSON, JSON.stringify], progress)
+    try {
+      yield call([localStorage, localStorage.setItem], LOCAL_STORAGE_KEY, serializedProgress)
+    } catch {
+      // Might throw (storage full, Mobile Safari private mode)
+    }
   }
 }
 
 export function* restoreSaga() {
   const { appRoot, loggedInEmail } = yield select(appSelectors.getApp)
+  let gotLocalStorageData = false
 
+  // localStorage
+  try {
+    const serializedProgress = yield call([localStorage, localStorage.getItem], LOCAL_STORAGE_KEY)
+    if (serializedProgress) {
+      const progress = yield call([JSON, JSON.parse], serializedProgress)
+      if (progress && progress.answeredQuestions && progress.visitedSections) {
+        yield put(loadProgress(progress.answeredQuestions, progress.visitedSections))
+        gotLocalStorageData = true
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  // server
   if (loggedInEmail) {
-    let response
     try {
-      response = yield call(fetchProgress, appRoot)
+      const { progress } = yield call(fetchProgress, appRoot)
+      if (progress && progress.answeredQuestions && progress.visitedSections) {
+        yield call([localStorage, localStorage.removeItem], LOCAL_STORAGE_KEY)
+        yield put(loadProgress(progress.answeredQuestions, progress.visitedSections))
+        if (gotLocalStorageData) {
+          // Sync localStorage back to server
+          yield call(persistSaga)
+        }
+      }
     } catch {
       // ignore
-    }
-
-    if (
-      response.progress &&
-      response.progress.answeredQuestions &&
-      response.progress.visitedSections
-    ) {
-      yield put(
-        loadProgress(response.progress.answeredQuestions, response.progress.visitedSections)
-      )
     }
   }
 }

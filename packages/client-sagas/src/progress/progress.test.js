@@ -14,6 +14,7 @@ import appSelectors from '@innodoc/client-store/src/selectors'
 import progressSelectors from '@innodoc/client-store/src/selectors/progress'
 
 import progressSaga, {
+  LOCAL_STORAGE_KEY,
   PERSIST_DEBOUNCE_TIME,
   clearSaga,
   persistSaga,
@@ -24,6 +25,13 @@ const mockProgress = {
   answeredQuestions: [],
   visitedSections: ['foo/section'],
 }
+
+const mockProgressLS = {
+  answeredQuestions: [],
+  visitedSections: ['foo/section', 'bar/section'],
+}
+const mockSerializedProgressLS = 'SERIALIZED_DATA'
+
 const defaultProvides = [
   [
     select(appSelectors.getApp),
@@ -36,53 +44,76 @@ const defaultProvides = [
   [select(progressSelectors.getPersistedProgress), mockProgress],
   [matchers.call.fn(persistProgress), { result: 'ok' }],
   [matchers.call.fn(fetchProgress), { result: 'ok', progress: mockProgress }],
+  [matchers.call.fn(JSON.parse), mockProgressLS],
+  [matchers.call.fn(JSON.stringify), mockSerializedProgressLS],
+  [matchers.call.fn(localStorage.getItem), mockSerializedProgressLS],
+]
+
+const providesNotLoggedIn = [
+  [
+    select(appSelectors.getApp),
+    {
+      appRoot: 'https://app.example.com/',
+      csrfToken: 'csrfToken123!',
+    },
+  ],
+  ...defaultProvides,
 ]
 
 describe('persistSaga', () => {
-  it('should persist progress if logged in', () =>
+  it('should persist to server if logged in', () =>
     expectSaga(persistSaga)
       .provide(defaultProvides)
       .call(persistProgress, 'https://app.example.com/', 'csrfToken123!', mockProgress)
+      .not.call.fn(JSON.stringify)
+      .not.call.fn(localStorage.setItem)
       .run())
 
-  it('should not persist progress if not logged in', () =>
+  it('should persist to localStorage if not logged in', () =>
     expectSaga(persistSaga)
-      .provide([
-        [
-          select(appSelectors.getApp),
-          {
-            appRoot: 'https://app.example.com/',
-            csrfToken: 'csrfToken123!',
-          },
-        ],
-        ...defaultProvides,
-      ])
+      .provide(providesNotLoggedIn)
+      .call([JSON, JSON.stringify], mockProgress)
+      .call([localStorage, localStorage.setItem], LOCAL_STORAGE_KEY, mockSerializedProgressLS)
       .not.call.fn(persistProgress)
       .run())
 })
 
 describe('restoreSaga', () => {
-  it('should restore progress if logged in', () =>
+  it('should restore from LS and server, sync LS to server and clear LS if logged in', () =>
     expectSaga(restoreSaga)
       .provide(defaultProvides)
+      // restore from LS
+      .call([localStorage, localStorage.getItem], LOCAL_STORAGE_KEY)
+      .call([JSON, JSON.parse], mockSerializedProgressLS)
+      .put(loadProgress(mockProgressLS.answeredQuestions, mockProgressLS.visitedSections))
+      // restore from server
       .call(fetchProgress, 'https://app.example.com/')
       .put(loadProgress(mockProgress.answeredQuestions, mockProgress.visitedSections))
+      // sync back to server and clear LS
+      .call([localStorage, localStorage.removeItem], LOCAL_STORAGE_KEY)
+      .call(persistSaga)
       .run())
 
-  it('should not restore progress if not logged in', () =>
+  it("should skip sync'ing back to server if LS was empty", () =>
     expectSaga(restoreSaga)
-      .provide([
-        [
-          select(appSelectors.getApp),
-          {
-            appRoot: 'https://app.example.com/',
-            csrfToken: 'csrfToken123!',
-          },
-        ],
-        ...defaultProvides,
-      ])
+      .provide([[matchers.call.fn(localStorage.getItem), undefined], ...defaultProvides])
+      .not.call.fn(JSON.parse)
+      .not.put(loadProgress(mockProgressLS.answeredQuestions, mockProgressLS.visitedSections))
+      .call(fetchProgress, 'https://app.example.com/')
+      .put(loadProgress(mockProgress.answeredQuestions, mockProgress.visitedSections))
+      .not.call.fn(persistSaga)
+      .run())
+
+  it('should restore from localStorage if not logged in', () =>
+    expectSaga(restoreSaga)
+      .provide(providesNotLoggedIn)
+      .call([localStorage, localStorage.getItem], LOCAL_STORAGE_KEY)
+      .call([JSON, JSON.parse], mockSerializedProgressLS)
+      .put(loadProgress(mockProgressLS.answeredQuestions, mockProgressLS.visitedSections))
       .not.call.fn(fetchProgress)
-      .not.put.actionType(userActionTypes.LOAD_PROGRESS)
+      .not.put(loadProgress(mockProgress.answeredQuestions, mockProgress.visitedSections))
+      .not.call.fn(localStorage.removeItem)
+      .not.call.fn(persistSaga)
       .run())
 })
 
