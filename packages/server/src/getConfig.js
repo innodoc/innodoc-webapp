@@ -35,9 +35,13 @@ const getConfig = () => {
     ? ensureTrailingSlash(process.env.STATIC_ROOT)
     : `${contentRoot}_static/`
 
-  const logFile = path.isAbsolute(process.env.LOG_FILE)
-    ? process.env.LOG_FILE
-    : path.resolve(rootDir, process.env.LOG_FILE)
+  // set logFile
+  let logFile = null
+  if (process.env.LOG_FILE.length) {
+    logFile = path.isAbsolute(process.env.LOG_FILE)
+      ? process.env.LOG_FILE
+      : path.resolve(rootDir, process.env.LOG_FILE)
+  }
 
   return {
     appRoot,

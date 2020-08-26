@@ -20,9 +20,24 @@ describe('configureLogger', () => {
     expect(logger).toBe(mockLogger)
     expect(log4js.configure).toBeCalledTimes(1)
     const opts = log4js.configure.mock.calls[0][0]
+    expect(Object.keys(opts.appenders)).toHaveLength(1)
     expect(opts.appenders.logfile.type).toBe('file')
     expect(opts.appenders.logfile.filename).toBe('/var/log/foo.log')
+    expect(Object.keys(opts.categories)).toHaveLength(1)
     expect(opts.categories.default.appenders[0]).toBe('logfile')
+    expect(opts.categories.default.level).toBe('info')
+    expect(opts.categories.default.enableCallStack).toBe(true)
+  })
+
+  it('should configure console in production if no log file is given', () => {
+    const logger = configureLogger({ logFile: null, nodeEnv: 'production' })
+    expect(logger).toBe(mockLogger)
+    expect(log4js.configure).toBeCalledTimes(1)
+    const opts = log4js.configure.mock.calls[0][0]
+    expect(Object.keys(opts.appenders)).toHaveLength(1)
+    expect(opts.appenders.console.type).toBe('stdout')
+    expect(Object.keys(opts.categories)).toHaveLength(1)
+    expect(opts.categories.default.appenders[0]).toBe('console')
     expect(opts.categories.default.level).toBe('info')
     expect(opts.categories.default.enableCallStack).toBe(true)
   })
@@ -32,7 +47,9 @@ describe('configureLogger', () => {
     expect(logger).toBe(mockLogger)
     expect(log4js.configure).toBeCalledTimes(1)
     const opts = log4js.configure.mock.calls[0][0]
+    expect(Object.keys(opts.appenders)).toHaveLength(1)
     expect(opts.appenders.console.type).toBe('stdout')
+    expect(Object.keys(opts.categories)).toHaveLength(1)
     expect(opts.categories.default.appenders[0]).toBe('console')
     expect(opts.categories.default.level).toBe('debug')
     expect(opts.categories.default.enableCallStack).toBe(true)

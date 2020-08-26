@@ -92,6 +92,26 @@ describe('getConfig', () => {
     })
   })
 
+  describe('logFile', () => {
+    it('should accept empty value', () => {
+      process.env.LOG_FILE = ''
+      const config = getConfig('/mock/root')
+      expect(config.logFile).toBeNull()
+    })
+
+    it('should accept relative path', () => {
+      process.env.LOG_FILE = 'foo/bar.log'
+      const config = getConfig('/mock/root')
+      expect(config.logFile).toMatch(/^\/.+\/foo\/bar\.log$/)
+    })
+
+    it('should accept absolute path', () => {
+      process.env.LOG_FILE = '/var/log/foo.log'
+      const config = getConfig('/mock/root')
+      expect(config.logFile).toBe('/var/log/foo.log')
+    })
+  })
+
   describe('errors', () => {
     it("should throw if .env wasn't found", () => {
       fs.existsSync.mockReturnValue(false)

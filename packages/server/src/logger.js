@@ -1,22 +1,30 @@
 import log4js from 'log4js'
 
+const consoleAppender = { type: 'stdout', layout: { type: 'basic' } }
+
 const configureLogger = ({ logFile, nodeEnv }) => {
   const appenders = {}
   const categories = {}
+  let level
 
   if (nodeEnv === 'production') {
-    appenders.logfile = {
-      type: 'file',
-      compress: true,
-      filename: logFile,
-      maxLogSize: 1024 * 1024 * 10, // 10 MiB
+    level = 'info'
+    if (!logFile) {
+      appenders.console = consoleAppender
+    } else {
+      appenders.logfile = {
+        type: 'file',
+        compress: true,
+        filename: logFile,
+        maxLogSize: 1024 * 1024 * 10, // 10 MiB
+      }
     }
-    categories.default = { appenders: ['logfile'], level: 'info', enableCallStack: true }
   } else {
-    appenders.console = { type: 'stdout', layout: { type: 'basic' } }
-    categories.default = { appenders: ['console'], level: 'debug', enableCallStack: true }
+    level = 'debug'
+    appenders.console = consoleAppender
   }
 
+  categories.default = { appenders: Object.keys(appenders), level, enableCallStack: true }
   return log4js.configure({ appenders, categories })
 }
 
