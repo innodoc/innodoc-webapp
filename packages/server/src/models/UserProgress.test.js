@@ -29,7 +29,14 @@ describe('UserProgress', () => {
 
   const addTestUserProgress = async () => {
     const user = await addTestUser()
-    const question = { id: 'foo/bar#Q01', answer: '42', result: 'CORRECT' }
+    const question = {
+      id: 'foo/bar#Q01',
+      exerciseId: 'foo/bar#EX01',
+      answer: '42',
+      answeredTimestamp: 1598451191939,
+      result: 'CORRECT',
+      points: 9,
+    }
     const userProgress = UserProgress({
       user_id: user._id,
       answeredQuestions: [question],
@@ -44,8 +51,11 @@ describe('UserProgress', () => {
     expect(userProgress.user_id).toBe(user._id)
     expect(userProgress.answeredQuestions).toHaveLength(1)
     expect(userProgress.answeredQuestions[0].id).toBe('foo/bar#Q01')
+    expect(userProgress.answeredQuestions[0].exerciseId).toBe('foo/bar#EX01')
     expect(userProgress.answeredQuestions[0].answer).toBe('42')
+    expect(userProgress.answeredQuestions[0].answeredTimestamp).toBe(1598451191939)
     expect(userProgress.answeredQuestions[0].result).toBe('CORRECT')
+    expect(userProgress.answeredQuestions[0].points).toBe(9)
     expect(userProgress.visitedSections).toHaveLength(2)
     expect(userProgress.visitedSections[0]).toBe('foo/bar')
     expect(userProgress.visitedSections[1]).toBe('foo/baz')

@@ -52,6 +52,7 @@ const getPersistedProgress = createSelector(orm, (session) => {
       id: q.id,
       exerciseId: q.exerciseId,
       answer: q.answer,
+      answeredTimestamp: q.answeredTimestamp,
       result: q.result,
       points: q.points,
     }))

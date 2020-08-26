@@ -14,6 +14,7 @@ export default class Question extends Model {
     return {
       id: attr(),
       answer: attr(),
+      answeredTimestamp: attr(),
       result: attr({ getDefault: () => RESULT_VALUE.NEUTRAL }),
       points: attr({ getDefault: () => 0 }),
       exerciseId: fk('Exercise', 'questions'),
@@ -42,6 +43,7 @@ export default class Question extends Model {
       case questionActionTypes.QUESTION_EVALUATED:
         QuestionModel.upsert({
           id: action.id,
+          answeredTimestamp: Date.now(),
           messages: action.messages,
           result: action.result,
           latexCode: action.latexCode,
@@ -62,7 +64,15 @@ export default class Question extends Model {
         break
 
       case userActionTypes.LOAD_PROGRESS:
-        action.answeredQuestions.forEach((q) => QuestionModel.upsert(q))
+        // Merge questions (newer timestamp wins)
+        action.answeredQuestions.forEach((q1) => {
+          const q2 = QuestionModel.withId(q1.id)
+          if (!q2 || !q2.answeredTimestamp) {
+            QuestionModel.upsert(q1)
+          } else if (q1.answeredTimestamp >= q2.answeredTimestamp) {
+            q2.update(q1)
+          }
+        })
         break
 
       default:

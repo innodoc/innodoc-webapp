@@ -4,6 +4,7 @@ const answeredQuestionSchema = new mongoose.Schema({
   id: String,
   exerciseId: String,
   answer: String,
+  answeredTimestamp: Number,
   result: String,
   points: Number,
 })
