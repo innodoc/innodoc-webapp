@@ -40,6 +40,7 @@ describe.each(['page/', 'section/'])('should receive "308" from server', (path) 
 it('should render "404" client-side', async () => {
   await openUrl('section/02-elements/04-links/01-internal')
   await browser.click('[href*=does-not-exist]')
+  await browser.wait(100)
   await browser.waitFor('[class*=content___] .ant-result')
   await browser.assert.textContains(
     '[class*=content___] .ant-result',
