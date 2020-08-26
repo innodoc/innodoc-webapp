@@ -1,4 +1,5 @@
 const waitForSiderWidth = async (width) => {
+  await browser.wait(100)
   await browser.waitFor(
     (w) => {
       const node = document.querySelector('.ant-layout-sider')
