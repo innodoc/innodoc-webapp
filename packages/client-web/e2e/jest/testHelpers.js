@@ -1,5 +1,8 @@
 /* eslint-disable no-param-reassign */
 const Wendigo = require('wendigo')
+const mongoose = require('mongoose')
+
+const User = require('@innodoc/server/dist/models/User').default
 
 const escapeXPathString = (str) => {
   const splitedQuotes = str.replace(/'/g, `', "'", '`)
@@ -37,6 +40,61 @@ const testHelpers = (env) => {
     )
     await env.global.browser.wait(500)
   }
+
+  env.global.getRandEmail = () => {
+    const randString = Math.random().toString(36).substring(2)
+    return `user-${randString}@example.com`
+  }
+
+  env.global.register = async (email, pwd) => {
+    await env.global.hoverNavItem('Login')
+    await env.global.browser.waitForText('Create account')
+    await env.global.browser.clickText('Create account')
+    await env.global.browser.waitAndType('input#registration-form_email', email)
+    await env.global.browser.type('input#registration-form_password', pwd)
+    await env.global.browser.type('input#registration-form_confirm-password', pwd)
+    await env.global.browser.assert.title('Create account · innoDoc')
+    await env.global.browser.clickText('Create account')
+    await env.global.browser.waitFor('.ant-result')
+    await env.global.browser.assert.textContains('.ant-result', 'Account created!')
+    await env.global.browser.wait(500)
+  }
+
+  env.global.activate = async (email) => {
+    const user = await User.findOne({ email })
+    await env.global.openUrl(`verify-user/${user.emailVerificationToken}`)
+    await env.global.browser.waitFor('.ant-result')
+    await env.global.browser.assert.textContains('.ant-result', 'Account activated')
+    await env.global.browser.assert.title('Account activated · innoDoc')
+  }
+
+  env.global.login = async (email, pwd) => {
+    await env.global.browser.waitAndClick('[class*=nav___] a[href="/login"]')
+    await env.global.browser.waitAndType('input#login-form_email', email)
+    await env.global.browser.type('input#login-form_password', pwd)
+    await env.global.browser.assert.title('Login · innoDoc')
+    await env.global.browser.clickText('Sign-in')
+    await env.global.browser.waitFor('.ant-result')
+    await env.global.browser.assert.textContains('.ant-result', 'Successfully logged in.')
+  }
+
+  env.global.logout = async (email) => {
+    await env.global.hoverNavItem(email)
+    await env.global.browser.waitForText('Logout')
+    await env.global.browser.clickText('Logout')
+    await env.global.browser.waitForText('You have been logged out.')
+  }
+
+  env.global.connectDb = () =>
+    mongoose.connect(process.env.MONGO_URL, {
+      useCreateIndex: true,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+
+  env.global.disconnectDb = mongoose.disconnect
+
+  env.global.getUser = (email) => User.findOne({ email })
 
   env.global.resetBrowser = async () => {
     if (env.global.browser) {

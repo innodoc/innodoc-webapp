@@ -1,70 +1,14 @@
-import mongoose from 'mongoose'
-import User from '@innodoc/server/dist/models/User'
-
-const getRandEmail = () => {
-  const randString = Math.random().toString(36).substring(2)
-  return `user-${randString}@example.com`
-}
-
-const connectDb = async () => {
-  await mongoose.connect(process.env.MONGO_URL, {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-}
-
 beforeEach(resetBrowser)
-beforeAll(() => connectDb())
-afterAll(() => mongoose.disconnect())
+beforeAll(connectDb)
+afterAll(disconnectDb)
 
 describe('Account interactions', () => {
   const pwd = 'S00perSecur3!'
 
-  const register = async (email) => {
-    await hoverNavItem('Login')
-    await browser.waitForText('Create account')
-    await browser.clickText('Create account')
-    await browser.waitAndType('input#registration-form_email', email)
-    await browser.type('input#registration-form_password', pwd)
-    await browser.type('input#registration-form_confirm-password', pwd)
-    expect(await browser.title()).toBe('Create account · innoDoc')
-    await browser.clickText('Create account')
-    await browser.waitFor('.ant-result')
-    await browser.assert.textContains('.ant-result', 'Account created!')
-    await browser.wait(500)
-  }
-
-  const activate = async (email) => {
-    const user = await User.findOne({ email })
-    expect(user).toBeTruthy()
-    await openUrl(`verify-user/${user.emailVerificationToken}`)
-    await browser.waitFor('.ant-result')
-    await browser.assert.textContains('.ant-result', 'Account activated')
-    expect(await browser.title()).toBe('Account activated · innoDoc')
-  }
-
-  const login = async (email, _pwd) => {
-    await browser.waitAndClick('[class*=nav___] a[href="/login"]')
-    await browser.waitAndType('input#login-form_email', email)
-    await browser.type('input#login-form_password', _pwd)
-    expect(await browser.title()).toBe('Login · innoDoc')
-    await browser.clickText('Sign-in')
-    await browser.waitFor('.ant-result')
-    await browser.assert.textContains('.ant-result', 'Successfully logged in.')
-  }
-
-  const logout = async (email) => {
-    await hoverNavItem(email)
-    await browser.waitForText('Logout')
-    await browser.clickText('Logout')
-    await browser.waitForText('You have been logged out.')
-  }
-
   test('Change password', async () => {
     const email = getRandEmail()
     await openUrl()
-    await register(email)
+    await register(email, pwd)
     await activate(email)
     await login(email, pwd)
 
@@ -87,7 +31,7 @@ describe('Account interactions', () => {
   test('Request password', async () => {
     const email = getRandEmail()
     await openUrl()
-    await register(email)
+    await register(email, pwd)
     await activate(email)
     // Request password reset
     await browser.click('a[href="/login"]')
@@ -103,8 +47,7 @@ describe('Account interactions', () => {
     await browser.waitForText('Password reset mail sent.')
     // Reset password
     const newPwd = '123ABCabcStr0ng!'
-    const user = await User.findOne({ email })
-    expect(user).toBeTruthy()
+    const user = await getUser(email)
     await openUrl(`reset-password/${user.passwordResetToken}`)
     await browser.waitAndType('input#reset-password-form_password', newPwd)
     await browser.type('input#reset-password-form_confirm-password', newPwd)
@@ -116,7 +59,7 @@ describe('Account interactions', () => {
   test('Request verification mail', async () => {
     const email = getRandEmail()
     await openUrl()
-    await register(email)
+    await register(email, pwd)
     await openUrl('login')
     await browser.waitAndType('input#login-form_email', email)
     await browser.type('input#login-form_password', 'wrongPwd')
@@ -134,7 +77,7 @@ describe('Account interactions', () => {
   test('Account deletion', async () => {
     const email = getRandEmail()
     await openUrl()
-    await register(email)
+    await register(email, pwd)
     await activate(email)
     await login(email, pwd)
     await openUrl('delete-account')
@@ -155,7 +98,7 @@ describe('Account interactions', () => {
     test('Verification > Login > About > Logout', async () => {
       const email = getRandEmail()
       await openUrl()
-      await register(email)
+      await register(email, pwd)
       await activate(email)
       await login(email, pwd)
       await browser.waitFor('[class*=header___] ul[class*=nav___] a[href="/page/about"]')
@@ -197,7 +140,7 @@ describe('Account interactions', () => {
     test('fails w/o activation', async () => {
       const email = getRandEmail()
       await openUrl()
-      await register(email)
+      await register(email, pwd)
       await openUrl('login')
       await browser.waitAndType('input#login-form_email', email)
       await browser.type('input#login-form_password', pwd)
@@ -218,7 +161,7 @@ describe('Account interactions', () => {
     test('using JWT cookie', async () => {
       const email = getRandEmail()
       await openUrl()
-      await register(email)
+      await register(email, pwd)
       await activate(email)
       await login(email, pwd)
       await openUrl()
