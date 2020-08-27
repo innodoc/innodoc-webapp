@@ -33,7 +33,7 @@ const ChapterCard = ({ minScore, progress, sectionId, title }) => {
     const keyData = progress[key]
     if (keyData) {
       const [value, total] = keyData
-      const percent = Math.ceil((100 * value) / total)
+      const percent = Math.round((100 * value) / total)
       return {
         key,
         value,
