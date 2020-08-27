@@ -62,7 +62,7 @@ class WendigoEnvironment extends NodeEnvironment {
       await this.global.browser.hover(
         `//ul[contains(@class,"nav___")]/li//*[text()[contains(.,${escaped})]]`
       )
-      await this.global.browser.wait(200)
+      await this.global.browser.wait(500)
     }
 
     this.global.resetBrowser = async () => {
