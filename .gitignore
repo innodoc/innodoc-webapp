@@ -3,3 +3,5 @@ node_modules
 coverage
 .env
 *~
+# shelfio/jest-mongodb temp config
+/globalConfig.json
