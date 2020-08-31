@@ -24,7 +24,7 @@ variables:
 
 .docker-base: &docker-base
   services:
-    - docker:dind
+    - docker:19.03.12-dind
   before_script:
     - *docker-base-login-script
   after_script:
