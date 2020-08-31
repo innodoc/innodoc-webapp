@@ -20,7 +20,7 @@ class WendigoEnvironment extends NodeEnvironment {
       userAgent,
     }
     if (isCI) {
-      this.wenidgoOpts.args = ['--no-sandbox', '--disable-dev-shm-usage']
+      this.wenidgoOpts.args = ['--disable-dev-shm-usage']
     }
     if (!headless) {
       this.wenidgoOpts.headless = false

@@ -109,6 +109,7 @@ E2E tests:
       --rm
       --env MONGO_URL=mongodb://mongodb-in-memory/innodoc-e2e
       --network testbridge
+      --security-opt seccomp=$(pwd)/packages/client-web/e2e/seccomp-chrome.json
       "$IMAGE_E2E_TAG"
   variables:
     <<: *docker-default-vars
