@@ -9,7 +9,7 @@ ARG PUPPETEER_VERSION=3.1.0
 ARG BUILD_IMAGE=innodoc/innodoc-webapp
 FROM $BUILD_IMAGE AS build
 
-FROM alpine:3.11
+FROM alpine:3.12
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 WORKDIR /innodoc-webapp
 
