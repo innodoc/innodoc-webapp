@@ -21,7 +21,6 @@ class WendigoEnvironment extends NodeEnvironment {
     }
     if (isCI) {
       this.wenidgoOpts.args = ['--no-sandbox', '--disable-dev-shm-usage']
-      this.wenidgoOpts.executablePath = '/usr/bin/chromium-browser'
     }
     if (!headless) {
       this.wenidgoOpts.headless = false
