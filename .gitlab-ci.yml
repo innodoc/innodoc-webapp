@@ -13,9 +13,9 @@ variables:
 .docker-default-vars: &docker-default-vars
   DOCKER_TLS_CERTDIR: '/certs'
   GIT_STRATEGY: none
-  IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
   IMAGE_E2E_CACHE_TAG: $CI_REGISTRY_IMAGE/e2e:cache
   IMAGE_E2E_TAG: $CI_REGISTRY_IMAGE/e2e:$CI_COMMIT_REF_SLUG
+  IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
   # taken from https://github.com/semver/semver/issues/232#issue-48635632
   SEMVER_REGEXP: '^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$'
 
@@ -84,6 +84,7 @@ Unit tests:
     - docker run
       --rm
       --env MONGO_URL=mongodb://mongodb-in-memory/innodoc-test
+      --env INNODOC_WEBAPP_CI=true
       --network testbridge
       "$IMAGE_TAG"
       yarn test:unit:coverage --color --coverageDirectory=/tmp/coverage
@@ -108,6 +109,7 @@ E2E tests:
     - docker run
       --rm
       --env MONGO_URL=mongodb://mongodb-in-memory/innodoc-e2e
+      --env INNODOC_WEBAPP_CI=true
       --network testbridge
       --security-opt seccomp=$(pwd)/packages/client-web/e2e/seccomp-chrome.json
       "$IMAGE_E2E_TAG"
