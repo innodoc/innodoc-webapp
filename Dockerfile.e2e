@@ -43,7 +43,8 @@ COPY --from=build --chown=innodocuser:innodocuser /innodoc-webapp .
 
 # force puppeteer version
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
+    INNODOC_WEBAPP_CI=true
 RUN yarn add --no-lockfile --ignore-workspace-root-check --exact puppeteer@$PUPPETEER_VERSION
 
 # run e2e script

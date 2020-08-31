@@ -1,4 +1,4 @@
-const fs = require('fs')
+const isCI = process.env.INNODOC_WEBAPP_CI === 'true'
 
 const config = {
   roots: ['src'],
@@ -8,7 +8,7 @@ const config = {
   verbose: true,
 }
 
-if (fs.existsSync('/etc/alpine-release')) {
+if (isCI) {
   config.testEnvironment = 'node'
 } else {
   config.preset = '@shelf/jest-mongodb'

@@ -1,10 +1,9 @@
-const { existsSync } = require('fs')
 const { resolve } = require('path')
 const { setup: setupServer } = require('jest-dev-server')
 
 const rootPath = resolve(__dirname, '..', '..', '..', '..')
 const clientWebPath = resolve(rootPath, 'packages', 'client-web')
-const isCI = existsSync('/etc/alpine-release')
+const isCI = process.env.INNODOC_WEBAPP_CI === 'true'
 const usedPortAction = 'error'
 const launchTimeout = 60000
 
