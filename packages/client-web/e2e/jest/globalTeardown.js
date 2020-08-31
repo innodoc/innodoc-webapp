@@ -1,3 +1,6 @@
-const { teardown } = require('jest-dev-server')
+const { teardown } = require('jest-process-manager')
 
-module.exports = () => teardown()
+module.exports = async () => {
+  await teardown()
+  console.log('Dev servers stopped.') // eslint-disable-line no-console
+}
