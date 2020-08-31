@@ -14,17 +14,17 @@ class WendigoEnvironment extends NodeEnvironment {
 
     // Browser launch options
     const headless = process.env.PUPPETEER_HEADLESS !== 'false'
-    this.wenidgoOpts = {
+    this.wendigoOpts = {
       defaultTimeout,
       incognito: true,
       userAgent,
     }
     if (isCI) {
-      this.wenidgoOpts.args = ['--disable-dev-shm-usage']
+      this.wendigoOpts.args = ['--disable-dev-shm-usage']
     }
     if (!headless) {
-      this.wenidgoOpts.headless = false
-      this.wenidgoOpts.slowMo = 50
+      this.wendigoOpts.headless = false
+      this.wendigoOpts.slowMo = 50
     }
 
     // Provide globals
