@@ -1,8 +1,10 @@
+const reactPkgInfo = require('react/package.json')
 const eslintNoExtraneousDependenciesConfig = require('@innodoc/common/eslintNoExtraneousDependenciesConfig')
 const baseConfig = require('../../.eslintrc')
 
 module.exports = {
   ...baseConfig,
+  extends: ['airbnb', 'prettier', 'prettier/react'],
   plugins: [...baseConfig.plugins, 'react-hooks'],
   rules: {
     ...baseConfig.rules,
@@ -35,4 +37,9 @@ module.exports = {
       },
     },
   ],
+  settings: {
+    react: {
+      version: reactPkgInfo.version,
+    },
+  },
 }
