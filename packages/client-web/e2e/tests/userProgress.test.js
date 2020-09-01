@@ -74,8 +74,4 @@ describe('User progress', () => {
     await assertProgress(1, 0, ['18 %', 'Visited 3 out of 17.'])
     await assertProgress(1, 1, ['13 %', 'Scored 8 out of 63 points.'])
   })
-
-  // test('Local to server storage sync') // should also clear localstorage
-
-  // test('Local to server storage sync while registering')
 })
