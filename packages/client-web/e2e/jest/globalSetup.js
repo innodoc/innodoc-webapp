@@ -59,7 +59,4 @@ if (!isCI) {
   })
 }
 
-module.exports = async () => {
-  await setupServer(servers)
-  console.log('Dev servers started') // eslint-disable-line no-console
-}
+module.exports = () => setupServer(servers)
