@@ -5,3 +5,10 @@ coverage
 *~
 # shelfio/jest-mongodb temp config
 /globalConfig.json
+# yarn 2
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
