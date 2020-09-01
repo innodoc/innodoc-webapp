@@ -41,9 +41,11 @@ RUN set -xe && \
 
 COPY --from=build --chown=innodocuser:innodocuser /innodoc-webapp .
 
-# force puppeteer version
+# use Chromium from Alpine package
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+# force puppeteer version
 RUN yarn add --no-lockfile --ignore-workspace-root-check --exact puppeteer@$PUPPETEER_VERSION
 
 # run e2e script
