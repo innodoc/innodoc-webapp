@@ -39,10 +39,14 @@ describe('User progress', () => {
     await assertProgress(1, 0, ['6 %', 'Visited 1 out of 17.'])
     await assertProgress(1, 1, ['5 %', 'Scored 3 out of 63 points.'])
 
+    console.log('1')
+
     const email = getRandEmail()
     await register(email, pwd)
     await activate(email)
     await login(email, pwd)
+
+    console.log('2')
 
     await openUrl('section/02-elements/02-headings')
     await browser.wait(2500)
@@ -55,10 +59,14 @@ describe('User progress', () => {
     await assertProgress(1, 1, ['11 %', 'Scored 7 out of 63 points.'])
     await logout(email)
 
+    console.log('3')
+
     // Empty progress after logout
     await openUrl('progress')
     await assertProgress(1, 0, ['0 %', 'Visited 0 out of 17.'])
     await assertProgress(1, 1, ['0 %', 'Scored 0 out of 63 points.'])
+
+    console.log('4')
 
     await openUrl('section/02-elements/01-formatting')
     await browser.wait(2500)
@@ -68,10 +76,14 @@ describe('User progress', () => {
     await assertProgress(1, 0, ['12 %', 'Visited 2 out of 17.'])
     await assertProgress(1, 1, ['6 %', 'Scored 4 out of 63 points.'])
 
+    console.log('5')
+
     // Check progress merge on login
     await login(email, pwd)
     await openUrl('progress')
     await assertProgress(1, 0, ['18 %', 'Visited 3 out of 17.'])
     await assertProgress(1, 1, ['13 %', 'Scored 8 out of 63 points.'])
+
+    console.log('6')
   })
 })
