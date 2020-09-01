@@ -4,6 +4,12 @@ const mongoose = require('mongoose')
 
 const User = require('@innodoc/server/dist/models/User').default
 
+const defaultOpenOpts = {
+  headers: { 'Accept-Language': 'en-US' },
+  skipDataConsent: true,
+  viewport: { width: 1200, height: 600 },
+}
+
 const escapeXPathString = (str) => {
   const splitedQuotes = str.replace(/'/g, `', "'", '`)
   return `concat('${splitedQuotes}', '')`
@@ -12,19 +18,17 @@ const escapeXPathString = (str) => {
 const testHelpers = (env) => {
   env.global.getUrl = (rest = '') => `${process.env.APP_ROOT}${rest}`
 
-  env.global.openUrl = async (urlFragment, opts = {}) => {
-    const mergedOpts = { skipDataConsent: true, ...opts }
-    if (mergedOpts.skipDataConsent) {
+  env.global.openUrl = async (urlFragment, userOpts = {}) => {
+    const { skipDataConsent, ...opts } = { ...defaultOpenOpts, ...userOpts }
+
+    if (skipDataConsent) {
       await env.global.browser.cookies.set('data-consent', {
         url: env.global.getUrl(),
         value: 'true',
       })
     }
-    await env.global.browser.open(env.global.getUrl(urlFragment), {
-      headers: { 'Accept-Language': 'en-US' },
-      viewport: { width: 1200, height: 600 },
-      ...mergedOpts,
-    })
+
+    await env.global.browser.open(env.global.getUrl(urlFragment), opts)
     await env.global.browser.waitFor(
       '//div[contains(@class, "header")]/./span[text()[contains(.,"innoDoc")]]'
     )
