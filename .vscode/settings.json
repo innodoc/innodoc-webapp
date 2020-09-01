@@ -3,6 +3,10 @@
     "packages/client-web/bundle-analyzer": true,
     "packages/client-web/src/.next": true,
     "packages/client-web/src/public/locales/*/*.missing.json": true,
-    "packages/server/dist": true
-  }
+    "packages/server/dist": true,
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "eslint.nodePath": ".yarn/sdks",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.js"
 }
