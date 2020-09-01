@@ -3,7 +3,7 @@ module.exports = (config) =>
     test: /\.svg$/,
     use: [
       {
-        loader: '@svgr/webpack',
+        loader: require.resolve('@svgr/webpack'),
         options: {
           icon: true,
         },

@@ -36,4 +36,4 @@ USER innodocuser
 # run web app
 EXPOSE 8000
 ENV APP_PORT=8000
-CMD ["node_modules/.bin/pm2-runtime", "start", "yarn", "--interpreter", "/bin/sh", "--name", "innodoc-webapp", "--", "start"]
+CMD ["yarn", "run", "pm2-runtime", "start", "yarn", "--interpreter", "/bin/sh", "--name", "innodoc-webapp", "--", "start"]

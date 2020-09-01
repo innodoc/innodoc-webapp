@@ -23,22 +23,21 @@
     "packages/*"
   ],
   "dependencies": {
-    "@innodoc/server": "*"
+    "@innodoc/common": "workspace:packages/common",
+    "@innodoc/server": "workspace:packages/server"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
     "@babel/plugin-proposal-export-default-from": "^7.10.4",
     "@babel/preset-env": "^7.11.0",
-    "@innodoc/client-misc": "*",
-    "@innodoc/client-question-validators": "*",
-    "@innodoc/client-sagas": "*",
-    "@innodoc/client-store": "*",
-    "@innodoc/client-web": "*",
-    "@innodoc/common": "*",
+    "@innodoc/client-misc": "workspace:packages/client-misc",
+    "@innodoc/client-question-validators": "workspace:packages/client-question-validators",
+    "@innodoc/client-sagas": "workspace:packages/client-sagas",
+    "@innodoc/client-store": "workspace:packages/client-store",
+    "@innodoc/client-web": "workspace:packages/client-web",
     "@types/jest": "^26.0.10",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.3.0",
-    "babel-loader": "^8.1.0",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "eslint": "^7.6.0",
     "eslint-config-airbnb": "^18.2.0",
@@ -47,6 +46,8 @@
     "eslint-plugin-jest": "^23.20.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-react-hooks": "^4.1.0",
     "jest": "^26.3.0",
     "prettier": "^2.0.5"
   },

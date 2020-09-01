@@ -8,10 +8,11 @@ module.exports = {
     '\\.(less|sss|svg)$': 'identity-obj-proxy',
   },
   setupFilesAfterEnv: ['<rootDir>/enzyme.config.js'],
-  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/src/.next/'],
+  testPathIgnorePatterns: ['<rootDir>/src/.next/'],
   transform: {
     '^.+\\.[t|j]sx?$': 'babel-jest',
   },
+  // TODO: pnp
   transformIgnorePatterns: [
     '!enzyme\\.config\\.js',
     `/node_modules/(?!(${nodeModulesEs.join('|')})/)`,

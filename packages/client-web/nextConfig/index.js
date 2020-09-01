@@ -1,4 +1,4 @@
-const withSugarSS = require('next-sugarss')
+const withSugarSS = require('./next-sugarss')
 const withTranspileModules = require('next-transpile-modules')
 
 const nodeModulesEs = require('./nodeModulesEs')

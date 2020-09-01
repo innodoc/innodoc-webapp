@@ -16,6 +16,7 @@
   "license": "GPL-3.0-or-later",
   "main": "src/index.js",
   "dependencies": {
+    "@innodoc/client-misc": "workspace:packages/client-misc",
     "mathjs": "^7.1.0"
   }
 }

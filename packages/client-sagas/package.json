@@ -16,10 +16,10 @@
   "license": "GPL-3.0-or-later",
   "main": "src/index.js",
   "dependencies": {
-    "@innodoc/client-misc": "*",
-    "@innodoc/client-question-validators": "*",
-    "@innodoc/client-store": "*",
-    "@innodoc/common": "*",
+    "@innodoc/client-misc": "workspace:packages/client-misc",
+    "@innodoc/client-question-validators": "workspace:packages/client-question-validators",
+    "@innodoc/client-store": "workspace:packages/client-store",
+    "@innodoc/common": "workspace:packages/common",
     "redux-saga": "^1.1.3"
   },
   "devDependencies": {

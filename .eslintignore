@@ -1,4 +1,3 @@
-/packages/*/node_modules
 /packages/client-web/e2e/content
 /packages/client-web/src/.next
 /packages/client-web/src/public

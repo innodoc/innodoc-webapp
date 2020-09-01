@@ -13,22 +13,19 @@ const LessPluginVariablesOutput = require('less-plugin-variables-output')
 const postcss = require('postcss')
 const postcssrc = require('postcss-load-config')
 
+// TODO https://yarnpkg.com/features/pnp#packages-are-stored-inside-zip-archives-how-can-i-access-their-files
+
 // Antd default vars
-const antdThemeFilename = path.resolve(
-  __dirname,
-  '..',
-  '..',
-  '..',
-  'node_modules',
-  'antd',
-  'lib',
-  'style',
-  'themes',
-  'default.less'
-)
+const antd = require('antd')
+console.log(antd)
+
+process.exit(0)
+
+// const antdThemeFilename = require('antd/lib/style/themes/default.less')
+// console.log(antdThemeFilename)
 
 // Output path for antd default vars
-const antdVarsFilename = path.resolve(__dirname, '..', 'src', 'style', 'antd-vars.json')
+const antdVarsFilename = path.resolve(__dirname, '..', '..', 'src', 'style', 'antd-vars.json')
 
 const extractAntdDefaultVariables = () =>
   less

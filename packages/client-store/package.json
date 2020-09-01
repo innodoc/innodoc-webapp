@@ -16,8 +16,8 @@
   "license": "GPL-3.0-or-later",
   "main": "src/index.js",
   "dependencies": {
-    "@innodoc/client-misc": "*",
-    "@innodoc/common": "*",
+    "@innodoc/client-misc": "workspace:packages/client-misc",
+    "@innodoc/common": "workspace:packages/common",
     "redux": "^4.0.5",
     "redux-orm": "^0.16.2",
     "redux-saga": "^1.1.3"

@@ -11,7 +11,9 @@ module.exports = {
   cssModules: true,
   cssLoaderOptions: {
     importLoaders: 1,
-    localIdentName: '[local]___[hash:base64:5]',
+    modules: {
+      localIdentName: '[local]___[hash:base64:5]',
+    },
   },
   generateBuildId: () => {
     const envVal = process.env.NEXTJS_WEBAPP_BUILD_ID // Passed in CI

@@ -14,11 +14,8 @@
     "directory": "packages/client-misc"
   },
   "license": "GPL-3.0-or-later",
-  "main": "src/index.js",
   "dependencies": {
     "isomorphic-unfetch": "^3.0.0",
-    "next-i18next": "^6.0.2",
-    "password-validator": "^5.1.0",
     "prop-types": "^15.7.2"
   }
 }
