@@ -17,6 +17,7 @@
   "main": "src/index.js",
   "dependencies": {
     "@innodoc/client-misc": "*",
+    "@innodoc/common": "*",
     "redux": "^4.0.5",
     "redux-orm": "^0.16.2",
     "redux-saga": "^1.1.3"

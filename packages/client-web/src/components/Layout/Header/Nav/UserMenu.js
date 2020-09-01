@@ -11,7 +11,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 import css from './style.sss'
 
 const UserMenu = (props) => {

@@ -11,7 +11,7 @@ jest.mock('csurf', () => () => mockNoopMiddleware)
 
 jest.mock('./nextController', () => () => mockNoopMiddleware)
 
-jest.mock('@innodoc/client-misc/src/i18n', () => ({
+jest.mock('@innodoc/common/src/i18n', () => ({
   i18n: { t: (s) => s },
 }))
 

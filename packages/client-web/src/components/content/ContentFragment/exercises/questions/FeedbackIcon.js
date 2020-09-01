@@ -1,7 +1,7 @@
 import React from 'react'
 import { CheckCircleTwoTone, CloseCircleTwoTone, EllipsisOutlined } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 import { resultType } from '@innodoc/client-misc/src/propTypes'
 

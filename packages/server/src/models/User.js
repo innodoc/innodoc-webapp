@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import passportLocalMongoose from 'passport-local-mongoose'
 
-import { validatePassword } from '@innodoc/client-misc/src/passwordDef'
+import { validatePassword } from '@innodoc/common/src/passwordDef'
 
 const TOKEN_LENGTH = 16
 export const tokenRegexp = `[a-f0-9]{${TOKEN_LENGTH}}`

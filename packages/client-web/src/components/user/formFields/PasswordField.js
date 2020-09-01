@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { Form, Input } from 'antd'
 import { LockOutlined } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
   validatePassword,
-} from '@innodoc/client-misc/src/passwordDef'
+} from '@innodoc/common/src/passwordDef'
 
 const PasswordField = ({ disabled, hasLabel, isConfirm, label, name, validate }) => {
   const { t } = useTranslation()

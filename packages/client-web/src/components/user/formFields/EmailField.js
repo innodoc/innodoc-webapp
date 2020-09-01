@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Form, Input } from 'antd'
 import { MailOutlined } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 
 const EmailField = ({ disabled, hasLabel, rules }) => {
   const { t } = useTranslation()

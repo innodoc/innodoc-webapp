@@ -9,7 +9,7 @@ import { withServerContext } from 'next-server-context'
 import '@innodoc/client-web/src/style/lato-font.sss'
 import '@innodoc/client-web/src/style/svg-icons-stroke.sss'
 
-import { appWithTranslation } from '@innodoc/client-misc/src/i18n'
+import { appWithTranslation } from '@innodoc/common/src/i18n'
 
 import PageTitle from '../PageTitle'
 import useRouteNotifier from '../../hooks/useRouteNotifier'

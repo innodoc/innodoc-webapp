@@ -32,6 +32,7 @@
     "@innodoc/client-misc": "*",
     "@innodoc/client-sagas": "*",
     "@innodoc/client-store": "*",
+    "@innodoc/common": "*",
     "@innodoc/react-mathjax-node": "^0.1.0",
     "@svgr/webpack": "^5.4.0",
     "@zeit/next-bundle-analyzer": "^0.1.2",

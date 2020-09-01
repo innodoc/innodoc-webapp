@@ -7,7 +7,7 @@ import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 import FeedbackIcon from './FeedbackIcon'
 import css from './style.sss'
 
-jest.mock('@innodoc/client-misc/src/i18n', () => ({
+jest.mock('@innodoc/common/src/i18n', () => ({
   useTranslation: () => ({
     t: jest.fn((key) => key),
   }),

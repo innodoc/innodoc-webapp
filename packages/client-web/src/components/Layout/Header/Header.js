@@ -5,7 +5,7 @@ import { Button, Col, Drawer, Grid, Layout as AntLayout, Row } from 'antd'
 import { MenuOutlined } from '@ant-design/icons'
 
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 
 import Nav from './Nav'
 import Logo from './Logo'

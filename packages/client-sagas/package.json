@@ -19,6 +19,7 @@
     "@innodoc/client-misc": "*",
     "@innodoc/client-question-validators": "*",
     "@innodoc/client-store": "*",
+    "@innodoc/common": "*",
     "redux-saga": "^1.1.3"
   },
   "devDependencies": {

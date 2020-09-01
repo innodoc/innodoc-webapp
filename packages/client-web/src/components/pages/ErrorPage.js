@@ -5,7 +5,7 @@ import { Button, Result } from 'antd'
 import { HomeOutlined } from '@ant-design/icons'
 
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 
 import { InternalLink } from '../content/links'
 import Layout from '../Layout'

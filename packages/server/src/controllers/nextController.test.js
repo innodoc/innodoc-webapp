@@ -19,7 +19,7 @@ jest.mock('mongoose', () => ({
   }),
 }))
 
-jest.mock('@innodoc/client-misc/src/i18n', () => ({
+jest.mock('@innodoc/common/src/i18n', () => ({
   i18n: { t: (s) => s },
 }))
 

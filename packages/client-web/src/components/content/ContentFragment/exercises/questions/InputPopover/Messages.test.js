@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Alert, Typography } from 'antd'
 
-import { Trans } from '@innodoc/client-misc/src/i18n'
+import { Trans } from '@innodoc/common/src/i18n'
 import Messages, { Message } from './Messages'
 
 const messages = [

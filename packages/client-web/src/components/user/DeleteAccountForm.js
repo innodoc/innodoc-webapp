@@ -4,7 +4,7 @@ import { Alert } from 'antd'
 import { WarningOutlined } from '@ant-design/icons'
 
 import { deleteAccount } from '@innodoc/client-misc/src/api'
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 import { showMessage } from '@innodoc/client-store/src/actions/ui'
 import { userLoggedOut } from '@innodoc/client-store/src/actions/user'
 import appSelectors from '@innodoc/client-store/src/selectors'

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { Tree } from 'antd'
 
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 

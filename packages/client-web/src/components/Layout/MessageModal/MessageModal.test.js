@@ -5,7 +5,7 @@ import { Modal, Result } from 'antd'
 import MessageModal from './MessageModal'
 
 const mockT = jest.fn()
-jest.mock('@innodoc/client-misc/src/i18n', () => ({
+jest.mock('@innodoc/common/src/i18n', () => ({
   useTranslation: jest.fn(() => ({ t: mockT })),
 }))
 

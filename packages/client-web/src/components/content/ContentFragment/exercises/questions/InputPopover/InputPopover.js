@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Popover } from 'antd'
 
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 import { childrenType, feedbackMessagesType } from '@innodoc/client-misc/src/propTypes'
 
 import MathJaxPreview from './MathJaxPreview'

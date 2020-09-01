@@ -2,7 +2,7 @@ import React from 'react'
 import { Row, Col, Typography } from 'antd'
 import { UserAddOutlined } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 
 import Layout from '../Layout'
 import PageTitle from '../PageTitle'

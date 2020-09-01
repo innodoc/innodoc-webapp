@@ -2,11 +2,11 @@ import { expectSaga } from 'redux-saga-test-plan'
 
 import { changeLanguage, languageDetected } from '@innodoc/client-store/src/actions/i18n'
 import { toTwoLetterCode } from '@innodoc/client-misc/src/util'
-import nextI18next from '@innodoc/client-misc/src/i18n'
+import nextI18next from '@innodoc/common/src/i18n'
 
 import { notifyI18next, waitForDetectedLanguage } from './i18n'
 
-jest.mock('@innodoc/client-misc/src/i18n', () => ({
+jest.mock('@innodoc/common/src/i18n', () => ({
   i18n: { changeLanguage: () => {} },
 }))
 

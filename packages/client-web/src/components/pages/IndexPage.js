@@ -2,7 +2,7 @@ import React from 'react'
 import { Typography } from 'antd'
 import MathJax from '@innodoc/react-mathjax-node'
 
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 
 import Layout from '../Layout'
 import Index from '../Index'

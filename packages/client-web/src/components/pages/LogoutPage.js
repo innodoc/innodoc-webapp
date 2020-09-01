@@ -4,7 +4,7 @@ import { Button, Result, Row, Col } from 'antd'
 import { HomeOutlined, LoadingOutlined } from '@ant-design/icons'
 
 import { logoutUser } from '@innodoc/client-misc/src/api'
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 import { userLoggedOut } from '@innodoc/client-store/src/actions/user'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'

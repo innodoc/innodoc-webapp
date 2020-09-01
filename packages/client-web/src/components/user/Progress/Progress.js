@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Alert } from 'antd'
 
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import progressSelectors from '@innodoc/client-store/src/selectors/progress'
 import css from './style.sss'

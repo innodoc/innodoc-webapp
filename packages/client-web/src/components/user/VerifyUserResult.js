@@ -6,7 +6,7 @@ import { Button, Result } from 'antd'
 import { LoadingOutlined, LoginOutlined } from '@ant-design/icons'
 
 import { verifyUser } from '@innodoc/client-misc/src/api'
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import PageTitle from '../PageTitle'

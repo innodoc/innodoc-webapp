@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { LockOutlined } from '@ant-design/icons'
 
 import { resetPassword } from '@innodoc/client-misc/src/api'
-import { useTranslation, Trans } from '@innodoc/client-misc/src/i18n'
+import { useTranslation, Trans } from '@innodoc/common/src/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import { PasswordField } from './formFields'

@@ -6,7 +6,7 @@ import { ReadOutlined } from '@ant-design/icons'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
 import { toggleSidebar } from '@innodoc/client-store/src/actions/ui'
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 
 const ToggleButton = ({ className, icon }) => {
   const dispatch = useDispatch()

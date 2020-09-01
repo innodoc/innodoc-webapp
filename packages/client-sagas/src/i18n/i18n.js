@@ -1,7 +1,7 @@
 import { call, put, take } from 'redux-saga/effects'
 
 import { actionTypes, changeLanguage } from '@innodoc/client-store/src/actions/i18n'
-import nextI18next from '@innodoc/client-misc/src/i18n'
+import nextI18next from '@innodoc/common/src/i18n'
 import { toTwoLetterCode } from '@innodoc/client-misc/src/util'
 
 // Notify i18next about language changes.

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { List, Typography } from 'antd'
 
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 import { sectionType } from '@innodoc/client-misc/src/propTypes'
 
 import css from './style.sss'

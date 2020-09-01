@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { Divider, Empty, Input, List, Tag } from 'antd'
 import MathJax from '@innodoc/react-mathjax-node'
 
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import indexTermSelectors from '@innodoc/client-store/src/selectors/indexTerm'
 

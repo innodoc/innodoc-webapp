@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { Menu } from 'antd'
 import { FilePdfOutlined, LineChartOutlined } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/client-misc/src/i18n'
+import { useTranslation } from '@innodoc/common/src/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import pageSelectors from '@innodoc/client-store/src/selectors/page'
 
