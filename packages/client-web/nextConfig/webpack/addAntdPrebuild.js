@@ -13,24 +13,16 @@ const LessPluginVariablesOutput = require('less-plugin-variables-output')
 const postcss = require('postcss')
 const postcssrc = require('postcss-load-config')
 
-// TODO https://yarnpkg.com/features/pnp#packages-are-stored-inside-zip-archives-how-can-i-access-their-files
-
-// Antd default vars
-const antd = require('antd')
-console.log(antd)
-
-process.exit(0)
-
-// const antdThemeFilename = require('antd/lib/style/themes/default.less')
-// console.log(antdThemeFilename)
+// Path to antd default theme
+const antdThemePath = require.resolve('antd/lib/style/themes/default.less')
 
 // Output path for antd default vars
 const antdVarsFilename = path.resolve(__dirname, '..', '..', 'src', 'style', 'antd-vars.json')
 
 const extractAntdDefaultVariables = () =>
   less
-    .render(fs.readFileSync(antdThemeFilename).toString(), {
-      filename: antdThemeFilename,
+    .render(fs.readFileSync(antdThemePath).toString(), {
+      filename: antdThemePath,
       javascriptEnabled: true,
       plugins: [new LessPluginVariablesOutput({ filename: antdVarsFilename })],
     })
@@ -41,7 +33,14 @@ const extractAntdDefaultVariables = () =>
     })
 
 // Overridden antd variables
-const antdVarsOverrideFilename = path.resolve(__dirname, '..', 'src', 'style', 'antd-theme.sss')
+const antdVarsOverrideFilename = path.resolve(
+  __dirname,
+  '..',
+  '..',
+  'src',
+  'style',
+  'antd-theme.sss'
+)
 
 const generateVarsForAntd = () =>
   postcssrc(
