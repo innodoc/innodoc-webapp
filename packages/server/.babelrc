@@ -9,5 +9,5 @@
       }
     ]
   ],
-  "ignore": ["src/**/*.test.js"]
+  "ignore": ["src/**/*.test.js", "src/**/__mocks__/**/*"]
 }
