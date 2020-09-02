@@ -1,6 +1,5 @@
 const addAntd = require('./addAntd')
 const addDotenv = require('./addDotEnv')
-// const addPnp = require('./addPnp')
 const addSvgIcons = require('./addSvgIcons')
 const filterConflictingStylesMessages = require('./filterConflictingStylesMessages')
 const ignoreTests = require('./ignoreTests')
@@ -10,7 +9,6 @@ module.exports = (prevConfig, options) => {
   const config = { ...prevConfig }
   addAntd(config, options)
   addDotenv(config)
-  // addPnp(config)
   addSvgIcons(config)
   filterConflictingStylesMessages(config)
   ignoreTests(config)

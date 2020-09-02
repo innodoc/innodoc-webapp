@@ -2038,7 +2038,6 @@ __metadata:
     null-loader: ^4.0.0
     object-hash: ^2.0.3
     optimize-css-assets-webpack-plugin: ^5.0.4
-    pnp-webpack-plugin: ^1.6.4
     postcss: ^7.0.32
     postcss-color-function: ^4.1.0
     postcss-import: ^12.0.1
@@ -13755,7 +13754,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"pnp-webpack-plugin@npm:1.6.4, pnp-webpack-plugin@npm:^1.6.4":
+"pnp-webpack-plugin@npm:1.6.4":
   version: 1.6.4
   resolution: "pnp-webpack-plugin@npm:1.6.4"
   dependencies:
