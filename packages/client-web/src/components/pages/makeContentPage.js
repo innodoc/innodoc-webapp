@@ -9,7 +9,7 @@ import appSelectors from '@innodoc/client-store/src/selectors'
 import Layout from '../Layout'
 import ErrorPage from './ErrorPage'
 
-export default (ContentComponent, load) => {
+const makeContentPage = (ContentComponent, load) => {
   const ContentPage = () => {
     const serverContext = useServerContext()
     const { show404 } = useSelector(appSelectors.getApp)
@@ -38,3 +38,5 @@ export default (ContentComponent, load) => {
 
   return ContentPage
 }
+
+export default makeContentPage
