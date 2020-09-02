@@ -17,7 +17,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "babel -d ./dist/ ./src/",
-    "dev": "NODE_ENV=development babel-node src/index.js",
+    "dev": "NODE_ENV=development BABEL_CACHE_PATH=../../.yarn/babel-cache.json babel-node src/index.js",
     "start": "NODE_ENV=production node dist/index.js"
   },
   "dependencies": {
