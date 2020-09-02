@@ -2011,7 +2011,6 @@ __metadata:
     http-server: ^0.12.3
     i18next: ^19.6.3
     identity-obj-proxy: ^3.0.0
-    ignore-loader: ^0.1.2
     ionicons: ^5.1.2
     jest: ^26.4.2
     jest-environment-enzyme: ^7.1.2

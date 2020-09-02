@@ -87,7 +87,6 @@
     "find-up": "^5.0.0",
     "http-server": "^0.12.3",
     "identity-obj-proxy": "^3.0.0",
-    "ignore-loader": "^0.1.2",
     "jest": "^26.4.2",
     "jest-environment-enzyme": "^7.1.2",
     "jest-environment-node": "^26.3.0",

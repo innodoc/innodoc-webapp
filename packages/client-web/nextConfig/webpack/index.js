@@ -19,7 +19,7 @@ module.exports = (prevConfig, options) => {
   // use file-loader??
   config.module.rules.push({
     test: /\.woff2$/,
-    loader: require.resolve('ignore-loader'),
+    loader: require.resolve('null-loader'),
   })
 
   return config
