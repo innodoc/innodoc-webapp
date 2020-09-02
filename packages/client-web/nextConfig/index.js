@@ -1,4 +1,3 @@
-const withSugarSS = require('./next-sugarss')
 const withTranspileModules = require('next-transpile-modules')
 
 const nodeModulesEs = require('./nodeModulesEs.json')
@@ -11,12 +10,9 @@ const workspacePackages = Object.entries(pkgInfo.dependencies).reduce(
   []
 )
 
-// Order of wrappers affects the order of the stylesheets
-const config = withSugarSS(
-  withTranspileModules([
-    ...workspacePackages,
-    ...nodeModulesEs, // ES6 node modules
-  ])(options)
-)
+const config = withTranspileModules([
+  ...workspacePackages,
+  ...nodeModulesEs, // ES6 node modules
+])(options)
 
 module.exports = process.env.BUNDLE_ANALYZE ? withBundleAnalyzer(config) : config
