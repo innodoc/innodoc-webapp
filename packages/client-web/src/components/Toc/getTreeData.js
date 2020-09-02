@@ -35,5 +35,7 @@ const getTreeNode = (section, currentSectionId, t) => {
   }
 }
 
-export default (tocData, currentSectionId, t) =>
+const getTreeData = (tocData, currentSectionId, t) =>
   tocData.map((section) => getTreeNode(section, currentSectionId, t))
+
+export default getTreeData
