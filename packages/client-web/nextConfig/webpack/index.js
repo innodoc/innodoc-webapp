@@ -4,7 +4,6 @@ const addMiniCssExtractPlugin = require('./addMiniCssExtractPlugin')
 const addSugarSs = require('./addSugarSs')
 const addSvgIcons = require('./addSvgIcons')
 const addWoff2FileLoader = require('./addWoff2FileLoader')
-const ignoreTests = require('./ignoreTests')
 const printDebugInfo = require('./printDebugInfo')
 
 module.exports = (prevConfig, options) => {
@@ -15,8 +14,6 @@ module.exports = (prevConfig, options) => {
   addMiniCssExtractPlugin(config, options)
   addSvgIcons(config)
   addWoff2FileLoader(config)
-
-  ignoreTests(config) // TODO: needed???
 
   if (process.env.PRINT_WEBPACK_DEBUG_INFO) {
     printDebugInfo(config, options)
