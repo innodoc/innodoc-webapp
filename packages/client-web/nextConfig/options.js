@@ -15,12 +15,7 @@ module.exports = {
       localIdentName: '[local]___[hash:base64:5]',
     },
   },
-  generateBuildId: () => {
-    const envVal = process.env.NEXTJS_WEBAPP_BUILD_ID // Passed in CI
-    if (envVal) {
-      return envVal
-    }
-    return nextBuildId({ dir: __dirname }) // Use git commit
-  },
+  // Use custom build ID (CI) or generated from git commit (default)
+  generateBuildId: () => process.env.NEXTJS_WEBAPP_BUILD_ID || nextBuildId({ dir: __dirname }),
   webpack,
 }
