@@ -30,6 +30,7 @@
     "@ant-design/icons": "^4.2.2",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@innodoc/client-misc": "workspace:packages/client-misc",
+    "@innodoc/client-question-validators": "workspace:packages/client-question-validators",
     "@innodoc/client-sagas": "workspace:packages/client-sagas",
     "@innodoc/client-store": "workspace:packages/client-store",
     "@innodoc/common": "workspace:packages/common",

@@ -1,20 +1,21 @@
 const withSugarSS = require('./next-sugarss')
 const withTranspileModules = require('next-transpile-modules')
 
-const nodeModulesEs = require('./nodeModulesEs')
+const nodeModulesEs = require('./nodeModulesEs.json')
 const withBundleAnalyzer = require('./withBundleAnalyzer')
 const options = require('./options')
+const pkgInfo = require('../package.json')
+
+const workspacePackages = Object.entries(pkgInfo.dependencies).reduce(
+  (acc, [name, ver]) => (ver.startsWith('workspace:packages/') ? [...acc, name] : acc),
+  []
+)
 
 // Order of wrappers affects the order of the stylesheets
 const config = withSugarSS(
   withTranspileModules([
-    // Monorepo modules
-    '@innodoc/client-misc',
-    '@innodoc/client-question-validators',
-    '@innodoc/client-sagas',
-    '@innodoc/client-store',
-    // ES6 node modules
-    ...nodeModulesEs,
+    ...workspacePackages,
+    ...nodeModulesEs, // ES6 node modules
   ])(options)
 )
 
