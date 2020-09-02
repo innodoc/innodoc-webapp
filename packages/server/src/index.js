@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { createHttpTerminator } from 'http-terminator'
 
 import createExpressApp from './createExpressApp'
@@ -36,6 +35,7 @@ const startServer = async () => {
     const msg = `Started ${config.nodeEnv} server on ${config.host}:${config.port}.`
     logger.info(msg)
   } catch (err) {
+    console.log('Error while starting server', err) // eslint-disable-line no-console
     if (logger) {
       logger.error(err)
     }
