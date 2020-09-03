@@ -1,9 +1,13 @@
+const path = require('path')
 const { default: MongodbMemoryServer } = require('mongodb-memory-server')
 
 const startMongod = async ({ hostname, port, pathname }) =>
   new MongodbMemoryServer({
     autoStart: false,
-    binary: { skipMD5: true },
+    binary: {
+      downloadDir: path.resolve(__dirname, '..', '..', '..', '..', '.yarn', 'mongodb-binaries'),
+      skipMD5: true,
+    },
     instance: {
       ip: hostname,
       dbName: pathname.substr(1),
