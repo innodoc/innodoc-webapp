@@ -9,11 +9,12 @@ describe('Basic layout', () => {
   it('should have content', async () => {
     await openUrl()
     await browser.assert.exists('[class*=content___]')
-    expect(await browser.text('h1')).toContain('About this course')
-    expect(await browser.text('div')).toContain(
-      'This content is a showcase for the innoDoc software package. It was ' +
-        'developed at innoCampus, Technische Universität Berlin.'
-    )
+    await browser.assert.textContains('h1', 'About this course')
+    await browser.assert.textContains('div', [
+      'This content is a showcase for the innoDoc software package',
+      'It was developed at innoCampus',
+      'It is used for automated software tests.',
+    ])
   })
 
   it('should have a header', async () => {
