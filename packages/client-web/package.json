@@ -34,7 +34,7 @@
     "@innodoc/client-sagas": "workspace:packages/client-sagas",
     "@innodoc/client-store": "workspace:packages/client-store",
     "@innodoc/common": "workspace:packages/common",
-    "@innodoc/react-mathjax-node": "^0.1.0",
+    "@innodoc/react-mathjax-node": "^0.1.1",
     "antd": "4.5.3",
     "classnames": "^2.2.6",
     "i18next": "^19.6.3",

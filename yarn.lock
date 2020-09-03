@@ -1979,7 +1979,7 @@ __metadata:
     "@innodoc/client-sagas": "workspace:packages/client-sagas"
     "@innodoc/client-store": "workspace:packages/client-store"
     "@innodoc/common": "workspace:packages/common"
-    "@innodoc/react-mathjax-node": ^0.1.0
+    "@innodoc/react-mathjax-node": ^0.1.1
     "@innodoc/server": "workspace:packages/server"
     "@svgr/webpack": ^5.4.0
     "@types/enzyme": ^3.10.5
@@ -2082,16 +2082,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@innodoc/react-mathjax-node@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@innodoc/react-mathjax-node@npm:0.1.0"
+"@innodoc/react-mathjax-node@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@innodoc/react-mathjax-node@npm:0.1.1"
   dependencies:
-    mathjax-full: ^3.0.5
+    mathjax-full: 3.0.5
     prop-types: ^15.7.2
     use-debounce: ^3.4.1
   peerDependencies:
     react: ^16.13.1
-  checksum: c7cbe447565aed29e8afe138f94f7b8f746b61ceea6c1297f0f77737c9693bdb0e52c8bdda2ed9040911393e7c428b0654c0e2f7fe644af02486fd2aeb7ca532
+  checksum: e608014cec0310fc0c9c556d2b4bb0c508412998a2bfd73b91b9b6238f4f86447ffdf8e63cacf4d7a86ea9a0f9a592fc79f04b260b578939747e7a30b2ed8746
   languageName: node
   linkType: hard
 
@@ -11652,6 +11652,17 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"mathjax-full@npm:3.0.5":
+  version: 3.0.5
+  resolution: "mathjax-full@npm:3.0.5"
+  dependencies:
+    esm: ^3.2.25
+    mj-context-menu: ^0.2.2
+    speech-rule-engine: ^3.0.0-beta.10
+  checksum: a6e7affa581e3163fd9f74e748fa57d8fbebcfa1703f718709fad70ba404e9ffe6dcda3a5d5de5ee38f75824f5635b313137a7d4a8191fde48111871c1b9d3aa
+  languageName: node
+  linkType: hard
+
 "mathjax-full@npm:^3.0.5":
   version: 3.1.0
   resolution: "mathjax-full@npm:3.1.0"
@@ -12088,6 +12099,13 @@ fsevents@^1.2.7:
     for-in: ^0.1.3
     is-extendable: ^0.1.1
   checksum: 90adec767dff41d8f9917d729d786ddae6cc9c08dc69133851348042d35c74496079be88fd33e874315b11db535c7761b769a3c3a361f2fb1c2ec8b6672ecac0
+  languageName: node
+  linkType: hard
+
+"mj-context-menu@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "mj-context-menu@npm:0.2.2"
+  checksum: 5d198b8636ffac840c81de92efd8e9286ecfa977422b72c35ca2b3a8206b75504c4731be09d4464a6ea1c8e9b4ff329697fcb0edc7ef6c6b7412bd1331e0d9ed
   languageName: node
   linkType: hard
 
@@ -17032,7 +17050,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"speech-rule-engine@npm:^3.1.0":
+"speech-rule-engine@npm:^3.0.0-beta.10, speech-rule-engine@npm:^3.1.0":
   version: 3.1.0
   resolution: "speech-rule-engine@npm:3.1.0"
   dependencies:
