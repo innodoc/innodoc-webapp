@@ -19,7 +19,7 @@ const mockConfig = {
   logFile: '/var/log/foo.log',
   nodeEnv: 'production',
 }
-const mockExpressApp = { listen: jest.fn().mockResolvedValue(mockServer) }
+const mockExpressApp = { listen: jest.fn().mockReturnValue(mockServer) }
 const mockNextApp = {}
 
 jest.mock('./logger')
