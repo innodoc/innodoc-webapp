@@ -59,6 +59,7 @@
   "devDependencies": {
     "@babel/core": "^7.11.5",
     "@babel/plugin-proposal-export-default-from": "^7.10.4",
+    "@babel/preset-env": "^7.11.5",
     "@innodoc/server": "workspace:packages/server",
     "@svgr/webpack": "^5.4.0",
     "@types/enzyme": "^3.10.5",

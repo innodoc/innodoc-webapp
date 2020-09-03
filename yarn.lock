@@ -1973,6 +1973,7 @@ __metadata:
     "@ant-design/icons": ^4.2.2
     "@babel/core": ^7.11.5
     "@babel/plugin-proposal-export-default-from": ^7.10.4
+    "@babel/preset-env": ^7.11.5
     "@fortawesome/fontawesome-free": ^5.14.0
     "@innodoc/client-misc": "workspace:packages/client-misc"
     "@innodoc/client-question-validators": "workspace:packages/client-question-validators"
