@@ -117,6 +117,16 @@ describe('startServer', () => {
   })
 
   describe('failed startup', () => {
+    let consoleSpy
+
+    beforeEach(() => {
+      // Prevent test output error message spam
+      consoleSpy = jest.spyOn(global.console, 'log')
+      consoleSpy.mockImplementation(() => undefined)
+    })
+
+    afterEach(() => consoleSpy.mockRestore())
+
     describe.each(['createExpressApp', 'createNextApp', 'connectDb', 'getConfig'])(
       '%s',
       (mockName) => {
