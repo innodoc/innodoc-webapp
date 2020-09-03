@@ -3,11 +3,15 @@ ARG BASE_IMAGE=node:14-alpine3.12
 FROM $BASE_IMAGE AS build
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 ARG BUILD_ID
-ENV NEXTJS_WEBAPP_BUILD_ID=$BUILD_ID
+ENV NEXTJS_WEBAPP_BUILD_ID=$BUILD_ID \
+    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
+    MONGOMS_DISABLE_POSTINSTALL=1 \
+    APP_HOST=0.0.0.0 \
+    APP_PORT=8000
 
-# build
+# Build
 WORKDIR /innodoc-webapp
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 RUN set -xe && \
   apk add --no-cache \
     build-base \
@@ -16,24 +20,23 @@ RUN set -xe && \
 COPY . .
 RUN set -xe && \
   ln -s .env.example .env && \
-  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 MONGOMS_DISABLE_POSTINSTALL=1 yarn install --frozen-lockfile && \
-  yarn add --no-lockfile --ignore-workspace-root-check pm2 && \
-  npx next telemetry disable && \
+  yarn install --immutable && \
+  yarn workspace @innodoc/client-web run next telemetry disable && \
   yarn build
 
 FROM $BASE_IMAGE
 
-# add user/group to run as
+# Add user/group to run as
 RUN set -xe && \
     addgroup -S innodocuser && \
     adduser -S -g innodocuser innodocuser
 
-# copy app
+# Copy app
 WORKDIR /innodoc-webapp
 COPY --from=build --chown=innodocuser:innodocuser /innodoc-webapp .
 USER innodocuser
+RUN set -xe && yarn add pm2
 
-# run web app
+# Run web app
 EXPOSE 8000
-ENV APP_PORT=8000
 CMD ["yarn", "run", "pm2-runtime", "start", "yarn", "--interpreter", "/bin/sh", "--name", "innodoc-webapp", "--", "start"]
