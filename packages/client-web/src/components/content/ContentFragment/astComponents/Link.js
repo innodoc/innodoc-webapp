@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { LinkOutlined } from '@ant-design/icons'
+import Icon from '@ant-design/icons'
+import ExternalLinkSvg from '@fortawesome/fontawesome-free/svgs/solid/external-link-alt.svg'
 
 import ContentFragment from '..'
 import { InternalLink } from '../../links'
@@ -26,9 +27,9 @@ const Link = ({ data }) => {
   if (/^https?:\/\//i.test(href)) {
     return (
       <a href={href} title={title}>
-        <ContentFragment content={content} />
+        <ContentFragment content={content} />{' '}
         <sup>
-          <LinkOutlined />
+          <Icon component={ExternalLinkSvg} />
         </sup>
       </a>
     )
