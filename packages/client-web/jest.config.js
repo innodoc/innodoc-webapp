@@ -12,7 +12,6 @@ module.exports = {
   transform: {
     '^.+\\.[t|j]sx?$': 'babel-jest',
   },
-  // TODO: pnp
   transformIgnorePatterns: [
     '!enzyme\\.config\\.js',
     `/node_modules/(?!(${nodeModulesEs.join('|')})/)`,
