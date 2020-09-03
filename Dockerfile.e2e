@@ -13,8 +13,12 @@ FROM alpine:3.12
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 WORKDIR /innodoc-webapp
 
+# Use Chromium from Alpine package
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
 RUN set -xe && \
-    # install distro chromium
+    # Install Chromium from distro
     apk add --no-cache \
       chromium \
       dumb-init \
@@ -26,7 +30,7 @@ RUN set -xe && \
       ttf-freefont \
       nodejs \
       yarn && \
-    # add user/group to run as
+    # Add user/group to run as
     addgroup -S innodocuser && \
     adduser -S -g innodocuser innodocuser && \
     mkdir -p /home/innodocuser/Downloads /innodoc-webapp && \
@@ -40,15 +44,11 @@ RUN set -xe && \
       /tmp/*
 
 COPY --from=build --chown=innodocuser:innodocuser /innodoc-webapp .
-
-# use Chromium from Alpine package
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-
-# force puppeteer version
-RUN yarn add --no-lockfile --ignore-workspace-root-check --exact puppeteer@$PUPPETEER_VERSION
-
-# run e2e script
 USER innodocuser
+
+# Force puppeteer version
+RUN yarn add puppeteer@$PUPPETEER_VERSION
+
+# Run E2E tests
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["yarn", "run", "test:e2e", "--color"]
