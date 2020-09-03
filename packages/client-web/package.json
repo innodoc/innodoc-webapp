@@ -18,7 +18,7 @@
     "build": "next build src",
     "lint:stylelint": "stylelint 'src/**/*.sss'",
     "test:e2e:content": "http-server e2e/content -a localhost -p ${CONTENT_PORT:-8001} --cors",
-    "test:e2e": "APP_ROOT=${APP_ROOT:-http://localhost:6123/} CONTENT_ROOT=${CONTENT_ROOT:-http://localhost:6124/} MONGO_URL=${MONGO_URL:-mongodb://localhost:6125/innodoc-e2e} jest --bail --runInBand --forceExit --detectOpenHandles --config e2e/jest/jest.config.js"
+    "test:e2e": "APP_ROOT=${APP_ROOT:-http://localhost:6123/} CONTENT_ROOT=${CONTENT_ROOT:-http://localhost:6124/} MONGO_URL=${MONGO_URL:-mongodb://localhost:6125/innodoc-e2e} jest --runInBand --forceExit --detectOpenHandles --config e2e/jest/jest.config.js"
   },
   "keywords": [
     "innodoc",
