@@ -52,4 +52,4 @@ RUN yarn add puppeteer@$PUPPETEER_VERSION
 
 # Run E2E tests
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["yarn", "run", "test:e2e", "--color"]
+CMD ["yarn", "run", "test:e2e", "--color", "e2e/tests/userProgress"]

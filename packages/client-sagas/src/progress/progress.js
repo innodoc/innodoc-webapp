@@ -50,6 +50,12 @@ export function* restoreSaga() {
     // ignore
   }
 
+  // TODO: try to run loadProgress in later separate saga??
+
+  // console.log('restoreSaga')
+  // console.log('local:')
+  // console.log(JSON.stringify(, null, 2))
+
   // server
   if (loggedInEmail) {
     try {

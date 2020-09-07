@@ -26,6 +26,8 @@ const testHelpers = (env) => {
         url: env.global.getUrl(),
         value: 'true',
       })
+    } else {
+      await env.global.browser.cookies.delete('data-consent')
     }
 
     await env.global.browser.open(env.global.getUrl(urlFragment), opts)

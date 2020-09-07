@@ -14,7 +14,8 @@ class WendigoEnvironment extends NodeEnvironment {
     const headless = process.env.PUPPETEER_HEADLESS !== 'false'
     this.wendigoOpts = {
       defaultTimeout,
-      incognito: true,
+      incognito: false,
+      log: true,
       userAgent,
     }
     if (isCI) {
