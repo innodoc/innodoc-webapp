@@ -6,7 +6,7 @@ describe('User progress', () => {
   const pwd = 'S00perSecur3!'
 
   const assertProgress = async (chapterIdx, chartIdx, strings) => {
-    await browser.waitFor((s) => document.querySelectorAll(s).length === 6, 10000, '.ant-progress')
+    // await browser.waitFor((s) => document.querySelectorAll(s).length === 6, 10000, '.ant-progress')
     const cards = await browser.queryAll('[class*=resultCard___]')
     const charts = await browser.queryAll(cards[chapterIdx], '.ant-card-body > .ant-row > .ant-col')
     await browser.assert.textContains(charts[chartIdx], strings)
@@ -29,6 +29,12 @@ describe('User progress', () => {
     await assertProgress(0, 0, ['0 %', 'Visited 0 out of 7.'])
     await assertProgress(1, 0, ['6 %', 'Visited 1 out of 17.'])
     await assertProgress(1, 1, ['5 %', 'Scored 3 out of 63 points.'])
+    await openUrl('section/02-elements/02-headings')
+    await browser.wait(2500)
+    await openUrl('progress')
+    await assertProgress(0, 0, ['0 %', 'Visited 0 out of 7.'])
+    await assertProgress(1, 0, ['12 %', 'Visited 2 out of 17.'])
+    await assertProgress(1, 1, ['5 %', 'Scored 3 out of 63 points.'])
   })
 
   test('Server storage', async () => {
@@ -46,7 +52,7 @@ describe('User progress', () => {
     await login(email, pwd)
 
     await openUrl('section/02-elements/02-headings')
-    await browser.wait(5000)
+    await browser.wait(2500)
     await openUrl('progress')
     await assertProgress(1, 0, ['12 %', 'Visited 2 out of 17.'])
     await assertProgress(1, 1, ['5 %', 'Scored 3 out of 63 points.'])
@@ -62,7 +68,7 @@ describe('User progress', () => {
     await assertProgress(1, 1, ['0 %', 'Scored 0 out of 63 points.'])
 
     await openUrl('section/02-elements/01-formatting')
-    await browser.wait(5000)
+    await browser.wait(2500)
     await solveExercise(0, 'wrong')
     await solveExercise(2, '{1}') // 4 points
     await openUrl('progress')
