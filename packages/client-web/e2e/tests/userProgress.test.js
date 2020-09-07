@@ -6,6 +6,7 @@ describe('User progress', () => {
   const pwd = 'S00perSecur3!'
 
   const assertProgress = async (chapterIdx, chartIdx, strings) => {
+    await browser.waitFor((s) => document.querySelectorAll(s).length === 6, 10000, '.ant-progress')
     const cards = await browser.queryAll('[class*=resultCard___]')
     const charts = await browser.queryAll(cards[chapterIdx], '.ant-card-body > .ant-row > .ant-col')
     await browser.assert.textContains(charts[chartIdx], strings)
