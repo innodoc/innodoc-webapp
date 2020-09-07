@@ -1,22 +1,23 @@
 # This image is used for E2E testing.
 # BUILD_IMAGE is set to current build in CI pipeline
 
-# Sync puppeteer version to corresponding Chromium version!
-# Check corresponding versions: https://github.com/GoogleChrome/puppeteer/blob/main/docs/api.md
-# Alpine Chromium version: https://pkgs.alpinelinux.org/packages?name=chromium
-ARG PUPPETEER_VERSION=3.1.0
 
 ARG BUILD_IMAGE=innodoc/innodoc-webapp
 FROM $BUILD_IMAGE AS build
 
 FROM alpine:3.12
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
-WORKDIR /innodoc-webapp
+
+# Sync puppeteer version to corresponding Chromium version!
+# Check corresponding versions: https://github.com/GoogleChrome/puppeteer/blob/main/docs/api.md
+# Alpine Chromium version: https://pkgs.alpinelinux.org/packages?name=chromium
+ARG PUPPETEER_VERSION=3.1.0
 
 # Use Chromium from Alpine package
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
+WORKDIR /innodoc-webapp
 RUN set -xe && \
     # Install Chromium from distro
     apk add --no-cache \
