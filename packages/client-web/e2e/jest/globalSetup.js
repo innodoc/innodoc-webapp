@@ -34,6 +34,9 @@ const servers = [
     port: appPort,
     protocol: 'http',
     usedPortAction,
+    waitOnScheme: {
+      delay: 4000, // Give content server time to start first
+    },
   },
   {
     command: contentCmd,
