@@ -54,10 +54,12 @@ export default class Section extends Model {
         break
 
       case contentActionTypes.SECTION_VISIT:
+        console.log(`Section Model (${action.sectionId}: visited true`)
         SectionModel.withId(action.sectionId).set('visited', true)
         break
 
       case userActionTypes.CLEAR_PROGRESS:
+        console.log('Section Model clear progress')
         SectionModel.all()
           .toModelArray()
           .forEach((section) => section.set('visited', false))
@@ -65,6 +67,7 @@ export default class Section extends Model {
 
       case userActionTypes.LOAD_PROGRESS:
         action.visitedSections.forEach((id) => {
+          console.log(`Section Model load progress: ${id}`)
           const section = SectionModel.withId(id)
           if (section) {
             section.set('visited', true)

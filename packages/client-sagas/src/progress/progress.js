@@ -18,15 +18,21 @@ export function* persistSaga() {
   const { appRoot, csrfToken, loggedInEmail } = yield select(appSelectors.getApp)
   const progress = yield select(progressSelectors.getPersistedProgress)
 
+  console.log('persistSaga')
+
   if (loggedInEmail) {
     // From server
     yield call(persistProgress, appRoot, csrfToken, progress)
+    console.log('persisted to server')
   } else {
     // localStorage
     const serializedProgress = yield call([JSON, JSON.stringify], progress)
     try {
       yield call([localStorage, localStorage.setItem], LOCAL_STORAGE_KEY, serializedProgress)
-    } catch {
+      console.log('persist to local success')
+    } catch (err) {
+      console.log('persist to local failed')
+      console.log(err)
       // Might throw (storage full, Mobile Safari private mode)
     }
   }
@@ -36,6 +42,8 @@ export function* restoreSaga() {
   const { appRoot, loggedInEmail } = yield select(appSelectors.getApp)
   let gotLocalStorageData = false
 
+  console.log('restoreSaga')
+
   // localStorage
   try {
     const serializedProgress = yield call([localStorage, localStorage.getItem], LOCAL_STORAGE_KEY)
@@ -43,10 +51,13 @@ export function* restoreSaga() {
       const progress = yield call([JSON, JSON.parse], serializedProgress)
       if (progress && progress.answeredQuestions && progress.visitedSections) {
         yield put(loadProgress(progress.answeredQuestions, progress.visitedSections))
+        console.log('restore from local success')
         gotLocalStorageData = true
       }
     }
-  } catch {
+  } catch (err) {
+    console.log('restore from local failed')
+    console.log(err)
     // ignore
   }
 
@@ -54,15 +65,20 @@ export function* restoreSaga() {
   if (loggedInEmail) {
     try {
       const { progress } = yield call(fetchProgress, appRoot)
+      console.log('server loaded')
       if (progress && progress.answeredQuestions && progress.visitedSections) {
         yield call([localStorage, localStorage.removeItem], LOCAL_STORAGE_KEY)
+        console.log('local cleared')
         yield put(loadProgress(progress.answeredQuestions, progress.visitedSections))
         if (gotLocalStorageData) {
           // Sync localStorage back to server
           yield call(persistSaga)
+          console.log('pesistSaga called to sync local back to server')
         }
       }
-    } catch {
+    } catch (err) {
+      console.log('persist to server failed')
+      console.log(err)
       // ignore
     }
   }

@@ -14,6 +14,8 @@ const Progress = () => {
   const { minScore } = useSelector(courseSelectors.getCurrentCourse)
   const chapters = useSelector(progressSelectors.getProgress)
 
+  console.log(JSON.stringify(chapters, null, 2))
+
   const chapterCards = chapters.map((chapter) => (
     <ChapterCard
       key={chapter.id.toString()}
