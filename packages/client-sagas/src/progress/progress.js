@@ -19,13 +19,15 @@ export function* persistSaga() {
   const progress = yield select(progressSelectors.getPersistedProgress)
 
   if (loggedInEmail) {
-    // From server
+    // To server
     yield call(persistProgress, appRoot, csrfToken, progress)
+    console.log('persisted to remote success')
   } else {
     // localStorage
     const serializedProgress = yield call([JSON, JSON.stringify], progress)
     try {
       yield call([localStorage, localStorage.setItem], LOCAL_STORAGE_KEY, serializedProgress)
+      console.log('persisted to local success')
     } catch {
       // Might throw (storage full, Mobile Safari private mode)
     }
@@ -73,8 +75,13 @@ export function* restoreSaga() {
           // Sync localStorage back to server
           yield call(persistSaga)
         }
+      } else {
+        console.log('restoring from remote fail')
+        console.log(progress)
       }
-    } catch {
+    } catch (err) {
+      console.log('restoring from remote error')
+      console.log(err)
       // ignore
     }
   }

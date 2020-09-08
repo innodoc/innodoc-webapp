@@ -73,9 +73,10 @@ describe('User progress', () => {
     // await assertProgress(1, 1, ['5 %', 'Scored 3 out of 63 points.'])
 
     await openUrl('section/02-elements/01-formatting')
-    await browser.wait(2500)
+    await browser.wait(5000)
 
     await openUrl('progress')
+    await browser.wait(5000)
     await assertProgress(1, 0, ['6 %', 'Visited 1 out of 17.'])
 
     // await assertProgress(1, 0, ['12 %', 'Visited 2 out of 17.'])
