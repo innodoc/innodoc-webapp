@@ -9,6 +9,7 @@ describe('User progress', () => {
     // await browser.waitFor((s) => document.querySelectorAll(s).length === 6, 10000, '.ant-progress')
     const cards = await browser.queryAll('[class*=resultCard___]')
     const charts = await browser.queryAll(cards[chapterIdx], '.ant-card-body > .ant-row > .ant-col')
+    await browser.wait(500) // Need to wait here for the charts render a second time with data
     await browser.assert.textContains(charts[chartIdx], strings)
   }
 
