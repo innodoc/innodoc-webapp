@@ -8,10 +8,12 @@ const useTrackVisit = (sectionId) => {
   useEffect(() => {
     console.log('useTrackVisit', sectionId)
     if (sectionId) {
-      dispatch(sectionVisit(sectionId))
-      console.log('useTrackVisit dispatched sectionVisit')
+      const action = sectionVisit(sectionId)
+      dispatch(action)
+      console.log('useTrackVisit dispatched action:')
+      console.log(action)
     }
-  })
+  }, [dispatch, sectionId])
 }
 
 export default useTrackVisit

@@ -1,4 +1,4 @@
-import { all, call, debounce, put, select, takeEvery } from 'redux-saga/effects'
+import { all, call, debounce, fork, put, select, takeEvery } from 'redux-saga/effects'
 
 import { fetchProgress, persistProgress } from '@innodoc/client-misc/src/api'
 import { actionTypes as contentActionTypes } from '@innodoc/client-store/src/actions/content'
@@ -65,12 +65,6 @@ export function* restoreSaga() {
     // ignore
   }
 
-  // TODO: try to run loadProgress in later separate saga??
-
-  // console.log('restoreSaga')
-  // console.log('local:')
-  // console.log(JSON.stringify(, null, 2))
-
   // server
   if (loggedInEmail) {
     console.log('logged in, try restoring from remote')
@@ -102,8 +96,7 @@ export function* clearSaga() {
   yield put(clearProgress())
 }
 
-export default function* progressSaga() {
-  yield call(restoreSaga)
+function* monitorActions() {
   yield all([
     takeEvery(userActionTypes.USER_LOGGED_IN, restoreSaga),
     takeEvery(userActionTypes.USER_LOGGED_OUT, clearSaga),
@@ -113,4 +106,9 @@ export default function* progressSaga() {
       persistSaga
     ),
   ])
+}
+
+export default function* progressSaga() {
+  yield fork(monitorActions)
+  yield call(restoreSaga)
 }

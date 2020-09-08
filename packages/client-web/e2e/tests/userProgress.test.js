@@ -73,7 +73,9 @@ describe('User progress', () => {
     // await assertProgress(1, 1, ['5 %', 'Scored 3 out of 63 points.'])
 
     await openUrl('section/02-elements/01-formatting')
-    await browser.wait(5000)
+    console.log('waiting 10sec')
+    await browser.wait(10000)
+    console.log('done waiting')
 
     await openUrl('progress')
     await browser.wait(5000)
