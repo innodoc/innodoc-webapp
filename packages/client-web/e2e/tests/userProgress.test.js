@@ -42,24 +42,30 @@ describe('User progress', () => {
     // await assertProgress(1, 0, ['0 %', 'Visited 0 out of 17.'])
     // await assertProgress(1, 1, ['0 %', 'Scored 0 out of 63 points.'])
     // console.log('E2E test: solving first')
-    await solveExercise(0, 'solution') // 3 points
+    // await solveExercise(0, 'solution') // 3 points
     // await openUrl('progress')
     // await assertProgress(1, 0, ['6 %', 'Visited 1 out of 17.'])
     // await assertProgress(1, 1, ['5 %', 'Scored 3 out of 63 points.'])
 
     // console.log('E2E test: registering')
-    const email = getRandEmail()
-    await register(email, pwd)
-    await activate(email)
-    await login(email, pwd)
+    // const email = getRandEmail()
+    // await register(email, pwd)
+    // await activate(email)
+    // await login(email, pwd)
 
     // console.log('E2E test: visiting another')
-    // await openUrl('section/02-elements/02-headings')
-    // await browser.wait(2500)
+    await openUrl('section/02-elements/02-headings')
+    await browser.wait(2500)
 
     await openUrl('progress')
     await assertProgress(1, 0, ['6 %', 'Visited 1 out of 17.'])
-    await assertProgress(1, 1, ['5 %', 'Scored 3 out of 63 points.'])
+    // await assertProgress(1, 1, ['5 %', 'Scored 3 out of 63 points.'])
+
+    await openUrl('section/02-elements/01-formatting')
+    await browser.wait(2500)
+
+    await openUrl('progress')
+    await assertProgress(1, 0, ['12 %', 'Visited 2 out of 17.'])
 
     // await assertProgress(1, 0, ['12 %', 'Visited 2 out of 17.'])
     // await assertProgress(1, 1, ['5 %', 'Scored 3 out of 63 points.'])
