@@ -1,4 +1,4 @@
-import { all, call, debounce, put, select, takeEvery } from 'redux-saga/effects'
+import { all, call, fork, debounce, put, select, takeEvery } from 'redux-saga/effects'
 
 import { fetchProgress, persistProgress } from '@innodoc/client-misc/src/api'
 import { actionTypes as contentActionTypes } from '@innodoc/client-store/src/actions/content'
@@ -72,8 +72,7 @@ export function* clearSaga() {
   yield put(clearProgress())
 }
 
-export default function* progressSaga() {
-  yield call(restoreSaga)
+export function* monitorActions() {
   yield all([
     takeEvery(userActionTypes.USER_LOGGED_IN, restoreSaga),
     takeEvery(userActionTypes.USER_LOGGED_OUT, clearSaga),
@@ -83,4 +82,9 @@ export default function* progressSaga() {
       persistSaga
     ),
   ])
+}
+
+export default function* progressSaga() {
+  yield fork(monitorActions)
+  yield call(restoreSaga)
 }

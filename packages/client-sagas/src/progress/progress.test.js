@@ -17,6 +17,7 @@ import progressSaga, {
   LOCAL_STORAGE_KEY,
   PERSIST_DEBOUNCE_TIME,
   clearSaga,
+  monitorActions,
   persistSaga,
   restoreSaga,
 } from './progress'
@@ -121,11 +122,9 @@ describe('clearSaga', () => {
   it('should put clearProgress', () => expectSaga(clearSaga).put(clearProgress()).run())
 })
 
-describe('progressSaga', () => {
-  it('should restore, fork and debounce persist', () => {
-    testSaga(progressSaga)
-      .next()
-      .call(restoreSaga)
+describe('monitorActions', () => {
+  it('should monitor user actions', () => {
+    testSaga(monitorActions)
       .next()
       .all([
         takeEvery(userActionTypes.USER_LOGGED_IN, restoreSaga),
@@ -138,5 +137,11 @@ describe('progressSaga', () => {
       ])
       .next()
       .isDone()
+  })
+})
+
+describe('progressSaga', () => {
+  it('should fork monitorActions and call restoreSaga', () => {
+    testSaga(progressSaga).next().fork(monitorActions).next().call(restoreSaga).next().isDone()
   })
 })
