@@ -54,11 +54,11 @@ describe('User progress', () => {
     // await login(email, pwd)
 
     // console.log('E2E test: visiting another')
-    await openUrl('section/02-elements/02-headings')
-    await browser.wait(2500)
+    // await openUrl('section/02-elements/02-headings')
+    // await browser.wait(2500)
 
     await openUrl('progress')
-    await assertProgress(1, 0, ['6 %', 'Visited 1 out of 17.'])
+    await assertProgress(1, 0, ['0 %', 'Visited 0 out of 17.'])
     // await assertProgress(1, 1, ['5 %', 'Scored 3 out of 63 points.'])
 
     const email = getRandEmail()
@@ -67,14 +67,14 @@ describe('User progress', () => {
     await login(email, pwd)
 
     await openUrl('progress')
-    await assertProgress(1, 0, ['6 %', 'Visited 1 out of 17.'])
+    await assertProgress(1, 0, ['0 %', 'Visited 0 out of 17.'])
     // await assertProgress(1, 1, ['5 %', 'Scored 3 out of 63 points.'])
 
     await openUrl('section/02-elements/01-formatting')
     await browser.wait(2500)
 
     await openUrl('progress')
-    await assertProgress(1, 0, ['12 %', 'Visited 2 out of 17.'])
+    await assertProgress(1, 0, ['6 %', 'Visited 1 out of 17.'])
 
     // await assertProgress(1, 0, ['12 %', 'Visited 2 out of 17.'])
     // await assertProgress(1, 1, ['5 %', 'Scored 3 out of 63 points.'])
