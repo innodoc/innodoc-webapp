@@ -15,13 +15,20 @@ export const LOCAL_STORAGE_KEY = 'user-progress'
 export const PERSIST_DEBOUNCE_TIME = 2000
 
 export function* persistSaga() {
+  console.log('START persistSaga')
+
   const { appRoot, csrfToken, loggedInEmail } = yield select(appSelectors.getApp)
   const progress = yield select(progressSelectors.getPersistedProgress)
 
   if (loggedInEmail) {
     // To server
-    yield call(persistProgress, appRoot, csrfToken, progress)
-    console.log('persisted to remote success')
+    try {
+      yield call(persistProgress, appRoot, csrfToken, progress)
+      console.log('persisted to remote success')
+    } catch (err) {
+      console.log('persisted to remote fail')
+      console.log(err)
+    }
   } else {
     // localStorage
     const serializedProgress = yield call([JSON, JSON.stringify], progress)
@@ -32,6 +39,8 @@ export function* persistSaga() {
       // Might throw (storage full, Mobile Safari private mode)
     }
   }
+
+  console.log('END persistSaga')
 }
 
 export function* restoreSaga() {
