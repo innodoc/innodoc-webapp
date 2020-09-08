@@ -33,16 +33,20 @@ export function* persistSaga() {
 }
 
 export function* restoreSaga() {
+  console.log('START restoreSaga')
+
   const { appRoot, loggedInEmail } = yield select(appSelectors.getApp)
   let gotLocalStorageData = false
 
   // localStorage
   try {
+    console.log('try to restore from local')
     const serializedProgress = yield call([localStorage, localStorage.getItem], LOCAL_STORAGE_KEY)
     if (serializedProgress) {
       const progress = yield call([JSON, JSON.parse], serializedProgress)
       if (progress && progress.answeredQuestions && progress.visitedSections) {
         yield put(loadProgress(progress.answeredQuestions, progress.visitedSections))
+        console.log('restoring from local success')
         gotLocalStorageData = true
       }
     }
@@ -58,11 +62,13 @@ export function* restoreSaga() {
 
   // server
   if (loggedInEmail) {
+    console.log('logged in, try restoring from remote')
     try {
       const { progress } = yield call(fetchProgress, appRoot)
       if (progress && progress.answeredQuestions && progress.visitedSections) {
         yield call([localStorage, localStorage.removeItem], LOCAL_STORAGE_KEY)
         yield put(loadProgress(progress.answeredQuestions, progress.visitedSections))
+        console.log('restoring from remote success')
         if (gotLocalStorageData) {
           // Sync localStorage back to server
           yield call(persistSaga)
@@ -72,6 +78,8 @@ export function* restoreSaga() {
       // ignore
     }
   }
+
+  console.log('END restoreSaga')
 }
 
 export function* clearSaga() {
