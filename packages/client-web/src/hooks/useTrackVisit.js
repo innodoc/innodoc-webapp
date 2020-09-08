@@ -9,7 +9,7 @@ const useTrackVisit = (sectionId) => {
     if (sectionId) {
       dispatch(sectionVisit(sectionId))
     }
-  })
+  }, [dispatch, sectionId])
 }
 
 export default useTrackVisit
