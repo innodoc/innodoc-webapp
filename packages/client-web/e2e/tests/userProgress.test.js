@@ -61,6 +61,7 @@ describe('User progress', () => {
     // await assertProgress(1, 0, ['0 %', 'Visited 0 out of 17.'])
     // await assertProgress(1, 1, ['5 %', 'Scored 3 out of 63 points.'])
 
+    await openUrl()
     const email = getRandEmail()
     await register(email, pwd)
     await activate(email)

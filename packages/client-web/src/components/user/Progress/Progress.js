@@ -10,6 +10,8 @@ import css from './style.sss'
 import ChapterCard from './ChapterCard'
 
 const Progress = () => {
+  console.log('rendering progress')
+
   const { t } = useTranslation()
   const { minScore } = useSelector(courseSelectors.getCurrentCourse)
   const chapters = useSelector(progressSelectors.getProgress)

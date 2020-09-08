@@ -32,6 +32,11 @@ const getProgress = createSelector(orm, sectionSelectors.getChapters, (session, 
     const chapterExercises = getSectionExercises(session, moduleSections.toModelArray())
     const testSections = chapterSections.filter((section) => section.type === 'test')
     const testExercises = getSectionExercises(session, testSections.toModelArray())
+
+    if (chapter.id === '02-elements') {
+      console.log('getProgress visited=', visitedSections.count(), 'total=', moduleSections.count())
+    }
+
     return {
       id: chapter.id,
       title: chapter.title,
