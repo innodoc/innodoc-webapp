@@ -15,7 +15,7 @@ const ContentAffix = () => {
   return (
     <Affix onChange={(newAffixed) => setAffixState(newAffixed)}>
       <div className={affixClassNames}>
-        <Breadcrumb />
+        {/* <Breadcrumb /> */}
         <AffixButtons />
       </div>
     </Affix>

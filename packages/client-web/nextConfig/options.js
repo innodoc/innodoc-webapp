@@ -38,6 +38,10 @@ module.exports = {
   pageExtensions: ['js'],
 
   // Pass config
+  publicRuntimeConfig: {
+    localeSubpaths: 'foo',
+  },
+
   serverRuntimeConfig: {
     ...Object.entries(envConfigMap).reduce((acc, [k, v]) => {
       acc[k] = process.env[v]

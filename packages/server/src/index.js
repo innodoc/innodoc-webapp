@@ -4,7 +4,6 @@ import createExpressApp from './createExpressApp'
 import createNextApp from './createNextApp'
 import { connectDb, disconnectDb } from './db'
 import getConfig from './getConfig'
-import getManifest from './getManifest'
 import { configureLogger } from './logger'
 
 let httpTerminator
@@ -27,7 +26,6 @@ process.on('SIGINT', shutdown)
 const startServer = async () => {
   try {
     const config = getConfig()
-    const manifest = await getManifest(config.contentRoot)
     logger = configureLogger(config).getLogger('appserver')
     const nextApp = await createNextApp(config)
     await connectDb(config)

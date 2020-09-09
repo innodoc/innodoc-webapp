@@ -13,6 +13,7 @@ const makeContentLink = (makeGetContentLink, prefixName) => {
     const getContentLink = useMemo(makeGetContentLink, [])
     const { contentId, hash, title } = useSelector((state) => getContentLink(state, contentIdHash))
     const pathPrefix = useSelector(appSelectors.getApp)[`${prefixName}PathPrefix`]
+    // TODO: fix href for next.js dynamic routes
     const { href, as } = getLinkInfo(pathPrefix, contentId, hash)
 
     const newChildren = children ? React.cloneElement(children, { title }) : <a>{title}</a>

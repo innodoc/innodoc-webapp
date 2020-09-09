@@ -9,9 +9,10 @@ import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
 import ContentFragment from './ContentFragment'
 import css from './style.sss'
 
-const PageContent = () => {
-  const { content, fadeInClassName, title } = useContentPane(pageSelectors.getCurrentPage)
-  console.log('PageContent', title)
+const PageContent = ({ content, title }) => {
+  // const { content, fadeInClassName, title } = useContentPane(pageSelectors.getCurrentPage)
+  const fadeInClassName = ''
+
   return (
     <>
       <PageTitle>{title}</PageTitle>
