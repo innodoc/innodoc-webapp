@@ -19,7 +19,8 @@ const contentTypes = {
   section: [SectionContent, loadSection],
 }
 
-const ContentPage = ({ ContentComponent }) => {
+const ContentPage = ({ contentType }) => {
+  const ContentComponent = contentType ? contentTypes[contentType][0] : () => {}
   const serverContext = useServerContext()
   const { show404 } = useSelector(appSelectors.getApp)
 
@@ -70,10 +71,10 @@ ContentPage.getInitialProps = ({ query: { fragments, contentPrefix }, store }) =
   if (Object.keys(pathPrefixes).includes(contentPrefix)) {
     if (fragments.every((f) => contentFragmentRegex.test(f))) {
       const contentType = contentPrefix === pathPrefixes.page ? 'page' : 'section'
-      const [ContentComponent, loadAction] = contentTypes[contentType]
+      const [, loadAction] = contentTypes[contentType]
       const actionContentId = contentType === 'section' ? fragments.join('/') : fragments[0]
       store.dispatch(loadAction(actionContentId, language))
-      return { ContentComponent }
+      return { contentType }
     }
   }
 
@@ -82,11 +83,11 @@ ContentPage.getInitialProps = ({ query: { fragments, contentPrefix }, store }) =
 }
 
 ContentPage.defaultProps = {
-  ContentComponent: () => null,
+  contentType: null,
 }
 
 ContentPage.propTypes = {
-  ContentComponent: PropTypes.elementType,
+  contentType: PropTypes.oneOf(Object.keys(contentTypes)),
 }
 
 export default ContentPage

@@ -65,7 +65,7 @@ const hocs = [
   ...(typeof window === 'undefined'
     ? [
         // Only server-side
-        withIndexRedirect,
+        // withIndexRedirect, TODO next.js redirects
         withLoadManifest,
         withServerVars,
       ]

@@ -1,5 +1,7 @@
 import getLinkInfo from './getLinkInfo'
 
+// TODO update test
+
 describe('getLinkInfo', () => {
   it('should return link info with hash', () => {
     const linkInfo = getLinkInfo('section', 'foo/bar', 'baz')
