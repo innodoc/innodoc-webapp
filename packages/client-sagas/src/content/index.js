@@ -14,7 +14,8 @@ import { fetchPage, fetchSection } from '@innodoc/client-misc/src/api'
 
 import changeLanguageSaga from './changeLanguageSaga'
 import loadFragmentSaga from './loadFragmentSaga'
-import loadManifestSaga from './loadManifestSaga'
+// TODO: Remove
+// import loadManifestSaga from './loadManifestSaga'
 import makeLoadContentSaga from './makeLoadContentSaga'
 
 const loadPageSaga = makeLoadContentSaga(
@@ -37,7 +38,7 @@ const loadSectionSaga = makeLoadContentSaga(
 
 export default [
   takeEvery(contentActionTypes.LOAD_FRAGMENT, loadFragmentSaga),
-  takeLeading(contentActionTypes.LOAD_MANIFEST, loadManifestSaga),
+  // takeLeading(contentActionTypes.LOAD_MANIFEST, loadManifestSaga),
   takeLeading(contentActionTypes.LOAD_PAGE, loadPageSaga),
   takeLeading(contentActionTypes.LOAD_SECTION, loadSectionSaga),
   takeLeading(i18nActionTypes.CHANGE_LANGUAGE, changeLanguageSaga),

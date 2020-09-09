@@ -6,6 +6,8 @@ import makeContentPage from './makeContentPage'
 import ErrorPage from './ErrorPage'
 import Layout from '../Layout'
 
+// TODO delete
+
 let mockApp
 jest.mock('react-redux', () => ({ useSelector: () => mockApp }))
 let mockServerContext

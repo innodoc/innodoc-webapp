@@ -15,9 +15,9 @@ import PageTitle from '../PageTitle'
 import useRouteNotifier from '../../hooks/useRouteNotifier'
 import withServerVars from './withServerVars'
 import withIndexRedirect from './withIndexRedirect'
+import withLoadManifest from './withLoadManifest'
 import withMathJaxOptions from './withMathJaxOptions'
 import withNextRedux from './withNextRedux'
-import withWaitForManifest from './withWaitForManifest'
 
 const InnoDocApp = ({ Component, mathJaxOptions, pageProps }) => {
   useRouteNotifier() // Notify store about Next.js route changes
@@ -66,7 +66,7 @@ const hocs = [
     ? [
         // Only server-side
         withIndexRedirect,
-        withWaitForManifest,
+        withLoadManifest,
         withServerVars,
       ]
     : []),

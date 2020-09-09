@@ -11,6 +11,7 @@ import css from './style.sss'
 
 const PageContent = () => {
   const { content, fadeInClassName, title } = useContentPane(pageSelectors.getCurrentPage)
+  console.log('PageContent', title)
   return (
     <>
       <PageTitle>{title}</PageTitle>

@@ -1,6 +1,8 @@
 import { loadManifest } from '@innodoc/client-store/src/actions/content'
 import withWaitForManifest, { waitForManifest } from './withWaitForManifest'
 
+// TODO
+
 let mockGetCurrentCourse
 jest.mock('@innodoc/client-store/src/selectors/course', () => ({
   getCurrentCourse: () => mockGetCurrentCourse(),
