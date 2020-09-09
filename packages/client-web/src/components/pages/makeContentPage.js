@@ -9,6 +9,8 @@ import appSelectors from '@innodoc/client-store/src/selectors'
 import Layout from '../Layout'
 import ErrorPage from './ErrorPage'
 
+const contentFragmentRegex = new RegExp('[A-Za-z0-9_:-]')
+
 const makeContentPage = (ContentComponent, load) => {
   const ContentPage = () => {
     const serverContext = useServerContext()
@@ -31,8 +33,22 @@ const makeContentPage = (ContentComponent, load) => {
   }
 
   ContentPage.getInitialProps = ({ query, store }) => {
+    console.log('here')
+    let { contentId } = query
+    console.log(contentId)
+    if (Array.isArray(contentId)) {
+      if (contentId.some((fragment) => !contentFragmentRegex.test(fragment))) {
+        store.dispatch(contentNotFound())
+        return {}
+      }
+      contentId = contentId.join('/')
+    } else if (!contentFragmentRegex.test(contentId)) {
+      store.dispatch(contentNotFound())
+      return {}
+    }
     const { language } = appSelectors.getApp(store.getState())
-    store.dispatch(query.contentId ? load(query.contentId, language) : contentNotFound())
+    console.log(contentId)
+    store.dispatch(load(contentId, language))
     return {}
   }
 
