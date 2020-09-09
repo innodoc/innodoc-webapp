@@ -9,7 +9,6 @@ import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import { parseContentId } from '@innodoc/client-misc/src/util'
 
 import makeLoadContentSaga from './makeLoadContentSaga'
-import loadManifestSaga from './loadManifestSaga'
 
 const loadContentFailure = (error) => ({
   type: 'LOAD_CONTENT_FAILURE',
@@ -57,18 +56,6 @@ describe('makeLoadContentSaga', () => {
     [select(getContent, contentId), { id: 0 }],
     [matchers.call.fn(fetchContent), fetchedContent[language]],
   ]
-
-  it('should not loadManifest with currentCourse', () =>
-    expectSaga(loadContentSaga, { contentId: contentIdHash })
-      .provide(defaultProvides)
-      .not.call(loadManifestSaga)
-      .run())
-
-  it('should loadManifest without currentCourse', () =>
-    expectSaga(loadContentSaga, loadContent(contentIdHash))
-      .provide([[select(courseSelectors.getCurrentCourse), null], ...defaultProvides])
-      .call(loadManifestSaga)
-      .silentRun(0))
 
   it("should do nothing if content didn't actually change", () =>
     expectSaga(loadContentSaga, loadContent(contentIdHash, 'en'))

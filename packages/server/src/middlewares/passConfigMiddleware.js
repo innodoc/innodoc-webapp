@@ -1,3 +1,5 @@
+// TODO obsolete
+
 const passConfigMiddleware = ({
   appRoot,
   contentRoot,

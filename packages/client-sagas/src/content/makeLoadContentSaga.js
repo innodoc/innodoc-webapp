@@ -2,10 +2,7 @@ import { call, put, select } from 'redux-saga/effects'
 
 import { contentNotFound } from '@innodoc/client-store/src/actions/content'
 import appSelectors from '@innodoc/client-store/src/selectors'
-import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import { parseContentId } from '@innodoc/client-misc/src/util'
-
-import loadManifestSaga from './loadManifestSaga'
 
 const makeLoadContentSaga = (
   getCurrentContent,
@@ -18,11 +15,6 @@ const makeLoadContentSaga = (
   function* loadContentSaga({ contentId: contentIdHash, prevLanguage }) {
     const { contentRoot, language } = yield select(appSelectors.getApp)
     const [contentId] = yield call(parseContentId, contentIdHash)
-
-    // Load manifest if course does not exist
-    if (!(yield select(courseSelectors.getCurrentCourse))) {
-      yield call(loadManifestSaga)
-    }
 
     // Do not load exact same content another time
     const currentContent = yield select(getCurrentContent)

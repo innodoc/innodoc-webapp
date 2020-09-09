@@ -1,8 +1,14 @@
+import getConfig from 'next/config'
+
 import { setServerConfiguration } from '@innodoc/client-store/src/actions/content'
 import { languageDetected } from '@innodoc/client-store/src/actions/i18n'
 import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
 
 import createHoc from './createHoc'
+
+const {
+  serverRuntimeConfig: { appRoot, contentRoot, staticRoot, sectionPathPrefix, pagePathPrefix },
+} = getConfig()
 
 const withServerVars = createHoc('withServerVars', async (ctx) => {
   const { dispatch } = ctx.store
@@ -10,12 +16,12 @@ const withServerVars = createHoc('withServerVars', async (ctx) => {
   // Pass initial configuration from express app
   dispatch(
     setServerConfiguration(
-      ctx.res.locals.appRoot,
-      ctx.res.locals.contentRoot,
-      ctx.res.locals.staticRoot,
+      appRoot,
+      contentRoot,
+      staticRoot,
       ctx.req.csrfToken(),
-      ctx.res.locals.sectionPathPrefix,
-      ctx.res.locals.pagePathPrefix
+      sectionPathPrefix,
+      pagePathPrefix
     )
   )
 

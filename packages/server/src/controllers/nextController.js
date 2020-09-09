@@ -13,8 +13,8 @@ const nextController = ({ sectionPathPrefix, pagePathPrefix }, nextApp) => {
     .get(`/verify-user/:token(${tokenRegexp})`, (req, res) =>
       nextApp.render(req, res, '/verify-user', req.params)
     )
-    .get(getContentPath(sectionPathPrefix), handleCustomRoute(nextApp, '/section'))
-    .get(getContentPath(pagePathPrefix), handleCustomRoute(nextApp, '/page'))
+    // .get(getContentPath(sectionPathPrefix), handleCustomRoute(nextApp, '/section'))
+    // .get(getContentPath(pagePathPrefix), handleCustomRoute(nextApp, '/page'))
     .get('*', nextApp.getRequestHandler())
 
   return router

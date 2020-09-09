@@ -2018,6 +2018,7 @@ __metadata:
     classnames: ^2.2.6
     css-loader: ^4.2.2
     cssnano: ^4.1.10
+    dotenv-safe: ^8.2.0
     dotenv-webpack: ^2.0.0
     enzyme: ^3.11.0
     enzyme-adapter-react-16: ^1.15.3
@@ -2059,6 +2060,7 @@ __metadata:
     next-redux-wrapper: ^6.0.2
     next-server-context: ^1.0.0
     next-transpile-modules: ^4.1.0
+    node-fetch: ^2.6.1
     normalize-path: ^3.0.0
     null-loader: ^4.0.0
     object-hash: ^2.0.3
@@ -12660,6 +12662,13 @@ fsevents@^1.2.7:
   version: 2.6.0
   resolution: "node-fetch@npm:2.6.0"
   checksum: dd9f586a9f7ddb7dd94d2aba9cb693d32f5001e9850098512fbc8a4cbdd56838afa08ed0a6725b9fce9b01ec12b713e622cbfc16d92762d8b937b238330a632a
+  languageName: node
+  linkType: hard
+
+"node-fetch@npm:^2.6.1":
+  version: 2.6.1
+  resolution: "node-fetch@npm:2.6.1"
+  checksum: cbb171635e538162b977eac5dfe7a1e07a9a02e991924377a6435502291e2f823d306b95aabc455caebf4a118ccf836868462bc70ccc3095af02bb9da61fda37
   languageName: node
   linkType: hard
 
