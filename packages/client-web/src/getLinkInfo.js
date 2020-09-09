@@ -1,8 +1,11 @@
 // generate URL info for use with <Link /> or 'next/router'
 const getLinkInfo = (pathPrefix, contentId, hash = undefined) => {
   const href = {
-    pathname: `/${pathPrefix}`,
-    query: { contentId },
+    pathname: '/[contentPrefix]/[...fragments]',
+    query: {
+      contentPrefix: pathPrefix,
+      fragments: contentId.split('/'),
+    },
   }
   const as = { pathname: `/${pathPrefix}/${contentId}` }
   if (hash) {

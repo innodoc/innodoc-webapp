@@ -61,7 +61,7 @@ ContentPage.getInitialProps = ({ query: { fragments, contentPrefix }, store }) =
 }
 
 ContentPage.propTypes = {
-  contentType: PropTypes.oneOf(['page', 'section']).isRequired,
+  contentType: PropTypes.oneOf(Object.keys(contentTypes)).isRequired,
 }
 
 export default ContentPage
