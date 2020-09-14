@@ -14,7 +14,6 @@ import { appWithTranslation } from '@innodoc/common/src/i18n'
 import PageTitle from '../PageTitle'
 import useRouteNotifier from '../../hooks/useRouteNotifier'
 import withServerVars from './withServerVars'
-import withIndexRedirect from './withIndexRedirect'
 import withLoadManifest from './withLoadManifest'
 import withMathJaxOptions from './withMathJaxOptions'
 import withNextRedux from './withNextRedux'
@@ -65,7 +64,6 @@ const hocs = [
   ...(typeof window === 'undefined'
     ? [
         // Only server-side
-        // withIndexRedirect, TODO next.js redirects
         withLoadManifest,
         withServerVars,
       ]
