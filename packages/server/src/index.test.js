@@ -4,7 +4,6 @@ import startServer, { shutdown } from './index'
 import createExpressApp from './createExpressApp'
 import createNextApp from './createNextApp'
 import { connectDb, disconnectDb } from './db'
-import getConfig from './getConfig'
 import getLogger, { configureLogger } from './logger'
 
 const mockHttpTerminator = { terminate: jest.fn() }
@@ -20,7 +19,7 @@ const mockConfig = {
   nodeEnv: 'production',
 }
 const mockExpressApp = { listen: jest.fn().mockReturnValue(mockServer) }
-const mockNextApp = {}
+const mockNextApp = { nextConfig: { serverRuntimeConfig: mockConfig } }
 
 jest.mock('./logger')
 jest.mock('./createExpressApp', () => jest.fn(() => mockExpressApp))
@@ -29,9 +28,8 @@ jest.mock('./db', () => ({
   connectDb: jest.fn(),
   disconnectDb: jest.fn(),
 }))
-jest.mock('./getConfig', () => jest.fn(() => mockConfig))
 
-const mocks = { createExpressApp, createNextApp, connectDb, getConfig }
+const mocks = { createExpressApp, createNextApp, connectDb }
 
 describe('startServer', () => {
   let mockExit
@@ -48,13 +46,8 @@ describe('startServer', () => {
   describe('successful startup', () => {
     beforeEach(startServer)
 
-    it('should get config', () => {
-      expect(mocks.getConfig).toHaveBeenCalledTimes(1)
-    })
-
     it('should create next app', () => {
       expect(mocks.createNextApp).toHaveBeenCalledTimes(1)
-      expect(mocks.createNextApp).toHaveBeenCalledWith(mockConfig)
     })
 
     it('should connect to MongoDB', () => {
@@ -127,28 +120,25 @@ describe('startServer', () => {
 
     afterEach(() => consoleSpy.mockRestore())
 
-    describe.each(['createExpressApp', 'createNextApp', 'connectDb', 'getConfig'])(
-      '%s',
-      (mockName) => {
-        beforeEach(async () => {
-          mocks[mockName].mockImplementationOnce(() => {
-            throw new Error(mockName)
-          })
-          await startServer()
+    describe.each(['createExpressApp', 'createNextApp', 'connectDb'])('%s', (mockName) => {
+      beforeEach(async () => {
+        mocks[mockName].mockImplementationOnce(() => {
+          throw new Error(mockName)
         })
+        await startServer()
+      })
 
-        it('should process.exit with return code', () => {
-          expect(mockExit).toHaveBeenCalledTimes(1)
-          expect(mockExit).toHaveBeenCalledWith(1)
-        })
+      it('should process.exit with return code', () => {
+        expect(mockExit).toHaveBeenCalledTimes(1)
+        expect(mockExit).toHaveBeenCalledWith(1)
+      })
 
-        it('should log error', () => {
-          const logger = getLogger('appserver')
-          expect(logger.error).toHaveBeenCalledTimes(1)
-          expect(logger.error.mock.calls[0][0].toString()).toMatch(mockName)
-          expect(logger.info).not.toHaveBeenCalled()
-        })
-      }
-    )
+      it('should log error', () => {
+        const logger = getLogger('appserver')
+        expect(logger.error).toHaveBeenCalledTimes(1)
+        expect(logger.error.mock.calls[0][0].toString()).toMatch(mockName)
+        expect(logger.info).not.toHaveBeenCalled()
+      })
+    })
   })
 })

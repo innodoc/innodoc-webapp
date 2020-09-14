@@ -1,15 +1,13 @@
 import request from 'supertest'
 
-import createExpressApp from '../createExpressApp'
-import { connectDb, disconnectDb } from '../db'
-import User, { tokenRegexp as tokenRegexpString } from '../models/User'
-import UserProgress from '../models/UserProgress'
+import createExpressApp from './createExpressApp'
+import { connectDb, disconnectDb } from './db'
+import User, { tokenRegexp as tokenRegexpString } from './models/User'
+import UserProgress from './models/UserProgress'
 
 const mockNoopMiddleware = (req, res, next) => next()
 
 jest.mock('csurf', () => () => mockNoopMiddleware)
-
-jest.mock('./nextController', () => () => mockNoopMiddleware)
 
 jest.mock('@innodoc/common/src/i18n', () => ({
   i18n: { t: (s) => s },
@@ -23,10 +21,12 @@ jest.mock('i18next-http-middleware', () => ({
 }))
 
 const mockSendMail = jest.fn().mockResolvedValue()
-jest.mock('../middlewares/sendMailMiddleware', () => () => (req, res, next) => {
+jest.mock('./middlewares/sendMailMiddleware', () => () => (req, res, next) => {
   req.app.locals.sendMail = mockSendMail
   next()
 })
+
+const mockNextApp = { getRequestHandler: jest.fn(() => mockNoopMiddleware) }
 
 const tokenRegexp = new RegExp(tokenRegexpString)
 
@@ -79,7 +79,7 @@ describe('userController', () => {
   }
 
   const testReq = async ({ accessTokenCookie, method, params, status, type, url }) => {
-    let req = request(await createExpressApp(config, {}))
+    let req = request(await createExpressApp(config, mockNextApp))
     req = method === 'get' ? req.get(url) : req.post(url)
     return req
       .set('Cookie', [accessTokenCookie])

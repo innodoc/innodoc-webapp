@@ -20,6 +20,7 @@ const mockCsrf = {}
 jest.mock('csurf', () => jest.fn(() => mockCsrf))
 
 const mockExpressApp = {
+  get: jest.fn(() => mockExpressApp),
   use: jest.fn(() => mockExpressApp),
 }
 jest.mock('express', () => jest.fn(() => mockExpressApp))
@@ -124,7 +125,7 @@ describe.each(['production', 'development'])('createExpressApp (%s)', (nodeEnv) 
     })
 
     it('should use next.getRequestHandler', () => {
-      expect(mockExpressApp.get).toBeCalledWith(mockNextRequestHandler)
+      expect(mockExpressApp.get).toBeCalledWith('*', mockNextRequestHandler)
     })
   })
 })
