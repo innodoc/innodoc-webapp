@@ -51,6 +51,7 @@
     "@babel/preset-env": "^7.11.5",
     "@shelf/jest-mongodb": "^1.2.2",
     "babel-eslint": "^10.1.0",
+    "eslint": "^7.9.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-import-resolver-node": "^0.3.4",
@@ -58,6 +59,7 @@
     "eslint-plugin-jest": "^23.20.0",
     "eslint-plugin-prettier": "^3.1.4",
     "mongodb": "^3.6.0",
+    "prettier": "^2.1.1",
     "supertest": "^4.0.2"
   }
 }

@@ -24,7 +24,9 @@
   ],
   "dependencies": {
     "@innodoc/common": "workspace:packages/common",
-    "@innodoc/server": "workspace:packages/server"
+    "@innodoc/server": "workspace:packages/server",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
