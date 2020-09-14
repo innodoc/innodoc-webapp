@@ -1,10 +1,10 @@
 import path from 'path'
 import next from 'next'
 
-const createNextApp = async ({ nodeEnv }) => {
+const createNextApp = async () => {
   const nextApp = next({
     dir: path.resolve(__dirname, '..', '..', 'client-web', 'src'),
-    dev: nodeEnv === 'development',
+    dev: process.env.NODE_ENV !== 'production',
   })
   await nextApp.prepare()
   return nextApp

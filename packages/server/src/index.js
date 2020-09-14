@@ -3,7 +3,6 @@ import { createHttpTerminator } from 'http-terminator'
 import createExpressApp from './createExpressApp'
 import createNextApp from './createNextApp'
 import { connectDb, disconnectDb } from './db'
-import getConfig from './getConfig'
 import { configureLogger } from './logger'
 
 let httpTerminator
@@ -25,9 +24,9 @@ process.on('SIGINT', shutdown)
 
 const startServer = async () => {
   try {
-    const config = getConfig()
+    const nextApp = await createNextApp()
+    const { serverRuntimeConfig: config } = nextApp.nextConfig
     logger = configureLogger(config).getLogger('appserver')
-    const nextApp = await createNextApp(config)
     await connectDb(config)
     const expressApp = createExpressApp(config, nextApp)
     const server = expressApp.listen(config.port, config.host)

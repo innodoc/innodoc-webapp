@@ -3,10 +3,10 @@ import passport from 'passport'
 import i18nextHttpMiddleware from 'i18next-http-middleware'
 
 import nextI18next from '@innodoc/common/src/i18n'
-import getLogger from '../logger'
-import User from '../models/User'
-import UserProgress from '../models/UserProgress'
-import { resetPasswordMail, verificationMail } from '../mails'
+import getLogger from './logger'
+import User from './models/User'
+import UserProgress from './models/UserProgress'
+import { resetPasswordMail, verificationMail } from './mails'
 
 const userController = ({ appRoot, jwtSecret }) => {
   const router = Router()

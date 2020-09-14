@@ -4,7 +4,7 @@ import csrf from 'csurf'
 import express from 'express'
 
 import errorHandler from './errorHandler'
-import { nextController, userController } from './controllers'
+import userController from './userController'
 import { requestLoggerMiddleware } from './logger'
 import {
   passConfigMiddleware,
@@ -34,7 +34,7 @@ const createExpressApp = (config, nextApp) => {
     .use(passportMiddleware(config))
     .use(lookupUserMiddleware(config))
     .use('/user', userController(config))
-    .use(nextController(config, nextApp))
+    .get('*', nextApp.getRequestHandler())
     .use(errorHandler(config))
 }
 
