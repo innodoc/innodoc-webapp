@@ -119,7 +119,7 @@ const userController = ({ appRoot, jwtSecret }) => {
     }
     try {
       await req.app.locals.sendMail(
-        verificationMail(req.t, res.locals.appRoot, email, user.emailVerificationToken)
+        verificationMail(req.t, appRoot, email, user.emailVerificationToken)
       )
       logger.info(`Account registered: ${user.email}`)
       res.status(200).json({ result: 'ok' })
@@ -215,7 +215,7 @@ const userController = ({ appRoot, jwtSecret }) => {
         user.passwordResetToken = User.generateToken()
         user.passwordResetExpires = Date.now() + 60 * 60 * 1000 // 1 hour
         await req.app.locals.sendMail(
-          resetPasswordMail(req.t, res.locals.appRoot, email, user.passwordResetToken)
+          resetPasswordMail(req.t, appRoot, email, user.passwordResetToken)
         )
         await user.save()
         res.status(200).json({ result: 'ok' })
@@ -236,7 +236,7 @@ const userController = ({ appRoot, jwtSecret }) => {
       })
       if (user) {
         await req.app.locals.sendMail(
-          verificationMail(req.t, res.locals.appRoot, email, user.emailVerificationToken)
+          verificationMail(req.t, appRoot, email, user.emailVerificationToken)
         )
         res.status(200).json({ result: 'ok' })
       } else {

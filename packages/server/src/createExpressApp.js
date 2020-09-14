@@ -6,12 +6,7 @@ import express from 'express'
 import errorHandler from './errorHandler'
 import userController from './userController'
 import { requestLoggerMiddleware } from './logger'
-import {
-  passConfigMiddleware,
-  passportMiddleware,
-  sendMailMiddleware,
-  lookupUserMiddleware,
-} from './middlewares'
+import { passportMiddleware, sendMailMiddleware, lookupUserMiddleware } from './middlewares'
 
 const createExpressApp = (config, nextApp) => {
   const app = express()
@@ -29,7 +24,6 @@ const createExpressApp = (config, nextApp) => {
         value: (req) => req.headers['csrf-token'],
       })
     )
-    .use(passConfigMiddleware(config))
     .use(sendMailMiddleware(config.smtp))
     .use(passportMiddleware(config))
     .use(lookupUserMiddleware(config))

@@ -5,13 +5,8 @@ import express from 'express'
 
 import createExpressApp from './createExpressApp'
 import { requestLoggerMiddleware } from './logger'
-import {
-  passConfigMiddleware,
-  passportMiddleware,
-  sendMailMiddleware,
-  lookupUserMiddleware,
-} from './middlewares'
-import { nextController, userController } from './controllers'
+import { passportMiddleware, sendMailMiddleware, lookupUserMiddleware } from './middlewares'
+import userController from './userController'
 
 const mockBodyParserJson = {}
 jest.mock('body-parser', () => ({
@@ -31,19 +26,13 @@ jest.mock('express', () => jest.fn(() => mockExpressApp))
 
 jest.mock('./logger')
 
-const mockNextController = {}
 const mockUserController = {}
-jest.mock('./controllers', () => ({
-  nextController: jest.fn(() => mockNextController),
-  userController: jest.fn(() => mockUserController),
-}))
+jest.mock('./userController', () => jest.fn(() => mockUserController))
 
-const mockPassConfigMiddleware = {}
 const mockPassportMiddleware = {}
 const mockSendMailMiddleware = {}
 const mockLookupUserMiddleware = {}
 jest.mock('./middlewares', () => ({
-  passConfigMiddleware: jest.fn(() => mockPassConfigMiddleware),
   passportMiddleware: jest.fn(() => mockPassportMiddleware),
   sendMailMiddleware: jest.fn(() => mockSendMailMiddleware),
   lookupUserMiddleware: jest.fn(() => mockLookupUserMiddleware),
@@ -57,7 +46,8 @@ const defaultConfig = {
 let config
 
 describe.each(['production', 'development'])('createExpressApp (%s)', (nodeEnv) => {
-  const mockNextApp = {}
+  const mockNextRequestHandler = () => {}
+  const mockNextApp = { getRequestHandler: () => mockNextRequestHandler }
   let returnedExpressApp
 
   beforeEach(() => {
@@ -110,11 +100,6 @@ describe.each(['production', 'development'])('createExpressApp (%s)', (nodeEnv) 
     })
 
     describe('innodoc middleswares', () => {
-      it('should use passConfigMiddleware', () => {
-        expect(passConfigMiddleware).toBeCalledWith(config)
-        expect(mockExpressApp.use).toBeCalledWith(mockPassConfigMiddleware)
-      })
-
       it('should use sendMailMiddleware', () => {
         expect(sendMailMiddleware).toBeCalledWith(config.smtp)
         expect(mockExpressApp.use).toBeCalledWith(mockSendMailMiddleware)
@@ -138,9 +123,8 @@ describe.each(['production', 'development'])('createExpressApp (%s)', (nodeEnv) 
       expect(mockExpressApp.use).toBeCalledWith(mockUserController)
     })
 
-    it('should use nextController', () => {
-      expect(nextController).toBeCalledWith(config, mockNextApp)
-      expect(mockExpressApp.use).toBeCalledWith(mockNextController)
+    it('should use next.getRequestHandler', () => {
+      expect(mockExpressApp.get).toBeCalledWith(mockNextRequestHandler)
     })
   })
 })
