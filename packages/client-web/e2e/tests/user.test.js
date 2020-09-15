@@ -86,12 +86,7 @@ describe('Account interactions', () => {
     await browser.waitFor('.ant-result')
     await browser.assert.textContains('.ant-result', 'Account deleted!')
     await openUrl()
-    await browser.waitForText('Login') // makes sure we're logged out
-    await openUrl('login')
-    await browser.waitAndType('input#login-form_email', email)
-    await browser.type('input#login-form_password', pwd)
-    await browser.clickText('Sign-in')
-    await browser.waitForText('Login failed!')
+    await login(email, pwd, true)
   })
 
   describe('Registration', () => {

@@ -72,14 +72,17 @@ const testHelpers = (env) => {
     await env.global.browser.assert.title('Account activated · innoDoc')
   }
 
-  env.global.login = async (email, pwd) => {
+  env.global.login = async (email, pwd, expectFailed = false) => {
     await env.global.browser.waitAndClick('[class*=nav___] a[href="/login"]')
     await env.global.browser.waitAndType('input#login-form_email', email)
     await env.global.browser.type('input#login-form_password', pwd)
     await env.global.browser.assert.title('Login · innoDoc')
     await env.global.browser.clickText('Sign-in')
     await env.global.browser.waitFor('.ant-result')
-    await env.global.browser.assert.textContains('.ant-result', 'Successfully logged in.')
+    await env.global.browser.assert.textContains(
+      '.ant-result',
+      expectFailed ? 'Login failed!' : 'Successfully logged in.'
+    )
   }
 
   env.global.logout = async (email) => {
