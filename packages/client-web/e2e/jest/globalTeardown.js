@@ -1,3 +1,1 @@
-const { teardown } = require('jest-process-manager')
-
-module.exports = () => teardown()
+module.exports = () => Promise.all(global.JEST_SERVERS.map((s) => s.destroy()))
