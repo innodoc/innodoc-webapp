@@ -9,6 +9,8 @@ import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
 import { SectionLink } from '../content/links'
 import TermIndex from './TermIndex'
 
+jest.mock('../content/links', () => ({ SectionLink: () => '' }))
+
 const mockTerms = [
   {
     id: 'term1',

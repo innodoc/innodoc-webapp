@@ -15,6 +15,9 @@ jest.mock('next/router', () => ({
   events: { on: jest.fn() },
 }))
 
+jest.mock('./withServerVars', () => (C) => C)
+jest.mock('./withLoadManifest', () => (C) => C)
+
 let mockGetCurrentCourse
 jest.mock('@innodoc/client-store/src/selectors/course', () => ({
   getCurrentCourse: () => mockGetCurrentCourse(),

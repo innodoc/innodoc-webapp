@@ -30,8 +30,11 @@ describe('makeContentLink', () => {
     const wrapper = shallow(<ContentLink contentId="foo" />)
     const link = wrapper.find(Link)
     expect(link.prop('href')).toEqual({
-      pathname: '/sec',
-      query: { contentId: 'foo' },
+      pathname: '/[contentPrefix]/[...fragments]',
+      query: {
+        contentPrefix: 'sec',
+        fragments: ['foo'],
+      },
     })
     expect(link.prop('as')).toEqual({ pathname: '/sec/foo' })
     const a = wrapper.find('a')
@@ -46,8 +49,11 @@ describe('makeContentLink', () => {
     )
     const link = wrapper.find(Link)
     expect(link.prop('href')).toEqual({
-      pathname: '/sec',
-      query: { contentId: 'foo' },
+      pathname: '/[contentPrefix]/[...fragments]',
+      query: {
+        contentPrefix: 'sec',
+        fragments: ['foo'],
+      },
     })
     expect(link.prop('as')).toEqual({ pathname: '/sec/foo' })
     const a = wrapper.find('a')
@@ -64,8 +70,11 @@ describe('makeContentLink', () => {
     const wrapper = shallow(<ContentLink contentId="foo#bar" />)
     const link = wrapper.find(Link)
     expect(link.prop('href')).toEqual({
-      pathname: '/sec',
-      query: { contentId: 'foo' },
+      pathname: '/[contentPrefix]/[...fragments]',
+      query: {
+        contentPrefix: 'sec',
+        fragments: ['foo'],
+      },
     })
     expect(link.prop('as')).toEqual({
       pathname: '/sec/foo',

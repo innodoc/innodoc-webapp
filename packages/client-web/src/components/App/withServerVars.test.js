@@ -7,6 +7,16 @@ import {
 
 import withServerVars from './withServerVars'
 
+jest.mock('next/config', () => () => ({
+  serverRuntimeConfig: {
+    appRoot: 'https://app.example.com/',
+    contentRoot: 'https://static.example.com/content/',
+    pagePathPrefix: 'page',
+    sectionPathPrefix: 'section',
+    staticRoot: 'https://static.example.com/',
+  },
+}))
+
 describe('withServerVars', () => {
   let WithServerVars
   const dispatch = jest.fn()
@@ -17,15 +27,6 @@ describe('withServerVars', () => {
         csrfToken: () => '123Token!',
         i18n: { language: 'en' },
         user: loggedIn ? { email: 'alice@example.com' } : undefined,
-      },
-      res: {
-        locals: {
-          appRoot: 'https://app.example.com/',
-          contentRoot: 'https://static.example.com/content/',
-          pagePathPrefix: 'page',
-          sectionPathPrefix: 'section',
-          staticRoot: 'https://static.example.com/',
-        },
       },
     },
   })
