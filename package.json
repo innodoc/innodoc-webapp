@@ -10,7 +10,7 @@
     "lint:eslint": "eslint .",
     "lint:stylelint": "stylelint .",
     "lint": "yarn lint:eslint && yarn workspace @innodoc/client-web lint:stylelint",
-    "prepush": "yarn build && yarn lint && yarn test:unit && yarn test:e2e",
+    "prepush": "MANIFEST_FILE=packages/client-web/e2e/content/manifest.json yarn build && yarn lint && yarn test:unit && yarn test:e2e",
     "server:build": "yarn workspace @innodoc/server build",
     "start": "yarn workspace @innodoc/server start",
     "test:e2e:content": "yarn workspace @innodoc/client-web test:e2e:content",
