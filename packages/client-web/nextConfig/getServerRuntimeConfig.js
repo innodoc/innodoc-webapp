@@ -7,14 +7,22 @@ const rootDir = path.resolve(__dirname, '..', '..', '..')
 
 const ensureTrailingSlash = (url) => (url.substr(-1) === '/' ? url : `${url}/`)
 
+const getAbsPath = (val) => (path.isAbsolute(val) ? val : path.resolve(rootDir, val))
+
 const getManifest = () => {
-  const loadManifestScript = path.resolve(__dirname, 'loadManifest.js')
-  const output = execSync(`yarn node ${loadManifestScript} ${process.env.CONTENT_ROOT}`).toString()
+  let jsonData
+  if (process.env.MANIFEST_FILE) {
+    const filePath = getAbsPath(process.env.MANIFEST_FILE)
+    jsonData = fs.readFileSync(filePath)
+  } else {
+    const loadManifestScript = path.resolve(__dirname, 'loadManifest.js')
+    jsonData = execSync(`yarn node ${loadManifestScript} ${process.env.CONTENT_ROOT}`).toString()
+  }
   try {
-    return JSON.parse(output)
+    return JSON.parse(jsonData)
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error(`${e}\n${output}`)
+    console.error(`${e}\n${jsonData}`)
   }
   return undefined
 }
@@ -48,12 +56,7 @@ const staticRoot = process.env.STATIC_ROOT
   : `${contentRoot}_static/`
 
 // Set logFile
-let logFile = null
-if (process.env.LOG_FILE.length) {
-  logFile = path.isAbsolute(process.env.LOG_FILE)
-    ? process.env.LOG_FILE
-    : path.resolve(rootDir, process.env.LOG_FILE)
-}
+const logFile = process.env.LOG_FILE.length ? getAbsPath(process.env.LOG_FILE) : null
 
 const getServerRuntimeConfig = () => ({
   appRoot,
