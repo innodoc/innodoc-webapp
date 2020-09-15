@@ -22,7 +22,7 @@ RUN set -xe && \
   ln -s .env.example .env && \
   yarn install --immutable && \
   yarn workspace @innodoc/client-web run next telemetry disable && \
-  yarn build
+  MANIFEST_FILE=packages/client-web/e2e/content/manifest.json yarn build
 
 FROM $BASE_IMAGE
 
