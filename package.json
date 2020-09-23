@@ -14,7 +14,7 @@
     "server:build": "yarn workspace @innodoc/server build",
     "start": "yarn workspace @innodoc/server start",
     "test:e2e:content": "yarn workspace @innodoc/client-web test:e2e:content",
-    "test:e2e:show": "PUPPETEER_HEADLESS=false yarn run test:e2e",
+    "test:e2e:show": "yarn workspace @innodoc/client-web test:e2e:show",
     "test:e2e": "yarn workspace @innodoc/client-web test:e2e",
     "test:unit:coverage": "yarn run test:unit --coverage",
     "test:unit": "jest"

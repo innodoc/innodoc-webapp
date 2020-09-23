@@ -1,23 +1,7 @@
 {
-  "env": {
-    "jest": true
-  },
+  "extends": ["plugin:jest-playwright/recommended"],
   "globals": {
-    "activate": true,
-    "browser": true,
-    "connectDb": true,
-    "DEFAULT_TIMEOUT": true,
-    "disconnectDb": true,
-    "getRandEmail": true,
-    "getUrl": true,
-    "getUser": true,
-    "hoverNavItem": true,
-    "login": true,
-    "logout": true,
-    "openUrl": true,
-    "register": true,
-    "resetBrowser": true,
-    "WendigoUtils": true
+    "helpers": true
   },
   "rules": {
     "import/no-extraneous-dependencies": 0
