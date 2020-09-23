@@ -17,6 +17,7 @@ Dockerfile.e2e
 # yarn 2
 .yarn/*
 !.yarn/cache
+!.yarn/pw-browsers
 !.yarn/releases
 !.yarn/plugins
 !.yarn/versions
