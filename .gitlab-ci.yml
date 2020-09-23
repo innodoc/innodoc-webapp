@@ -21,7 +21,6 @@ variables:
 
 .docker-base-login-script: &docker-base-login-script echo "$CI_JOB_TOKEN" | docker login --username gitlab-ci-token --password-stdin "$CI_REGISTRY"
 .docker-base-logout-script: &docker-base-logout-script docker logout "$CI_REGISTRY"
-
 .docker-base: &docker-base
   services:
     - docker:19.03.12-dind
@@ -32,6 +31,9 @@ variables:
   variables:
     <<: *docker-default-vars
 
+.docker-mongo-base-after-script: &docker-mongo-base-after-script |
+  docker stop mongodb-in-memory
+  docker network rm testbridge
 .docker-mongo-base: &docker-mongo-base
   <<: *docker-base
   before_script:
@@ -45,8 +47,7 @@ variables:
       --noauth
       --storageEngine ephemeralForTest
   after_script:
-    - docker stop mongodb-in-memory
-    - docker network rm testbridge
+    - *docker-mongo-base-after-script
     - *docker-base-logout-script
 
 Build image:
@@ -64,10 +65,21 @@ Build image:
       --tag "$IMAGE_TAG"
       --build-arg BUILD_ID="$CI_COMMIT_SHA"
       .
+    - docker create
+      --cidfile /tmp/build.cid
+      "$IMAGE_TAG"
+    - docker cp
+      $(cat /tmp/build.cid):/home/innodocuser/innodoc-webapp/.yarn/cache/.
+      .yarn/cache
+    - docker rm -v $(cat /tmp/build.cid)
     - docker push "$IMAGE_TAG"
   variables:
     <<: *docker-default-vars
     GIT_STRATEGY: fetch
+  cache:
+    key: yarn-cache
+    paths:
+      - .yarn/cache/
 
 Linting:
   <<: *docker-base
@@ -98,25 +110,43 @@ E2E tests:
     - docker pull "$IMAGE_E2E_CACHE_TAG" || true
     - docker build
       --pull
-      --cache-from "$IMAGE_TAG"
       --cache-from "$IMAGE_E2E_CACHE_TAG"
       --tag "$IMAGE_E2E_TAG"
       --build-arg BUILD_IMAGE="$IMAGE_TAG"
-      -f Dockerfile.e2e
+      -f packages/client-web/e2e/Dockerfile
       .
     - docker tag "$IMAGE_E2E_TAG" "$IMAGE_E2E_CACHE_TAG"
     - docker push "$IMAGE_E2E_CACHE_TAG"
     - docker run
-      --rm
+      --cidfile /tmp/e2e.cid
       --env MONGO_URL=mongodb://mongodb-in-memory/innodoc-e2e
-      --env INNODOC_WEBAPP_CI=true
       --network testbridge
-      --security-opt seccomp=$(pwd)/packages/client-web/e2e/seccomp-chrome.json
+      --ipc=host
+      --security-opt seccomp=$(pwd)/packages/client-web/e2e/seccomp_profile.json
       "$IMAGE_E2E_TAG"
+  after_script:
+    - docker cp
+      $(cat /tmp/e2e.cid):/home/innodocuser/innodoc-webapp/packages/client-web/e2e/screenshots/.
+      packages/client-web/e2e/screenshots
+    - docker cp
+      $(cat /tmp/e2e.cid):/home/innodocuser/innodoc-webapp/.yarn/pw-browsers/.
+      .yarn/pw-browsers
+    - docker rm -v $(cat /tmp/e2e.cid)
+    - *docker-mongo-base-after-script
+    - *docker-base-logout-script
   variables:
     <<: *docker-default-vars
     GIT_STRATEGY: fetch
-  retry: 2
+  cache:
+    key: pw-browsers-cache
+    paths:
+      - .yarn/pw-browsers/
+  artifacts:
+    name: e2e-screenshots-$CI_COMMIT_REF_NAME
+    paths:
+      - packages/client-web/e2e/screenshots/*.png
+    when: on_failure
+    expire_in: 1 week
 
 Push to GitLab registry (staging):
   <<: *docker-base

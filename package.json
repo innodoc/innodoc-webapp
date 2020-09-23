@@ -25,6 +25,7 @@
   "dependencies": {
     "@innodoc/common": "workspace:packages/common",
     "@innodoc/server": "workspace:packages/server",
+    "pm2": "^4.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
