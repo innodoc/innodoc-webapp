@@ -90,6 +90,12 @@ Unit tests:
       yarn test:unit:coverage --color --coverageDirectory=/tmp/coverage
   coverage: '/^All files\s+\|\s+([0-9.]+)\s+\|\s+/'
 
+# TODO
+# playwright
+# screenshots as artefacts?
+# cache .yarn/cache (with docker volume)?
+# docker build --tag innodoc-webapp-e2e --build-arg BUILD_ID="innodoc-webapp-e2e" -f Dockerfile.e2e .
+# docker run --rm --env MONGO_URL=mongodb://mongodb-in-memory/innodoc-e2e --network testbridge --security-opt seccomp=$(pwd)/packages/client-web/e2e/seccomp_profile.json innodoc-webapp-e2e:latest
 E2E tests:
   <<: *docker-mongo-base
   stage: test
