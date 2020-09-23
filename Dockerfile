@@ -5,7 +5,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG NODE_VERSION=node_14.x
 ENV NEXTJS_WEBAPP_BUILD_ID=$BUILD_ID \
     MONGOMS_DISABLE_POSTINSTALL=1 \
-    PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
     APP_HOST=0.0.0.0 \
     APP_PORT=8000
 WORKDIR /home/innodocuser/innodoc-webapp
@@ -34,7 +33,7 @@ COPY --chown=innodocuser . .
 RUN set -xe && \
   ln -s .env.example .env && \
   yarn config set --home enableTelemetry 0 && \
-  yarn install --immutable && \
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 yarn install --immutable && \
   yarn workspace @innodoc/client-web run next telemetry disable && \
   MANIFEST_FILE=packages/client-web/e2e/content/manifest.json yarn build && \
   yarn add pm2

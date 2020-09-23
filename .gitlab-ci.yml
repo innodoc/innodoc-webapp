@@ -71,7 +71,7 @@ Build image:
   cache:
     key: yarn-cache
     paths:
-      - .yarn/cache
+      - .yarn/cache/*.zip
 
 Linting:
   <<: *docker-base
@@ -129,7 +129,7 @@ E2E tests:
   cache:
     key: pw-browsers-cache
     paths:
-      - .yarn/pw-browsers
+      - .yarn/pw-browsers/
   artifacts:
     name: "e2e-screenshots-$CI_COMMIT_REF_NAME"
     paths:
