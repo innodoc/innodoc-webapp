@@ -93,9 +93,9 @@ Unit tests:
 # TODO
 # playwright
 # screenshots as artefacts?
-# cache .yarn/cache (with docker volume)?
+# cache .yarn/cache + .yarn/pw-browsers (with docker volume)?
 # docker build --tag innodoc-webapp-e2e --build-arg BUILD_ID="innodoc-webapp-e2e" -f Dockerfile.e2e .
-# docker run --rm --env MONGO_URL=mongodb://mongodb-in-memory/innodoc-e2e --network testbridge --security-opt seccomp=$(pwd)/packages/client-web/e2e/seccomp_profile.json innodoc-webapp-e2e:latest
+# docker run --rm --env MONGO_URL=mongodb://mongodb-in-memory/innodoc-e2e --network testbridge --ipc=host --security-opt seccomp=$(pwd)/packages/client-web/e2e/seccomp_profile.json innodoc-webapp-e2e:latest
 E2E tests:
   <<: *docker-mongo-base
   stage: test
