@@ -1,116 +1,79 @@
-const waitForSiderWidth = async (width) => {
-  await browser.wait(100)
-  await browser.waitFor(
-    (w) => {
-      const node = document.querySelector('.ant-layout-sider')
-      if (node) {
-        const styleW = node.style.width
-        return parseInt(styleW.slice(0, -2), 10) === w
-      }
-      return false
-    },
-    DEFAULT_TIMEOUT,
-    width
-  )
-}
-const waitForSiderClosed = () => waitForSiderWidth(0)
-const waitForSiderOpen = () => waitForSiderWidth(400)
-
-const waitForHeader = (text) =>
-  browser.waitFor(
-    (t) => {
-      const node = document.querySelector('[class*=content___] h1')
-      if (node) {
-        return node.innerText === t
-      }
-      return false
-    },
-    DEFAULT_TIMEOUT,
-    text
-  )
-
-const expectSwitcherAmount = async (n, type = '') =>
-  expect(await browser.queryAll(`.ant-layout-sider .ant-tree-switcher${type}`)).toHaveLength(n)
-
-beforeEach(resetBrowser)
+beforeEach(async () => {
+  await jestPlaywright.resetContext()
+})
 
 describe('TOC', () => {
   it('should have working section link', async () => {
-    await openUrl()
-    await browser.waitAndClick('[class*=content___] button[title="Show table of contents"]')
-    await waitForSiderOpen()
-    await browser.assert.textContains('.ant-layout-sider', [
-      '1 Project structure',
-      '2 Content elements',
-    ])
-    await browser.wait(100) // no idea why this is needed... :|
-    await browser.waitAndClick('.ant-layout-sider a[href="/section/01-project"]')
-    await browser.waitForNavigation()
-    await waitForHeader('1 Project structure')
+    await helpers.goto()
+    await page.click('[class*=content___] button[title="Show table of contents"]')
+    await page.waitForSelector('.ant-layout-sider >> "1 Project structure"')
+    await page.waitForSelector('.ant-layout-sider >> "2 Content elements"')
+    await page.click('.ant-layout-sider a[href="/section/01-project"]')
+    await page.waitForSelector('[class*=content___] h1 >> "1 Project structure"')
   })
 
   it('should have collapsible nodes', async () => {
-    await openUrl('section/01-project')
-    await browser.waitAndClick('[class*=content___] button[title="Show table of contents"]')
-    await waitForSiderOpen()
+    await helpers.goto('section/01-project')
+    await page.click('[class*=content___] button[title="Show table of contents"]')
+    await Promise.all(
+      [
+        '1 Project structure',
+        '1.1 Folders',
+        '1.2 Files',
+        '1.3 Languages',
+        '1.4 Building',
+        '2 Content elements',
+      ].map((text) => page.waitForSelector(`.ant-layout-sider >> "${text}"`))
+    )
+    await Promise.all(
+      ['1.2.1 manifest.yml', '1.2.2 Content files'].map((text) =>
+        expect(page).not.toHaveText('.ant-layout-sider', text)
+      )
+    )
 
-    await browser.assert.textContains('.ant-layout-sider', [
-      '1 Project structure',
-      '1.1 Folders',
-      '1.2 Files',
-      '1.3 Languages',
-      '1.4 Building',
-      '2 Content elements',
-    ])
-    await browser.assert.not.textContains('.ant-layout-sider', [
-      '1.2.1 manifest.yml',
-      '1.2.2 Content files',
-    ])
+    expect(await page.$$('.ant-layout-sider .ant-tree-switcher')).toHaveLength(6)
+    expect(await page.$$('.ant-layout-sider .ant-tree-switcher_open')).toHaveLength(1)
+    expect(await page.$$('.ant-layout-sider .ant-tree-switcher_close')).toHaveLength(2)
 
-    await expectSwitcherAmount(6)
-    await expectSwitcherAmount(1, '_open')
-    await expectSwitcherAmount(2, '_close')
+    await page.click('.ant-layout-sider >> "1.2 Files"')
+    await expect(page).toEqualText('[class*=content___] h1', '1.2 Files')
 
-    await browser.wait(500)
-    await browser.clickText('.ant-layout-sider', '1.2 Files')
-    await browser.waitForNavigation()
+    expect(await page.$$('.ant-layout-sider .ant-tree-switcher')).toHaveLength(8)
+    expect(await page.$$('.ant-layout-sider .ant-tree-switcher_open')).toHaveLength(2)
+    expect(await page.$$('.ant-layout-sider .ant-tree-switcher_close')).toHaveLength(1)
 
-    await browser.wait(500)
-    await expectSwitcherAmount(8)
-    await expectSwitcherAmount(2, '_open')
-    await expectSwitcherAmount(1, '_close')
-
-    await browser.assert.textContains('.ant-layout-sider', [
-      '1.2.1 manifest.yml',
-      '1.2.2 Content files',
-    ])
+    await Promise.all(
+      ['1.2.1 manifest.yml', '1.2.2 Content files'].map((text) =>
+        expect(page).toHaveText('.ant-layout-sider', text)
+      )
+    )
   })
 
   it('should respond to section change', async () => {
-    await openUrl('section/01-project/04-building')
-    await browser.waitAndClick('[class*=content___] button[title="Show table of contents"]')
-    await waitForSiderOpen()
-    await expectSwitcherAmount(6)
-    await browser.waitAndClick('[class*=sectionAffix___] button[title="2 Content elements"]')
-    await waitForHeader('2 Content elements')
-    await expectSwitcherAmount(17)
+    await helpers.goto('section/01-project/04-building')
+    await page.click('[class*=content___] button[title="Show table of contents"]')
+    expect(await page.$$('.ant-layout-sider .ant-tree-switcher')).toHaveLength(6)
+    await page.click('[class*=sectionAffix___] button[title="2 Content elements"]')
+    await page.waitForSelector('[class*=content___] h1 >> "2 Content elements"')
+    expect(await page.$$('.ant-layout-sider .ant-tree-switcher')).toHaveLength(17)
   })
 
   it('should be toggleable using content button', async () => {
-    await openUrl()
-    await waitForSiderClosed()
-    await browser.waitAndClick('[class*=content___] button[title="Show table of contents"]')
-    await waitForSiderOpen()
-    await browser.waitAndClick('[class*=content___] button[title="Close table of contents"]')
-    await waitForSiderClosed()
+    await helpers.goto()
+    await page.waitForSelector('.ant-layout-sider', { state: 'hidden' })
+    const toggleButton = await page.$('[class*=content___] button[title="Show table of contents"]')
+    await toggleButton.click()
+    await page.waitForSelector('.ant-layout-sider')
+    await toggleButton.click()
+    await page.waitForSelector('.ant-layout-sider', { state: 'hidden' })
   })
 
   it('should be closeable using sider button', async () => {
-    await openUrl()
-    await waitForSiderClosed()
-    await browser.waitAndClick('[class*=content___] button[title="Show table of contents"]')
-    await waitForSiderOpen()
-    await browser.waitAndClick('.ant-layout-sider button[title="Close table of contents"]')
-    await waitForSiderClosed()
+    await helpers.goto()
+    await page.waitForSelector('.ant-layout-sider', { state: 'hidden' })
+    await page.click('[class*=content___] button[title="Show table of contents"]')
+    await page.waitForSelector('.ant-layout-sider')
+    await page.click('.ant-layout-sider button[title="Close table of contents"]')
+    await page.waitForSelector('.ant-layout-sider', { state: 'hidden' })
   })
 })

@@ -1,6 +1,9 @@
 # This image is used for E2E testing.
 # BUILD_IMAGE is set to current build in CI pipeline
 
+# TODO
+# - playwright
+# - screenshots as artefacts?
 
 ARG BUILD_IMAGE=innodoc/innodoc-webapp
 FROM $BUILD_IMAGE AS build

@@ -1,3 +1,10 @@
-const headless = process.env.PUPPETEER_HEADLESS !== 'false'
+const headless = process.env.PLAYWRIGHT_HEADLESS !== 'false'
+const isCI = process.env.INNODOC_WEBAPP_CI === 'true'
 
-jest.setTimeout(headless ? 60000 : 1000 * 60 * 10)
+let jestTimeout = 1000 * 60
+
+if (!headless || isCI) {
+  jestTimeout *= 5
+}
+
+jest.setTimeout(jestTimeout)

@@ -132,7 +132,7 @@ $ yarn test:unit:coverage
 
 ### E2E tests
 
-[Puppeteer](https://pptr.dev/) is used for E2E testing.
+[Playwright](https://playwright.dev/) is used for E2E testing.
 
 This will spawn the app and content servers automatically before running E2E
 tests. Afterwards both servers are shut down. Don't forget to build the

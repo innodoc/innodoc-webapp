@@ -1,1 +1,9 @@
-module.exports = () => Promise.all(global.JEST_SERVERS.map((s) => s.destroy()))
+const mongoose = require('mongoose')
+const jestPlaywrightTeardown = require('jest-playwright-preset/teardown')
+
+const teardown = async (jestConfig) => {
+  await mongoose.disconnect()
+  await jestPlaywrightTeardown(jestConfig)
+}
+
+module.exports = teardown
