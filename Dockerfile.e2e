@@ -1,58 +1,31 @@
-# This image is used for E2E testing.
-# BUILD_IMAGE is set to current build in CI pipeline
+# TODO: move to packages/client-web/e2e ???
 
-# TODO
-# - playwright
-# - screenshots as artefacts?
-
-ARG BUILD_IMAGE=innodoc/innodoc-webapp
-FROM $BUILD_IMAGE AS build
-
-FROM alpine:3.12
+FROM mcr.microsoft.com/playwright:bionic
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 
-# Sync puppeteer version to corresponding Chromium version!
-# Check corresponding versions: https://github.com/GoogleChrome/puppeteer/blob/main/docs/api.md
-# Alpine Chromium version: https://pkgs.alpinelinux.org/packages?name=chromium
-ARG PUPPETEER_VERSION=3.1.0
+ARG BUILD_ID
+ENV INNODOC_WEBAPP_CI=true \
+    MONGOMS_DISABLE_POSTINSTALL=1 \
+    NEXTJS_WEBAPP_BUILD_ID=$BUILD_ID \
+    PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 
-# Use Chromium from Alpine package
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-
-WORKDIR /innodoc-webapp
 RUN set -xe && \
-    # Install Chromium from distro
-    apk add --no-cache \
-      chromium \
-      dumb-init \
-      nss \
-      freetype \
-      freetype-dev \
-      harfbuzz \
-      ca-certificates \
-      ttf-freefont \
-      nodejs \
-      yarn && \
-    # Add user/group to run as
-    addgroup -S innodocuser && \
-    adduser -S -g innodocuser innodocuser && \
-    mkdir -p /home/innodocuser/Downloads /innodoc-webapp && \
-    chown -R innodocuser.innodocuser /home/innodocuser && \
-    chown -R innodocuser.innodocuser /innodoc-webapp && \
-    # clean up
-    rm -rf \
-      /usr/include \
-      /var/cache/apk/* \
-      /usr/share/man \
-      /tmp/*
+    apt-get update && \
+    apt-get install -y dumb-init && \
+    mv /root/.cache /home/innodocuser && \
+    useradd --shell /bin/bash innodocuser && \
+    chown -R innodocuser /home/innodocuser && \
+    rm -rf /var/lib/apt/lists/*
 
-COPY --from=build --chown=innodocuser:innodocuser /innodoc-webapp .
 USER innodocuser
+WORKDIR /home/innodocuser/innodoc-webapp
+COPY . .
+RUN set -xe && \
+  ln -s .env.example .env && \
+  yarn config set --home enableTelemetry 0 && \
+  yarn install --immutable && \
+  yarn workspace @innodoc/client-web run next telemetry disable && \
+  MANIFEST_FILE=packages/client-web/e2e/content/manifest.json yarn build
 
-# Force puppeteer version
-RUN yarn add puppeteer@$PUPPETEER_VERSION
-
-# Run E2E tests
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["yarn", "run", "test:e2e", "--color"]
