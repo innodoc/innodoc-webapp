@@ -1,10 +1,7 @@
-FROM ubuntu:bionic
+FROM innodoc/innodoc-webapp-base
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 ARG BUILD_ID
-ARG DEBIAN_FRONTEND=noninteractive
-ARG NODE_VERSION=node_14.x
 
-# Add user/group to run as
 RUN set -xe && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
