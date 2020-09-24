@@ -171,11 +171,14 @@ Push to Docker Hub:
   variables:
     GIT_STRATEGY: none
 
+.deploy-prepare-ssh-script: &deploy-prepare-ssh-script |
+  apk add --no-cache openssh-client
+  mkdir -p ~/.ssh
+
 .deploy-staging-base: &deploy-staging-base
   <<: *deploy-base
   before_script:
-    - apk add --no-cache openssh-client
-    - mkdir -p ~/.ssh
+    - *deploy-prepare-ssh-script
     - echo "$STAGING_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ecdsa
     - chmod 600 ~/.ssh/id_ecdsa
     - echo "$STAGING_SERVER_KEY" > ~/.ssh/known_hosts
@@ -185,8 +188,7 @@ Push to Docker Hub:
 .deploy-production-base: &deploy-production-base
   <<: *deploy-base
   before_script:
-    - apk add --no-cache openssh-client
-    - mkdir -p ~/.ssh
+    - *deploy-prepare-ssh-script
     - echo "$PRODUCTION_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ecdsa
     - chmod 600 ~/.ssh/id_ecdsa
     - echo "$PRODUCTION_SERVER_KEY" > ~/.ssh/known_hosts
