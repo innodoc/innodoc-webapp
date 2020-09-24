@@ -11,7 +11,7 @@ PLAYWRIGHT_VERSION=$(yarn workspace @innodoc/client-web node --eval "console.log
 docker build \
   --pull \
   --tag $BASE_IMAGE \
-  -f Dockerfile.base \
+  --file Dockerfile.base \
   .
 
 # Playwright image
@@ -19,7 +19,7 @@ docker build \
   --pull \
   --tag $PLAYWRIGHT_IMAGE \
   --build-arg PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION \
-  -f Dockerfile.playwright \
+  --file Dockerfile.playwright \
   .
 
 docker push $BASE_IMAGE
