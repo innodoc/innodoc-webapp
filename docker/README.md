@@ -1,6 +1,22 @@
-This directory contains base Dockerfiles. This greatly speed-ups the CI
-pipelines. The images should be build and pushed with every new Playwright
-version.
+# Dockerfiles innodoc-webapp
+
+This directory contains the project's Dockerfiles.
+
+## Images
+
+- `Dockerfile`
+  - Based on `innodoc/innodoc-webapp/base`
+  - Includes the innodoc web application
+- `Dockerfile.e2e`
+  - Based on `innodoc/innodoc-webapp/playwright`
+  - Includes a custom innodoc-webapp build (via `$BUILD_IMAGE`)
+  - Runs E2E tests
+
+## Base images
+
+Using base images greatly improves CI build times. The image
+`innodoc/innodoc-webapp/playwright` must be rebuilt and pushed with every new
+Playwright version!
 
 - `Dockerfile.base` &ndash; `innodoc/innodoc-webapp/base`
   - Based on `ubuntu/bionic`

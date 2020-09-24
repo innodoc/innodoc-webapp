@@ -23,6 +23,8 @@ docker run \
 **Note:** You still need a MongoDB instance and content for the app to do
 anything useful.
 
+**See also:** [Docker README](docker/README.md)
+
 ### Manually building the application
 
 #### Requirements
