@@ -13,8 +13,6 @@ variables:
 .docker-default-vars: &docker-default-vars
   DOCKER_TLS_CERTDIR: '/certs'
   GIT_STRATEGY: none
-  IMAGE_E2E_CACHE_TAG: $CI_REGISTRY_IMAGE/e2e:cache
-  IMAGE_E2E_TAG: $CI_REGISTRY_IMAGE/e2e:$CI_COMMIT_REF_SLUG
   IMAGE_TAG: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
   # taken from https://github.com/semver/semver/issues/232#issue-48635632
   SEMVER_REGEXP: '^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$'
@@ -54,14 +52,8 @@ Build image:
   <<: *docker-base
   stage: build
   script:
-    - docker pull "$IMAGE_TAG" || true
-    - docker pull "$IMAGE_STAGING_TAG" || true
-    - docker pull "$IMAGE_RELEASE_TAG" || true
     - docker build
       --pull
-      --cache-from "$IMAGE_TAG"
-      --cache-from "$IMAGE_STAGING_TAG"
-      --cache-from "$IMAGE_RELEASE_TAG"
       --tag "$IMAGE_TAG"
       --build-arg BUILD_ID="$CI_COMMIT_SHA"
       .
@@ -85,14 +77,12 @@ Linting:
   <<: *docker-base
   stage: test
   script:
-    - docker pull "$IMAGE_TAG"
     - docker run --rm "$IMAGE_TAG" yarn lint
 
 Unit tests:
   <<: *docker-mongo-base
   stage: test
   script:
-    - docker pull "$IMAGE_TAG"
     - docker run
       --rm
       --env MONGO_URL=mongodb://mongodb-in-memory/innodoc-test
@@ -106,41 +96,29 @@ E2E tests:
   <<: *docker-mongo-base
   stage: test
   script:
-    - docker pull "$IMAGE_TAG"
-    - docker pull "$IMAGE_E2E_CACHE_TAG" || true
     - docker build
       --pull
-      --cache-from "$IMAGE_E2E_CACHE_TAG"
-      --tag "$IMAGE_E2E_TAG"
+      --tag innodoc-webapp-e2e:latest
       --build-arg BUILD_IMAGE="$IMAGE_TAG"
       -f packages/client-web/e2e/Dockerfile
       .
-    - docker tag "$IMAGE_E2E_TAG" "$IMAGE_E2E_CACHE_TAG"
-    - docker push "$IMAGE_E2E_CACHE_TAG"
     - docker run
       --cidfile /tmp/e2e.cid
       --env MONGO_URL=mongodb://mongodb-in-memory/innodoc-e2e
       --network testbridge
       --ipc=host
       --security-opt seccomp=$(pwd)/packages/client-web/e2e/seccomp_profile.json
-      "$IMAGE_E2E_TAG"
+      innodoc-webapp-e2e:latest
   after_script:
     - docker cp
       $(cat /tmp/e2e.cid):/home/innodocuser/innodoc-webapp/packages/client-web/e2e/screenshots/.
       packages/client-web/e2e/screenshots
-    - docker cp
-      $(cat /tmp/e2e.cid):/home/innodocuser/innodoc-webapp/.yarn/pw-browsers/.
-      .yarn/pw-browsers
     - docker rm -v $(cat /tmp/e2e.cid)
     - *docker-mongo-base-after-script
     - *docker-base-logout-script
   variables:
     <<: *docker-default-vars
     GIT_STRATEGY: fetch
-  cache:
-    key: pw-browsers-cache
-    paths:
-      - .yarn/pw-browsers/
   artifacts:
     name: e2e-screenshots-$CI_COMMIT_REF_NAME
     paths:
