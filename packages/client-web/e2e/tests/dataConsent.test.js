@@ -16,7 +16,7 @@ describe('Data consent', () => {
     const modal = await page.waitForSelector('.ant-modal')
     const switches = await modal.$$('button[role=switch]')
     await Promise.all(switches.map((sw) => sw.click()))
-    const okButton = await modal.waitForSelector('*css=button >> "OK"')
+    const okButton = await modal.waitForSelector('*css=button >> "OKK"')
     await okButton.click()
     await page.waitForSelector('.ant-modal', { state: 'hidden' })
     const cookie = await helpers.getCookie('data-consent')
