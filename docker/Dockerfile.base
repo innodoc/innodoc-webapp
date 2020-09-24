@@ -1,0 +1,25 @@
+FROM ubuntu:bionic
+LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
+ARG DEBIAN_FRONTEND=noninteractive
+ARG NODE_VERSION=node_14.x
+
+RUN set -xe && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+      ca-certificates \
+      curl \
+      gnupg && \
+    curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
+    echo "deb https://deb.nodesource.com/$NODE_VERSION bionic main" > /etc/apt/sources.list.d/nodesource.list && \
+    echo "deb-src https://deb.nodesource.com/$NODE_VERSION bionic main" >> /etc/apt/sources.list.d/nodesource.list && \
+    cat /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && \
+    apt-get install -y nodejs && \
+    npm install -g yarn && \
+    useradd \
+      --shell /bin/bash \
+      --home-dir /home/innodocuser \
+      --create-home \
+      innodocuser && \
+    apt-get remove --auto-remove --purge -y curl gnupg && \
+    rm -rf /var/lib/apt/lists/*
