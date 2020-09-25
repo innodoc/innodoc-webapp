@@ -30,9 +30,9 @@ describe('Media query', () => {
 
 describe('Mobile display', () => {
   it('should support very low browser resolution', async () => {
-    await jestPlaywright.resetContext({ viewport: { width: 280, height: 600 } })
+    await jestPlaywright.resetContext({ viewport: { width: 320, height: 600 } })
     await helpers.goto()
     const contentWidth = await page.$eval('[class*=content___]', (el) => el.clientWidth)
-    expect(contentWidth).toBe(280)
+    expect(contentWidth).toBe(320)
   })
 })
