@@ -2,11 +2,16 @@
 
 .content
   margin: $padding-lg auto calc(2 * $padding-lg)
-  max-width: 100%
   padding: 0 $padding-sm
   min-height: 600px
 
-  @media (max-width: $screen-sm-max)
+  // Content widths
+
+  @media (max-width: $screen-xs-max)
+    &
+      width: 320px
+
+  @media (min-width: $screen-xs)
     &
       width: 480px
 
@@ -21,3 +26,31 @@
   @media (min-width: $screen-lg)
     &
       width: 980px
+
+  // Font sizes
+
+  @media (max-width: $screen-sm-max)
+    & h1
+      font-size: calc($font-size-base * 1.8)
+
+    & h2
+      font-size: calc($font-size-base * 1.4)
+
+    & h3
+      font-size: calc($font-size-base * 1.1)
+
+    & h4
+      font-size: $font-size-base
+
+  @media (max-width: $screen-xs-max)
+    & h1
+      font-size: calc($font-size-base * 1.5)
+
+    & h2
+      font-size: calc($font-size-base * 1.2)
+
+    & h3
+      font-size: calc($font-size-base * 1.1)
+
+    & h4
+      font-size: $font-size-base
