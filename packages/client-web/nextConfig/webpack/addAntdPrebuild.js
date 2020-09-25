@@ -47,9 +47,9 @@ const generateVarsForAntd = () =>
     {
       // Don't use postcss-import-json so only overridden variables are exported
       disablePostcssImportJson: true,
-      file: { extname: path.extname(antdVarsOverrideFilename) },
+      file: antdVarsOverrideFilename,
     },
-    path.resolve(__dirname, 'postcss.config.js')
+    path.resolve(__dirname, '..', 'postcss.config.js')
   ).then(({ plugins, options }) =>
     postcss(plugins)
       .process(fs.readFileSync(antdVarsOverrideFilename).toString(), {
@@ -59,7 +59,7 @@ const generateVarsForAntd = () =>
       .then((result) => result.root.variables)
       .catch((err) => {
         console.error('Failed to generate variables for Ant Design!')
-        console.log(err)
+        console.error(err)
         process.exit(-1)
       })
   )

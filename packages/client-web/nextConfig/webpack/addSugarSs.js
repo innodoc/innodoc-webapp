@@ -19,8 +19,8 @@ module.exports = (config, { dev, isServer }) => {
     {
       loader: require.resolve('postcss-loader'),
       options: {
-        config: {
-          path: path.resolve(__dirname, 'postcss.config.js'),
+        postcssOptions: {
+          config: path.resolve(__dirname, '..', 'postcss.config.js'),
         },
       },
     },

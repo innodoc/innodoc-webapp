@@ -10,7 +10,7 @@
     "lint:eslint": "eslint .",
     "lint:stylelint": "stylelint .",
     "lint": "yarn lint:eslint && yarn workspace @innodoc/client-web lint:stylelint",
-    "prepush": "MANIFEST_FILE=packages/client-web/e2e/content/manifest.json yarn build && yarn lint && yarn test:unit && yarn test:e2e",
+    "prepush": "yarn build && yarn lint && yarn test:unit && yarn test:e2e",
     "server:build": "yarn workspace @innodoc/server build",
     "start": "yarn workspace @innodoc/server start",
     "test:e2e:content": "yarn workspace @innodoc/client-web test:e2e:content",
@@ -30,32 +30,33 @@
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.1",
+    "@babel/core": "^7.11.6",
     "@babel/plugin-proposal-export-default-from": "^7.10.4",
-    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-env": "^7.11.5",
     "@innodoc/client-misc": "workspace:packages/client-misc",
     "@innodoc/client-question-validators": "workspace:packages/client-question-validators",
     "@innodoc/client-sagas": "workspace:packages/client-sagas",
     "@innodoc/client-store": "workspace:packages/client-store",
     "@innodoc/client-web": "workspace:packages/client-web",
-    "@types/jest": "^26.0.10",
+    "@types/jest": "^26.0.14",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.3.0",
     "babel-plugin-dynamic-import-node": "^2.3.3",
-    "eslint": "^7.6.0",
+    "eslint": "^7.9.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-prettier": "^6.12.0",
     "eslint-import-resolver-node": "^0.3.4",
     "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-jest": "^24.0.2",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-prettier": "^3.1.4",
-    "jest": "^26.3.0",
-    "next": "^9.5.2",
-    "prettier": "^2.0.5",
-    "stylelint": "^13.7.0"
+    "jest": "^26.4.2",
+    "next": "^9.5.3",
+    "prettier": "^2.1.2",
+    "stylelint": "^13.7.1"
   },
   "resolutions": {
-    "mongodb-memory-server": "6.6.1"
+    "mongodb-memory-server": "6.6.1",
+    "postcss": "7.0.34"
   }
 }

@@ -1,7 +1,7 @@
 const fs = require('fs')
 const { execSync } = require('child_process')
 const path = require('path')
-const Dotenv = require('dotenv-safe')
+const Dotenv = require('dotenv')
 
 const rootDir = path.resolve(__dirname, '..', '..', '..')
 
@@ -11,6 +11,7 @@ const getAbsPath = (val) => (path.isAbsolute(val) ? val : path.resolve(rootDir, 
 
 const getManifest = () => {
   let jsonData
+  // TODO: remove the need to use MANIFEST_FILE at build time?
   if (process.env.MANIFEST_FILE) {
     const filePath = getAbsPath(process.env.MANIFEST_FILE)
     jsonData = fs.readFileSync(filePath)
@@ -27,18 +28,14 @@ const getManifest = () => {
   return undefined
 }
 
-// Load .env
+// Load env config
 const dotEnvFile = path.resolve(rootDir, '.env')
 if (!fs.existsSync(dotEnvFile)) {
   throw new Error(
-    `Could not find configuration file '${dotEnvFile}'\nCopy '.env.example' to '.env' and edit to your liking.`
+    `Could not find configuration file '${dotEnvFile}'\nCopy '.env.local.example' to '.env.local' and edit to your liking.`
   )
 }
-Dotenv.config({
-  path: path.resolve(rootDir, '.env'),
-  example: path.resolve(rootDir, '.env.example'),
-  allowEmptyValues: true,
-})
+Dotenv.config({ path: dotEnvFile })
 
 // Node environment
 let nodeEnv
@@ -67,10 +64,10 @@ const getServerRuntimeConfig = () => ({
   manifest: getManifest(),
   mongoUrl: process.env.MONGO_URL,
   nodeEnv,
-  pagePathPrefix: process.env.PAGE_PATH_PREFIX,
+  pagePathPrefix: process.env.PAGE_PATH_PREFIX || 'page',
   host: process.env.APP_HOST,
   port: parseInt(process.env.APP_PORT, 10),
-  sectionPathPrefix: process.env.SECTION_PATH_PREFIX,
+  sectionPathPrefix: process.env.SECTION_PATH_PREFIX || 'section',
   smtp: {
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT, 10),

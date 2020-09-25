@@ -1,5 +1,4 @@
 const addAntd = require('./addAntd')
-const addDotenv = require('./addDotEnv')
 const addMiniCssExtractPlugin = require('./addMiniCssExtractPlugin')
 const addSugarSs = require('./addSugarSs')
 const addSvgIcons = require('./addSvgIcons')
@@ -10,7 +9,6 @@ module.exports = (prevConfig, options) => {
   const config = { ...prevConfig }
   addSugarSs(config, options)
   addAntd(config, options)
-  addDotenv(config)
   addMiniCssExtractPlugin(config, options)
   addSvgIcons(config)
   addWoff2FileLoader(config)

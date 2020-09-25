@@ -1,7 +1,9 @@
 const path = require('path')
 
-module.exports = ({ disablePostcssImportJson, file: { extname } }) => ({
-  parser: extname === '.sss' ? require.resolve('sugarss') : undefined,
+// TODO: Add cssnano in production
+
+module.exports = ({ disablePostcssImportJson, file }) => ({
+  parser: path.extname(file) === '.sss' ? require.resolve('sugarss') : undefined,
   plugins: {
     [require.resolve('postcss-import')]: {},
     [path.resolve(__dirname, 'postcss-import-json')]: disablePostcssImportJson ? false : {},

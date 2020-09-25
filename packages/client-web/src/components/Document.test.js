@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Document, { Main, NextScript } from 'next/document'
+import Document, { Html, Main, NextScript } from 'next/document'
 
 import InnodocDocument from './Document'
 
@@ -11,9 +11,7 @@ jest.mock('next-i18next/dist/commonjs/utils', () => ({
 describe('<InnoDocDocument />', () => {
   it('should render', () => {
     const wrapper = shallow(<InnodocDocument language="ru" />)
-    const htmlTag = wrapper.find('html')
-    expect(htmlTag.exists()).toBe(true)
-    expect(htmlTag.prop('lang')).toBe('ru')
+    expect(wrapper.find(Html).prop('lang')).toBe('ru')
     expect(wrapper.find('body').exists()).toBe(true)
     expect(wrapper.find(Main).exists()).toBe(true)
     expect(wrapper.find(NextScript).exists()).toBe(true)

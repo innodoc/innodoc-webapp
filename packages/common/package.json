@@ -15,7 +15,7 @@
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "next": "^9.5.2",
+    "next": "^9.5.3",
     "next-i18next": "^6.0.2",
     "password-validator": "^5.1.0",
     "react": "^16.13.1",
@@ -25,11 +25,11 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^7.9.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-prettier": "^6.12.0",
     "eslint-import-resolver-node": "^0.3.4",
     "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-jest": "^24.0.2",
     "eslint-plugin-prettier": "^3.1.4",
-    "prettier": "^2.1.1"
+    "prettier": "^2.1.2"
   }
 }

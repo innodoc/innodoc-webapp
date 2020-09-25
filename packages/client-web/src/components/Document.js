@@ -1,7 +1,7 @@
 // this is only rendered server-side
 
 import React from 'react'
-import Document, { Head, Main, NextScript } from 'next/document'
+import Document, { Head, Html, Main, NextScript } from 'next/document'
 import { lngFromReq } from 'next-i18next/dist/commonjs/utils'
 
 export default class InnodocDocument extends Document {
@@ -16,13 +16,13 @@ export default class InnodocDocument extends Document {
   render() {
     const { language } = this.props
     return (
-      <html lang={language}>
+      <Html lang={language}>
         <Head />
         <body>
           <Main />
           <NextScript />
         </body>
-      </html>
+      </Html>
     )
   }
 }
