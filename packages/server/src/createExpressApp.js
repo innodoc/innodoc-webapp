@@ -4,6 +4,7 @@ import csrf from 'csurf'
 import express from 'express'
 
 import errorHandler from './errorHandler'
+import indexRedirectHandler from './indexRedirectHandler'
 import userController from './userController'
 import { requestLoggerMiddleware } from './logger'
 import { passportMiddleware, sendMailMiddleware, lookupUserMiddleware } from './middlewares'
@@ -24,6 +25,7 @@ const createExpressApp = (config, nextApp) => {
         value: (req) => req.headers['csrf-token'],
       })
     )
+    .get('/', indexRedirectHandler(config))
     .use(sendMailMiddleware(config.smtp))
     .use(passportMiddleware(config))
     .use(lookupUserMiddleware(config))

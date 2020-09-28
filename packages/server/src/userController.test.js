@@ -33,6 +33,7 @@ const tokenRegexp = new RegExp(tokenRegexpString)
 const config = {
   appRoot: 'https://app.example.com/',
   jwtSecret: '123ABCabc!',
+  manifest: { home_link: '/page/foo' },
   mongoUrl: process.env.MONGO_URL,
   nodeEnv: 'testing',
   smtp: {

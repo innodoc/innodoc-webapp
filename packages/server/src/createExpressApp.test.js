@@ -27,6 +27,9 @@ jest.mock('express', () => jest.fn(() => mockExpressApp))
 
 jest.mock('./logger')
 
+const mockIndexRedirectHandler = {}
+jest.mock('./indexRedirectHandler', () => () => mockIndexRedirectHandler)
+
 const mockUserController = {}
 jest.mock('./userController', () => jest.fn(() => mockUserController))
 
@@ -41,6 +44,7 @@ jest.mock('./middlewares', () => ({
 
 const defaultConfig = {
   appRoot: 'http://app.example.com/',
+  manifest: { home_link: '/page/foo' },
   nodeEnv: 'production',
   smtp: {},
 }
@@ -60,6 +64,10 @@ describe.each(['production', 'development'])('createExpressApp (%s)', (nodeEnv) 
   it('should instantiate and return express app', () => {
     expect(returnedExpressApp).toBe(mockExpressApp)
     expect(express).toBeCalled()
+  })
+
+  it('should use indexRedirectHandler', () => {
+    expect(mockExpressApp.get).toBeCalledWith('/', mockIndexRedirectHandler)
   })
 
   describe('middlewares', () => {

@@ -4,21 +4,26 @@ const withTranspileModules = require('next-transpile-modules')
 
 const nodeModulesEs = require('./nodeModulesEs.json')
 const withBundleAnalyzer = require('./withBundleAnalyzer')
-const options = require('./options')
+const config = require('./config')
 const pkgInfo = require('../package.json')
 
-// Copy MathJax fonts
-const copyScript = path.resolve(__dirname, 'copyMathJaxFonts.js')
-execSync(`yarn node ${copyScript}`)
+module.exports = (phase, { defaultConfig }) => {
+  // Copy MathJax fonts
+  const copyScript = path.resolve(__dirname, 'copyMathJaxFonts.js')
+  execSync(`yarn node ${copyScript}`)
 
-const workspacePackages = Object.entries(pkgInfo.dependencies).reduce(
-  (acc, [name, ver]) => (ver.startsWith('workspace:packages/') ? [...acc, name] : acc),
-  []
-)
+  // Custom config
+  const customConfig = config(phase, { defaultConfig })
 
-const config = withTranspileModules([
-  ...workspacePackages,
-  ...nodeModulesEs, // ES6 node modules
-])(options)
+  // Transpile modules
+  const workspacePackages = Object.entries(pkgInfo.dependencies).reduce(
+    (acc, [name, ver]) => (ver.startsWith('workspace:packages/') ? [...acc, name] : acc),
+    []
+  )
+  const withTMConfig = withTranspileModules([
+    ...workspacePackages,
+    ...nodeModulesEs, // ES6 node modules
+  ])(customConfig)
 
-module.exports = process.env.BUNDLE_ANALYZE ? withBundleAnalyzer(config) : config
+  return process.env.BUNDLE_ANALYZE ? withBundleAnalyzer(withTMConfig) : withTMConfig
+}

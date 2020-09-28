@@ -15,7 +15,7 @@ RUN set -xe && \
   yarn config set --home enableTelemetry 0 && \
   yarn install --immutable && \
   yarn workspace @innodoc/client-web run next telemetry disable && \
-  MANIFEST_FILE=packages/client-web/e2e/content/manifest.json yarn build
+  yarn build
 
 EXPOSE 8000
 CMD ["yarn", "run", "pm2-runtime", "start", "yarn", "--interpreter", "/bin/sh", "--name", "innodoc-webapp", "--", "start"]
