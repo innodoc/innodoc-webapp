@@ -2,7 +2,6 @@ import { Router } from 'express'
 import passport from 'passport'
 import i18nextHttpMiddleware from 'i18next-http-middleware'
 
-import nextI18next from '@innodoc/common/src/i18n'
 import getLogger from './logger'
 import User from './models/User'
 import UserProgress from './models/UserProgress'
@@ -12,6 +11,9 @@ const userController = ({ appRoot, jwtSecret }) => {
   const router = Router()
   const logger = getLogger('user')
   const secureCookie = new URL(appRoot).protocol === 'https'
+
+  // Late import of i18n, as it depends on Next.js configuration
+  const nextI18next = import('@innodoc/common/src/i18n')
   router.use(i18nextHttpMiddleware.handle(nextI18next.i18n))
 
   router.get(
