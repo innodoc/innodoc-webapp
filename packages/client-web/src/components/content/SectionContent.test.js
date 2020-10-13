@@ -11,6 +11,8 @@ import SubsectionList from './SubsectionList'
 import ContentAffix from './ContentAffix'
 import ContentFragment from './ContentFragment'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const mockGetCurrentSubsections = sectionSelectors.getCurrentSubsections
 
 let mockContent

@@ -7,6 +7,8 @@ import PageTitle from '../PageTitle'
 import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
 import IndexPage from './IndexPage'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<IndexPage />', () => {
   it('should render', () => {
     const wrapper = shallow(<IndexPage />)

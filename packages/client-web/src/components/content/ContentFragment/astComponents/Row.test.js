@@ -5,6 +5,8 @@ import { Col as AntdCol, Row as AntdRow } from 'antd'
 import Row from './Row'
 import ContentFragment from '../ContentFragment'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<Row />', () => {
   it('should render', () => {
     const attributes = [

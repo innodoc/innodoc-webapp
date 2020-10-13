@@ -6,6 +6,8 @@ import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 import ChangePasswordForm from '../user/ChangePasswordForm'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<ChangePasswordPage />', () => {
   it('should render', () => {
     const wrapper = shallow(<ChangePasswordPage />)

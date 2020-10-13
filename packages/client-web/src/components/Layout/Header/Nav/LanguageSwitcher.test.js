@@ -7,6 +7,8 @@ import appSelectors from '@innodoc/client-store/src/selectors'
 import LanguageSwitcher from './LanguageSwitcher'
 import css from './style.sss'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const mockApp = { language: 'de' }
 const mockCourse = {
   currentSectionId: 'foo',

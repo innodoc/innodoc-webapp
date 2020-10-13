@@ -10,6 +10,8 @@ import CheckboxQuestion from './CheckboxQuestion'
 import { ExerciseContext } from '../ExerciseContext'
 import css from './style.sss'
 
+jest.mock('@innodoc/common/src/i18n')
+
 let mockQuestion = {}
 jest.mock('@innodoc/client-store/src/selectors/question', () => ({
   makeGetQuestion: () => () => mockQuestion,

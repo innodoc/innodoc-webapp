@@ -6,6 +6,8 @@ import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 import RequestVerificationForm from '../user/RequestVerificationForm'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<RequestVerificationPage />', () => {
   it('should render', () => {
     const wrapper = shallow(<RequestVerificationPage />)

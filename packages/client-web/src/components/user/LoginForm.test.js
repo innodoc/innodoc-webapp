@@ -10,6 +10,8 @@ import LoginForm from './LoginForm'
 import UserForm from './UserForm'
 import { EmailField, PasswordField } from './formFields'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const mockDispatch = jest.fn()
 const mockAppSelectors = appSelectors
 let mockLoggedInEmail

@@ -55,10 +55,10 @@ describe.each(['production', 'development'])('createExpressApp (%s)', (nodeEnv) 
   const mockNextApp = { getRequestHandler: () => mockNextRequestHandler }
   let returnedExpressApp
 
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.clearAllMocks()
     config = { ...defaultConfig, nodeEnv }
-    returnedExpressApp = createExpressApp(config, mockNextApp)
+    returnedExpressApp = await createExpressApp(config, mockNextApp)
   })
 
   it('should instantiate and return express app', () => {

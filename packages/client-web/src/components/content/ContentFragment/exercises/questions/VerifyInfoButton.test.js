@@ -6,6 +6,8 @@ import ContentFragment from '../..'
 import { ExerciseContext } from '../ExerciseContext'
 import VerifyInfoButton from './VerifyInfoButton'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const content = [{ t: '', c: [] }]
 
 const getWrapper = (val) => {

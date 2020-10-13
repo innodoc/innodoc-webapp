@@ -7,6 +7,8 @@ import { showMessage } from '@innodoc/client-store/src/actions/ui'
 import RegistrationForm from './RegistrationForm'
 import UserForm from './UserForm'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const mockDispatch = jest.fn()
 jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,

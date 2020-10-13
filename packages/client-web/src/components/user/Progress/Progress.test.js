@@ -7,6 +7,8 @@ import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import ChapterCard from './ChapterCard'
 import Progress from './Progress'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const mockChapters = [
   {
     id: 'foo',

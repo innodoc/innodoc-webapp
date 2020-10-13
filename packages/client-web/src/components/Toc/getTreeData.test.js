@@ -6,6 +6,8 @@ import ActiveSectionLabel from './ActiveSectionLabel'
 import getTreeData from './getTreeData'
 import css from './style.sss'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const tocData = [
   {
     id: 'section-1',

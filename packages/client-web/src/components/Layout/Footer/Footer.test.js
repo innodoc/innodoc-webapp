@@ -13,6 +13,8 @@ import FooterLink from './Link'
 import PageIcon from '../PageIcon'
 import ContentFragment from '../../content/ContentFragment'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const mockGetApp = appSelectors.getApp
 const mockGetCurrentCourse = courseSelectors.getCurrentCourse
 const mockGetCurrentPage = pageSelectors.getCurrentPage

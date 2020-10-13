@@ -6,6 +6,8 @@ import { CheckCircleTwoTone } from '@ant-design/icons'
 import { SectionLink } from '../../content/links'
 import ChapterCard, { DynamicChapterPieChart } from './ChapterCard'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<ChapterCard />', () => {
   it('should render', () => {
     const wrapper = shallow(

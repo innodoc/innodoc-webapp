@@ -7,6 +7,8 @@ import PageTitle from '../PageTitle'
 import UserProgress from '../user/Progress'
 import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<ProgressPage />', () => {
   it('should render', () => {
     const wrapper = shallow(<ProgressPage />)

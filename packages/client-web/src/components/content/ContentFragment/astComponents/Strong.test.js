@@ -5,6 +5,8 @@ import { Typography } from 'antd'
 import Strong from './Strong'
 import ContentFragment from '../ContentFragment'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const content = [{ t: 'Str', c: 'Foo' }]
 
 describe('<Strong />', () => {

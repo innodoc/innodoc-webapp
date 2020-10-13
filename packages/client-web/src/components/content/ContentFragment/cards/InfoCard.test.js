@@ -5,6 +5,8 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import Card from './Card'
 import InfoCard from './InfoCard'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<InfoCard />', () => {
   it('renders', () => {
     const attrs = [['data-number', '2.1.16']]

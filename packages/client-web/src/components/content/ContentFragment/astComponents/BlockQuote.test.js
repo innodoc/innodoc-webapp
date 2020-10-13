@@ -4,6 +4,8 @@ import { shallow } from 'enzyme'
 import BlockQuote from './BlockQuote'
 import ContentFragment from '../ContentFragment'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const content = [{ t: 'Para', c: ['Foo'] }]
 
 describe('<BlockQuote />', () => {

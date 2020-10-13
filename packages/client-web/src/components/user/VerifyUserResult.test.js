@@ -7,6 +7,8 @@ import { verifyUser } from '@innodoc/client-misc/src/api'
 import PageTitle from '../PageTitle'
 import VerifyUserResult from './VerifyUserResult'
 
+jest.mock('@innodoc/common/src/i18n')
+
 jest.mock('react-redux', () => ({
   useSelector: () => ({
     appRoot: 'http://app.example.com/',

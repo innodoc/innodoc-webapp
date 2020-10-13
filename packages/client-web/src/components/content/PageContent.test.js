@@ -6,6 +6,8 @@ import PageTitle from '../PageTitle'
 import PageContent from './PageContent'
 import ContentFragment from './ContentFragment'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const mockContent = [{ t: 'Str', c: 'A nice string' }]
 const mockRef = React.createRef()
 jest.mock('../../hooks/useContentPane', () => () => ({

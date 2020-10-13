@@ -6,6 +6,8 @@ import { changePassword } from '@innodoc/client-misc/src/api'
 import ChangePasswordForm from './ChangePasswordForm'
 import UserForm from './UserForm'
 
+jest.mock('@innodoc/common/src/i18n')
+
 jest.mock('react-redux', () => ({
   useSelector: () => ({
     appRoot: 'http://app.example.com/',

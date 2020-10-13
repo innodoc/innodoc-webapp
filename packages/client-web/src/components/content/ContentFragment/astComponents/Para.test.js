@@ -5,6 +5,8 @@ import { Typography } from 'antd'
 import Para from './Para'
 import ContentFragment from '../ContentFragment'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const content = [{ t: 'Str', c: 'Foo' }]
 
 describe('<Para />', () => {

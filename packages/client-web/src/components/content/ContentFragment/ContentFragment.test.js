@@ -4,6 +4,8 @@ import { shallow } from 'enzyme'
 import ContentFragment from './ContentFragment'
 import { BulletList, Para, UnknownType } from './astComponents'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<ContentFragment />', () => {
   it('renders', () => {
     const contentData = [

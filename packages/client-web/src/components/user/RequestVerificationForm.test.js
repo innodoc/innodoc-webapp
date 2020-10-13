@@ -7,6 +7,8 @@ import RequestVerificationForm from './RequestVerificationForm'
 import UserForm from './UserForm'
 import { EmailField } from './formFields'
 
+jest.mock('@innodoc/common/src/i18n')
+
 jest.mock('react-redux', () => ({
   useSelector: () => ({
     appRoot: 'http://app.example.com/',

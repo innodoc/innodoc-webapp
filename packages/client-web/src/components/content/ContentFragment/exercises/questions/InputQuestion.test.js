@@ -5,6 +5,8 @@ import { Input } from 'antd'
 import InputPopover from './InputPopover'
 import InputQuestion from './InputQuestion'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const Icon = () => null
 
 const messages = [{ msg: 'foo', type: 'success' }]

@@ -5,6 +5,8 @@ import { EyeOutlined } from '@ant-design/icons'
 import Card from './Card'
 import ExampleCard from './ExampleCard'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<ExampleCard />', () => {
   it('renders', () => {
     const attrs = [['data-number', '1.2.3']]

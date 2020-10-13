@@ -11,6 +11,8 @@ import Layout from './Layout'
 import MessageModal from './MessageModal'
 import Sidebar from './Sidebar'
 
+jest.mock('@innodoc/common/src/i18n')
+
 let mockLoggedInEmail
 let mockLatestMessage
 const mockDispatch = jest.fn()

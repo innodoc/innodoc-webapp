@@ -6,6 +6,8 @@ import { toggleSidebar } from '@innodoc/client-store/src/actions/ui'
 
 import ToggleButton from './ToggleButton'
 
+jest.mock('@innodoc/common/src/i18n')
+
 let mockApp
 const mockDispatch = jest.fn()
 jest.mock('react-redux', () => ({

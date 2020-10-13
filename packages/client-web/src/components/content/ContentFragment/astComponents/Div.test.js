@@ -6,6 +6,8 @@ import UnknownType from './UnknownType'
 import ExerciseCard from '../exercises/ExerciseCard'
 import Figure from './Figure'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<Div />', () => {
   it.each([
     ['figure', Figure],

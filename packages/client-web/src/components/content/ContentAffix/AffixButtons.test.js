@@ -7,6 +7,8 @@ import AffixButtons, { SectionButton } from './AffixButtons'
 import { SectionLink } from '../links'
 import SidebarToggleButton from '../../Layout/Sidebar/ToggleButton'
 
+jest.mock('@innodoc/common/src/i18n')
+
 jest.mock('react-redux', () => ({
   useSelector: () => ({ prevId: 'section1', nextId: 'section3' }),
 }))
