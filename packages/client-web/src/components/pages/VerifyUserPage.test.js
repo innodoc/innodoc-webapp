@@ -5,6 +5,8 @@ import VerifyUserPage from './VerifyUserPage'
 import Layout from '../Layout'
 import VerifyUserResult from '../user/VerifyUserResult'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<VerifyUserPage />', () => {
   it('should render', () => {
     const wrapper = shallow(<VerifyUserPage token="123Token!" />)

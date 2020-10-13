@@ -5,6 +5,8 @@ import { SectionLink } from '../links'
 
 import SubsectionList, { Subsection } from './SubsectionList'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const subsections = [
   {
     id: 'bar-1',

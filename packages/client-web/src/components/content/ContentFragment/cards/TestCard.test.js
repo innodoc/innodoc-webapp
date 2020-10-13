@@ -5,6 +5,8 @@ import { EditOutlined } from '@ant-design/icons'
 import Card from './Card'
 import TestCard from './TestCard'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<TestCard />', () => {
   it('renders', () => {
     const content = []

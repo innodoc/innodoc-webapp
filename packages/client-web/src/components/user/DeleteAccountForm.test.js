@@ -10,6 +10,8 @@ import DeleteAccountForm from './DeleteAccountForm'
 import { PasswordField } from './formFields'
 import UserForm from './UserForm'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const mockDispatch = jest.fn()
 jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,

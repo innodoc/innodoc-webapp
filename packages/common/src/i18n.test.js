@@ -5,6 +5,15 @@ jest.mock('next-i18next', () => ({
   default: jest.fn().mockImplementation((config) => ({ config })),
 }))
 
+jest.mock('next/config', () => ({
+  default: jest.fn().mockImplementation(() => ({
+    publicRuntimeConfig: {
+      defaultLanguage: 'en',
+      otherLanguages: ['de'],
+    },
+  })),
+}))
+
 let NextI18Next
 let i18n
 let windowSpy

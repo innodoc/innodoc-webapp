@@ -5,6 +5,8 @@ import Figure from './Figure'
 import ContentFragment from '../ContentFragment'
 import ImageTag from './Image'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const content = [
   {
     t: 'Para',

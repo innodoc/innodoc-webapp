@@ -7,6 +7,8 @@ import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import Breadcrumb from './Breadcrumb'
 import { InternalLink, SectionLink } from '../links'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const mockGetCurrentCourse = courseSelectors.getCurrentCourse
 const mockSections = [
   {

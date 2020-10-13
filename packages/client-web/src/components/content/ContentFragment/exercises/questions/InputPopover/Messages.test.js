@@ -5,6 +5,8 @@ import { Alert, Typography } from 'antd'
 import { Trans } from '@innodoc/common/src/i18n'
 import Messages, { Message } from './Messages'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const messages = [
   { msg: 'messageKey', type: 'success' },
   { msg: 'messageKey', type: 'error' },

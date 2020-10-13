@@ -7,6 +7,8 @@ import ContentAffix from './ContentAffix'
 import Breadcrumb from './Breadcrumb'
 import AffixButtons from './AffixButtons'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('ContentAffix', () => {
   it('should render', () => {
     const wrapper = shallow(<ContentAffix />)

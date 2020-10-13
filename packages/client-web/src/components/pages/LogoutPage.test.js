@@ -11,6 +11,8 @@ import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 import LogoutPage from './LogoutPage'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const mockDispatch = jest.fn()
 const mockAppSelectors = appSelectors
 jest.mock('react-redux', () => ({

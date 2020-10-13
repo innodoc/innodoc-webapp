@@ -9,6 +9,8 @@ import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
 import useContentPane, { scrollToHash } from './useContentPane'
 import ContentFragment from '../components/content/ContentFragment'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const stdApp = { language: 'en' }
 const contentArr = [{ t: 'Str', c: 'Foo' }]
 const stdContent = {

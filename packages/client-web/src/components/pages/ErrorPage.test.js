@@ -6,6 +6,8 @@ import ErrorPage from './ErrorPage'
 import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 
+jest.mock('@innodoc/common/src/i18n')
+
 jest.mock('react-redux', () => ({
   useSelector: () => ({ homeLink: '/home/link' }),
 }))

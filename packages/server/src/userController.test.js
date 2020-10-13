@@ -9,9 +9,7 @@ const mockNoopMiddleware = (req, res, next) => next()
 
 jest.mock('csurf', () => () => mockNoopMiddleware)
 
-jest.mock('@innodoc/common/src/i18n', () => ({
-  i18n: { t: (s) => s },
-}))
+jest.mock('@innodoc/common/src/i18n')
 
 jest.mock('i18next-http-middleware', () => ({
   handle: (i18n) => (req, res, next) => {

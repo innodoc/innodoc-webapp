@@ -28,7 +28,7 @@ const startServer = async () => {
     const { serverRuntimeConfig: config } = nextApp.nextConfig
     logger = configureLogger(config).getLogger('appserver')
     await connectDb(config)
-    const expressApp = createExpressApp(config, nextApp)
+    const expressApp = await createExpressApp(config, nextApp)
     const server = expressApp.listen(config.port, config.host)
     httpTerminator = createHttpTerminator({ server })
     const msg = `Started ${config.nodeEnv} server on ${config.host}:${config.port}.`

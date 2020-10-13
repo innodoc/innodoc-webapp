@@ -4,6 +4,8 @@ import { Menu } from 'antd'
 
 import UserMenu from './UserMenu'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<UserMenu />', () => {
   it('should render (logged in)', () => {
     const wrapper = shallow(<UserMenu email="alice@example.com" />)

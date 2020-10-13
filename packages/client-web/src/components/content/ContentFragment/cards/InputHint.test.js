@@ -6,6 +6,8 @@ import KeyboardSvg from '@fortawesome/fontawesome-free/svgs/regular/keyboard.svg
 import Card from './Card'
 import InputHint from './InputHint'
 
+jest.mock('@innodoc/common/src/i18n')
+
 // @svgr/webpack does not work inside tests
 jest.mock('@fortawesome/fontawesome-free/svgs/regular/keyboard.svg', () => () => null)
 

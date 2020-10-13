@@ -6,6 +6,8 @@ import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 import RegistrationForm from '../user/RegistrationForm'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<RegistrationPage />', () => {
   it('should render', () => {
     const wrapper = shallow(<RegistrationPage />)

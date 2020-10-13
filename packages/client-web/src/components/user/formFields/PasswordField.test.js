@@ -4,6 +4,8 @@ import { Form, Input } from 'antd'
 
 import PasswordField from './PasswordField'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<PasswordField />', () => {
   it('should render', () => {
     const wrapper = shallow(<PasswordField />)

@@ -4,6 +4,8 @@ import { shallow } from 'enzyme'
 import Quoted from './Quoted'
 import ContentFragment from '..'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<Quoted />', () => {
   it('renders', () => {
     const data = [

@@ -4,6 +4,8 @@ import { Form, Input } from 'antd'
 
 import EmailField from './EmailField'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<EmailField />', () => {
   it('should render', () => {
     const wrapper = shallow(<EmailField />)

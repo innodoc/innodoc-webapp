@@ -5,6 +5,8 @@ import { Typography } from 'antd'
 import Header from './Header'
 import ContentFragment from '..'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<Header />', () => {
   it('should render', () => {
     const data = [1, ['foo-caption', 'caption', null], [{ t: 'Str', c: 'foo content' }]]

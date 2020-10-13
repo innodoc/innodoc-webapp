@@ -4,6 +4,8 @@ import { Table as AntTable } from 'antd'
 
 import Table from './Table'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const tableData = [
   [],
   [{ t: 'AlignCenter' }, { t: 'AlignRight' }, { t: 'AlignLeft' }],

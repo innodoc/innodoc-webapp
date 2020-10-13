@@ -11,6 +11,8 @@ import { PageLink } from '../../../content/links'
 import PageIcon from '../../PageIcon'
 import css from './style.sss'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const mockGetCurrentPage = pageSelectors.getCurrentPage
 const mockGetNavPages = pageSelectors.getNavPages
 

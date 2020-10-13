@@ -6,6 +6,8 @@ import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 import ResetPasswordForm from '../user/ResetPasswordForm'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<ResetPasswordPage />', () => {
   it('should render', () => {
     const wrapper = shallow(<ResetPasswordPage token="123Token!" />)

@@ -7,6 +7,8 @@ import InputHint from '../cards/InputHint'
 import Question from '../exercises/questions'
 import Span, { IndexSpan } from './Span'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const content = [{ content: 'foo' }]
 
 describe('<IndexSpan />', () => {

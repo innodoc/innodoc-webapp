@@ -6,6 +6,8 @@ import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 import Toc from '../Toc'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<TocPage />', () => {
   it('should render', () => {
     const wrapper = shallow(<TocPage />)

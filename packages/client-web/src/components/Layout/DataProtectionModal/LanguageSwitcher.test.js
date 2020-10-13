@@ -7,6 +7,7 @@ import appSelectors from '@innodoc/client-store/src/selectors'
 import LanguageSwitcher from './LanguageSwitcher'
 import css from './style.sss'
 
+jest.mock('@innodoc/common/src/i18n')
 jest.mock('ionicons/dist/svg/language-outline.svg', () => () => null)
 
 const mockApp = { language: 'en' }

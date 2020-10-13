@@ -5,6 +5,8 @@ import { Collapse } from 'antd'
 import Hint from './Hint'
 import ContentFragment from '..'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<Hint />', () => {
   it('renders', () => {
     const attributes = [['caption', 'Solution']]

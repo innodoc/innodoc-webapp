@@ -5,6 +5,8 @@ import ContentFragment from '..'
 
 import BulletList from './BulletList'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const listData = [
   [{ t: 'Str', c: 'data 1' }],
   [{ t: 'Str', c: 'data 2' }],

@@ -4,6 +4,8 @@ import { Typography } from 'antd'
 
 import Video, { StaticVideo, YouTubeVideo } from './Video'
 
+jest.mock('@innodoc/common/src/i18n')
+
 jest.mock('react-redux', () => ({
   useSelector: () => ({
     language: 'en',

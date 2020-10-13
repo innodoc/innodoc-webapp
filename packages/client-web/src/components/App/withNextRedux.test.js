@@ -5,6 +5,8 @@ import { HYDRATE } from 'next-redux-wrapper'
 
 import withNextRedux, { getRootReducer } from './withNextRedux'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('withNextRedux', () => {
   it('should return HOC', async () => {
     const Comp = () => {}

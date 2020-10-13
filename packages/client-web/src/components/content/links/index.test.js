@@ -5,6 +5,8 @@ import { Typography } from 'antd'
 
 import { InternalLink, PageLink, SectionLink } from '.'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<InternalLink />', () => {
   it.each([
     ['section', SectionLink],

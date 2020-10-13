@@ -8,6 +8,8 @@ import Nav from './Nav'
 import Logo from './Logo'
 import SearchInput from './SearchInput'
 
+jest.mock('@innodoc/common/src/i18n')
+
 let mockCourse
 jest.mock('react-redux', () => ({
   useSelector: () => mockCourse,

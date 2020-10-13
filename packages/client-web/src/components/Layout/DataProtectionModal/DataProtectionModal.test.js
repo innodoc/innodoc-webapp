@@ -5,6 +5,8 @@ import { Button, Collapse, Modal, Switch } from 'antd'
 import DataProtectionModal from './DataProtectionModal'
 import LanguageSwitcher from './LanguageSwitcher'
 
+jest.mock('@innodoc/common/src/i18n')
+
 jest.mock('./LanguageSwitcher', () => () => null)
 
 describe('<DataProtectionModal />', () => {

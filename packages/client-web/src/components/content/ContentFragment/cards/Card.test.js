@@ -6,6 +6,8 @@ import { FileOutlined } from '@ant-design/icons'
 import Card from './Card'
 import ContentFragment from '..'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<Card />', () => {
   it('renders', () => {
     const content = [{ t: 'Str', c: 'Bar' }]

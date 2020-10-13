@@ -6,6 +6,8 @@ import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 import RequestPasswordResetForm from '../user/RequestPasswordResetForm'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<RequestPasswordResetPage />', () => {
   it('should render', () => {
     const wrapper = shallow(<RequestPasswordResetPage />)

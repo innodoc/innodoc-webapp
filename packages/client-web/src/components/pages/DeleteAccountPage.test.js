@@ -6,6 +6,8 @@ import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 import DeleteAccountForm from '../user/DeleteAccountForm'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<DeleteAccountPage />', () => {
   it('should render', () => {
     const wrapper = shallow(<DeleteAccountPage />)

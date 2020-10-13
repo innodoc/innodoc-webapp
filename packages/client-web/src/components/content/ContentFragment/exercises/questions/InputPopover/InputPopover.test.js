@@ -7,6 +7,8 @@ import Messages from './Messages'
 import InputPopover from './InputPopover'
 import css from './style.sss'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const messages = [{ msg: 'messageKey', type: 'success' }]
 
 let mockLg

@@ -9,7 +9,7 @@ import userController from './userController'
 import { requestLoggerMiddleware } from './logger'
 import { passportMiddleware, sendMailMiddleware, lookupUserMiddleware } from './middlewares'
 
-const createExpressApp = (config, nextApp) => {
+const createExpressApp = async (config, nextApp) => {
   const app = express()
 
   if (config.nodeEnv !== 'production') {
@@ -29,7 +29,7 @@ const createExpressApp = (config, nextApp) => {
     .use(sendMailMiddleware(config.smtp))
     .use(passportMiddleware(config))
     .use(lookupUserMiddleware(config))
-    .use('/user', userController(config))
+    .use('/user', await userController(config))
     .get('*', nextApp.getRequestHandler())
     .use(errorHandler(config))
 }

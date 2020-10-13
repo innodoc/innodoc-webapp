@@ -7,13 +7,13 @@ import User from './models/User'
 import UserProgress from './models/UserProgress'
 import { resetPasswordMail, verificationMail } from './mails'
 
-const userController = ({ appRoot, jwtSecret }) => {
+const userController = async ({ appRoot, jwtSecret }) => {
   const router = Router()
   const logger = getLogger('user')
   const secureCookie = new URL(appRoot).protocol === 'https'
 
   // Late import of i18n, as it depends on Next.js configuration
-  const nextI18next = import('@innodoc/common/src/i18n')
+  const nextI18next = await import('@innodoc/common/src/i18n')
   router.use(i18nextHttpMiddleware.handle(nextI18next.i18n))
 
   router.get(

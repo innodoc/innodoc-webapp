@@ -9,6 +9,8 @@ import useRouteNotifier from '../../hooks/useRouteNotifier'
 import PageTitle from '../PageTitle'
 import { InnoDocApp } from './App'
 
+jest.mock('@innodoc/common/src/i18n')
+
 jest.mock('../../hooks/useRouteNotifier', () => jest.fn())
 
 jest.mock('next/router', () => ({

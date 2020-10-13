@@ -6,6 +6,8 @@ import Link from './Link'
 import { InternalLink } from '../../links'
 import Video from './Video'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<Link />', () => {
   it('should render external link', () => {
     const data = [

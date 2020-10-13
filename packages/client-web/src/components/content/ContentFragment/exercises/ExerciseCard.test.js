@@ -6,6 +6,8 @@ import ExerciseCard from './ExerciseCard'
 import { ExerciseProvider } from './ExerciseContext'
 import Card from '../cards/Card'
 
+jest.mock('@innodoc/common/src/i18n')
+
 describe('<ExerciseCard />', () => {
   it('should render', () => {
     const attrs = [['data-number', '1.1.1']]

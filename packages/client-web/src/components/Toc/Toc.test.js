@@ -6,6 +6,8 @@ import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
 import Toc from './Toc'
 
+jest.mock('@innodoc/common/src/i18n')
+
 const mockGetCurrentCourse = courseSelectors.getCurrentCourse
 let mockCurrentCourse
 let mockToc
