@@ -7,10 +7,16 @@ const getServerRuntimeConfig = require('./getServerRuntimeConfig')
 const config = (phase, { defaultConfig }) => {
   const isRuntime = [PHASE_PRODUCTION_SERVER, PHASE_DEVELOPMENT_SERVER].includes(phase)
   const serverRuntimeConfig = getServerRuntimeConfig(isRuntime)
+  const publicRuntimeConfig = {}
+  if (serverRuntimeConfig.manifest) {
+    const { languages } = serverRuntimeConfig.manifest
+    ;[publicRuntimeConfig.defaultLanguage, ...publicRuntimeConfig.otherLanguages] = languages
+  }
 
   const nextConfig = {
     ...defaultConfig,
     serverRuntimeConfig,
+    publicRuntimeConfig,
     webpack,
 
     // Only use .js (not .jsx)
