@@ -1,0 +1,1 @@
+- Read language info from manifest in i18n?

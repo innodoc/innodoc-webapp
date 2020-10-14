@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import ChangePasswordPage from './ChangePasswordPage'
+import { ChangePasswordPage } from './ChangePasswordPage'
 import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 import ChangePasswordForm from '../user/ChangePasswordForm'

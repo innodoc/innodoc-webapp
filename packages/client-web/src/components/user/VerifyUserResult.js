@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import Link from 'next/link'
-import { Button, Result } from 'antd'
-import { LoadingOutlined, LoginOutlined } from '@ant-design/icons'
+import { Result } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
 
 import { verifyUser } from '@innodoc/client-misc/src/api'
 import { useTranslation } from '@innodoc/common/src/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
+import LoginButton from '../LoginButton'
 import PageTitle from '../PageTitle'
 
 const VerifyUserResult = ({ token }) => {
@@ -23,19 +23,7 @@ const VerifyUserResult = ({ token }) => {
       .catch(() => setStatus('error'))
   }, [appRoot, csrfToken, token])
 
-  // Wrap inside <>
-  // https://github.com/zeit/next.js/issues/7915#issuecomment-573397162
-  const extra =
-    status === 'success' ? (
-      <Link href="/login">
-        <div>
-          <Button icon={<LoginOutlined />} type="primary" key="console">
-            {t('user.login.title')}
-          </Button>
-        </div>
-      </Link>
-    ) : null
-
+  const extra = status === 'success' ? <LoginButton /> : null
   const icon = status === 'pending' ? <LoadingOutlined /> : null
 
   return (
