@@ -284,5 +284,9 @@
         "title": "Konto aktiviert"
       }
     }
+  },
+  "useRequireLogin": {
+    "title": "Nicht eingeloggt.",
+    "text": "Um diese Seite zu sehen, musst Du eingeloggt sein."
   }
 }

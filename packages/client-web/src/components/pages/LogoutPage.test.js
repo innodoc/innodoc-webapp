@@ -7,11 +7,13 @@ import { userLoggedOut } from '@innodoc/client-store/src/actions/user'
 import { logoutUser } from '@innodoc/client-misc/src/api'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
+import useRequireLogin from '../../hooks/useRequireLogin'
 import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 import LogoutPage from './LogoutPage'
 
 jest.mock('@innodoc/common/src/i18n')
+jest.mock('../../hooks/useRequireLogin', () => jest.fn())
 
 const mockDispatch = jest.fn()
 const mockAppSelectors = appSelectors
@@ -76,5 +78,10 @@ describe('<LogoutPage />', () => {
     expect(result.prop('status')).toBe('error')
     expect(result.prop('icon')).toBeNull()
     expect(result.prop('title')).toBe('user.logout.errorMessage')
+  })
+
+  it('should require login', () => {
+    shallow(<LogoutPage />)
+    expect(useRequireLogin).toBeCalled()
   })
 })

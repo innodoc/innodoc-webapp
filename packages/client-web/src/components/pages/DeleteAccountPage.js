@@ -3,11 +3,13 @@ import { Col, Row, Typography } from 'antd'
 
 import { useTranslation } from '@innodoc/common/src/i18n'
 
+import useRequireLogin from '../../hooks/useRequireLogin'
 import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 import DeleteAccountForm from '../user/DeleteAccountForm'
 
 const DeleteAccountPage = () => {
+  useRequireLogin()
   const { t } = useTranslation()
   const title = t('user.deleteAccount.title')
   return (

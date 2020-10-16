@@ -284,5 +284,9 @@
         "title": "Account activated"
       }
     }
+  },
+  "useRequireLogin": {
+    "title": "Not logged in.",
+    "text": "You must be logged in to view this page."
   }
 }

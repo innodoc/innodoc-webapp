@@ -9,6 +9,7 @@ import { userLoggedOut } from '@innodoc/client-store/src/actions/user'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
+import useRequireLogin from '../../hooks/useRequireLogin'
 import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 import { InternalLink } from '../content/links'
@@ -19,6 +20,7 @@ const LogoutPage = () => {
   const { appRoot, csrfToken } = useSelector(appSelectors.getApp)
   const course = useSelector(courseSelectors.getCurrentCourse)
   const [logoutState, setLogoutState] = useState('pending')
+  useRequireLogin(logoutState === 'error')
   const title = t(`user.logout.${logoutState}Message`)
 
   useEffect(() => {
