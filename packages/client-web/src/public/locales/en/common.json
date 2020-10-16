@@ -1,6 +1,7 @@
 {
   "common": {
     "hideToc": "Close table of contents",
+    "home": "Back home",
     "language": "Language",
     "ok": "OK",
     "sectionTypes": {
@@ -40,8 +41,7 @@
     "unspecific": {
       "title": "Error",
       "msg": "Something went wrong."
-    },
-    "backHome": "Back home"
+    }
   },
   "dataProtectionConsent": {
     "cookies": {

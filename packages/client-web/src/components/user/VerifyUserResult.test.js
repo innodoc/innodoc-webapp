@@ -1,11 +1,12 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import { Button, Result } from 'antd'
+import { Result } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
 import { verifyUser } from '@innodoc/client-misc/src/api'
 import PageTitle from '../PageTitle'
 import VerifyUserResult from './VerifyUserResult'
+import LoginButton from '../LoginButton'
 
 jest.mock('@innodoc/common/src/i18n')
 
@@ -21,6 +22,7 @@ jest.mock('@innodoc/client-misc/src/api', () => ({
 }))
 
 jest.mock('../PageTitle', () => () => null)
+jest.mock('../LoginButton', () => () => null)
 
 describe('<VerifyUserResult />', () => {
   it('should render', () => {
@@ -33,18 +35,16 @@ describe('<VerifyUserResult />', () => {
   })
 
   it('should render with successful verify', async () => {
-    expect.assertions(6)
+    expect.assertions(5)
     verifyUser.mockResolvedValue()
     const wrapper = mount(<VerifyUserResult token="123verifytoken" />)
     await waitForComponent(wrapper)
     expect(verifyUser).toBeCalledWith('http://app.example.com/', '123csrftoken', '123verifytoken')
     const result = wrapper.find(Result)
+    const Extra = () => result.prop('extra')
+    expect(shallow(<Extra />).is(LoginButton)).toBe(true)
     expect(result.prop('icon')).toBeNull()
     expect(result.prop('status')).toBe('success')
-    const Extra = () => result.prop('extra')
-    const extra = shallow(<Extra />)
-    expect(extra.prop('href')).toBe('/login')
-    expect(extra.exists(Button)).toBe(true)
     expect(wrapper.find(PageTitle).prop('children')).toBe('user.verification.success.title')
   })
 

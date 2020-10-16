@@ -1,6 +1,7 @@
 {
   "common": {
     "hideToc": "Inhaltsverzeichnis schließen",
+    "home": "Zurück zu Home",
     "language": "Sprache",
     "ok": "OK",
     "sectionTypes": {
@@ -40,8 +41,7 @@
     "unspecific": {
       "title": "Fehler",
       "msg": "Leider ist etwas schief gelaufen."
-    },
-    "backHome": "Zurück zu Home"
+    }
   },
   "dataProtectionConsent": {
     "cookies": {

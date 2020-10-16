@@ -5,6 +5,7 @@ import { Result } from 'antd'
 import ErrorPage from './ErrorPage'
 import Layout from '../Layout'
 import PageTitle from '../PageTitle'
+import HomeButton from '../HomeButton'
 
 jest.mock('@innodoc/common/src/i18n')
 
@@ -29,7 +30,7 @@ describe('<ErrorPage />', () => {
     expect(result.prop('status')).toBe(statusCode.toString())
     expect(result.prop('subTitle')).toEqual(`errorPage.${statusCode}.msg_errorPage.unspecific.msg`)
     expect(result.prop('title')).toEqual(`errorPage.${statusCode}.title_errorPage.unspecific.title`)
-    expect(result.prop('extra').props.href).toBe('/home/link')
+    expect(result.prop('extra')).toEqual(<HomeButton />)
     expect(mockRouter.replace).not.toBeCalled()
     expect(wrapper.find(PageTitle).prop('children')).toBe(
       `errorPage.${statusCode}.title_errorPage.unspecific.title`
