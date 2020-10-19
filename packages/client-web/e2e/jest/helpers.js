@@ -19,10 +19,11 @@ const testHelpers = (env) => ({
 
   clickNavSubmenu: async (menuText, itemText) => {
     const { page } = env.global
-    await page.waitForSelector(`[class*=nav___] >> "${menuText}"`)
-    await page.mouse.move(0, 0)
-    await page.waitForTimeout(100)
-    await page.hover(`[class*=nav___] li.ant-menu-submenu >> "${menuText}"`)
+    // First move mouse away, this ensures the submenu element receives a
+    // mouseenter event.
+    await page.mouse.move(10, 200)
+    await page.waitForTimeout(500)
+    await page.hover(`[class*=nav___] >> "${menuText}"`)
     await page.click(`.ant-menu-submenu-popup >> "${itemText}"`)
   },
 
