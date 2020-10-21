@@ -11,6 +11,7 @@ import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import { useTranslation } from '@innodoc/common/src/i18n'
 
 import css from './style.sss'
+import cssActiveItem from '../LinkMenuItem/style.sss'
 
 const LanguageSwitcher = (props) => {
   const { t } = useTranslation()
@@ -18,17 +19,18 @@ const LanguageSwitcher = (props) => {
   const { language: currentLanguage } = useSelector(appSelectors.getApp)
   const dispatch = useDispatch()
 
+  const titleText = t('common.language')
   const title = (
-    <span>
+    <span title={titleText}>
       <Icon component={LanguageOutlineSvg} />
-      <span>{t('common.language')}</span>
+      <span className={css.menuLabel}>{titleText}</span>
     </span>
   )
 
   const languageList = course && course.languages ? course.languages : []
   const languageOptions = languageList.map((lang) => (
     <Menu.Item
-      className={classNames({ [css.active]: lang === currentLanguage })}
+      className={classNames({ [cssActiveItem.active]: lang === currentLanguage })}
       key={lang}
       onClick={() => dispatch(changeLanguage(lang, currentLanguage))}
     >

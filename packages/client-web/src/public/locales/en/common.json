@@ -1,5 +1,6 @@
 {
   "common": {
+    "account": "Account",
     "hideToc": "Close table of contents",
     "home": "Back home",
     "language": "Language",
@@ -136,6 +137,7 @@
   },
   "progress": {
     "title": "Progress",
+    "titleLong": "Show personal progress",
     "chapter": "Chapter",
     "chapterComplete": "Completed",
     "introduction": {

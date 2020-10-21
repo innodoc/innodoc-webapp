@@ -1,12 +1,14 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Button, Drawer, Grid, Layout as AntLayout } from 'antd'
+import { Button, Drawer, Grid, Layout } from 'antd'
+import { MenuOutlined } from '@ant-design/icons'
 
 import { InternalLink } from '../../content/links'
 import Header from './Header'
-import Nav from './Nav'
+import NavMenu from './NavMenu'
 import Logo from './Logo'
 import SearchInput from './SearchInput'
+import SecondMenu from './SecondMenu'
 
 jest.mock('@innodoc/common/src/i18n')
 
@@ -19,43 +21,60 @@ let mockMd
 Grid.useBreakpoint = jest.fn(() => ({ md: mockMd }))
 
 describe('<Header />', () => {
-  beforeEach(() => {
+  it.each([
+    ['mobile', true],
+    ['non-mobile', false],
+  ])('should render (%s)', (_, isMobile) => {
     mockCourse = { homeLink: '/section/foo' }
-    mockMd = true
-  })
-
-  it('should render', () => {
+    mockMd = !isMobile
     const wrapper = shallow(<Header />)
-    expect(wrapper.find(AntLayout.Header).exists()).toBe(true)
-    expect(wrapper.find(InternalLink)).toHaveLength(1)
-    expect(wrapper.find(Logo)).toHaveLength(1)
-    expect(wrapper.find(Button)).toHaveLength(1)
-    expect(wrapper.find(SearchInput)).toHaveLength(2)
-    expect(wrapper.find(Nav)).toHaveLength(2)
+    const header = wrapper.find(Layout.Header)
+
+    const homeLink = header.find(InternalLink)
+    expect(homeLink.prop('href')).toBe('/section/foo')
+    expect(homeLink.exists(Logo)).toBe(true)
+
+    const expectedMenuMode = isMobile ? 'inline' : 'horizontal'
+    expect(wrapper.find(NavMenu).prop('menuMode')).toBe(expectedMenuMode)
+    expect(wrapper.find(SecondMenu).prop('menuMode')).toBe(expectedMenuMode)
+
+    const drawerButton = header.find(Button)
+    const DrawerButtonIcon = () => drawerButton.prop('icon')
+    expect(shallow(<DrawerButtonIcon />).is(MenuOutlined)).toBe(true)
+    expect(drawerButton.prop('size')).toBe('large')
+    expect(drawerButton.prop('title')).toBe('header.menu')
+
+    if (isMobile) {
+      const drawer = wrapper.find(Drawer)
+
+      expect(drawer.exists(SearchInput)).toBe(true)
+      expect(header.exists(SearchInput)).toBe(false)
+
+      expect(drawer.exists(NavMenu)).toBe(true)
+      expect(header.exists(NavMenu)).toBe(false)
+
+      expect(drawer.exists(SecondMenu)).toBe(true)
+      expect(header.exists(SecondMenu)).toBe(false)
+    } else {
+      expect(wrapper.exists(Drawer)).toBe(false)
+      expect(header.exists(SearchInput)).toBe(true)
+      expect(header.exists(NavMenu)).toBe(true)
+      expect(header.exists(SecondMenu)).toBe(true)
+    }
   })
 
   it('should render without home link', () => {
     mockCourse = {}
     const wrapper = shallow(<Header />)
-    expect(wrapper.find(InternalLink)).toHaveLength(0)
+    expect(wrapper.exists(InternalLink)).toBe(false)
   })
 
-  describe('mobile menu', () => {
-    beforeEach(() => {
-      mockMd = false
-    })
-
-    it('should render', () => {
-      const wrapper = shallow(<Header />)
-      expect(wrapper.find(Drawer).prop('visible')).toBe(false)
-    })
-
-    it('should activate and close drawer menu', () => {
-      const wrapper = shallow(<Header />)
-      wrapper.find(Button).at(0).simulate('click')
-      expect(wrapper.find(Drawer).prop('visible')).toBe(true)
-      wrapper.find(Drawer).prop('onClose')()
-      expect(wrapper.find(Drawer).prop('visible')).toBe(false)
-    })
+  it('should open and close drawer menu', () => {
+    mockMd = false
+    const wrapper = shallow(<Header />)
+    wrapper.find(Button).at(0).simulate('click')
+    expect(wrapper.find(Drawer).prop('visible')).toBe(true)
+    wrapper.find(Drawer).prop('onClose')()
+    expect(wrapper.find(Drawer).prop('visible')).toBe(false)
   })
 })

@@ -1,5 +1,6 @@
 {
   "common": {
+    "account": "Konto",
     "hideToc": "Inhaltsverzeichnis schließen",
     "home": "Zurück zu Home",
     "language": "Sprache",
@@ -136,6 +137,7 @@
   },
   "progress": {
     "title": "Fortschritt",
+    "titleLong": "Eigenen Fortschritt zeigen",
     "chapter": "Kapitel",
     "chapterComplete": "Abgeschlossen",
     "introduction": {

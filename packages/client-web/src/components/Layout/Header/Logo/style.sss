@@ -7,9 +7,11 @@
   height: 100%
 
   .headerLogoImg
-    margin-right: $padding-sm
-    height: calc($layout-header-height - 2 * $padding-xs)
-    width: calc($layout-header-height - 2 * $padding-xs)
+    $size: calc($layout-header-height - 2 * $padding-xs)
+
     background-position: 50% 50%
     background-repeat: no-repeat
     background-size: contain
+    height: $size
+    margin-right: $padding-sm
+    min-width: $size

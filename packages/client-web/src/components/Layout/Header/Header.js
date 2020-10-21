@@ -1,25 +1,26 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import classNames from 'classnames'
-import { Button, Col, Drawer, Grid, Layout as AntLayout, Row } from 'antd'
+import { Button, Drawer, Grid, Layout, Menu } from 'antd'
 import { MenuOutlined } from '@ant-design/icons'
 
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import { useTranslation } from '@innodoc/common/src/i18n'
 
-import Nav from './Nav'
+import SecondMenu from './SecondMenu'
+import NavMenu from './NavMenu'
 import Logo from './Logo'
-import SearchInput from './SearchInput'
 import { InternalLink } from '../../content/links'
+import SearchInput from './SearchInput'
 import css from './style.sss'
 
 const Header = () => {
   const { t } = useTranslation()
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const { md } = Grid.useBreakpoint()
+  const isMobile = !md
   const course = useSelector(courseSelectors.getCurrentCourse)
 
-  const logoWrapper =
+  const logo =
     course && course.homeLink ? (
       <InternalLink href={course.homeLink}>
         <a className={css.logoLink}>
@@ -30,37 +31,63 @@ const Header = () => {
       <Logo />
     )
 
+  const menuMode = isMobile ? 'inline' : 'horizontal'
+  const navMenu = <NavMenu menuMode={menuMode} />
+  const secondMenu = <SecondMenu menuMode={menuMode} />
+  const search = (
+    <div className={css.searchInputWrapper}>
+      <SearchInput />
+    </div>
+  )
+
+  const drawerButton = (
+    <div className={css.drawerButton}>
+      <Button
+        icon={<MenuOutlined />}
+        onClick={() => setShowMobileMenu(true)}
+        size="large"
+        title={t('header.menu')}
+      />
+    </div>
+  )
+
+  const mobileDrawerMenu = isMobile ? (
+    <Drawer
+      className={css.drawerMenu}
+      onClose={() => setShowMobileMenu(false)}
+      title={t('header.menu')}
+      visible={showMobileMenu}
+    >
+      {search}
+      <Menu>
+        <Menu.Divider />
+      </Menu>
+      {navMenu}
+      <Menu>
+        <Menu.Divider />
+      </Menu>
+      {secondMenu}
+    </Drawer>
+  ) : null
+
+  const wideItems = isMobile ? null : (
+    <>
+      <div className={css.wideMenu}>
+        {navMenu}
+        {secondMenu}
+      </div>
+      {search}
+    </>
+  )
+
   return (
     <>
-      <AntLayout.Header className={css.header}>
-        <Row>
-          <Col xs={18} sm={20} md={5} lg={4} xl={3}>
-            {logoWrapper}
-          </Col>
-          <Col xs={6} sm={4} md={0} lg={0} xl={0} className={css.menuRight}>
-            <Button
-              className={classNames(css.menuButton, css.mobileMenuButton)}
-              icon={<MenuOutlined />}
-              onClick={() => setShowMobileMenu(true)}
-              title={t('header.menu')}
-            />
-          </Col>
-          <Col xs={0} sm={0} md={14} lg={16} xl={17}>
-            <Nav />
-          </Col>
-          <Col xs={0} sm={0} md={5} lg={4} xl={4}>
-            <SearchInput />
-          </Col>
-        </Row>
-      </AntLayout.Header>
-      <Drawer
-        onClose={() => setShowMobileMenu(false)}
-        title={t('header.menu')}
-        visible={!md && showMobileMenu}
-      >
-        <SearchInput className={css.searchInputMenu} />
-        <Nav menuMode="inline" />
-      </Drawer>
+      <Layout.Header className={css.header}>
+        {logo}
+        {wideItems}
+        {drawerButton}
+      </Layout.Header>
+      {mobileDrawerMenu}
     </>
   )
 }
