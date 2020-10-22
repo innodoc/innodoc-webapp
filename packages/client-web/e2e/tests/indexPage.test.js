@@ -5,7 +5,7 @@ beforeEach(async () => {
 describe('IndexPage', () => {
   it('should show an index and index terms', async () => {
     await helpers.goto('index-page')
-    await page.waitForSelector('[class*=content___] h1 >> "Index"')
+    await page.waitForSelector('h1 >> "Index"')
     expect(await page.title()).toBe('Index · innoDoc')
     const entries = await page.$$('[class*=content___] .ant-list li.ant-list-item')
     expect(entries.length).toBeGreaterThan(5)
@@ -16,7 +16,7 @@ describe('IndexPage', () => {
 
   it('should filter term list', async () => {
     await helpers.goto('index-page')
-    await page.type('input[placeholder="Search keyword…"]', 'table of contents')
+    await page.fill('[placeholder="Search keyword…"]', 'table of contents')
     const entries = await page.$$('[class*=content___] .ant-list li.ant-list-item')
     const visibleEntries = await Promise.all(entries.map((e) => e.boundingBox()))
     expect(visibleEntries.filter(Boolean)).toHaveLength(1)

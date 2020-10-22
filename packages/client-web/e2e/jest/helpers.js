@@ -23,7 +23,7 @@ const testHelpers = (env) => ({
     // mouseenter event.
     await page.mouse.move(10, 200)
     await page.waitForTimeout(500)
-    await page.hover(`[class*=nav___] >> "${menuText}"`)
+    await page.hover(`header >> "${menuText}"`)
     await page.click(`.ant-menu-submenu-popup >> "${itemText}"`)
   },
 
@@ -52,12 +52,13 @@ const testHelpers = (env) => ({
 
   register: async (email, pwd) => {
     const { expect, helpers, page } = env.global
-    await helpers.clickNavSubmenu('Login', 'Create account')
-    await page.waitForSelector('"Create account"')
+    await helpers.goto('register')
+    await page.waitForSelector('h1 >> text=Create account')
     expect(await page.title()).toBe('Create account · innoDoc')
-    await page.type('input#registration-form_email', email)
-    await page.type('input#registration-form_password', pwd)
-    await page.type('input#registration-form_confirm-password', pwd)
+    await page.fill('input[autocomplete="email"]', email)
+    const pwdInputs = await page.$$('input[type=password]')
+    await pwdInputs[0].fill(pwd)
+    await pwdInputs[1].fill(pwd)
     await page.click('"Create account"')
     await page.waitForSelector('"Account created!"')
   },
@@ -71,20 +72,24 @@ const testHelpers = (env) => ({
   },
 
   login: async (email, pwd, expectFailed = false) => {
-    const { expect, page } = env.global
-    await page.click('[class*=nav___] a[href="/login"]')
-    await page.waitForSelector('input#login-form_email')
+    const { expect, helpers, page } = env.global
+    await helpers.goto('login')
+    await page.waitForSelector('h1 >> text=Login')
     expect(await page.title()).toBe('Login · innoDoc')
-    await page.type('input#login-form_email', email)
-    await page.type('input#login-form_password', pwd)
+    await page.fill('input[placeholder="Email"]', email)
+    await page.fill('input[placeholder="Password"]', pwd)
     await page.click('"Sign-in"')
-    await page.waitForSelector(expectFailed ? '"Login failed!"' : '"Successfully logged in."')
-    await page.waitForSelector(expectFailed ? '"Login"' : `"${email}"`)
+    if (expectFailed) {
+      await expect(page).toHaveText('Login failed!')
+    } else {
+      await page.waitForSelector('"Successfully logged in."')
+      await page.waitForSelector(`header >> "${email}"`)
+    }
   },
 
-  logout: async (email) => {
+  logout: async () => {
     const { helpers, page } = env.global
-    await helpers.clickNavSubmenu(email, 'Logout')
+    await helpers.goto('logout')
     await page.waitForSelector("'You have been logged out.'")
   },
 

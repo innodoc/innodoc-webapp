@@ -12,11 +12,9 @@ describe('Redirects', () => {
     expect(await page.title()).toBe('About this course · innoDoc')
   })
 
-  it.each(['page/', 'section/'])('should remove trailing slash (%s)', (path, done) => {
-    helpers.goto(path).then((res) => {
-      expect(res.url().endsWith(`/${path.slice(0, -1)}`)).toBe(true)
-      expect(res.request().redirectedFrom()).toBeTruthy()
-      done()
-    })
+  it.each(['page/about/', 'login/'])('should remove trailing slash (%s)', async (path) => {
+    const res = await helpers.goto(path)
+    expect(res.url().endsWith(`/${path.slice(0, -1)}`)).toBe(true)
+    expect(res.request().redirectedFrom()).toBeTruthy()
   })
 })

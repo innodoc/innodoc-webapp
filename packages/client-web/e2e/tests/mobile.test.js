@@ -1,37 +1,44 @@
+const desktop = { width: 800, height: 600 }
+const mobile = { width: 320, height: 600 }
+
+beforeAll(async () => {
+  await jestPlaywright.resetContext({ viewport: mobile })
+  await helpers.goto()
+})
+
 describe('Media query', () => {
   it('should toggle drawer menu', async () => {
-    await jestPlaywright.resetContext({ viewport: { width: 320, height: 600 } })
-    await helpers.goto()
+    await page.setViewportSize(mobile)
     expect(await page.$('.ant-drawer')).toBeNull()
-    await page.click('[class*=mobileMenuButton___]')
-    expect(page).toHaveText('.ant-drawer', 'Menu')
-    const menu = await page.$('.ant-drawer ul[class*="nav___"]')
-    await expect(menu).toHaveText('About')
-    await expect(menu).toHaveText('Language')
-    await expect(menu).toHaveText('Login')
-    await page.click('button.ant-drawer-close')
+    await page.click('header >> [title="Menu"]')
+    const drawer = await page.waitForSelector('.ant-drawer')
+    await expect(drawer).toHaveText('Menu')
+    await expect(drawer).toHaveText('About')
+    await expect(drawer).toHaveText('Progress')
+    await expect(drawer).toHaveText('PDF')
+    await expect(drawer).toHaveText('Language')
+    await expect(drawer).toHaveText('Account')
+    const closeBtn = await drawer.$('[aria-label="Close"]')
+    await closeBtn.click()
     await page.waitForSelector('.ant-drawer', { state: 'hidden' })
   })
 
-  describe('mobile menu button', () => {
+  describe('Mobile menu button', () => {
     it('should be visible on small viewport', async () => {
-      await jestPlaywright.resetContext({ viewport: { width: 320, height: 600 } })
-      await helpers.goto()
-      await page.waitForSelector('[class*=mobileMenuButton___]')
+      await page.setViewportSize(mobile)
+      await page.waitForSelector('header >> [title="Menu"]')
     })
 
     it('should be hidden on wide viewport', async () => {
-      await jestPlaywright.resetContext({ viewport: { width: 800, height: 600 } })
-      await helpers.goto()
-      await page.waitForSelector('[class*=mobileMenuButton___]', { state: 'hidden' })
+      await page.setViewportSize(desktop)
+      await page.waitForSelector('header >> [title="Menu"]', { state: 'hidden' })
     })
   })
 })
 
 describe('Mobile display', () => {
   it('should support very low browser resolution', async () => {
-    await jestPlaywright.resetContext({ viewport: { width: 320, height: 600 } })
-    await helpers.goto()
+    await page.setViewportSize(mobile)
     const contentWidth = await page.$eval('[class*=content___]', (el) => el.clientWidth)
     expect(contentWidth).toBe(320)
   })

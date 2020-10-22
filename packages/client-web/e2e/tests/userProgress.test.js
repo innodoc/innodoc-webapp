@@ -16,7 +16,7 @@ describe('User progress', () => {
     await helpers.goto('section/02-elements/10-interactive-exercises/01-text')
     await page.waitForSelector('[class*=inputQuestion___] input')
     const inputs = await page.$$('[class*=inputQuestion___] input')
-    await inputs[inputIdx].type(text)
+    await inputs[inputIdx].fill(text)
     await page.waitForTimeout(2500) // Visited state is recorded after delay
   }
 
@@ -55,7 +55,7 @@ describe('User progress', () => {
     await helpers.goto('progress')
     await assertProgress(1, 0, ['12 %', 'Visited 2 out of 17.'])
     await assertProgress(1, 1, ['11 %', 'Scored 7 out of 63 points.'])
-    await helpers.logout(email)
+    await helpers.logout()
 
     // Empty progress after logout
     await helpers.goto('progress')

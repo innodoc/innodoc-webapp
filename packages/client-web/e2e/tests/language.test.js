@@ -5,27 +5,23 @@ describe('Content translation', () => {
   ])('should load content in language (%s)', async (lang, tocText, linkText) => {
     await jestPlaywright.resetContext({ extraHTTPHeaders: { 'Accept-Language': lang } })
     await helpers.goto('toc')
-    await page.waitForSelector(`[class*=content___] h1 >> "${tocText}"`)
-    await page.waitForSelector(`[class*=content___] >> "${linkText}"`)
+    await page.waitForSelector(`h1 >> "${tocText}"`)
+    await expect(page).toHaveText(linkText)
     expect(await page.title()).toBe(`${tocText} · innoDoc`)
   })
 
   it('should switch language w/o page reload', async () => {
     await jestPlaywright.resetContext()
     await helpers.goto('section/01-project')
-    await page.waitForSelector('[class*=content___] h1 >> "1 Project structure"')
+    await page.waitForSelector('h1 >> "1 Project structure"')
     expect(await page.title()).toBe('1 Project structure · innoDoc')
     await expect(page).toHaveText(
-      '[class*=content___]',
       'A course consists of a number of chapters, sections and subsections.'
     )
     await helpers.clickNavSubmenu('Language', 'Deutsch')
-    await page.waitForSelector('[class*=content___] h1 >> "1 Projektstruktur"')
+    await page.waitForSelector('h1 >> "1 Projektstruktur"')
     expect(await page.title()).toBe('1 Projektstruktur · innoDoc')
-    await expect(page).toHaveText(
-      '[class*=content___]',
-      'Ein Kurs besteht aus einer Anzahl von Kapiteln'
-    )
+    await expect(page).toHaveText('Ein Kurs besteht aus einer Anzahl von Kapiteln')
   })
 })
 
