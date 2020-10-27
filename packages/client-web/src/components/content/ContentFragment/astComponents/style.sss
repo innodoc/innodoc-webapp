@@ -15,8 +15,23 @@
   margin-bottom: $padding-sm
   overflow-x: auto
 
-  tr:hover > td
-    background-color: transparent !important
+  :global(.ant-table)
+    background-color: transparent
+
+    tr
+      & > th
+        background-color: transparent
+        font-weight: bold
+
+      & > td,
+      & > th
+        border-bottom-color: rgba(0, 0, 0, 0.2)
+
+      &:last-child > td
+        border-bottom-color: transparent
+
+      &:hover > td
+        background-color: transparent !important
 
 .codeblock
   background: rgba(0, 0, 0, 0.06)
