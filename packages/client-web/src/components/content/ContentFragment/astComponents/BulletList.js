@@ -1,21 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { List } from 'antd'
 
-import css from './style.sss'
 import ContentFragment from '..'
+import css from './style.sss'
 
 const BulletList = ({ data }) => {
   const listItems = data.map((item, i) => (
-    <List.Item key={i.toString()}>
+    <li key={i.toString()}>
       <ContentFragment content={item} />
-    </List.Item>
+    </li>
   ))
-  return (
-    <List itemLayout="vertical" className={css.bulletList}>
-      {listItems}
-    </List>
-  )
+  return <ul className={css.list}>{listItems}</ul>
 }
 
 BulletList.propTypes = {

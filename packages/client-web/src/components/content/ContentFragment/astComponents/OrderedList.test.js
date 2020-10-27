@@ -1,6 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { List } from 'antd'
 import ContentFragment from '..'
 
 import OrderedList from './OrderedList'
@@ -15,8 +14,8 @@ const listData = [
 describe('<OrderedList />', () => {
   it('should render', () => {
     const wrapper = shallow(<OrderedList data={listData} />)
-    expect(wrapper.find(List)).toHaveLength(1)
-    expect(wrapper.find(List.Item)).toHaveLength(3)
+    expect(wrapper.find('ol')).toHaveLength(1)
+    expect(wrapper.find('li')).toHaveLength(3)
     expect(wrapper.find(ContentFragment)).toHaveLength(3)
   })
 })

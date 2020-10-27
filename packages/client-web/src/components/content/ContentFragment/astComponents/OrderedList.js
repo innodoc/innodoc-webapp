@@ -1,26 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { List } from 'antd'
 
-import css from './style.sss'
 import ContentFragment from '..'
+import css from './style.sss'
 
 const OrderedList = ({ data }) => {
   const listItems = data[1].map((item, i) => {
     return (
-      <List.Item key={i.toString()}>
-        <div className={css.listnumber}>{`${i + 1}.`}</div>
-        <div>
-          <ContentFragment content={item} />
-        </div>
-      </List.Item>
+      <li key={i.toString()}>
+        <ContentFragment content={item} />
+      </li>
     )
   })
-  return (
-    <List itemLayout="vertical" className={css.orderedList}>
-      {listItems}
-    </List>
-  )
+  return <ol className={css.list}>{listItems}</ol>
 }
 
 OrderedList.propTypes = { data: PropTypes.arrayOf(PropTypes.array).isRequired }
