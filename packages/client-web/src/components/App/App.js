@@ -8,6 +8,7 @@ import { withServerContext } from 'next-server-context'
 
 import '@innodoc/client-web/src/style/lato-font.sss'
 import '@innodoc/client-web/src/style/svg-icons-stroke.sss'
+import '@innodoc/client-web/src/style/fix-code-wrap.sss'
 
 import { appWithTranslation } from '@innodoc/common/src/i18n'
 
