@@ -12,19 +12,15 @@ import ContentFragment from '..'
 const Hint = ({ attributes, content }) => {
   const { t } = useTranslation()
   const attrsObj = attributesToObject(attributes)
-  const caption = attrsObj.caption || t('content.hint')
-  const header = (
-    <>
-      <BulbOutlined className={css.icon} />
-      {caption}
-    </>
-  )
+
   return (
-    <Collapse bordered={false} className={css.collapse}>
-      <Collapse.Panel header={header} forceRender>
-        <div className={css.collapseContent}>
-          <ContentFragment content={content} />
-        </div>
+    <Collapse className={css.hint}>
+      <Collapse.Panel
+        extra={<BulbOutlined className={css.icon} />}
+        forceRender
+        header={attrsObj.caption || t('content.hint')}
+      >
+        <ContentFragment content={content} />
       </Collapse.Panel>
     </Collapse>
   )
