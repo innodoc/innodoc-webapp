@@ -1,8 +1,12 @@
-const mockT = (s) => {
+const mockT = (s, interp) => {
+  let ret = s
   if (Array.isArray(s)) {
-    return s.join('_')
+    ret = s.join('_')
   }
-  return s
+  if (interp) {
+    ret += Object.values(interp).reduce((acc, v) => `${acc}_${v}`, '')
+  }
+  return ret
 }
 const i18n = { t: mockT }
 const appWithTranslation = (Comp) => Comp

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { getClassNameToComponentMapper } from '@innodoc/client-misc/src/util'
 
 import ExerciseCard from '../exercises/ExerciseCard'
+import ExerciseRouletteCard from '../exercises/ExerciseRouletteCard'
 import InfoCard from '../cards/InfoCard'
 import ExampleCard from '../cards/ExampleCard'
 import Hint from '../Hint'
@@ -17,6 +18,7 @@ import UnknownType from './UnknownType'
 
 const mapClassNameToComponent = getClassNameToComponentMapper({
   exercise: ExerciseCard,
+  'exercise-roulette': ExerciseRouletteCard,
   info: InfoCard,
   example: ExampleCard,
   figure: Figure,

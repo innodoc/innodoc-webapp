@@ -15,6 +15,11 @@
   "content": {
     "example": "Example",
     "exercise": "Exercise",
+    "exerciseRoulette": {
+      "counter": "{{num}} of {{total}}",
+      "next": "Show next exercise",
+      "prev": "Show previous exercise"
+    },
     "hint": "Hint",
     "home": "Home",
     "info": "Info",
