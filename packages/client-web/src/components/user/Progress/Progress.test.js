@@ -41,7 +41,7 @@ describe('<Progress />', () => {
     expect(cards.at(1).prop('sectionId')).toBe('bar')
     expect(cards.at(1).prop('title')).toBe('Bar')
     const alert = wrapper.find(Alert)
-    expect(alert.prop('description')).toBe('progress.introduction.description')
+    expect(alert.prop('description')).toBe('progress.introduction.description_90')
     expect(alert.prop('message')).toBe('progress.introduction.message')
   })
 })
