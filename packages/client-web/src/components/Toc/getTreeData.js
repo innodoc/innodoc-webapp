@@ -1,6 +1,6 @@
 import React from 'react'
-import { AuditOutlined, FormOutlined } from '@ant-design/icons'
 
+import SectionTypeTag from '../SectionTypeTag'
 import { SectionLink } from '../content/links'
 import ActiveSectionLabel from './ActiveSectionLabel'
 import css from './style.sss'
@@ -16,14 +16,10 @@ const getTreeNode = (section, currentSectionId, t) => {
   )
 
   if (['exercises', 'test'].includes(section.type)) {
-    const Icon = section.type === 'exercises' ? FormOutlined : AuditOutlined
-    const icon = (
-      <Icon className={css.sectionIcon} title={t(`common.sectionTypes.${section.type}`)} />
-    )
     title = (
       <>
         {title}
-        {icon}
+        <SectionTypeTag className={css.sectionTag} type={section.type} />
       </>
     )
   }

@@ -1,6 +1,6 @@
 import React from 'react'
-import { AuditOutlined, FormOutlined } from '@ant-design/icons'
 
+import SectionTypeTag from '../SectionTypeTag'
 import { SectionLink } from '../content/links'
 import ActiveSectionLabel from './ActiveSectionLabel'
 import getTreeData from './getTreeData'
@@ -58,10 +58,7 @@ describe('getTreeData', () => {
                 title: (
                   <>
                     <SectionLink contentId="section-1/section-1-1/exercises-1-1-2" />
-                    <FormOutlined
-                      className={css.sectionIcon}
-                      title="common.sectionTypes.exercises"
-                    />
+                    <SectionTypeTag className={css.sectionTag} type="exercises" />
                   </>
                 ),
               },
@@ -71,7 +68,7 @@ describe('getTreeData', () => {
                 title: (
                   <>
                     <SectionLink contentId="section-1/section-1-1/test-1-1-3" />
-                    <AuditOutlined className={css.sectionIcon} title="common.sectionTypes.test" />
+                    <SectionTypeTag className={css.sectionTag} type="test" />
                   </>
                 ),
               },
