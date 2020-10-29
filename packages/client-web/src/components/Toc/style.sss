@@ -12,13 +12,16 @@
     cursor: auto
     margin-left: $padding-xs
 
-  :global(.ant-tree-node-content-wrapper:hover)
+  :global(.ant-tree)
     background-color: transparent
-    color: $primary-5
-    cursor: auto
 
-    .sectionIcon
-      color: $heading-color
+    :global(.ant-tree-node-content-wrapper:hover)
+      background-color: transparent
+      color: $primary-5
+      cursor: auto
+
+      .sectionIcon
+        color: $heading-color
 
   .active
     color: $heading-color
