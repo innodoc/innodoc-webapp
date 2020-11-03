@@ -1,25 +1,23 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
-const useAutoExpand = (currentSectionId, expandAll, expandedKeys, setExpandedKeys) =>
+// Auto-expand current section subtree
+const useAutoExpand = (currentSectionId, expandAll, expandedKeys, setExpandedKeys) => {
+  // Only add current keys if section change happened, otherwise it would be impossible
+  // to close a current subtree.
+  const prevSectionId = useRef()
+
   useEffect(() => {
-    if (!expandAll && currentSectionId) {
-      // current key and all parent keys
-      const allKeys = currentSectionId
+    if (!expandAll && currentSectionId && currentSectionId !== prevSectionId.current) {
+      prevSectionId.current = currentSectionId
+
+      // Add current and all its parent keys
+      const currentSubtreeKeys = currentSectionId
         .split('/')
         .reduce((acc, id, idx) => [...acc, idx > 0 ? `${acc[idx - 1]}/${id}` : id], [])
-      // add all keys
-      let newExpandedKeys = [...expandedKeys]
-      let changed = false
-      allKeys.forEach((key) => {
-        if (!expandedKeys.includes(key)) {
-          changed = true
-          newExpandedKeys = [...newExpandedKeys, key]
-        }
-      })
-      if (changed) {
-        setExpandedKeys(newExpandedKeys)
-      }
+
+      setExpandedKeys(new Set([...expandedKeys, ...currentSubtreeKeys]))
     }
   }, [currentSectionId, expandAll, expandedKeys, setExpandedKeys])
+}
 
 export default useAutoExpand
