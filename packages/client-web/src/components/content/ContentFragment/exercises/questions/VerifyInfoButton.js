@@ -7,6 +7,7 @@ import { unwrapPara } from '@innodoc/client-misc/src/util'
 
 import { ExerciseContext } from '../ExerciseContext'
 import ContentFragment from '../..'
+import css from './style.sss'
 
 const VerifyInfoButton = ({ content }) => {
   const { answered, setAutoVerify, setUserTriggeredVerify, userTriggeredVerify } = useContext(
@@ -15,8 +16,8 @@ const VerifyInfoButton = ({ content }) => {
   useEffect(() => setAutoVerify(false), [setAutoVerify])
 
   return (
-    <>
-      <Divider />
+    <div className={css.verifyBtn}>
+      <Divider className={css.divider} />
       <Button
         disabled={!answered || userTriggeredVerify}
         icon={<CheckOutlined />}
@@ -26,7 +27,7 @@ const VerifyInfoButton = ({ content }) => {
           <ContentFragment content={unwrapPara(content)} />
         </span>
       </Button>
-    </>
+    </div>
   )
 }
 
