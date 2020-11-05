@@ -1,6 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Typography } from 'antd'
 
 import ContentFragment from '../ContentFragment'
 import InputHint from '../cards/InputHint'
@@ -57,18 +56,18 @@ describe('<Span />', () => {
     expect(wrapper.prop('attributes')).toEqual([['key', 'val']])
   })
 
-  describe('unknown span', () => {
-    it('should render debug component for unknown span', () => {
-      const data = [[null, ['does-not-exist'], []], content]
-      const typography = shallow(<Span data={data} />).find(Typography.Text)
-      expect(typography.prop('type')).toBe('danger')
-      expect(typography.children().text()).toMatch('Unknown span')
-    })
+  it('should render regular span', () => {
+    const data = [['foo-id', ['foo-class', 'bar-class'], []], content]
+    const wrapper = shallow(<Span data={data} />)
+    expect(wrapper.type()).toBe('span')
+    expect(wrapper.prop('id')).toBe('foo-id')
+    expect(wrapper.prop('className')).toContain('foo-class')
+    expect(wrapper.prop('className')).toContain('bar-class')
+  })
 
-    it('should not render unknown span in production', () => {
-      process.env.NODE_ENV = 'production'
-      const data = [[null, ['does-not-exist'], []], content]
-      expect(shallow(<Span data={data} />).get(0)).toBeNull()
-    })
+  it('should render regular span with text color', () => {
+    const data = [[null, [], [['style', 'color: red']]], content]
+    const wrapper = shallow(<Span data={data} />)
+    expect(wrapper.prop('style').color).toBe('red')
   })
 })

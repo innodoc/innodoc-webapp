@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Typography } from 'antd'
+import classNames from 'classnames'
 
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 import { attributesToObject } from '@innodoc/client-misc/src/util'
@@ -21,14 +21,14 @@ IndexSpan.propTypes = {
 }
 
 const Span = ({ data }) => {
-  const [[id, classNames, attributes], content] = data
+  const [[id, spanClassNames, attributes], content] = data
   const attrObj = attributesToObject(attributes)
 
   if (Object.keys(attrObj).includes('data-index-term')) {
     return <IndexSpan content={content} id={id} indexTerm={attrObj['data-index-term']} />
   }
 
-  if (classNames.length === 0 && attributes.length === 0) {
+  if (spanClassNames.length === 0 && attributes.length === 0) {
     if (content.length === 0) {
       // skip empty spans
       return null
@@ -37,26 +37,30 @@ const Span = ({ data }) => {
     return <ContentFragment content={content} />
   }
 
-  if (classNames.includes('hint-text')) {
+  if (spanClassNames.includes('hint-text')) {
     return <InputHint id={id} content={content} />
   }
 
-  if (classNames.includes('question')) {
-    const questionClasses = classNames.filter((className) => className !== 'question')
+  if (spanClassNames.includes('question')) {
+    const questionClasses = spanClassNames.filter((className) => className !== 'question')
     return <Question id={id} questionClasses={questionClasses} attributes={attributes} />
   }
 
-  if (process.env.NODE_ENV !== 'production') {
-    const msg = `Unknown span: classes=${classNames} attrs=${attributes} content-length=${content.length}`
-    return (
-      <span>
-        <Typography.Text type="danger">{msg}</Typography.Text>
-        <ContentFragment content={content} />
-      </span>
-    )
+  // Support color style
+  const style = {}
+  if (attrObj.style) {
+    const match = /color:\s+([^;]+)/.exec(attrObj.style)
+    if (match) {
+      const [, color] = match
+      style.color = color
+    }
   }
 
-  return null
+  return (
+    <span className={classNames(spanClassNames)} id={id} style={style}>
+      <ContentFragment content={content} />
+    </span>
+  )
 }
 Span.propTypes = { data: PropTypes.arrayOf(PropTypes.array).isRequired }
 
