@@ -29,4 +29,10 @@ describe('<Card />', () => {
     const icon = antCard.find(FileOutlined)
     expect(icon).toHaveLength(1)
   })
+
+  it('renders with actions', () => {
+    const actions = ['ACTION_A', 'ACTION_B']
+    const wrapper = mount(<Card actions={actions} cardType="info" content={[]} title="foo" />)
+    expect(wrapper.find(AntCard).prop('actions')).toBe(actions)
+  })
 })

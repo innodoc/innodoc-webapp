@@ -14,7 +14,11 @@
   },
   "content": {
     "example": "Beispiel",
-    "exercise": "Aufgabe",
+    "exercise": {
+      "reset": "Reset",
+      "title": "Aufgabe",
+      "verify": "Eingabe kontrollieren"
+    },
     "exerciseRoulette": {
       "counter": "{{num}} von {{total}}",
       "next": "Nächste Aufgabe zeigen",
@@ -134,11 +138,9 @@
       "still-incorrect-answer": "Eingabe ist noch nicht richtig."
     },
     "feedbackIcon": {
-      "correct": "Eingabe richtig",
-      "incorrect": "Eingabe falsch",
-      "indeterminate": "Noch kein Ergebnis"
-    },
-    "preview": "Vorschau"
+      "correct": "Richtig",
+      "incorrect": "Falsch"
+    }
   },
   "progress": {
     "title": "Fortschritt",

@@ -12,6 +12,7 @@ export default class Exercise extends Model {
       id: attr(),
       number: attr(),
       points: attr({ getDefault: () => 0 }),
+      questionCount: attr({ getDefault: () => 0 }),
       sectionId: fk('Section', 'exercises'),
     }
   }
@@ -26,12 +27,13 @@ export default class Exercise extends Model {
             if (sectionBoxes) {
               sectionBoxes.forEach((boxData) => {
                 if (boxData[2] === 'exercise') {
-                  const [id, number, , points] = boxData
+                  const [id, number, , points, questionCount] = boxData
                   ExerciseModel.create({
                     id: `${sectionId}#${id}`,
                     number,
-                    sectionId,
                     points,
+                    questionCount,
+                    sectionId,
                   })
                 }
               })
@@ -40,6 +42,7 @@ export default class Exercise extends Model {
         }
         break
       }
+
       default:
         break
     }

@@ -1,29 +1,36 @@
 import React from 'react'
-import { CheckCircleTwoTone, CloseCircleTwoTone, EllipsisOutlined } from '@ant-design/icons'
+import PropTypes from 'prop-types'
+import Icon, { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons'
 
 import { useTranslation } from '@innodoc/common/src/i18n'
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
-import { resultType } from '@innodoc/client-misc/src/propTypes'
 
 import css from './style.sss'
 
-const FeedbackIcon = ({ result }) => {
+const EmptyIcon = () => <span className={css.emptyIcon} />
+
+const FeedbackIcon = ({ className, isCorrect }) => {
   const { t } = useTranslation()
-  if (result === RESULT_VALUE.NEUTRAL) {
-    return <EllipsisOutlined title={t('questions.feedbackIcon.indeterminate')} />
+  if (isCorrect === null) {
+    return <Icon component={EmptyIcon} />
   }
-  const correct = result === RESULT_VALUE.CORRECT
-  const Icon = correct ? CheckCircleTwoTone : CloseCircleTwoTone
+  const IconComp = isCorrect ? CheckCircleTwoTone : CloseCircleTwoTone
   return (
-    <Icon
-      title={t(`questions.feedbackIcon.${correct ? 'correct' : 'incorrect'}`)}
-      twoToneColor={css[correct ? 'color-correct' : 'color-incorrect']}
+    <IconComp
+      className={className}
+      title={t(`questions.feedbackIcon.${isCorrect ? 'correct' : 'incorrect'}`)}
+      twoToneColor={css[isCorrect ? 'color-correct' : 'color-incorrect']}
     />
   )
 }
 
+FeedbackIcon.defaultProps = {
+  className: null,
+  isCorrect: null,
+}
+
 FeedbackIcon.propTypes = {
-  result: resultType.isRequired,
+  className: PropTypes.string,
+  isCorrect: PropTypes.bool,
 }
 
 export default FeedbackIcon

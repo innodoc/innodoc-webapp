@@ -30,12 +30,8 @@ Message.propTypes = {
   message: feedbackMessageType.isRequired,
 }
 
-const Messages = ({ messages }) => {
-  if (!messages.length) {
-    return null
-  }
-
-  return (
+const Messages = ({ messages }) =>
+  messages.length ? (
     <>
       {messages.map((message) => (
         <div className={css.messageItem} key={message.msg}>
@@ -43,8 +39,7 @@ const Messages = ({ messages }) => {
         </div>
       ))}
     </>
-  )
-}
+  ) : null
 
 Messages.propTypes = {
   messages: feedbackMessagesType.isRequired,

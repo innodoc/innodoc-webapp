@@ -8,6 +8,7 @@ import css from './style.sss'
 const CheckboxQuestion = ({ className, onChange, icon, value }) => {
   let checked
   let indeterminate
+
   if (value === '1') {
     checked = true
   } else if (value === '0') {
@@ -29,17 +30,17 @@ const CheckboxQuestion = ({ className, onChange, icon, value }) => {
   )
 }
 
+CheckboxQuestion.defaultProps = {
+  className: '',
+  icon: null,
+  value: null,
+}
+
 CheckboxQuestion.propTypes = {
   className: PropTypes.string,
   icon: PropTypes.element,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
-}
-
-CheckboxQuestion.defaultProps = {
-  className: '',
-  icon: null,
-  value: null,
 }
 
 export default CheckboxQuestion

@@ -5,11 +5,11 @@ import { loadManifestSuccess } from '../actions/content'
 const boxes = {
   section01: [
     ['info-1.1.1', '1.1.1', 'info'],
-    ['EX_01', '1.1.2', 'exercise', 4],
+    ['EX_01', '1.1.2', 'exercise', 4, 2],
   ],
   'section01/02': [
-    ['EX_02', '1.2.1', 'exercise', 2],
-    ['EX_03', '1.2.2', 'exercise', 6],
+    ['EX_02', '1.2.1', 'exercise', 2, 1],
+    ['EX_03', '1.2.2', 'exercise', 6, 3],
   ],
 }
 
@@ -20,18 +20,21 @@ const loadExercises = (state) => {
     number: '1.1.2',
     sectionId: 'section01',
     points: 4,
+    questionCount: 2,
   })
   session.Exercise.create({
     id: 'section01/02#EX_02',
     number: '1.2.1',
     sectionId: 'section01/02',
     points: 2,
+    questionCount: 1,
   })
   session.Exercise.create({
     id: 'section01/02#EX_03',
     number: '1.2.2',
     sectionId: 'section01/02',
     points: 6,
+    questionCount: 3,
   })
   return session.state
 }

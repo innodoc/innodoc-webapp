@@ -1,6 +1,7 @@
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 
 import orm from '../orm'
+import { resetExercise } from '../actions/exercise'
 import { addQuestion, questionAnswered, questionEvaluated } from '../actions/question'
 import { clearProgress, loadProgress } from '../actions/user'
 
@@ -20,6 +21,37 @@ describe('Question', () => {
   })
 
   describe('reducer', () => {
+    test('resetExercise', () => {
+      session.Question.create({
+        id: 'foo/bar#Q01',
+        exerciseId: 'foo/bar#EX01',
+        answer: '42',
+        result: RESULT_VALUE.CORRECT,
+        messages: ['foo'],
+        latexCode: '42',
+      })
+      session.Question.create({
+        id: 'foo/bar#Q02',
+        exerciseId: 'foo/bar#EX02',
+        answer: '41',
+        result: RESULT_VALUE.INCORRECT,
+        messages: ['bar'],
+        latexCode: '41',
+      })
+
+      session.Question.reducer(resetExercise('foo/bar#EX01'), session.Question)
+      const q1 = session.Question.withId('foo/bar#Q01')
+      expect(q1.answer).toBeUndefined()
+      expect(q1.result).toBe(RESULT_VALUE.NEUTRAL)
+      expect(q1.messages).toHaveLength(0)
+      expect(q1.latexCode).toBeUndefined()
+      const q2 = session.Question.withId('foo/bar#Q02')
+      expect(q2.answer).toBe('41')
+      expect(q2.result).toBe(RESULT_VALUE.INCORRECT)
+      expect(q2.messages).toEqual(['bar'])
+      expect(q2.latexCode).toBe('41')
+    })
+
     test('addQuestion', () => {
       expect(session.Question.all().toRefArray()).toHaveLength(0)
       session.Question.reducer(addQuestion('foo/bar#EX01', 'foo/bar#Q01', 5), session.Question)
@@ -126,14 +158,14 @@ describe('Question', () => {
         id: 'foo/bar#Q01',
         answer: '42',
         result: RESULT_VALUE.CORRECT,
-        message: ['foo'],
+        messages: ['foo'],
         latexCode: '42',
       })
       session.Question.create({
         id: 'foo/bar#Q02',
         answer: '41',
         result: RESULT_VALUE.INCORRECT,
-        message: ['bar'],
+        messages: ['bar'],
         latexCode: '41',
       })
 
@@ -141,10 +173,10 @@ describe('Question', () => {
       const qIds = ['foo/bar#Q01', 'foo/bar#Q02']
       qIds.forEach((qId) => {
         const q = session.Question.withId(qId)
-        expect(q.answer).toBe(null)
+        expect(q.answer).toBeUndefined()
         expect(q.messages).toHaveLength(0)
         expect(q.result).toBe(RESULT_VALUE.NEUTRAL)
-        expect(q.latexCode).toBe(null)
+        expect(q.latexCode).toBeUndefined()
       })
     })
 

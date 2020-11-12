@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
 import objectHash from 'object-hash'
+import { debounce } from 'lodash-es'
 
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 import questionSelectors from '@innodoc/client-store/src/selectors/question'
@@ -44,19 +45,43 @@ const Question = ({ attributes, id, questionClasses }) => {
     []
   )
   const question = useSelector((state) => getQuestion(state, globalQuestionId))
-  const { addQuestion, getShowResult, questionAnswered } = useContext(ExerciseContext)
+  const { addQuestion, dispatchAnswer, showResult } = useContext(ExerciseContext)
 
+  // Register question with ExerciseContext
   useEffect(() => {
-    // Notify exercise context about this question
     addQuestion(globalQuestionId, parseInt(attrsObj.points, 10) || 0)
   }, [addQuestion, attrsObj.points, globalQuestionId])
 
+  const { answer, result, messages, latexCode } = question
+  const [value, setValue] = useState()
+  const debouncedDispatchAnswer = useRef(
+    debounce(
+      (qId, val, qAttrsObj) => {
+        dispatchAnswer(globalQuestionId, val, qAttrsObj)
+      },
+      500,
+      {
+        leading: true,
+      }
+    )
+  )
+  const onChange = (val) => {
+    setValue(val)
+    // Do not hammer store with updates
+    debouncedDispatchAnswer.current(globalQuestionId, val, attrsObj)
+  }
+
+  useEffect(() => {
+    setValue(answer)
+  }, [answer, globalQuestionId])
+
   const QuestionComponent = mapClassNameToComponent(questionClasses)
   if (QuestionComponent) {
-    const { answer, result, messages, latexCode } = question
-    const showResult = result !== RESULT_VALUE.NEUTRAL && getShowResult()
-    const iconResult = showResult ? result : RESULT_VALUE.NEUTRAL
-    const feedbackIcon = <FeedbackIcon result={iconResult} />
+    let iconIsCorrect
+    if (showResult) {
+      iconIsCorrect = result === RESULT_VALUE.CORRECT
+    }
+    const feedbackIcon = <FeedbackIcon isCorrect={iconIsCorrect} />
     const className = showResult
       ? classNames({
           [css.correct]: result === RESULT_VALUE.CORRECT,
@@ -71,8 +96,9 @@ const Question = ({ attributes, id, questionClasses }) => {
         icon={feedbackIcon}
         latexCode={latexCode}
         messages={messages}
-        onChange={(val) => questionAnswered(globalQuestionId, val, attrsObj)}
-        value={answer}
+        onChange={onChange}
+        showResult={showResult}
+        value={value}
       />
     )
   }

@@ -1,37 +1,33 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { CheckCircleTwoTone, CloseCircleTwoTone, EllipsisOutlined } from '@ant-design/icons'
-
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import Icon, { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons'
 
 import FeedbackIcon from './FeedbackIcon'
 import css from './style.sss'
 
-jest.mock('@innodoc/common/src/i18n', () => ({
-  useTranslation: () => ({
-    t: jest.fn((key) => key),
-  }),
-}))
+jest.mock('@innodoc/common/src/i18n')
 
 describe('<FeedbackIcon />', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
-  it('should render (result=NEUTRAL)', () => {
-    const wrapper = shallow(<FeedbackIcon result={RESULT_VALUE.NEUTRAL} />)
-    expect(wrapper.find(EllipsisOutlined).prop('title')).toBe(
-      'questions.feedbackIcon.indeterminate'
-    )
+  it('should render an empty icon w/o isCorrect', () => {
+    const wrapper = shallow(<FeedbackIcon />)
+    expect(wrapper.is(Icon)).toBe(true)
+    const EmptyIcon = wrapper.prop('component')
+    const emptyIconWrapper = shallow(<EmptyIcon />)
+    const span = emptyIconWrapper.find('span')
+    expect(span.hasClass(css.emptyIcon)).toBe(true)
   })
 
   it.each([
-    [true, CheckCircleTwoTone, RESULT_VALUE.CORRECT],
-    [false, CloseCircleTwoTone, RESULT_VALUE.INCORRECT],
-  ])('should render (correct=%s)', (correct, Icon, result) => {
-    const wrapper = shallow(<FeedbackIcon result={result} />)
-    const icon = wrapper.find(Icon)
-    const correctStr = correct ? 'correct' : 'incorrect'
+    [true, CheckCircleTwoTone],
+    [false, CloseCircleTwoTone],
+  ])('should render (isCorrect=%s)', (isCorrect, ExpIcon) => {
+    const wrapper = shallow(<FeedbackIcon className="foo" isCorrect={isCorrect} />)
+    const icon = wrapper.find(ExpIcon)
+    const correctStr = isCorrect ? 'correct' : 'incorrect'
     expect(icon.prop('twoToneColor')).toBe(css[`color-${correctStr}`])
     expect(icon.prop('title')).toBe(`questions.feedbackIcon.${correctStr}`)
   })

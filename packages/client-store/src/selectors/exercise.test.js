@@ -19,6 +19,7 @@ const dummyState = (results) => {
   })
   session.Exercise.create({
     id: 'foo/bar#E01',
+    questionCount: 2,
   })
   session.Question.create({
     answer: '42',
@@ -36,27 +37,31 @@ const dummyState = (results) => {
 }
 
 describe('exerciseSelectors', () => {
-  describe('getExerciseAnswered', () => {
+  describe('getExercise', () => {
     test.each([
-      [true, [RESULT_VALUE.CORRECT, RESULT_VALUE.CORRECT]],
-      [true, [RESULT_VALUE.CORRECT, RESULT_VALUE.INCORRECT]],
-      [false, [RESULT_VALUE.NEUTRAL, RESULT_VALUE.CORRECT]],
+      [
+        { isAnswered: true, isCorrect: true, isTouched: true },
+        [RESULT_VALUE.CORRECT, RESULT_VALUE.CORRECT],
+      ],
+      [
+        { isAnswered: true, isCorrect: false, isTouched: true },
+        [RESULT_VALUE.CORRECT, RESULT_VALUE.INCORRECT],
+      ],
+      [
+        { isAnswered: false, isCorrect: false, isTouched: true },
+        [RESULT_VALUE.NEUTRAL, RESULT_VALUE.CORRECT],
+      ],
+      [
+        { isAnswered: false, isCorrect: false, isTouched: false },
+        [RESULT_VALUE.NEUTRAL, RESULT_VALUE.NEUTRAL],
+      ],
     ])('%s', (exp, values) => {
       const state = dummyState(values)
-      const allAnswered = exerciseSelectors.getExerciseAnswered(state, 'foo/bar#E01')
-      expect(allAnswered).toBe(exp)
-    })
-  })
-
-  describe('getExerciseCorrect', () => {
-    test.each([
-      [true, [RESULT_VALUE.CORRECT, RESULT_VALUE.CORRECT]],
-      [false, [RESULT_VALUE.CORRECT, RESULT_VALUE.INCORRECT]],
-      [false, [RESULT_VALUE.NEUTRAL, RESULT_VALUE.CORRECT]],
-    ])('%s', (exp, values) => {
-      const state = dummyState(values)
-      const correct = exerciseSelectors.getExerciseCorrect(state, 'foo/bar#E01')
-      expect(correct).toBe(exp)
+      const exercise = exerciseSelectors.getExercise(state, 'foo/bar#E01')
+      expect(exercise.id).toBe('foo/bar#E01')
+      expect(exercise.isAnswered).toBe(exp.isAnswered)
+      expect(exercise.isCorrect).toBe(exp.isCorrect)
+      expect(exercise.isTouched).toBe(exp.isTouched)
     })
   })
 })

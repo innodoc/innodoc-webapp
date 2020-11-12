@@ -1,5 +1,7 @@
-import { fork } from 'redux-saga/effects'
+import { takeEvery } from 'redux-saga/effects'
 
-import watchQuestionChangeSaga from './question'
+import { actionTypes } from '@innodoc/client-store/src/actions/question'
 
-export default [fork(watchQuestionChangeSaga)]
+import handleQuestionAnsweredSaga from './handleQuestionAnsweredSaga'
+
+export default [takeEvery(actionTypes.QUESTION_ANSWERED, handleQuestionAnsweredSaga)]

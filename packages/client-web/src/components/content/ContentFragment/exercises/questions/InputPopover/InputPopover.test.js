@@ -24,7 +24,7 @@ describe('<InputPopover />', () => {
 
   it('should render', () => {
     const wrapper = shallow(
-      <InputPopover focus messages={messages} showPreview={false} userInput="Foo">
+      <InputPopover focus messages={messages} showPreview={false} showResult userInput="Foo">
         <div>Test</div>
       </InputPopover>
     )
@@ -40,7 +40,13 @@ describe('<InputPopover />', () => {
 
   it('should not be visible w/o focus', () => {
     const wrapper = shallow(
-      <InputPopover focus={false} messages={messages} showPreview={false} userInput="Foo">
+      <InputPopover
+        focus={false}
+        messages={messages}
+        showPreview={false}
+        showResult
+        userInput="Foo"
+      >
         <div>Test</div>
       </InputPopover>
     )
@@ -49,7 +55,7 @@ describe('<InputPopover />', () => {
 
   it('should not be visible with empty userInput and no messages', () => {
     const wrapper = shallow(
-      <InputPopover focus showPreview={false} userInput="">
+      <InputPopover focus showPreview={false} showResult userInput="">
         <div>Test</div>
       </InputPopover>
     )
@@ -58,13 +64,31 @@ describe('<InputPopover />', () => {
 
   it('should show MathJax preview', () => {
     const wrapper = shallow(
-      <InputPopover focus messages={messages} showPreview userInput="Foo">
+      <InputPopover focus messages={messages} showPreview showResult userInput="Foo">
         <div>Test</div>
       </InputPopover>
     )
     const Content = () => wrapper.find(Popover).prop('content')
     const contentWrapper = shallow(<Content />)
     expect(contentWrapper.find(MathJaxPreview).prop('texCode')).toBe('Foo')
+  })
+
+  it('should not show messages with showResult=false', () => {
+    const wrapper = shallow(
+      <InputPopover
+        focus
+        messages={messages}
+        showPreview={false}
+        showResult={false}
+        userInput="Foo"
+      >
+        <div>Test</div>
+      </InputPopover>
+    )
+    const popover = wrapper.find(Popover)
+    const Content = () => popover.prop('content')
+    const contentWrapper = shallow(<Content />)
+    expect(contentWrapper.exists(Messages)).toBe(false)
   })
 
   describe('placement', () => {
@@ -74,7 +98,7 @@ describe('<InputPopover />', () => {
     ])('should place %s with lg=%s', (placement, lg) => {
       mockLg = lg
       const wrapper = shallow(
-        <InputPopover focus showPreview={false} userInput="Foo">
+        <InputPopover focus showPreview={false} showResult userInput="Foo">
           <div>Test</div>
         </InputPopover>
       )

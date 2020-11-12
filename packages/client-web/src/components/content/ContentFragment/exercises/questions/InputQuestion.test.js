@@ -24,6 +24,7 @@ describe('<InputQuestion />', () => {
         icon={<Icon />}
         messages={messages}
         onChange={onChange}
+        showResult
         value={value}
       />
     )
@@ -32,6 +33,7 @@ describe('<InputQuestion />', () => {
     expect(inputPopover.prop('focus')).toBe(false)
     expect(inputPopover.prop('messages')).toBe(messages)
     expect(inputPopover.prop('showPreview')).toBe(true)
+    expect(inputPopover.prop('showResult')).toBe(true)
     expect(inputPopover.prop('userInput')).toBe('')
 
     const input = wrapper.find(Input)
@@ -52,6 +54,7 @@ describe('<InputQuestion />', () => {
         icon={<Icon />}
         messages={[{ msg: 'foo', type: 'success' }]}
         onChange={() => {}}
+        showResult={false}
       />
     )
     const input = wrapper.find(Input)

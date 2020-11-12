@@ -12,7 +12,7 @@ import css from './style.sss'
 
 jest.mock('@innodoc/common/src/i18n')
 
-let mockQuestion = {}
+let mockQuestion
 jest.mock('@innodoc/client-store/src/selectors/question', () => ({
   makeGetQuestion: () => () => mockQuestion,
 }))
@@ -23,11 +23,17 @@ jest.mock('react-redux', () => ({
   useSelector: (selector) => (selector === mockGetCurrentSection ? mockSection : selector()),
 }))
 
-let addQuestion
-let questionAnswered
-let getShowResult
+let mockAddQuestion
+let mockDispatchAnswer
+let mockShowResult
 const MockProvider = ({ children }) => (
-  <ExerciseContext.Provider value={{ addQuestion, questionAnswered, getShowResult }}>
+  <ExerciseContext.Provider
+    value={{
+      addQuestion: mockAddQuestion,
+      dispatchAnswer: mockDispatchAnswer,
+      showResult: mockShowResult,
+    }}
+  >
     {children}
   </ExerciseContext.Provider>
 )
@@ -40,9 +46,9 @@ describe('<Question />', () => {
       messages: [],
       latexCode: '42',
     }
-    addQuestion = () => {}
-    questionAnswered = () => false
-    getShowResult = () => true
+    mockAddQuestion = () => {}
+    mockDispatchAnswer = () => false
+    mockShowResult = true
   })
 
   it.each([
@@ -61,24 +67,25 @@ describe('<Question />', () => {
     const cssCls = correct === 'correct' ? css.correct : css.incorrect
     expect(inputQuestion.hasClass(cssCls)).toBe(true)
     const IconComp = () => inputQuestion.prop('icon')
-    expect(shallow(<IconComp />).prop('result')).toBe(result)
+    expect(shallow(<IconComp />).prop('isCorrect')).toBe(result === RESULT_VALUE.CORRECT)
+    expect(inputQuestion.prop('showResult')).toBe(true)
     expect(inputQuestion.prop('value')).toBe('42')
   })
 
   describe('ExerciseContext functions', () => {
-    it('should call addQuestion', () => {
-      addQuestion = jest.fn()
+    it('should register question', () => {
+      mockAddQuestion = jest.fn()
       mount(
         <MockProvider>
           <Question attributes={[['points', '10']]} id="Q99" questionClasses={['text']} />
         </MockProvider>
       )
-      expect(addQuestion).toBeCalledTimes(1)
-      expect(addQuestion).toBeCalledWith('foo/bar#Q99', 10)
+      expect(mockAddQuestion).toBeCalledTimes(1)
+      expect(mockAddQuestion).toBeCalledWith('foo/bar#Q99', 10)
     })
 
-    it.each([['Q91'], [undefined]])('should call questionAnswered on change', (qId) => {
-      questionAnswered = jest.fn()
+    it.each([['Q91'], [undefined]])('should call dispatchAnswer on change', (qId) => {
+      mockDispatchAnswer = jest.fn()
       mockQuestion = { ...mockQuestion, answer: 'foo' }
       const wrapper = mount(
         <MockProvider>
@@ -86,40 +93,43 @@ describe('<Question />', () => {
         </MockProvider>
       )
       wrapper.find(InputQuestion).invoke('onChange')('42')
-      expect(questionAnswered).toBeCalledTimes(1)
-      expect(questionAnswered).toBeCalledWith(expect.stringContaining('foo/bar#'), '42', {
+      expect(mockDispatchAnswer).toBeCalledTimes(1)
+      expect(mockDispatchAnswer).toBeCalledWith(expect.stringContaining('foo/bar#'), '42', {
         points: '8',
       })
     })
   })
 
-  describe('getShowResult', () => {
+  describe('showResult', () => {
     it.each([
-      [true, RESULT_VALUE.NEUTRAL, false, undefined],
-      [true, RESULT_VALUE.CORRECT, true, css.correct],
-      [true, RESULT_VALUE.INCORRECT, true, css.incorrect],
-      [false, RESULT_VALUE.NEUTRAL, false, undefined],
-      [false, RESULT_VALUE.CORRECT, false, undefined],
-      [false, RESULT_VALUE.INCORRECT, false, undefined],
-    ])(
-      'getShowResult=%s correct=%s showsResult=%s className=%s',
-      (getShowResultValue, result, expShowResult, expClassName) => {
-        mockQuestion = { ...mockQuestion, answer: 'foo', result }
-        getShowResult = () => getShowResultValue
-        const wrapper = mount(
-          <MockProvider>
-            <Question attributes={[['foo', 'bar']]} id="Q91" questionClasses={['text']} />
-          </MockProvider>
-        )
-        const inputQuestion = wrapper.find(InputQuestion)
-        if (expShowResult) {
-          expect(inputQuestion.hasClass(expClassName)).toBe(true)
-        } else {
-          expect(inputQuestion.hasClass(css.correct)).toBe(false)
-          expect(inputQuestion.hasClass(css.incorrect)).toBe(false)
-        }
+      [true, RESULT_VALUE.NEUTRAL],
+      [true, RESULT_VALUE.CORRECT],
+      [true, RESULT_VALUE.INCORRECT],
+      [false, RESULT_VALUE.NEUTRAL],
+      [false, RESULT_VALUE.CORRECT],
+      [false, RESULT_VALUE.INCORRECT],
+    ])('should indicate result (showResult=%s, result=%s)', (showResult, result) => {
+      mockQuestion = { ...mockQuestion, result }
+      mockShowResult = showResult
+      const wrapper = mount(
+        <MockProvider>
+          <Question attributes={[['foo', 'bar']]} id="Q91" questionClasses={['text']} />
+        </MockProvider>
+      )
+      const inputQuestion = wrapper.find(InputQuestion)
+      expect(inputQuestion.prop('showResult')).toBe(showResult)
+      const IconComp = () => inputQuestion.prop('icon')
+      const iconIsCorrect = shallow(<IconComp />).prop('isCorrect')
+      if (showResult) {
+        expect(iconIsCorrect).toBe(result === RESULT_VALUE.CORRECT)
+        expect(inputQuestion.hasClass(css.correct)).toBe(result === RESULT_VALUE.CORRECT)
+        expect(inputQuestion.hasClass(css.incorrect)).toBe(result === RESULT_VALUE.INCORRECT)
+      } else {
+        expect(iconIsCorrect).toBeNull()
+        expect(inputQuestion.hasClass(css.correct)).toBe(false)
+        expect(inputQuestion.hasClass(css.incorrect)).toBe(false)
       }
-    )
+    })
   })
 })
 

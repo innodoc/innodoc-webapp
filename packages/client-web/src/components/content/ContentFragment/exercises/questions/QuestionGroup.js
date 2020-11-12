@@ -4,9 +4,11 @@ import { contentType } from '@innodoc/client-misc/src/propTypes'
 
 import ContentFragment from '../..'
 
-// TODO: Remove this?
+// TODO: Remove as this is doing nothing
 
-const QuestionGroup = ({ content }) => <ContentFragment content={content} />
+const QuestionGroup = ({ content }) => {
+  return <ContentFragment content={content} />
+}
 
 QuestionGroup.propTypes = {
   content: contentType.isRequired,

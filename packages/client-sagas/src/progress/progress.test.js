@@ -4,6 +4,7 @@ import { debounce, select, takeEvery } from 'redux-saga/effects'
 
 import { persistProgress, fetchProgress } from '@innodoc/client-misc/src/api'
 import { actionTypes as contentActionTypes } from '@innodoc/client-store/src/actions/content'
+import { actionTypes as exerciseActionTypes } from '@innodoc/client-store/src/actions/exercise'
 import { actionTypes as questionActionTypes } from '@innodoc/client-store/src/actions/question'
 import {
   actionTypes as userActionTypes,
@@ -131,7 +132,11 @@ describe('monitorActions', () => {
         takeEvery(userActionTypes.USER_LOGGED_OUT, clearSaga),
         debounce(
           PERSIST_DEBOUNCE_TIME,
-          [questionActionTypes.QUESTION_EVALUATED, contentActionTypes.SECTION_VISIT],
+          [
+            contentActionTypes.SECTION_VISIT,
+            exerciseActionTypes.RESET_EXERCISE,
+            questionActionTypes.QUESTION_EVALUATED,
+          ],
           persistSaga
         ),
       ])

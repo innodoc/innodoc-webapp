@@ -2,6 +2,7 @@ import { Model, attr, fk } from 'redux-orm'
 
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 
+import { actionTypes as exerciseActionTypes } from '../actions/exercise'
 import { actionTypes as questionActionTypes } from '../actions/question'
 import { actionTypes as userActionTypes } from '../actions/user'
 
@@ -25,6 +26,12 @@ export default class Question extends Model {
 
   static reducer(action, QuestionModel) {
     switch (action.type) {
+      case exerciseActionTypes.RESET_EXERCISE:
+        QuestionModel.filter({ exerciseId: action.id })
+          .toModelArray()
+          .forEach((question) => question.clear())
+        break
+
       case questionActionTypes.ADD_QUESTION:
         QuestionModel.upsert({
           id: action.questionId,
@@ -53,14 +60,7 @@ export default class Question extends Model {
       case userActionTypes.CLEAR_PROGRESS:
         QuestionModel.all()
           .toModelArray()
-          .forEach((section) =>
-            section.update({
-              answer: null,
-              result: RESULT_VALUE.NEUTRAL,
-              messages: [],
-              latexCode: null,
-            })
-          )
+          .forEach((question) => question.clear())
         break
 
       case userActionTypes.LOAD_PROGRESS:
@@ -78,5 +78,15 @@ export default class Question extends Model {
       default:
         break
     }
+  }
+
+  clear() {
+    this.update({
+      answer: undefined,
+      answeredTimestamp: Date.now(),
+      result: RESULT_VALUE.NEUTRAL,
+      messages: [],
+      latexCode: undefined,
+    })
   }
 }

@@ -1,42 +1,50 @@
-import React, { useState } from 'react'
+import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
 import { addQuestion, questionAnswered } from '@innodoc/client-store/src/actions/question'
-import exerciseSelectors from '@innodoc/client-store/src/selectors/exercise'
-import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import ExerciseContext from './ExerciseContext'
 
 // All questions inside an ExerciseCard are connected using this
 // Context.Provider.
-const ExerciseProvider = ({ children, id }) => {
+const ExerciseProvider = ({
+  children,
+  exercise: { isAnswered, isCorrect, id: globalExId },
+  setShowResult,
+  showResult,
+}) => {
   const dispatch = useDispatch()
-  const { id: sectionId } = useSelector(sectionSelectors.getCurrentSection)
-  const answered = useSelector(exerciseSelectors.getExerciseAnswered)
-  const correct = useSelector(exerciseSelectors.getExerciseCorrect)
-  const globalId = `${sectionId}#${id}`
 
-  const [autoVerify, setAutoVerify] = useState(true)
-  const [userTriggeredVerify, setUserTriggeredVerify] = useState(false)
+  // Register a question in the store
+  const addQuestionWrapper = useCallback(
+    (qId, points) => dispatch(addQuestion(globalExId, qId, points)),
+    [dispatch, globalExId]
+  )
 
   const value = {
-    addQuestion: (qId, points) => dispatch(addQuestion(globalId, qId, points)),
-    answered,
-    correct,
-    questionAnswered: (qId, answer, attrs) => dispatch(questionAnswered(qId, answer, attrs)),
-    getShowResult: () => autoVerify || userTriggeredVerify,
-    setAutoVerify,
-    setUserTriggeredVerify,
-    userTriggeredVerify,
+    addQuestion: addQuestionWrapper,
+    isAnswered,
+    isCorrect,
+    dispatchAnswer: (qId, answer, attrs) => {
+      setShowResult(false)
+      dispatch(questionAnswered(qId, answer, attrs))
+    },
+    showResult,
   }
   return <ExerciseContext.Provider value={value}>{children}</ExerciseContext.Provider>
 }
 
 ExerciseProvider.propTypes = {
   children: childrenType.isRequired,
-  id: PropTypes.string.isRequired,
+  exercise: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    isAnswered: PropTypes.bool.isRequired,
+    isCorrect: PropTypes.bool.isRequired,
+  }).isRequired,
+  setShowResult: PropTypes.func.isRequired,
+  showResult: PropTypes.bool.isRequired,
 }
 
 export default ExerciseProvider
