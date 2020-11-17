@@ -10,7 +10,6 @@ import ExampleCard from '../cards/ExampleCard'
 import Hint from '../Hint'
 import InputHint from '../cards/InputHint'
 import TestCard from '../cards/TestCard'
-import QuestionGroup from '../exercises/questions/QuestionGroup'
 import Figure from './Figure'
 import Row from './Row'
 import UnknownType from './UnknownType'
@@ -25,7 +24,6 @@ const mapClassNameToComponent = getClassNameToComponentMapper({
   'hint-text': InputHint,
   row: Row,
   test: TestCard,
-  'question-group': QuestionGroup,
 })
 
 const Div = ({ data }) => {
