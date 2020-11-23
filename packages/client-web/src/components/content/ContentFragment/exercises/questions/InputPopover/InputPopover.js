@@ -10,21 +10,21 @@ import css from './style.sss'
 
 const InputPopover = ({ children, focus, messages, showPreview, showResult, userInput }) => {
   const { lg } = Grid.useBreakpoint()
-  const hasData = Boolean(messages.length) || Boolean(userInput.length)
 
-  const preview = showPreview ? (
-    <div className={css.mathJaxPreview}>
-      <MathJaxPreview texCode={userInput || ''} />
-    </div>
-  ) : null
+  const preview =
+    showPreview && userInput.length ? (
+      <div className={css.mathJaxPreview}>
+        <MathJaxPreview texCode={userInput || ''} />
+      </div>
+    ) : null
 
-  const content = showResult ? (
+  const messageList = messages.length && showResult ? <Messages messages={messages} /> : null
+
+  const content = (
     <>
       {preview}
-      <Messages messages={messages} />
+      {messageList}
     </>
-  ) : (
-    preview
   )
 
   return (
@@ -33,7 +33,7 @@ const InputPopover = ({ children, focus, messages, showPreview, showResult, user
       placement={lg ? 'rightTop' : 'bottom'}
       trigger={[]}
       overlayClassName={css.popover}
-      visible={hasData && focus}
+      visible={Boolean(focus && (preview || messageList))}
     >
       {children}
     </Popover>
