@@ -17,6 +17,7 @@ const SectionLink = makeContentLink(sectionSelectors.makeGetSectionLink, 'sectio
 const specialPages = {
   ___INDEX_PAGE___: ['/index-page', 'index.title'],
   ___TOC___: ['/toc', 'common.toc'],
+  ___PROGRESS___: ['/progress', 'progress.title'],
 }
 
 // takes href like '/section/...' or '/page/...'

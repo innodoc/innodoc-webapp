@@ -21,6 +21,7 @@ describe('<InternalLink />', () => {
   it.each([
     ['___INDEX_PAGE___', '/index-page', 'index.title'],
     ['___TOC___', '/toc', 'common.toc'],
+    ['___PROGRESS___', '/progress', 'progress.title'],
   ])('should render special links (%s)', (href, pageHref, title) => {
     const wrapper = shallow(<InternalLink href={href} />)
     const link = wrapper.find(Link)
