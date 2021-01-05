@@ -7,7 +7,7 @@ import { attributesToObject } from '@innodoc/client-misc/src/util'
 import ContentFragment from '..'
 import css from './style.sss'
 
-const colPropNames = ['span', 'xs', 'sm', 'md', 'lg', 'xl']
+const colPropNames = ['span', 'offset', 'xs', 'sm', 'md', 'lg', 'xl']
 const rowPropNames = ['align', 'gutter']
 
 const getPropsFromAttrs = (propNames, attrs) => {
