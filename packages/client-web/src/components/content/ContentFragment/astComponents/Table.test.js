@@ -3,75 +3,253 @@ import { shallow } from 'enzyme'
 import { Table as AntTable } from 'antd'
 
 import Table from './Table'
+import css from './style.sss'
 
 jest.mock('@innodoc/common/src/i18n')
 
 const tableData = [
-  [],
-  [{ t: 'AlignCenter' }, { t: 'AlignRight' }, { t: 'AlignLeft' }],
-  [0, 0, 0],
+  ['', [], []],
   [
+    null,
     [
       {
-        t: 'Str',
-        c: 'A',
-      },
-    ],
-    [
-      {
-        t: 'Str',
-        c: 'B',
-      },
-    ],
-    [
-      {
-        t: 'Str',
-        c: 'C',
+        t: 'Plain',
+        c: [
+          {
+            t: 'Str',
+            c: 'Caption',
+          },
+        ],
       },
     ],
   ],
   [
     [
-      [
-        {
-          t: 'Str',
-          c: 'A1',
-        },
-      ],
-      [
-        {
-          t: 'Str',
-          c: 'B1',
-        },
-      ],
-      [
-        {
-          t: 'Str',
-          c: 'C1',
-        },
-      ],
+      {
+        t: 'AlignCenter',
+      },
+      {
+        t: 'ColWidthDefault',
+      },
     ],
     [
+      {
+        t: 'AlignRight',
+      },
+      {
+        t: 'ColWidthDefault',
+      },
+    ],
+    [
+      {
+        t: 'AlignLeft',
+      },
+      {
+        t: 'ColWidthDefault',
+      },
+    ],
+  ],
+  [
+    ['', [], []],
+    [
       [
-        {
-          t: 'Str',
-          c: 'A2',
-        },
-      ],
-      [
-        {
-          t: 'Str',
-          c: 'B2',
-        },
-      ],
-      [
-        {
-          t: 'Str',
-          c: 'C2',
-        },
+        ['', [], []],
+        [
+          [
+            ['', [], []],
+            {
+              t: 'AlignDefault',
+            },
+            1,
+            1,
+            [
+              {
+                t: 'Plain',
+                c: [
+                  {
+                    t: 'Str',
+                    c: 'A',
+                  },
+                ],
+              },
+            ],
+          ],
+          [
+            ['', [], []],
+            {
+              t: 'AlignDefault',
+            },
+            1,
+            1,
+            [
+              {
+                t: 'Plain',
+                c: [
+                  {
+                    t: 'Str',
+                    c: 'B',
+                  },
+                ],
+              },
+            ],
+          ],
+          [
+            ['', [], []],
+            {
+              t: 'AlignDefault',
+            },
+            1,
+            1,
+            [
+              {
+                t: 'Plain',
+                c: [
+                  {
+                    t: 'Str',
+                    c: 'C',
+                  },
+                ],
+              },
+            ],
+          ],
+        ],
       ],
     ],
   ],
+  [
+    [
+      ['', [], []],
+      0,
+      [],
+      [
+        [
+          ['', [], []],
+          [
+            [
+              ['', [], []],
+              {
+                t: 'AlignDefault',
+              },
+              1,
+              1,
+              [
+                {
+                  t: 'Plain',
+                  c: [
+                    {
+                      t: 'Str',
+                      c: 'A1',
+                    },
+                  ],
+                },
+              ],
+            ],
+            [
+              ['', [], []],
+              {
+                t: 'AlignDefault',
+              },
+              1,
+              1,
+              [
+                {
+                  t: 'Plain',
+                  c: [
+                    {
+                      t: 'Str',
+                      c: 'B1',
+                    },
+                  ],
+                },
+              ],
+            ],
+            [
+              ['', [], []],
+              {
+                t: 'AlignDefault',
+              },
+              1,
+              1,
+              [
+                {
+                  t: 'Plain',
+                  c: [
+                    {
+                      t: 'Str',
+                      c: 'C1',
+                    },
+                  ],
+                },
+              ],
+            ],
+          ],
+        ],
+        [
+          ['', [], []],
+          [
+            [
+              ['', [], []],
+              {
+                t: 'AlignDefault',
+              },
+              1,
+              1,
+              [
+                {
+                  t: 'Plain',
+                  c: [
+                    {
+                      t: 'Str',
+                      c: 'A2',
+                    },
+                  ],
+                },
+              ],
+            ],
+            [
+              ['', [], []],
+              {
+                t: 'AlignDefault',
+              },
+              1,
+              1,
+              [
+                {
+                  t: 'Plain',
+                  c: [
+                    {
+                      t: 'Str',
+                      c: 'B2',
+                    },
+                  ],
+                },
+              ],
+            ],
+            [
+              ['', [], []],
+              {
+                t: 'AlignDefault',
+              },
+              1,
+              1,
+              [
+                {
+                  t: 'Plain',
+                  c: [
+                    {
+                      t: 'Str',
+                      c: 'C2',
+                    },
+                  ],
+                },
+              ],
+            ],
+          ],
+        ],
+      ],
+    ],
+  ],
+  [['', [], []], []],
 ]
 
 describe('<Table />', () => {
@@ -86,11 +264,20 @@ describe('<Table />', () => {
     expect(cols[1].align).toBe('right')
     expect(cols[2].align).toBe('left')
     expect(antTable.prop('dataSource')).toHaveLength(2)
+    const caption = wrapper.children('div')
+    expect(caption.hasClass(css.tableCaption)).toBe(true)
+  })
+
+  it('renders with caption', () => {
+    const tableDataWithoutCaption = [...tableData]
+    tableDataWithoutCaption[1][1] = []
+    const wrapper = shallow(<Table data={tableDataWithoutCaption} />)
+    expect(wrapper.exists('div')).toBe(false)
   })
 
   it('renders without header', () => {
     const tableDataWithoutHeader = [...tableData]
-    tableDataWithoutHeader[3] = []
+    tableDataWithoutHeader[3][1] = []
     const wrapper = shallow(<Table data={tableDataWithoutHeader} />)
     const antTable = wrapper.find(AntTable)
     expect(antTable).toHaveLength(1)

@@ -20,7 +20,7 @@
 
 .table
   margin-bottom: $padding-sm
-  overflow-x: auto
+  overflow: auto hidden
 
   :global(.ant-table)
     background-color: transparent
@@ -39,6 +39,12 @@
 
       &:hover > td
         background-color: transparent !important
+
+.tableCaption
+  font-style: italic
+  margin-top: -$padding-md
+  margin-bottom: $padding-md
+  text-align: center
 
 .codeblock
   background: rgba(0, 0, 0, 0.06)
