@@ -43,7 +43,7 @@ describe('TOC', () => {
     expect(await page.$$('aside .ant-tree-switcher_close')).toHaveLength(1)
 
     await Promise.all(
-      ['1.2.1 manifest.yml', '1.2.2 Content files'].map((text) =>
+      ['1.2.1 Course manifest', '1.2.2 Content files'].map((text) =>
         expect(page).toHaveText('aside', text)
       )
     )
@@ -55,7 +55,7 @@ describe('TOC', () => {
     expect(await page.$$('aside .ant-tree-switcher')).toHaveLength(6)
     await page.click('[class*=sectionAffix___] button[title="2 Content elements"]')
     await page.waitForSelector('h1 >> "2 Content elements"')
-    expect(await page.$$('aside .ant-tree-switcher')).toHaveLength(17)
+    expect(await page.$$('aside .ant-tree-switcher')).toHaveLength(14)
   })
 
   it('should be toggleable using content button', async () => {

@@ -19,7 +19,7 @@ describe('404', () => {
   })
 
   it('should render 404 client-side', async () => {
-    await helpers.goto('section/02-elements/04-links/01-internal')
+    await helpers.goto('section/02-elements/02-links/01-internal')
     await page.click('[href*=does-not-exist]')
     await page.waitForSelector('"404 Not found"')
     expect(await page.title()).toBe('404 Not found · innoDoc')

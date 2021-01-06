@@ -4,14 +4,14 @@ beforeEach(async () => {
 
 describe('Exercises', () => {
   describe('Input questions', () => {
-    describe('Parsed expression 2.10.8', () => {
+    describe('Parsed expression 2.7.8', () => {
       let exercise
       let checkInputBtn
       let resetBtn
 
       beforeEach(async () => {
-        await helpers.goto('section/02-elements/10-interactive-exercises/01-text')
-        exercise = await page.waitForSelector('*css=[class*=exercise___] >> text=Exercise 2.10.8')
+        await helpers.goto('section/02-elements/07-interactive-exercises/01-text')
+        exercise = await page.waitForSelector('*css=[class*=exercise___] >> text=Exercise 2.7.8')
         checkInputBtn = await exercise.waitForSelector('*css=button >> text=Check input')
         resetBtn = await exercise.waitForSelector('*css=button >> text=Reset')
       })
@@ -54,14 +54,14 @@ describe('Exercises', () => {
     })
   })
 
-  describe('Checkbox question 2.10.19', () => {
+  describe('Checkbox question 2.7.19', () => {
     let exercise
     let checkInputBtn
     let resetBtn
 
     beforeEach(async () => {
-      await helpers.goto('section/02-elements/10-interactive-exercises/02-checkbox')
-      exercise = await page.waitForSelector('*css=[class*=exercise___] >> text=Exercise 2.10.19')
+      await helpers.goto('section/02-elements/07-interactive-exercises/02-checkbox')
+      exercise = await page.waitForSelector('*css=[class*=exercise___] >> text=Exercise 2.7.19')
       checkInputBtn = await exercise.waitForSelector('*css=button >> text=Check input')
       resetBtn = await exercise.waitForSelector('*css=button >> text=Reset')
     })
