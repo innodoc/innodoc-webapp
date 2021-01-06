@@ -1,4 +1,5 @@
 /src/.next
+/src/.next-dev
 /bundle-analyzer
 /src/public/locales/*/*.missing.json
 /src/style/antd-vars.json

@@ -29,6 +29,11 @@ const config = (phase, { defaultConfig }) => {
     generateBuildId: () => process.env.NEXTJS_WEBAPP_BUILD_ID || nextBuildId({ dir: __dirname }),
   }
 
+  // Allow prod and dev build to co-exist
+  if (phase === PHASE_DEVELOPMENT_SERVER) {
+    nextConfig.distDir = '.next-dev'
+  }
+
   return nextConfig
 }
 
