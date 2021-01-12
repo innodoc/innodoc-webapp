@@ -33,7 +33,7 @@ const getBreadcrumbSections = createSelector(
             const section = session.Section.withId(id)
             return {
               id: section.id,
-              title: section.getDisplayTitle(language),
+              title: section.getDisplayTitle(language, true),
             }
           })
       : []

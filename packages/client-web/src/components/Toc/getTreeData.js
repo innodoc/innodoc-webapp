@@ -12,7 +12,7 @@ const getTreeNode = (section, currentSectionId, t) => {
   let title = active ? (
     <ActiveSectionLabel sectionId={sectionId} />
   ) : (
-    <SectionLink contentId={sectionId} />
+    <SectionLink contentId={sectionId} preferShortTitle />
   )
 
   if (['exercises', 'test'].includes(section.type)) {

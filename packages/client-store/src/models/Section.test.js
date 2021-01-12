@@ -10,10 +10,12 @@ const toc = [
     children: [
       {
         id: 'child1',
+        short_title: { en: 'child1' },
         title: { en: 'test child1 title' },
       },
       {
         id: 'child2',
+        short_title: { en: 'child2' },
         title: { en: 'test child2 title' },
         type: 'exercises',
       },
@@ -27,6 +29,7 @@ const loadToc = (state) => {
   Section.create({
     id: 'test/child1',
     ord: [0, 0],
+    shortTitle: { en: 'child1' },
     title: { en: 'test child1 title' },
     parentId: 'test',
     type: 'regular',
@@ -34,6 +37,7 @@ const loadToc = (state) => {
   Section.create({
     id: 'test/child2',
     ord: [0, 1],
+    shortTitle: { en: 'child2' },
     title: { en: 'test child2 title' },
     parentId: 'test',
     type: 'exercises',
@@ -118,18 +122,26 @@ describe('Section', () => {
 
   describe('getDisplaytitle()', () => {
     it.each([
-      [[0], '1 Test title'],
-      [[0, 0], '1.1 Test title'],
-      [[0, 0, 0], '1.1.1 Test title'],
-      [[4, 5, 3], '5.6.4 Test title'],
-    ])('should generate displayTitle (ord="%s" -> "%s")', (ord, expectedDisplayTitle) => {
-      const section = session.Section.create({
-        id: 'test',
-        ord,
-        title: { en: 'Test title' },
-        parentId: undefined,
-      })
-      expect(section.getDisplayTitle('en')).toBe(expectedDisplayTitle)
-    })
+      [[0], false, '1 Test title'],
+      [[0, 0], false, '1.1 Test title'],
+      [[0, 0, 0], false, '1.1.1 Test title'],
+      [[4, 5, 3], false, '5.6.4 Test title'],
+      [[0], true, '1 Test'],
+      [[0, 0], true, '1.1 Test'],
+      [[0, 0, 0], true, '1.1.1 Test'],
+      [[1, 1, 2], true, '2.2.3 Test'],
+    ])(
+      'should generate displayTitle (ord="%s" preferShort=%s -> "%s")',
+      (ord, preferShort, expectedDisplayTitle) => {
+        const section = session.Section.create({
+          id: 'test',
+          ord,
+          shortTitle: { en: 'Test' },
+          title: { en: 'Test title' },
+          parentId: undefined,
+        })
+        expect(section.getDisplayTitle('en', preferShort)).toBe(expectedDisplayTitle)
+      }
+    )
   })
 })

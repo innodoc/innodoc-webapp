@@ -7,11 +7,11 @@ import css from './style.sss'
 
 const ActiveSectionLabel = ({ sectionId }) => {
   const getSectionLink = useMemo(
-    (state, _sectionId) => sectionSelectors.makeGetSectionLink(state, _sectionId),
+    (state, sectionId_) => sectionSelectors.makeGetSectionLink(state, sectionId_),
     []
   )
-  const { title } = useSelector((state) => getSectionLink(state, sectionId))
-  return <span className={css.active}>{title}</span>
+  const { shortTitle, title } = useSelector((state) => getSectionLink(state, sectionId))
+  return <span className={css.active}>{shortTitle || title}</span>
 }
 
 ActiveSectionLabel.propTypes = {

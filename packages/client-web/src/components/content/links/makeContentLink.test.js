@@ -18,6 +18,7 @@ describe('makeContentLink', () => {
   beforeEach(() => {
     mockContent = {
       contentId: 'foo',
+      shortTitle: 'Foo',
       title: 'Foo title',
     }
   })
@@ -39,6 +40,11 @@ describe('makeContentLink', () => {
     expect(link.prop('as')).toEqual({ pathname: '/sec/foo' })
     const a = wrapper.find('a')
     expect(a.text()).toEqual('Foo title')
+  })
+
+  it('renders short title', () => {
+    const wrapper = shallow(<ContentLink contentId="foo" preferShortTitle />)
+    expect(wrapper.find(Link).find('a').text()).toEqual('Foo')
   })
 
   it('renders with custom content', () => {

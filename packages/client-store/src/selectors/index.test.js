@@ -20,12 +20,14 @@ beforeEach(() => {
   session.App.create(app)
   session.Section.create({
     id: 'foo/bar',
+    shortTitle: { en: 'Foo' },
     title: { en: 'Foo bar' },
     ord: [0],
   })
   session.Page.create({
     id: 'quz',
-    title: { en: 'Quz' },
+    shortTitle: { en: 'Quz' },
+    title: { en: 'Quz section' },
     ord: 0,
   })
   state = { orm: ormState }
@@ -38,9 +40,9 @@ describe('appSelectors', () => {
 test('selectId', () => expect(selectId(state, 12)).toBe(12))
 
 describe.each([
-  ['Section', 'foo/bar', '1 Foo bar'],
-  ['Page', 'quz', 'Quz'],
-])('makeMakeGetContentLink (%s)', (modelName, contentId, title) => {
+  ['Section', 'foo/bar', '1 Foo bar', '1 Foo'],
+  ['Page', 'quz', 'Quz section', 'Quz'],
+])('makeMakeGetContentLink (%s)', (modelName, contentId, title, shortTitle) => {
   let makeGetContentLink
   let getContentLink
   beforeEach(() => {
@@ -53,6 +55,9 @@ describe.each([
     expect(contentLink.contentId).toBe(contentId)
     expect(contentLink.title).toBe(title)
     expect(contentLink.hash).toBeUndefined()
+    if (modelName === 'Section') {
+      expect(contentLink.shortTitle).toBe(shortTitle)
+    }
   })
 
   it('returns content data and hash', () => {
@@ -60,11 +65,17 @@ describe.each([
     expect(contentLink.contentId).toBe(contentId)
     expect(contentLink.title).toBe(title)
     expect(contentLink.hash).toBe('baz')
+    if (modelName === 'Section') {
+      expect(contentLink.shortTitle).toBe(shortTitle)
+    }
   })
 
   it('notices unknown content', () => {
     const contentLink = getContentLink(state, 'does/not/exist')
     expect(contentLink.contentId).toBe('does/not/exist')
     expect(contentLink.title).toMatch('UNKNOWN')
+    if (modelName === 'Section') {
+      expect(contentLink.shortTitle).toBeUndefined()
+    }
   })
 })

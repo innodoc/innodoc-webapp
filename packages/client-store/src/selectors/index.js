@@ -18,11 +18,16 @@ const makeMakeGetContentLink = (modelName) => () =>
     const { hash, contentId } = linkInfo
     if (session[modelName].idExists(contentId)) {
       const content = session[modelName].withId(contentId)
-      return {
+      const data = {
         hash,
         contentId,
         title: content.getDisplayTitle(language),
       }
+      const shortTitle = content.getDisplayTitle(language, true)
+      if (shortTitle !== data.title) {
+        data.shortTitle = shortTitle
+      }
+      return data
     }
     return {
       contentId,

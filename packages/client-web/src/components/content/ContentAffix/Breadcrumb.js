@@ -17,7 +17,11 @@ const Breadcrumb = () => {
   // links to parent sections, last is current section thus not a link
   const sectionLinks = sections.map((section, i) => (
     <AntBreadcrumb.Item key={section.id}>
-      {i + 1 < sections.length ? <SectionLink contentId={section.id} /> : section.title}
+      {i + 1 < sections.length ? (
+        <SectionLink contentId={section.id} preferShortTitle />
+      ) : (
+        section.title
+      )}
     </AntBreadcrumb.Item>
   ))
 

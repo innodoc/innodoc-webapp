@@ -9,13 +9,20 @@ import appSelectors from '@innodoc/client-store/src/selectors'
 import getLinkInfo from '../../../getLinkInfo'
 
 const makeContentLink = (makeGetContentLink, prefixName) => {
-  const ContentLink = ({ children, contentId: contentIdHash }) => {
+  const ContentLink = ({ children, contentId: contentIdHash, preferShortTitle }) => {
     const getContentLink = useMemo(makeGetContentLink, [])
-    const { contentId, hash, title } = useSelector((state) => getContentLink(state, contentIdHash))
+    const { contentId, hash, shortTitle, title } = useSelector((state) =>
+      getContentLink(state, contentIdHash)
+    )
     const pathPrefix = useSelector(appSelectors.getApp)[`${prefixName}PathPrefix`]
     const { href, as } = getLinkInfo(pathPrefix, contentId, hash)
+    const titleStr = preferShortTitle && shortTitle ? shortTitle : title
 
-    const newChildren = children ? React.cloneElement(children, { title }) : <a>{title}</a>
+    const newChildren = children ? (
+      React.cloneElement(children, { title: titleStr })
+    ) : (
+      <a>{titleStr}</a>
+    )
 
     return (
       <Link href={href} as={as}>
@@ -26,11 +33,13 @@ const makeContentLink = (makeGetContentLink, prefixName) => {
 
   ContentLink.defaultProps = {
     children: null,
+    preferShortTitle: false,
   }
 
   ContentLink.propTypes = {
     children: childrenType,
     contentId: PropTypes.string.isRequired,
+    preferShortTitle: PropTypes.bool,
   }
 
   return ContentLink

@@ -12,6 +12,7 @@ export default class Section extends Model {
     return {
       id: attr(),
       ord: attr(),
+      shortTitle: attr(),
       title: attr(),
       type: attr(),
       content: attr(),
@@ -30,6 +31,7 @@ export default class Section extends Model {
     SectionModel.upsert({
       id: currentPath.join('/'),
       ord,
+      shortTitle: node.short_title,
       title: node.title,
       type: node.type || 'regular',
       parentId: path.length ? path.join('/') : undefined,
@@ -77,11 +79,15 @@ export default class Section extends Model {
     }
   }
 
-  getDisplayTitle(language) {
+  getDisplayTitle(language, preferShort = false) {
     const ordString = this.ord.reduce((acc, secOrd) => {
       const prefix = acc === '' ? '' : `${acc}.`
       return `${prefix}${secOrd + 1}`
     }, '')
-    return `${ordString} ${this.title[language]}`
+    const title =
+      preferShort && this.shortTitle && this.shortTitle[language]
+        ? this.shortTitle[language]
+        : this.title[language]
+    return `${ordString} ${title}`
   }
 }
