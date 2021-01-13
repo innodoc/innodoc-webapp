@@ -41,7 +41,7 @@ describe('getTreeData', () => {
   it.each([
     ['with', 'section-1/section-1-1'],
     ['w/o', null],
-  ])('should return tree data %s current section', (_, currentSectionId) => {
+  ])('should return tree data %s current section', (_, currentSectionId) =>
     expect(getTreeData(tocData, currentSectionId, (s) => s)).toEqual([
       {
         children: [
@@ -50,14 +50,19 @@ describe('getTreeData', () => {
               {
                 children: [],
                 key: 'section-1/section-1-1/section-1-1-1',
-                title: <SectionLink contentId="section-1/section-1-1/section-1-1-1" />,
+                title: (
+                  <SectionLink contentId="section-1/section-1-1/section-1-1-1" preferShortTitle />
+                ),
               },
               {
                 children: [],
                 key: 'section-1/section-1-1/exercises-1-1-2',
                 title: (
                   <>
-                    <SectionLink contentId="section-1/section-1-1/exercises-1-1-2" />
+                    <SectionLink
+                      contentId="section-1/section-1-1/exercises-1-1-2"
+                      preferShortTitle
+                    />
                     <SectionTypeTag className={css.sectionTag} type="exercises" />
                   </>
                 ),
@@ -67,7 +72,7 @@ describe('getTreeData', () => {
                 key: 'section-1/section-1-1/test-1-1-3',
                 title: (
                   <>
-                    <SectionLink contentId="section-1/section-1-1/test-1-1-3" />
+                    <SectionLink contentId="section-1/section-1-1/test-1-1-3" preferShortTitle />
                     <SectionTypeTag className={css.sectionTag} type="test" />
                   </>
                 ),
@@ -77,13 +82,13 @@ describe('getTreeData', () => {
             title: currentSectionId ? (
               <ActiveSectionLabel sectionId="section-1/section-1-1" />
             ) : (
-              <SectionLink contentId="section-1/section-1-1" />
+              <SectionLink contentId="section-1/section-1-1" preferShortTitle />
             ),
           },
         ],
         key: 'section-1',
-        title: <SectionLink contentId="section-1" />,
+        title: <SectionLink contentId="section-1" preferShortTitle />,
       },
     ])
-  })
+  )
 })
