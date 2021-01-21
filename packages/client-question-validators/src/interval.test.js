@@ -60,4 +60,9 @@ createTests('interval', interval, [
     incorrect: [['(0.39;2.6180)', '\\left(0.39;2.6180\\right)', ['incorrect-interval']]],
     attrs: { precision: 3 },
   },
+  {
+    solution: '(0;3]',
+    correct: [['(0;3]', '\\left(0;3\\right]']],
+    attrs: { precision: 3 },
+  },
 ])

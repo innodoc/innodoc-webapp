@@ -16,7 +16,7 @@ global.createTests = (name, validatorFunc, cases) => {
     })
 
     describe('cases', () => {
-      cases.forEach(({ solution, correct, incorrect, attrs = defaultAttrs }) => {
+      cases.forEach(({ solution, correct = [], incorrect = [], attrs = defaultAttrs }) => {
         const attrStr = Object.entries(attrs)
           .map(([key, value]) => `${key}="${value}"`)
           .join(' ')

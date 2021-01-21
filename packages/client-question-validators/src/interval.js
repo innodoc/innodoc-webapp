@@ -1,7 +1,7 @@
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 import { outsideDistance, rawParse, rawParseWithLatex } from './util'
 
-const REGEX_INTERVAL = /([([\]]{1})([^,]*),([^,]*)([)[\]]{1})/
+const REGEX_INTERVAL = /([([\]]{1})([^,;]*)[,;]([^,;]*)([)[\]]{1})/
 
 const interval = (input, solution, attrs) => {
   const messages = []
