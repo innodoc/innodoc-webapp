@@ -16,6 +16,7 @@ const makeGetQuestion = () =>
           answer: undefined,
           messages: [],
           result: RESULT_VALUE.NEUTRAL,
+          invalid: false,
         }
   })
 

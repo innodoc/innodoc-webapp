@@ -45,6 +45,7 @@ describe('<Question />', () => {
       result: RESULT_VALUE.NEUTRAL,
       messages: [],
       latexCode: '42',
+      invalid: false,
     }
     mockAddQuestion = () => {}
     mockDispatchAnswer = () => false

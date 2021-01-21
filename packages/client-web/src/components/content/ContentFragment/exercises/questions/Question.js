@@ -52,7 +52,7 @@ const Question = ({ attributes, id, questionClasses }) => {
     addQuestion(globalQuestionId, parseInt(attrsObj.points, 10) || 0)
   }, [addQuestion, attrsObj.points, globalQuestionId])
 
-  const { answer, result, messages, latexCode } = question
+  const { answer, result, messages, latexCode, invalid } = question
   const [value, setValue] = useState()
   const debouncedDispatchAnswer = useRef(
     debounce(
@@ -94,6 +94,7 @@ const Question = ({ attributes, id, questionClasses }) => {
         attributes={attrsObj}
         className={className}
         icon={feedbackIcon}
+        invalid={invalid}
         latexCode={latexCode}
         messages={messages}
         onChange={onChange}

@@ -5,6 +5,7 @@ import validators from '@innodoc/client-question-validators'
 import {
   actionTypes as questionActionTypes,
   questionEvaluated,
+  questionInvalid,
 } from '@innodoc/client-store/src/actions/question'
 
 import handleQuestionAnsweredSaga from './handleQuestionAnsweredSaga'
@@ -12,6 +13,9 @@ import handleQuestionAnsweredSaga from './handleQuestionAnsweredSaga'
 const mockExactRet = [RESULT_VALUE.INCORRECT, ['foo'], '41']
 jest.mock('@innodoc/client-question-validators', () => ({
   exact: () => mockExactRet,
+  throwing: () => {
+    throw new Error('Some validation error')
+  },
 }))
 
 describe('handleQuestionAnsweredSaga', () => {
@@ -32,7 +36,7 @@ describe('handleQuestionAnsweredSaga', () => {
 
   it('should not put questionEvaluated with unknown validator', () => {
     const data = {
-      questionId: 'foo/bar#Q1',
+      id: 'foo/bar#Q1',
       answer: '41',
       attributes: {
         validation: 'validator-does-not-exist',
@@ -41,6 +45,21 @@ describe('handleQuestionAnsweredSaga', () => {
     }
     return expectSaga(handleQuestionAnsweredSaga, data)
       .not.put.actionType(questionActionTypes.QUESTION_EVALUATED)
+      .run()
+  })
+
+  it('should put questionInvalid with erroneous validator', () => {
+    const data = {
+      id: 'foo/bar#Q1',
+      answer: '41',
+      attributes: {
+        validation: 'throwing',
+        solution: '42',
+      },
+    }
+    return expectSaga(handleQuestionAnsweredSaga, data)
+      .not.put.actionType(questionActionTypes.QUESTION_EVALUATED)
+      .put(questionInvalid('foo/bar#Q1', 'Invalid question: Some validation error'))
       .run()
   })
 })

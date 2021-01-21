@@ -25,6 +25,7 @@ const dummyState = () => {
     result: RESULT_VALUE.CORRECT,
     id: 'foo/bar#Q01',
     exerciseId: 'foo/bar#E01',
+    invalid: false,
   })
   return { orm: state }
 }
@@ -36,5 +37,6 @@ describe('questionSelectors', () => {
     expect(question.answer).toBe('42')
     expect(question.result).toBe(RESULT_VALUE.CORRECT)
     expect(question.id).toEqual('foo/bar#Q01')
+    expect(question.invalid).toBe(false)
   })
 })

@@ -14,6 +14,7 @@ const InputQuestion = ({
   attributes,
   className,
   icon,
+  invalid,
   latexCode,
   messages,
   onChange,
@@ -30,7 +31,7 @@ const InputQuestion = ({
       focus={focus}
       messages={messages}
       showPreview={showPreview}
-      showResult={showResult}
+      showResult={showResult || invalid}
       userInput={latexCode}
     >
       <Input
@@ -58,6 +59,7 @@ InputQuestion.propTypes = {
   attributes: PropTypes.object.isRequired,
   className: PropTypes.string,
   icon: PropTypes.element,
+  invalid: PropTypes.bool.isRequired,
   latexCode: PropTypes.string,
   messages: feedbackMessagesType.isRequired,
   onChange: PropTypes.func.isRequired,

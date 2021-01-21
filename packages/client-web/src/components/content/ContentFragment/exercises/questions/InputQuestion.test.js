@@ -22,6 +22,7 @@ describe('<InputQuestion />', () => {
         attributes={{ validation: 'parsed' }}
         className="customClass"
         icon={<Icon />}
+        invalid={false}
         messages={messages}
         onChange={onChange}
         showResult
@@ -52,6 +53,7 @@ describe('<InputQuestion />', () => {
       <InputQuestion
         attributes={attrs}
         icon={<Icon />}
+        invalid={false}
         messages={[{ msg: 'foo', type: 'success' }]}
         onChange={() => {}}
         showResult={false}

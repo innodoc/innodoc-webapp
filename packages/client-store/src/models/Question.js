@@ -21,6 +21,7 @@ export default class Question extends Model {
       exerciseId: fk('Exercise', 'questions'),
       messages: attr({ getDefault: () => [] }),
       latexCode: attr(),
+      invalid: attr({ getDefault: () => false }),
     }
   }
 
@@ -54,6 +55,14 @@ export default class Question extends Model {
           messages: action.messages,
           result: action.result,
           latexCode: action.latexCode,
+        })
+        break
+
+      case questionActionTypes.QUESTION_INVALID:
+        QuestionModel.upsert({
+          id: action.id,
+          invalid: true,
+          messages: [{ msg: action.message, type: 'error' }],
         })
         break
 

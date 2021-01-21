@@ -4,6 +4,7 @@ export const actionTypes = makeSymbolObj([
   'ADD_QUESTION',
   'QUESTION_ANSWERED',
   'QUESTION_EVALUATED',
+  'QUESTION_INVALID',
 ])
 
 export const addQuestion = (exerciseId, questionId, points) => ({
@@ -26,4 +27,10 @@ export const questionEvaluated = (id, result, messages, latexCode) => ({
   latexCode,
   messages,
   result,
+})
+
+export const questionInvalid = (id, message) => ({
+  type: actionTypes.QUESTION_INVALID,
+  id,
+  message,
 })

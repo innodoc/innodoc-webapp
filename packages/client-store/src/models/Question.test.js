@@ -2,7 +2,12 @@ import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 
 import orm from '../orm'
 import { resetExercise } from '../actions/exercise'
-import { addQuestion, questionAnswered, questionEvaluated } from '../actions/question'
+import {
+  addQuestion,
+  questionAnswered,
+  questionEvaluated,
+  questionInvalid,
+} from '../actions/question'
 import { clearProgress, loadProgress } from '../actions/user'
 
 describe('Question', () => {
@@ -84,6 +89,20 @@ describe('Question', () => {
       expect(questions[0].messages[0]).toBe('foo')
       expect(questions[0].result).toBe(RESULT_VALUE.CORRECT)
       expect(questions[0].latexCode).toBe('x^{2}')
+    })
+
+    test('questionInvalid', () => {
+      session.Question.create({ id: 'foo/bar#Q01', answer: 'x^2' })
+      session.Question.reducer(
+        questionInvalid('foo/bar#Q01', 'Question invalid: Error in validation'),
+        session.Question
+      )
+      const questions = session.Question.all().toRefArray()
+      expect(questions).toHaveLength(1)
+      expect(questions[0].invalid).toBe(true)
+      expect(questions[0].messages).toHaveLength(1)
+      expect(questions[0].messages[0].type).toBe('error')
+      expect(questions[0].messages[0].msg).toBe('Question invalid: Error in validation')
     })
 
     test('loadProgress', () => {
