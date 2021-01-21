@@ -20,7 +20,7 @@ import css from './style.sss'
 const DATA_CONSENT_ACCESS_COOKIE = 'data-consent'
 
 const Layout = ({ children, disableSidebar }) => {
-  const { loggedInEmail } = useSelector(appSelectors.getApp)
+  const { ftSearchEnabled, loggedInEmail } = useSelector(appSelectors.getApp)
   const message = useSelector(userMessageSelectors.getLatest)
   const dispatch = useDispatch()
   const [showConsentModal, setShowConsent] = useState(false)
@@ -65,7 +65,7 @@ const Layout = ({ children, disableSidebar }) => {
   return (
     <>
       <AntLayout hasSider={false}>
-        <Header />
+        <Header enableSearch={ftSearchEnabled} />
         <AntLayout hasSider={!disableSidebar}>
           {sidebar}
           <AntLayout>

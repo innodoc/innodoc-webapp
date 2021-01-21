@@ -22,6 +22,7 @@ describe('App', () => {
     const app = session.App.first()
     expect(app.id).toBe(0)
     expect(app.contentRoot).toBe('')
+    expect(app.ftSearchEnabled).toBe(false)
     expect(app.staticRoot).toBe('')
     expect(app.show404).toBe(false)
     expect(app.sidebarVisible).toBe(false)
@@ -33,6 +34,7 @@ describe('App', () => {
         setServerConfiguration(
           'https://app.example.com/',
           'https://content.example.com/',
+          false,
           'https://cdn.example.com/',
           'csrfToken123!',
           'sec',
@@ -43,6 +45,7 @@ describe('App', () => {
       const app = session.App.first().ref
       expect(app.appRoot).toEqual('https://app.example.com/')
       expect(app.contentRoot).toEqual('https://content.example.com/')
+      expect(app.ftSearchEnabled).toBe(false)
       expect(app.staticRoot).toEqual('https://cdn.example.com/')
       expect(app.csrfToken).toEqual('csrfToken123!')
       expect(app.sectionPathPrefix).toEqual('sec')

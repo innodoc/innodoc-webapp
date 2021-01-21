@@ -102,6 +102,7 @@ export const sectionVisit = (sectionId) => ({
 export const setServerConfiguration = (
   appRoot,
   contentRoot,
+  ftSearch,
   staticRoot,
   csrfToken,
   sectionPathPrefix,
@@ -111,6 +112,7 @@ export const setServerConfiguration = (
   config: {
     appRoot,
     contentRoot,
+    ftSearchEnabled: ftSearch,
     csrfToken,
     pagePathPrefix,
     sectionPathPrefix,

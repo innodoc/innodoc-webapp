@@ -54,6 +54,7 @@ const getServerRuntimeConfig = (isRuntime) => {
   return {
     appRoot,
     contentRoot,
+    ftSearch: process.env.FT_SEARCH === 'true',
     jwtSecret: process.env.JWT_SECRET,
     logErrorEmail: process.env.LOG_ERROR_EMAIL,
     logFile: process.env.LOG_FILE.length ? getAbsPath(process.env.LOG_FILE) : null,

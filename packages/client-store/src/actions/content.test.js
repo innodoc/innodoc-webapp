@@ -146,6 +146,7 @@ test('SET_SERVER_CONFIGURATION action', () => {
     setServerConfiguration(
       'https://app.example.com/',
       'https://content.example.com/',
+      false,
       'https://cdn.example.com/',
       '123csrfToken!',
       'section',
@@ -156,6 +157,7 @@ test('SET_SERVER_CONFIGURATION action', () => {
     config: {
       appRoot: 'https://app.example.com/',
       contentRoot: 'https://content.example.com/',
+      ftSearchEnabled: false,
       csrfToken: '123csrfToken!',
       pagePathPrefix: 'page',
       sectionPathPrefix: 'section',

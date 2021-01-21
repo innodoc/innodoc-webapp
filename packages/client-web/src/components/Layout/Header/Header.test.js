@@ -69,6 +69,11 @@ describe('<Header />', () => {
     expect(wrapper.exists(InternalLink)).toBe(false)
   })
 
+  it('should render without search input', () => {
+    const wrapper = shallow(<Header enableSearch={false} />)
+    expect(wrapper.find(Layout.Header).exists(SearchInput)).toBe(false)
+  })
+
   it('should open and close drawer menu', () => {
     mockMd = false
     const wrapper = shallow(<Header />)

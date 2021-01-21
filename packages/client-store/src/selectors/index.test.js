@@ -5,6 +5,7 @@ const app = {
   id: 0,
   contentRoot: 'http://root/to/conent',
   currentCourse: 5,
+  ftSearchEnabled: false,
   language: 'en',
   message: 'custom message',
   show404: false,

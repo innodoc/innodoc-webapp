@@ -11,6 +11,7 @@ jest.mock('next/config', () => () => ({
   serverRuntimeConfig: {
     appRoot: 'https://app.example.com/',
     contentRoot: 'https://static.example.com/content/',
+    ftSearch: false,
     pagePathPrefix: 'page',
     sectionPathPrefix: 'section',
     staticRoot: 'https://static.example.com/',
@@ -43,6 +44,7 @@ describe('withServerVars', () => {
       setServerConfiguration(
         'https://app.example.com/',
         'https://static.example.com/content/',
+        false,
         'https://static.example.com/',
         '123Token!',
         'section',

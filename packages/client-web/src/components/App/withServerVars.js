@@ -7,7 +7,14 @@ import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
 import createHoc from './createHoc'
 
 const {
-  serverRuntimeConfig: { appRoot, contentRoot, staticRoot, sectionPathPrefix, pagePathPrefix },
+  serverRuntimeConfig: {
+    appRoot,
+    contentRoot,
+    ftSearch,
+    staticRoot,
+    sectionPathPrefix,
+    pagePathPrefix,
+  },
 } = getConfig()
 
 const withServerVars = createHoc('withServerVars', async (ctx) => {
@@ -18,6 +25,7 @@ const withServerVars = createHoc('withServerVars', async (ctx) => {
     setServerConfiguration(
       appRoot,
       contentRoot,
+      ftSearch,
       staticRoot,
       ctx.req.csrfToken(),
       sectionPathPrefix,

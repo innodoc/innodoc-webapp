@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { Button, Drawer, Grid, Layout, Menu } from 'antd'
 import { MenuOutlined } from '@ant-design/icons'
@@ -13,7 +14,7 @@ import { InternalLink } from '../../content/links'
 import SearchInput from './SearchInput'
 import css from './style.sss'
 
-const Header = () => {
+const Header = ({ enableSearch }) => {
   const { t } = useTranslation()
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const { md } = Grid.useBreakpoint()
@@ -34,11 +35,11 @@ const Header = () => {
   const menuMode = isMobile ? 'inline' : 'horizontal'
   const navMenu = <NavMenu menuMode={menuMode} />
   const secondMenu = <SecondMenu menuMode={menuMode} />
-  const search = (
+  const search = enableSearch ? (
     <div className={css.searchInputWrapper}>
       <SearchInput />
     </div>
-  )
+  ) : null
 
   const drawerButton = (
     <div className={css.drawerButton}>
@@ -90,6 +91,14 @@ const Header = () => {
       {mobileDrawerMenu}
     </>
   )
+}
+
+Header.defaultProps = {
+  enableSearch: true,
+}
+
+Header.propTypes = {
+  enableSearch: PropTypes.bool,
 }
 
 export default Header
