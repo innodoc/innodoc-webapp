@@ -13,7 +13,7 @@ jest.mock('@innodoc/common/src/i18n')
 const mockGetCurrentPage = pageSelectors.getCurrentPage
 const mockGetNavPages = pageSelectors.getNavPages
 
-const mockApp = { language: 'en' }
+let mockApp
 const mockNavPages = [
   {
     content: { en: 'foo content' },
@@ -56,6 +56,10 @@ jest.mock('next/router', () => ({
 }))
 
 describe('<NavMenu />', () => {
+  beforeEach(() => {
+    mockApp = { language: 'en', pdfFilename: 'content.pdf' }
+  })
+
   it('should render', () => {
     mockPathname = ''
 
@@ -102,5 +106,11 @@ describe('<NavMenu />', () => {
     mockPathname = '/progress'
     const wrapper = shallow(<NavMenu menuMode="vertical" />)
     expect(wrapper.children().at(2).prop('itemActive')).toBe(true)
+  })
+
+  it('should not render PDF link only if PDF is not available', () => {
+    mockApp = { ...mockApp, pdfFilename: undefined }
+    const wrapper = shallow(<NavMenu menuMode="vertical" />)
+    expect(wrapper.children()).toHaveLength(3)
   })
 })

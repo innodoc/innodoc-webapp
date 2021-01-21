@@ -23,6 +23,7 @@ export default class App extends Model {
       ftSearchEnabled: attr({ getDefault: () => false }),
       language: attr(),
       loggedInEmail: attr(),
+      pdfFilename: attr(),
       show404: attr({ getDefault: () => false }),
       sidebarVisible: attr({ getDefault: () => false }),
       staticRoot: attr({ getDefault: () => '' }),

@@ -20,7 +20,6 @@ describe('Basic layout', () => {
   it('should have a header', async () => {
     const header = await page.waitForSelector('header')
     await header.waitForSelector('[class*=headerLogoWrapper___]')
-    await header.waitForSelector('[class*=ant-input-search]')
     await expect(header).toHaveText('About')
     await header.waitForSelector('a[href="/page/about"]')
     await expect(header).toHaveText('Progress')

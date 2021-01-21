@@ -14,6 +14,7 @@ const {
     staticRoot,
     sectionPathPrefix,
     pagePathPrefix,
+    pdfFilename,
   },
 } = getConfig()
 
@@ -29,7 +30,8 @@ const withServerVars = createHoc('withServerVars', async (ctx) => {
       staticRoot,
       ctx.req.csrfToken(),
       sectionPathPrefix,
-      pagePathPrefix
+      pagePathPrefix,
+      pdfFilename
     )
   )
 

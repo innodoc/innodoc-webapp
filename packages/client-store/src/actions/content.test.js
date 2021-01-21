@@ -150,7 +150,8 @@ test('SET_SERVER_CONFIGURATION action', () => {
       'https://cdn.example.com/',
       '123csrfToken!',
       'section',
-      'page'
+      'page',
+      'content.pdf'
     )
   ).toEqual({
     type: actionTypes.SET_SERVER_CONFIGURATION,
@@ -160,6 +161,7 @@ test('SET_SERVER_CONFIGURATION action', () => {
       ftSearchEnabled: false,
       csrfToken: '123csrfToken!',
       pagePathPrefix: 'page',
+      pdfFilename: 'content.pdf',
       sectionPathPrefix: 'section',
       staticRoot: 'https://cdn.example.com/',
     },

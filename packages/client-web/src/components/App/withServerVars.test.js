@@ -13,6 +13,7 @@ jest.mock('next/config', () => () => ({
     contentRoot: 'https://static.example.com/content/',
     ftSearch: false,
     pagePathPrefix: 'page',
+    pdfFilename: 'content.pdf',
     sectionPathPrefix: 'section',
     staticRoot: 'https://static.example.com/',
   },
@@ -48,7 +49,8 @@ describe('withServerVars', () => {
         'https://static.example.com/',
         '123Token!',
         'section',
-        'page'
+        'page',
+        'content.pdf'
       )
     )
   })

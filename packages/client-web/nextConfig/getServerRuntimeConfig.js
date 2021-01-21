@@ -51,10 +51,21 @@ const getServerRuntimeConfig = (isRuntime) => {
   // Manifest (only needed at runtime)
   const manifest = isRuntime ? getManifest() : undefined
 
+  // Copy PDF version
+  let pdfFilename
+  if (process.env.PDF_FILE && process.env.PDF_FILE !== '') {
+    const pdfFilepathSrc = getAbsPath(process.env.PDF_FILE)
+    const pdfFileBasename = path.basename(process.env.PDF_FILE)
+    const pdfFilepathDest = path.resolve(__dirname, '..', 'src', 'public', pdfFileBasename)
+    fs.copyFileSync(pdfFilepathSrc, pdfFilepathDest)
+    pdfFilename = pdfFileBasename
+  }
+
   return {
     appRoot,
     contentRoot,
     ftSearch: process.env.FT_SEARCH === 'true',
+    pdfFilename,
     jwtSecret: process.env.JWT_SECRET,
     logErrorEmail: process.env.LOG_ERROR_EMAIL,
     logFile: process.env.LOG_FILE.length ? getAbsPath(process.env.LOG_FILE) : null,

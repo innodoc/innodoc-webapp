@@ -106,7 +106,8 @@ export const setServerConfiguration = (
   staticRoot,
   csrfToken,
   sectionPathPrefix,
-  pagePathPrefix
+  pagePathPrefix,
+  pdfFilename
 ) => ({
   type: actionTypes.SET_SERVER_CONFIGURATION,
   config: {
@@ -115,6 +116,7 @@ export const setServerConfiguration = (
     ftSearchEnabled: ftSearch,
     csrfToken,
     pagePathPrefix,
+    pdfFilename,
     sectionPathPrefix,
     staticRoot,
   },

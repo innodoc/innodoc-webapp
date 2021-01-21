@@ -38,7 +38,8 @@ describe('App', () => {
           'https://cdn.example.com/',
           'csrfToken123!',
           'sec',
-          'p'
+          'p',
+          'content.pdf'
         ),
         session.App
       )
@@ -50,6 +51,7 @@ describe('App', () => {
       expect(app.csrfToken).toEqual('csrfToken123!')
       expect(app.sectionPathPrefix).toEqual('sec')
       expect(app.pagePathPrefix).toEqual('p')
+      expect(app.pdfFilename).toEqual('content.pdf')
     })
 
     test('changeCourse', () => {

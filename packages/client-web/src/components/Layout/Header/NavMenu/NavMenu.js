@@ -13,7 +13,7 @@ import PageIcon from '../../PageIcon'
 import LinkMenuItem from '../LinkMenuItem'
 
 const NavMenu = ({ menuMode }) => {
-  const { language } = useSelector(appSelectors.getApp)
+  const { language, pdfFilename } = useSelector(appSelectors.getApp)
   const currentPage = useSelector(pageSelectors.getCurrentPage)
   const pages = useSelector(pageSelectors.getNavPages)
   const router = useRouter()
@@ -30,6 +30,15 @@ const NavMenu = ({ menuMode }) => {
     />
   ))
 
+  const pdfLinkItem = pdfFilename ? (
+    <Menu.Item key="pdf">
+      <a href={`/${pdfFilename}`} title={t('header.downloadPDFTitle')}>
+        <FilePdfOutlined />
+        {t('header.downloadPDF')}
+      </a>
+    </Menu.Item>
+  ) : null
+
   return (
     <Menu mode={menuMode} selectable={false}>
       {pageItems}
@@ -40,12 +49,7 @@ const NavMenu = ({ menuMode }) => {
         title={t('progress.title')}
         titleLong={t('progress.titleLong')}
       />
-      <Menu.Item key="pdf">
-        <a title={t('header.downloadPDFTitle')}>
-          <FilePdfOutlined />
-          {t('header.downloadPDF')}
-        </a>
-      </Menu.Item>
+      {pdfLinkItem}
     </Menu>
   )
 }
