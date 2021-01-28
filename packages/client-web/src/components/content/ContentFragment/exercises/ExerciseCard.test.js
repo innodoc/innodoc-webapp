@@ -3,6 +3,7 @@ import { mount, shallow } from 'enzyme'
 import { CheckOutlined, FormOutlined, UndoOutlined } from '@ant-design/icons'
 
 import { resetExercise } from '@innodoc/client-store/src/actions/exercise'
+import progressSelectors from '@innodoc/client-store/src/selectors/progress'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import ExerciseCard from './ExerciseCard'
@@ -12,14 +13,19 @@ import FeedbackIcon from './questions/FeedbackIcon'
 
 const mockDispatch = jest.fn()
 const mockSectionSelectors = sectionSelectors
+const mockProgressSelectors = progressSelectors
 let mockSectionType
 let mockExercise
+let mockIsSubmitted
 
 jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
   useSelector: (sel) => {
     if (sel === mockSectionSelectors.getCurrentSection) {
       return { id: 'foo/bar', type: mockSectionType }
+    }
+    if (sel === mockProgressSelectors.getTest) {
+      return { isSubmitted: mockIsSubmitted }
     }
     return mockExercise
   },
@@ -45,6 +51,7 @@ describe('<ExerciseCard />', () => {
     mockIsMounted = true
     mockSectionType = 'regular'
     mockExercise = { isAnswered: false, isCorrect: false, isTouched: false }
+    mockIsSubmitted = undefined
   })
 
   it('should render', () => {
@@ -65,6 +72,12 @@ describe('<ExerciseCard />', () => {
     mockExercise = { isAnswered: true, isCorrect: false, isTouched: false }
     const wrapper = mount(<ExerciseCard attributes={attrs} content={content} />)
     expect(wrapper.find(ExerciseProvider).prop('showResult')).toBe(true)
+  })
+
+  it.each([true, false])('should show result depending on test submission=%s', (submitted) => {
+    mockIsSubmitted = submitted
+    const wrapper = mount(<ExerciseCard attributes={attrs} content={content} />)
+    expect(wrapper.find(ExerciseProvider).prop('showResult')).toBe(submitted)
   })
 
   it.each([true, false])(

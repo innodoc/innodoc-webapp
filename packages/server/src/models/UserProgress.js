@@ -17,6 +17,7 @@ const UserProgress = new mongoose.Schema({
     unique: true,
   },
   answeredQuestions: { type: [answeredQuestionSchema], required: true },
+  testScores: { type: Map, of: Number, required: true },
   visitedSections: { type: [String], required: true },
 })
 

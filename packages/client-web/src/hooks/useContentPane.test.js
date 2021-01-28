@@ -17,6 +17,7 @@ const stdContent = {
   content: { en: contentArr },
   id: 'foo',
   title: { en: 'Foo title' },
+  type: 'regular',
 }
 
 const mockGetApp = appSelectors.getApp
@@ -34,12 +35,13 @@ jest.mock('react-redux', () => ({
 }))
 
 const ContentComponent = () => {
-  const { content, fadeInClassName, id, language, title } = useContentPane(mockSelector)
+  const { content, fadeInClassName, id, language, title, type } = useContentPane(mockSelector)
   return (
     <>
       <h1>{title}</h1>
       <span>{id}</span>
       <span>{language}</span>
+      <span>{type}</span>
       <div className={fadeInClassName}>
         <ContentFragment content={content} />
       </div>
@@ -75,6 +77,7 @@ describe('useContentPane', () => {
     expect(wrapper.find('h1').text()).toBe('Foo title')
     expect(wrapper.find('span').at(0).text()).toBe('foo')
     expect(wrapper.find('span').at(1).text()).toBe('en')
+    expect(wrapper.find('span').at(2).text()).toBe('regular')
   })
 
   it('should provide add/remove callback scrollToHash', () => {

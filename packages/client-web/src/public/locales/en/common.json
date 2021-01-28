@@ -30,7 +30,27 @@
     "inputHint": "Input",
     "noHtml5Video": "Your browser doesn't support HTML5 video. Here is a <a href=\"{{src}}\">link to the video</a> instead.",
     "subsections": "Subsections",
-    "test": "Test",
+    "test": {
+      "actions": {
+        "reset": "Reset and restart",
+        "submit": "Submit test"
+      },
+      "introduction": {
+        "item1": "Unlike open exercises, no hints for formulating mathematical expressions are provided.",
+        "item2": "The test can be restarted or interrupted at any time.",
+        "item3": "The test can be terminated and submitted using the buttons at the end of the page, or reset.",
+        "item4": "The test can be attempted several times. Only the last version will be included in the statistics.",
+        "title": "This is a test for submission."
+      },
+      "resultText": {
+        "notSubmitted": "The test can be submitted if at least one exercise has been completed.",
+        "submitted": "The test has been submitted. However it can still be edited and submitted again."
+      },
+      "resultTitle": {
+        "notSubmitted": "The test has not been submitted yet.",
+        "submitted": "A score of <1>{{score}}</1> out of <3>{{total}}</3> was achieved in the test."
+      }
+    },
     "ytIdError": "Could not extract YouTube Video ID: {{src}}"
   },
   "emails": {

@@ -18,6 +18,7 @@ export default class Section extends Model {
       content: attr(),
       parentId: fk('Section', 'children'),
       visited: attr({ getDefault: () => false }),
+      testScore: attr(), // Only relevant if type=test, testScore=undefined means not submitted
     }
   }
 
@@ -72,6 +73,20 @@ export default class Section extends Model {
             section.set('visited', true)
           }
         })
+        Object.keys(action.testScores).forEach((id) => {
+          const section = SectionModel.withId(id)
+          if (section) {
+            section.set('testScore', action.testScores[id])
+          }
+        })
+        break
+
+      case userActionTypes.RESET_TEST:
+        SectionModel.withId(action.sectionId).set('testScore', undefined)
+        break
+
+      case userActionTypes.TEST_SCORE:
+        SectionModel.withId(action.sectionId).set('testScore', action.score)
         break
 
       default:

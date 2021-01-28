@@ -64,6 +64,7 @@ describe('userController', () => {
       const userProgress = UserProgress({
         user_id: user._id,
         answeredQuestions: [],
+        testScores: { 'section/foo': 32 },
         visitedSections: ['section/foo'],
       })
       await userProgress.save()
@@ -145,6 +146,7 @@ describe('userController', () => {
           result: 'ok',
           progress: {
             answeredQuestions: [],
+            testScores: { 'section/foo': 32 },
             visitedSections: ['section/foo'],
           },
         })
@@ -179,6 +181,7 @@ describe('userController', () => {
         params: {
           progress: {
             answeredQuestions: [],
+            testScores: { 'section/bar': 4 },
             visitedSections: ['section/foo', 'section/bar'],
           },
         },
@@ -188,6 +191,11 @@ describe('userController', () => {
       }).then(async () => {
         const progress = await UserProgress.find({ user_id: user._id })
         expect(progress).toHaveLength(1)
+        const testScoresIter = progress[0].testScores.entries()
+        const testScore = testScoresIter.next().value
+        expect(testScore[0]).toBe('section/bar')
+        expect(testScore[1]).toBe(4)
+        expect(testScoresIter.next().done).toBe(true)
         expect(progress[0].visitedSections).toHaveLength(2)
         expect(progress[0].visitedSections[0]).toBe('section/foo')
         expect(progress[0].visitedSections[1]).toBe('section/bar')

@@ -40,6 +40,7 @@ describe('UserProgress', () => {
     const userProgress = UserProgress({
       user_id: user._id,
       answeredQuestions: [question],
+      testScores: { 'foo/baz': 21 },
       visitedSections: ['foo/bar', 'foo/baz'],
     })
     await userProgress.save()
@@ -56,6 +57,8 @@ describe('UserProgress', () => {
     expect(userProgress.answeredQuestions[0].answeredTimestamp).toBe(1598451191939)
     expect(userProgress.answeredQuestions[0].result).toBe('CORRECT')
     expect(userProgress.answeredQuestions[0].points).toBe(9)
+    expect(userProgress.testScores.size).toBe(1)
+    expect(userProgress.testScores.get('foo/baz')).toBe(21)
     expect(userProgress.visitedSections).toHaveLength(2)
     expect(userProgress.visitedSections[0]).toBe('foo/bar')
     expect(userProgress.visitedSections[1]).toBe('foo/baz')
@@ -63,7 +66,12 @@ describe('UserProgress', () => {
 
   it('should have unique user_id field', async () => {
     const [, user] = await addTestUserProgress()
-    const anotherUserProgress = UserProgress({ user_id: user._id })
+    const anotherUserProgress = UserProgress({
+      user_id: user._id,
+      answeredQuestions: [],
+      testScores: {},
+      visitedSections: [],
+    })
     return expect(anotherUserProgress.save()).rejects.toThrow(/duplicate/)
   })
 })

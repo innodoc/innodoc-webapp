@@ -198,22 +198,33 @@ const questions = [
   },
 ]
 
-const dummyState = () => {
+const initState = () => {
   const state = orm.getEmptyState()
   const session = orm.mutableSession(state)
   session.Course.create(dummyCourse)
   session.App.create({
     id: 0,
-    currentCourse: session.Course.first(),
+    currentCourseId: session.Course.first(),
     language: 'en',
   })
-  sections.forEach((section) => session.Section.create(section))
-  exercises.forEach((exercise) => session.Exercise.create(exercise))
-  questions.forEach((question) => session.Question.create(question))
   return { orm: state }
 }
 
+const dummyState = () => {
+  const state = initState()
+  const session = orm.mutableSession(state.orm)
+  sections.forEach((section) => session.Section.create(section))
+  exercises.forEach((exercise) => session.Exercise.create(exercise))
+  questions.forEach((question) => session.Question.create(question))
+  return state
+}
+
 describe('progressSelectors', () => {
+  test('calculateTestScore', () => {
+    const state = dummyState()
+    expect(progressSelectors.calculateTestScore(state, 'ch2/test')).toBe(15)
+  })
+
   test('getProgress', () => {
     const state = dummyState()
     const progress = progressSelectors.getProgress(state)
@@ -253,5 +264,111 @@ describe('progressSelectors', () => {
         ...questions[i],
       })
     )
+  })
+
+  describe('getTest', () => {
+    let state
+
+    beforeEach(() => {
+      state = initState()
+      const session = orm.mutableSession(state.orm)
+      session.Section.create({
+        id: 'test',
+        ord: [0],
+        parentId: undefined,
+        type: 'test',
+      })
+      session.Course.first().set('currentSectionId', 'test')
+
+      session.Exercise.create({
+        id: 'test#EX_01',
+        number: '1.1.1',
+        sectionId: 'test',
+        points: 3,
+      })
+      session.Question.create({
+        exerciseId: 'test#EX_01',
+        result: RESULT_VALUE.NEUTRAL,
+        points: 1,
+      })
+      session.Question.create({
+        exerciseId: 'test#EX_01',
+        result: RESULT_VALUE.NEUTRAL,
+        points: 2,
+      })
+
+      session.Exercise.create({
+        id: 'test#EX_02',
+        number: '1.1.2',
+        sectionId: 'test',
+        points: 5,
+      })
+      session.Question.create({
+        exerciseId: 'test#EX_02',
+        result: RESULT_VALUE.NEUTRAL,
+        points: 2,
+      })
+      session.Question.create({
+        exerciseId: 'test#EX_02',
+        result: RESULT_VALUE.NEUTRAL,
+        points: 3,
+      })
+    })
+
+    describe('submitted=false', () => {
+      test('no question answered', () =>
+        expect(progressSelectors.getTest(state)).toEqual({
+          canBeReset: false,
+          canBeSubmitted: false,
+          isSubmitted: false,
+          score: undefined,
+          totalScore: 8,
+        }))
+
+      test('one question answered', () => {
+        orm
+          .mutableSession(state.orm)
+          .Exercise.first()
+          .questions.first()
+          .set('result', RESULT_VALUE.CORRECT)
+        expect(progressSelectors.getTest(state)).toEqual({
+          canBeReset: true,
+          canBeSubmitted: false,
+          isSubmitted: false,
+          score: undefined,
+          totalScore: 8,
+        })
+      })
+
+      test('one exercise answered', () => {
+        orm
+          .mutableSession(state.orm)
+          .Exercise.first()
+          .questions.toModelArray()
+          .forEach((q) => q.set('result', RESULT_VALUE.CORRECT))
+        expect(progressSelectors.getTest(state)).toEqual({
+          canBeReset: true,
+          canBeSubmitted: true,
+          isSubmitted: false,
+          score: undefined,
+          totalScore: 8,
+        })
+      })
+    })
+
+    test('submitted=true', () => {
+      const session = orm.mutableSession(state.orm)
+      session.Question.all()
+        .toModelArray()
+        .forEach((q) => q.set('result', RESULT_VALUE.CORRECT))
+      session.Section.first().set('testScore', 8)
+      expect(progressSelectors.getTest(state)).toEqual({
+        canBeReset: true,
+        canBeSubmitted: true,
+        isSubmitted: true,
+        score: 8,
+        totalScore: 8,
+      })
+    })
   })
 })

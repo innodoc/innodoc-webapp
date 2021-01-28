@@ -30,7 +30,27 @@
     "inputHint": "Hilfe zur Eingabe",
     "noHtml5Video": "Dein Browser unterstützt kein HTML5-Video. Hier is ein <a href=\"{{src}}\">Link zum Video</a>.",
     "subsections": "Unterabschnitte",
-    "test": "Test",
+    "test": {
+      "actions": {
+        "reset": "Test löschen und neu starten",
+        "submit": "Test auswerten"
+      },
+      "introduction": {
+        "item1": "Im Gegensatz zu den offenen Aufgaben werden beim Eingeben keine Hinweise zur Formulierung der mathematischen Ausdrücke gegeben.",
+        "item2": "Der Test kann jederzeit neu gestartet oder verlassen werden.",
+        "item3": "Der Test kann durch die Buttons am Ende der Seite beendet und abgeschickt, oder zurückgesetzt werden.",
+        "item4": "Der Test kann mehrfach probiert werden. Für die Statistik zählt die zuletzt abgeschickte Version.",
+        "title": "Dies ist ein einreichbarer Test."
+      },
+      "resultText": {
+        "notSubmitted": "Der Test kann abgeschickt werden, wenn mindestens eine Aufgabe bearbeitet wurde.",
+        "submitted": "Der Test wurde abgeschickt. Er kann jedoch noch bearbeitet und erneut eingereicht werden."
+      },
+      "resultTitle": {
+        "notSubmitted": "Der Test wurde noch nicht abgeschickt.",
+        "submitted": "Im Test wurden <1>{{score}}</1> von <3>{{total}}</3> Punkten erreicht."
+      }
+    },
     "ytIdError": "Konnte YouTube-Video-ID nicht extrahieren: {{src}}"
   },
   "emails": {
