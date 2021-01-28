@@ -35,6 +35,7 @@ const useContentPane = (getCurrent) => {
     fadeInClassName,
     language,
     title,
+    type: current && current.type,
   }
 }
 

@@ -10,6 +10,7 @@ import SectionContent from './SectionContent'
 import SubsectionList from './SubsectionList'
 import ContentAffix from './ContentAffix'
 import ContentFragment from './ContentFragment'
+import TestContent from './TestContent'
 
 jest.mock('@innodoc/common/src/i18n')
 
@@ -31,11 +32,13 @@ jest.mock('react-redux', () => ({
 }))
 
 const mockRef = React.createRef()
+let mockSectionType
 jest.mock('../../hooks/useContentPane', () => () => ({
   content: mockContent,
   fadeInClassName: 'show',
   id: 'foo',
   mathJaxElem: mockRef,
+  type: mockSectionType,
 }))
 
 describe('<SectionContent />', () => {
@@ -57,6 +60,7 @@ describe('<SectionContent />', () => {
       },
     ]
     mockCurrentTitle = '1 Foo section'
+    mockSectionType = 'regular'
   })
 
   it('should render', () => {
@@ -66,11 +70,19 @@ describe('<SectionContent />', () => {
     expect(wrapper.find(PageTitle).prop('children')).toBe('1 Foo section')
     expect(wrapper.find(ContentFragment).prop('content')).toBe(mockContent)
     expect(wrapper.exists(SubsectionList)).toBe(true)
+    expect(wrapper.exists(TestContent)).toBe(false)
   })
 
   it('should track visit', () => {
     shallow(<SectionContent />)
     expect(useTrackVisit).toBeCalledWith('foo')
+  })
+
+  it('should render <TestContent /> for section type test', () => {
+    mockSectionType = 'test'
+    const wrapper = shallow(<SectionContent />)
+    expect(wrapper.find(TestContent).prop('id')).toBe('foo')
+    expect(wrapper.exists(SubsectionList)).toBe(false)
   })
 
   describe('missing data', () => {

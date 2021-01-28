@@ -10,9 +10,11 @@ import {
   actionTypes as userActionTypes,
   clearProgress,
   loadProgress,
+  testScore,
 } from '@innodoc/client-store/src/actions/user'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import progressSelectors from '@innodoc/client-store/src/selectors/progress'
+import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import progressSaga, {
   LOCAL_STORAGE_KEY,
@@ -20,17 +22,21 @@ import progressSaga, {
   clearSaga,
   monitorActions,
   persistSaga,
+  questionAnsweredSaga,
   restoreSaga,
+  submitTestSaga,
 } from './progress'
 
 const mockProgress = {
   answeredQuestions: [],
   visitedSections: ['foo/section'],
+  testScores: {},
 }
 
 const mockProgressLS = {
   answeredQuestions: [],
   visitedSections: ['foo/section', 'bar/section'],
+  testScores: { 'bar/section': 12 },
 }
 const mockSerializedProgressLS = 'SERIALIZED_DATA'
 
@@ -87,22 +93,46 @@ describe('restoreSaga', () => {
       // restore from LS
       .call([localStorage, localStorage.getItem], LOCAL_STORAGE_KEY)
       .call([JSON, JSON.parse], mockSerializedProgressLS)
-      .put(loadProgress(mockProgressLS.answeredQuestions, mockProgressLS.visitedSections))
+      .put(
+        loadProgress(
+          mockProgressLS.answeredQuestions,
+          mockProgressLS.visitedSections,
+          mockProgressLS.testScores
+        )
+      )
       // restore from server
       .call(fetchProgress, 'https://app.example.com/')
-      .put(loadProgress(mockProgress.answeredQuestions, mockProgress.visitedSections))
+      .put(
+        loadProgress(
+          mockProgress.answeredQuestions,
+          mockProgress.visitedSections,
+          mockProgress.testScores
+        )
+      )
       // sync back to server and clear LS
-      .call([localStorage, localStorage.removeItem], LOCAL_STORAGE_KEY)
       .call(persistSaga)
+      .call([localStorage, localStorage.removeItem], LOCAL_STORAGE_KEY)
       .run())
 
   it("should skip sync'ing back to server if LS was empty", () =>
     expectSaga(restoreSaga)
       .provide([[matchers.call.fn(localStorage.getItem), undefined], ...defaultProvides])
       .not.call.fn(JSON.parse)
-      .not.put(loadProgress(mockProgressLS.answeredQuestions, mockProgressLS.visitedSections))
+      .not.put(
+        loadProgress(
+          mockProgressLS.answeredQuestions,
+          mockProgressLS.visitedSections,
+          mockProgressLS.testScores
+        )
+      )
       .call(fetchProgress, 'https://app.example.com/')
-      .put(loadProgress(mockProgress.answeredQuestions, mockProgress.visitedSections))
+      .put(
+        loadProgress(
+          mockProgress.answeredQuestions,
+          mockProgress.visitedSections,
+          mockProgress.testScores
+        )
+      )
       .not.call.fn(persistSaga)
       .run())
 
@@ -111,9 +141,21 @@ describe('restoreSaga', () => {
       .provide(providesNotLoggedIn)
       .call([localStorage, localStorage.getItem], LOCAL_STORAGE_KEY)
       .call([JSON, JSON.parse], mockSerializedProgressLS)
-      .put(loadProgress(mockProgressLS.answeredQuestions, mockProgressLS.visitedSections))
+      .put(
+        loadProgress(
+          mockProgressLS.answeredQuestions,
+          mockProgressLS.visitedSections,
+          mockProgressLS.testScores
+        )
+      )
       .not.call.fn(fetchProgress)
-      .not.put(loadProgress(mockProgress.answeredQuestions, mockProgress.visitedSections))
+      .not.put(
+        loadProgress(
+          mockProgress.answeredQuestions,
+          mockProgress.visitedSections,
+          mockProgress.testScores
+        )
+      )
       .not.call.fn(localStorage.removeItem)
       .not.call.fn(persistSaga)
       .run())
@@ -123,19 +165,39 @@ describe('clearSaga', () => {
   it('should put clearProgress', () => expectSaga(clearSaga).put(clearProgress()).run())
 })
 
+describe('submitTestSaga', () => {
+  it('should calculate score', () =>
+    expectSaga(submitTestSaga, { sectionId: 'section/bar' })
+      .provide([[select(progressSelectors.calculateTestScore, 'section/bar'), 27]])
+      .put(testScore('section/bar', 27))
+      .run())
+})
+
+describe('questionAnsweredSaga', () => {
+  it('should reset test score', () =>
+    expectSaga(questionAnsweredSaga, { id: 'Q123' })
+      .provide([[select(sectionSelectors.getSectionByQuestion, 'Q123'), { id: 'section/foo' }]])
+      .put(testScore('section/foo', undefined))
+      .run())
+})
+
 describe('monitorActions', () => {
   it('should monitor user actions', () => {
     testSaga(monitorActions)
       .next()
       .all([
+        takeEvery(questionActionTypes.QUESTION_ANSWERED, questionAnsweredSaga),
         takeEvery(userActionTypes.USER_LOGGED_IN, restoreSaga),
         takeEvery(userActionTypes.USER_LOGGED_OUT, clearSaga),
+        takeEvery(userActionTypes.SUBMIT_TEST, submitTestSaga),
         debounce(
           PERSIST_DEBOUNCE_TIME,
           [
             contentActionTypes.SECTION_VISIT,
             exerciseActionTypes.RESET_EXERCISE,
             questionActionTypes.QUESTION_EVALUATED,
+            userActionTypes.RESET_TEST,
+            userActionTypes.TEST_SCORE,
           ],
           persistSaga
         ),

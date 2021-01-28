@@ -8,6 +8,7 @@ import { attributeType, contentType } from '@innodoc/client-misc/src/propTypes'
 import { getNumberedTitle } from '@innodoc/client-misc/src/util'
 import { resetExercise } from '@innodoc/client-store/src/actions/exercise'
 import exerciseSelectors from '@innodoc/client-store/src/selectors/exercise'
+import progressSelectors from '@innodoc/client-store/src/selectors/progress'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import useIsMounted from '../../../../hooks/useIsMounted'
@@ -23,11 +24,11 @@ const ExerciseCard = ({ attributes, content, extra, id: exId }) => {
   const dispatch = useDispatch()
   const [showResult, setShowResult] = useState(false)
   const { id: sectionId, type: sectionType } = useSelector(sectionSelectors.getCurrentSection)
+  const { isSubmitted } = useSelector(progressSelectors.getTest)
   const globalExId = `${sectionId}#${exId}`
   const exercise = useSelector((state) => exerciseSelectors.getExercise(state, globalExId))
 
-  // Result shown only if all questions are answered on first render. Later it
-  // needs to be triggered manually by user.
+  // Result shown only if all questions are answered on first render.
   const initialIsAnswered = useRef(exercise.isAnswered)
   useEffect(() => {
     if (initialIsAnswered.current) {
@@ -35,9 +36,16 @@ const ExerciseCard = ({ attributes, content, extra, id: exId }) => {
     }
   }, [initialIsAnswered])
 
-  // Don't render actions on server as this leads to hyrdation issues
+  // For test sections: Show result if test is submitted.
+  useEffect(() => {
+    if (isSubmitted !== undefined) {
+      setShowResult(isSubmitted)
+    }
+  }, [isSubmitted])
+
   const actions =
-    sectionType !== 'test' && isMounted.current
+    sectionType !== 'test' && // Tests evaluate all exercises at once
+    isMounted.current // Don't render on server as this leads to hydration issues
       ? [
           <Action
             disabled={!exercise.isAnswered || showResult}

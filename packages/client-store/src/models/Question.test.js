@@ -8,7 +8,7 @@ import {
   questionEvaluated,
   questionInvalid,
 } from '../actions/question'
-import { clearProgress, loadProgress } from '../actions/user'
+import { clearProgress, loadProgress, resetTest } from '../actions/user'
 
 describe('Question', () => {
   let session
@@ -44,7 +44,7 @@ describe('Question', () => {
         latexCode: '41',
       })
 
-      session.Question.reducer(resetExercise('foo/bar#EX01'), session.Question)
+      session.Question.reducer(resetExercise('foo/bar#EX01'), session.Question, session)
       const q1 = session.Question.withId('foo/bar#Q01')
       expect(q1.answer).toBeUndefined()
       expect(q1.result).toBe(RESULT_VALUE.NEUTRAL)
@@ -59,7 +59,11 @@ describe('Question', () => {
 
     test('addQuestion', () => {
       expect(session.Question.all().toRefArray()).toHaveLength(0)
-      session.Question.reducer(addQuestion('foo/bar#EX01', 'foo/bar#Q01', 5), session.Question)
+      session.Question.reducer(
+        addQuestion('foo/bar#EX01', 'foo/bar#Q01', 5),
+        session.Question,
+        session
+      )
       const questions = session.Question.all().toRefArray()
       expect(questions).toHaveLength(1)
       expect(questions[0].id).toBe('foo/bar#Q01')
@@ -70,7 +74,7 @@ describe('Question', () => {
 
     test('questionAnswered', () => {
       session.Question.create({ id: 'foo/bar#Q01' })
-      session.Question.reducer(questionAnswered('foo/bar#Q01', '42', {}), session.Question)
+      session.Question.reducer(questionAnswered('foo/bar#Q01', '42', {}), session.Question, session)
       const questions = session.Question.all().toRefArray()
       expect(questions).toHaveLength(1)
       expect(questions[0].id).toBe('foo/bar#Q01')
@@ -81,7 +85,8 @@ describe('Question', () => {
       session.Question.create({ id: 'foo/bar#Q01', answer: 'x^2' })
       session.Question.reducer(
         questionEvaluated('foo/bar#Q01', RESULT_VALUE.CORRECT, ['foo'], 'x^{2}'),
-        session.Question
+        session.Question,
+        session
       )
       const questions = session.Question.all().toRefArray()
       expect(questions).toHaveLength(1)
@@ -95,7 +100,8 @@ describe('Question', () => {
       session.Question.create({ id: 'foo/bar#Q01', answer: 'x^2' })
       session.Question.reducer(
         questionInvalid('foo/bar#Q01', 'Question invalid: Error in validation'),
-        session.Question
+        session.Question,
+        session
       )
       const questions = session.Question.all().toRefArray()
       expect(questions).toHaveLength(1)
@@ -153,7 +159,7 @@ describe('Question', () => {
         },
       ]
       const action = loadProgress(updatedQuestions, [])
-      session.Question.reducer(action, session.Question)
+      session.Question.reducer(action, session.Question, session)
       expect(session.Question.all().count()).toBe(3)
 
       const q1 = session.Question.withId('foo/bar#Q01')
@@ -188,7 +194,41 @@ describe('Question', () => {
         latexCode: '41',
       })
 
-      session.Question.reducer(clearProgress(), session.Question)
+      session.Question.reducer(clearProgress(), session.Question, session)
+      const qIds = ['foo/bar#Q01', 'foo/bar#Q02']
+      qIds.forEach((qId) => {
+        const q = session.Question.withId(qId)
+        expect(q.answer).toBeUndefined()
+        expect(q.messages).toHaveLength(0)
+        expect(q.result).toBe(RESULT_VALUE.NEUTRAL)
+        expect(q.latexCode).toBeUndefined()
+      })
+    })
+
+    test('resetTest', () => {
+      session.Section.create({ id: 'foo/bar' })
+      session.Exercise.create({
+        id: 'foo/bar#EX01',
+        questionCount: 2,
+        sectionId: 'foo/bar',
+      })
+      session.Question.create({
+        id: 'foo/bar#Q01',
+        exerciseId: 'foo/bar#EX01',
+        answer: '42',
+        result: RESULT_VALUE.CORRECT,
+        messages: ['foo'],
+        latexCode: '42',
+      })
+      session.Question.create({
+        id: 'foo/bar#Q02',
+        exerciseId: 'foo/bar#EX01',
+        answer: '41',
+        result: RESULT_VALUE.INCORRECT,
+        messages: ['bar'],
+        latexCode: '41',
+      })
+      session.Question.reducer(resetTest('foo/bar'), session.Question, session)
       const qIds = ['foo/bar#Q01', 'foo/bar#Q02']
       qIds.forEach((qId) => {
         const q = session.Question.withId(qId)
@@ -200,7 +240,7 @@ describe('Question', () => {
     })
 
     test('no-op action', () => {
-      session.Question.reducer({ type: 'DOES-NOT-EXIST' }, session.Question)
+      session.Question.reducer({ type: 'DOES-NOT-EXIST' }, session.Question, session)
     })
   })
 })

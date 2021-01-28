@@ -25,7 +25,7 @@ export default class Question extends Model {
     }
   }
 
-  static reducer(action, QuestionModel) {
+  static reducer(action, QuestionModel, session) {
     switch (action.type) {
       case exerciseActionTypes.RESET_EXERCISE:
         QuestionModel.filter({ exerciseId: action.id })
@@ -71,6 +71,16 @@ export default class Question extends Model {
           .toModelArray()
           .forEach((question) => question.clear())
         break
+
+      case userActionTypes.RESET_TEST: {
+        const section = session.Section.withId(action.sectionId)
+        if (section.exercises) {
+          section.exercises
+            .toModelArray()
+            .forEach((ex) => ex.questions.toModelArray().forEach((q) => q.clear()))
+        }
+        break
+      }
 
       case userActionTypes.LOAD_PROGRESS:
         // Merge questions (newer timestamp wins)

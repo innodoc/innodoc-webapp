@@ -36,6 +36,7 @@ const userController = async ({ appRoot, jwtSecret }) => {
                   result: q.result,
                   points: q.points,
                 })),
+                testScores: progress.testScores,
                 visitedSections: progress.visitedSections,
               }
             : null,
@@ -54,6 +55,11 @@ const userController = async ({ appRoot, jwtSecret }) => {
       if (
         !progress ||
         !Array.isArray(progress.answeredQuestions) ||
+        !progress.testScores ||
+        !typeof progress.testScores === 'object' ||
+        Object.keys(progress.testScores).some(
+          (k) => typeof k !== 'string' || !Number.isInteger(progress.testScores[k])
+        ) ||
         !Array.isArray(progress.visitedSections)
       ) {
         res.status(400).json({ result: 'MalformedRequest' })
@@ -64,6 +70,7 @@ const userController = async ({ appRoot, jwtSecret }) => {
         const filter = { user_id: req.user._id }
         const update = {
           answeredQuestions: progress.answeredQuestions,
+          testScores: progress.testScores,
           visitedSections: progress.visitedSections,
         }
         const opts = { upsert: true }

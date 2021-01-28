@@ -56,6 +56,18 @@ const getCurrentTitle = createSelector(
 // Return section by ID
 const getSection = createSelector(orm, selectId, (session, id) => session.Section.withId(id).ref)
 
+// Get section by question ID
+const getSectionByQuestion = createSelector(orm, selectId, (session, id) => {
+  const question = session.Question.withId(id)
+  if (question) {
+    const exercise = question.exerciseId
+    if (exercise) {
+      return exercise.sectionId.ref
+    }
+  }
+  return undefined
+})
+
 const makeGetSectionLink = makeMakeGetContentLink('Section')
 
 // Check if section exists
@@ -67,6 +79,7 @@ export default {
   getCurrentSubsections,
   getCurrentTitle,
   getSection,
+  getSectionByQuestion,
   makeGetSectionLink,
   sectionExists,
   // re-exported

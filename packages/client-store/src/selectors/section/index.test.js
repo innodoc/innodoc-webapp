@@ -104,6 +104,14 @@ describe('sectionSelectors', () => {
     expect(sectionSelectors.getSection(getState(), sectionId)).toEqual(sections[sectionId])
   )
 
+  test('getSectionByQuestion', () => {
+    session.Exercise.create({ id: 'test/child1#EX01', sectionId: 'test/child1' })
+    session.Question.create({ id: 'Q01', exerciseId: 'test/child1#EX01' })
+    expect(sectionSelectors.getSectionByQuestion(getState(), 'Q01')).toEqual(
+      sections['test/child1']
+    )
+  })
+
   describe('makeGetSectionLink', () => {
     it('calls makeMakeGetContentLink', () => {
       expect(makeMakeGetContentLink).toBeCalledTimes(1)
