@@ -54,10 +54,6 @@ describe.each(['server', 'client'])('i18n (%s)', (environment) => {
     expect(i18n.config.otherLanguages).toEqual(['de'])
   })
 
-  it('should have saveMissing set', () => {
-    expect(i18n.config.saveMissing).toBe(environment === 'server')
-  })
-
   it('should have correct locale path', () => {
     if (environment === 'server') {
       const localeFilepath = path.resolve(

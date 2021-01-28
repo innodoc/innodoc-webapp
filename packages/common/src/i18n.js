@@ -10,7 +10,6 @@ const nextI18NextConfig = {
       ? '/locales'
       : path.join('..', 'client-web', 'src', 'public', 'locales'),
   otherLanguages: [],
-  saveMissing: typeof window === 'undefined' && process.env.NODE_ENV !== 'production',
 }
 
 const { publicRuntimeConfig: prc } = getConfig()
