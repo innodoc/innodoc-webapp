@@ -23,6 +23,7 @@ describe('TOC', () => {
         '1.3 Languages',
         '1.4 Building',
         '2 Content elements',
+        '3 Example test',
       ].map((text) => page.waitForSelector(`aside >> "${text}"`))
     )
     await Promise.all(
@@ -31,14 +32,14 @@ describe('TOC', () => {
       )
     )
 
-    expect(await page.$$('aside .ant-tree-switcher')).toHaveLength(6)
+    expect(await page.$$('aside .ant-tree-switcher')).toHaveLength(7)
     expect(await page.$$('aside .ant-tree-switcher_open')).toHaveLength(1)
     expect(await page.$$('aside .ant-tree-switcher_close')).toHaveLength(2)
 
     await page.click('aside >> "1.2 Files"')
     await expect(page).toEqualText('h1', '1.2 Files')
 
-    expect(await page.$$('aside .ant-tree-switcher')).toHaveLength(8)
+    expect(await page.$$('aside .ant-tree-switcher')).toHaveLength(9)
     expect(await page.$$('aside .ant-tree-switcher_open')).toHaveLength(2)
     expect(await page.$$('aside .ant-tree-switcher_close')).toHaveLength(1)
 
@@ -52,10 +53,10 @@ describe('TOC', () => {
   it('should respond to section change', async () => {
     await helpers.goto('section/01-project/04-building')
     await page.click('[class*=content___] button[title="Show table of contents"]')
-    expect(await page.$$('aside .ant-tree-switcher')).toHaveLength(6)
+    expect(await page.$$('aside .ant-tree-switcher')).toHaveLength(7)
     await page.click('[class*=sectionAffix___] button[title="2 Content elements"]')
     await page.waitForSelector('h1 >> "2 Content elements"')
-    expect(await page.$$('aside .ant-tree-switcher')).toHaveLength(14)
+    expect(await page.$$('aside .ant-tree-switcher')).toHaveLength(15)
   })
 
   it('should be toggleable using content button', async () => {
