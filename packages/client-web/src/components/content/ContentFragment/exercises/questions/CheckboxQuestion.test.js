@@ -29,7 +29,11 @@ describe('<CheckboxQuestion />', () => {
       expect(cb.hasClass(css.checkbox)).toBe(true)
       expect(cb.hasClass('customClass')).toBe(true)
       expect(cb.prop('checked')).toBe(checked)
-      expect(cb.prop('indeterminate')).toBe(indeterminate)
+      if (indeterminate) {
+        expect(cb.prop('indeterminate')).toBeTruthy()
+      } else {
+        expect(cb.prop('indeterminate')).toBeFalsy()
+      }
       cb.prop('onChange')({ target: { checked: false } })
       cb.prop('onChange')({ target: { checked: true } })
       expect(onChange).toBeCalledTimes(2)

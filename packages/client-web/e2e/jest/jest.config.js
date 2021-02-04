@@ -10,7 +10,7 @@ module.exports = {
   rootDir,
   roots: [resolve(rootDir, 'e2e', 'tests')],
   setupFilesAfterEnv: [
-    'jest-playwright-preset/extends.js',
+    'jest-playwright-preset/lib/extends.js',
     resolve(e2eJestDir, 'setupAfterEnv.js'),
   ],
   testEnvironment: resolve(e2eJestDir, 'Environment.js'),

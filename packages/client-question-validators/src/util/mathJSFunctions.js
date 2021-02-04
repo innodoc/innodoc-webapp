@@ -8,7 +8,7 @@
  * */
 
 // TODO: Create custom MathJS build (incrementally removing items from 'all')
-import { create, all } from 'mathjs/number'
+import { create, all } from 'mathjs/lib/esm/number'
 
 const mathJS = create(all)
 
