@@ -15,7 +15,6 @@ describe('Media query', () => {
     await expect(drawer).toHaveText('Menu')
     await expect(drawer).toHaveText('About')
     await expect(drawer).toHaveText('Progress')
-    await expect(drawer).toHaveText('PDF')
     await expect(drawer).toHaveText('Language')
     await expect(drawer).toHaveText('Account')
     const closeBtn = await drawer.$('[aria-label="Close"]')

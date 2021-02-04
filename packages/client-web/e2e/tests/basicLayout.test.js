@@ -24,8 +24,6 @@ describe('Basic layout', () => {
     await header.waitForSelector('a[href="/page/about"]')
     await expect(header).toHaveText('Progress')
     await header.waitForSelector('a[href="/progress"]')
-    await expect(header).toHaveText('PDF')
-    await header.waitForSelector('a[title="Download PDF"]')
     await expect(header).toHaveText('Language')
     await expect(header).toHaveText('Account')
   })
