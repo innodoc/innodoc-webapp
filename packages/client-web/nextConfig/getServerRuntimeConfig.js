@@ -53,12 +53,14 @@ const getServerRuntimeConfig = (isRuntime) => {
 
   // Copy PDF version
   let pdfFilename
-  if (process.env.PDF_FILE && process.env.PDF_FILE !== '') {
+  try {
     const pdfFilepathSrc = getAbsPath(process.env.PDF_FILE)
     const pdfFileBasename = path.basename(process.env.PDF_FILE)
     const pdfFilepathDest = path.resolve(__dirname, '..', 'src', 'public', pdfFileBasename)
     fs.copyFileSync(pdfFilepathSrc, pdfFilepathDest)
     pdfFilename = pdfFileBasename
+  } catch (e) {
+    console.warn(`Warning: ${e}`)
   }
 
   return {
