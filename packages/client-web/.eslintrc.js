@@ -36,6 +36,12 @@ module.exports = {
         'react/prop-types': 'off',
       },
     },
+    {
+      files: ['nextConfig/**/*.js'],
+      rules: {
+        'no-console': 'off',
+      },
+    },
   ],
   settings: {
     react: {

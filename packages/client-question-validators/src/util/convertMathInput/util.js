@@ -1,10 +1,9 @@
 import { BRACKET_PAIRS, DIFFERENTIALS, TO_REPLACE, TO_REPLACE_BRACKETS } from './constants'
 
 // escape strings for use in regular expressions
-export const regexEscape = (input) => {
+export const regexEscape = (input) =>
   // return input.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
-  return input.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&')
-}
+  input.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&')
 
 // Construct character classes for opening and closing parentheses
 export const CHAR_CLASS_OPEN = Object.keys(BRACKET_PAIRS).reduce(
