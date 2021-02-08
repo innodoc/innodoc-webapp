@@ -25,7 +25,6 @@ module.exports = (config, { dev, isServer }) => {
     : [
         {
           loader: MiniCssExtractPlugin.loader,
-          options: { hmr: dev },
         },
         {
           loader: require.resolve('css-loader'),

@@ -27,10 +27,7 @@ module.exports = (config, { dev, isServer }) => {
   ]
 
   if (!isServer) {
-    loaders.unshift({
-      loader: MiniCssExtractPlugin.loader,
-      options: { hmr: dev },
-    })
+    loaders.unshift({ loader: MiniCssExtractPlugin.loader })
   }
 
   config.module.rules.push({
