@@ -34,6 +34,7 @@ describe('App', () => {
         setServerConfiguration(
           'https://app.example.com/',
           'https://content.example.com/',
+          'https://discourse.example.com/',
           false,
           'https://cdn.example.com/',
           'csrfToken123!',
@@ -46,6 +47,7 @@ describe('App', () => {
       const app = session.App.first().ref
       expect(app.appRoot).toEqual('https://app.example.com/')
       expect(app.contentRoot).toEqual('https://content.example.com/')
+      expect(app.discourseUrl).toEqual('https://discourse.example.com/')
       expect(app.ftSearchEnabled).toBe(false)
       expect(app.staticRoot).toEqual('https://cdn.example.com/')
       expect(app.csrfToken).toEqual('csrfToken123!')

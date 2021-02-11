@@ -10,6 +10,7 @@ const {
   serverRuntimeConfig: {
     appRoot,
     contentRoot,
+    discourseUrl,
     ftSearch,
     staticRoot,
     sectionPathPrefix,
@@ -26,6 +27,7 @@ const withServerVars = createHoc('withServerVars', async (ctx) => {
     setServerConfiguration(
       appRoot,
       contentRoot,
+      discourseUrl,
       ftSearch,
       staticRoot,
       ctx.req.csrfToken(),

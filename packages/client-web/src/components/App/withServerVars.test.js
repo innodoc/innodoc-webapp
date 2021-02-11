@@ -11,6 +11,7 @@ jest.mock('next/config', () => () => ({
   serverRuntimeConfig: {
     appRoot: 'https://app.example.com/',
     contentRoot: 'https://static.example.com/content/',
+    discourseUrl: 'https://discourse.example.com/',
     ftSearch: false,
     pagePathPrefix: 'page',
     pdfFilename: 'content.pdf',
@@ -45,6 +46,7 @@ describe('withServerVars', () => {
       setServerConfiguration(
         'https://app.example.com/',
         'https://static.example.com/content/',
+        'https://discourse.example.com/',
         false,
         'https://static.example.com/',
         '123Token!',

@@ -29,6 +29,11 @@ jest.mock('react-redux', () => ({
   },
 }))
 
+let mockQuery
+jest.mock('next/router', () => ({
+  useRouter: () => ({ query: mockQuery }),
+}))
+
 jest.mock('@innodoc/client-misc/src/api', () => ({
   loginUser: jest.fn(),
 }))
@@ -39,6 +44,7 @@ describe('<LoginForm />', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
+    mockQuery = {}
   })
 
   it('should render', () => {
@@ -110,5 +116,25 @@ describe('<LoginForm />', () => {
     const userForm = wrapper.find(UserForm)
     expect(userForm.prop('hide')).toBe(false)
     expect(wrapper.exists(Result)).toBe(false)
+  })
+
+  it('should redirect with redirect_to after login', async () => {
+    const replaceOld = window.location.reload
+    window.location.replace = jest.fn()
+    mockQuery = { redirect_to: 'https://somewhere.com/' }
+    expect.assertions(1)
+    loginUser.mockResolvedValue()
+    const wrapper = mount(<LoginForm />)
+    wrapper.find(UserForm).invoke('onFinish')(
+      {
+        email: 'alice@example.com',
+        password: 's3cr3t',
+      },
+      setDisabled,
+      setMessage
+    )
+    await waitForComponent(wrapper)
+    expect(window.location.replace).toBeCalledWith('https://somewhere.com/')
+    window.location.reload = replaceOld
   })
 })

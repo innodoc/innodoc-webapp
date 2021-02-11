@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { Menu } from 'antd'
-import { FilePdfOutlined, LineChartOutlined } from '@ant-design/icons'
+import { CommentOutlined, FilePdfOutlined, LineChartOutlined } from '@ant-design/icons'
 
 import pageSelectors from '@innodoc/client-store/src/selectors/page'
 
@@ -57,7 +57,11 @@ jest.mock('next/router', () => ({
 
 describe('<NavMenu />', () => {
   beforeEach(() => {
-    mockApp = { language: 'en', pdfFilename: 'content.pdf' }
+    mockApp = {
+      discourseUrl: 'https://discourse.example.com/',
+      language: 'en',
+      pdfFilename: 'content.pdf',
+    }
   })
 
   it('should render', () => {
@@ -66,7 +70,7 @@ describe('<NavMenu />', () => {
     const wrapper = shallow(<NavMenu menuMode="vertical" />)
     expect(wrapper.find(Menu).prop('mode')).toBe('vertical')
     const items = wrapper.children()
-    expect(items).toHaveLength(4)
+    expect(items).toHaveLength(5)
 
     const item1 = items.at(0)
     const Icon1 = () => item1.prop('icon')
@@ -96,10 +100,17 @@ describe('<NavMenu />', () => {
 
     const item4 = items.at(3)
     expect(item4.is(Menu.Item)).toBe(true)
-    const anchor = item4.find('a')
+    let anchor = item4.find('a')
     expect(anchor.prop('title')).toBe('header.downloadPDFTitle')
     expect(anchor.exists(FilePdfOutlined)).toBe(true)
     expect(anchor.text()).toContain('header.downloadPDF')
+
+    const item5 = items.at(4)
+    expect(item5.is(Menu.Item)).toBe(true)
+    anchor = item5.find('a')
+    expect(anchor.prop('title')).toBe('header.forumTitle')
+    expect(anchor.exists(CommentOutlined)).toBe(true)
+    expect(anchor.text()).toContain('header.forum')
   })
 
   it('should render progress item as active', () => {
@@ -108,9 +119,15 @@ describe('<NavMenu />', () => {
     expect(wrapper.children().at(2).prop('itemActive')).toBe(true)
   })
 
-  it('should not render PDF link only if PDF is not available', () => {
+  it('should not render PDF link if PDF is not available', () => {
     mockApp = { ...mockApp, pdfFilename: undefined }
     const wrapper = shallow(<NavMenu menuMode="vertical" />)
-    expect(wrapper.children()).toHaveLength(3)
+    expect(wrapper.children()).toHaveLength(4)
+  })
+
+  it('should not render forum link if URL not available', () => {
+    mockApp = { ...mockApp, discourseUrl: undefined }
+    const wrapper = shallow(<NavMenu menuMode="vertical" />)
+    expect(wrapper.children()).toHaveLength(4)
   })
 })

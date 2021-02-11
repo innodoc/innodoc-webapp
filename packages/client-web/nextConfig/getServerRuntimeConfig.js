@@ -63,9 +63,21 @@ const getServerRuntimeConfig = (isRuntime) => {
     console.warn(`Warning: ${e}`)
   }
 
+  // Discourse integration
+  let discourseSsoSecret
+  let discourseUrl
+  try {
+    discourseSsoSecret = process.env.DISCOURSE_SSO_SECRET
+    discourseUrl = ensureTrailingSlash(process.env.DISCOURSE_URL)
+  } catch (e) {
+    console.warn(`Warning: Discourse integration disabled`)
+  }
+
   return {
     appRoot,
     contentRoot,
+    discourseSsoSecret,
+    discourseUrl,
     ftSearch: process.env.FT_SEARCH === 'true',
     pdfFilename,
     jwtSecret: process.env.JWT_SECRET,

@@ -20,6 +20,7 @@ export default class App extends Model {
         as: 'currentCourse',
       }),
       csrfToken: attr(),
+      discourseUrl: attr(),
       ftSearchEnabled: attr({ getDefault: () => false }),
       language: attr(),
       loggedInEmail: attr(),

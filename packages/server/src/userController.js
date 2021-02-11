@@ -1,3 +1,6 @@
+import crypto from 'crypto'
+import querystring from 'querystring'
+
 import { Router } from 'express'
 import passport from 'passport'
 import i18nextHttpMiddleware from 'i18next-http-middleware'
@@ -7,7 +10,7 @@ import User from './models/User'
 import UserProgress from './models/UserProgress'
 import { resetPasswordMail, verificationMail } from './mails'
 
-const userController = async ({ appRoot, jwtSecret }) => {
+const userController = async ({ appRoot, discourseSsoSecret, discourseUrl, jwtSecret }) => {
   const router = Router()
   const logger = getLogger('user')
   const secureCookie = new URL(appRoot).protocol === 'https'
@@ -255,6 +258,54 @@ const userController = async ({ appRoot, jwtSecret }) => {
       next(err)
     }
   })
+
+  // Discourse SSO implementation
+  // https://meta.discourse.org/t/discourseconnect-official-single-sign-on-for-discourse-sso/13045
+  if (discourseUrl && discourseSsoSecret) {
+    router.get('/discourse-sso', (req, res, next) => {
+      passport.authenticate('jwt', (err, user) => {
+        if (err) {
+          next(err)
+        } else if (!user) {
+          // If not logged in, redirect to /login with redirect_to query param
+          const redirectAfterLogin = new URL(discourseUrl)
+          redirectAfterLogin.pathname = '/session/sso'
+          const qs = querystring.stringify({ redirect_to: redirectAfterLogin.toString() })
+          res.redirect(`/login?${qs}`)
+        } else
+          try {
+            // Verify SSO payload
+            const { sso, sig } = req.query
+            const digest = crypto.createHmac('sha256', discourseSsoSecret).update(sso).digest('hex')
+            if (digest !== sig) {
+              throw new Error('Could not verify signature!')
+            }
+            const payload = Buffer.from(sso, 'base64').toString()
+            const { nonce, return_sso_url: returnSsoUrl } = querystring.parse(payload)
+
+            // Create return payload
+            const payloadQuerystring = querystring.stringify({
+              email: user.email,
+              external_id: user.id,
+              nonce,
+            })
+            const returnPayload = Buffer.from(payloadQuerystring).toString('base64')
+            const returnSig = crypto
+              .createHmac('sha256', discourseSsoSecret)
+              .update(returnPayload)
+              .digest('hex')
+
+            // Redirect to Discourse SSO endpoint
+            const url = new URL(returnSsoUrl)
+            url.searchParams.set('sso', returnPayload)
+            url.searchParams.set('sig', returnSig)
+            res.redirect(url.toString())
+          } catch {
+            res.status(403).end()
+          }
+      })(req, res, next)
+    })
+  }
 
   return router
 }

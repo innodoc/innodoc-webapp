@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
 import { Button, Result } from 'antd'
 import { HomeOutlined, LoginOutlined } from '@ant-design/icons'
 
@@ -29,6 +30,7 @@ const ErrorDescription = () => (
 )
 
 const LoginForm = () => {
+  const router = useRouter()
   const { appRoot, csrfToken, loggedInEmail } = useSelector(appSelectors.getApp)
   const course = useSelector(courseSelectors.getCurrentCourse)
   const dispatch = useDispatch()
@@ -37,7 +39,13 @@ const LoginForm = () => {
   const onFinish = useCallback(
     ({ email, password }, setDisabled, setMessage) =>
       loginUser(appRoot, csrfToken, email, password)
-        .then(() => dispatch(userLoggedIn(email)))
+        .then(() => {
+          dispatch(userLoggedIn(email))
+          // Honor redirect_to after login
+          if (router.query.redirect_to) {
+            window.location.replace(router.query.redirect_to)
+          }
+        })
         .catch(() => {
           setMessage({
             level: 'error',
@@ -46,7 +54,7 @@ const LoginForm = () => {
           })
           setDisabled(false)
         }),
-    [appRoot, csrfToken, dispatch, t]
+    [appRoot, csrfToken, dispatch, router, t]
   )
 
   const result = loggedInEmail ? (

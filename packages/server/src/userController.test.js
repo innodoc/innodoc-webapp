@@ -1,3 +1,6 @@
+import crypto from 'crypto'
+import querystring from 'querystring'
+
 import request from 'supertest'
 
 import createExpressApp from './createExpressApp'
@@ -34,6 +37,8 @@ const config = {
   manifest: { home_link: '/page/foo' },
   mongoUrl: process.env.MONGO_URL,
   nodeEnv: 'testing',
+  discourseUrl: 'https://discourse.example.com/',
+  discourseSsoSecret: 's3cr3t!123',
   smtp: {
     host: 'smtp.ethereal.email',
     port: 587,
@@ -618,6 +623,63 @@ describe('userController', () => {
           const updatedUser = await User.findOne({ email: user.email })
           expFunc(updatedUser, opts)
         }
+      })
+    })
+  })
+
+  describe('GET /user/discourse-sso', () => {
+    const createDiscoursePayload = (secret = config.discourseSsoSecret) => {
+      const payloadQs = querystring.stringify({
+        return_sso_url: 'https://discourse.example.com/session/sso_login',
+        nonce: 'foononce',
+      })
+      const sso = Buffer.from(payloadQs).toString('base64')
+      const sig = crypto.createHmac('sha256', secret).update(sso).digest('hex')
+      return querystring.stringify({ sso, sig }).toString()
+    }
+
+    test('302 to discourse with valid payload', async () => {
+      const email = await addTestUser()
+      const user = await User.findOne({ email })
+      return testGet({
+        url: `/user/discourse-sso?${createDiscoursePayload()}`,
+        accessTokenCookie: await createAccessTokenCookie({ user }),
+        status: 302,
+      }).then((res) => {
+        const url = new URL(res.headers.location)
+        expect(url.origin).toBe('https://discourse.example.com')
+        expect(url.pathname).toBe('/session/sso_login')
+        const returnSso = url.searchParams.get('sso')
+        const digest = crypto
+          .createHmac('sha256', config.discourseSsoSecret)
+          .update(returnSso)
+          .digest('hex')
+        expect(url.searchParams.get('sig')).toBe(digest)
+        const payload = querystring.parse(Buffer.from(returnSso, 'base64').toString())
+        expect(payload.email).toBe(email)
+        expect(payload.external_id).toBe(user.id)
+        expect(payload.nonce).toBe('foononce')
+      })
+    })
+
+    test('302 to /login with redirect_to w/o access token', async () =>
+      testGet({
+        url: `/user/discourse-sso?${createDiscoursePayload()}`,
+        status: 302,
+      }).then((res) => {
+        const { location } = res.headers
+        expect(location).toMatch('/login?')
+        const params = querystring.parse(location.replace('/login?', ''))
+        expect(params.redirect_to).toBe('https://discourse.example.com/session/sso')
+      }))
+
+    test('403 with bad payload', async () => {
+      const email = await addTestUser()
+      const user = await User.findOne({ email })
+      return testGet({
+        url: `/user/discourse-sso?${createDiscoursePayload('badS3cr3t!')}`,
+        accessTokenCookie: await createAccessTokenCookie({ user }),
+        status: 403,
       })
     })
   })
