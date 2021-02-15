@@ -67,8 +67,9 @@ const getServerRuntimeConfig = (isRuntime) => {
   let discourseSsoSecret
   let discourseUrl
   try {
+    discourseUrl = new URL(process.env.DISCOURSE_URL)
+    discourseUrl = discourseUrl.toString()
     discourseSsoSecret = process.env.DISCOURSE_SSO_SECRET
-    discourseUrl = ensureTrailingSlash(process.env.DISCOURSE_URL)
   } catch (e) {
     console.warn(`Warning: Discourse integration disabled`)
   }
