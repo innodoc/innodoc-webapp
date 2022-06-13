@@ -15,22 +15,22 @@
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "next": "^9.5.3",
-    "next-i18next": "^6.0.2",
-    "password-validator": "^5.1.1",
+    "next": "^9.5.5",
+    "next-i18next": "^6.0.3",
+    "password-validator": "^5.3.0",
     "react": "16.14.0",
     "react-dom": "16.14.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.13",
-    "@babel/eslint-parser": "^7.12.13",
-    "eslint": "^7.19.0",
+    "@babel/core": "^7.18.5",
+    "@babel/eslint-parser": "^7.18.2",
+    "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^7.2.0",
-    "eslint-import-resolver-node": "^0.3.4",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.1.3",
-    "eslint-plugin-prettier": "^3.3.1",
-    "prettier": "^2.2.1"
+    "eslint-import-resolver-node": "^0.3.6",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^24.7.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "prettier": "^2.6.2"
   }
 }
