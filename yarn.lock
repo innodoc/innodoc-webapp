@@ -2575,6 +2575,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.18.3":
+  version: 7.18.3
+  resolution: "@babel/runtime@npm:7.18.3"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: db8526226aa02cfa35a5a7ac1a34b5f303c62a1f000c7db48cb06c6290e616483e5036ab3c4e7a84d0f3be6d4e2148d5fe5cec9564bf955f505c3e764b83d7f1
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.10.4, @babel/template@npm:^7.3.3, @babel/template@npm:^7.4.0, @babel/template@npm:^7.7.4":
   version: 7.10.4
   resolution: "@babel/template@npm:7.10.4"
@@ -2806,7 +2815,7 @@ __metadata:
     eslint-plugin-import: ^2.22.1
     eslint-plugin-jest: ^24.1.3
     eslint-plugin-prettier: ^3.3.1
-    mathjs: ^9.2.0
+    mathjs: ^10.6.1
     prettier: ^2.2.1
   languageName: unknown
   linkType: soft
@@ -6632,10 +6641,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"complex.js@npm:^2.0.11":
-  version: 2.0.11
-  resolution: "complex.js@npm:2.0.11"
-  checksum: 3c25d629b217bc30450a4f7d9e877550aadc21ac0cd7a8bee715675f71ec2f5d63b15edbfd1d49fab6239487a491ca032d7d5a0969d99a132c80458bc71b6acd
+"complex.js@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "complex.js@npm:2.1.1"
+  checksum: a0802cc3f0eb7703088edfc3fe209ae7be5ce93c0e710a0f288be2e29ee31b3530a8c0d3330d7c2a668410dfe4293a4038554d66c7f1f1165997941bdc1092aa
   languageName: node
   linkType: hard
 
@@ -7604,10 +7613,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"decimal.js@npm:^10.2.1":
-  version: 10.2.1
-  resolution: "decimal.js@npm:10.2.1"
-  checksum: d2421adf209422d520c8f1a4d1fceffc2ccd0c041aa179f8d18a315ebda6a7be918f2634ac850df299dccccae6a3567c5761301a1c3693461fdef3d1de23b000
+"decimal.js@npm:^10.3.1":
+  version: 10.3.1
+  resolution: "decimal.js@npm:10.3.1"
+  checksum: 0351ac9f05fe050f23227aa6a4573bee2d58fa7378fcf28d969a8c789525032effb488a90320fd3fe86a66e17b4bc507d811b15eada5b7f0e7ec5d2af4c24a59
   languageName: node
   linkType: hard
 
@@ -9636,10 +9645,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fraction.js@npm:^4.0.13":
-  version: 4.0.13
-  resolution: "fraction.js@npm:4.0.13"
-  checksum: 755f588c7ba8cedef6178369b940b39baac8549f463cad3f490c7e120d801fa55dd72956dfcae781b91992f551adbc7dfa1db8d042593794222ae9af22e008f0
+"fraction.js@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "fraction.js@npm:4.2.0"
+  checksum: 8c76a6e21dedea87109d6171a0ac77afa14205794a565d71cb10d2925f629a3922da61bf45ea52dbc30bce4d8636dc0a27213a88cbd600eab047d82f9a3a94c5
   languageName: node
   linkType: hard
 
@@ -13369,21 +13378,22 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"mathjs@npm:^9.2.0":
-  version: 9.2.0
-  resolution: "mathjs@npm:9.2.0"
+"mathjs@npm:^10.6.1":
+  version: 10.6.1
+  resolution: "mathjs@npm:10.6.1"
   dependencies:
-    complex.js: ^2.0.11
-    decimal.js: ^10.2.1
+    "@babel/runtime": ^7.18.3
+    complex.js: ^2.1.1
+    decimal.js: ^10.3.1
     escape-latex: ^1.2.0
-    fraction.js: ^4.0.13
+    fraction.js: ^4.2.0
     javascript-natural-sort: ^0.7.1
     seedrandom: ^3.0.5
     tiny-emitter: ^2.1.0
-    typed-function: ^2.0.0
+    typed-function: ^2.1.0
   bin:
     mathjs: bin/cli.js
-  checksum: 55b0463ff39938556497195b065fdb9890f1ae9cdb8d6cac37f2e4e59e0920d00e32b83ef3f1fc21a10d7237e0046297433588c1933648ff3aa6727d23817afd
+  checksum: 049d7e4e93f9e19c57321e7d5e8c3b695d3915b23c3aa2e77f29a099a1561bdf2d18c2229947b75b23c7b8395333bb89936ef051066204cd9af07be2e6db758f
   languageName: node
   linkType: hard
 
@@ -20555,10 +20565,10 @@ resolve@^1.18.1:
   languageName: node
   linkType: hard
 
-"typed-function@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "typed-function@npm:2.0.0"
-  checksum: 8abb39dff088706f454cd3fa3e884ed98b61f28fcae6ea8b0f3b83225ca130d0ee5ab20acc91f820b41773532f0fd4308e25b5b346c9ab6a626bd8b4e83c59dc
+"typed-function@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "typed-function@npm:2.1.0"
+  checksum: 168c2c8f765fbecc842521a5fb62a5800958f9fcb0ce78d69c38a5e96c81fe133f853256ec8ee245ee2fc42b4c9342b5ba754c732189550c64c12e758892dc43
   languageName: node
   linkType: hard
 

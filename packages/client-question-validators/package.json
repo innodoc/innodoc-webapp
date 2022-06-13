@@ -17,7 +17,7 @@
   "main": "src/index.js",
   "dependencies": {
     "@innodoc/client-misc": "workspace:packages/client-misc",
-    "mathjs": "^9.2.0"
+    "mathjs": "^10.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",
