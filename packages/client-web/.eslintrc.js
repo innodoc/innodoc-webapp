@@ -4,7 +4,7 @@ const baseConfig = require('../../.eslintrc')
 
 module.exports = {
   ...baseConfig,
-  extends: ['airbnb', 'prettier', 'prettier/react'],
+  extends: ['airbnb', 'plugin:prettier/recommended'],
   plugins: [...baseConfig.plugins, 'react-hooks'],
   rules: {
     ...baseConfig.rules,

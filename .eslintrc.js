@@ -5,7 +5,7 @@ module.exports = {
     node: true,
     'jest/globals': true,
   },
-  extends: ['airbnb-base', 'prettier'],
+  extends: ['airbnb-base', 'plugin:prettier/recommended'],
   parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 7,
