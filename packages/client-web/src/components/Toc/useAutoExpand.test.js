@@ -5,10 +5,12 @@ import useAutoExpand from './useAutoExpand'
 
 describe('useAutoExpand', () => {
   const setExpandedKeys = jest.fn()
-  const makeComp = (expandAll) => ({ currentSectionId, expandedKeys = new Set() }) => {
-    useAutoExpand(currentSectionId, expandAll, expandedKeys, setExpandedKeys)
-    return null
-  }
+  const makeComp =
+    (expandAll) =>
+    ({ currentSectionId, expandedKeys = new Set() }) => {
+      useAutoExpand(currentSectionId, expandAll, expandedKeys, setExpandedKeys)
+      return null
+    }
 
   beforeEach(() => {
     setExpandedKeys.mockClear()

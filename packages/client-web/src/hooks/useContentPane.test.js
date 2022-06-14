@@ -49,15 +49,14 @@ const ContentComponent = () => {
   )
 }
 
-const makeMockProvider = (
-  typesetDone = true,
-  addCallback = () => {},
-  removeCallback = () => {}
-) => ({ children }) => (
-  <MathJax.Context.Provider value={{ addCallback, removeCallback, typesetDone }}>
-    {children}
-  </MathJax.Context.Provider>
-)
+const makeMockProvider =
+  (typesetDone = true, addCallback = () => {}, removeCallback = () => {}) =>
+  ({ children }) =>
+    (
+      <MathJax.Context.Provider value={{ addCallback, removeCallback, typesetDone }}>
+        {children}
+      </MathJax.Context.Provider>
+    )
 
 describe('useContentPane', () => {
   beforeEach(() => {

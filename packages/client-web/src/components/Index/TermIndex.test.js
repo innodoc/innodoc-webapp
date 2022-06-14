@@ -58,15 +58,17 @@ jest.mock('react-redux', () => ({
   },
 }))
 
-const makeMockProvider = (typesetDone) => ({ children }) => {
-  const value = {
-    promiseMakers: { current: [] },
-    setTypesetDone: () => {},
-    triggerProcessing: () => {},
-    typesetDone,
+const makeMockProvider =
+  (typesetDone) =>
+  ({ children }) => {
+    const value = {
+      promiseMakers: { current: [] },
+      setTypesetDone: () => {},
+      triggerProcessing: () => {},
+      typesetDone,
+    }
+    return <MathJax.Context.Provider value={value}>{children}</MathJax.Context.Provider>
   }
-  return <MathJax.Context.Provider value={value}>{children}</MathJax.Context.Provider>
-}
 
 describe('<TermIndex />', () => {
   describe.each([true, false])('render (typesetDone=%s)', (typesetDone) => {

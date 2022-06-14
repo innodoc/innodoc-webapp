@@ -14,8 +14,7 @@ describe('verificationMail', () => {
     expect(verificationMail(t, appRoot, 'alice@example.com', '123abcdef')).toEqual({
       to: 'alice@example.com',
       subject: 'emails.emailVerification.subject',
-      text:
-        'emails.emailVerification.text_verificationLink=https://app.example.com/verify-user/123abcdef',
+      text: 'emails.emailVerification.text_verificationLink=https://app.example.com/verify-user/123abcdef',
     })
   })
 })
@@ -25,8 +24,7 @@ describe('resetPasswordMail', () => {
     expect(resetPasswordMail(t, appRoot, 'alice@example.com', '123abcdef')).toEqual({
       to: 'alice@example.com',
       subject: 'emails.passwordReset.subject',
-      text:
-        'emails.passwordReset.text_passwordResetLink=https://app.example.com/reset-password/123abcdef',
+      text: 'emails.passwordReset.text_passwordResetLink=https://app.example.com/reset-password/123abcdef',
     })
   })
 })

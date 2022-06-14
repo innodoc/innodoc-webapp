@@ -33,10 +33,14 @@ describe('<LanguageSwitcher />', () => {
     await waitForComponent(wrapper)
     expect(wrapper.exists(Menu)).toBe(true)
 
-    const menuItemDe = wrapper.findWhere((node) => node.type() === Menu.Item && node.text() === 'languages.de')
+    const menuItemDe = wrapper.findWhere(
+      (node) => node.type() === Menu.Item && node.text() === 'languages.de'
+    )
     expect(menuItemDe).toHaveLength(1)
     expect(menuItemDe.at(0).hasClass(css.active)).toBe(false)
-    const menuItemEn = wrapper.findWhere((node) => node.type() === Menu.Item && node.text() === 'languages.en')
+    const menuItemEn = wrapper.findWhere(
+      (node) => node.type() === Menu.Item && node.text() === 'languages.en'
+    )
     expect(menuItemEn).toHaveLength(1)
     expect(menuItemEn.at(0).hasClass(css.active)).toBe(true)
   })
