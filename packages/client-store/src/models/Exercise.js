@@ -20,7 +20,7 @@ export default class Exercise extends Model {
   static reducer(action, ExerciseModel) {
     switch (action.type) {
       case contentActionTypes.LOAD_MANIFEST_SUCCESS: {
-        const { boxes } = action.data.content
+        const { boxes } = action.data
         if (boxes) {
           Object.keys(boxes).forEach((sectionId) => {
             const sectionBoxes = boxes[sectionId]

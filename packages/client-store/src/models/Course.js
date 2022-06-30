@@ -24,14 +24,14 @@ export default class Course extends Model {
   static reducer(action, CourseModel) {
     switch (action.type) {
       case contentActionTypes.LOAD_MANIFEST_SUCCESS: {
-        const { content } = action.data
+        const { data } = action
         CourseModel.create({
-          homeLink: content.home_link || `/section/${content.toc[0].id}`,
-          languages: content.languages,
-          logo: content.logo || undefined,
-          mathJaxOptions: content.mathjax || {},
-          minScore: content.min_score,
-          title: content.title,
+          homeLink: data.home_link || `/section/${data.toc[0].id}`,
+          languages: data.languages,
+          logo: data.logo || undefined,
+          mathJaxOptions: data.mathjax || {},
+          minScore: data.min_score,
+          title: data.title,
         })
         break
       }

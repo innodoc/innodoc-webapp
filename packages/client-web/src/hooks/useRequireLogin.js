@@ -5,7 +5,7 @@ import { Modal } from 'antd'
 import { LoginOutlined } from '@ant-design/icons'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 
 const useRequireLogin = (requireLogin = true) => {
   const { t } = useTranslation()

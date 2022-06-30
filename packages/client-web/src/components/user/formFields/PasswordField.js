@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Form, Input } from 'antd'
 import { LockOutlined } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,

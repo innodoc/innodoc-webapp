@@ -8,13 +8,13 @@ export const jwtFromRequest = (req) => (req && req.cookies ? req.cookies.accessT
 // User lookup already done in lookupUserMiddleware
 export const verify = (req, jwtPayload, done) => done(null, req.user ? req.user : false)
 
-const passportMiddleware = ({ appRoot, jwtSecret }) => {
+const passportMiddleware = () => {
   const jwtStrategy = new JwtStrategy(
     {
-      issuer: appRoot,
+      issuer: process.env.APP_ROOT,
       jwtFromRequest,
       passReqToCallback: true,
-      secretOrKey: jwtSecret,
+      secretOrKey: process.env.JWT_SECRET,
     },
     verify
   )

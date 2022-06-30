@@ -1,3 +1,5 @@
+// TODO: not needed anymore
+
 const path = require('path')
 const getConfig = require('next/config').default
 const NextI18Next = require('next-i18next').default

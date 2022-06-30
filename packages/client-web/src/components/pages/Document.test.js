@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Document, { Html, Main, NextScript } from 'next/document'
 
-import InnodocDocument from './Document'
+import InnodocDocument from './_document'
 
 jest.mock('next-i18next/dist/commonjs/utils', () => ({
   lngFromReq: () => 'pt',

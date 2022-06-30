@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { MailOutlined } from '@ant-design/icons'
 
 import { requestVerification } from '@innodoc/client-misc/src/api'
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import { EmailField } from './formFields'

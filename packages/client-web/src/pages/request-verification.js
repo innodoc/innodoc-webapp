@@ -1,1 +1,3 @@
-export default from '../components/pages/RequestVerificationPage'
+import RequestVerificationPage from '../components/pages/RequestVerificationPage'
+
+export default RequestVerificationPage

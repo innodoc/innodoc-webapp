@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { UserAddOutlined } from '@ant-design/icons'
 
 import { checkEmail, registerUser } from '@innodoc/client-misc/src/api'
-import { useTranslation, Trans } from '@innodoc/common/src/i18n'
+import { Trans, useTranslation } from 'next-i18next'
 import { showMessage } from '@innodoc/client-store/src/actions/ui'
 import appSelectors from '@innodoc/client-store/src/selectors'
 

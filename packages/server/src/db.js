@@ -1,13 +1,13 @@
 import mongoose from 'mongoose'
 
-const connectDb = async ({ mongoUrl, nodeEnv }) => {
-  await mongoose.connect(mongoUrl, {
+const connectDb = async () => {
+  await mongoose.connect(process.env.MONGO_URL, {
     useCreateIndex: true,
     useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  mongoose.set('debug', nodeEnv === 'development')
+  mongoose.set('debug', process.env.NODE_ENV !== 'production')
 }
 
 const disconnectDb = () => {

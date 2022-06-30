@@ -1,1 +1,3 @@
-export default from '../../components/pages/ResetPasswordPage'
+import ResetPasswordPage from '../../components/pages/ResetPasswordPage'
+
+export default ResetPasswordPage

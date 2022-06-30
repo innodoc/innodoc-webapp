@@ -1,7 +1,7 @@
 import React from 'react'
 import { Col, Row, Typography } from 'antd'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 
 import useRequireLogin from '../../hooks/useRequireLogin'
 import Layout from '../Layout'

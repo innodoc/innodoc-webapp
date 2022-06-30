@@ -12,7 +12,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import LinkMenuItem from '../LinkMenuItem'

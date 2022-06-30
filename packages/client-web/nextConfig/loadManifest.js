@@ -1,3 +1,5 @@
+// TODO: remove, should happen in saga
+
 /* eslint-disable no-console */
 const fetch = require('node-fetch')
 

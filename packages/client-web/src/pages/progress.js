@@ -1,1 +1,3 @@
-export default from '../components/pages/ProgressPage'
+import ProgressPage from '../components/pages/ProgressPage'
+
+export default ProgressPage

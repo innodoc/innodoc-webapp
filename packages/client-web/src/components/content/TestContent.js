@@ -6,7 +6,7 @@ import { EditOutlined, FileDoneOutlined, ReloadOutlined, SendOutlined } from '@a
 
 import { resetTest, submitTest } from '@innodoc/client-store/src/actions/user'
 import progressSelectors from '@innodoc/client-store/src/selectors/progress'
-import { Trans, useTranslation } from '@innodoc/common/src/i18n'
+import { Trans, useTranslation } from 'next-i18next'
 
 import useIsMounted from '../../hooks/useIsMounted'
 import css from './style.sss'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Input } from 'antd'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 
 const SearchInput = () => {
   const { t } = useTranslation()

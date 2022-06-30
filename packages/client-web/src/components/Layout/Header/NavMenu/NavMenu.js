@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { Menu } from 'antd'
 import { CommentOutlined, FilePdfOutlined, LineChartOutlined } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import pageSelectors from '@innodoc/client-store/src/selectors/page'
 

@@ -3,7 +3,7 @@ import { Button } from 'antd'
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
 import MathJax from '@innodoc/react-mathjax-node'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 
 import ExerciseCard from './ExerciseCard'

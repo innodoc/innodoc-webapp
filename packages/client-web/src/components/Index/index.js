@@ -1,1 +1,3 @@
-export default from './TermIndex'
+import TermIndex from './TermIndex'
+
+export default TermIndex

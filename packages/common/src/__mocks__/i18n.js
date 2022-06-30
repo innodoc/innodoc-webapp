@@ -13,5 +13,5 @@ const appWithTranslation = (Comp) => Comp
 const useTranslation = () => ({ t: mockT })
 const Trans = ({ children }) => children
 
-export { appWithTranslation, i18n, useTranslation, Trans }
+export { appWithTranslation, i18n, Trans, useTranslation }
 export default i18n

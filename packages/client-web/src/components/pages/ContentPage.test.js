@@ -13,6 +13,7 @@ jest.mock('react-redux', () => ({ useSelector: () => mockApp }))
 jest.mock('@innodoc/client-store/src/selectors', () => ({ getApp: () => mockApp }))
 
 let mockServerContext
+// TODO: update import
 jest.mock('next-server-context', () => ({ useServerContext: () => mockServerContext }))
 
 jest.mock('../content', () => ({ PageContent: () => {}, SectionContent: () => {} }))

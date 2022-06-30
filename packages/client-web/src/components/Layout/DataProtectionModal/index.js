@@ -1,1 +1,3 @@
-export default from './DataProtectionModal'
+import DataProtectionModal from './DataProtectionModal'
+
+export default DataProtectionModal

@@ -1,6 +1,6 @@
 .DS_Store
 coverage
-.env
+.env*.local
 *~
 # shelfio/jest-mongodb temp config
 /globalConfig.json

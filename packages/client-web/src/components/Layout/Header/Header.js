@@ -5,7 +5,7 @@ import { Button, Drawer, Grid, Layout, Menu } from 'antd'
 import { MenuOutlined } from '@ant-design/icons'
 
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 
 import SecondMenu from './SecondMenu'
 import NavMenu from './NavMenu'

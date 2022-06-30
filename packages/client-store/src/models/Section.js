@@ -32,19 +32,17 @@ export default class Section extends Model {
     SectionModel.upsert({
       id: currentPath.join('/'),
       ord,
-      shortTitle: node.short_title,
+      shortTitle: node.short_title || null,
       title: node.title,
       type: node.type || 'regular',
-      parentId: path.length ? path.join('/') : undefined,
+      parentId: path.length ? path.join('/') : null,
     })
   }
 
   static reducer(action, SectionModel) {
     switch (action.type) {
       case contentActionTypes.LOAD_MANIFEST_SUCCESS:
-        action.data.content.toc.forEach((node, idx) =>
-          Section.parseTOC([], [idx], node, SectionModel)
-        )
+        action.data.toc.forEach((node, idx) => Section.parseTOC([], [idx], node, SectionModel))
         break
 
       case contentActionTypes.LOAD_SECTION_SUCCESS:

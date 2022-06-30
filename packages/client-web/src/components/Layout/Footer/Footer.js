@@ -10,7 +10,7 @@ import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import fragmentSelectors from '@innodoc/client-store/src/selectors/fragment'
 import pageSelectors from '@innodoc/client-store/src/selectors/page'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 
 import FooterLink from './Link'
 import { PageLink } from '../../content/links'

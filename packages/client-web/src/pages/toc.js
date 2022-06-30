@@ -1,1 +1,3 @@
-export default from '../components/pages/TocPage'
+import TocPage from '../components/pages/TocPage'
+
+export default TocPage

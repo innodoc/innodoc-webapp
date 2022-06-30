@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Breadcrumb as AntBreadcrumb } from 'antd'
 import { HomeOutlined } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 

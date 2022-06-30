@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Button, Input, Modal, Result } from 'antd'
 
 import { messageType } from '@innodoc/client-misc/src/propTypes'
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 
 const MessageModal = ({ message: { closable, level, text, type }, onClose }) => {
   const { t } = useTranslation()

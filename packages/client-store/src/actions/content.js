@@ -70,8 +70,9 @@ export const loadManifestSuccess = (data) => ({
   data,
 })
 
-export const loadManifest = () => ({
+export const loadManifest = (contentRoot) => ({
   type: actionTypes.LOAD_MANIFEST,
+  contentRoot,
 })
 
 export const loadSectionFailure = (error) => ({

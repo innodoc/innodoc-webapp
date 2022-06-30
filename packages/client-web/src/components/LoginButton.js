@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { Button } from 'antd'
 import { LoginOutlined } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 
 const LoginButton = () => {
   const router = useRouter()

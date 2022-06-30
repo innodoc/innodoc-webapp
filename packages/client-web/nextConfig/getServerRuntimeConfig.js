@@ -1,3 +1,5 @@
+// TODO: remove (replace all this with env vars)
+
 const fs = require('fs')
 const { execSync } = require('child_process')
 const path = require('path')

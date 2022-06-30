@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Tag } from 'antd'
 import { AuditOutlined, FormOutlined } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 
 const SectionTypeTag = ({ className, type }) => {
   const { t } = useTranslation()

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { InfoCircleOutlined } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 import { attributeType, contentType } from '@innodoc/client-misc/src/propTypes'
 import { getNumberedTitle } from '@innodoc/client-misc/src/util'
 

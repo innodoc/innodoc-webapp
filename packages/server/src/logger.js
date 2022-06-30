@@ -2,12 +2,13 @@ import log4js from 'log4js'
 
 const consoleAppender = { type: 'stdout', layout: { type: 'basic' } }
 
-const configureLogger = ({ logFile, nodeEnv }) => {
+const configureLogger = () => {
+  const logFile = process.env.LOG_FILE
   const appenders = {}
   const categories = {}
   let level
 
-  if (nodeEnv === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     level = 'info'
     if (!logFile) {
       appenders.console = consoleAppender

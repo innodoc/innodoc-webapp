@@ -1,1 +1,3 @@
-export default from './ContentAffix'
+import ContentAffix from './ContentAffix'
+
+export default ContentAffix

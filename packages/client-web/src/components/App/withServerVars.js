@@ -19,9 +19,7 @@ const {
   },
 } = getConfig()
 
-const withServerVars = createHoc('withServerVars', async (ctx) => {
-  const { dispatch } = ctx.store
-
+const withServerVars = createHoc('withServerVars', async ({ req }, { dispatch }) => {
   // Pass initial configuration from express app
   dispatch(
     setServerConfiguration(
@@ -30,21 +28,19 @@ const withServerVars = createHoc('withServerVars', async (ctx) => {
       discourseUrl,
       ftSearch,
       staticRoot,
-      ctx.req.csrfToken(),
+      req.csrfToken(),
       sectionPathPrefix,
       pagePathPrefix,
       pdfFilename
     )
   )
-
   // Pass detected language to store
-  if (ctx.req.i18n) {
-    dispatch(languageDetected(ctx.req.i18n.language))
+  if (req.i18n) {
+    dispatch(languageDetected(req.i18n.language))
   }
-
   // Express/passport sets req.user on successful auth
-  if (ctx.req.user) {
-    dispatch(userLoggedIn(ctx.req.user.email))
+  if (req.user) {
+    dispatch(userLoggedIn(req.user.email))
   }
 })
 

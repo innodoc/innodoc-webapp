@@ -34,12 +34,14 @@ const getCurrentSection = createSelector(
 const getCurrentSubsections = createSelector(
   orm,
   courseSelectors.getCurrentCourse,
-  (session, course) =>
-    course.currentSectionId
-      ? session.Section.all()
-          .filter((section) => section.parentId === course.currentSectionId)
-          .toRefArray()
-      : []
+  (session, course) => {
+    if (course === undefined || course.currentSectionId === undefined) {
+      return []
+    }
+    return session.Section.all()
+      .filter((section) => section.parentId === course.currentSectionId)
+      .toRefArray()
+  }
 )
 
 // Return current section title
@@ -48,6 +50,9 @@ const getCurrentTitle = createSelector(
   appSelectors.getApp,
   courseSelectors.getCurrentCourse,
   (session, { language }, course) => {
+    if (course === undefined) {
+      return undefined
+    }
     const section = session.Section.withId(course.currentSectionId)
     return section ? section.getDisplayTitle(language) : undefined
   }

@@ -3,6 +3,7 @@ import querystring from 'querystring'
 
 import { Router } from 'express'
 import passport from 'passport'
+import i18next from 'i18next'
 import i18nextHttpMiddleware from 'i18next-http-middleware'
 
 import getLogger from './logger'
@@ -10,14 +11,17 @@ import User from './models/User'
 import UserProgress from './models/UserProgress'
 import { resetPasswordMail, verificationMail } from './mails'
 
-const userController = async ({ appRoot, discourseSsoSecret, discourseUrl, jwtSecret }) => {
+i18next.use(i18nextHttpMiddleware.LanguageDetector).init({
+  preload: ['en', 'de'],
+})
+
+const userController = () => {
   const router = Router()
   const logger = getLogger('user')
-  const secureCookie = new URL(appRoot).protocol === 'https'
+  const secureCookie = new URL(process.env.APP_ROOT).protocol === 'https'
 
   // Late import of i18n, as it depends on Next.js configuration
-  const nextI18next = await import('@innodoc/common/src/i18n')
-  router.use(i18nextHttpMiddleware.handle(nextI18next.i18n))
+  router.use(i18nextHttpMiddleware.handle(i18next))
 
   router.get(
     '/progress',
@@ -131,7 +135,7 @@ const userController = async ({ appRoot, discourseSsoSecret, discourseUrl, jwtSe
     }
     try {
       await req.app.locals.sendMail(
-        verificationMail(req.t, appRoot, email, user.emailVerificationToken)
+        verificationMail(req.t, process.env.APP_ROOT, email, user.emailVerificationToken)
       )
       logger.info(`Account registered: ${user.email}`)
       res.status(200).json({ result: 'ok' })
@@ -144,7 +148,7 @@ const userController = async ({ appRoot, discourseSsoSecret, discourseUrl, jwtSe
   })
 
   router.post('/login', passport.authenticate('local', { session: false }), async (req, res) => {
-    const accessToken = req.user.generateAccessToken(jwtSecret, appRoot)
+    const accessToken = req.user.generateAccessToken(process.env.JWT_SECRET, process.env.APP_ROOT)
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
       secure: secureCookie,
@@ -227,7 +231,7 @@ const userController = async ({ appRoot, discourseSsoSecret, discourseUrl, jwtSe
         user.passwordResetToken = User.generateToken()
         user.passwordResetExpires = Date.now() + 60 * 60 * 1000 // 1 hour
         await req.app.locals.sendMail(
-          resetPasswordMail(req.t, appRoot, email, user.passwordResetToken)
+          resetPasswordMail(req.t, process.env.APP_ROOT, email, user.passwordResetToken)
         )
         await user.save()
         res.status(200).json({ result: 'ok' })
@@ -248,7 +252,7 @@ const userController = async ({ appRoot, discourseSsoSecret, discourseUrl, jwtSe
       })
       if (user) {
         await req.app.locals.sendMail(
-          verificationMail(req.t, appRoot, email, user.emailVerificationToken)
+          verificationMail(req.t, process.env.APP_ROOT, email, user.emailVerificationToken)
         )
         res.status(200).json({ result: 'ok' })
       } else {
@@ -261,14 +265,14 @@ const userController = async ({ appRoot, discourseSsoSecret, discourseUrl, jwtSe
 
   // Discourse SSO implementation
   // https://meta.discourse.org/t/discourseconnect-official-single-sign-on-for-discourse-sso/13045
-  if (discourseUrl && discourseSsoSecret) {
+  if (process.env.DISCOURSE_URL && process.env.DISCOURSE_SSO_SECRET) {
     router.get('/discourse-sso', (req, res, next) => {
       passport.authenticate('jwt', (err, user) => {
         if (err) {
           next(err)
         } else if (!user) {
           // If not logged in, redirect to /login with redirect_to query param
-          const redirectAfterLogin = new URL(discourseUrl)
+          const redirectAfterLogin = new URL(process.env.DISCOURSE_URL)
           redirectAfterLogin.pathname = '/session/sso'
           const qs = querystring.stringify({ redirect_to: redirectAfterLogin.toString() })
           res.redirect(`/login?${qs}`)
@@ -276,7 +280,10 @@ const userController = async ({ appRoot, discourseSsoSecret, discourseUrl, jwtSe
           try {
             // Verify SSO payload
             const { sso, sig } = req.query
-            const digest = crypto.createHmac('sha256', discourseSsoSecret).update(sso).digest('hex')
+            const digest = crypto
+              .createHmac('sha256', process.env.DISCOURSE_SSO_SECRET)
+              .update(sso)
+              .digest('hex')
             if (digest !== sig) {
               throw new Error('Could not verify signature!')
             }
@@ -291,7 +298,7 @@ const userController = async ({ appRoot, discourseSsoSecret, discourseUrl, jwtSe
             })
             const returnPayload = Buffer.from(payloadQuerystring).toString('base64')
             const returnSig = crypto
-              .createHmac('sha256', discourseSsoSecret)
+              .createHmac('sha256', process.env.DISCOURSE_SSO_SECRET)
               .update(returnPayload)
               .digest('hex')
 

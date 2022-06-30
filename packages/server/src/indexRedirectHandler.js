@@ -1,7 +1,17 @@
+// TODO:
+// use https://nextjs.org/docs/api-reference/next.config.js/redirects difficult???
+// how to get manifest.homeLink from store here??
+
 // Redirect / to custom homeLink. (Next.js does support redirects out-of-the-box
 // but homeLink would need to be known at build time for this to work.)
-const indexRedirectHandler = ({ manifest, pagePathPrefix, sectionPathPrefix }) => {
-  const { home_link: homeLink } = manifest
+const indexRedirectHandler = () => {
+  const pagePathPrefix = process.env.PAGE_PATH_PREFIX
+  const sectionPathPrefix = process.env.SECTION_PATH_PREFIX
+
+  // FIXME
+  const homeLink = '/page/about'
+  // const { home_link: homeLink } = manifest
+
   let contentType
   let contentId
 

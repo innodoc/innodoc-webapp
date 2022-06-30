@@ -4,7 +4,7 @@ const baseConfig = require('../../.eslintrc')
 
 module.exports = {
   ...baseConfig,
-  extends: ['airbnb', 'plugin:prettier/recommended'],
+  extends: ['airbnb', 'plugin:prettier/recommended', 'plugin:@next/next/recommended'],
   plugins: [...baseConfig.plugins, 'react-hooks'],
   rules: {
     ...baseConfig.rules,
@@ -19,6 +19,12 @@ module.exports = {
     'react/forbid-prop-types': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
+    'react/function-component-definition': [
+      'error',
+      {
+        namedComponents: 'arrow-function',
+      },
+    ],
   },
   overrides: [
     {

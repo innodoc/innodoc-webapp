@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Button, Collapse, Modal, Switch, Typography } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 import LanguageSwitcher from './LanguageSwitcher'
 
 const stopPropagation = (checked, ev) => ev.stopPropagation()

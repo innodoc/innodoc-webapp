@@ -1,1 +1,5 @@
-export default from '../components/App'
+import 'antd/dist/antd.less'
+
+import App from '../components/App'
+
+export default App

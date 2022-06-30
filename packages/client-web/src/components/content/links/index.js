@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import { Typography } from 'antd'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 import { parseLink } from '@innodoc/client-misc/src/util'
 import { childrenType } from '@innodoc/client-misc/src/propTypes'
 import pageSelectors from '@innodoc/client-store/src/selectors/page'

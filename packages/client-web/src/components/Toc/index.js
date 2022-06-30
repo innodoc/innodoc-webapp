@@ -1,1 +1,3 @@
-export default from './Toc'
+import Toc from './Toc'
+
+export default Toc

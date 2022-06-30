@@ -9,11 +9,20 @@ import userController from './userController'
 import { requestLoggerMiddleware } from './logger'
 import { passportMiddleware, sendMailMiddleware, lookupUserMiddleware } from './middlewares'
 
-const createExpressApp = async (config, nextApp) => {
+const createExpressApp = async (nextApp) => {
   const app = express()
 
-  if (config.nodeEnv !== 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     app.use(requestLoggerMiddleware())
+  }
+
+  const smtpConfig = {
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT, 10),
+    user: process.env.SMTP_USER,
+    password: process.env.SMTP_PASSWORD,
+    senderAddress: process.env.SMTP_SENDER,
+    skipMails: process.env.SMTP_SKIP_MAILS === 'yes',
   }
 
   return app
@@ -21,17 +30,17 @@ const createExpressApp = async (config, nextApp) => {
     .use(cookieParser())
     .use(
       csrf({
-        cookie: { secure: new URL(config.appRoot).protocol === 'https' },
+        cookie: { secure: new URL(process.env.APP_ROOT).protocol === 'https' },
         value: (req) => req.headers['csrf-token'],
       })
     )
-    .get('/', indexRedirectHandler(config))
-    .use(sendMailMiddleware(config.smtp))
-    .use(passportMiddleware(config))
-    .use(lookupUserMiddleware(config))
-    .use('/user', await userController(config))
+    .get('/', indexRedirectHandler())
+    .use(sendMailMiddleware(smtpConfig))
+    .use(passportMiddleware())
+    .use(lookupUserMiddleware())
+    .use('/user', userController())
     .get('*', nextApp.getRequestHandler())
-    .use(errorHandler(config))
+    .use(errorHandler(smtpConfig))
 }
 
 export default createExpressApp

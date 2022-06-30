@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { LockOutlined } from '@ant-design/icons'
 
 import { changePassword } from '@innodoc/client-misc/src/api'
-import { useTranslation, Trans } from '@innodoc/common/src/i18n'
+import { Trans, useTranslation } from 'next-i18next'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import { PasswordField } from './formFields'

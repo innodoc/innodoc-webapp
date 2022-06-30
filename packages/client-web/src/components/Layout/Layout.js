@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { Layout as AntLayout } from 'antd'
+
 import cookies from 'react-cookies'
 
 import { childrenType } from '@innodoc/client-misc/src/propTypes'

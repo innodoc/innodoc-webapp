@@ -1,3 +1,5 @@
+// TODO: move to ./lib ??
+
 // generate URL info for use with <Link /> or 'next/router'
 const getLinkInfo = (pathPrefix, contentId, hash = undefined) => {
   const href = {

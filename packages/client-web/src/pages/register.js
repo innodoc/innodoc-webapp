@@ -1,1 +1,3 @@
-export default from '../components/pages/RegistrationPage'
+import RegistrationPage from '../components/pages/RegistrationPage'
+
+export default RegistrationPage

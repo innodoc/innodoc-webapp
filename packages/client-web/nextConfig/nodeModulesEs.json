@@ -1,14 +1,1 @@
-[
-  "@innodoc/react-mathjax-node",
-  "antd",
-  "lodash-es",
-  "css-animation",
-  "mathjs",
-  "rc-animate",
-  "rc-calendar",
-  "rc-pagination",
-  "rc-tabs",
-  "rc-tooltip",
-  "rc-tree",
-  "rc-util"
-]
+["antd", "lodash-es"]

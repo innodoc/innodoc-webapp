@@ -1,1 +1,3 @@
-export default from './SecondMenu'
+import SecondMenu from './SecondMenu'
+
+export default SecondMenu

@@ -1,1 +1,3 @@
-export default from '../../components/pages/VerifyUserPage'
+import VerifyUserPage from '../../components/pages/VerifyUserPage'
+
+export default VerifyUserPage

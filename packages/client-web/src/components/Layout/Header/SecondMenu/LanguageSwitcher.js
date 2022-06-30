@@ -8,7 +8,7 @@ import LanguageOutlineSvg from 'ionicons/dist/svg/language-outline.svg'
 import { changeLanguage } from '@innodoc/client-store/src/actions/i18n'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 
 import css from './style.sss'
 import cssActiveItem from '../LinkMenuItem/style.sss'

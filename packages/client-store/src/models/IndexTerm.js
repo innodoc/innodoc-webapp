@@ -17,7 +17,7 @@ export default class IndexTerm extends Model {
   static reducer(action, IndexTermModel, session) {
     switch (action.type) {
       case contentActionTypes.LOAD_MANIFEST_SUCCESS: {
-        const indexTerms = action.data.content.index_terms
+        const indexTerms = action.data.index_terms
         if (indexTerms) {
           Object.keys(indexTerms).forEach((language) => {
             const indexTermLang = indexTerms[language]

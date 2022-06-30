@@ -1,7 +1,7 @@
 import React from 'react'
 import { Typography } from 'antd'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 
 import Layout from '../Layout'
 import PageTitle from '../PageTitle'

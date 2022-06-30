@@ -1,1 +1,3 @@
-export default from './Question'
+import Question from './Question'
+
+export default Question

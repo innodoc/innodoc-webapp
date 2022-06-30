@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Icon from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 import { contentType } from '@innodoc/client-misc/src/propTypes'
 
 import KeyboardSvg from '@fortawesome/fontawesome-free/svgs/regular/keyboard.svg'

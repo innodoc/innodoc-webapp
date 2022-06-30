@@ -23,8 +23,8 @@ export default class Page extends Model {
   static reducer(action, PageModel) {
     switch (action.type) {
       case actionTypes.LOAD_MANIFEST_SUCCESS:
-        if (action.data.content.pages) {
-          action.data.content.pages.forEach((page, idx) => {
+        if (action.data.pages) {
+          action.data.pages.forEach((page, idx) => {
             PageModel.upsert({
               icon: page.icon,
               id: page.id,

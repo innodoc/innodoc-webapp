@@ -2,7 +2,7 @@ import React from 'react'
 import { Collapse } from 'antd'
 import { BulbOutlined } from '@ant-design/icons'
 
-import { useTranslation } from '@innodoc/common/src/i18n'
+import { useTranslation } from 'next-i18next'
 import { attributesToObject } from '@innodoc/client-misc/src/util'
 import { attributeType, contentType } from '@innodoc/client-misc/src/propTypes'
 

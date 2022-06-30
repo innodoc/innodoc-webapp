@@ -1,1 +1,3 @@
-export default from './InputPopover'
+import InputPopover from './InputPopover'
+
+export default InputPopover

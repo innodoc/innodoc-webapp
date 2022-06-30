@@ -13,8 +13,6 @@ export default class App extends Model {
   static get fields() {
     return {
       id: attr({ getDefault: () => 0 }),
-      appRoot: attr(),
-      contentRoot: attr({ getDefault: () => '' }),
       currentCourseId: oneToOne({
         to: 'Course',
         as: 'currentCourse',
@@ -22,7 +20,7 @@ export default class App extends Model {
       csrfToken: attr(),
       discourseUrl: attr(),
       ftSearchEnabled: attr({ getDefault: () => false }),
-      language: attr(),
+      language: attr(), // TODO: remove as this is handled by next/router now
       loggedInEmail: attr(),
       pdfFilename: attr(),
       show404: attr({ getDefault: () => false }),
@@ -51,6 +49,7 @@ export default class App extends Model {
           app.set('show404', false)
           break
 
+        // TODO: remove as this is handled by next/router now
         case i18nActionTypes.CHANGE_LANGUAGE:
           app.set('language', action.language)
           break

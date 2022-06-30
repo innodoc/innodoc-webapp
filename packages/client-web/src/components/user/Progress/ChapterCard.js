@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import { Card, Grid, Row, Typography } from 'antd'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 
-import { Trans, useTranslation } from '@innodoc/common/src/i18n'
+import { Trans, useTranslation } from 'next-i18next'
 
 import { SectionLink } from '../../content/links'
 import css from './style.sss'

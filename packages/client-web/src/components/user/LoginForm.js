@@ -5,7 +5,7 @@ import { Button, Result } from 'antd'
 import { HomeOutlined, LoginOutlined } from '@ant-design/icons'
 
 import { loginUser } from '@innodoc/client-misc/src/api'
-import { useTranslation, Trans } from '@innodoc/common/src/i18n'
+import { Trans, useTranslation } from 'next-i18next'
 import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'

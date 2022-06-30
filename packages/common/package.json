@@ -15,8 +15,8 @@
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "next": "^9.5.5",
-    "next-i18next": "^6.0.3",
+    "next": "^12.1.6",
+    "next-i18next": "^11.0.0",
     "password-validator": "^5.3.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
