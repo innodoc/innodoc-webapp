@@ -29,17 +29,12 @@
     "react-dom": "^18.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.5",
-    "@babel/eslint-parser": "^7.18.2",
-    "@babel/preset-env": "^7.18.2",
     "@innodoc/client-misc": "workspace:packages/client-misc",
     "@innodoc/client-question-validators": "workspace:packages/client-question-validators",
     "@innodoc/client-sagas": "workspace:packages/client-sagas",
     "@innodoc/client-store": "workspace:packages/client-store",
     "@innodoc/client-web": "workspace:packages/client-web",
     "@types/jest": "^28.1.1",
-    "babel-jest": "^28.1.1",
-    "babel-plugin-dynamic-import-node": "^2.3.3",
     "eslint": "^8.17.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
