@@ -12,7 +12,7 @@ import NavMenu from './NavMenu'
 import Logo from './Logo'
 import { InternalLink } from '../../content/links'
 import SearchInput from './SearchInput'
-import css from './style.sss'
+import css from './Header.module.sss'
 
 const Header = ({ enableSearch }) => {
   const { t } = useTranslation()

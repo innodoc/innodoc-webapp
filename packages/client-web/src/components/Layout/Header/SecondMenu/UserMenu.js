@@ -16,7 +16,7 @@ import { useTranslation } from 'next-i18next'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import LinkMenuItem from '../LinkMenuItem'
-import css from './style.sss'
+import css from './SecondMenu.module.sss'
 
 const menuItems = {
   loggedIn: [

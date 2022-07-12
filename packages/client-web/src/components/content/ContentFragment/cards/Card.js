@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Card as AntCard } from 'antd'
 
-import { contentType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 
-import css from './style.sss'
+import css from './Card.module.sss'
 import ContentFragment from '..'
 
 const Card = ({ actions, cardType, content, extra, icon, id, title }) => {
@@ -41,7 +41,7 @@ Card.defaultProps = {
 Card.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.node),
   cardType: PropTypes.string.isRequired,
-  content: contentType.isRequired,
+  content: propTypes.contentType.isRequired,
   extra: PropTypes.node,
   icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func, PropTypes.object]),
   id: PropTypes.string,

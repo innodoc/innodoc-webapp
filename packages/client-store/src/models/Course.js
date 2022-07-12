@@ -26,11 +26,11 @@ export default class Course extends Model {
       case contentActionTypes.LOAD_MANIFEST_SUCCESS: {
         const { data } = action
         CourseModel.create({
-          homeLink: data.home_link || `/section/${data.toc[0].id}`,
+          homeLink: data.homeLink || `/section/${data.toc[0].id}`,
           languages: data.languages,
           logo: data.logo || undefined,
           mathJaxOptions: data.mathjax || {},
-          minScore: data.min_score,
+          minScore: data.minScore,
           title: data.title,
         })
         break

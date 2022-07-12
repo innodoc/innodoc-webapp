@@ -1,4 +1,5 @@
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
+
 import orm from '../orm'
 import exerciseSelectors from './exercise'
 
@@ -41,19 +42,19 @@ describe('exerciseSelectors', () => {
     test.each([
       [
         { isAnswered: true, isCorrect: true, isTouched: true },
-        [RESULT_VALUE.CORRECT, RESULT_VALUE.CORRECT],
+        [constants.RESULT.CORRECT, constants.RESULT.CORRECT],
       ],
       [
         { isAnswered: true, isCorrect: false, isTouched: true },
-        [RESULT_VALUE.CORRECT, RESULT_VALUE.INCORRECT],
+        [constants.RESULT.CORRECT, constants.RESULT.INCORRECT],
       ],
       [
         { isAnswered: false, isCorrect: false, isTouched: true },
-        [RESULT_VALUE.NEUTRAL, RESULT_VALUE.CORRECT],
+        [constants.RESULT.NEUTRAL, constants.RESULT.CORRECT],
       ],
       [
         { isAnswered: false, isCorrect: false, isTouched: false },
-        [RESULT_VALUE.NEUTRAL, RESULT_VALUE.NEUTRAL],
+        [constants.RESULT.NEUTRAL, constants.RESULT.NEUTRAL],
       ],
     ])('%s', (exp, values) => {
       const state = dummyState(values)

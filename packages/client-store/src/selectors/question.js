@@ -1,6 +1,6 @@
 import { createSelector } from 'redux-orm'
 
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
 
 import orm from '../orm'
 import { selectId } from '.'
@@ -15,7 +15,7 @@ const makeGetQuestion = () =>
           id: undefined,
           answer: undefined,
           messages: [],
-          result: RESULT_VALUE.NEUTRAL,
+          result: constants.RESULT.NEUTRAL,
           invalid: false,
         }
   })

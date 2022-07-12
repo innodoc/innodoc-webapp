@@ -1,7 +1,7 @@
 import { expectSaga } from 'redux-saga-test-plan'
 
 import { changeLanguage, languageDetected } from '@innodoc/client-store/src/actions/i18n'
-import { toTwoLetterCode } from '@innodoc/client-misc/src/util'
+import { util } from '@innodoc/client-misc'
 import nextI18next from '@innodoc/common/src/i18n'
 
 import { notifyI18next, waitForDetectedLanguage } from './i18n'
@@ -21,7 +21,7 @@ describe('waitForDetectedLanguage', () => {
   it('should wait for the i18n instance', () =>
     expectSaga(waitForDetectedLanguage)
       .dispatch(languageDetected('en-US'))
-      .call(toTwoLetterCode, 'en-US')
+      .call(util.toTwoLetterCode, 'en-US')
       .put(changeLanguage('en'))
       .run())
 })

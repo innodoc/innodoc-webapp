@@ -1,4 +1,4 @@
-const nodeModulesEs = require('./nextConfig/nodeModulesEs.json')
+const nodeModulesEs = require('./next.config/nodeModulesEs.json')
 
 module.exports = {
   testEnvironment: 'enzyme',

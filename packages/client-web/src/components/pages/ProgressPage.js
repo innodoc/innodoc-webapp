@@ -7,7 +7,7 @@ import Layout from '../Layout'
 import PageTitle from '../PageTitle'
 import UserProgress from '../user/Progress'
 import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
-import css from '../content/style.sss'
+import css from '../content/content.module.sss'
 
 const ProgressPage = () => {
   const { t } = useTranslation()

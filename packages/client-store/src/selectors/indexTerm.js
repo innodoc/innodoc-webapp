@@ -1,6 +1,6 @@
 import { createSelector } from 'redux-orm'
 
-import { intSortArray } from '@innodoc/client-misc/src/util'
+import { util } from '@innodoc/client-misc'
 
 import orm from '../orm'
 import { selectId } from '.'
@@ -16,7 +16,7 @@ const getIndexTerms = createSelector(orm, selectId, (session, language) =>
         .toModelArray()
         .map((loc) => ({ id: loc.id, contentId: loc.getContentId() })),
     }))
-    .sort(intSortArray(language))
+    .sort(util.intSortArray(language))
 )
 
 export default {

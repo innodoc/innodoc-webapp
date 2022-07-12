@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Input } from 'antd'
 
-import { feedbackMessagesType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 
-import css from './style.sss'
+import css from './Question.module.sss'
 import InputPopover from './InputPopover'
 
 const DEFAULT_INPUT_LENGTH = 10
@@ -61,7 +61,7 @@ InputQuestion.propTypes = {
   icon: PropTypes.element,
   invalid: PropTypes.bool.isRequired,
   latexCode: PropTypes.string,
-  messages: feedbackMessagesType.isRequired,
+  messages: propTypes.feedbackMessagesType.isRequired,
   onChange: PropTypes.func.isRequired,
   showResult: PropTypes.bool.isRequired,
   value: PropTypes.string,

@@ -1,6 +1,6 @@
 import { Model, attr, fk } from 'redux-orm'
 
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
 
 import { actionTypes as exerciseActionTypes } from '../actions/exercise'
 import { actionTypes as questionActionTypes } from '../actions/question'
@@ -16,7 +16,7 @@ export default class Question extends Model {
       id: attr(),
       answer: attr(),
       answeredTimestamp: attr(),
-      result: attr({ getDefault: () => RESULT_VALUE.NEUTRAL }),
+      result: attr({ getDefault: () => constants.RESULT.NEUTRAL }),
       points: attr({ getDefault: () => 0 }),
       exerciseId: fk('Exercise', 'questions'),
       messages: attr({ getDefault: () => [] }),
@@ -103,7 +103,7 @@ export default class Question extends Model {
     this.update({
       answer: undefined,
       answeredTimestamp: Date.now(),
-      result: RESULT_VALUE.NEUTRAL,
+      result: constants.RESULT.NEUTRAL,
       messages: [],
       latexCode: undefined,
     })

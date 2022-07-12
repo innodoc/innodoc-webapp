@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { List, Typography } from 'antd'
-
 import { useTranslation } from 'next-i18next'
-import { sectionType } from '@innodoc/client-misc/src/propTypes'
 
-import css from './style.sss'
+import { propTypes } from '@innodoc/client-misc'
+
+import css from './SubsectionList.module.sss'
 import { SectionLink } from '../links'
 
 const Subsection = (subSection) => (
@@ -14,7 +14,7 @@ const Subsection = (subSection) => (
   </List.Item>
 )
 
-Subsection.propTypes = sectionType.isRequired
+Subsection.propTypes = propTypes.sectionType.isRequired
 
 const SubsectionList = ({ subsections }) => {
   const { t } = useTranslation()
@@ -37,7 +37,7 @@ const SubsectionList = ({ subsections }) => {
 }
 
 SubsectionList.propTypes = {
-  subsections: PropTypes.arrayOf(sectionType).isRequired,
+  subsections: PropTypes.arrayOf(propTypes.sectionType).isRequired,
 }
 
 export { Subsection }

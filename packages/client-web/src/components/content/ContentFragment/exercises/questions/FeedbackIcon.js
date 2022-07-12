@@ -4,7 +4,7 @@ import Icon, { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons'
 
 import { useTranslation } from 'next-i18next'
 
-import css from './style.sss'
+import css from './Question.module.sss'
 
 const EmptyIcon = () => <span className={css.emptyIcon} />
 

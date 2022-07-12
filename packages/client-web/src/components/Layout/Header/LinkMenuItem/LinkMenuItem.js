@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Menu } from 'antd'
 
 import { PageLink } from '../../../content/links'
-import css from './style.sss'
+import css from './LinkMenuItem.module.sss'
 
 const LinkMenuItem = ({ itemActive, href, icon, pageId, title, titleLong, ...otherProps }) => {
   let link

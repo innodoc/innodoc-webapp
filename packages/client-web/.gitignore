@@ -1,6 +1,7 @@
 /src/.next
 /src/.next-dev
-/bundle-analyzer
+/src/.env*.local
+/analyze
 /src/public/locales/*/*.missing.json
 /src/style/antd-vars.json
 /src/public/fonts/mathjax-woff-v2

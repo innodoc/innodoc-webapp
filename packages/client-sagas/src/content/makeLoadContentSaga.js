@@ -2,7 +2,7 @@ import { call, put, select } from 'redux-saga/effects'
 
 import { contentNotFound } from '@innodoc/client-store/src/actions/content'
 import appSelectors from '@innodoc/client-store/src/selectors'
-import { parseContentId } from '@innodoc/client-misc/src/util'
+import { util } from '@innodoc/client-misc'
 
 const makeLoadContentSaga = (
   getCurrentContent,
@@ -13,8 +13,10 @@ const makeLoadContentSaga = (
   fetchContent
 ) =>
   function* loadContentSaga({ contentId: contentIdHash, prevLanguage }) {
+    console.log('loadContentSaga')
+
     const { contentRoot, language } = yield select(appSelectors.getApp)
-    const [contentId] = yield call(parseContentId, contentIdHash)
+    const [contentId] = yield call(util.parseContentId, contentIdHash)
 
     // Do not load exact same content another time
     const currentContent = yield select(getCurrentContent)
@@ -27,6 +29,7 @@ const makeLoadContentSaga = (
       // Check if fetched already
       const content = yield select(getContent, contentId)
       if (content.content && content.content[language]) {
+        console.log('  put(loadContentSuccess(...)) from cache')
         yield put(
           loadContentSuccess({
             language,
@@ -37,18 +40,21 @@ const makeLoadContentSaga = (
       } else {
         // Fetch from remote
         try {
+          console.log('  put(loadContentSuccess(...))')
           yield put(
             loadContentSuccess({
-              content: yield call(fetchContent, contentRoot, language, contentId),
+              content: yield call(fetchContent, language, contentId),
               contentId,
               language,
             })
           )
         } catch (error) {
+          console.log('  put(loadContentFailure(error))')
           yield put(loadContentFailure(error))
         }
       }
     } else {
+      console.log('  put(contentNotFound())')
       yield put(contentNotFound())
     }
   }

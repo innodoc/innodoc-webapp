@@ -1,6 +1,4 @@
-import 'isomorphic-unfetch'
-
-import { fetchFragment, fetchManifest, fetchPage, fetchProgress, fetchSection } from './get'
+import { fetchFragment, fetchManifest, fetchPage, fetchProgress, fetchSection } from './get.js'
 import {
   changePassword,
   checkEmail,
@@ -13,7 +11,7 @@ import {
   requestVerification,
   resetPassword,
   verifyUser,
-} from './post'
+} from './post.js'
 
 export {
   changePassword,

@@ -1,4 +1,4 @@
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
 
 import { notationParserIn, outsideDistance, rawParse, rawParseWithLatex } from './util'
 
@@ -12,7 +12,7 @@ const exactFraction = (input, solution, attrs) => {
 
   if (input === '') {
     messages.push({ msg: 'still-incorrect-answer', type: 'error' })
-    return [RESULT_VALUE.NEUTRAL, messages]
+    return [constants.RESULT.NEUTRAL, messages]
   }
 
   const { precision } = attrs
@@ -27,18 +27,18 @@ const exactFraction = (input, solution, attrs) => {
   if (b.trim() === '') {
     // Empty string is not a correct entry
     l = NaN
-    ok = RESULT_VALUE.INCORRECT
+    ok = constants.RESULT.INCORRECT
     messages.push({ msg: 'still-incorrect-answer', type: 'error' })
   } else {
     ;[l, latexCode] = rawParseWithLatex(b)
     sp = rawParse(s)
-    ok = RESULT_VALUE.CORRECT
+    ok = constants.RESULT.CORRECT
   }
 
   // Correct value (within precision)?
   if (outsideDistance(l, sp, precision)) {
     messages.push({ msg: 'incorrect-value', type: 'error' })
-    ok = RESULT_VALUE.INCORRECT
+    ok = constants.RESULT.INCORRECT
   }
 
   // test non-fraction
@@ -48,17 +48,17 @@ const exactFraction = (input, solution, attrs) => {
     if (m !== null) {
       if (m[1] !== b) {
         messages.push({ msg: 'exact-fraction.only-integer', type: 'warning' })
-        ok = RESULT_VALUE.INCORRECT
+        ok = constants.RESULT.INCORRECT
       }
     } else {
-      ok = RESULT_VALUE.INCORRECT
+      ok = constants.RESULT.INCORRECT
       messages.push({ msg: 'exact-fraction.only-integer', type: 'warning' })
     }
   } else {
     // test fraction
     const fr = b.split('/')
     if (fr.length !== 2) {
-      ok = RESULT_VALUE.INCORRECT
+      ok = constants.RESULT.INCORRECT
       messages.push({ msg: 'malformed-input', type: 'error' })
     } else {
       fr[0] = fr[0].trim()
@@ -78,7 +78,7 @@ const exactFraction = (input, solution, attrs) => {
               const g = gcd(a, b)
 
               if (g !== 1) {
-                ok = RESULT_VALUE.INCORRECT
+                ok = constants.RESULT.INCORRECT
                 messages.push({
                   msg: 'exact-fraction.fraction-not-reduced',
                   type: 'warning',
@@ -86,35 +86,35 @@ const exactFraction = (input, solution, attrs) => {
               }
 
               if (b <= 0) {
-                ok = RESULT_VALUE.INCORRECT
+                ok = constants.RESULT.INCORRECT
                 messages.push({
                   msg: 'exact-fraction.denominator-not-positive',
                   type: 'warning',
                 })
               }
             } else {
-              ok = RESULT_VALUE.INCORRECT
+              ok = constants.RESULT.INCORRECT
               messages.push({
                 msg: 'exact-fraction.denominator-not-integer',
                 type: 'warning',
               })
             }
           } else {
-            ok = RESULT_VALUE.INCORRECT
+            ok = constants.RESULT.INCORRECT
             messages.push({
               msg: 'exact-fraction.denominator-not-integer',
               type: 'warning',
             })
           }
         } else {
-          ok = RESULT_VALUE.INCORRECT
+          ok = constants.RESULT.INCORRECT
           messages.push({
             msg: 'exact-fraction.numerator-not-integer',
             type: 'warning',
           })
         }
       } else {
-        ok = RESULT_VALUE.INCORRECT
+        ok = constants.RESULT.INCORRECT
         messages.push({
           msg: 'exact-fraction.numerator-not-integer',
           type: 'warning',
@@ -123,7 +123,7 @@ const exactFraction = (input, solution, attrs) => {
     }
   }
 
-  if (ok === RESULT_VALUE.CORRECT) {
+  if (ok === constants.RESULT.CORRECT) {
     messages.push({ msg: 'correct-answer', type: 'success' })
   }
 

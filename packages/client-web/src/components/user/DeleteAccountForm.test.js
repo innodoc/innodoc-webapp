@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Alert } from 'antd'
 
-import { deleteAccount } from '@innodoc/client-misc/src/api'
+import api from '@innodoc/client-misc'
 import { showMessage } from '@innodoc/client-store/src/actions/ui'
 import { userLoggedOut } from '@innodoc/client-store/src/actions/user'
 
@@ -21,8 +21,8 @@ jest.mock('react-redux', () => ({
   }),
 }))
 
-jest.mock('@innodoc/client-misc/src/api', () => ({
-  deleteAccount: jest.fn(),
+jest.mock('@innodoc/client-misc', () => ({
+  api: { deleteAccount: jest.fn() },
 }))
 
 describe('<DeleteAccountForm />', () => {
@@ -62,11 +62,11 @@ describe('<DeleteAccountForm />', () => {
 
     it('should call deleteAccount with success', async () => {
       expect.assertions(8)
-      deleteAccount.mockResolvedValueOnce()
+      api.deleteAccount.mockResolvedValueOnce()
       const { setDisabled, setMessage, onFinishPromise } = prepare()
       await expect(onFinishPromise).resolves.toBeUndefined()
-      expect(deleteAccount).toBeCalledTimes(1)
-      expect(deleteAccount).toBeCalledWith('http://app.example.com/', '123csrftoken', 'abc123ABC!')
+      expect(api.deleteAccount).toBeCalledTimes(1)
+      expect(api.deleteAccount).toBeCalledWith('123csrftoken', 'abc123ABC!')
       expect(mockDispatch).toBeCalledTimes(2)
       expect(mockDispatch).toBeCalledWith(
         showMessage({
@@ -82,11 +82,11 @@ describe('<DeleteAccountForm />', () => {
 
     it('should call deleteAccount with error', async () => {
       expect.assertions(9)
-      deleteAccount.mockRejectedValueOnce()
+      api.deleteAccount.mockRejectedValueOnce()
       const { setDisabled, setMessage, onFinishPromise } = prepare()
       await expect(onFinishPromise).resolves.toBeUndefined()
-      expect(deleteAccount).toBeCalledTimes(1)
-      expect(deleteAccount).toBeCalledWith('http://app.example.com/', '123csrftoken', 'abc123ABC!')
+      expect(api.deleteAccount).toBeCalledTimes(1)
+      expect(api.deleteAccount).toBeCalledWith('123csrftoken', 'abc123ABC!')
       expect(mockDispatch).not.toBeCalled()
       expect(setMessage).toBeCalledTimes(1)
       expect(setMessage).toBeCalledWith({

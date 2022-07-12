@@ -8,7 +8,7 @@ import Layout from '../Layout'
 import Index from '../Index'
 import PageTitle from '../PageTitle'
 import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
-import css from '../content/style.sss'
+import css from '../content/content.module.sss'
 
 const IndexPage = () => {
   const { t } = useTranslation()

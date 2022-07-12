@@ -1,6 +1,6 @@
 import { createSelector } from 'redux-orm'
 
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
 
 import orm from '../orm'
 import sectionSelectors from './section'
@@ -17,7 +17,7 @@ const getScoredPoints = (exercises) =>
       eAcc +
       ex.questions
         .toRefArray()
-        .reduce((qAcc, q) => qAcc + (q.result === RESULT_VALUE.CORRECT ? q.points : 0), 0),
+        .reduce((qAcc, q) => qAcc + (q.result === constants.RESULT.CORRECT ? q.points : 0), 0),
     0
   )
 
@@ -52,7 +52,7 @@ const getProgress = createSelector(orm, sectionSelectors.getChapters, (session, 
 
 // Create progress object for persistance
 const getPersistedProgress = createSelector(orm, (session) => {
-  const questions = session.Question.filter((q) => q.result !== RESULT_VALUE.NEUTRAL)
+  const questions = session.Question.filter((q) => q.result !== constants.RESULT.NEUTRAL)
     .toRefArray()
     .map((q) => ({
       id: q.id,
@@ -101,11 +101,11 @@ const getTest = createSelector(orm, sectionSelectors.getCurrentSection, (session
 
       // Test can be submitted if at least one exercise has been answered
       testInfo.canBeSubmitted = questions.some((qArr) =>
-        qArr.every((q) => q.result !== RESULT_VALUE.NEUTRAL)
+        qArr.every((q) => q.result !== constants.RESULT.NEUTRAL)
       )
       // Test can be reset if at least one question has been answered
       testInfo.canBeReset = questions.some((qArr) =>
-        qArr.some((q) => q.result !== RESULT_VALUE.NEUTRAL)
+        qArr.some((q) => q.result !== constants.RESULT.NEUTRAL)
       )
     }
   }

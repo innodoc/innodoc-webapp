@@ -43,9 +43,10 @@ module.exports = {
       },
     },
     {
-      files: ['nextConfig/**/*.js'],
+      files: ['next.config/**/*.js'],
       rules: {
         'no-console': 'off',
+        'no-restricted-syntax': 'off',
       },
     },
   ],

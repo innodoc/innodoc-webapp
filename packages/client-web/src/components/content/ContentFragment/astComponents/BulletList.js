@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import ContentFragment from '..'
-import css from './style.sss'
+import css from './ast.module.sss'
 
 const BulletList = ({ data }) => {
   const listItems = data.map((item, i) => (

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Typography } from 'antd'
 
-import css from './style.sss'
+import css from './ast.module.sss'
 
 const UnknownTypeData = ({ data }) => (
   <span className={css.componentData}>{JSON.stringify(data, null, 2)}</span>

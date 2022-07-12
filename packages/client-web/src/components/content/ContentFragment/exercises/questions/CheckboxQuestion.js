@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Checkbox } from 'antd'
 
-import css from './style.sss'
+import css from './Question.module.sss'
 
 const CheckboxQuestion = ({ className, onChange, icon, value }) => {
   let checked

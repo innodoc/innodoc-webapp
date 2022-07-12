@@ -3,6 +3,7 @@
   "version": "0.2.3",
   "private": true,
   "scripts": {
+    "build:analyze": "yarn workspace @innodoc/client-web build:analyze",
     "build": "yarn workspace @innodoc/client-web build",
     "dev": "yarn workspace @innodoc/client-web dev",
     "format": "prettier --write \"*.js\" \"packages/**/*.js\"",
@@ -48,7 +49,7 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^28.1.1",
-    "next": "^12.1.6",
+    "next": "^12.2.0",
     "prettier": "^2.7.0",
     "stylelint": "^14.9.1"
   },

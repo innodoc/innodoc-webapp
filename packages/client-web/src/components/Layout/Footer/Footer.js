@@ -16,7 +16,7 @@ import FooterLink from './Link'
 import { PageLink } from '../../content/links'
 import ContentFragment from '../../content/ContentFragment'
 import PageIcon from '../PageIcon'
-import css from './style.sss'
+import css from './Footer.module.sss'
 
 const Footer = () => {
   const { t } = useTranslation()

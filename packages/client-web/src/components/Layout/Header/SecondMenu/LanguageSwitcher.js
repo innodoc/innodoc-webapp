@@ -10,8 +10,8 @@ import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import { useTranslation } from 'next-i18next'
 
-import css from './style.sss'
-import cssActiveItem from '../LinkMenuItem/style.sss'
+import css from './SecondMenu.module.sss'
+import cssActiveItem from '../LinkMenuItem/LinkMenuItem.module.sss'
 
 const LanguageSwitcher = (props) => {
   const { t } = useTranslation()

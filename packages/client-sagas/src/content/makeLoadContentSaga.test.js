@@ -6,7 +6,7 @@ import { call, select } from 'redux-saga/effects'
 import { contentNotFound } from '@innodoc/client-store/src/actions/content'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
-import { parseContentId } from '@innodoc/client-misc/src/util'
+import { util } from '@innodoc/client-misc'
 
 import makeLoadContentSaga from './makeLoadContentSaga'
 
@@ -49,7 +49,7 @@ describe('makeLoadContentSaga', () => {
 
   const defaultProvides = [
     [select(appSelectors.getApp), { language, contentRoot }],
-    [call(parseContentId, contentIdHash), [contentId, 'baz']],
+    [call(util.parseContentId, contentIdHash), [contentId, 'baz']],
     [select(courseSelectors.getCurrentCourse), { id: 0 }],
     [select(getCurrentContent), { id: null }],
     [select(contentExists, contentId), true],

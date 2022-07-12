@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { unwrapPara } from '@innodoc/client-misc/src/util'
+import { util } from '@innodoc/client-misc'
 
 import ContentFragment from '..'
 import ImageTag from './Image'
-import css from './style.sss'
+import css from './ast.module.sss'
 
 const Figure = ({ content }) => {
-  const imgData = unwrapPara(content)[0].c
+  const imgData = util.unwrapPara(content)[0].c
   const [, captionContent] = imgData
   const caption = captionContent.length ? (
     <figcaption>

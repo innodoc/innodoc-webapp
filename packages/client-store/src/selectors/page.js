@@ -5,7 +5,10 @@ import { makeMakeGetContentLink, selectId } from '.'
 import courseSelectors from './course'
 
 // Check if page exists
-const pageExists = createSelector(orm, selectId, (session, id) => session.Page.idExists(id))
+const pageExists = createSelector(orm, selectId, (session, id) => {
+  console.log('pageExists', id, session.Page.idExists(id))
+  session.Page.idExists(id)
+})
 
 // Return current page
 const getCurrentPage = createSelector(orm, courseSelectors.getCurrentCourse, (session, course) => {

@@ -1,6 +1,6 @@
-import { makeSymbolObj } from '@innodoc/client-misc/src/util'
+import { util } from '@innodoc/client-misc'
 
-export const actionTypes = makeSymbolObj([
+export const actionTypes = util.makeSymbolObj([
   'CHANGE_COURSE',
   'CONTENT_NOT_FOUND',
   'LOAD_FRAGMENT_FAILURE',
@@ -17,7 +17,7 @@ export const actionTypes = makeSymbolObj([
   'LOAD_SECTION',
   'ROUTE_CHANGE_START',
   'SECTION_VISIT',
-  'SET_SERVER_CONFIGURATION',
+  'SET_SERVER_CONFIGURATION', // TODO: remove in favor of env vars
 ])
 
 export const changeCourse = (course) => ({
@@ -100,6 +100,7 @@ export const sectionVisit = (sectionId) => ({
   sectionId,
 })
 
+// TODO: remove once migrated to env vars
 export const setServerConfiguration = (
   appRoot,
   contentRoot,

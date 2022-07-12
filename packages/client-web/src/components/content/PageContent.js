@@ -7,10 +7,13 @@ import useContentPane from '../../hooks/useContentPane'
 import PageTitle from '../PageTitle'
 import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
 import ContentFragment from './ContentFragment'
-import css from './style.sss'
+import css from './content.module.sss'
 
 const PageContent = () => {
   const { content, fadeInClassName, title } = useContentPane(pageSelectors.getCurrentPage)
+  console.log('PageContent content=')
+  console.log(content)
+
   return (
     <>
       <PageTitle>{title}</PageTitle>

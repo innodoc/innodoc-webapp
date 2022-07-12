@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { contentType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 
 import ContentFragment from '..'
 
 const Plain = ({ data }) => <ContentFragment content={data} />
 
-Plain.propTypes = { data: contentType.isRequired }
+Plain.propTypes = { data: propTypes.contentType.isRequired }
 
 export default Plain

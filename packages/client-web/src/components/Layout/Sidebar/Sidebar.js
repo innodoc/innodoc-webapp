@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux'
 import { Grid, Layout as AntLayout } from 'antd'
 import { DoubleLeftOutlined } from '@ant-design/icons'
 
+import { propTypes } from '@innodoc/client-misc'
 import appSelectors from '@innodoc/client-store/src/selectors'
-import { childrenType } from '@innodoc/client-misc/src/propTypes'
 
 import ToggleButton from './ToggleButton'
-import css from './style.sss'
+import css from './Sidebar.module.sss'
 
 const WIDTHS = [300, 400] // width change on breakpoint
 
@@ -44,6 +44,6 @@ const Sidebar = ({ children }) => {
 }
 
 Sidebar.defaultProps = { children: null }
-Sidebar.propTypes = { children: childrenType }
+Sidebar.propTypes = { children: propTypes.childrenType }
 
 export default Sidebar

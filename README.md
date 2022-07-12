@@ -179,5 +179,5 @@ Visualize bundle contents using
 [Webpack Bundle Analyzer](https://www.npmjs.com/package/webpack-bundle-analyzer).
 
 ```sh
-$ yarn workspace @innodoc/client-web build:bundle-analyze
+$ yarn workspace @innodoc/client-web build:analyze
 ```

@@ -1,29 +1,26 @@
-const astToString = (ast) => {
-  if (typeof ast === 'string') {
-    return ast
-  }
-
-  return ast
-    .map((node) => {
-      switch (node.t) {
-        case 'Str':
-          return node.c
-        case 'Space':
-          return ' '
-        default:
-          return undefined
-      }
-    })
-    .join('')
-}
+export const astToString = (ast) =>
+  typeof ast === 'string'
+    ? ast
+    : ast
+        .map((node) => {
+          switch (node.t) {
+            case 'Str':
+              return node.c
+            case 'Space':
+              return ' '
+            default:
+              return undefined
+          }
+        })
+        .join('')
 
 // Convert [[key, val], [key, val], ...] style attribute list to object.
-const attributesToObject = (attrs) =>
+export const attributesToObject = (attrs) =>
   attrs ? attrs.reduce((obj, [key, val]) => ({ ...obj, [key]: val }), {}) : {}
 
 // Return a function that maps classNames to Components, used by AST components
 // like Div that render different components according to the className.
-const getClassNameToComponentMapper = (classNameComponentMap) => {
+export const getClassNameToComponentMapper = (classNameComponentMap) => {
   const availableClassNames = Object.keys(classNameComponentMap)
   return (classNames) => {
     for (let i = 0; i < availableClassNames.length; i += 1) {
@@ -37,14 +34,14 @@ const getClassNameToComponentMapper = (classNameComponentMap) => {
 }
 
 // Generate numbered title from attributes (e.g. "Example 1.2.1")
-const getNumberedTitle = (title, attributes) => {
+export const getNumberedTitle = (title, attributes) => {
   const attrsObj = attributesToObject(attributes)
   const number = attrsObj['data-number']
   return number ? `${title} ${number}` : title
 }
 
 // Sort an obejct (using name key) in an alphanumerical way considering umlauts/accents etc.
-const intSortArray = (lang) => {
+export const intSortArray = (lang) => {
   const { compare } = new Intl.Collator(lang)
   // Remove special characters in front, case-insensitive
   const normalize = (string) => string.replace(/^[$\\]+/g, '').toUpperCase()
@@ -53,12 +50,12 @@ const intSortArray = (lang) => {
 
 // Create an object of symbols, protecting it from code manglers
 // (e.g. { SYMBOL: "SYMBOL" })
-const makeSymbolObj = (symbolList = []) =>
+export const makeSymbolObj = (symbolList = []) =>
   symbolList.reduce((acc, symbol) => ({ ...acc, [symbol]: symbol }), {})
 
-const parseContentId = (contentId) => contentId.split('#')
+export const parseContentId = (contentId) => contentId.split('#')
 
-const parseLink = (href) => {
+export const parseLink = (href) => {
   if (href.startsWith('/page/')) {
     return ['page', href.slice(6)]
   }
@@ -69,25 +66,12 @@ const parseLink = (href) => {
 }
 
 // Normalize language code to 2 letters (e.g. 'en-US' -> 'en').
-const toTwoLetterCode = (lang) => (lang.length > 2 ? lang.substring(0, 2) : lang)
+export const toTwoLetterCode = (lang) => (lang.length > 2 ? lang.substring(0, 2) : lang)
 
 // Unwraps all Paras in a list of content elements
-const unwrapPara = (content) => {
+export const unwrapPara = (content) => {
   if (content.length === 1) {
     return content[0].t === 'Para' ? content[0].c : content
   }
   return content.map((item) => (item.t === 'Para' ? item.c : item))
-}
-
-export {
-  astToString,
-  attributesToObject,
-  getClassNameToComponentMapper,
-  getNumberedTitle,
-  intSortArray,
-  makeSymbolObj,
-  parseContentId,
-  parseLink,
-  toTwoLetterCode,
-  unwrapPara,
 }

@@ -4,7 +4,7 @@ import { Result } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
 import { userLoggedOut } from '@innodoc/client-store/src/actions/user'
-import { logoutUser } from '@innodoc/client-misc/src/api'
+import api from '@innodoc/client-misc'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import useRequireLogin from '../../hooks/useRequireLogin'
@@ -30,8 +30,8 @@ jest.mock('react-redux', () => ({
   },
 }))
 
-jest.mock('@innodoc/client-misc/src/api', () => ({
-  logoutUser: jest.fn(),
+jest.mock('@innodoc/client-misc', () => ({
+  api: { logoutUser: jest.fn() },
 }))
 
 jest.mock('../Layout', () => ({ children }) => <>{children}</>)
@@ -56,9 +56,9 @@ describe('<LogoutPage />', () => {
 
   it('should render with successful logout', async () => {
     expect.assertions(5)
-    logoutUser.mockResolvedValue()
+    api.logoutUser.mockResolvedValue()
     const wrapper = mount(<LogoutPage />)
-    expect(logoutUser).toBeCalledWith('http://app.example.com/', '123csrftoken')
+    expect(api.logoutUser).toBeCalledWith('123csrftoken')
     await waitForComponent(wrapper)
     expect(mockDispatch).toBeCalledWith(userLoggedOut())
     const result = wrapper.find(Result)
@@ -69,9 +69,9 @@ describe('<LogoutPage />', () => {
 
   it('should render with failed logout', async () => {
     expect.assertions(5)
-    logoutUser.mockRejectedValue()
+    api.logoutUser.mockRejectedValue()
     const wrapper = mount(<LogoutPage />)
-    expect(logoutUser).toBeCalledWith('http://app.example.com/', '123csrftoken')
+    expect(api.logoutUser).toBeCalledWith('123csrftoken')
     await waitForComponent(wrapper)
     expect(mockDispatch).not.toBeCalled()
     const result = wrapper.find(Result)

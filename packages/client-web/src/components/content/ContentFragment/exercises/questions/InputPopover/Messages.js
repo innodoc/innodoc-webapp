@@ -1,10 +1,10 @@
 import React from 'react'
 import { Alert, Typography } from 'antd'
-
 import { Trans, useTranslation } from 'next-i18next'
-import { feedbackMessageType, feedbackMessagesType } from '@innodoc/client-misc/src/propTypes'
 
-import css from './style.sss'
+import { propTypes } from '@innodoc/client-misc'
+
+import css from './InputPopover.module.sss'
 
 const Message = ({ message }) => {
   const { t } = useTranslation()
@@ -27,7 +27,7 @@ const Message = ({ message }) => {
 }
 
 Message.propTypes = {
-  message: feedbackMessageType.isRequired,
+  message: propTypes.feedbackMessageType.isRequired,
 }
 
 const Messages = ({ messages }) =>
@@ -42,7 +42,7 @@ const Messages = ({ messages }) =>
   ) : null
 
 Messages.propTypes = {
-  messages: feedbackMessagesType.isRequired,
+  messages: propTypes.feedbackMessagesType.isRequired,
 }
 
 export { Message } // for testing

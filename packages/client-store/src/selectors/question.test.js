@@ -1,4 +1,5 @@
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
+
 import orm from '../orm'
 import questionSelectors from './question'
 
@@ -22,7 +23,7 @@ const dummyState = () => {
   })
   session.Question.create({
     answer: '42',
-    result: RESULT_VALUE.CORRECT,
+    result: constants.RESULT.CORRECT,
     id: 'foo/bar#Q01',
     exerciseId: 'foo/bar#E01',
     invalid: false,
@@ -35,7 +36,7 @@ describe('questionSelectors', () => {
     const state = dummyState()
     const question = questionSelectors.makeGetQuestion()(state, 'foo/bar#Q01')
     expect(question.answer).toBe('42')
-    expect(question.result).toBe(RESULT_VALUE.CORRECT)
+    expect(question.result).toBe(constants.RESULT.CORRECT)
     expect(question.id).toEqual('foo/bar#Q01')
     expect(question.invalid).toBe(false)
   })

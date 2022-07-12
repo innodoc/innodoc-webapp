@@ -5,7 +5,7 @@ import { Layout as AntLayout } from 'antd'
 
 import cookies from 'react-cookies'
 
-import { childrenType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 import { closeMessage } from '@innodoc/client-store/src/actions/ui'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import userMessageSelectors from '@innodoc/client-store/src/selectors/userMessage'
@@ -16,7 +16,7 @@ import Header from './Header'
 import MessageModal from './MessageModal'
 import Sidebar from './Sidebar'
 import Toc from '../Toc'
-import css from './style.sss'
+import css from './Layout.module.sss'
 
 const DATA_CONSENT_ACCESS_COOKIE = 'data-consent'
 
@@ -87,7 +87,7 @@ Layout.defaultProps = {
 }
 
 Layout.propTypes = {
-  children: childrenType,
+  children: propTypes.childrenType,
   disableSidebar: PropTypes.bool,
 }
 

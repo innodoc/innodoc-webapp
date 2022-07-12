@@ -2,10 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { CheckOutlined, FormOutlined, UndoOutlined } from '@ant-design/icons'
-
 import { useTranslation } from 'next-i18next'
-import { attributeType, contentType } from '@innodoc/client-misc/src/propTypes'
-import { getNumberedTitle } from '@innodoc/client-misc/src/util'
+
+import { propTypes, util } from '@innodoc/client-misc'
 import { resetExercise } from '@innodoc/client-store/src/actions/exercise'
 import exerciseSelectors from '@innodoc/client-store/src/selectors/exercise'
 import progressSelectors from '@innodoc/client-store/src/selectors/progress'
@@ -16,7 +15,7 @@ import Action from '../cards/Action'
 import Card from '../cards/Card'
 import FeedbackIcon from './questions/FeedbackIcon'
 import { ExerciseProvider } from './ExerciseContext'
-import css from './style.sss'
+import css from './ExerciseCard.module.sss'
 
 const ExerciseCard = ({ attributes, content, extra, id: exId }) => {
   const { t } = useTranslation()
@@ -67,7 +66,7 @@ const ExerciseCard = ({ attributes, content, extra, id: exId }) => {
         ]
       : []
 
-  const exTitle = getNumberedTitle(t('content.exercise.title'), attributes)
+  const exTitle = util.getNumberedTitle(t('content.exercise.title'), attributes)
   const title = showResult ? (
     <>
       {exTitle}
@@ -98,8 +97,8 @@ ExerciseCard.defaultProps = {
 }
 
 ExerciseCard.propTypes = {
-  attributes: attributeType.isRequired,
-  content: contentType.isRequired,
+  attributes: propTypes.attributeType.isRequired,
+  content: propTypes.contentType.isRequired,
   extra: PropTypes.node,
   id: PropTypes.string,
 }

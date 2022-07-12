@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { LockOutlined } from '@ant-design/icons'
 
-import { requestPasswordReset } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 import { useTranslation } from 'next-i18next'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
@@ -10,12 +10,13 @@ import { EmailField } from './formFields'
 import UserForm from './UserForm'
 
 const RequestPasswordResetForm = () => {
-  const { appRoot, csrfToken } = useSelector(appSelectors.getApp)
+  const { csrfToken } = useSelector(appSelectors.getApp)
   const { t } = useTranslation()
 
   const onFinish = useCallback(
     ({ email }, setDisabled, setMessage) =>
-      requestPasswordReset(appRoot, csrfToken, email)
+      api
+        .requestPasswordReset(csrfToken, email)
         .then(() =>
           setMessage({
             afterClose: () => setMessage(),
@@ -33,7 +34,7 @@ const RequestPasswordResetForm = () => {
           })
           setDisabled(false)
         }),
-    [appRoot, csrfToken, t]
+    [csrfToken, t]
   )
 
   return (

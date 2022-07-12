@@ -1,7 +1,7 @@
 import React from 'react'
 import { Typography } from 'antd'
 
-import { contentType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 
 import ContentFragment from '..'
 
@@ -10,6 +10,6 @@ const Para = ({ data }) => (
     <ContentFragment content={data} />
   </Typography.Paragraph>
 )
-Para.propTypes = { data: contentType.isRequired }
+Para.propTypes = { data: propTypes.contentType.isRequired }
 
 export default Para

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Typography } from 'antd'
 
-import { contentType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 
 import ContentFragment from '..'
 
@@ -11,6 +11,6 @@ const Strong = ({ data }) => (
   </Typography.Text>
 )
 
-Strong.propTypes = { data: contentType.isRequired }
+Strong.propTypes = { data: propTypes.contentType.isRequired }
 
 export default Strong

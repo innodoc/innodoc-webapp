@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 
-import { requestVerification } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 
 import RequestVerificationForm from './RequestVerificationForm'
 import UserForm from './UserForm'
@@ -16,8 +16,8 @@ jest.mock('react-redux', () => ({
   }),
 }))
 
-jest.mock('@innodoc/client-misc/src/api', () => ({
-  requestVerification: jest.fn(),
+jest.mock('@innodoc/client-misc', () => ({
+  api: { requestVerification: jest.fn() },
 }))
 
 describe('<RequestVerificationForm />', () => {
@@ -40,18 +40,14 @@ describe('<RequestVerificationForm />', () => {
 
   it('should render with successful verification request', async () => {
     expect.assertions(3)
-    requestVerification.mockResolvedValue()
+    api.requestVerification.mockResolvedValue()
     const wrapper = mount(<RequestVerificationForm />)
     wrapper.find(UserForm).invoke('onFinish')(
       { email: 'alice@example.com' },
       setDisabled,
       setMessage
     )
-    expect(requestVerification).toBeCalledWith(
-      'http://app.example.com/',
-      '123csrftoken',
-      'alice@example.com'
-    )
+    expect(api.requestVerification).toBeCalledWith('123csrftoken', 'alice@example.com')
     await waitForComponent(wrapper)
     expect(setMessage.mock.calls[0][0].level).toBe('success')
     expect(setDisabled).not.toBeCalled()
@@ -59,18 +55,14 @@ describe('<RequestVerificationForm />', () => {
 
   it('should render with failed verification request', async () => {
     expect.assertions(3)
-    requestVerification.mockRejectedValue()
+    api.requestVerification.mockRejectedValue()
     const wrapper = mount(<RequestVerificationForm />)
     wrapper.find(UserForm).invoke('onFinish')(
       { email: 'alice@example.com' },
       setDisabled,
       setMessage
     )
-    expect(requestVerification).toBeCalledWith(
-      'http://app.example.com/',
-      '123csrftoken',
-      'alice@example.com'
-    )
+    expect(api.requestVerification).toBeCalledWith('123csrftoken', 'alice@example.com')
     await waitForComponent(wrapper)
     expect(setMessage.mock.calls[0][0].level).toBe('error')
     expect(setDisabled).toBeCalledWith(false)

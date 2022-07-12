@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import Question from './Question'
@@ -42,7 +42,7 @@ describe('<Question />', () => {
   beforeEach(() => {
     mockQuestion = {
       answer: '42',
-      result: RESULT_VALUE.NEUTRAL,
+      result: constants.RESULT.NEUTRAL,
       messages: [],
       latexCode: '42',
       invalid: false,
@@ -53,8 +53,8 @@ describe('<Question />', () => {
   })
 
   it.each([
-    ['correct', RESULT_VALUE.CORRECT],
-    ['incorrect', RESULT_VALUE.INCORRECT],
+    ['correct', constants.RESULT.CORRECT],
+    ['incorrect', constants.RESULT.INCORRECT],
   ])('should render %s', (correct, result) => {
     mockQuestion = { ...mockQuestion, answer: '42', result }
     const wrapper = mount(
@@ -68,7 +68,7 @@ describe('<Question />', () => {
     const cssCls = correct === 'correct' ? css.correct : css.incorrect
     expect(inputQuestion.hasClass(cssCls)).toBe(true)
     const IconComp = () => inputQuestion.prop('icon')
-    expect(shallow(<IconComp />).prop('isCorrect')).toBe(result === RESULT_VALUE.CORRECT)
+    expect(shallow(<IconComp />).prop('isCorrect')).toBe(result === constants.RESULT.CORRECT)
     expect(inputQuestion.prop('showResult')).toBe(true)
     expect(inputQuestion.prop('value')).toBe('42')
   })
@@ -103,12 +103,12 @@ describe('<Question />', () => {
 
   describe('showResult', () => {
     it.each([
-      [true, RESULT_VALUE.NEUTRAL],
-      [true, RESULT_VALUE.CORRECT],
-      [true, RESULT_VALUE.INCORRECT],
-      [false, RESULT_VALUE.NEUTRAL],
-      [false, RESULT_VALUE.CORRECT],
-      [false, RESULT_VALUE.INCORRECT],
+      [true, constants.RESULT.NEUTRAL],
+      [true, constants.RESULT.CORRECT],
+      [true, constants.RESULT.INCORRECT],
+      [false, constants.RESULT.NEUTRAL],
+      [false, constants.RESULT.CORRECT],
+      [false, constants.RESULT.INCORRECT],
     ])('should indicate result (showResult=%s, result=%s)', (showResult, result) => {
       mockQuestion = { ...mockQuestion, result }
       mockShowResult = showResult
@@ -122,9 +122,9 @@ describe('<Question />', () => {
       const IconComp = () => inputQuestion.prop('icon')
       const iconIsCorrect = shallow(<IconComp />).prop('isCorrect')
       if (showResult) {
-        expect(iconIsCorrect).toBe(result === RESULT_VALUE.CORRECT)
-        expect(inputQuestion.hasClass(css.correct)).toBe(result === RESULT_VALUE.CORRECT)
-        expect(inputQuestion.hasClass(css.incorrect)).toBe(result === RESULT_VALUE.INCORRECT)
+        expect(iconIsCorrect).toBe(result === constants.RESULT.CORRECT)
+        expect(inputQuestion.hasClass(css.correct)).toBe(result === constants.RESULT.CORRECT)
+        expect(inputQuestion.hasClass(css.incorrect)).toBe(result === constants.RESULT.INCORRECT)
       } else {
         expect(iconIsCorrect).toBeNull()
         expect(inputQuestion.hasClass(css.correct)).toBe(false)

@@ -1,4 +1,4 @@
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
 
 global.createTests = (name, validatorFunc, cases) => {
   const defaultAttrs = {
@@ -10,7 +10,7 @@ global.createTests = (name, validatorFunc, cases) => {
   describe(name, () => {
     it('should return neutral result for empty string', () => {
       const [result, messages] = validatorFunc('', '', defaultAttrs)
-      expect(result).toBe(RESULT_VALUE.NEUTRAL)
+      expect(result).toBe(constants.RESULT.NEUTRAL)
       expect(messages).toHaveLength(1)
       expect(messages[0].msg).toBe('still-incorrect-answer')
     })
@@ -38,7 +38,7 @@ global.createTests = (name, validatorFunc, cases) => {
             const expLatexStr = typeof expLatex !== 'undefined' ? ` (${expLatex})` : ''
             test(`✓ "${input}${expMessagesStr}${expLatexStr}"`, () => {
               const [result, messages, latex] = validatorFunc(input, solution, attrs)
-              expect(result).toBe(RESULT_VALUE.CORRECT)
+              expect(result).toBe(constants.RESULT.CORRECT)
               if (expLatex !== null) {
                 expect(latex).toBe(expLatex)
               }
@@ -51,7 +51,7 @@ global.createTests = (name, validatorFunc, cases) => {
             const expLatexStr = expLatex ? ` (${expLatex})` : ''
             test(`✕ "${inp}" (${expMessages})${expLatexStr}`, () => {
               const [result, messages, latex] = validatorFunc(inp, solution, attrs)
-              expect(result).toBe(RESULT_VALUE.INCORRECT)
+              expect(result).toBe(constants.RESULT.INCORRECT)
               if (expLatex !== null) {
                 expect(latex).toBe(expLatex)
               }

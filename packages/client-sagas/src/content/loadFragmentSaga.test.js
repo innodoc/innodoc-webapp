@@ -11,7 +11,7 @@ import {
 } from '@innodoc/client-store/src/actions/content'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import fragmentSelectors from '@innodoc/client-store/src/selectors/fragment'
-import { fetchFragment } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 
 import loadFragmentSaga from './loadFragmentSaga'
 
@@ -25,13 +25,13 @@ describe('loadFragmentSaga', () => {
   const defaultProvides = [
     [select(appSelectors.getApp), { language, contentRoot }],
     [select(fragmentSelectors.getFragment, contentId), { id: 0, content: {} }],
-    [matchers.call.fn(fetchFragment), fetchedContent[language]],
+    [matchers.call.fn(api.fetchFragment), fetchedContent[language]],
   ]
 
   it('should fetch content', () =>
     expectSaga(loadFragmentSaga, loadFragment(contentId))
       .provide(defaultProvides)
-      .call(fetchFragment, contentRoot, language, contentId)
+      .call(api.fetchFragment, contentRoot, language, contentId)
       .put(
         loadFragmentSuccess({
           language,
@@ -45,7 +45,7 @@ describe('loadFragmentSaga', () => {
   it('should get content from cache', () =>
     expectSaga(loadFragmentSaga, loadFragment(contentId))
       .provide([[select(fragmentSelectors.getFragment, contentId), fragment], ...defaultProvides])
-      .not.call.fn(fetchFragment)
+      .not.call.fn(api.fetchFragment)
       .put(
         loadFragmentSuccess({
           language,
@@ -58,7 +58,7 @@ describe('loadFragmentSaga', () => {
   it('should put loadFragmentFailure if fetch fails', () => {
     const error = new Error('mock error')
     return expectSaga(loadFragmentSaga, loadFragment(contentId))
-      .provide([[matchers.call.fn(fetchFragment), throwError(error)], ...defaultProvides])
+      .provide([[matchers.call.fn(api.fetchFragment), throwError(error)], ...defaultProvides])
       .put(loadFragmentFailure(error))
       .not.put.actionType(actionTypes.LOAD_FRAGMENT_SUCCESS)
       .run()

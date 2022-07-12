@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 
-import { checkEmail, registerUser } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 import { showMessage } from '@innodoc/client-store/src/actions/ui'
 
 import RegistrationForm from './RegistrationForm'
@@ -18,9 +18,11 @@ jest.mock('react-redux', () => ({
   }),
 }))
 
-jest.mock('@innodoc/client-misc/src/api', () => ({
-  checkEmail: jest.fn(),
-  registerUser: jest.fn(),
+jest.mock('@innodoc/client-misc', () => ({
+  api: {
+    checkEmail: jest.fn(),
+    registerUser: jest.fn(),
+  },
 }))
 
 describe('<RegistrationForm />', () => {
@@ -53,7 +55,7 @@ describe('<RegistrationForm />', () => {
   describe('email validation', () => {
     it('should validate email if not already used', async () => {
       expect.assertions(3)
-      checkEmail.mockResolvedValue(true)
+      api.checkEmail.mockResolvedValue(true)
       const rule = shallow(<RegistrationForm />)
         .find(UserForm)
         .renderProp('children')(false)
@@ -61,33 +63,25 @@ describe('<RegistrationForm />', () => {
         .prop('rules')[0]
       expect(rule.validateTrigger).toBe('onFinish')
       await expect(rule.validator(rule, 'alice@example.com')).resolves.toBe(true)
-      expect(checkEmail).toBeCalledWith(
-        'http://app.example.com/',
-        '123csrftoken',
-        'alice@example.com'
-      )
+      expect(api.checkEmail).toBeCalledWith('123csrftoken', 'alice@example.com')
     })
 
     it('should not validate email if already used', async () => {
       expect.assertions(2)
-      checkEmail.mockRejectedValue(new Error())
+      api.checkEmail.mockRejectedValue(new Error())
       const rule = shallow(<RegistrationForm />)
         .find(UserForm)
         .renderProp('children')(false)
         .childAt(0)
         .prop('rules')[0]
       await expect(rule.validator(rule, 'alice@example.com')).rejects.toThrow()
-      expect(checkEmail).toBeCalledWith(
-        'http://app.example.com/',
-        '123csrftoken',
-        'alice@example.com'
-      )
+      expect(api.checkEmail).toBeCalledWith('123csrftoken', 'alice@example.com')
     })
   })
 
   it('should render with successful registration', async () => {
     expect.assertions(4)
-    registerUser.mockResolvedValue()
+    api.registerUser.mockResolvedValue()
     const wrapper = mount(<RegistrationForm />)
     wrapper.find(UserForm).invoke('onFinish')(
       {
@@ -97,12 +91,7 @@ describe('<RegistrationForm />', () => {
       setDisabled,
       setMessage
     )
-    expect(registerUser).toBeCalledWith(
-      'http://app.example.com/',
-      '123csrftoken',
-      'alice@example.com',
-      's3cr3t'
-    )
+    expect(api.registerUser).toBeCalledWith('123csrftoken', 'alice@example.com', 's3cr3t')
     await waitForComponent(wrapper)
     expect(setMessage).not.toBeCalled()
     expect(setDisabled).not.toBeCalled()
@@ -117,7 +106,7 @@ describe('<RegistrationForm />', () => {
 
   it('should render with failed registration', async () => {
     expect.assertions(4)
-    registerUser.mockRejectedValue(new Error('mock error'))
+    api.registerUser.mockRejectedValue(new Error('mock error'))
     const wrapper = mount(<RegistrationForm />)
     wrapper.find(UserForm).invoke('onFinish')(
       {
@@ -127,12 +116,7 @@ describe('<RegistrationForm />', () => {
       setDisabled,
       setMessage
     )
-    expect(registerUser).toBeCalledWith(
-      'http://app.example.com/',
-      '123csrftoken',
-      'alice@example.com',
-      's3cr3t'
-    )
+    expect(api.registerUser).toBeCalledWith('123csrftoken', 'alice@example.com', 's3cr3t')
     await waitForComponent(wrapper)
     expect(setMessage.mock.calls[0][0].level).toBe('error')
     expect(setDisabled).toBeCalledWith(false)

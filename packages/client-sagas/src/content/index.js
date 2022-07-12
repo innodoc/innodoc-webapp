@@ -10,9 +10,10 @@ import {
 import { actionTypes as i18nActionTypes } from '@innodoc/client-store/src/actions/i18n'
 import pageSelectors from '@innodoc/client-store/src/selectors/page'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
-import { fetchPage, fetchSection } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 
 import changeLanguageSaga from './changeLanguageSaga'
+import changeCourseSaga from './changeCourseSaga'
 import loadFragmentSaga from './loadFragmentSaga'
 import makeLoadContentSaga from './makeLoadContentSaga'
 import loadManifestSaga from './loadManifestSaga'
@@ -25,7 +26,7 @@ const loadPageSaga = makeLoadContentSaga(
   pageSelectors.getPage,
   loadPageSuccess,
   loadPageFailure,
-  fetchPage
+  api.fetchPage
 )
 
 const loadSectionSaga = makeLoadContentSaga(
@@ -34,7 +35,7 @@ const loadSectionSaga = makeLoadContentSaga(
   sectionSelectors.getSection,
   loadSectionSuccess,
   loadSectionFailure,
-  fetchSection
+  api.fetchSection
 )
 
 export default [
@@ -44,5 +45,6 @@ export default [
   takeLeading(contentActionTypes.LOAD_MANIFEST_FAILURE, loadManifestFailureSaga),
   takeLeading(contentActionTypes.LOAD_PAGE, loadPageSaga),
   takeLeading(contentActionTypes.LOAD_SECTION, loadSectionSaga),
+  takeLeading(contentActionTypes.CHANGE_COURSE, changeCourseSaga),
   takeLeading(i18nActionTypes.CHANGE_LANGUAGE, changeLanguageSaga),
 ]

@@ -5,7 +5,7 @@ import { Alert } from 'antd'
 import { useTranslation } from 'next-i18next'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import progressSelectors from '@innodoc/client-store/src/selectors/progress'
-import css from './style.sss'
+import css from './Progress.module.sss'
 
 import ChapterCard from './ChapterCard'
 

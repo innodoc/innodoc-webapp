@@ -1,6 +1,6 @@
 import { createSelector } from 'redux-orm'
 
-import { parseContentId } from '@innodoc/client-misc/src/util'
+import { util } from '@innodoc/client-misc'
 
 import orm from '../orm'
 
@@ -9,7 +9,7 @@ const getApp = createSelector(orm, (session) => session.App.first().ref)
 const selectId = (state, id) => id
 
 const selectLinkInfo = (state, contentIdHash) => {
-  const [contentId, hash] = parseContentId(contentIdHash)
+  const [contentId, hash] = util.parseContentId(contentIdHash)
   return { hash, contentId }
 }
 

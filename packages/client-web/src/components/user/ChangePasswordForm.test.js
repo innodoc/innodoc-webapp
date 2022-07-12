@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 
-import { changePassword } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 
 import ChangePasswordForm from './ChangePasswordForm'
 import UserForm from './UserForm'
@@ -16,8 +16,8 @@ jest.mock('react-redux', () => ({
   }),
 }))
 
-jest.mock('@innodoc/client-misc/src/api', () => ({
-  changePassword: jest.fn(),
+jest.mock('@innodoc/client-misc', () => ({
+  api: { changePassword: jest.fn() },
 }))
 
 describe('<ChangePasswordForm />', () => {
@@ -49,7 +49,7 @@ describe('<ChangePasswordForm />', () => {
 
   it('should render with successful password change', async () => {
     expect.assertions(3)
-    changePassword.mockResolvedValue()
+    api.changePassword.mockResolvedValue()
     const wrapper = mount(<ChangePasswordForm />)
     wrapper.find(UserForm).invoke('onFinish')(
       {
@@ -59,12 +59,7 @@ describe('<ChangePasswordForm />', () => {
       setDisabled,
       setMessage
     )
-    expect(changePassword).toBeCalledWith(
-      'http://app.example.com/',
-      '123csrftoken',
-      's3cr3t',
-      'old_s3cr3t'
-    )
+    expect(api.changePassword).toBeCalledWith('123csrftoken', 's3cr3t', 'old_s3cr3t')
     await waitForComponent(wrapper)
     expect(setMessage.mock.calls[0][0].level).toBe('success')
     expect(setDisabled).not.toBeCalled()
@@ -72,7 +67,7 @@ describe('<ChangePasswordForm />', () => {
 
   it('should render with failed password change', async () => {
     expect.assertions(3)
-    changePassword.mockRejectedValue()
+    api.changePassword.mockRejectedValue()
     const wrapper = mount(<ChangePasswordForm />)
     wrapper.find(UserForm).invoke('onFinish')(
       {
@@ -82,12 +77,7 @@ describe('<ChangePasswordForm />', () => {
       setDisabled,
       setMessage
     )
-    expect(changePassword).toBeCalledWith(
-      'http://app.example.com/',
-      '123csrftoken',
-      's3cr3t',
-      'wrong_s3cr3t'
-    )
+    expect(api.changePassword).toBeCalledWith('123csrftoken', 's3cr3t', 'wrong_s3cr3t')
     await waitForComponent(wrapper)
     expect(setMessage.mock.calls[0][0].level).toBe('error')
     expect(setDisabled).toBeCalledWith(false)

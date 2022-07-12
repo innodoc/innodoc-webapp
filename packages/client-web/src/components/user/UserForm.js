@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Alert, Button, Form } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
-import { childrenType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 
 const UserForm = ({
   children,
@@ -77,7 +77,7 @@ UserForm.defaultProps = {
 
 UserForm.propTypes = {
   children: PropTypes.func.isRequired,
-  extra: childrenType,
+  extra: propTypes.childrenType,
   hide: PropTypes.bool,
   labelCol: PropTypes.objectOf(PropTypes.any),
   name: PropTypes.string.isRequired,

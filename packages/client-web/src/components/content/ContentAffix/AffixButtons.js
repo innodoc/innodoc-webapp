@@ -9,7 +9,7 @@ import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 import SidebarToggleButton from '../../Layout/Sidebar/ToggleButton'
 import { SectionLink } from '../links'
 
-import css from './style.sss'
+import css from './ContentAffix.module.sss'
 
 const SectionButton = ({ direction, sectionId }) => {
   const icon = direction === 'left' ? <ArrowLeftOutlined /> : <ArrowRightOutlined />

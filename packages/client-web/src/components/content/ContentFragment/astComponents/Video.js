@@ -6,7 +6,7 @@ import { Typography } from 'antd'
 import { useTranslation } from 'next-i18next'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
-import css from './style.sss'
+import css from './ast.module.sss'
 
 const StaticVideo = ({ src }) => {
   const { staticRoot } = useSelector(appSelectors.getApp)

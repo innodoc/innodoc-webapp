@@ -1,7 +1,7 @@
 // TODO: do we need to support multiple solutions? (like "foo,bar")
 // this is specified in mintmod, check tub_math it is actually used
 
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
 
 const equality = (input, solution) => {
   let ok
@@ -9,12 +9,12 @@ const equality = (input, solution) => {
 
   if (input === '') {
     messages.push({ msg: 'still-incorrect-answer', type: 'error' })
-    ok = RESULT_VALUE.NEUTRAL
+    ok = constants.RESULT.NEUTRAL
   } else if (input === solution) {
-    ok = RESULT_VALUE.CORRECT
+    ok = constants.RESULT.CORRECT
     messages.push({ msg: 'correct-answer', type: 'success' })
   } else {
-    ok = RESULT_VALUE.INCORRECT
+    ok = constants.RESULT.INCORRECT
     messages.push({ msg: 'still-incorrect-answer', type: 'error' })
   }
 

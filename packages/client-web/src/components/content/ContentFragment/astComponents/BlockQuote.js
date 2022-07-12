@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { contentType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 
-import css from './style.sss'
+import css from './ast.module.sss'
 import ContentFragment from '..'
 
 const BlockQuote = ({ data }) => (
@@ -11,6 +11,6 @@ const BlockQuote = ({ data }) => (
   </blockquote>
 )
 
-BlockQuote.propTypes = { data: contentType.isRequired }
+BlockQuote.propTypes = { data: propTypes.contentType.isRequired }
 
 export default BlockQuote

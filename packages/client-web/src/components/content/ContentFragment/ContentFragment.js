@@ -5,7 +5,7 @@
 
 import React from 'react'
 
-import { contentType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 import {
   BlockQuote,
   BulletList,
@@ -77,6 +77,6 @@ const ContentFragment = ({ content }) => {
   }
   return output
 }
-ContentFragment.propTypes = { content: contentType.isRequired }
+ContentFragment.propTypes = { content: propTypes.contentType.isRequired }
 
 export default ContentFragment

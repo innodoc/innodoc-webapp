@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 
-import { resetPassword } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 
 import ResetPasswordForm from './ResetPasswordForm'
 import UserForm from './UserForm'
@@ -9,14 +9,11 @@ import UserForm from './UserForm'
 jest.mock('@innodoc/common/src/i18n')
 
 jest.mock('react-redux', () => ({
-  useSelector: () => ({
-    appRoot: 'http://app.example.com/',
-    csrfToken: '123csrftoken',
-  }),
+  useSelector: () => ({ csrfToken: '123csrftoken' }),
 }))
 
-jest.mock('@innodoc/client-misc/src/api', () => ({
-  resetPassword: jest.fn(),
+jest.mock('@innodoc/client-misc', () => ({
+  api: { resetPassword: jest.fn() },
 }))
 
 describe('<ResetPasswordForm />', () => {
@@ -44,15 +41,10 @@ describe('<ResetPasswordForm />', () => {
 
   it('should render with successful password reset', async () => {
     expect.assertions(3)
-    resetPassword.mockResolvedValue()
+    api.resetPassword.mockResolvedValue()
     const wrapper = mount(<ResetPasswordForm token="123token" />)
     wrapper.find(UserForm).invoke('onFinish')({ password: 's3cr3t' }, setDisabled, setMessage)
-    expect(resetPassword).toBeCalledWith(
-      'http://app.example.com/',
-      '123csrftoken',
-      's3cr3t',
-      '123token'
-    )
+    expect(api.resetPassword).toBeCalledWith('123csrftoken', 's3cr3t', '123token')
     await waitForComponent(wrapper)
     expect(setMessage.mock.calls[0][0].level).toBe('success')
     expect(setDisabled).not.toBeCalled()
@@ -60,15 +52,10 @@ describe('<ResetPasswordForm />', () => {
 
   it('should render with failed password reset', async () => {
     expect.assertions(3)
-    resetPassword.mockRejectedValue()
+    api.resetPassword.mockRejectedValue()
     const wrapper = mount(<ResetPasswordForm token="123token" />)
     wrapper.find(UserForm).invoke('onFinish')({ password: 's3cr3t' }, setDisabled, setMessage)
-    expect(resetPassword).toBeCalledWith(
-      'http://app.example.com/',
-      '123csrftoken',
-      's3cr3t',
-      '123token'
-    )
+    expect(api.resetPassword).toBeCalledWith('123csrftoken', 's3cr3t', '123token')
     await waitForComponent(wrapper)
     expect(setMessage.mock.calls[0][0].level).toBe('error')
     expect(setDisabled).toBeCalledWith(false)

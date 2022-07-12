@@ -1,6 +1,6 @@
 /* eslint no-bitwise: "off" */
 
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
 
 import { convertMathInput, mathJS, mathJSFunctions, rawParse, withinDistance } from './util'
 
@@ -169,7 +169,7 @@ const func = (input, solution, attrs) => {
 
   if (input === '') {
     messages.push({ msg: 'still-incorrect-answer', type: 'error' })
-    return [RESULT_VALUE.NEUTRAL, messages]
+    return [constants.RESULT.NEUTRAL, messages]
   }
 
   // Doing check here, otherwise math.js would choke on '|'
@@ -179,7 +179,7 @@ const func = (input, solution, attrs) => {
       interp: { got: '|…|', need: 'abs(…)' },
       type: 'warning',
     })
-    return [RESULT_VALUE.INCORRECT, messages]
+    return [constants.RESULT.INCORRECT, messages]
   }
 
   const varia = attrs.variables.split(',')
@@ -187,7 +187,7 @@ const func = (input, solution, attrs) => {
   const simplification =
     typeof attrs.simplification === 'string' ? attrs.simplification.split(',') : []
 
-  let ok = RESULT_VALUE.CORRECT
+  let ok = constants.RESULT.CORRECT
 
   let rt
   let solcode
@@ -206,7 +206,7 @@ const func = (input, solution, attrs) => {
     valcode = mathJS.compile(inputRt.mathjs)
   } catch (e) {
     messages.push({ msg: 'malformed-input', type: 'error' })
-    return [RESULT_VALUE.INCORRECT, messages]
+    return [constants.RESULT.INCORRECT, messages]
   }
 
   let c1
@@ -262,7 +262,7 @@ const func = (input, solution, attrs) => {
       const ed = rawParse(pd)
 
       if (!withinDistance(ed, 0, precision)) {
-        ok = RESULT_VALUE.INCORRECT
+        ok = constants.RESULT.INCORRECT
         fini = true
         messages.push({ msg: 'still-incorrect-answer', type: 'error' })
       }
@@ -286,11 +286,11 @@ const func = (input, solution, attrs) => {
       }
     }
 
-    if (ok === RESULT_VALUE.CORRECT) {
+    if (ok === constants.RESULT.CORRECT) {
       messages.push({ msg: 'correct-answer', type: 'success' })
     }
   } catch (e) {
-    ok = RESULT_VALUE.INCORRECT
+    ok = constants.RESULT.INCORRECT
     messages.push({ msg: 'malformed-input', type: 'error' })
   }
 
@@ -301,7 +301,7 @@ const func = (input, solution, attrs) => {
     }
     messages.push(msg)
     if (['error', 'warning'].includes(message.type)) {
-      ok = RESULT_VALUE.INCORRECT
+      ok = constants.RESULT.INCORRECT
     }
   })
 

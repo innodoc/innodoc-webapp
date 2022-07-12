@@ -14,8 +14,10 @@
     "directory": "packages/client-misc"
   },
   "license": "GPL-3.0-or-later",
+  "type": "module",
+  "exports": "./src/index.js",
   "dependencies": {
-    "isomorphic-unfetch": "^3.1.0",
+    "camelcase-keys": "^8.0.1",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {

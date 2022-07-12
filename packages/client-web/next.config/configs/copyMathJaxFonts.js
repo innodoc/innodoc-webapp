@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require('fs').promises
 const path = require('path')
 
 const fontFiles = [
@@ -27,32 +27,40 @@ const fontFiles = [
   'MathJax_Zero.woff',
 ]
 
-const match = /^(.+\.zip)\//.exec(require.resolve('mathjax-full'))
-if (!match) {
-  throw new Error('Could not find ZIP package for mathjax-full.')
-}
+const outputPath = path.resolve(__dirname, '..', '..', 'src', 'public', 'fonts', 'mathjax-woff-v2')
 
-const outputPath = path.resolve(__dirname, '..', 'src', 'public', 'fonts', 'mathjax-woff-v2')
-try {
-  fs.mkdirSync(outputPath)
-} catch (err) {
-  if (!err.message.match('EEXIST')) {
-    throw err
+module.exports = async (phase, config) => {
+  const match = /^(.+\.zip)\//.exec(require.resolve('mathjax-full'))
+  if (!match) {
+    throw new Error('Could not find mathjax-full package.')
   }
-}
 
-fontFiles.forEach((file) => {
-  const filePath = path.join(
-    match[1],
-    'node_modules',
-    'mathjax-full',
-    'es5',
-    'output',
-    'chtml',
-    'fonts',
-    'woff-v2',
-    file
+  try {
+    await fs.mkdir(outputPath)
+  } catch (err) {
+    if (!err.message.match('EEXIST')) {
+      throw err
+    }
+  }
+
+  await Promise.all(
+    fontFiles.map((file) =>
+      fs.copyFile(
+        path.join(
+          match[1],
+          'node_modules',
+          'mathjax-full',
+          'es5',
+          'output',
+          'chtml',
+          'fonts',
+          'woff-v2',
+          file
+        ),
+        path.join(outputPath, file)
+      )
+    )
   )
-  const buffer = fs.readFileSync(filePath)
-  fs.writeFileSync(path.join(outputPath, file), buffer)
-})
+
+  return config
+}

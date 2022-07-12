@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { contentType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 
 import ContentFragment from '..'
 
@@ -10,6 +10,6 @@ const Emph = ({ data }) => (
   </em>
 )
 
-Emph.propTypes = { data: contentType.isRequired }
+Emph.propTypes = { data: propTypes.contentType.isRequired }
 
 export default Emph

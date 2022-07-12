@@ -3,7 +3,7 @@ import { call, put, select } from 'redux-saga/effects'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import fragmentSelectors from '@innodoc/client-store/src/selectors/fragment'
 import { loadFragmentFailure, loadFragmentSuccess } from '@innodoc/client-store/src/actions/content'
-import { fetchFragment } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 
 export default function* loadFragmentSaga({ contentId }) {
   const { contentRoot, language } = yield select(appSelectors.getApp)
@@ -20,7 +20,7 @@ export default function* loadFragmentSaga({ contentId }) {
       )
     } else {
       // Fetch from remote
-      const content = yield call(fetchFragment, contentRoot, language, contentId)
+      const content = yield call(api.fetchFragment, contentRoot, language, contentId)
       yield put(
         loadFragmentSuccess({
           language,

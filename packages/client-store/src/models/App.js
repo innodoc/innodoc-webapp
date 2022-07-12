@@ -38,6 +38,7 @@ export default class App extends Model {
           break
 
         case contentActionTypes.CHANGE_COURSE:
+          console.log('App: CHANGE_COURSE', action)
           app.set('currentCourseId', action.course.id)
           break
 

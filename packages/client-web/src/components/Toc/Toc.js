@@ -9,7 +9,7 @@ import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import getTreeData from './getTreeData'
 import useAutoExpand from './useAutoExpand'
-import css from './style.sss'
+import css from './Toc.module.sss'
 
 const Toc = ({ expandAll }) => {
   const { t } = useTranslation()

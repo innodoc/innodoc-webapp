@@ -1,28 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
-import useServerContext from 'next-server-context/useServerContext.mjs'
+// import { useSelector } from 'react-redux'
+// import useServerContext from 'next-server-context/useServerContext.mjs'
 
 import MathJax from '@innodoc/react-mathjax-node'
 
-import appSelectors from '@innodoc/client-store/src/selectors'
+// import appSelectors from '@innodoc/client-store/src/selectors'
 
-import contentTypes from '../../lib/contentTypes'
+import contentTypes from '../../lib/content/contentTypes'
 import Layout from '../Layout'
-import ErrorPage from './ErrorPage'
+// import ErrorPage from './ErrorPage'
 
 const ContentPage = ({ contentType }) => {
-  const serverContext = useServerContext()
-  const { show404 } = useSelector(appSelectors.getApp)
+  // const serverContext = useServerContext()
+  // const { show404 } = useSelector(appSelectors.getApp)
 
-  if (show404) {
-    if (serverContext) {
-      serverContext.response.statusCode = 404
-    }
-    return <ErrorPage statusCode={404} />
-  }
+  // if (show404) {
+  //   if (serverContext) {
+  //     serverContext.response.statusCode = 404
+  //   }
+  //   return <ErrorPage statusCode={404} />
+  // }
 
   const [ContentComponent] = contentTypes[contentType]
+  console.log('ContentPage ContentComponent=', ContentComponent.name)
 
   return (
     <Layout>

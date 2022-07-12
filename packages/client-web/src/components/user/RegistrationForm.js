@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { UserAddOutlined } from '@ant-design/icons'
 
-import { checkEmail, registerUser } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 import { Trans, useTranslation } from 'next-i18next'
 import { showMessage } from '@innodoc/client-store/src/actions/ui'
 import appSelectors from '@innodoc/client-store/src/selectors'
@@ -12,13 +12,14 @@ import Link from '../Link'
 import UserForm from './UserForm'
 
 const RegistrationForm = () => {
-  const { appRoot, csrfToken } = useSelector(appSelectors.getApp)
+  const { csrfToken } = useSelector(appSelectors.getApp)
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
   const onFinish = useCallback(
     ({ email, password }, setDisabled, setMessage) =>
-      registerUser(appRoot, csrfToken, email, password)
+      api
+        .registerUser(csrfToken, email, password)
         .then(() =>
           dispatch(
             showMessage({
@@ -43,7 +44,7 @@ const RegistrationForm = () => {
           })
           setDisabled(false)
         }),
-    [appRoot, csrfToken, dispatch, t]
+    [csrfToken, dispatch, t]
   )
 
   const extra = (
@@ -80,9 +81,9 @@ const RegistrationForm = () => {
             rules={[
               {
                 validator: (rule, value) =>
-                  checkEmail(appRoot, csrfToken, value).catch(() =>
-                    Promise.reject(new Error(t('user.emailValidation.alreadyUsed')))
-                  ),
+                  api
+                    .checkEmail(csrfToken, value)
+                    .catch(() => Promise.reject(new Error(t('user.emailValidation.alreadyUsed')))),
                 validateTrigger: 'onFinish',
               },
             ]}

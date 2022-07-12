@@ -2,7 +2,7 @@ import React from 'react'
 import { mount, shallow } from 'enzyme'
 import { Result } from 'antd'
 
-import { loginUser } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
@@ -34,8 +34,8 @@ jest.mock('next/router', () => ({
   useRouter: () => ({ query: mockQuery }),
 }))
 
-jest.mock('@innodoc/client-misc/src/api', () => ({
-  loginUser: jest.fn(),
+jest.mock('@innodoc/client-misc', () => ({
+  api: { loginUser: jest.fn() },
 }))
 
 describe('<LoginForm />', () => {
@@ -63,7 +63,7 @@ describe('<LoginForm />', () => {
 
   it('should render with successful login', async () => {
     expect.assertions(6)
-    loginUser.mockResolvedValue()
+    api.loginUser.mockResolvedValue()
     const wrapper = mount(<LoginForm />)
     wrapper.find(UserForm).invoke('onFinish')(
       {
@@ -73,12 +73,7 @@ describe('<LoginForm />', () => {
       setDisabled,
       setMessage
     )
-    expect(loginUser).toBeCalledWith(
-      'http://app.example.com/',
-      '123csrftoken',
-      'alice@example.com',
-      's3cr3t'
-    )
+    expect(api.loginUser).toBeCalledWith('123csrftoken', 'alice@example.com', 's3cr3t')
     mockLoggedInEmail = 'alice@example.com'
     await waitForComponent(wrapper)
     wrapper.setProps({}) // force re-render
@@ -93,7 +88,7 @@ describe('<LoginForm />', () => {
   it('should render with failed login', async () => {
     expect.assertions(6)
     mockLoggedInEmail = undefined
-    loginUser.mockRejectedValue()
+    api.loginUser.mockRejectedValue()
     const wrapper = mount(<LoginForm />)
     wrapper.find(UserForm).invoke('onFinish')(
       {
@@ -103,12 +98,7 @@ describe('<LoginForm />', () => {
       setDisabled,
       setMessage
     )
-    expect(loginUser).toBeCalledWith(
-      'http://app.example.com/',
-      '123csrftoken',
-      'alice@example.com',
-      'wrongPwd'
-    )
+    expect(api.loginUser).toBeCalledWith('123csrftoken', 'alice@example.com', 'wrongPwd')
     await waitForComponent(wrapper)
     expect(mockDispatch).not.toBeCalled()
     expect(setMessage.mock.calls[0][0].level).toBe('error')
@@ -123,7 +113,7 @@ describe('<LoginForm />', () => {
     window.location.replace = jest.fn()
     mockQuery = { redirect_to: 'https://somewhere.com/' }
     expect.assertions(1)
-    loginUser.mockResolvedValue()
+    api.loginUser.mockResolvedValue()
     const wrapper = mount(<LoginForm />)
     wrapper.find(UserForm).invoke('onFinish')(
       {

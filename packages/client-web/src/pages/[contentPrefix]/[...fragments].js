@@ -1,16 +1,9 @@
 import ContentPage from '../../components/pages/ContentPage'
-import { getContentPaths, getContentProps } from '../../lib/contentProps'
-import serverBootstrap from '../../lib/serverBootstrap'
-import nextReduxWrapper from '../../store'
+import getStaticPaths from '../../lib/content/getStaticPaths'
+import getStaticContentProps from '../../lib/content/getStaticProps'
+import serverBootstap from '../../lib/serverBootstrap'
 
-export function getStaticPaths() {
-  return getContentPaths()
-}
+const getStaticProps = serverBootstap(getStaticContentProps)
 
-export const getStaticProps = nextReduxWrapper.getStaticProps((store) => async (context) => {
-  const props = await getContentProps(context, store)
-  await serverBootstrap(store)
-  return { props }
-})
-
+export { getStaticPaths, getStaticProps }
 export default ContentPage

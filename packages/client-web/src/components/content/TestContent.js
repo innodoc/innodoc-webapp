@@ -9,7 +9,7 @@ import progressSelectors from '@innodoc/client-store/src/selectors/progress'
 import { Trans, useTranslation } from 'next-i18next'
 
 import useIsMounted from '../../hooks/useIsMounted'
-import css from './style.sss'
+import css from './content.module.sss'
 
 const TestContent = ({ children, id }) => {
   const { t } = useTranslation()

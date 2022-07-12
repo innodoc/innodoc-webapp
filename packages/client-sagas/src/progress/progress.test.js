@@ -2,7 +2,7 @@ import { testSaga, expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
 import { debounce, select, takeEvery } from 'redux-saga/effects'
 
-import { persistProgress, fetchProgress } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 import { actionTypes as contentActionTypes } from '@innodoc/client-store/src/actions/content'
 import { actionTypes as exerciseActionTypes } from '@innodoc/client-store/src/actions/exercise'
 import { actionTypes as questionActionTypes } from '@innodoc/client-store/src/actions/question'
@@ -50,8 +50,8 @@ const defaultProvides = [
     },
   ],
   [select(progressSelectors.getPersistedProgress), mockProgress],
-  [matchers.call.fn(persistProgress), { result: 'ok' }],
-  [matchers.call.fn(fetchProgress), { result: 'ok', progress: mockProgress }],
+  [matchers.call.fn(api.persistProgress), { result: 'ok' }],
+  [matchers.call.fn(api.fetchProgress), { result: 'ok', progress: mockProgress }],
   [matchers.call.fn(JSON.parse), mockProgressLS],
   [matchers.call.fn(JSON.stringify), mockSerializedProgressLS],
   [matchers.call.fn(localStorage.getItem), mockSerializedProgressLS],
@@ -72,7 +72,7 @@ describe('persistSaga', () => {
   it('should persist to server if logged in', () =>
     expectSaga(persistSaga)
       .provide(defaultProvides)
-      .call(persistProgress, 'https://app.example.com/', 'csrfToken123!', mockProgress)
+      .call(api.persistProgress, 'csrfToken123!', mockProgress)
       .not.call.fn(JSON.stringify)
       .not.call.fn(localStorage.setItem)
       .run())
@@ -82,7 +82,7 @@ describe('persistSaga', () => {
       .provide(providesNotLoggedIn)
       .call([JSON, JSON.stringify], mockProgress)
       .call([localStorage, localStorage.setItem], LOCAL_STORAGE_KEY, mockSerializedProgressLS)
-      .not.call.fn(persistProgress)
+      .not.call.fn(api.persistProgress)
       .run())
 })
 
@@ -101,7 +101,7 @@ describe('restoreSaga', () => {
         )
       )
       // restore from server
-      .call(fetchProgress, 'https://app.example.com/')
+      .call(api.fetchProgress)
       .put(
         loadProgress(
           mockProgress.answeredQuestions,
@@ -125,7 +125,7 @@ describe('restoreSaga', () => {
           mockProgressLS.testScores
         )
       )
-      .call(fetchProgress, 'https://app.example.com/')
+      .call(api.fetchProgress)
       .put(
         loadProgress(
           mockProgress.answeredQuestions,
@@ -148,7 +148,7 @@ describe('restoreSaga', () => {
           mockProgressLS.testScores
         )
       )
-      .not.call.fn(fetchProgress)
+      .not.call.fn(api.fetchProgress)
       .not.put(
         loadProgress(
           mockProgress.answeredQuestions,

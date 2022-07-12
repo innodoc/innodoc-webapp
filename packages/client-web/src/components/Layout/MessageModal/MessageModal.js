@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Input, Modal, Result } from 'antd'
-
-import { messageType } from '@innodoc/client-misc/src/propTypes'
 import { useTranslation } from 'next-i18next'
+
+import { propTypes } from '@innodoc/client-misc'
 
 const MessageModal = ({ message: { closable, level, text, type }, onClose }) => {
   const { t } = useTranslation()
@@ -40,7 +40,7 @@ const MessageModal = ({ message: { closable, level, text, type }, onClose }) => 
 }
 
 MessageModal.propTypes = {
-  message: messageType.isRequired,
+  message: propTypes.messageType.isRequired,
   onClose: PropTypes.func,
 }
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Alert } from 'antd'
 import { WarningOutlined } from '@ant-design/icons'
 
-import { deleteAccount } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 import { useTranslation } from 'next-i18next'
 import { showMessage } from '@innodoc/client-store/src/actions/ui'
 import { userLoggedOut } from '@innodoc/client-store/src/actions/user'
@@ -11,16 +11,17 @@ import appSelectors from '@innodoc/client-store/src/selectors'
 
 import { PasswordField } from './formFields'
 import UserForm from './UserForm'
-import css from './style.sss'
+import css from './user.module.sss'
 
 const DeleteAccountForm = () => {
-  const { appRoot, csrfToken } = useSelector(appSelectors.getApp)
+  const { csrfToken } = useSelector(appSelectors.getApp)
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
   const onFinish = useCallback(
     ({ password }, setDisabled, setMessage) =>
-      deleteAccount(appRoot, csrfToken, password)
+      api
+        .deleteAccount(csrfToken, password)
         .then(() => {
           dispatch(
             showMessage({
@@ -40,7 +41,7 @@ const DeleteAccountForm = () => {
           })
           setDisabled(false)
         }),
-    [appRoot, csrfToken, dispatch, t]
+    [csrfToken, dispatch, t]
   )
 
   return (

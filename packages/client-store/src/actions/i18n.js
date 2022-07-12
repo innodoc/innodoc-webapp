@@ -1,8 +1,12 @@
 // TODO: rename language->locale everywhere according to next.js convention
 
-import { makeSymbolObj } from '@innodoc/client-misc/src/util'
+import { util } from '@innodoc/client-misc'
 
-export const actionTypes = makeSymbolObj(['CHANGE_LANGUAGE', 'LANGUAGE_DETECTED', 'SET_I18NEXT'])
+export const actionTypes = util.makeSymbolObj([
+  'CHANGE_LANGUAGE',
+  'LANGUAGE_DETECTED',
+  'SET_I18NEXT',
+])
 
 export const changeLanguage = (language, prevLanguage = undefined) => ({
   type: actionTypes.CHANGE_LANGUAGE,

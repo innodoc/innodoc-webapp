@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Col, Row, Progress, Typography } from 'antd'
 
-import css from './style.sss'
+import css from './Progress.module.sss'
 
 const format = (p) => `${p} %`
 

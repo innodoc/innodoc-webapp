@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { List } from 'antd'
 import { BorderOutlined } from '@ant-design/icons'
 
-import css from './style.sss'
+import css from './Link.module.sss'
 
 const FooterLink = ({ active, icon, renderLink, shortTitle, title }) => {
   const iconSpan = icon ? (

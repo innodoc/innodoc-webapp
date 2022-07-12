@@ -1,4 +1,4 @@
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
 import { outsideDistance, rawParse, rawParseWithLatex } from './util'
 
 const REGEX_INTERVAL = /([([\]]{1})([^,;]*)[,;]([^,;]*)([)[\]]{1})/
@@ -8,7 +8,7 @@ const interval = (input, solution, attrs) => {
 
   if (input === '') {
     messages.push({ msg: 'still-incorrect-answer', type: 'error' })
-    return [RESULT_VALUE.NEUTRAL, messages]
+    return [constants.RESULT.NEUTRAL, messages]
   }
 
   let latexCodeLeft
@@ -22,7 +22,7 @@ const interval = (input, solution, attrs) => {
   let btypr = 0
   let leftok = true
   let rightok = true
-  let ok = RESULT_VALUE.INCORRECT
+  let ok = constants.RESULT.INCORRECT
 
   const matchSol = solution.match(REGEX_INTERVAL)
   if (!matchSol) {
@@ -76,13 +76,13 @@ const interval = (input, solution, attrs) => {
       }
 
       if (rightok && leftok) {
-        ok = RESULT_VALUE.CORRECT
+        ok = constants.RESULT.CORRECT
         messages.push({ msg: 'correct-answer', type: 'success' })
       }
     }
   }
 
-  if (ok === RESULT_VALUE.INCORRECT) {
+  if (ok === constants.RESULT.INCORRECT) {
     messages.push({ msg: 'incorrect-interval', type: 'error' })
   }
 

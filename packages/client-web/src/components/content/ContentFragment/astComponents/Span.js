@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import { contentType } from '@innodoc/client-misc/src/propTypes'
-import { attributesToObject } from '@innodoc/client-misc/src/util'
+import { propTypes } from '@innodoc/client-misc'
+import { util } from '@innodoc/client-misc'
 
 import ContentFragment from '..'
 import InputHint from '../cards/InputHint'
@@ -15,14 +15,14 @@ const IndexSpan = ({ id, indexTerm, content }) => (
   </span>
 )
 IndexSpan.propTypes = {
-  content: contentType.isRequired,
+  content: propTypes.contentType.isRequired,
   id: PropTypes.string.isRequired,
   indexTerm: PropTypes.string.isRequired,
 }
 
 const Span = ({ data }) => {
   const [[id, spanClassNames, attributes], content] = data
-  const attrObj = attributesToObject(attributes)
+  const attrObj = util.attributesToObject(attributes)
 
   if (Object.keys(attrObj).includes('data-index-term')) {
     return <IndexSpan content={content} id={id} indexTerm={attrObj['data-index-term']} />

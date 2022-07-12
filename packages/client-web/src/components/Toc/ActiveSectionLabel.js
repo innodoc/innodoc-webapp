@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
-import css from './style.sss'
+import css from './Toc.module.sss'
 
 const ActiveSectionLabel = ({ sectionId }) => {
   const getSectionLink = useMemo(

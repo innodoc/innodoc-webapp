@@ -7,17 +7,15 @@ import { debounce } from 'lodash-es'
 
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 import questionSelectors from '@innodoc/client-store/src/selectors/question'
-import { attributesToObject, getClassNameToComponentMapper } from '@innodoc/client-misc/src/util'
-import { attributeType } from '@innodoc/client-misc/src/propTypes'
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants, propTypes, util } from '@innodoc/client-misc'
 
 import { ExerciseContext } from '../ExerciseContext'
 import CheckboxQuestion from './CheckboxQuestion'
 import InputQuestion from './InputQuestion'
 import FeedbackIcon from './FeedbackIcon'
-import css from './style.sss'
+import css from './Question.module.sss'
 
-const mapClassNameToComponent = getClassNameToComponentMapper({
+const mapClassNameToComponent = util.getClassNameToComponentMapper({
   text: InputQuestion,
   checkbox: CheckboxQuestion,
 })
@@ -37,7 +35,7 @@ const getQuestionId = (sectionId, id, attributes) => {
 }
 
 const Question = ({ attributes, id, questionClasses }) => {
-  const attrsObj = attributesToObject(attributes)
+  const attrsObj = util.attributesToObject(attributes)
   const { id: sectionId } = useSelector(sectionSelectors.getCurrentSection)
   const globalQuestionId = getQuestionId(sectionId, id, attributes)
   const getQuestion = useMemo(
@@ -79,13 +77,13 @@ const Question = ({ attributes, id, questionClasses }) => {
   if (QuestionComponent) {
     let iconIsCorrect
     if (showResult) {
-      iconIsCorrect = result === RESULT_VALUE.CORRECT
+      iconIsCorrect = result === constants.RESULT.CORRECT
     }
     const feedbackIcon = <FeedbackIcon isCorrect={iconIsCorrect} />
     const className = showResult
       ? classNames({
-          [css.correct]: result === RESULT_VALUE.CORRECT,
-          [css.incorrect]: result === RESULT_VALUE.INCORRECT,
+          [css.correct]: result === constants.RESULT.CORRECT,
+          [css.incorrect]: result === constants.RESULT.INCORRECT,
         })
       : null
 
@@ -112,7 +110,7 @@ const Question = ({ attributes, id, questionClasses }) => {
 }
 
 Question.propTypes = {
-  attributes: attributeType.isRequired,
+  attributes: propTypes.attributeType.isRequired,
   id: PropTypes.string,
   questionClasses: PropTypes.arrayOf(PropTypes.string).isRequired,
 }

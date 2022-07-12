@@ -7,7 +7,7 @@ import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Trans, useTranslation } from 'next-i18next'
 
 import { SectionLink } from '../../content/links'
-import css from './style.sss'
+import css from './Progress.module.sss'
 
 const DynamicChapterPieChart = dynamic(() => import('./ChapterPieChart'), {
   ssr: false,

@@ -1,17 +1,16 @@
 import React from 'react'
 import { Col as AntdCol, Row as AntdRow } from 'antd'
 
-import { attributeType, contentType } from '@innodoc/client-misc/src/propTypes'
-import { attributesToObject } from '@innodoc/client-misc/src/util'
+import { propTypes, util } from '@innodoc/client-misc'
 
 import ContentFragment from '..'
-import css from './style.sss'
+import css from './ast.module.sss'
 
 const colPropNames = ['span', 'offset', 'xs', 'sm', 'md', 'lg', 'xl']
 const rowPropNames = ['align', 'gutter']
 
 const getPropsFromAttrs = (propNames, attrs) => {
-  const attrsObj = attributesToObject(attrs)
+  const attrsObj = util.attributesToObject(attrs)
   return propNames.reduce((acc, name) => {
     if (Object.hasOwnProperty.call(attrsObj, name)) {
       const intVal = parseInt(attrsObj[name], 10)
@@ -49,8 +48,8 @@ const Row = ({ attributes, content }) => {
 }
 
 Row.propTypes = {
-  attributes: attributeType.isRequired,
-  content: contentType.isRequired,
+  attributes: propTypes.attributeType.isRequired,
+  content: propTypes.contentType.isRequired,
 }
 
 export default Row

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { getClassNameToComponentMapper } from '@innodoc/client-misc/src/util'
+import { util } from '@innodoc/client-misc'
 
 import ExerciseCard from '../exercises/ExerciseCard'
 import ExerciseRouletteCard from '../exercises/ExerciseRouletteCard'
@@ -13,7 +13,7 @@ import Figure from './Figure'
 import Row from './Row'
 import UnknownType from './UnknownType'
 
-const mapClassNameToComponent = getClassNameToComponentMapper({
+const mapClassNameToComponent = util.getClassNameToComponentMapper({
   exercise: ExerciseCard,
   'exercise-roulette': ExerciseRouletteCard,
   info: InfoCard,

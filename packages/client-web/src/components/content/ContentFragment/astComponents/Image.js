@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 
 import appSelectors from '@innodoc/client-store/src/selectors'
-import { astToString } from '@innodoc/client-misc/src/util'
+import { util } from '@innodoc/client-misc'
 
-import css from './style.sss'
+import css from './ast.module.sss'
 
 const Image = ({ data }) => {
   const { staticRoot } = useSelector(appSelectors.getApp)
@@ -13,7 +13,7 @@ const Image = ({ data }) => {
   try {
     const [[id], content, [src, alt]] = data
     const imgSrc = /^https?:\/\//i.test(src) ? src : `${staticRoot}${src}`
-    const imgAlt = alt || astToString(content)
+    const imgAlt = alt || util.astToString(content)
     return <img className={css.image} id={id} src={imgSrc} alt={imgAlt} />
   } catch (err) {
     return null

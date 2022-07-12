@@ -22,7 +22,7 @@ Dockerfile.e2e
 !.yarn/versions
 .pnp.*
 # client-web
-packages/client-web/bundle-analyzer
+packages/client-web/analyze
 packages/client-web/src/.next
 packages/client-web/src/public/locales/*/*.missing.json
 packages/client-web/src/style/antd-vars.json

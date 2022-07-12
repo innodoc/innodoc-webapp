@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { LockOutlined } from '@ant-design/icons'
 
-import { changePassword } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 import { Trans, useTranslation } from 'next-i18next'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
@@ -11,12 +11,13 @@ import Link from '../Link'
 import UserForm from './UserForm'
 
 const ChangePasswordForm = () => {
-  const { appRoot, csrfToken } = useSelector(appSelectors.getApp)
+  const { csrfToken } = useSelector(appSelectors.getApp)
   const { t } = useTranslation()
 
   const onFinish = useCallback(
     ({ 'old-password': oldPassword, password }, setDisabled, setMessage) =>
-      changePassword(appRoot, csrfToken, password, oldPassword)
+      api
+        .changePassword(csrfToken, password, oldPassword)
         .then(() =>
           setMessage({
             afterClose: () => setMessage(),
@@ -40,7 +41,7 @@ const ChangePasswordForm = () => {
           })
           setDisabled(false)
         }),
-    [appRoot, csrfToken, t]
+    [csrfToken, t]
   )
 
   return (

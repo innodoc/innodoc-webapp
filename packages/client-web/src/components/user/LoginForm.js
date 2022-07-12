@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { Button, Result } from 'antd'
 import { HomeOutlined, LoginOutlined } from '@ant-design/icons'
-
-import { loginUser } from '@innodoc/client-misc/src/api'
 import { Trans, useTranslation } from 'next-i18next'
+
+import { api } from '@innodoc/client-misc'
 import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
@@ -31,14 +31,15 @@ const ErrorDescription = () => (
 
 const LoginForm = () => {
   const router = useRouter()
-  const { appRoot, csrfToken, loggedInEmail } = useSelector(appSelectors.getApp)
+  const { csrfToken, loggedInEmail } = useSelector(appSelectors.getApp)
   const course = useSelector(courseSelectors.getCurrentCourse)
   const dispatch = useDispatch()
   const { t } = useTranslation()
 
   const onFinish = useCallback(
     ({ email, password }, setDisabled, setMessage) =>
-      loginUser(appRoot, csrfToken, email, password)
+      api
+        .loginUser(csrfToken, email, password)
         .then(() => {
           dispatch(userLoggedIn(email))
           // Honor redirect_to after login
@@ -54,7 +55,7 @@ const LoginForm = () => {
           })
           setDisabled(false)
         }),
-    [appRoot, csrfToken, dispatch, router, t]
+    [csrfToken, dispatch, router, t]
   )
 
   const result = loggedInEmail ? (

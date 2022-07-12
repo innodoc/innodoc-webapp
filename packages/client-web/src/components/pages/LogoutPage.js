@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button, Result, Row, Col } from 'antd'
 import { HomeOutlined, LoadingOutlined } from '@ant-design/icons'
 
-import { logoutUser } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 import { useTranslation } from 'next-i18next'
 import { userLoggedOut } from '@innodoc/client-store/src/actions/user'
 import appSelectors from '@innodoc/client-store/src/selectors'
@@ -17,20 +17,21 @@ import { InternalLink } from '../content/links'
 const LogoutPage = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const { appRoot, csrfToken } = useSelector(appSelectors.getApp)
+  const { csrfToken } = useSelector(appSelectors.getApp)
   const course = useSelector(courseSelectors.getCurrentCourse)
   const [logoutState, setLogoutState] = useState('pending')
   useRequireLogin(logoutState === 'error')
   const title = t(`user.logout.${logoutState}Message`)
 
   useEffect(() => {
-    logoutUser(appRoot, csrfToken)
+    api
+      .logoutUser(csrfToken)
       .then(() => {
         dispatch(userLoggedOut())
         setLogoutState('success')
       })
       .catch(() => setLogoutState('error'))
-  }, [appRoot, csrfToken, dispatch])
+  }, [csrfToken, dispatch])
 
   return (
     <>

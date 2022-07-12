@@ -1,21 +1,28 @@
-const getJson = (url) =>
-  fetch(url).then((response) =>
-    response.ok
-      ? response.json()
-      : Promise.reject(
-          new Error(`Could not fetch JSON data. (Status: ${response.status} URL: ${url})`)
-        )
-  )
+import camelcaseKeys from 'camelcase-keys'
 
-export const fetchFragment = (base, language, fragmentId) =>
-  getJson(`${base}${language}/${fragmentId}.json`)
+const getJson = async (inputUrl, camelcaseKeysStopPaths = undefined) => {
+  const url = new URL(inputUrl, process.env.NEXT_PUBLIC_CONTENT_ROOT)
+  const response = await fetch(url)
+  if (response.ok) {
+    const data = await response.json()
 
-export const fetchManifest = (base) => getJson(`${base}manifest.json`)
+    if (typeof camelcaseKeysStopPaths === 'undefined') {
+      return data
+    }
 
-export const fetchPage = (base, language, pageId) =>
-  getJson(`${base}${language}/_pages/${pageId}.json`)
+    return camelcaseKeys(data, { deep: true, stopPaths: camelcaseKeysStopPaths })
+  }
 
-export const fetchProgress = (base) => getJson(`${base}user/progress`)
+  throw new Error(`Could not fetch JSON data. (Status: ${response.status} URL: ${url})`)
+}
 
-export const fetchSection = (base, language, sectionId) =>
-  getJson(`${base}${language}/${sectionId}/content.json`)
+export const fetchFragment = (language, fragmentId) => getJson(`/${language}/${fragmentId}.json`)
+
+export const fetchManifest = () => getJson(`/manifest.json`, ['toc', 'index_terms', 'boxes'])
+
+export const fetchPage = (language, pageId) => getJson(`/${language}/_pages/${pageId}.json`)
+
+export const fetchProgress = () => getJson(`/user/progress`)
+
+export const fetchSection = (language, sectionId) =>
+  getJson(`/${language}/${sectionId}/content.json`)

@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 
-import { childrenType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 import { addQuestion, questionAnswered } from '@innodoc/client-store/src/actions/question'
 
 import ExerciseContext from './ExerciseContext'
@@ -37,7 +37,7 @@ const ExerciseProvider = ({
 }
 
 ExerciseProvider.propTypes = {
-  children: childrenType.isRequired,
+  children: propTypes.childrenType.isRequired,
   exercise: PropTypes.shape({
     id: PropTypes.string.isRequired,
     isAnswered: PropTypes.bool.isRequired,

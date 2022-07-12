@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 
-import { MESSAGE_LEVELS, MESSAGE_TYPES } from './messageDef'
-import RESULT_VALUE from './resultDef'
+import { MESSAGE_LEVELS, MESSAGE_TYPES, RESULT } from './constants.js'
 
 export const attributeType = PropTypes.PropTypes.arrayOf(PropTypes.array)
 
@@ -32,4 +31,4 @@ export const sectionType = PropTypes.shape({
   title: PropTypes.objectOf(PropTypes.string).isRequired,
 })
 
-export const resultType = PropTypes.oneOf(Object.values(RESULT_VALUE))
+export const resultType = PropTypes.oneOf(Object.values(RESULT))

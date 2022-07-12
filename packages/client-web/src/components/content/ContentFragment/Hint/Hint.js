@@ -1,17 +1,16 @@
 import React from 'react'
 import { Collapse } from 'antd'
 import { BulbOutlined } from '@ant-design/icons'
-
 import { useTranslation } from 'next-i18next'
-import { attributesToObject } from '@innodoc/client-misc/src/util'
-import { attributeType, contentType } from '@innodoc/client-misc/src/propTypes'
 
-import css from './style.sss'
+import { propTypes, util } from '@innodoc/client-misc'
+
+import css from './Hint.module.sss'
 import ContentFragment from '..'
 
 const Hint = ({ attributes, content }) => {
   const { t } = useTranslation()
-  const attrsObj = attributesToObject(attributes)
+  const attrsObj = util.attributesToObject(attributes)
 
   return (
     <Collapse className={css.hint}>
@@ -27,8 +26,8 @@ const Hint = ({ attributes, content }) => {
 }
 
 Hint.propTypes = {
-  attributes: attributeType.isRequired,
-  content: contentType.isRequired,
+  attributes: propTypes.attributeType.isRequired,
+  content: propTypes.contentType.isRequired,
 }
 
 export default Hint

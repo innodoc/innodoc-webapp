@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme'
 import { Result } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
-import { verifyUser } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 import PageTitle from '../PageTitle'
 import VerifyUserResult from './VerifyUserResult'
 import LoginButton from '../LoginButton'
@@ -17,8 +17,8 @@ jest.mock('react-redux', () => ({
   }),
 }))
 
-jest.mock('@innodoc/client-misc/src/api', () => ({
-  verifyUser: jest.fn(),
+jest.mock('@innodoc/client-misc', () => ({
+  api: { verifyUser: jest.fn() },
 }))
 
 jest.mock('../PageTitle', () => () => null)
@@ -36,10 +36,10 @@ describe('<VerifyUserResult />', () => {
 
   it('should render with successful verify', async () => {
     expect.assertions(5)
-    verifyUser.mockResolvedValue()
+    api.verifyUser.mockResolvedValue()
     const wrapper = mount(<VerifyUserResult token="123verifytoken" />)
     await waitForComponent(wrapper)
-    expect(verifyUser).toBeCalledWith('http://app.example.com/', '123csrftoken', '123verifytoken')
+    expect(api.verifyUser).toBeCalledWith('123csrftoken', '123verifytoken')
     const result = wrapper.find(Result)
     const Extra = () => result.prop('extra')
     expect(shallow(<Extra />).is(LoginButton)).toBe(true)
@@ -50,7 +50,7 @@ describe('<VerifyUserResult />', () => {
 
   it('should render with failed verify', async () => {
     expect.assertions(4)
-    verifyUser.mockRejectedValue()
+    api.verifyUser.mockRejectedValue()
     const wrapper = mount(<VerifyUserResult token="123verifytoken" />)
     await waitForComponent(wrapper)
     const result = wrapper.find(Result)

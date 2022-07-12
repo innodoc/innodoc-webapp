@@ -4,8 +4,7 @@ import Link from 'next/link'
 import { Typography } from 'antd'
 
 import { useTranslation } from 'next-i18next'
-import { parseLink } from '@innodoc/client-misc/src/util'
-import { childrenType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes, util } from '@innodoc/client-misc'
 import pageSelectors from '@innodoc/client-store/src/selectors/page'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
@@ -36,7 +35,7 @@ const InternalLink = ({ children, href }) => {
   }
 
   try {
-    ;[contentType, contentId] = parseLink(href)
+    ;[contentType, contentId] = util.parseLink(href)
   } catch {
     if (process.env.NODE_ENV !== 'production') {
       return (
@@ -57,7 +56,7 @@ InternalLink.defaultProps = {
 
 InternalLink.propTypes = {
   href: PropTypes.string.isRequired,
-  children: childrenType,
+  children: propTypes.childrenType,
 }
 
 export { InternalLink, PageLink, SectionLink }

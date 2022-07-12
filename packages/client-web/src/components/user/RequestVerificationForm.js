@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { MailOutlined } from '@ant-design/icons'
 
-import { requestVerification } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 import { useTranslation } from 'next-i18next'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
@@ -10,12 +10,13 @@ import { EmailField } from './formFields'
 import UserForm from './UserForm'
 
 const RequestVerificationForm = () => {
-  const { appRoot, csrfToken } = useSelector(appSelectors.getApp)
+  const { csrfToken } = useSelector(appSelectors.getApp)
   const { t } = useTranslation()
 
   const onFinish = useCallback(
     ({ email }, setDisabled, setMessage) =>
-      requestVerification(appRoot, csrfToken, email)
+      api
+        .requestVerification(csrfToken, email)
         .then(() =>
           setMessage({
             afterClose: () => setMessage(),
@@ -33,7 +34,7 @@ const RequestVerificationForm = () => {
           })
           setDisabled(false)
         }),
-    [appRoot, csrfToken, t]
+    [csrfToken, t]
   )
 
   return (

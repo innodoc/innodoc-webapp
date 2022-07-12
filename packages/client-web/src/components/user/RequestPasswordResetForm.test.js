@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 
-import { requestPasswordReset } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 
 import RequestPasswordResetForm from './RequestPasswordResetForm'
 import UserForm from './UserForm'
@@ -15,8 +15,8 @@ jest.mock('react-redux', () => ({
   }),
 }))
 
-jest.mock('@innodoc/client-misc/src/api', () => ({
-  requestPasswordReset: jest.fn(),
+jest.mock('@innodoc/client-misc', () => ({
+  api: { requestPasswordReset: jest.fn() },
 }))
 
 describe('<RequestPasswordResetForm />', () => {
@@ -37,36 +37,28 @@ describe('<RequestPasswordResetForm />', () => {
   })
 
   it('should render with successful password request', async () => {
-    requestPasswordReset.mockResolvedValue()
+    api.requestPasswordReset.mockResolvedValue()
     const wrapper = mount(<RequestPasswordResetForm />)
     wrapper.find(UserForm).invoke('onFinish')(
       { email: 'alice@example.com' },
       setDisabled,
       setMessage
     )
-    expect(requestPasswordReset).toBeCalledWith(
-      'http://app.example.com/',
-      '123csrftoken',
-      'alice@example.com'
-    )
+    expect(api.requestPasswordReset).toBeCalledWith('123csrftoken', 'alice@example.com')
     await waitForComponent(wrapper)
     expect(setMessage.mock.calls[0][0].level).toBe('success')
     expect(setDisabled).not.toBeCalled()
   })
 
   it('should render with failed password request', async () => {
-    requestPasswordReset.mockRejectedValue(new Error('mock error'))
+    api.requestPasswordReset.mockRejectedValue(new Error('mock error'))
     const wrapper = mount(<RequestPasswordResetForm />)
     wrapper.find(UserForm).invoke('onFinish')(
       { email: 'alice@example.com' },
       setDisabled,
       setMessage
     )
-    expect(requestPasswordReset).toBeCalledWith(
-      'http://app.example.com/',
-      '123csrftoken',
-      'alice@example.com'
-    )
+    expect(api.requestPasswordReset).toBeCalledWith('123csrftoken', 'alice@example.com')
     await waitForComponent(wrapper)
     expect(setMessage.mock.calls[0][0].level).toBe('error')
     expect(setDisabled).toBeCalledWith(false)

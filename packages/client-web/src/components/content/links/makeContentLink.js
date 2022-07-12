@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
 
-import { childrenType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import getLinkInfo from '../../../getLinkInfo'
@@ -37,7 +37,7 @@ const makeContentLink = (makeGetContentLink, prefixName) => {
   }
 
   ContentLink.propTypes = {
-    children: childrenType,
+    children: propTypes.childrenType,
     contentId: PropTypes.string.isRequired,
     preferShortTitle: PropTypes.bool,
   }

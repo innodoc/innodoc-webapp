@@ -1,6 +1,6 @@
-import { makeSymbolObj } from '@innodoc/client-misc/src/util'
+import { util } from '@innodoc/client-misc'
 
-export const actionTypes = makeSymbolObj([
+export const actionTypes = util.makeSymbolObj([
   'CLEAR_PROGRESS',
   'LOAD_PROGRESS',
   'RESET_TEST',

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import MathJax from '@innodoc/react-mathjax-node'
 
-import css from './style.sss'
+import css from './ast.module.sss'
 
 const Math = ({ data }) => {
   const [{ t: mathType }, texCode] = data

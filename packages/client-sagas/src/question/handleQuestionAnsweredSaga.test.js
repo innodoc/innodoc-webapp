@@ -1,6 +1,6 @@
 import { expectSaga } from 'redux-saga-test-plan'
 
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
 import validators from '@innodoc/client-question-validators'
 import {
   actionTypes as questionActionTypes,
@@ -10,7 +10,7 @@ import {
 
 import handleQuestionAnsweredSaga from './handleQuestionAnsweredSaga'
 
-const mockExactRet = [RESULT_VALUE.INCORRECT, ['foo'], '41']
+const mockExactRet = [constants.RESULT.INCORRECT, ['foo'], '41']
 jest.mock('@innodoc/client-question-validators', () => ({
   exact: () => mockExactRet,
   throwing: () => {
@@ -30,7 +30,7 @@ describe('handleQuestionAnsweredSaga', () => {
     }
     return expectSaga(handleQuestionAnsweredSaga, data)
       .call.like({ fn: validators.exact })
-      .put(questionEvaluated('foo/bar#Q1', RESULT_VALUE.INCORRECT, ['foo'], '41'))
+      .put(questionEvaluated('foo/bar#Q1', constants.RESULT.INCORRECT, ['foo'], '41'))
       .run()
   })
 

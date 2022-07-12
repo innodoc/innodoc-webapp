@@ -11,7 +11,7 @@ import indexTermSelectors from '@innodoc/client-store/src/selectors/indexTerm'
 
 import fadeInCss from '@innodoc/client-web/src/style/fade-in.sss'
 import { SectionLink } from '../content/links'
-import css from './style.sss'
+import css from './TermIndex.module.sss'
 
 import parseTermName from './parseTermName'
 

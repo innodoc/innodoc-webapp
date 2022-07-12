@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import NextLink from 'next/link'
 
-import { childrenType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 
 const Link = ({ children, href }) => (
   <NextLink href={href}>
@@ -11,7 +11,7 @@ const Link = ({ children, href }) => (
 )
 
 Link.propTypes = {
-  children: childrenType.isRequired,
+  children: propTypes.childrenType.isRequired,
   href: PropTypes.string.isRequired,
 }
 

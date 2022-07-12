@@ -1,4 +1,5 @@
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
+
 import orm from '../orm'
 import progressSelectors from './progress'
 
@@ -132,68 +133,68 @@ const exercises = [
 const questions = [
   {
     exerciseId: 'ch1/sec1#EX_01',
-    result: RESULT_VALUE.NEUTRAL,
+    result: constants.RESULT.NEUTRAL,
     points: 4,
   },
   {
     exerciseId: 'ch2/sec1#EX_01',
     answer: '23',
     answeredTimestamp: 1598451191939,
-    result: RESULT_VALUE.INCORRECT,
+    result: constants.RESULT.INCORRECT,
     points: 4,
   },
   {
     exerciseId: 'ch2/sec1#EX_01',
     answer: 'foo',
     answeredTimestamp: 1598451191939,
-    result: RESULT_VALUE.INCORRECT,
+    result: constants.RESULT.INCORRECT,
     points: 4,
   },
   {
     exerciseId: 'ch2/sec1#EX_02',
     answer: '42',
     answeredTimestamp: 1598451191939,
-    result: RESULT_VALUE.CORRECT,
+    result: constants.RESULT.CORRECT,
     points: 2,
   },
   {
     exerciseId: 'ch2/sec2#EX_01',
-    result: RESULT_VALUE.NEUTRAL,
+    result: constants.RESULT.NEUTRAL,
     points: 10,
   },
   {
     exerciseId: 'ch2/test#EX_01',
     answer: '1',
     answeredTimestamp: 1598451191939,
-    result: RESULT_VALUE.CORRECT,
+    result: constants.RESULT.CORRECT,
     points: 11,
   },
   {
     exerciseId: 'ch2/test#EX_02',
     answer: 'x/2',
     answeredTimestamp: 1598451191939,
-    result: RESULT_VALUE.INCORRECT,
+    result: constants.RESULT.INCORRECT,
     points: 4,
   },
   {
     exerciseId: 'ch2/test#EX_02',
     answer: 'x',
     answeredTimestamp: 1598451191939,
-    result: RESULT_VALUE.CORRECT,
+    result: constants.RESULT.CORRECT,
     points: 4,
   },
   {
     exerciseId: 'ch2/test#EX_03',
     answer: '{5}',
     answeredTimestamp: 1598451191939,
-    result: RESULT_VALUE.INCORRECT,
+    result: constants.RESULT.INCORRECT,
     points: 5,
   },
   {
     exerciseId: 'ch2/test#EX_03',
     answer: '1',
     answeredTimestamp: 1598451191939,
-    result: RESULT_VALUE.INCORRECT,
+    result: constants.RESULT.INCORRECT,
     points: 5,
   },
 ]
@@ -288,12 +289,12 @@ describe('progressSelectors', () => {
       })
       session.Question.create({
         exerciseId: 'test#EX_01',
-        result: RESULT_VALUE.NEUTRAL,
+        result: constants.RESULT.NEUTRAL,
         points: 1,
       })
       session.Question.create({
         exerciseId: 'test#EX_01',
-        result: RESULT_VALUE.NEUTRAL,
+        result: constants.RESULT.NEUTRAL,
         points: 2,
       })
 
@@ -305,12 +306,12 @@ describe('progressSelectors', () => {
       })
       session.Question.create({
         exerciseId: 'test#EX_02',
-        result: RESULT_VALUE.NEUTRAL,
+        result: constants.RESULT.NEUTRAL,
         points: 2,
       })
       session.Question.create({
         exerciseId: 'test#EX_02',
-        result: RESULT_VALUE.NEUTRAL,
+        result: constants.RESULT.NEUTRAL,
         points: 3,
       })
     })
@@ -330,7 +331,7 @@ describe('progressSelectors', () => {
           .mutableSession(state.orm)
           .Exercise.first()
           .questions.first()
-          .set('result', RESULT_VALUE.CORRECT)
+          .set('result', constants.RESULT.CORRECT)
         expect(progressSelectors.getTest(state)).toEqual({
           canBeReset: true,
           canBeSubmitted: false,
@@ -345,7 +346,7 @@ describe('progressSelectors', () => {
           .mutableSession(state.orm)
           .Exercise.first()
           .questions.toModelArray()
-          .forEach((q) => q.set('result', RESULT_VALUE.CORRECT))
+          .forEach((q) => q.set('result', constants.RESULT.CORRECT))
         expect(progressSelectors.getTest(state)).toEqual({
           canBeReset: true,
           canBeSubmitted: true,
@@ -360,7 +361,7 @@ describe('progressSelectors', () => {
       const session = orm.mutableSession(state.orm)
       session.Question.all()
         .toModelArray()
-        .forEach((q) => q.set('result', RESULT_VALUE.CORRECT))
+        .forEach((q) => q.set('result', constants.RESULT.CORRECT))
       session.Section.first().set('testScore', 8)
       expect(progressSelectors.getTest(state)).toEqual({
         canBeReset: true,

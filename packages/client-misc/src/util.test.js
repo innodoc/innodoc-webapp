@@ -1,38 +1,27 @@
-import {
-  astToString,
-  attributesToObject,
-  getClassNameToComponentMapper,
-  getNumberedTitle,
-  parseContentId,
-  parseLink,
-  intSortArray,
-  makeSymbolObj,
-  toTwoLetterCode,
-  unwrapPara,
-} from './util'
+import * as util from './util.js'
 
 describe('astToString', () => {
   it('should just return a string', () => {
-    expect(astToString('foo')).toBe('foo')
+    expect(util.astToString('foo')).toBe('foo')
   })
 
   it('should convert AST to string', () => {
     const ast = [{ t: 'Str', c: 'Hello' }, { t: 'Space' }, { t: 'Str', c: 'World' }]
-    expect(astToString(ast)).toBe('Hello World')
+    expect(util.astToString(ast)).toBe('Hello World')
   })
 })
 
 describe('attributesToObject', () => {
   it('should convert null', () => {
     const input = null
-    const output = attributesToObject(input)
+    const output = util.attributesToObject(input)
     expect(output).toBeInstanceOf(Object)
     expect(Object.getOwnPropertyNames(output)).toHaveLength(0)
   })
 
   it('should convert empty array', () => {
     const input = []
-    const output = attributesToObject(input)
+    const output = util.attributesToObject(input)
     expect(output).toBeInstanceOf(Object)
     expect(Object.getOwnPropertyNames(output)).toHaveLength(0)
   })
@@ -43,7 +32,7 @@ describe('attributesToObject', () => {
       ['key2', 'val2'],
       ['key3', 'val3'],
     ]
-    const output = attributesToObject(input)
+    const output = util.attributesToObject(input)
     expect(output).toBeInstanceOf(Object)
     expect(Object.getOwnPropertyNames(output)).toHaveLength(3)
     expect(output.key1).toBe('val1')
@@ -56,7 +45,7 @@ describe('getClassNameToComponentMapper', () => {
   it('should create a working mapper function', () => {
     const Foo = () => 'Foo'
     const Bar = () => 'Bar'
-    const mapper = getClassNameToComponentMapper({
+    const mapper = util.getClassNameToComponentMapper({
       foo: Foo,
       bar: Bar,
     })
@@ -68,40 +57,40 @@ describe('getClassNameToComponentMapper', () => {
 
 describe('getNumberedTitle', () => {
   it('should generate numbered title from title and attributes', () => {
-    expect(getNumberedTitle('Foo', [['data-number', '1.2.3']])).toBe('Foo 1.2.3')
+    expect(util.getNumberedTitle('Foo', [['data-number', '1.2.3']])).toBe('Foo 1.2.3')
   })
 
   it('should just return title if "data-number" attribute is not present', () => {
-    expect(getNumberedTitle('Foo', [['bar', 'baz']])).toBe('Foo')
+    expect(util.getNumberedTitle('Foo', [['bar', 'baz']])).toBe('Foo')
   })
 })
 
 describe('parseContentId', () => {
   it('should parse a content ID with hash', () => {
-    expect(parseContentId('foo/bar#baz')).toEqual(['foo/bar', 'baz'])
+    expect(util.parseContentId('foo/bar#baz')).toEqual(['foo/bar', 'baz'])
   })
 
   it('should parse a content ID without hash', () => {
-    expect(parseContentId('foo/bar')).toEqual(['foo/bar'])
+    expect(util.parseContentId('foo/bar')).toEqual(['foo/bar'])
   })
 })
 
 describe('parseLink', () => {
   it.each(['page', 'section'])('should parse link (%s)', (contentType) => {
-    const [parsedContentType, contentId] = parseLink(`/${contentType}/foo/bar`)
+    const [parsedContentType, contentId] = util.parseLink(`/${contentType}/foo/bar`)
     expect(parsedContentType).toBe(contentType)
     expect(contentId).toBe('foo/bar')
   })
 
   it('should throw with malformed link', () => {
     expect(() => {
-      parseLink('/foo/bar')
+      util.parseLink('/foo/bar')
     }).toThrow()
   })
 })
 
 describe('intSortArray', () => {
-  const sortFunc = intSortArray('de')
+  const sortFunc = util.intSortArray('de')
 
   it('should ignore case', () => {
     const unsorted = [{ name: 'alt' }, { name: 'Ast' }]
@@ -129,33 +118,33 @@ describe('intSortArray', () => {
 
 describe('makeSymbolObj', () => {
   it('should create actions object', () => {
-    expect(makeSymbolObj(['DO_THIS', 'DO_THAT'])).toEqual({
+    expect(util.makeSymbolObj(['DO_THIS', 'DO_THAT'])).toEqual({
       DO_THIS: 'DO_THIS',
       DO_THAT: 'DO_THAT',
     })
   })
 
   it('should create empty actions object', () => {
-    expect(makeSymbolObj()).toEqual({})
-    expect(makeSymbolObj([])).toEqual({})
+    expect(util.makeSymbolObj()).toEqual({})
+    expect(util.makeSymbolObj([])).toEqual({})
   })
 })
 
 describe('toTwoLetterCode', () => {
   it('should normalize language codes', () => {
-    expect(toTwoLetterCode('en-US')).toEqual('en')
-    expect(toTwoLetterCode('de')).toEqual('de')
+    expect(util.toTwoLetterCode('en-US')).toEqual('en')
+    expect(util.toTwoLetterCode('de')).toEqual('de')
   })
 })
 
 describe('unwrapPara', () => {
   it('should unwrap single Para', () => {
-    const unwrapped = unwrapPara([{ t: 'Para', c: ['foo'] }])
+    const unwrapped = util.unwrapPara([{ t: 'Para', c: ['foo'] }])
     expect(unwrapped).toEqual(['foo'])
   })
 
   it('should not unwrap single Plain', () => {
-    const unwrapped = unwrapPara([{ t: 'Plain', c: ['foo'] }])
+    const unwrapped = util.unwrapPara([{ t: 'Plain', c: ['foo'] }])
     expect(unwrapped).toEqual([{ t: 'Plain', c: ['foo'] }])
   })
 
@@ -165,9 +154,9 @@ describe('unwrapPara', () => {
       { t: 'Div', c: ['bar'] },
       { t: 'Para', c: ['baz'] },
     ]
-    const unwrapped = unwrapPara(items)
+    const unwrapped = util.unwrapPara(items)
     expect(unwrapped).toEqual([['foo'], { t: 'Div', c: ['bar'] }, ['baz']])
   })
 
-  it('should return empty list for empty list', () => expect(unwrapPara([])).toEqual([]))
+  it('should return empty list for empty list', () => expect(util.unwrapPara([])).toEqual([]))
 })

@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { EyeOutlined } from '@ant-design/icons'
-
 import { useTranslation } from 'next-i18next'
-import { attributeType, contentType } from '@innodoc/client-misc/src/propTypes'
-import { getNumberedTitle } from '@innodoc/client-misc/src/util'
+
+import { propTypes, util } from '@innodoc/client-misc'
 
 import Card from './Card'
 
@@ -12,7 +11,7 @@ const ExampleCard = ({ attributes, content, id }) => {
   const { t } = useTranslation()
   return (
     <Card
-      title={getNumberedTitle(t('content.example'), attributes)}
+      title={util.getNumberedTitle(t('content.example'), attributes)}
       cardType="example"
       icon={<EyeOutlined />}
       content={content}
@@ -22,8 +21,8 @@ const ExampleCard = ({ attributes, content, id }) => {
 }
 
 ExampleCard.propTypes = {
-  attributes: attributeType.isRequired,
-  content: contentType.isRequired,
+  attributes: propTypes.attributeType.isRequired,
+  content: propTypes.contentType.isRequired,
   id: PropTypes.string,
 }
 

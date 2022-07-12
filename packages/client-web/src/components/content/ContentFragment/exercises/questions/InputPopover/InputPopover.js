@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Popover } from 'antd'
 
-import { childrenType, feedbackMessagesType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 
 import MathJaxPreview from './MathJaxPreview'
 import Messages from './Messages'
-import css from './style.sss'
+import css from './InputPopover.module.sss'
 
 const InputPopover = ({ children, focus, messages, showPreview, showResult, userInput }) => {
   const { lg } = Grid.useBreakpoint()
@@ -41,9 +41,9 @@ const InputPopover = ({ children, focus, messages, showPreview, showResult, user
 }
 
 InputPopover.propTypes = {
-  children: childrenType.isRequired,
+  children: propTypes.childrenType.isRequired,
   focus: PropTypes.bool.isRequired,
-  messages: feedbackMessagesType,
+  messages: propTypes.feedbackMessagesType,
   showPreview: PropTypes.bool.isRequired,
   showResult: PropTypes.bool.isRequired,
   userInput: PropTypes.string.isRequired,

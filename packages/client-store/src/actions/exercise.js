@@ -1,6 +1,6 @@
-import { makeSymbolObj } from '@innodoc/client-misc/src/util'
+import { util } from '@innodoc/client-misc'
 
-export const actionTypes = makeSymbolObj(['RESET_EXERCISE'])
+export const actionTypes = util.makeSymbolObj(['RESET_EXERCISE'])
 
 export const resetExercise = (id) => ({
   type: actionTypes.RESET_EXERCISE,

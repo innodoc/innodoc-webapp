@@ -18,6 +18,8 @@
   "dependencies": {
     "@innodoc/client-misc": "workspace:packages/client-misc",
     "@innodoc/common": "workspace:packages/common",
+    "next-redux-wrapper": "^7.0.5",
+    "react-redux": "^8.0.2",
     "redux": "^4.2.0",
     "redux-orm": "^0.16.2",
     "redux-saga": "^1.1.3"

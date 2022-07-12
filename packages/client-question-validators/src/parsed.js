@@ -1,4 +1,4 @@
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
 
 import { convertMathInput, notationParserIn, rawParse, withinDistance } from './util'
 
@@ -17,13 +17,13 @@ const parsed = (input, solution, attrs) => {
 
   if (input === '') {
     messages.push({ msg: 'still-incorrect-answer', type: 'error' })
-    return [RESULT_VALUE.NEUTRAL, messages]
+    return [constants.RESULT.NEUTRAL, messages]
   }
 
   let soluta = solution.split(',') // never has set brackets
 
   let valuta = {}
-  let ok = RESULT_VALUE.CORRECT
+  let ok = constants.RESULT.CORRECT
   // empty set asked (otherwise not recognized because split returns
   // one element (empty string))
   let solleer = 0
@@ -38,7 +38,7 @@ const parsed = (input, solution, attrs) => {
     // An element without set brackets is required
     valuta = notationParserIn(input).split(',')
     if (valuta.length !== 1 || valuta[0].indexOf('{') !== -1 || valuta[0].indexOf('}') !== -1) {
-      ok = RESULT_VALUE.INCORRECT
+      ok = constants.RESULT.INCORRECT
     }
     const result = convertMathInput(input)
     if (!result.errorList.length) {
@@ -49,7 +49,7 @@ const parsed = (input, solution, attrs) => {
     const tr = notationParserIn(input).trim()
 
     if (tr.indexOf('{') !== 0 || tr.indexOf('}') !== tr.length - 1) {
-      ok = RESULT_VALUE.INCORRECT // Curly brackets not set correctly or not there
+      ok = constants.RESULT.INCORRECT // Curly brackets not set correctly or not there
     } else {
       const st = tr.substr(1, tr.length - 2)
       if (st.trim() === '') {
@@ -79,7 +79,7 @@ const parsed = (input, solution, attrs) => {
   }
 
   // Check both subset relations, i.e. double listings of elements are considered correct
-  for (let vj = 0; vj < valuta.length && ok === RESULT_VALUE.CORRECT; vj += 1) {
+  for (let vj = 0; vj < valuta.length && ok === constants.RESULT.CORRECT; vj += 1) {
     let c = 0
     const v = rawParse(valuta[vj])
     for (let sj = 0; sj < soluta.length && c === 0; sj += 1) {
@@ -87,10 +87,10 @@ const parsed = (input, solution, attrs) => {
       if (withinDistance(v, s, attrs.precision)) c = 1
     }
     if (c === 0) {
-      ok = RESULT_VALUE.INCORRECT
+      ok = constants.RESULT.INCORRECT
     }
   }
-  for (let sj = 0; sj < soluta.length && ok === RESULT_VALUE.CORRECT; sj += 1) {
+  for (let sj = 0; sj < soluta.length && ok === constants.RESULT.CORRECT; sj += 1) {
     let c = 0
     const s = rawParse(soluta[sj])
     for (let vj = 0; vj < valuta.length && c === 0; vj += 1) {
@@ -98,17 +98,17 @@ const parsed = (input, solution, attrs) => {
       if (withinDistance(v, s, attrs.precision)) c = 1
     }
     if (c === 0) {
-      ok = RESULT_VALUE.INCORRECT
+      ok = constants.RESULT.INCORRECT
     }
   }
 
-  if (ok === RESULT_VALUE.INCORRECT) {
+  if (ok === constants.RESULT.INCORRECT) {
     if (soluta.length === 1 && solleer === 0) {
       messages.push({ msg: 'incorrect-value', type: 'error' })
     } else {
       messages.push({ msg: 'incorrect-solution-set', type: 'error' })
     }
-  } else if (ok === RESULT_VALUE.CORRECT) {
+  } else if (ok === constants.RESULT.CORRECT) {
     messages.push({ msg: 'correct-answer', type: 'success' })
   }
 

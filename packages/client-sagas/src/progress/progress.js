@@ -1,6 +1,6 @@
 import { all, call, fork, debounce, put, select, takeEvery } from 'redux-saga/effects'
 
-import { fetchProgress, persistProgress } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 import { actionTypes as contentActionTypes } from '@innodoc/client-store/src/actions/content'
 import { actionTypes as exerciseActionTypes } from '@innodoc/client-store/src/actions/exercise'
 import { actionTypes as questionActionTypes } from '@innodoc/client-store/src/actions/question'
@@ -18,12 +18,12 @@ export const LOCAL_STORAGE_KEY = 'user-progress'
 export const PERSIST_DEBOUNCE_TIME = 2000
 
 export function* persistSaga() {
-  const { appRoot, csrfToken, loggedInEmail } = yield select(appSelectors.getApp)
+  const { csrfToken, loggedInEmail } = yield select(appSelectors.getApp)
   const progress = yield select(progressSelectors.getPersistedProgress)
 
   if (loggedInEmail) {
     // server
-    yield call(persistProgress, appRoot, csrfToken, progress)
+    yield call(api.persistProgress, csrfToken, progress)
   } else {
     // localStorage
     const serializedProgress = yield call([JSON, JSON.stringify], progress)
@@ -36,7 +36,7 @@ export function* persistSaga() {
 }
 
 export function* restoreSaga() {
-  const { appRoot, loggedInEmail } = yield select(appSelectors.getApp)
+  const { loggedInEmail } = yield select(appSelectors.getApp)
   let localProgress
 
   // localStorage
@@ -66,7 +66,7 @@ export function* restoreSaga() {
   // server
   if (loggedInEmail) {
     try {
-      const { progress: remoteProgress } = yield call(fetchProgress, appRoot)
+      const { progress: remoteProgress } = yield call(api.fetchProgress)
       if (
         remoteProgress &&
         remoteProgress.answeredQuestions &&

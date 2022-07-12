@@ -4,10 +4,10 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
 import MathJax from '@innodoc/react-mathjax-node'
 
 import { useTranslation } from 'next-i18next'
-import { contentType } from '@innodoc/client-misc/src/propTypes'
+import { propTypes } from '@innodoc/client-misc'
 
 import ExerciseCard from './ExerciseCard'
-import css from './style.sss'
+import css from './ExerciseCard.module.sss'
 
 const ExerciseRouletteCard = ({ content: exercises }) => {
   const { t } = useTranslation()
@@ -49,7 +49,7 @@ const ExerciseRouletteCard = ({ content: exercises }) => {
 }
 
 ExerciseRouletteCard.propTypes = {
-  content: contentType.isRequired,
+  content: propTypes.contentType.isRequired,
 }
 
 export default ExerciseRouletteCard

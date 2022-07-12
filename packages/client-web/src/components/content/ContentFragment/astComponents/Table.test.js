@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import { Table as AntTable } from 'antd'
 
 import Table from './Table'
-import css from './style.sss'
+import css from './ast.module.sss'
 
 jest.mock('@innodoc/common/src/i18n')
 

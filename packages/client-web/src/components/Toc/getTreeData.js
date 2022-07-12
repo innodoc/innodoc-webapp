@@ -3,7 +3,7 @@ import React from 'react'
 import SectionTypeTag from '../SectionTypeTag'
 import { SectionLink } from '../content/links'
 import ActiveSectionLabel from './ActiveSectionLabel'
-import css from './style.sss'
+import css from './Toc.module.sss'
 
 const getTreeNode = (section, currentSectionId, t) => {
   const { id: sectionId, children = [] } = section

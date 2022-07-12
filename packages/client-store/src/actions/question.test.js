@@ -1,4 +1,4 @@
-import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
+import { constants } from '@innodoc/client-misc'
 
 import {
   actionTypes,
@@ -25,12 +25,12 @@ test('QUESTION_ANSWERED', () =>
   }))
 
 test('QUESTION_EVALUATED', () =>
-  expect(questionEvaluated('Q_01', RESULT_VALUE.CORRECT, ['foo'], 'x^2')).toEqual({
+  expect(questionEvaluated('Q_01', constants.RESULT.CORRECT, ['foo'], 'x^2')).toEqual({
     type: actionTypes.QUESTION_EVALUATED,
     id: 'Q_01',
     latexCode: 'x^2',
     messages: ['foo'],
-    result: RESULT_VALUE.CORRECT,
+    result: constants.RESULT.CORRECT,
   }))
 
 test('QUESTION_INVALID', () =>

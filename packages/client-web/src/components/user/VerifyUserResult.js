@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { Result } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
-import { verifyUser } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 import { useTranslation } from 'next-i18next'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
@@ -12,16 +12,17 @@ import LoginButton from '../LoginButton'
 import PageTitle from '../PageTitle'
 
 const VerifyUserResult = ({ token }) => {
-  const { appRoot, csrfToken } = useSelector(appSelectors.getApp)
+  const { csrfToken } = useSelector(appSelectors.getApp)
   const [status, setStatus] = useState('pending')
   const { t } = useTranslation()
   const title = t(`user.verification.${status}.title`)
 
   useEffect(() => {
-    verifyUser(appRoot, csrfToken, token)
+    api
+      .verifyUser(csrfToken, token)
       .then(() => setStatus('success'))
       .catch(() => setStatus('error'))
-  }, [appRoot, csrfToken, token])
+  }, [csrfToken, token])
 
   const extra = status === 'success' ? <LoginButton /> : null
   const icon = status === 'pending' ? <LoadingOutlined /> : null

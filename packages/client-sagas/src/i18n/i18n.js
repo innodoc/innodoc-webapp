@@ -3,7 +3,7 @@ import { call, fork, getContext, put, setContext, take, takeLatest } from 'redux
 
 import { actionTypes, changeLanguage } from '@innodoc/client-store/src/actions/i18n'
 
-import { toTwoLetterCode } from '@innodoc/client-misc/src/util'
+import { util } from '@innodoc/client-misc'
 
 // Notify i18next about language changes
 // export function* notifyI18nextSaga({ language }) {
@@ -39,7 +39,7 @@ export function* waitForI18NextSaga() {
   const { i18next, language: detectedLanguage } = yield take(actionTypes.SET_I18NEXT)
   console.log('waitForI18NextSaga i18next=', i18next, 'language=', detectedLanguage)
   // yield setContext({ i18next })
-  const language = yield call(toTwoLetterCode, detectedLanguage) // TODO: toTwoLetterCode needed??
+  const language = yield call(util.toTwoLetterCode, detectedLanguage) // TODO: toTwoLetterCode needed??
   // yield fork(takeLatest(actionTypes.CHANGE_LANGUAGE, notifyI18nextSaga))
   yield fork(waitForNotifyI18nextSaga, i18next)
   yield put(changeLanguage(language))

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import classNames from 'classnames'
 import { Affix } from 'antd'
 
-import css from './style.sss'
+import css from './ContentAffix.module.sss'
 import Breadcrumb from './Breadcrumb'
 import AffixButtons from './AffixButtons'
 

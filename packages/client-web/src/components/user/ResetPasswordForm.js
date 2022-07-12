@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { LockOutlined } from '@ant-design/icons'
 
-import { resetPassword } from '@innodoc/client-misc/src/api'
+import { api } from '@innodoc/client-misc'
 import { Trans, useTranslation } from 'next-i18next'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
@@ -12,12 +12,13 @@ import Link from '../Link'
 import UserForm from './UserForm'
 
 const ResetPasswordForm = ({ token }) => {
-  const { appRoot, csrfToken } = useSelector(appSelectors.getApp)
+  const { csrfToken } = useSelector(appSelectors.getApp)
   const { t } = useTranslation()
 
   const onFinish = useCallback(
     ({ password }, setDisabled, setMessage) =>
-      resetPassword(appRoot, csrfToken, password, token)
+      api
+        .resetPassword(csrfToken, password, token)
         .then(() =>
           setMessage({
             afterClose: () => setMessage(),
@@ -39,7 +40,7 @@ const ResetPasswordForm = ({ token }) => {
           })
           setDisabled(false)
         }),
-    [appRoot, csrfToken, t, token]
+    [csrfToken, t, token]
   )
 
   return (
