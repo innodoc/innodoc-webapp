@@ -1,11 +1,32 @@
-const { i18n } = require('../next-i18next.config')
+import path from 'path'
 
-module.exports = async (phase, config) => {
+import nextBuildId from 'next-build-id'
+
+import nextI18nextConfig from '../next-i18next.config.js'
+
+const __dirname = new URL('.', import.meta.url).pathname
+
+// TODO: this is not needed I think:
+// On server-side localePath is the actual directory, but due to the build
+// process this is tricky
+// nextI18nextConfig.localePath =
+//   // __dirname.split(path.sep).at(-1) === 'next.config'
+//   __dirname.split(path.sep).at(-1) === 'configs'
+//     ? // file compiled in 'NEXT_BUILD_DIR/server/pages'!
+//       path.resolve(__dirname, '..', 'src', 'public', 'locales')
+//     : // __dirname actual file location
+//       path.resolve(__dirname, '..', '..', '..', 'public', 'locales')
+// On server-side localePath is the actual directory, but due to the build
+// nextI18nextConfig.localePath = path.resolve(__dirname, '..', '..', 'src', 'public', 'locales')
+
+// console.log('appConfig')
+// console.log('__dirname', __dirname)
+// console.log('nextI18nextConfig', nextI18nextConfig)
+
+const config = async (phase, config) => {
   let generateBuildId
   if (!process.env.NEXTJS_WEBAPP_BUILD_ID) {
-    /* eslint-disable-next-line global-require */
-    const nextBuildId = require('next-build-id')
-    generateBuildId = () => nextBuildId({ dir: __dirname })
+    generateBuildId = () => nextBuildId({ dir: new URL('.', import.meta.url).pathname })
   } else {
     generateBuildId = () => process.env.NEXTJS_WEBAPP_BUILD_ID
   }
@@ -23,7 +44,7 @@ module.exports = async (phase, config) => {
     generateBuildId,
 
     // next-i18next config
-    i18n,
+    i18n: nextI18nextConfig.i18n,
 
     // Only use .js (not .jsx, .ts, ...)
     pageExtensions: ['js'],
@@ -32,3 +53,5 @@ module.exports = async (phase, config) => {
     swcMinify: process.env.NODE_ENV === 'production',
   }
 }
+
+export default config

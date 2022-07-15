@@ -17,7 +17,7 @@ import '@innodoc/client-web/src/style/fix-code-wrap.sss'
 
 import nextI18NextConfig from '../../next.config/next-i18next.config'
 import nextReduxWrapper from '../store'
-import PageTitle from '../components/PageTitle'
+import PageTitle from '../components/common/PageTitle'
 import useRouteNotifier from '../hooks/useRouteNotifier'
 // import withServerVars from './withServerVars'
 // import withLoadManifest from './withLoadManifest'

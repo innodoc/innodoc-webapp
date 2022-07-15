@@ -1,5 +1,8 @@
-const fs = require('fs').promises
-const path = require('path')
+import fs from 'fs/promises'
+import { createRequire } from 'module'
+import path from 'path'
+
+const require = createRequire(import.meta.url)
 
 const fontFiles = [
   'MathJax_AMS-Regular.woff',
@@ -27,9 +30,17 @@ const fontFiles = [
   'MathJax_Zero.woff',
 ]
 
-const outputPath = path.resolve(__dirname, '..', '..', 'src', 'public', 'fonts', 'mathjax-woff-v2')
+const outputPath = path.resolve(
+  new URL('.', import.meta.url).pathname,
+  '..',
+  '..',
+  'src',
+  'public',
+  'fonts',
+  'mathjax-woff-v2'
+)
 
-module.exports = async (phase, config) => {
+const config = async (phase, config) => {
   const match = /^(.+\.zip)\//.exec(require.resolve('mathjax-full'))
   if (!match) {
     throw new Error('Could not find mathjax-full package.')
@@ -64,3 +75,5 @@ module.exports = async (phase, config) => {
 
   return config
 }
+
+export default config

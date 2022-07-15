@@ -1,10 +1,13 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import { createRequire } from 'module'
+import path from 'path'
 
-const clone = require('clone')
+import clone from 'clone'
 
-const { getCssModuleLocalIdentForNextJs } = require('./getCssModuleLocalIdent')
-const postcssConfig = require('../../postcss.config')
+import { getCssModuleLocalIdentForNextJs } from './getCssModuleLocalIdent.js'
+import postcssConfig from '../../postcss.config.cjs'
+
+const require = createRequire(import.meta.url)
 
 const updateRegexp = (re) => new RegExp(re.source.replace('scss|sass', 'scss|sass|sss'))
 
@@ -41,7 +44,16 @@ const addSugarssRule = (rules, cssLoaderOptions) => {
 
   // Pass antd variables to postcss-advanced-variables
   const variables = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, '..', '..', 'src', 'style', 'antd-vars.json'))
+    fs.readFileSync(
+      path.resolve(
+        new URL('.', import.meta.url).pathname,
+        '..',
+        '..',
+        'src',
+        'style',
+        'antd-vars.json'
+      )
+    )
   )
   const advancedVariablesKey = Object.keys(postcssConfig.plugins).find((k) =>
     k.includes('postcss-advanced-variables')
@@ -87,7 +99,7 @@ const addSugarssRule = (rules, cssLoaderOptions) => {
   rules.splice(sassRuleIdx, 0, sssRule)
 }
 
-module.exports = async (phase, nextConfig = {}) => ({
+const config = async (phase, nextConfig = {}) => ({
   ...nextConfig,
   webpack: (config, options) => {
     const isDev = process.env.NODE_ENV === 'development'
@@ -115,3 +127,5 @@ module.exports = async (phase, nextConfig = {}) => ({
     return typeof nextConfig.webpack === 'function' ? nextConfig.webpack(config, options) : config
   },
 })
+
+export default config

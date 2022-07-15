@@ -4,7 +4,7 @@ import Icon from '@ant-design/icons'
 import ExternalLinkSvg from '@fortawesome/fontawesome-free/svgs/solid/external-link-alt.svg'
 
 import ContentFragment from '..'
-import { InternalLink } from '../../links'
+import { ContentLink } from '../../links'
 import Video from './Video'
 
 const Link = ({ data }) => {
@@ -46,13 +46,13 @@ const Link = ({ data }) => {
 
   // Internal link
   return content && content.length ? (
-    <InternalLink href={href}>
+    <ContentLink href={href}>
       <a>
         <ContentFragment content={content} />
       </a>
-    </InternalLink>
+    </ContentLink>
   ) : (
-    <InternalLink href={href} />
+    <ContentLink href={href} />
   )
 }
 

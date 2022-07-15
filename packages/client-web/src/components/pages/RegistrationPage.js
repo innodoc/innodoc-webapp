@@ -5,7 +5,7 @@ import { UserAddOutlined } from '@ant-design/icons'
 import { useTranslation } from 'next-i18next'
 
 import Layout from '../Layout'
-import PageTitle from '../PageTitle'
+import PageTitle from '../common/PageTitle'
 import RegistrationForm from '../user/RegistrationForm'
 
 const RegistrationPage = () => {

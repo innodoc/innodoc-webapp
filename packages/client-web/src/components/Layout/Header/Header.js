@@ -10,7 +10,7 @@ import { useTranslation } from 'next-i18next'
 import SecondMenu from './SecondMenu'
 import NavMenu from './NavMenu'
 import Logo from './Logo'
-import { InternalLink } from '../../content/links'
+import { ContentLink } from '../../content/links'
 import SearchInput from './SearchInput'
 import css from './Header.module.sss'
 
@@ -23,11 +23,11 @@ const Header = ({ enableSearch }) => {
 
   const logo =
     course && course.homeLink ? (
-      <InternalLink href={course.homeLink}>
+      <ContentLink href={course.homeLink}>
         <a className={css.logoLink}>
           <Logo />
         </a>
-      </InternalLink>
+      </ContentLink>
     ) : (
       <Logo />
     )

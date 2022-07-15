@@ -1,15 +1,17 @@
-const fs = require('fs').promises
-const path = require('path')
+import { readFile } from 'fs/promises'
+import { createRequire } from 'module'
+import path from 'path'
 
-const clone = require('clone')
+import clone from 'clone'
+import postcss from 'postcss'
+import postcssrc from 'postcss-load-config'
+import sugarss from 'sugarss'
 
-const postcss = require('postcss')
-const postcssrc = require('postcss-load-config')
-const sugarss = require('sugarss')
+const require = createRequire(import.meta.url)
 
 // Path to overridden antd variables
 const antdVarsOverrideFilename = path.resolve(
-  __dirname,
+  new URL('.', import.meta.url).pathname,
   '..',
   '..',
   'src',
@@ -23,7 +25,7 @@ const generateModifyVars = async () => {
 
   try {
     const { plugins, options } = await postcssrc()
-    const buffer = await fs.readFile(antdVarsOverrideFilename)
+    const buffer = await readFile(antdVarsOverrideFilename)
     const result = await postcss(plugins).process(buffer.toString(), {
       ...options,
       parser: sugarss,
@@ -81,7 +83,7 @@ const addLessRule = (rules, cssLoaderOptions, modifyVars) => {
   rules.splice(sassRuleIdx, 0, lessRule)
 }
 
-module.exports = async (phase, nextConfig = {}) => {
+const config = async (phase, nextConfig = {}) => {
   const modifyVars = await generateModifyVars()
 
   return {
@@ -108,3 +110,5 @@ module.exports = async (phase, nextConfig = {}) => {
     },
   }
 }
+
+export default config

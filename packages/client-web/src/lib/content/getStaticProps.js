@@ -3,7 +3,7 @@
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import nextI18NextConfig from '../../../next.config/next-i18next.config'
+import getStaticPageProps from '../getStaticPageProps'
 import contentTypes from './contentTypes'
 
 const contentFragmentRegex = /^[A-Za-z0-9_:-]+$/
@@ -24,17 +24,15 @@ const getContentType = (contentPrefix, fragments) => {
   throw new Error(`getStaticProps: Could not parse content URL: ${contentPrefix} ${fragments}`)
 }
 
-const getStaticProps = async ({ locale, params: { contentPrefix, fragments } }, { dispatch }) => {
-  // next-i18next
-  const serverSideTranslationsProps = await serverSideTranslations(
-    locale,
-    ['common'],
-    nextI18NextConfig
-  )
-
-  const props = { ...serverSideTranslationsProps }
+const getStaticProps = async (context, { dispatch }) => {
+  const staticPageProps = await getStaticPageProps(context)
+  const props = { ...staticPageProps }
 
   // Evaluate URL path and fetch content
+  const {
+    locale,
+    params: { contentPrefix, fragments },
+  } = context
   const [contentType, loadAction] = getContentType(contentPrefix, fragments)
   dispatch(loadAction(fragments.join('/'), locale))
 

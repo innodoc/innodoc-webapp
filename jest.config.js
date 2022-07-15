@@ -6,6 +6,5 @@ module.exports = {
     '<rootDir>/packages/client-store',
     '<rootDir>/packages/client-web',
     '<rootDir>/packages/common',
-    '<rootDir>/packages/server',
   ],
 }

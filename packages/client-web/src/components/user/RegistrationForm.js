@@ -8,7 +8,7 @@ import { showMessage } from '@innodoc/client-store/src/actions/ui'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import { EmailField, PasswordField } from './formFields'
-import Link from '../Link'
+import Link from '../common/Link'
 import UserForm from './UserForm'
 
 const RegistrationForm = () => {

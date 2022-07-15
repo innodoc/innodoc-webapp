@@ -114,16 +114,29 @@ is activated by default.
 $ yarn dev
 ```
 
-### Unit tests
+### Automated Tests
 
-[Jest](https://jestjs.io/) and [Enzyme](http://airbnb.io/enzyme/) are used for
-testing.
+This software package makes use of automated software testing. It follow this
+principle:
+
+> The more your tests resemble the way your software is used, the more
+> confidence they can give you.
+>
+> -- <cite>@kentcdodds</cite>
+
+In practice, this means our test suite consists mainly of integration and E2E
+tests while unit tests are used sparingly where appropriate.
+
+[Jest](https://jestjs.io/) is used as a test runner for unit and integration
+tests.
+
+#### Unit tests
 
 ```sh
 $ yarn test:unit
 ```
 
-##### Coverage
+TODO Coverage still needed?
 
 Shows detailed coverage report and also produces `./coverage/lcov-report` that
 can be viewed in a web browser.
@@ -132,7 +145,18 @@ can be viewed in a web browser.
 $ yarn test:unit:coverage
 ```
 
-### E2E tests
+#### Integration tests
+
+We use [React Testing
+Library](https://testing-library.com/docs/react-testing-library/intro) for
+writing maintainable tests, avoiding testing implentation details of our
+components.
+
+```sh
+$ yarn test:integration
+```
+
+#### E2E tests
 
 [Playwright](https://playwright.dev/) is used for E2E testing.
 
@@ -153,7 +177,7 @@ $ yarn test:e2e:show
 For failed tests a screenshot will be taken automatically and placed into the
 directory `packages/client-web/e2e/screenshots`.
 
-### Serve test content
+#### Serve test content
 
 Serve test content that can be used with [`CONTENT_ROOT`](#content_root). That
 comes in handy for development and testing. For production you should set up a

@@ -8,7 +8,7 @@ import { Trans, useTranslation } from 'next-i18next'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import { PasswordField } from './formFields'
-import Link from '../Link'
+import Link from '../common/Link'
 import UserForm from './UserForm'
 
 const ResetPasswordForm = ({ token }) => {

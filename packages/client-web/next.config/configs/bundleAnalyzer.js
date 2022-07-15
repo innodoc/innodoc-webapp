@@ -1,13 +1,13 @@
-const path = require('path')
+import path from 'path'
 
-module.exports = async (phase, nextConfig = {}) => {
+const config = async (phase, nextConfig = {}) => {
   const { default: BundleAnalyzerPlugin } = await import('webpack-bundle-analyzer')
 
   return {
     ...nextConfig,
     webpack: (config, options) => {
       const reportFilename = path.resolve(
-        __dirname,
+        new URL('.', import.meta.url).pathname,
         '..',
         '..',
         'analyze',
@@ -25,3 +25,5 @@ module.exports = async (phase, nextConfig = {}) => {
     },
   }
 }
+
+export default config

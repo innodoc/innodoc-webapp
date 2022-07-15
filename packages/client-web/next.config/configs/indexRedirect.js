@@ -1,6 +1,7 @@
-module.exports = async (phase, config) => {
+const config = async (phase, config) => {
   const pagePathPrefix = process.env.PAGE_PATH_PREFIX
   const sectionPathPrefix = process.env.SECTION_PATH_PREFIX
+
   const { homeLink } = config.courseManifest
 
   let contentType
@@ -31,3 +32,5 @@ module.exports = async (phase, config) => {
     ],
   }
 }
+
+export default config

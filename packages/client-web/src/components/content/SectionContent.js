@@ -6,7 +6,7 @@ import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
 import useContentPane from '../../hooks/useContentPane'
 import useTrackVisit from '../../hooks/useTrackVisit'
-import PageTitle from '../PageTitle'
+import PageTitle from '../common/PageTitle'
 import ContentFragment from './ContentFragment'
 import ContentAffix from './ContentAffix'
 import SubsectionList from './SubsectionList'

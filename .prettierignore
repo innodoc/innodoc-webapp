@@ -1,2 +1,2 @@
 packages/client-web/src/.next
-packages/server/dist
+packages/client-web/src/.next-dev

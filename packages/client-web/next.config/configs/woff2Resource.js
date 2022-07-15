@@ -1,4 +1,4 @@
-module.exports = async (phase, nextConfig = {}) => ({
+const config = async (phase, nextConfig = {}) => ({
   ...nextConfig,
   webpack: (config, options) => {
     config.module.rules.push({
@@ -9,3 +9,5 @@ module.exports = async (phase, nextConfig = {}) => ({
     return typeof nextConfig.webpack === 'function' ? nextConfig.webpack(config, options) : config
   },
 })
+
+export default config

@@ -20,7 +20,7 @@ const specialPages = {
 }
 
 // takes href like '/section/...' or '/page/...'
-const InternalLink = ({ children, href }) => {
+const ContentLink = ({ children, href }) => {
   const { t } = useTranslation()
   let contentType
   let contentId
@@ -50,13 +50,13 @@ const InternalLink = ({ children, href }) => {
   return <LinkComponent contentId={contentId}>{children}</LinkComponent>
 }
 
-InternalLink.defaultProps = {
+ContentLink.defaultProps = {
   children: null,
 }
 
-InternalLink.propTypes = {
+ContentLink.propTypes = {
   href: PropTypes.string.isRequired,
   children: propTypes.childrenType,
 }
 
-export { InternalLink, PageLink, SectionLink }
+export { ContentLink, PageLink, SectionLink }

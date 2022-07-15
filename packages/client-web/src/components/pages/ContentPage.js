@@ -23,7 +23,7 @@ const ContentPage = ({ contentType }) => {
   // }
 
   const [ContentComponent] = contentTypes[contentType]
-  console.log('ContentPage ContentComponent=', ContentComponent.name)
+  // console.log('ContentPage ContentComponent=', ContentComponent.name)
 
   return (
     <Layout>

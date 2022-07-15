@@ -1,5 +1,7 @@
+import fetch from 'cross-fetch'
+
 const postJson = async (inputUrl, { csrfToken, ...data }) => {
-  const url = new URL(inputUrl, process.env.NEXT_PUBLIC_CONTENT_ROOT)
+  const url = new URL(inputUrl, process.env.NEXT_PUBLIC_APP_ROOT)
   const response = await fetch(url, {
     method: 'POST',
     headers: {

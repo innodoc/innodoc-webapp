@@ -2,6 +2,8 @@
   "name": "@innodoc/client-misc",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
+  "exports": "./src/index.js",
   "author": "innoCampus, TU Berlin",
   "contributors": [
     "Mirko Dietrich <dietrich@math.tu-berlin.de>"
@@ -14,10 +16,9 @@
     "directory": "packages/client-misc"
   },
   "license": "GPL-3.0-or-later",
-  "type": "module",
-  "exports": "./src/index.js",
   "dependencies": {
     "camelcase-keys": "^8.0.1",
+    "cross-fetch": "^3.1.5",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {

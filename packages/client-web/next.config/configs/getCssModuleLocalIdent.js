@@ -1,6 +1,8 @@
+// TODO
+
 // file fork by https://github.com/vercel/next.js/blob/283af4e69bd86e108ae712cbf6921e3f143b40f1/packages/next/build/webpack/config/blocks/css/loaders/getCssModuleLocalIdent.ts
-const loaderUtils = require('loader-utils')
-const path = require('path')
+import loaderUtils from 'loader-utils'
+import path from 'path'
 
 // ### Default ClassName
 //
@@ -57,7 +59,4 @@ function getCssModuleLocalIdentForNextJs(
   )
 }
 
-module.exports = {
-  getCssModuleLocalIdentForNextJs,
-  loaderUtils,
-}
+export { getCssModuleLocalIdentForNextJs, loaderUtils }

@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 
 import useRequireLogin from '../../hooks/useRequireLogin'
 import Layout from '../Layout'
-import PageTitle from '../PageTitle'
+import PageTitle from '../common/PageTitle'
 import DeleteAccountForm from '../user/DeleteAccountForm'
 
 const DeleteAccountPage = () => {

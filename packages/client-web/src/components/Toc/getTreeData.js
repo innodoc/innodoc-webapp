@@ -1,6 +1,6 @@
 import React from 'react'
 
-import SectionTypeTag from '../SectionTypeTag'
+import SectionTypeTag from './SectionTypeTag'
 import { SectionLink } from '../content/links'
 import ActiveSectionLabel from './ActiveSectionLabel'
 import css from './Toc.module.sss'

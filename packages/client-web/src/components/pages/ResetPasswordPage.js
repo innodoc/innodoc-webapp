@@ -5,7 +5,7 @@ import { Row, Col, Typography } from 'antd'
 import { useTranslation } from 'next-i18next'
 
 import Layout from '../Layout'
-import PageTitle from '../PageTitle'
+import PageTitle from '../common/PageTitle'
 import ResetPasswordForm from '../user/ResetPasswordForm'
 
 const ResetPasswordPage = ({ token }) => {

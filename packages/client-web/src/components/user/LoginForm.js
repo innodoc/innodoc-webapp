@@ -10,8 +10,8 @@ import { userLoggedIn } from '@innodoc/client-store/src/actions/user'
 import appSelectors from '@innodoc/client-store/src/selectors'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
-import Link from '../Link'
-import { InternalLink } from '../content/links'
+import Link from '../common/Link'
+import { ContentLink } from '../content/links'
 import { EmailField, PasswordField } from './formFields'
 import UserForm from './UserForm'
 
@@ -65,11 +65,11 @@ const LoginForm = () => {
       subTitle={t('user.login.success.description')}
       extra={
         course ? (
-          <InternalLink href={course.homeLink}>
+          <ContentLink href={course.homeLink}>
             <Button icon={<HomeOutlined />} type="primary">
               {t('content.home')}
             </Button>
-          </InternalLink>
+          </ContentLink>
         ) : null
       }
     />

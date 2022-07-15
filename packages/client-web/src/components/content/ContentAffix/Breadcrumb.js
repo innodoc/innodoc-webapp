@@ -7,7 +7,7 @@ import { useTranslation } from 'next-i18next'
 import courseSelectors from '@innodoc/client-store/src/selectors/course'
 import sectionSelectors from '@innodoc/client-store/src/selectors/section'
 
-import { SectionLink, InternalLink } from '../links'
+import { SectionLink, ContentLink } from '../links'
 
 const Breadcrumb = () => {
   const { t } = useTranslation()
@@ -29,11 +29,11 @@ const Breadcrumb = () => {
 
   const breadcrumbItems = [
     <AntBreadcrumb.Item key="root">
-      <InternalLink href={homeLink}>
+      <ContentLink href={homeLink}>
         <a title={t('content.home')}>
           <HomeOutlined />
         </a>
-      </InternalLink>
+      </ContentLink>
     </AntBreadcrumb.Item>,
   ].concat(sectionLinks)
 

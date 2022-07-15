@@ -9,7 +9,7 @@ import { useTranslation } from 'next-i18next'
 import appSelectors from '@innodoc/client-store/src/selectors'
 
 import LoginButton from '../LoginButton'
-import PageTitle from '../PageTitle'
+import PageTitle from '../common/PageTitle'
 
 const VerifyUserResult = ({ token }) => {
   const { csrfToken } = useSelector(appSelectors.getApp)

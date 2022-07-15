@@ -1,3 +1,3 @@
-const config = require('./next.config/index')
+import config from './next.config/index.js'
 
-module.exports = config
+export default config

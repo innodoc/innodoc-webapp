@@ -1,17 +1,17 @@
-const antdLess = require('./antdLess')
-const appConfig = require('./appConfig')
-const bundleAnalyzer = require('./bundleAnalyzer')
-const copyMathJaxFonts = require('./copyMathJaxFonts')
-const { exportWebpackConfigPre, exportWebpackConfigPost } = require('./exportWebpackConfig')
-const extractAntdVariables = require('./extractAntdVariables')
-const fetchManifest = require('./fetchManifest')
-const indexRedirect = require('./indexRedirect')
-const printNextConfig = require('./printNextConfig')
-const sugarss = require('./sugarss')
-const svgIcons = require('./svgIcons')
-const woff2Resource = require('./woff2Resource')
+import antdLess from './antdLess.js'
+import appConfig from './appConfig.js'
+import bundleAnalyzer from './bundleAnalyzer.js'
+import copyMathJaxFonts from './copyMathJaxFonts.js'
+import { exportWebpackConfigPre, exportWebpackConfigPost } from './exportWebpackConfig.js'
+import extractAntdVariables from './extractAntdVariables.js'
+import fetchManifest from './fetchManifest.js'
+import indexRedirect from './indexRedirect.js'
+import printNextConfig from './printNextConfig.js'
+import sugarss from './sugarss.js'
+import svgIcons from './svgIcons.js'
+import woff2Resource from './woff2Resource.js'
 
-module.exports = [
+const configs = [
   process.env.EXPORT_WEBPACK_CONFIG && exportWebpackConfigPost,
   fetchManifest,
   appConfig,
@@ -26,3 +26,5 @@ module.exports = [
   process.env.PRINT_NEXT_CONFIG === 'true' && printNextConfig,
   process.env.EXPORT_WEBPACK_CONFIG && exportWebpackConfigPre,
 ].filter(Boolean)
+
+export default configs

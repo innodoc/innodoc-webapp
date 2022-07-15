@@ -8,11 +8,10 @@ import orm from './orm'
 // add redux devtools
 const bindMiddleware = (middleware) => {
   let boundMiddleware = applyMiddleware(...middleware)
-  if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line global-require, import/no-extraneous-dependencies
-    const { composeWithDevTools } = require('redux-devtools-extension')
-    boundMiddleware = composeWithDevTools(boundMiddleware)
-  }
+  // if (process.env.NODE_ENV !== 'production') {
+    // const { composeWithDevTools } = require('redux-devtools-extension')
+    // boundMiddleware = composeWithDevTools(boundMiddleware)
+  // }
   return boundMiddleware
 }
 

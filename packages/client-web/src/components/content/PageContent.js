@@ -4,7 +4,7 @@ import { Typography } from 'antd'
 import pageSelectors from '@innodoc/client-store/src/selectors/page'
 
 import useContentPane from '../../hooks/useContentPane'
-import PageTitle from '../PageTitle'
+import PageTitle from '../common/PageTitle'
 import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
 import ContentFragment from './ContentFragment'
 import css from './content.module.sss'

@@ -4,7 +4,7 @@ import { Typography } from 'antd'
 import { useTranslation } from 'next-i18next'
 
 import Layout from '../Layout'
-import PageTitle from '../PageTitle'
+import PageTitle from '../common/PageTitle'
 import UserProgress from '../user/Progress'
 import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
 import css from '../content/content.module.sss'

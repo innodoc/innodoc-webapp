@@ -1,14 +1,24 @@
-const { PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_SERVER } = require('next/constants')
+import constants from 'next/constants.js'
 
-module.exports = async (phase, config) => {
-  if ([PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_SERVER].includes(phase)) {
-    const { api } = await import('@innodoc/client-misc')
+import { api } from '@innodoc/client-misc'
 
-    return {
-      ...config,
-      courseManifest: await api.fetchManifest(),
+const config = async (phase, config) => {
+  let courseManifest
+
+  // mock manifest for testing
+  if (constants.PHASE_TEST === phase) {
+    // TODO: load from example course?
+    courseManifest = {
+      homeLink: '/page/about',
     }
   }
 
-  return config
+  // prod/dev phase
+  else {
+    courseManifest = await api.fetchManifest()
+  }
+
+  return { ...config, courseManifest }
 }
+
+export default config

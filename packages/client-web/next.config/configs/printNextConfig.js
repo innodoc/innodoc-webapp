@@ -1,4 +1,4 @@
-module.exports = async (phase, config) => {
+const config = async (phase, config) => {
   /* eslint-disable-next-line no-extend-native */
   Object.defineProperty(RegExp.prototype, 'toJSON', {
     value: RegExp.prototype.toString,
@@ -7,3 +7,5 @@ module.exports = async (phase, config) => {
 
   return config
 }
+
+export default config

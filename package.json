@@ -2,6 +2,7 @@
   "name": "innodoc",
   "version": "0.2.3",
   "private": true,
+  "type": "module",
   "scripts": {
     "build:analyze": "yarn workspace @innodoc/client-web build:analyze",
     "build": "yarn workspace @innodoc/client-web build",
@@ -15,6 +16,7 @@
     "test:e2e:content": "yarn workspace @innodoc/client-web test:e2e:content",
     "test:e2e:show": "yarn workspace @innodoc/client-web test:e2e:show",
     "test:e2e": "yarn workspace @innodoc/client-web test:e2e",
+    "test:integration": "yarn workspace @innodoc/client-web test:integration",
     "test:unit:coverage": "yarn run test:unit --coverage",
     "test:unit": "jest"
   },
@@ -23,7 +25,6 @@
   ],
   "dependencies": {
     "@innodoc/common": "workspace:packages/common",
-    "@innodoc/server": "workspace:packages/server",
     "pm2": "^4.5.6",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
@@ -47,13 +48,6 @@
     "next": "^12.2.0",
     "prettier": "^2.7.0",
     "stylelint": "^14.9.1"
-  },
-  "resolutions": {
-    "expect-playwright": "0.2.5",
-    "mongodb-memory-server": "6.9.3",
-    "playwright-chromium": "1.4.2",
-    "playwright-core": "1.4.2",
-    "webpack": "4.46.0"
   },
   "packageManager": "yarn@3.2.1"
 }

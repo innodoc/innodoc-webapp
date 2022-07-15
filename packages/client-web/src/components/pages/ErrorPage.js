@@ -4,9 +4,9 @@ import { Result } from 'antd'
 
 import { useTranslation } from 'next-i18next'
 
-import HomeButton from '../HomeButton'
+import HomeButton from '../common/HomeButton'
+import PageTitle from '../common/PageTitle'
 import Layout from '../Layout'
-import PageTitle from '../PageTitle'
 
 const ErrorPage = ({ statusCode }) => {
   const { t } = useTranslation()

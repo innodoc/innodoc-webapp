@@ -1,7 +1,8 @@
 import camelcaseKeys from 'camelcase-keys'
+import fetch from 'cross-fetch'
 
 const getJson = async (inputUrl, camelcaseKeysStopPaths = undefined) => {
-  const url = new URL(inputUrl, process.env.NEXT_PUBLIC_CONTENT_ROOT)
+  const url = new URL(inputUrl, process.env.NEXT_PUBLIC_APP_ROOT)
   const response = await fetch(url)
   if (response.ok) {
     const data = await response.json()

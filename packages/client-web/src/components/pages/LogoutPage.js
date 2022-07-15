@@ -11,8 +11,8 @@ import courseSelectors from '@innodoc/client-store/src/selectors/course'
 
 import useRequireLogin from '../../hooks/useRequireLogin'
 import Layout from '../Layout'
-import PageTitle from '../PageTitle'
-import { InternalLink } from '../content/links'
+import PageTitle from '../common/PageTitle'
+import { ContentLink } from '../content/links'
 
 const LogoutPage = () => {
   const { t } = useTranslation()
@@ -45,11 +45,11 @@ const LogoutPage = () => {
               title={title}
               extra={
                 course ? (
-                  <InternalLink href={course.homeLink}>
+                  <ContentLink href={course.homeLink}>
                     <Button icon={<HomeOutlined />} type="primary">
                       {t('content.home')}
                     </Button>
-                  </InternalLink>
+                  </ContentLink>
                 ) : null
               }
             />

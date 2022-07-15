@@ -1,5 +1,5 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
 
 const exportJson = (name, config, { isServer }) => {
   /* eslint-disable-next-line no-extend-native */
@@ -36,4 +36,4 @@ const exportWebpackConfigPost = async (phase, nextConfig = {}) => ({
   },
 })
 
-module.exports = { exportWebpackConfigPre, exportWebpackConfigPost }
+export { exportWebpackConfigPre, exportWebpackConfigPost }
