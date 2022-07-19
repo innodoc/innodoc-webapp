@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "es6",
+    "paths": {
+      "@innodoc/app": ["app"],
+      "@innodoc/common": ["packages/common"],
+      "@innodoc/eslint-config": ["packages/eslint-config"],
+      "@innodoc/misc": ["packages/misc"],
+      "@innodoc/question-validators": ["packages/question-validators"],
+      "@innodoc/store": ["packages/store"]
+    }
+  },
+  "exclude": [".yarn", ".vscode", "coverage", "e2e"]
+}

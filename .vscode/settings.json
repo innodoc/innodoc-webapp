@@ -1,8 +1,9 @@
 {
   "search.exclude": {
-    "packages/client-web/analyze": true,
-    "packages/client-web/src/.next*": true,
-    "packages/client-web/src/public/locales/*/*.missing.json": true,
+    "app/analyze": true,
+    "app/src/.next*": true,
+    "app/src/.swc": true,
+    "app/src/public/locales/*/*.missing.json": true,
     "**/.yarn": true,
     "**/.pnp.*": true
   },

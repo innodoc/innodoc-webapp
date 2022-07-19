@@ -1,0 +1,28 @@
+{
+  "name": "@innodoc/store",
+  "version": "0.0.0",
+  "private": true,
+  "author": "innoCampus, TU Berlin",
+  "contributors": [
+    "Mirko Dietrich <dietrich@math.tu-berlin.de>"
+  ],
+  "description": "innoDoc client store",
+  "homepage": "https://gitlab.tubit.tu-berlin.de/innodoc/innodoc/tree/master/packages/store#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.tu-berlin.de/innodoc/innodoc",
+    "directory": "packages/store"
+  },
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "sideEffects": false,
+  "dependencies": {
+    "@innodoc/common": "workspace:^",
+    "@innodoc/misc": "workspace:^",
+    "next-redux-wrapper": "^7.0.5",
+    "react-redux": "^8.0.2",
+    "redux": "^4.2.0",
+    "redux-orm": "^0.16.2",
+    "redux-saga": "^1.1.3"
+  }
+}

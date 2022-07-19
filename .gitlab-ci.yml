@@ -112,8 +112,8 @@ E2E tests:
       innodoc-webapp-e2e:latest
   after_script:
     - docker cp
-      $(cat /tmp/e2e.cid):/home/innodocuser/innodoc-webapp/packages/client-web/e2e/screenshots/.
-      packages/client-web/e2e/screenshots
+      $(cat /tmp/e2e.cid):/home/innodocuser/innodoc-webapp/e2e/screenshots/.
+      e2e/screenshots
     - docker rm -v $(cat /tmp/e2e.cid)
     - *docker-mongo-base-after-script
     - *docker-base-logout-script
@@ -123,7 +123,7 @@ E2E tests:
   artifacts:
     name: e2e-screenshots-$CI_COMMIT_REF_NAME
     paths:
-      - packages/client-web/e2e/screenshots/*.png
+      - e2e/screenshots/*.png
     when: on_failure
     expire_in: 1 week
 

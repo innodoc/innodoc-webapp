@@ -1,9 +1,10 @@
 .DS_Store
-coverage
 *~
+/coverage
+/e2e/screenshots
 # shelfio/jest-mongodb temp config
 /globalConfig.json
-# yarn 2
+# yarn berry
 .yarn/*
 !.yarn/releases
 !.yarn/plugins

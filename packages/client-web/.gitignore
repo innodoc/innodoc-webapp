@@ -1,8 +1,0 @@
-/src/.next
-/src/.next-dev
-/src/.env*.local
-/analyze
-/src/public/locales/*/*.missing.json
-/src/style/antd-vars.json
-/src/public/fonts/mathjax-woff-v2
-/e2e/screenshots

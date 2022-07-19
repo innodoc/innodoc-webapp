@@ -57,8 +57,7 @@ liking.
 $ yarn build
 ```
 
-An optimized production build can be found in the directory
-`packages/client-web/src/.next`.
+An optimized production build can be found in the directory `app/src/.next`.
 
 #### 4. Start the production server
 
@@ -175,7 +174,7 @@ $ yarn test:e2e:show
 ```
 
 For failed tests a screenshot will be taken automatically and placed into the
-directory `packages/client-web/e2e/screenshots`.
+directory `e2e/screenshots`.
 
 #### Serve test content
 
@@ -203,5 +202,5 @@ Visualize bundle contents using
 [Webpack Bundle Analyzer](https://www.npmjs.com/package/webpack-bundle-analyzer).
 
 ```sh
-$ yarn workspace @innodoc/client-web build:analyze
+$ yarn workspace @innodoc/app build:analyze
 ```

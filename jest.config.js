@@ -1,10 +1,10 @@
-module.exports = {
+export default {
   projects: [
-    '<rootDir>/packages/client-misc',
-    '<rootDir>/packages/client-question-validators',
+    '<rootDir>/app',
     '<rootDir>/packages/client-sagas',
-    '<rootDir>/packages/client-store',
-    '<rootDir>/packages/client-web',
     '<rootDir>/packages/common',
+    '<rootDir>/packages/misc',
+    '<rootDir>/packages/question-validators',
+    '<rootDir>/packages/store',
   ],
 }

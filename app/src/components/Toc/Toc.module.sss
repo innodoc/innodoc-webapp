@@ -1,0 +1,24 @@
+@import '@innodoc/app/src/style/antd-theme.sss'
+
+.disableExpand
+  :global(.ant-tree-switcher)
+    display: none !important
+
+.tocWrapper
+  margin-bottom: $padding-lg
+
+  .sectionTag
+    cursor: auto
+    margin-left: $padding-xs
+
+  :global(.ant-tree)
+    background-color: transparent
+
+    :global(.ant-tree-node-content-wrapper:hover)
+      background-color: transparent
+      color: $primary-5
+      cursor: auto
+
+  .active
+    color: $heading-color
+    text-decoration: underline

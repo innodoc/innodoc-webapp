@@ -16,7 +16,7 @@ RUN set -xe && \
   mkdir log && \
   yarn config set --home enableTelemetry 0 && \
   yarn install --immutable && \
-  yarn workspace @innodoc/client-web run next telemetry disable && \
+  yarn workspace @innodoc/app run next telemetry disable && \
   yarn build
 
 EXPOSE 8000
