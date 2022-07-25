@@ -1,0 +1,41 @@
+@import '@vars/antd-theme.sss'
+
+$affix-height: 38px
+
+html
+  scroll-padding: $affix-height 0 0 0
+
+.sectionAffix
+  display: flex
+  background-color: transparent
+  border-bottom: $border-width-base $border-style-base transparent
+  margin-bottom: $padding-xs
+  transition: background-color $animation-duration-slow, border-color $animation-duration-slow
+
+  .affixButtons
+    align-self: flex-start
+    white-space: nowrap
+
+    .affixButton
+      margin-left: $padding-xs
+
+  :global(.ant-breadcrumb)
+    line-height: $line-height-base
+    flex-grow: 1
+    transition: none
+
+  &.affixed
+    height: $affix-height
+    background-color: $body-background
+    border-bottom-color: $border-color-split
+
+    .affixButtons
+      align-self: center
+
+    :global(.ant-breadcrumb)
+      height: $affix-height
+      line-height: calc(1.5 * $line-height-base)
+      overflow: hidden
+      text-overflow: ellipsis
+      transition: line-height $animation-duration-slow
+      white-space: nowrap

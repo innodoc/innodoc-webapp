@@ -19,10 +19,12 @@ import nextI18nextConfig from '../next-i18next.config.js'
 // console.log('__dirname', __dirname)
 // console.log('nextI18nextConfig', nextI18nextConfig)
 
+const dirname = new URL('.', import.meta.url).pathname
+
 export default async (phase, config) => {
   let generateBuildId
   if (!process.env.NEXTJS_WEBAPP_BUILD_ID) {
-    generateBuildId = () => nextBuildId({ dir: new URL('.', import.meta.url).pathname })
+    generateBuildId = () => nextBuildId({ dir: dirname })
   } else {
     generateBuildId = () => process.env.NEXTJS_WEBAPP_BUILD_ID
   }
@@ -44,5 +46,10 @@ export default async (phase, config) => {
 
     // Minify JS code
     swcMinify: process.env.NODE_ENV === 'production',
+
+    // Allow importing from outside of next.js root
+    experimental: {
+      externalDir: true,
+    },
   }
 }

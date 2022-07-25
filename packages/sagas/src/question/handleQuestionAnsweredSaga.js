@@ -1,7 +1,7 @@
 import { call, put } from 'redux-saga/effects'
 
 import validators from '@innodoc/question-validators'
-import { questionEvaluated, questionInvalid } from '@innodoc/store/src/actions/question'
+import { questionEvaluated, questionInvalid } from '@innodoc/store/actions/question'
 
 export default function* handleQuestionAnsweredSaga({ id, answer, attributes }) {
   const { solution, validation, ...remainingAttrs } = attributes

@@ -1,3 +1,3 @@
-# `client-sagas`
+# `sagas`
 
-Internal application logic written as [sagas](https://redux-saga.js.org/).
+Internal application logic written using [redux-saga](https://redux-saga.js.org/).

@@ -1,3 +1,5 @@
+// TODO not needed
+
 export default async (phase, nextConfig = {}) => ({
   ...nextConfig,
   webpack: (config, options) => {

@@ -2,7 +2,7 @@
 
 import { fork, takeLatest } from 'redux-saga/effects'
 
-import { actionTypes } from '@innodoc/store/src/actions/i18n'
+import { actionTypes } from '@innodoc/store/actions/i18n'
 import { notifyI18nextSaga, waitForI18NextSaga } from './i18n'
 
 export default [

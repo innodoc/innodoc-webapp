@@ -1,11 +1,8 @@
 // Separate import settings, so they can be applied late
 module.exports = {
-  settings: {
+  rules: {
     // We require extensions as does Node.js ESM
     'import/extensions': ['error', 'ignorePackages'],
-
-    // Mark workspaces as internal for proper import sorting
-    'import/internal-regex': '^@innodoc/',
 
     // Custom import order
     'import/order': [
@@ -19,6 +16,10 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
+  },
+  settings: {
+    // Mark workspaces as internal for proper import sorting
+    'import/internal-regex': '^@innodoc/',
 
     // eslint-import-resolver-node (using browserify/resolve) does not support
     // ESM! (https://github.com/browserify/resolve/issues/222)

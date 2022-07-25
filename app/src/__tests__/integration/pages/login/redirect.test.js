@@ -3,7 +3,7 @@ import router from 'next/router'
 import userEvent from '@testing-library/user-event'
 
 import { render, screen, waitFor } from 'test-utils.js'
-import LoginPage from 'pages/login.js'
+import Login from 'pages/login.js'
 
 const oldWindowLocation = window.location
 
@@ -33,7 +33,7 @@ test('navigate to redirect_to query param after login', async () => {
   router.query.redirect_to = 'http://example.com/foo/bar'
 
   const user = userEvent.setup()
-  render(<LoginPage />)
+  render(<Login />)
 
   const emailInput = screen.getByRole('textbox')
   const passwordInput = screen.getByPlaceholderText(/password/i)

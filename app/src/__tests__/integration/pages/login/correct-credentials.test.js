@@ -1,11 +1,11 @@
 import userEvent from '@testing-library/user-event'
 
 import { render, screen, waitFor } from 'test-utils.js'
-import LoginPage from 'pages/login.js'
+import Login from 'pages/login.js'
 
 test('login with correct credentials', async () => {
   const user = userEvent.setup()
-  render(<LoginPage />)
+  render(<Login />)
 
   const emailInput = screen.getByRole('textbox')
   const passwordInput = screen.getByPlaceholderText(/password/i)

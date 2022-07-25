@@ -4,8 +4,8 @@
 // import { createWrapper, HYDRATE } from 'next-redux-wrapper'
 import { createWrapper } from 'next-redux-wrapper'
 
-import clientSagas from '@innodoc/client-sagas'
-import makeMakeStore from '@innodoc/store/src/store'
+import clientSagas from '@innodoc/sagas'
+import getMakeStore from '@innodoc/store/getMakeStore'
 
 // next-redux-wrapper needs HYDRATE to be handled
 // const getRootReducer = (innerReducer) => (state, action) => {
@@ -24,8 +24,8 @@ import makeMakeStore from '@innodoc/store/src/store'
 //   yield fork(clientSagas)
 // }
 
-// const makeStore = makeMakeStore(rootSaga, getRootReducer)
-const makeStore = makeMakeStore(clientSagas)
+// const makeStore = getMakeStore(rootSaga, getRootReducer)
+const makeStore = getMakeStore(clientSagas)
 
 // export { getRootReducer } // for testing
 export default createWrapper(makeStore)

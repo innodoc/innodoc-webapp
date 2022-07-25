@@ -1,8 +1,8 @@
 /* eslint no-bitwise: "off" */
 
-import { constants } from '@innodoc/misc'
+import constants from '@innodoc/misc/constants'
 
-import { convertMathInput, mathJS, mathJSFunctions, rawParse, withinDistance } from './util'
+import { convertMathInput, mathJS, mathJSFunctions, rawParse, withinDistance } from './utils'
 
 // taken from jQuery-3.1.1
 const isNumeric = (obj) =>

@@ -9,31 +9,13 @@ module.exports = {
     '@innodoc/eslint-config/airbnb',
     '@innodoc/eslint-config/filenames',
     '@innodoc/eslint-config/nextjs',
-    '@innodoc/eslint-config/react-redux',
     '@innodoc/eslint-config/promise',
     '@innodoc/eslint-config/security',
     '@innodoc/eslint-config/prettier',
     '@innodoc/eslint-config/import-settings',
   ],
   overrides: [
-    {
-      files: ['src/components/content/ContentFragment/**/*.js'],
-      rules: {
-        'import/no-cycle': 'off',
-      },
-    },
-    {
-      files: ['src/**/*.+(js|jsx)'],
-      rules: {
-        'filenames/match-exported': 'error',
-      },
-    },
-    {
-      files: ['src/pages/**/*.jsx'],
-      rules: {
-        'filenames/match-exported': 'off',
-      },
-    },
+    // next.config
     {
       files: ['next.config/**/*.js'],
       rules: {
@@ -42,11 +24,31 @@ module.exports = {
         'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
       },
     },
+
+    // As per nextjs convention filenames in pages function as URL patterns
+    {
+      files: ['src/pages/**/*.jsx'],
+      rules: {
+        'filenames/match-exported': ['error', 'kebab'],
+        'filenames/match-regex': ['error', '^_?[a-z-]+$', false],
+      },
+    },
+
+    // Exempt special nextjs page files and dynamic routes
+    {
+      files: [
+        'src/pages/_+(app|error|document).jsx',
+        'src/pages/\\[*\\]/*.jsx',
+        'src/pages/*/\\[*\\].jsx',
+      ],
+      rules: {
+        'filenames/match-exported': 'off',
+        'filenames/match-regex': 'off',
+      },
+    },
   ],
   settings: {
     // Next.js rootDir
     next: { rootDir: path.resolve(__dirname, 'src') },
-    // Add .sss
-    'import/ignore': ['node_modules', /\.(coffee|scss|css|sss|less|hbs|svg|json)$/.toString()],
   },
 }

@@ -1,6 +1,6 @@
-import { util } from '@innodoc/misc'
+import { makeSymbolObj } from '@innodoc/misc/utils'
 
-export const actionTypes = util.makeSymbolObj([
+export const actionTypes = makeSymbolObj([
   'ADD_QUESTION',
   'QUESTION_ANSWERED',
   'QUESTION_EVALUATED',

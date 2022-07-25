@@ -67,10 +67,9 @@
   "type": "commonjs",
   "sideEffects": false,
   "dependencies": {
-    "@innodoc/client-sagas": "workspace:^",
-    "@innodoc/common": "workspace:^",
     "@innodoc/misc": "workspace:^",
     "@innodoc/question-validators": "workspace:^",
+    "@innodoc/sagas": "workspace:^",
     "@innodoc/store": "workspace:^",
     "@next/eslint-plugin-next": "^12.2.2",
     "@rushstack/eslint-patch": "^1.1.4",

@@ -1,8 +1,8 @@
 import { call, put, select } from 'redux-saga/effects'
 
-import { contentNotFound } from '@innodoc/store/src/actions/content'
-import appSelectors from '@innodoc/store/src/selectors'
-import { util } from '@innodoc/misc'
+import { parseContentId } from '@innodoc/misc/utils'
+import { contentNotFound } from '@innodoc/store/actions/content'
+import { getApp } from '@innodoc/store/selectors/misc'
 
 const makeLoadContentSaga = (
   getCurrentContent,
@@ -15,8 +15,8 @@ const makeLoadContentSaga = (
   function* loadContentSaga({ contentId: contentIdHash, prevLanguage }) {
     console.log('loadContentSaga')
 
-    const { contentRoot, language } = yield select(appSelectors.getApp)
-    const [contentId] = yield call(util.parseContentId, contentIdHash)
+    const { contentRoot, language } = yield select(getApp)
+    const [contentId] = yield call(parseContentId, contentIdHash)
 
     // Do not load exact same content another time
     const currentContent = yield select(getCurrentContent)

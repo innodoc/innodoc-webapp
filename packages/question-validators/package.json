@@ -15,6 +15,9 @@
   },
   "license": "GPL-3.0-or-later",
   "type": "module",
+  "exports": {
+    ".": "./src/validators.js"
+  },
   "sideEffects": false,
   "dependencies": {
     "@innodoc/eslint-config": "workspace:^",

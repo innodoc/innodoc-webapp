@@ -1,5 +1,5 @@
-import { constants } from '@innodoc/misc'
-import { outsideDistance, rawParse, rawParseWithLatex } from './util'
+import constants from '@innodoc/misc/constants'
+import { outsideDistance, rawParse, rawParseWithLatex } from './utils'
 
 const REGEX_INTERVAL = /([([\]]{1})([^,;]*)[,;]([^,;]*)([)[\]]{1})/
 

@@ -5,13 +5,13 @@ import { render, screen, waitFor } from 'test-utils.js'
 import { getUrl } from 'api-mock/handlers.js'
 import mockServer from 'api-mock/server.js'
 
-import LoginPage from 'pages/login.js'
+import Login from 'pages/login.js'
 
 test('show error with incorrect credentials', async () => {
   mockServer.use(rest.post(getUrl('/user/login'), (req, res, ctx) => res(ctx.status(403))))
 
   const user = userEvent.setup()
-  render(<LoginPage />)
+  render(<Login />)
 
   const emailInput = screen.getByRole('textbox')
   const passwordInput = screen.getByPlaceholderText(/password/i)

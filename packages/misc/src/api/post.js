@@ -14,7 +14,7 @@ const postJson = async (url, { csrfToken, ...data }) => {
     return response.json()
   }
 
-  throw new Error(response.status)
+  throw new Error(`Could not fetch JSON data. (Status: ${response.status} URL: ${url})`)
 }
 
 export const changePassword = (csrfToken, password, oldPassword) =>

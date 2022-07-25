@@ -1,4 +1,4 @@
-import { makeSymbolObj } from './util.js'
+import { makeSymbolObj } from './utils.js'
 
 export const MESSAGE_LEVELS = ['error', 'warning', 'info', 'success']
 

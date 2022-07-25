@@ -3,10 +3,10 @@
     "baseUrl": "./src",
     "module": "es6",
     "paths": {
-      "@components/*": ["components/*"],
-      "@hooks/*": ["hooks/*"],
-      "@lib/*": ["lib/*"],
-      "@style/*": ["style/*"]
+      "@components/*": ["./components/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@lib/*": ["./lib/*"],
+      "@style/*": ["./style/*"]
     }
   },
   "include": ["next.config/**/*.js", "src/**/*.jsx", "src/**/*.js"],

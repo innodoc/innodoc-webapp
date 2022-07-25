@@ -9,13 +9,19 @@ import sugarss from 'sugarss'
 
 const require = createRequire(import.meta.url)
 
+const dirname = new URL('.', import.meta.url).pathname
+
 // Path to overridden antd variables
 const antdVarsOverrideFilename = path.resolve(
-  new URL('.', import.meta.url).pathname,
+  dirname,
   '..',
   '..',
+  '..',
+  'packages',
+  'ui',
   'src',
   'style',
+  'vars',
   'antd-theme.sss'
 )
 
@@ -89,10 +95,8 @@ export default async (phase, nextConfig = {}) => {
   return {
     ...nextConfig,
     webpack: (config, options) => {
-      const isDev = process.env.NODE_ENV === 'development'
-
       const cssLoaderOptions = {
-        sourceMap: isDev,
+        sourceMap: process.env.NODE_ENV === 'development',
         modules: false,
       }
 

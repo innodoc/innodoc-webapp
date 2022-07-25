@@ -1,0 +1,38 @@
+@import '@vars/antd-theme.sss'
+@import '@vars/posneg-colors.sss'
+
+:exports
+  color-correct: $color-positive
+  color-incorrect: $color-negative
+
+.inputQuestion
+  margin: $padding-xss $padding-xs
+
+  input[type=text]
+    font-family: $code-family
+    background-color: $background-color-light
+
+.checkbox
+  margin-right: $padding-xs !important
+
+.correct input[type=text]
+  border-color: $color-positive
+  background-color: $color-positive-bg
+
+.incorrect input[type=text]
+  border-color: $color-negative
+  background-color: $color-negative-bg
+
+.unknownQuestion
+  background-color: $color-error
+
+.verifyBtn
+  margin-bottom: $padding-lg
+
+  .divider
+    margin: $padding-sm 0
+
+.emptyIcon
+  display: inline-block
+  height: 16px
+  width: 16px

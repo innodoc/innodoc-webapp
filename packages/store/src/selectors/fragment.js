@@ -1,26 +1,21 @@
 import { createSelector } from 'redux-orm'
 
-import orm from '../orm'
-import { selectId } from '.'
+import orm from '../orm.js'
+
+import { selectId } from './misc.js'
 
 // Return fragment by ID
-const getFragment = createSelector(orm, selectId, (session, id) => {
+export const getFragment = createSelector(orm, selectId, (session, id) => {
   const fragment = session.Fragment.withId(id)
   return fragment ? fragment.ref : undefined
 })
 
-const getFooterA = createSelector(orm, (session) => {
+export const getFooterA = createSelector(orm, (session) => {
   const fragment = session.Fragment.withId('_footer_a')
   return fragment ? fragment.ref : undefined
 })
 
-const getFooterB = createSelector(orm, (session) => {
+export const getFooterB = createSelector(orm, (session) => {
   const fragment = session.Fragment.withId('_footer_b')
   return fragment ? fragment.ref : undefined
 })
-
-export default {
-  getFooterA,
-  getFooterB,
-  getFragment,
-}

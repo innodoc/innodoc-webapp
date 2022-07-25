@@ -1,15 +1,15 @@
 import { LoginOutlined } from '@ant-design/icons'
 import { Row, Col, Typography } from 'antd'
-
 import { useTranslation } from 'next-i18next'
 
-import PageTitle from '../components/common/PageTitle'
-import Layout from '../components/Layout'
-import LoginForm from '../components/user/LoginForm'
-import getStaticPageProps from '../lib/getStaticPageProps'
-import serversideBootstrap from '../lib/serversideBootstrap'
+import { PageTitle } from '@innodoc/ui/common'
+import Layout from '@innodoc/ui/layout'
+import { LoginForm } from '@innodoc/ui/user'
 
-function LoginPage() {
+import getStaticPageProps from '../lib/getStaticPageProps.js'
+import serversideBootstrap from '../lib/serversideBootstrap.js'
+
+function Login() {
   const { t } = useTranslation()
   const title = t('user.login.title')
   return (
@@ -32,4 +32,4 @@ function LoginPage() {
 const getStaticProps = serversideBootstrap(getStaticPageProps)
 
 export { getStaticProps }
-export default LoginPage
+export default Login

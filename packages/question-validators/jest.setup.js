@@ -1,4 +1,4 @@
-import { constants } from '@innodoc/misc'
+import constants from '@innodoc/misc/constants'
 
 global.createTests = (name, validatorFunc, cases) => {
   const defaultAttrs = {

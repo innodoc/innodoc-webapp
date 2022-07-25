@@ -1,8 +1,9 @@
 // - Prepare content props for SSR
 // - Add next-i18next specific props
 
-import getStaticPageProps from '../getStaticPageProps'
-import contentTypes from './contentTypes'
+import getContentComponentAndLoadAction from '@innodoc/misc/getContentComponentAndLoadAction'
+
+import getStaticPageProps from '../getStaticPageProps.js'
 
 const contentFragmentRegex = /^[A-Za-z0-9_:-]+$/
 
@@ -15,7 +16,7 @@ const getContentType = (contentPrefix, fragments) => {
   if (Object.keys(pathPrefixes).includes(contentPrefix)) {
     const contentType = contentPrefix === pathPrefixes.page ? 'page' : 'section'
     if (fragments.every((f) => contentFragmentRegex.test(f))) {
-      const [, loadAction] = contentTypes[contentType]
+      const { loadAction } = getContentComponentAndLoadAction(contentType)
       return [contentType, loadAction]
     }
   }

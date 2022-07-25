@@ -1,6 +1,6 @@
-import { constants } from '@innodoc/misc'
+import constants from '@innodoc/misc/constants'
 
-import { notationParserIn, outsideDistance, rawParse, rawParseWithLatex } from './util'
+import { notationParserIn, outsideDistance, rawParse, rawParseWithLatex } from './utils'
 
 // Find greatest common divisor
 const gcd = (a, b) => (b ? gcd(b, a % b) : a)

@@ -1,26 +1,22 @@
 import fetch from 'cross-fetch'
 
 async function fetchWithTimeout(url, { timeout = 10000, ...otherOptions } = {}) {
-  let response
+  let timeoutId
   const controller = new AbortController()
-  const timeoutId = setTimeout(() => controller.abort(), timeout)
+
   try {
-    response = await fetch(url, {
+    timeoutId = setTimeout(() => controller.abort(), timeout)
+    return await fetch(url, {
       ...otherOptions,
       signal: controller.signal,
     })
   } catch (err) {
-    if (err.type === 'aborted') {
-      throw new Error(`Timeout while fetching ${url}`)
-    }
+    throw err.type === 'aborted' ? new Error(`Timeout while fetching ${url}`) : err
+  } finally {
+    clearTimeout(timeoutId)
   }
-  clearTimeout(timeoutId)
-  return response
 }
 
-const getUrl = (base, pathname) => {
-  const url = new URL(pathname, base)
-  return url.toString()
-}
+const getUrl = (base, pathname) => new URL(pathname, base).toString()
 
 export { fetchWithTimeout, getUrl }

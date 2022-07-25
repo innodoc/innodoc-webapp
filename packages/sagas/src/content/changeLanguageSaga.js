@@ -1,11 +1,11 @@
 import { put, select } from 'redux-saga/effects'
 
-import { loadFragment, loadPage, loadSection } from '@innodoc/store/src/actions/content'
-import courseSelectors from '@innodoc/store/src/selectors/course'
+import { loadFragment, loadPage, loadSection } from '@innodoc/store/actions/content'
+import { getCurrentCourse } from '@innodoc/store/selectors/course'
 
 // When the language changes we may need to (re-)load content.
 export default function* changeLanguageSaga({ prevLanguage }) {
-  const course = yield select(courseSelectors.getCurrentCourse)
+  const course = yield select(getCurrentCourse)
   if (course) {
     if (course.currentSectionId) {
       yield put(loadSection(course.currentSectionId, prevLanguage))

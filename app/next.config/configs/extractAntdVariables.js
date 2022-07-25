@@ -2,25 +2,16 @@
 
 import fs from 'fs/promises'
 import { createRequire } from 'module'
-import path from 'path'
 
 import less from 'less'
 import LessPluginVariablesOutput from 'less-plugin-variables-output'
+
+import { antdExtractedVarsTmp } from './common.js'
 
 const require = createRequire(import.meta.url)
 
 // Path to antd default theme
 const antdThemePath = require.resolve('antd/lib/style/themes/default.less')
-
-// Output path for antd default vars
-const antdVarsFilename = path.resolve(
-  new URL('.', import.meta.url).pathname,
-  '..',
-  '..',
-  'src',
-  'style',
-  'antd-vars.json'
-)
 
 export default async (phase, config) => {
   try {
@@ -28,7 +19,7 @@ export default async (phase, config) => {
     less.render(buffer.toString(), {
       filename: antdThemePath,
       javascriptEnabled: true,
-      plugins: [new LessPluginVariablesOutput({ filename: antdVarsFilename })],
+      plugins: [new LessPluginVariablesOutput({ filename: antdExtractedVarsTmp.name })],
     })
   } catch (err) {
     console.error('Error: Failed to extract antd default variables!')

@@ -1,5 +1,6 @@
-import { loadManifest } from '@innodoc/store/src/actions/content'
-import nextReduxWrapper from '../store'
+import { loadManifest } from '@innodoc/store/actions/content'
+
+import nextReduxWrapper from '../store.js'
 
 const serversideBootstrap = (getStaticProps) =>
   nextReduxWrapper.getStaticProps((store) => async (context) => {

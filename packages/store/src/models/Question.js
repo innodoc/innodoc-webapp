@@ -1,6 +1,6 @@
 import { Model, attr, fk } from 'redux-orm'
 
-import { constants } from '@innodoc/misc'
+import constants from '@innodoc/misc/constants'
 
 import { actionTypes as exerciseActionTypes } from '../actions/exercise'
 import { actionTypes as questionActionTypes } from '../actions/question'

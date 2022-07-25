@@ -1,7 +1,7 @@
 // TODO: do we need to support multiple solutions? (like "foo,bar")
 // this is specified in mintmod, check tub_math it is actually used
 
-import { constants } from '@innodoc/misc'
+import constants from '@innodoc/misc/constants'
 
 const equality = (input, solution) => {
   let ok

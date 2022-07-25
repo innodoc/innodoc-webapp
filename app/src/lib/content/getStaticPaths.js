@@ -1,7 +1,7 @@
 // Generate list of dynamic content paths for SSG
 // https://nextjs.org/docs/basic-features/data-fetching/get-static-paths
 
-import { api } from '@innodoc/misc'
+import { fetchManifest } from '@innodoc/misc/api'
 
 const generatePageParams = (pages) =>
   pages.map(({ id }) => ({
@@ -27,7 +27,7 @@ const generateSectionParams = (sections, parentIds = []) =>
   }, [])
 
 const getStaticPaths = async () => {
-  const manifest = await api.fetchManifest()
+  const manifest = await fetchManifest()
   return {
     paths: [...generatePageParams(manifest.pages), ...generateSectionParams(manifest.toc)],
     fallback: false,

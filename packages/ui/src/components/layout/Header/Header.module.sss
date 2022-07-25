@@ -1,0 +1,78 @@
+@import '@vars/antd-theme.sss'
+
+.drawerMenu
+  :global(.ant-drawer-body)
+    padding: $padding-md 0
+
+  .searchInputWrapper
+    margin: 0 $padding-sm $padding-sm
+
+.header
+  align-items: center
+  border-bottom: $border-width-base $border-style-base $border-color-split
+  display: flex
+  height: calc($layout-header-height + 1px)
+  overflow: hidden
+  padding-left: $padding-md
+  padding-right: $padding-md
+
+  :global(.ant-menu-horizontal)
+    height: $layout-header-height
+    line-height: $layout-header-height
+    border: 0
+
+    > :global(.ant-menu-item),
+    > :global(.ant-menu-item-selected),
+    > :global(.ant-menu-submenu),
+    > :global(.ant-menu-submenu-active),
+    > :global(.ant-menu-item-selected):hover,
+    > :global(.ant-menu-submenu):hover,
+    > :global(.ant-menu-item:hover)
+      border-bottom: 0
+
+    @media (max-width: $screen-md-max)
+      & > :global(.ant-menu-item),
+      & > :global(.ant-menu-submenu)
+        margin-left: $padding-sm
+        margin-right: $padding-sm
+
+  > *
+    height: $layout-header-height
+
+  .logoLink
+    display: inline-block
+    margin-top: 0
+    max-width: 215px
+    padding: 0 $padding-md 0 0
+    position: relative
+    vertical-align: middle
+    white-space: nowrap
+
+    span
+      color: $menu-item-color
+      display: inline-block
+      font-weight: bold
+      line-height: calc(3 / 4 * $line-height-base)
+      white-space: normal
+
+    &:hover span
+      color: $menu-highlight-color
+
+  .wideMenu
+    display: flex
+    flex-grow: 1
+
+    > *
+      flex-grow: 1
+      height: $layout-header-height
+
+  .searchInputWrapper
+    flex-shrink: 1
+
+  .drawerButton
+    flex-grow: 1
+    text-align: right
+
+    @media (min-width: $screen-md)
+      &
+        display: none

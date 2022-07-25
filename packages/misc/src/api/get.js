@@ -4,6 +4,7 @@ import { fetchWithTimeout, getUrl } from './utils.js'
 
 const getJson = async (url, camelcaseKeysStopPaths = undefined) => {
   const response = await fetchWithTimeout(url)
+
   if (response.ok) {
     const data = await response.json()
 

@@ -21,8 +21,7 @@ Dockerfile.e2e
 !.yarn/plugins
 !.yarn/versions
 .pnp.*
-/app/analyze
+/analyze
 /app/src/.next
 /app/src/public/locales/*/*.missing.json
-/app/src/style/antd-vars.json
 /app/src/public/fonts/mathjax-woff-v2/*

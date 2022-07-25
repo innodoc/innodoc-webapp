@@ -1,10 +1,11 @@
 import { createSelector } from 'redux-orm'
 
-import { constants } from '@innodoc/misc'
+import { RESULT } from '@innodoc/misc/constants'
 
-import orm from '../orm'
-import sectionSelectors from './section'
-import { selectId } from '.'
+import orm from '../orm.js'
+
+import { selectId } from './misc.js'
+import { getChapters, getCurrentSection } from './section/section.js'
 
 const getSectionExercises = (session, sections) =>
   sections.reduce((acc, sec) => [...acc, ...sec.exercises.toModelArray()], [])
@@ -17,16 +18,16 @@ const getScoredPoints = (exercises) =>
       eAcc +
       ex.questions
         .toRefArray()
-        .reduce((qAcc, q) => qAcc + (q.result === constants.RESULT.CORRECT ? q.points : 0), 0),
+        .reduce((qAcc, q) => qAcc + (q.result === RESULT.CORRECT ? q.points : 0), 0),
     0
   )
 
 // Calculate test score
-const calculateTestScore = createSelector(orm, selectId, (session, id) =>
+export const calculateTestScore = createSelector(orm, selectId, (session, id) =>
   getScoredPoints(session.Section.withId(id).exercises.toModelArray())
 )
 
-const getProgress = createSelector(orm, sectionSelectors.getChapters, (session, chapters) =>
+export const getProgress = createSelector(orm, getChapters, (session, chapters) =>
   // Progress is calculated per chapter (1st-level section)
   chapters.map((chapter) => {
     const sectionIdStart = `${chapter.id}/`
@@ -51,8 +52,8 @@ const getProgress = createSelector(orm, sectionSelectors.getChapters, (session, 
 )
 
 // Create progress object for persistance
-const getPersistedProgress = createSelector(orm, (session) => {
-  const questions = session.Question.filter((q) => q.result !== constants.RESULT.NEUTRAL)
+export const getPersistedProgress = createSelector(orm, (session) => {
+  const questions = session.Question.filter((q) => q.result !== RESULT.NEUTRAL)
     .toRefArray()
     .map((q) => ({
       id: q.id,
@@ -79,7 +80,7 @@ const getPersistedProgress = createSelector(orm, (session) => {
 })
 
 // Return information about test section
-const getTest = createSelector(orm, sectionSelectors.getCurrentSection, (session, section) => {
+export const getTest = createSelector(orm, getCurrentSection, (session, section) => {
   const testInfo = {
     canBeReset: true,
     canBeSubmitted: true,
@@ -101,16 +102,12 @@ const getTest = createSelector(orm, sectionSelectors.getCurrentSection, (session
 
       // Test can be submitted if at least one exercise has been answered
       testInfo.canBeSubmitted = questions.some((qArr) =>
-        qArr.every((q) => q.result !== constants.RESULT.NEUTRAL)
+        qArr.every((q) => q.result !== RESULT.NEUTRAL)
       )
       // Test can be reset if at least one question has been answered
-      testInfo.canBeReset = questions.some((qArr) =>
-        qArr.some((q) => q.result !== constants.RESULT.NEUTRAL)
-      )
+      testInfo.canBeReset = questions.some((qArr) => qArr.some((q) => q.result !== RESULT.NEUTRAL))
     }
   }
 
   return testInfo
 })
-
-export default { calculateTestScore, getProgress, getPersistedProgress, getTest }

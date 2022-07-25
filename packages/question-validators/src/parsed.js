@@ -1,6 +1,6 @@
-import { constants } from '@innodoc/misc'
+import constants from '@innodoc/misc/constants'
 
-import { convertMathInput, notationParserIn, rawParse, withinDistance } from './util'
+import { convertMathInput, notationParserIn, rawParse, withinDistance } from './utils'
 
 // Input field with real solution, parsed, exactly up to precision places after the comma
 // solution formats:

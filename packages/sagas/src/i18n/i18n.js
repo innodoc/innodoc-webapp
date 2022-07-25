@@ -1,9 +1,9 @@
 import i18n from 'i18next'
 import { call, fork, getContext, put, setContext, take, takeLatest } from 'redux-saga/effects'
 
-import { actionTypes, changeLanguage } from '@innodoc/store/src/actions/i18n'
+import { actionTypes, changeLanguage } from '@innodoc/store/actions/i18n'
 
-import { util } from '@innodoc/misc'
+import util from '@innodoc/misc/utils'
 
 // Notify i18next about language changes
 // export function* notifyI18nextSaga({ language }) {

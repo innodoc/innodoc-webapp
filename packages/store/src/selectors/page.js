@@ -1,17 +1,15 @@
 import { createSelector } from 'redux-orm'
 
-import orm from '../orm'
-import { makeMakeGetContentLink, selectId } from '.'
-import courseSelectors from './course'
+import orm from '../orm.js'
+
+import { getCurrentCourse } from './course.js'
+import { getMakeGetContentLink, selectId } from './misc.js'
 
 // Check if page exists
-const pageExists = createSelector(orm, selectId, (session, id) => {
-  console.log('pageExists', id, session.Page.idExists(id))
-  session.Page.idExists(id)
-})
+export const pageExists = createSelector(orm, selectId, (session, id) => session.Page.idExists(id))
 
 // Return current page
-const getCurrentPage = createSelector(orm, courseSelectors.getCurrentCourse, (session, course) => {
+export const getCurrentPage = createSelector(orm, getCurrentCourse, (session, course) => {
   if (course) {
     const page = session.Page.withId(course.currentPageId)
     return page ? page.ref : undefined
@@ -20,10 +18,10 @@ const getCurrentPage = createSelector(orm, courseSelectors.getCurrentCourse, (se
 })
 
 // Return page by ID
-const getPage = createSelector(orm, selectId, (session, id) => session.Page.withId(id).ref)
+export const getPage = createSelector(orm, selectId, (session, id) => session.Page.withId(id).ref)
 
 // Return pages that appear in footer
-const getFooterPages = createSelector(orm, (session) =>
+export const getFooterPages = createSelector(orm, (session) =>
   session.Page.all()
     .filter((page) => page.inFooter)
     .orderBy('ord')
@@ -31,20 +29,11 @@ const getFooterPages = createSelector(orm, (session) =>
 )
 
 // Return pages that appear in navigation
-const getNavPages = createSelector(orm, (session) =>
+export const getNavPages = createSelector(orm, (session) =>
   session.Page.all()
     .filter((page) => page.inNav)
     .orderBy('ord')
     .toRefArray()
 )
 
-const makeGetPageLink = makeMakeGetContentLink('Page')
-
-export default {
-  pageExists,
-  getCurrentPage,
-  getPage,
-  getFooterPages,
-  getNavPages,
-  makeGetPageLink,
-}
+export const makeGetPageLink = getMakeGetContentLink('Page')

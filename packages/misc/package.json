@@ -16,16 +16,20 @@
   "license": "GPL-3.0-or-later",
   "type": "module",
   "exports": {
-    ".": "./src/misc.js",
     "./api": "./src/api/api.js",
     "./constants": "./src/constants.js",
+    "./getContentComponentAndLoadAction": "./src/getContentComponentAndLoadAction.js",
     "./propTypes": "./src/propTypes.js",
-    "./util": "./src/util.js"
+    "./utils": "./src/utils.js",
+    "./validatePassword": "./src/validatePassword.js"
   },
   "sideEffects": false,
   "dependencies": {
+    "@innodoc/store": "workspace:^",
+    "@innodoc/ui": "workspace:^",
     "camelcase-keys": "^8.0.1",
     "cross-fetch": "^3.1.5",
+    "password-validator": "^5.3.0",
     "prop-types": "^15.8.1"
   }
 }
