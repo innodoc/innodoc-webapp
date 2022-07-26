@@ -2,8 +2,8 @@ import { Row, Col, Typography } from 'antd'
 
 import { useTranslation } from 'next-i18next'
 
-import getStaticPageProps from '../lib/getStaticPageProps'
-import serversideBootstrap from '../lib/serversideBootstrap'
+import getTranslationProps from '../lib/getTranslationProps.js'
+import serversideBootstrap from '../lib/serversideBootstrap.js'
 import Layout from '../Layout'
 import PageTitle from '../common/PageTitle'
 import RequestVerificationForm from '../user/RequestVerificationForm'
@@ -26,7 +26,7 @@ const RequestVerificationPage = () => {
   )
 }
 
-const getStaticProps = serversideBootstrap(getStaticPageProps)
+const getStaticProps = serversideBootstrap(getTranslationProps)
 
 export { getStaticProps }
 export default RequestVerificationPage

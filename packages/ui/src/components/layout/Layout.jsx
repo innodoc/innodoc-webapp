@@ -5,9 +5,8 @@ import cookies from 'react-cookies'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { childrenType } from '@innodoc/misc/propTypes'
-import { closeMessage } from '@innodoc/store/actions/ui'
-import getLatestUserMessages from '@innodoc/store/selectors/getLatestUserMessages'
-import { getApp } from '@innodoc/store/selectors/misc'
+import { popUserMessage } from '@innodoc/store/actions/userMessages'
+import { selectUserMessage } from '@innodoc/store/selectors/userMessages'
 
 import Toc from '../Toc/Toc.jsx'
 
@@ -21,8 +20,9 @@ import Sidebar from './Sidebar/Sidebar.jsx'
 const DATA_CONSENT_ACCESS_COOKIE = 'data-consent'
 
 function Layout({ children, disableSidebar }) {
-  const { ftSearchEnabled, loggedInEmail } = useSelector(getApp)
-  const message = useSelector(getLatestUserMessages)
+  const loggedInEmail = undefined
+
+  const message = useSelector(selectUserMessage)
   const dispatch = useDispatch()
   const [showConsentModal, setShowConsent] = useState(false)
   const [consentGiven, setConsentGiven] = useState(false)
@@ -56,7 +56,7 @@ function Layout({ children, disableSidebar }) {
   )
 
   const modal = message ? (
-    <MessageModal message={message} onClose={() => dispatch(closeMessage(message.id))} />
+    <MessageModal message={message} onClose={() => dispatch(popUserMessage())} />
   ) : null
 
   const dataProtectionModal = showConsentModal ? (
@@ -66,7 +66,7 @@ function Layout({ children, disableSidebar }) {
   return (
     <>
       <AntLayout hasSider={false}>
-        <Header enableSearch={ftSearchEnabled} />
+        <Header enableSearch={false} />
         <AntLayout hasSider={!disableSidebar}>
           {sidebar}
           <AntLayout>

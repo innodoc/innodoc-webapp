@@ -1,17 +1,15 @@
-import { loadManifest } from '@innodoc/store/actions/content'
+import { getManifest, getRunningOperationPromises } from '@innodoc/store/api/content'
 
-import nextReduxWrapper from '../store.js'
+import nextReduxWrapper from './nextReduxWrapper.js'
 
 const serversideBootstrap = (getStaticProps) =>
   nextReduxWrapper.getStaticProps((store) => async (context) => {
     // Fetch manifest
-    store.dispatch(loadManifest(process.env.NEXT_PUBLIC_CONTENT_ROOT))
+    store.dispatch(getManifest.initiate())
+    await Promise.all(getRunningOperationPromises())
 
     // Get static props
     const props = await getStaticProps(context, store)
-
-    // Wait until sagas finish
-    await store.sagaTask.toPromise()
 
     return { props }
   })

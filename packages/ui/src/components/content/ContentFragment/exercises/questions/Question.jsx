@@ -2,14 +2,14 @@ import classNames from 'classnames'
 import { debounce } from 'lodash-es'
 import objectHash from 'object-hash'
 import PropTypes from 'prop-types'
-import { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { RESULT } from '@innodoc/misc/constants'
 import { attributeType } from '@innodoc/misc/propTypes'
 import { attributesToObject, getClassNameToComponentMapper } from '@innodoc/misc/utils'
-import makeGetQuestion from '@innodoc/store/selectors/makeGetQuestion'
-import { getCurrentSection } from '@innodoc/store/selectors/section'
+import { selectQuestionById } from '@innodoc/store/selectors/questions'
+import { selectSection } from '@innodoc/store/selectors/sections'
 
 import ExerciseContext from '../ExerciseContext/ExerciseContext.js'
 
@@ -32,17 +32,19 @@ const getQuestionId = (sectionId, id, attributes) => {
         // shouldn't break. So we generate an internal ID from the question's
         // content.
         objectHash(attributes)
-  // As IDs are unique to a single page, for the global app state we need to
-  // prefix them with the section ID.
+
+  // As IDs are unique to a single page, for the global app state we prefix them
+  // with the section ID.
   return `${sectionId}#${questionId}`
 }
 
 function Question({ attributes, id, questionClasses }) {
   const attrsObj = attributesToObject(attributes)
-  const { id: sectionId } = useSelector(getCurrentSection)
+  const { id: sectionId } = useSelector(selectSection)
   const globalQuestionId = getQuestionId(sectionId, id, attributes)
-  const getQuestion = useMemo((state, questionId) => makeGetQuestion(state, questionId), [])
-  const question = useSelector((state) => getQuestion(state, globalQuestionId))
+  // const getQuestion = useMemo((state, questionId) => makeGetQuestion(state, questionId), [])
+  // const question = useSelector((state) => getQuestion(state, globalQuestionId))
+  const question = useSelector((state) => selectQuestionById(state, globalQuestionId))
   const { addQuestion, dispatchAnswer, showResult } = useContext(ExerciseContext)
 
   // Register question with ExerciseContext

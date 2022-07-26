@@ -2,10 +2,10 @@ import { Typography } from 'antd'
 import { useSelector } from 'react-redux'
 
 import {
-  getCurrentSection,
-  getCurrentSubsections,
-  getCurrentTitle,
-} from '@innodoc/store/selectors/section'
+  selectSection,
+  selectSubsections,
+  selectSectionTitle,
+} from '@innodoc/store/selectors/sections'
 
 import useContentPane from '../../hooks/useContentPane.js'
 import useTrackVisit from '../../hooks/useTrackVisit.js'
@@ -17,10 +17,10 @@ import SubsectionList from './SubsectionList/SubsectionList.jsx'
 import TestContent from './TestContent.jsx'
 
 function SectionContent() {
-  const { content, fadeInClassName, id, type } = useContentPane(getCurrentSection)
+  const { content, fadeInClassName, id, type } = useContentPane(selectSection)
   useTrackVisit(id)
-  const subsections = useSelector(getCurrentSubsections)
-  const title = useSelector(getCurrentTitle)
+  const subsections = useSelector(selectSubsections)
+  const title = useSelector(selectSectionTitle)
 
   const titleComp = <Typography.Title>{title}</Typography.Title>
   const subsectionList = subsections.length ? <SubsectionList subsections={subsections} /> : null

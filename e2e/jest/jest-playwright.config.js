@@ -16,8 +16,8 @@ const serverEnvVars = [
   'LOG_ERROR_EMAIL=admin@example.com',
   'LOG_FILE=',
   'JWT_SECRET=jwtsecret123',
-  'PAGE_PATH_PREFIX=page',
-  'SECTION_PATH_PREFIX=section',
+  'NEXT_PUBLIC_PAGE_PATH_PREFIX=page',
+  'NEXT_PUBLIC_SECTION_PATH_PREFIX=section',
   'SMTP_SKIP_MAILS=yes',
 ].join(' ')
 

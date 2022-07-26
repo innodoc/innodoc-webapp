@@ -1,5 +1,3 @@
-import fetch from 'cross-fetch'
-
 async function fetchWithTimeout(url, { timeout = 10000, ...otherOptions } = {}) {
   let timeoutId
   const controller = new AbortController()

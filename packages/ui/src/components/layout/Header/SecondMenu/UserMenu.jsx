@@ -9,9 +9,6 @@ import {
 import { Menu } from 'antd'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
-
-import { getApp } from '@innodoc/store/selectors/misc'
 
 import LinkMenuItem from '../LinkMenuItem/LinkMenuItem.jsx'
 
@@ -50,7 +47,8 @@ const menuItems = {
 }
 
 function UserMenu(props) {
-  const { loggedInEmail } = useSelector(getApp)
+  const loggedInEmail = undefined
+
   const router = useRouter()
   const { t } = useTranslation()
 

@@ -1,42 +1,47 @@
 // - Prepare content props for SSR
 // - Add next-i18next specific props
 
-import getContentComponentAndLoadAction from '@innodoc/misc/getContentComponentAndLoadAction'
+import { getPage, getSection, getRunningOperationPromises } from '@innodoc/store/api/content'
 
-import getStaticPageProps from '../getStaticPageProps.js'
+import getTranslationProps from '../getTranslationProps.js'
 
 const contentFragmentRegex = /^[A-Za-z0-9_:-]+$/
 
 const pathPrefixes = {
-  page: process.env.PAGE_PATH_PREFIX,
-  section: process.env.SECTION_PATH_PREFIX,
+  page: process.env.NEXT_PUBLIC_PAGE_PATH_PREFIX,
+  section: process.env.NEXT_PUBLIC_SECTION_PATH_PREFIX,
 }
 
-const getContentType = (contentPrefix, fragments) => {
+const parsePath = (contentPrefix, fragments) => {
   if (Object.keys(pathPrefixes).includes(contentPrefix)) {
     const contentType = contentPrefix === pathPrefixes.page ? 'page' : 'section'
-    if (fragments.every((f) => contentFragmentRegex.test(f))) {
-      const { loadAction } = getContentComponentAndLoadAction(contentType)
-      return [contentType, loadAction]
+
+    if (contentType === 'page' && fragments.length === 1) {
+      return { contentType, getAction: getPage, pathname: fragments[0] }
+    }
+
+    if (contentType === 'section' && fragments.every((f) => contentFragmentRegex.test(f))) {
+      return { contentType, getAction: getSection, pathname: fragments.join('/') }
     }
   }
   throw new Error(`getStaticProps: Could not parse content URL: ${contentPrefix} ${fragments}`)
 }
 
 const getStaticProps = async (context, { dispatch }) => {
-  const staticPageProps = await getStaticPageProps(context)
-  const props = { ...staticPageProps }
-
-  // Evaluate URL path and fetch content
   const {
     locale,
     params: { contentPrefix, fragments },
   } = context
-  const [contentType, loadAction] = getContentType(contentPrefix, fragments)
-  dispatch(loadAction(fragments.join('/'), locale))
+
+  // Parse URL path
+  const { contentType, getAction, pathname } = parsePath(contentPrefix, fragments)
+
+  // Fetch content
+  dispatch(getAction.initiate({ locale, pathname }))
+  await Promise.all(getRunningOperationPromises())
 
   return {
-    ...props,
+    ...(await getTranslationProps(context)),
     contentType,
   }
 }

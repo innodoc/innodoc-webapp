@@ -1,15 +1,14 @@
-import { Row, Col, Typography } from 'antd'
 import { UserAddOutlined } from '@ant-design/icons'
-
+import { Row, Col, Typography } from 'antd'
 import { useTranslation } from 'next-i18next'
 
-import getStaticPageProps from '../lib/getStaticPageProps'
-import serversideBootstrap from '../lib/serversideBootstrap'
-import Layout from '../Layout'
-import PageTitle from '../common/PageTitle'
-import RegistrationForm from '../user/RegistrationForm'
+import PageTitle from '../common/PageTitle.js'
+import Layout from '../Layout.js'
+import getStaticPageProps from '../lib/getStaticPageProps.js'
+import serversideBootstrap from '../lib/serversideBootstrap.js'
+import RegistrationForm from '../user/RegistrationForm.js'
 
-const RegistrationPage = () => {
+function Register() {
   const { t } = useTranslation()
   const title = t('user.registration.title')
   return (
@@ -32,4 +31,4 @@ const RegistrationPage = () => {
 const getStaticProps = serversideBootstrap(getStaticPageProps)
 
 export { getStaticProps }
-export default RegistrationPage
+export default Register

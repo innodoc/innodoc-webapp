@@ -3,7 +3,7 @@ import { Grid, Layout as AntLayout } from 'antd'
 import { useSelector } from 'react-redux'
 
 import { childrenType } from '@innodoc/misc/propTypes'
-import { getApp } from '@innodoc/store/selectors/misc'
+import { selectSidebarVisible } from '@innodoc/store/selectors/ui'
 
 import css from './Sidebar.module.sss'
 import ToggleButton from './ToggleButton.jsx'
@@ -11,7 +11,7 @@ import ToggleButton from './ToggleButton.jsx'
 const WIDTHS = [300, 400] // width change on breakpoint
 
 function Sidebar({ children }) {
-  const { sidebarVisible } = useSelector(getApp)
+  const sidebarVisible = useSelector(selectSidebarVisible)
   const { xl } = Grid.useBreakpoint()
   const width = xl ? WIDTHS[1] : WIDTHS[0]
 

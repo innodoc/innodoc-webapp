@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import { Row, Col } from 'antd'
 
-import getStaticPageProps from '../lib/getStaticPageProps'
-import serversideBootstrap from '../lib/serversideBootstrap'
+import getTranslationProps from '../../lib/getTranslationProps.js'
+import serversideBootstrap from '../../lib/serversideBootstrap.js'
 import Layout from '../Layout'
 import VerifyUserResult from '../user/VerifyUserResult'
 
@@ -22,7 +22,7 @@ VerifyUserPage.propTypes = {
   token: PropTypes.string.isRequired,
 }
 
-const getStaticProps = serversideBootstrap(getStaticPageProps)
+const getStaticProps = serversideBootstrap(getTranslationProps)
 
 export { getStaticProps }
 export default VerifyUserPage

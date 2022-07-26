@@ -5,19 +5,20 @@ import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 
-import { getApp } from '@innodoc/store/selectors/misc'
-import { getCurrentPage, getNavPages } from '@innodoc/store/selectors/page'
+import { selectPage, selectNavPages } from '@innodoc/store/selectors/pages'
+import { useTranslatedContent } from '@innodoc/ui/hooks'
 
 import PageIcon from '../PageIcon.jsx'
 
 import LinkMenuItem from './LinkMenuItem/LinkMenuItem.jsx'
 
 function NavMenu({ menuMode }) {
-  const { discourseUrl, language, pdfFilename } = useSelector(getApp)
-  const currentPage = useSelector(getCurrentPage)
-  const pages = useSelector(getNavPages)
-  const router = useRouter()
   const { t } = useTranslation()
+  const translateContent = useTranslatedContent()
+
+  const currentPage = useSelector(selectPage)
+  const pages = useSelector(selectNavPages)
+  const router = useRouter()
 
   const pageItems = pages.map((page) => (
     <LinkMenuItem
@@ -25,14 +26,14 @@ function NavMenu({ menuMode }) {
       itemActive={currentPage && page.id === currentPage.id}
       key={page.id}
       pageId={page.id}
-      title={page.shortTitle[language]}
-      titleLong={page.title[language]}
+      title={translateContent(page.shortTitle)}
+      titleLong={translateContent(page.title)}
     />
   ))
 
-  const pdfLinkItem = pdfFilename ? (
+  const pdfLinkItem = process.env.NEXT_PUBLIC_PDF_FILE ? (
     <Menu.Item key="pdf">
-      <a href={`/${pdfFilename}`} title={t('header.downloadPDFTitle')}>
+      <a href={`/${process.env.NEXT_PUBLIC_PDF_FILE}`} title={t('header.downloadPDFTitle')}>
         <FilePdfOutlined />
         {t('header.downloadPDF')}
       </a>
@@ -40,8 +41,8 @@ function NavMenu({ menuMode }) {
   ) : null
 
   let discourseLinkItem
-  if (discourseUrl) {
-    const url = new URL(discourseUrl)
+  if (process.env.NEXT_PUBLIC_DISCOURSE_URL) {
+    const url = new URL(process.env.NEXT_PUBLIC_DISCOURSE_URL)
     url.pathname = '/session/sso'
     discourseLinkItem = (
       <Menu.Item key="forum">

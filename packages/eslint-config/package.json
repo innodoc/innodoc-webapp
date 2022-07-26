@@ -39,9 +39,6 @@
     "./react-redux": {
       "require": "./src/bases/reactRedux.js"
     },
-    "./redux-saga": {
-      "require": "./src/bases/reduxSaga.js"
-    },
     "./regexp": {
       "require": "./src/bases/regexp.js"
     },
@@ -67,10 +64,6 @@
   "type": "commonjs",
   "sideEffects": false,
   "dependencies": {
-    "@innodoc/misc": "workspace:^",
-    "@innodoc/question-validators": "workspace:^",
-    "@innodoc/sagas": "workspace:^",
-    "@innodoc/store": "workspace:^",
     "@next/eslint-plugin-next": "^12.2.2",
     "@rushstack/eslint-patch": "^1.1.4",
     "eslint-config-airbnb": "^19.0.4",
@@ -87,13 +80,11 @@
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-redux": "^4.0.0",
-    "eslint-plugin-redux-saga": "^1.3.2",
     "eslint-plugin-regexp": "^1.7.0",
     "eslint-plugin-security": "^1.5.0",
     "eslint-plugin-testing-library": "^5.5.1",
     "next": "^12.2.2",
-    "prettier": "^2.7.1",
-    "redux-saga": "^1.1.3"
+    "prettier": "^2.7.1"
   },
   "devDependencies": {
     "eslint": "^8.20.0",
@@ -103,6 +94,7 @@
   "peerDependencies": {
     "eslint": "^8.0.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-redux": "^8.0.2"
   }
 }

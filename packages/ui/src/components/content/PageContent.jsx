@@ -1,6 +1,6 @@
 import { Typography } from 'antd'
 
-import { getCurrentPage } from '@innodoc/store/selectors/page'
+import { selectPage } from '@innodoc/store/selectors/pages'
 
 import useContentPane from '../../hooks/useContentPane.js'
 import PageTitle from '../common/PageTitle.jsx'
@@ -10,7 +10,7 @@ import css from './content.module.sss'
 import ContentFragment from './ContentFragment/ContentFragment.jsx'
 
 function PageContent() {
-  const { content, fadeInClassName, title } = useContentPane(getCurrentPage)
+  const { content, fadeInClassName, title } = useContentPane(selectPage)
 
   return (
     <>

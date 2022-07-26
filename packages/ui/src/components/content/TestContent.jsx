@@ -4,8 +4,8 @@ import { Trans, useTranslation } from 'next-i18next'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { resetTest, submitTest } from '@innodoc/store/actions/user'
-import { getTest } from '@innodoc/store/selectors/progress'
+import { testReset, testSubmitted } from '@innodoc/store/actions/user'
+import { selectTest } from '@innodoc/store/selectors/progress'
 
 import useIsMounted from '../../hooks/useIsMounted.js'
 
@@ -15,7 +15,7 @@ function TestContent({ children, id }) {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const isMounted = useIsMounted()
-  const { canBeSubmitted, canBeReset, isSubmitted, score, totalScore } = useSelector(getTest)
+  const { canBeSubmitted, canBeReset, isSubmitted, score, totalScore } = useSelector(selectTest)
 
   // Test results only available on client
   let result = null
@@ -26,7 +26,7 @@ function TestContent({ children, id }) {
         disabled={!canBeSubmitted}
         icon={<SendOutlined />}
         key="submit"
-        onClick={() => dispatch(submitTest(id))}
+        onClick={() => dispatch(testSubmitted(id))}
         type="primary"
       >
         {t('content.test.actions.submit')}
@@ -37,7 +37,7 @@ function TestContent({ children, id }) {
         danger
         icon={<ReloadOutlined />}
         key="reset"
-        onClick={() => dispatch(resetTest(id))}
+        onClick={() => dispatch(testReset(id))}
       >
         {t('content.test.actions.reset')}
       </Button>,

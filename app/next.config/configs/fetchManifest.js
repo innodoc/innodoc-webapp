@@ -14,6 +14,7 @@ export default async (phase, config) => {
   }
 
   // prod/dev phase
+  // TODO: instantiate store and use contentApi?
   else {
     try {
       courseManifest = await fetchManifest()

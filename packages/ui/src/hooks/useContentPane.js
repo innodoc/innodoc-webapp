@@ -1,10 +1,12 @@
 import Router from 'next/router'
 import { useEffect, useContext } from 'react'
 import { useSelector } from 'react-redux'
+
 import MathJax from '@innodoc/react-mathjax-node'
 
-import { getApp } from '@innodoc/store/selectors/misc'
 import fadeInCss from '../style/fade-in.module.sss'
+
+import useTranslatedContent from './useTranslatedContent.js'
 
 const scrollToHash = () => {
   if (typeof window !== 'undefined') {
@@ -13,13 +15,14 @@ const scrollToHash = () => {
 }
 
 const useContentPane = (getCurrent) => {
-  const { language } = useSelector(getApp)
+  const translateContent = useTranslatedContent()
+
   const current = useSelector(getCurrent)
-  const loading = !language || !current || !current.content[language]
+  const loading = !current || !current.content
   const { addCallback, removeCallback, typesetDone } = useContext(MathJax.Context)
   const show = !loading && typesetDone
   const fadeInClassName = show ? fadeInCss.show : fadeInCss.hide
-  const title = loading ? null : current.title[language]
+  const title = loading ? null : current.title
 
   // Page is going to re-layout after typesetting. So, we need to manually
   // scroll to anchor.
@@ -30,9 +33,8 @@ const useContentPane = (getCurrent) => {
 
   return {
     id: loading ? null : current.id,
-    content: loading ? [] : current.content[language],
+    content: loading ? [] : translateContent(current.content),
     fadeInClassName,
-    language,
     title,
     type: current && current.type,
   }

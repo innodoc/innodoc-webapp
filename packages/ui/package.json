@@ -21,6 +21,7 @@
     "./hooks": "./src/hooks/hooks.js",
     "./layout": "./src/components/layout/Layout.jsx",
     "./style/global.sss": "./src/style/global/index.sss",
+    "./toc": "./src/components/Toc/Toc.jsx",
     "./user": "./src/components/user/user.js"
   },
   "sideEffects": false,
@@ -37,10 +38,12 @@
     "lodash-es": "^4.17.21",
     "next": "^12.2.0",
     "next-i18next": "^11.0.0",
+    "next-redux-wrapper": "^7.0.5",
     "object-hash": "^2.2.0",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-cookies": "^0.1.1",
+    "react-dom": "^18.1.0",
     "react-redux": "^8.0.2"
   }
 }

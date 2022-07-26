@@ -1,22 +1,22 @@
+import { HomeOutlined, LoadingOutlined } from '@ant-design/icons'
+import { Button, Result, Row, Col } from 'antd'
+import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Result, Row, Col } from 'antd'
-import { HomeOutlined, LoadingOutlined } from '@ant-design/icons'
 
 import { logoutUser } from '@innodoc/misc/api'
-import { useTranslation } from 'next-i18next'
 import { userLoggedOut } from '@innodoc/store/actions/user'
 import { getApp } from '@innodoc/store/selectors/misc'
 import { getCurrentCourse } from '@innodoc/store/selectors/course'
 
-import getStaticPageProps from '../lib/getStaticPageProps'
-import serversideBootstrap from '../lib/serversideBootstrap'
-import useRequireLogin from '../../hooks/useRequireLogin'
-import Layout from '../Layout'
 import PageTitle from '../common/PageTitle'
 import { ContentLink } from '../content/links'
+import Layout from '../Layout'
+import getTranslationProps from '../lib/getTranslationProps.js'
+import serversideBootstrap from '../lib/serversideBootstrap.js'
+import useRequireLogin from '../../hooks/useRequireLogin'
 
-const LogoutPage = () => {
+function Logout() {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const { csrfToken } = useSelector(getApp)
@@ -61,7 +61,7 @@ const LogoutPage = () => {
   )
 }
 
-const getStaticProps = serversideBootstrap(getStaticPageProps)
+const getStaticProps = serversideBootstrap(getTranslationProps)
 
 export { getStaticProps }
-export default LogoutPage
+export default Logout

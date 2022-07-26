@@ -23,5 +23,9 @@
     "@innodoc/eslint-config": "workspace:^",
     "@innodoc/misc": "workspace:^",
     "mathjs": "^10.6.1"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-redux": "^8.0.2"
   }
 }

@@ -6,7 +6,7 @@ import { PageTitle } from '@innodoc/ui/common'
 import Layout from '@innodoc/ui/layout'
 import { LoginForm } from '@innodoc/ui/user'
 
-import getStaticPageProps from '../lib/getStaticPageProps.js'
+import getTranslationProps from '../lib/getTranslationProps.js'
 import serversideBootstrap from '../lib/serversideBootstrap.js'
 
 function Login() {
@@ -29,7 +29,7 @@ function Login() {
   )
 }
 
-const getStaticProps = serversideBootstrap(getStaticPageProps)
+const getStaticProps = serversideBootstrap(getTranslationProps)
 
 export { getStaticProps }
 export default Login

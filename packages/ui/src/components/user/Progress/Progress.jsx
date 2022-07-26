@@ -2,7 +2,7 @@ import { Alert } from 'antd'
 import { useTranslation } from 'next-i18next'
 import { useSelector } from 'react-redux'
 
-import { getCurrentCourse } from '@innodoc/store/src/selectors/course'
+import { selectCourse } from '@innodoc/store/src/selectors/course'
 import { getProgress } from '@innodoc/store/src/selectors/progress'
 
 import ChapterCard from './ChapterCard.jsx'
@@ -10,7 +10,7 @@ import css from './Progress.module.sss'
 
 function Progress() {
   const { t } = useTranslation()
-  const { minScore } = useSelector(getCurrentCourse)
+  const { minScore } = useSelector(selectCourse)
   const chapters = useSelector(getProgress)
 
   const chapterCards = chapters.map((chapter) => (

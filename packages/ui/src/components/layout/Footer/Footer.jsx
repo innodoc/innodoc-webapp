@@ -5,10 +5,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 
-import { getCurrentCourse } from '@innodoc/store/selectors/course'
-import { getFooterA, getFooterB } from '@innodoc/store/selectors/fragment'
-import { getApp } from '@innodoc/store/selectors/misc'
-import { getCurrentPage, getFooterPages } from '@innodoc/store/selectors/page'
+import { selectCourse, selectFooterA, selectFooterB } from '@innodoc/store/selectors/content'
+import { selectPage, selectFooterPages } from '@innodoc/store/selectors/pages'
+import { useTranslatedContent } from '@innodoc/ui/hooks'
 
 import ContentFragment from '../../content/ContentFragment/ContentFragment.jsx'
 import PageLink from '../../content/links/PageLink.js'
@@ -18,15 +17,16 @@ import css from './Footer.module.sss'
 import FooterLink from './FooterLink/FooterLink.jsx'
 
 function Footer() {
-  const { t } = useTranslation()
   const router = useRouter()
-  const { language } = useSelector(getApp)
-  const course = useSelector(getCurrentCourse)
-  const currentPage = useSelector(getCurrentPage)
-  const pages = useSelector(getFooterPages)
-  const footerA = useSelector(getFooterA)
-  const footerB = useSelector(getFooterB)
-  const title = course ? course.title[language] : ''
+  const { t } = useTranslation()
+
+  const translateContent = useTranslatedContent()
+
+  const { title } = useSelector(selectCourse)
+  const currentPage = useSelector(selectPage)
+  const pages = useSelector(selectFooterPages)
+  const footerA = useSelector(selectFooterA)
+  const footerB = useSelector(selectFooterB)
 
   const customPageItems = pages.map((page) => (
     <FooterLink
@@ -34,8 +34,8 @@ function Footer() {
       icon={page.icon ? <PageIcon type={page.icon} /> : null}
       key={page.id}
       renderLink={() => <PageLink contentId={page.id} />}
-      shortTitle={page.shortTitle[language]}
-      title={page.title[language] || ''}
+      shortTitle={translateContent(page.shortTitle)}
+      title={translateContent(page.title)}
     />
   ))
 
@@ -56,21 +56,19 @@ function Footer() {
     />
   ))
 
-  const footerAContent =
-    footerA && footerA.content[language] ? (
-      <ContentFragment content={footerA.content[language]} />
-    ) : null
-  const footerBContent =
-    footerB && footerB.content[language] ? (
-      <ContentFragment content={footerB.content[language]} />
-    ) : null
+  const footerAContent = footerA?.content ? (
+    <ContentFragment content={translateContent(footerA?.content)} />
+  ) : null
+  const footerBContent = footerB?.content ? (
+    <ContentFragment content={translateContent(footerB?.content)} />
+  ) : null
 
   return (
     <AntLayout.Footer className={css.footer}>
       <Row>
         <Col xs={24} sm={24} md={6} lg={6} xl={6} className={css.footerCol}>
           <div className={css.footerSegment}>
-            <Typography.Title level={4}>{title}</Typography.Title>
+            <Typography.Title level={4}>{translateContent(title)}</Typography.Title>
             <List>{customPageItems}</List>
             <List>{otherPageItems}</List>
           </div>

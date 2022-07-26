@@ -3,8 +3,8 @@ import MathJax from '@innodoc/react-mathjax-node'
 
 import { useTranslation } from 'next-i18next'
 
-import getStaticPageProps from '../lib/getStaticPageProps'
-import serversideBootstrap from '../lib/serversideBootstrap'
+import getTranslationProps from '../lib/getTranslationProps.js'
+import serversideBootstrap from '../lib/serversideBootstrap.js'
 import Layout from '../Layout'
 import Index from '../Index'
 import PageTitle from '../common/PageTitle'
@@ -30,7 +30,7 @@ const IndexPage = () => {
   )
 }
 
-const getStaticProps = serversideBootstrap(getStaticPageProps)
+const getStaticProps = serversideBootstrap(getTranslationProps)
 
 export { getStaticProps }
 export default IndexPage

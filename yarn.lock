@@ -1376,7 +1376,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.1, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.10.4, @babel/runtime@npm:^7.11.1, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.0, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.10.1, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.10.4, @babel/runtime@npm:^7.11.1, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.0, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.18.9
   resolution: "@babel/runtime@npm:7.18.9"
   dependencies:
@@ -1655,7 +1655,6 @@ __metadata:
     "@innodoc/misc": "workspace:^"
     "@innodoc/question-validators": "workspace:^"
     "@innodoc/react-mathjax-node": "npm:^0.1.3"
-    "@innodoc/sagas": "workspace:^"
     "@innodoc/store": "workspace:^"
     "@innodoc/ui": "workspace:^"
     "@svgr/webpack": "npm:^5.5.0"
@@ -1665,10 +1664,10 @@ __metadata:
     "@testing-library/user-event": "npm:^14.2.1"
     antd: "npm:^4.21.1"
     clone: "npm:^2.1.2"
-    cross-fetch: "npm:^3.1.5"
     css-loader: "npm:6.7.1"
     cssnano: "npm:^5.1.11"
     dotenv: "npm:^16.0.1"
+    eslint: "npm:^8.20.0"
     eslint-plugin-testing-library: "npm:^5.5.1"
     find-up: "npm:^5.0.0"
     http-server: "npm:^0.12.3"
@@ -1686,7 +1685,7 @@ __metadata:
     msw: "npm:^0.44.0"
     next: "npm:^12.2.0"
     next-build-id: "npm:^3.0.0"
-    next-i18next: "npm:^11.0.0"
+    next-i18next: "npm:^11.3.0"
     next-redux-wrapper: "npm:^7.0.5"
     next-router-mock: "npm:^0.7.4"
     next-transpile-modules: "npm:^9.0.0"
@@ -1709,8 +1708,6 @@ __metadata:
     react: "npm:^18.1.0"
     react-dom: "npm:^18.1.0"
     react-redux: "npm:^8.0.2"
-    redux: "npm:^4.2.0"
-    redux-saga: "npm:^1.1.3"
     sass: "npm:^1.53.0"
     stylelint: "npm:^14.9.1"
     stylelint-config-css-modules: "npm:^2.3.0"
@@ -1727,10 +1724,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@innodoc/eslint-config@workspace:packages/eslint-config"
   dependencies:
-    "@innodoc/misc": "workspace:^"
-    "@innodoc/question-validators": "workspace:^"
-    "@innodoc/sagas": "workspace:^"
-    "@innodoc/store": "workspace:^"
     "@next/eslint-plugin-next": "npm:^12.2.2"
     "@rushstack/eslint-patch": "npm:^1.1.4"
     eslint: "npm:^8.20.0"
@@ -1748,7 +1741,6 @@ __metadata:
     eslint-plugin-react: "npm:^7.30.1"
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-react-redux: "npm:^4.0.0"
-    eslint-plugin-redux-saga: "npm:^1.3.2"
     eslint-plugin-regexp: "npm:^1.7.0"
     eslint-plugin-security: "npm:^1.5.0"
     eslint-plugin-testing-library: "npm:^5.5.1"
@@ -1756,11 +1748,11 @@ __metadata:
     prettier: "npm:^2.7.1"
     react: "npm:^18.1.0"
     react-dom: "npm:^18.1.0"
-    redux-saga: "npm:^1.1.3"
   peerDependencies:
     eslint: ^8.0.0
     react: ^18.0.0
     react-dom: ^18.0.0
+    react-redux: ^8.0.2
   languageName: unknown
   linkType: soft
 
@@ -1768,12 +1760,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@innodoc/misc@workspace:packages/misc"
   dependencies:
-    "@innodoc/store": "workspace:^"
-    "@innodoc/ui": "workspace:^"
     camelcase-keys: "npm:^8.0.1"
-    cross-fetch: "npm:^3.1.5"
     password-validator: "npm:^5.3.0"
     prop-types: "npm:^15.8.1"
+  peerDependencies:
+    react: ^18.2.0
+    react-redux: ^8.0.2
   languageName: unknown
   linkType: soft
 
@@ -1784,6 +1776,9 @@ __metadata:
     "@innodoc/eslint-config": "workspace:^"
     "@innodoc/misc": "workspace:^"
     mathjs: "npm:^10.6.1"
+  peerDependencies:
+    react: ^18.2.0
+    react-redux: ^8.0.2
   languageName: unknown
   linkType: soft
 
@@ -1800,31 +1795,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@innodoc/sagas@workspace:^, @innodoc/sagas@workspace:packages/sagas":
-  version: 0.0.0-use.local
-  resolution: "@innodoc/sagas@workspace:packages/sagas"
-  dependencies:
-    "@innodoc/eslint-config": "workspace:^"
-    "@innodoc/misc": "workspace:^"
-    "@innodoc/question-validators": "workspace:^"
-    "@innodoc/store": "workspace:^"
-    next-redux-wrapper: "npm:^7.0.5"
-    react-redux: "npm:^8.0.2"
-    redux-saga: "npm:^1.1.3"
-    redux-saga-test-plan: "npm:^4.0.5"
-  languageName: unknown
-  linkType: soft
-
 "@innodoc/store@workspace:^, @innodoc/store@workspace:packages/store":
   version: 0.0.0-use.local
   resolution: "@innodoc/store@workspace:packages/store"
   dependencies:
-    "@innodoc/misc": "workspace:^"
-    next-redux-wrapper: "npm:^7.0.5"
+    "@reduxjs/toolkit": "npm:^1.8.3"
     react-redux: "npm:^8.0.2"
-    redux: "npm:^4.2.0"
-    redux-orm: "npm:^0.16.2"
-    redux-saga: "npm:^1.1.3"
+  peerDependencies:
+    next-redux-wrapper: ^7.0.5
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -1844,10 +1823,12 @@ __metadata:
     lodash-es: "npm:^4.17.21"
     next: "npm:^12.2.0"
     next-i18next: "npm:^11.0.0"
+    next-redux-wrapper: "npm:^7.0.5"
     object-hash: "npm:^2.2.0"
     prop-types: "npm:^15.8.1"
     react: "npm:^18.1.0"
     react-cookies: "npm:^0.1.1"
+    react-dom: "npm:^18.1.0"
     react-redux: "npm:^8.0.2"
   languageName: unknown
   linkType: soft
@@ -2455,59 +2436,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redux-saga/core@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "@redux-saga/core@npm:1.1.3"
+"@reduxjs/toolkit@npm:^1.8.3":
+  version: 1.8.3
+  resolution: "@reduxjs/toolkit@npm:1.8.3"
   dependencies:
-    "@babel/runtime": "npm:^7.6.3"
-    "@redux-saga/deferred": "npm:^1.1.2"
-    "@redux-saga/delay-p": "npm:^1.1.2"
-    "@redux-saga/is": "npm:^1.1.2"
-    "@redux-saga/symbols": "npm:^1.1.2"
-    "@redux-saga/types": "npm:^1.1.0"
-    redux: "npm:^4.0.4"
-    typescript-tuple: "npm:^2.2.1"
-  checksum: 1fa7c840e392b6b12e70e903db3b35c210611b48059da3b74e10ad6baf6623f8a60990a2956245a7dec433c4f152c31a09111677c996bd70c6471c7719eca920
-  languageName: node
-  linkType: hard
-
-"@redux-saga/deferred@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "@redux-saga/deferred@npm:1.1.2"
-  checksum: 8fe6bd085ea5829e7350e802528ebc2c7f81244a6f7d6fe71aec82699af5cd7b1589279d5f55796469ed75043cb6813a6986c83f4ea8d8dc50a2f914da9c6c1f
-  languageName: node
-  linkType: hard
-
-"@redux-saga/delay-p@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "@redux-saga/delay-p@npm:1.1.2"
-  dependencies:
-    "@redux-saga/symbols": "npm:^1.1.2"
-  checksum: 5f1e386fed05bec63ee6656e19b40e18234a430ce7f24a8683f45ed2c7bb9095b581e33d35dfb1c3ecde4049af3d4263fae2246a80d4765abfd72335637fd4f2
-  languageName: node
-  linkType: hard
-
-"@redux-saga/is@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "@redux-saga/is@npm:1.1.2"
-  dependencies:
-    "@redux-saga/symbols": "npm:^1.1.2"
-    "@redux-saga/types": "npm:^1.1.0"
-  checksum: a3ab090c90f26da52dfb77019bcc8eebac93663db3ddefa60b189657b3fbaac85237605cec89851e42f4c2cede568fdbc65f8d38bbc38ab03e0d50185e13ee19
-  languageName: node
-  linkType: hard
-
-"@redux-saga/symbols@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "@redux-saga/symbols@npm:1.1.2"
-  checksum: 64dad79ad4adfd236dc9540fd6bb544859241733c60761b89fdc33e7d51eebc57c571521bb2f857ed9bff1a96cc0f140de9202dbc9b9c83491a1c7d26090ee1d
-  languageName: node
-  linkType: hard
-
-"@redux-saga/types@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@redux-saga/types@npm:1.1.0"
-  checksum: 0feb304c52f8651557a46b2f2b9149b4ba77730850c0bc484c6c5cf72039d966b718b63d32f8cf7df6fed8bb340138e9875b42ea4eb53f372fcf8080263d26db
+    immer: "npm:^9.0.7"
+    redux: "npm:^4.1.2"
+    redux-thunk: "npm:^2.4.1"
+    reselect: "npm:^4.1.5"
+  peerDependencies:
+    react: ^16.9.0 || ^17.0.0 || ^18
+    react-redux: ^7.2.1 || ^8.0.2
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-redux:
+      optional: true
+  checksum: 0cfecf84b49d1692e6559c90491bb5b5e9a1494bbf4343a46187a0651b20de5019327c80696384e98a061149957b3c53fe8cebdfa727e182f95d72aa039804a1
   languageName: node
   linkType: hard
 
@@ -4812,13 +4757,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^2.4.1":
-  version: 2.6.12
-  resolution: "core-js@npm:2.6.12"
-  checksum: 1cab48644f8b5d4c58c9ce82b045d1c683ba0b8025abd7df1b6a91a4dd24c64ea4194cc769849fedc71c0f56e1645cf6bc36808cbadd53b9a6dcb48c821df811
-  languageName: node
-  linkType: hard
-
 "core-js@npm:^3":
   version: 3.23.5
   resolution: "core-js@npm:3.23.5"
@@ -4859,15 +4797,6 @@ __metadata:
   dependencies:
     moment-timezone: "npm:^0.5.x"
   checksum: 79991e19252904f23e6145afb06475c286a640680a88f27cdf39fe22bee52a6e5e23ab46565be83f876bdd5e98db3644ee3e25848b5d71cc0f4a3d41fca328cf
-  languageName: node
-  linkType: hard
-
-"cross-fetch@npm:^3.1.5":
-  version: 3.1.5
-  resolution: "cross-fetch@npm:3.1.5"
-  dependencies:
-    node-fetch: "npm:2.6.7"
-  checksum: 83fa7b13186c55abf289d6907b7d0be13e8c85066fb7d82a99b1b16ebcbf4cb49bcd9806020e386c94d69c7c09e15c4aade7de56ece40f86dba0147915d5c196
   languageName: node
   linkType: hard
 
@@ -6069,16 +5998,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-redux-saga@npm:^1.3.2":
-  version: 1.3.2
-  resolution: "eslint-plugin-redux-saga@npm:1.3.2"
-  peerDependencies:
-    eslint: ">= 6.7.0"
-    redux-saga: ">= 0.11.1 < 1 || >= 1.0.0"
-  checksum: e9988752f9ef2798643454a8cd036839c1e0bf69e4dd30f4440ac1235748da27b5d278c47abc43925bb6bdc36a987496d444b2a0ed0849fc2525f0defa55c5d8
-  languageName: node
-  linkType: hard
-
 "eslint-plugin-regexp@npm:^1.7.0":
   version: 1.7.0
   resolution: "eslint-plugin-regexp@npm:1.7.0"
@@ -6640,13 +6559,6 @@ __metadata:
   dependencies:
     node-gyp: "npm:latest"
   conditions: os=darwin
-  languageName: node
-  linkType: hard
-
-"fsm-iterator@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "fsm-iterator@npm:1.1.0"
-  checksum: 39dc12559e3d5e22013bb7712caabbaddfa4905aeec2ce1331487fe29195f2530e944cd6550145ec20ad22e663dc86351617e7151b3b6b61647411f577d83f74
   languageName: node
   linkType: hard
 
@@ -7277,13 +7189,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immutable-ops@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "immutable-ops@npm:0.7.0"
-  dependencies:
-    "@babel/runtime": "npm:^7.0.0"
-    ramda: "npm:^0.26.1"
-  checksum: 680ce20597355f2874853e1aad9dac5b7d4237ea18fcde7939d39fb03f4afa7cd1eb6c4ed7ccf9a0b0080f7a883e11f1871bd18f08093cd822df53c5854ad4b1
+"immer@npm:^9.0.7":
+  version: 9.0.15
+  resolution: "immer@npm:9.0.15"
+  checksum: 1805963014da1349a7164066692f2246a634e3197d7e48b3d33bb88447b4841d7c314ef414bb0059e83d46bd883b39add2a8d96dff40a54943d2ba8000ba109d
   languageName: node
   linkType: hard
 
@@ -7381,11 +7290,8 @@ __metadata:
     react: "npm:^18.1.0"
     react-dom: "npm:^18.1.0"
     stylelint: "npm:^14.9.1"
-  dependenciesMeta:
-    eslint-import-resolver-alias@1.1.2:
-      unplugged: true
-    eslint-import-resolver-custom-alias@1.3.0:
-      unplugged: true
+  peerDependencies:
+    react-redux: ^8.0.2
   languageName: unknown
   linkType: soft
 
@@ -8714,20 +8620,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.isequal@npm:^4.5.0":
-  version: 4.5.0
-  resolution: "lodash.isequal@npm:4.5.0"
-  checksum: d413585fd1dbcb6ebed6d9d98a7fe5e10cc6f653b6676a61a69185aa1f6ae5b4aac1367a632db0ee46197ee1ab6aa5b7428c1721f9b5459a3623e0cc930b9b77
-  languageName: node
-  linkType: hard
-
-"lodash.ismatch@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "lodash.ismatch@npm:4.4.0"
-  checksum: 82bb7c7feb9cb3db8c4bdf953038cf5ec17f44a65e12eeb6fc08590b9435cb3d6954133b279c54a1eed645d4ec42776a0409e79b8e526cc05305230a38d1f361
-  languageName: node
-  linkType: hard
-
 "lodash.kebabcase@npm:4.1.1":
   version: 4.1.1
   resolution: "lodash.kebabcase@npm:4.1.1"
@@ -9502,9 +9394,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-i18next@npm:^11.0.0":
-  version: 11.2.2
-  resolution: "next-i18next@npm:11.2.2"
+"next-i18next@npm:^11.0.0, next-i18next@npm:^11.3.0":
+  version: 11.3.0
+  resolution: "next-i18next@npm:11.3.0"
   dependencies:
     "@babel/runtime": "npm:^7.18.6"
     "@types/hoist-non-react-statics": "npm:^3.3.1"
@@ -9516,7 +9408,7 @@ __metadata:
   peerDependencies:
     next: ">= 10.0.0"
     react: ">= 16.8.0"
-  checksum: 2a7ae9e455629c4ade3fde7fa707a4453c240ddf5699e4a5ff7f3eb59b6654144367e417b1ff32fb3b197395490e4fe6b0c53088e1140cf44dbdbd2b50f14a4a
+  checksum: e6a79b4fca1c8d72f4e044a1e4c582ae21046aafdc1ebb6123937663114e2a8f3951201d5ca5cf48799715635717c22ba837963b52acd1e142d58e070ba08378
   languageName: node
   linkType: hard
 
@@ -9620,7 +9512,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:2.6.7, node-fetch@npm:^2.6.7":
+"node-fetch@npm:^2.6.7":
   version: 2.6.7
   resolution: "node-fetch@npm:2.6.7"
   dependencies:
@@ -9792,7 +9684,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"object-assign@npm:^4.1.0, object-assign@npm:^4.1.1":
+"object-assign@npm:^4.1.1":
   version: 4.1.1
   resolution: "object-assign@npm:4.1.1"
   checksum: f5cd1f2f1e82e12207e4f2377d9d7d90fbc0d9822a6afa717a6dcab6930d8925e1ebbbb25df770c31ff11335ee423459ba65ffa2e53999926c328b806b4d73d6
@@ -11484,13 +11376,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ramda@npm:^0.26.1":
-  version: 0.26.1
-  resolution: "ramda@npm:0.26.1"
-  checksum: 8ffc52dadaf1bd6409760cf2c1da49571f33831622269db66bebad150dbacc15aeea9f8f4f9089c04bbdc73fd77827ac186f40135847e5a5fb43c1c7a748dac7
-  languageName: node
-  linkType: hard
-
 "randombytes@npm:^2.1.0":
   version: 2.1.0
   resolution: "randombytes@npm:2.1.0"
@@ -12059,15 +11944,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"re-reselect@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "re-reselect@npm:3.4.0"
-  peerDependencies:
-    reselect: ">1.0.0"
-  checksum: 36716c03792919f27acfde5fdb44917a71fe7dfbe4b367fcada3fa8c308562129b37008d61cbd5c516bb82c80e5472feffa3fe3bc257f91ec3af735a0c6fd3f6
-  languageName: node
-  linkType: hard
-
 "react-cookies@npm:^0.1.1":
   version: 0.1.1
   resolution: "react-cookies@npm:0.1.1"
@@ -12277,46 +12153,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux-orm@npm:^0.16.2":
-  version: 0.16.2
-  resolution: "redux-orm@npm:0.16.2"
-  dependencies:
-    "@babel/runtime": "npm:^7.11.2"
-    immutable-ops: "npm:^0.7.0"
-    lodash: "npm:^4.17.15"
-    re-reselect: "npm:^3.4.0"
-    reselect: "npm:^3.0.1"
-  checksum: 5432c1004ea346d4396e549474ce5bef45a095749f249443e2f1c4d83e16fb34d99dc0e6b116b4863553c899e0b03717f64a7e6cc2caa0f6c6f14f08b7652828
-  languageName: node
-  linkType: hard
-
-"redux-saga-test-plan@npm:^4.0.5":
-  version: 4.0.5
-  resolution: "redux-saga-test-plan@npm:4.0.5"
-  dependencies:
-    core-js: "npm:^2.4.1"
-    fsm-iterator: "npm:^1.1.0"
-    lodash.isequal: "npm:^4.5.0"
-    lodash.ismatch: "npm:^4.4.0"
-    object-assign: "npm:^4.1.0"
+"redux-thunk@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "redux-thunk@npm:2.4.1"
   peerDependencies:
-    "@redux-saga/is": ^1.0.1
-    "@redux-saga/symbols": ^1.0.1
-    redux-saga: ^1.0.1
-  checksum: 4ec845ebfc088212d26fe96b0df76e39b48d0c5f31235f397e1bce86ef1ca117d010d0f511e327ec52c40da9c0a31b09fa8f1981caa309c5c006490e09b87b37
+    redux: ^4
+  checksum: ba000f2586862f0db4070bb6ef12601521278b1084cee7c3f83322d843461e84c5df53b60ba8c3782005d4eaae0ea5bb3cc55932ab7b28c98a724eced2726e47
   languageName: node
   linkType: hard
 
-"redux-saga@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "redux-saga@npm:1.1.3"
-  dependencies:
-    "@redux-saga/core": "npm:^1.1.3"
-  checksum: 6bf24f245bc9dbd47b169e4316d01e7011adf32bdbe0f20a8c9935c0151e0b85995cef5b870a58b09ca073c23afe0687e5a7abc20b2a0f11b2fb7834fd410fe0
-  languageName: node
-  linkType: hard
-
-"redux@npm:^4.0.4, redux@npm:^4.2.0":
+"redux@npm:^4.1.2":
   version: 4.2.0
   resolution: "redux@npm:4.2.0"
   dependencies:
@@ -12491,10 +12337,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reselect@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "reselect@npm:3.0.1"
-  checksum: 77b0c5efa5ab738589987e511c6e704dd256e88bc5836113fb231e102f2c2372db7f17449864e3fc08b100b78ab494227a79802a0687947bb608c48addc36344
+"reselect@npm:^4.1.5":
+  version: 4.1.6
+  resolution: "reselect@npm:4.1.6"
+  checksum: dee09874278bb662102b7bd36e5331bc3ac72125940c03804c4506eed0ac08334ea6e63cd9bcaa1d3c603575f3449d1e6d1ba2e6ad2ff4eeb5385334fa8fccfc
   languageName: node
   linkType: hard
 
@@ -13893,31 +13739,6 @@ __metadata:
   version: 2.1.0
   resolution: "typed-function@npm:2.1.0"
   checksum: b40e82d19695794b08c81d35adeea8a281460ae2a73ef79ab03ad5bad9ab281ac6cbeb7ae0641105b890c0ab8ca84309d1197edee0b1b3c4241d56fc3923057a
-  languageName: node
-  linkType: hard
-
-"typescript-compare@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "typescript-compare@npm:0.0.2"
-  dependencies:
-    typescript-logic: "npm:^0.0.0"
-  checksum: c9945b8084819b9bb7aa6a370d570cdc47b7498dc3f1aba16376d4d6f05c3ad7324c5f54903534f30986cfdec90775f281f6769f399aa9d77bcf54300f40cb92
-  languageName: node
-  linkType: hard
-
-"typescript-logic@npm:^0.0.0":
-  version: 0.0.0
-  resolution: "typescript-logic@npm:0.0.0"
-  checksum: 3b2ed9aeb4a0abc7c422b46d0c09edae5053ddb0723e359b9e2f709655c5c42256cf9db0b390706f4066daaf46252900c95fd21f0b19a97d3e06e311addba219
-  languageName: node
-  linkType: hard
-
-"typescript-tuple@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "typescript-tuple@npm:2.2.1"
-  dependencies:
-    typescript-compare: "npm:^0.0.2"
-  checksum: 53f3b380618ef56eb7c58f5cf027baf547416d8ef8145ac0b053e4f61bbef581c0f018393868e4cfa02c281d2250a9b8fd21d12615db992033e100702f4dea61
   languageName: node
   linkType: hard
 

@@ -6,10 +6,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { attributeType, contentType } from '@innodoc/misc/propTypes'
 import { getNumberedTitle } from '@innodoc/misc/utils'
-import { resetExercise } from '@innodoc/store/actions/exercise'
-import getExercise from '@innodoc/store/selectors/getExercise'
-import { getTest } from '@innodoc/store/selectors/progress'
-import { getCurrentSection } from '@innodoc/store/selectors/section'
+import { selectById } from '@innodoc/store/selectors/exercises'
+import { selectTest } from '@innodoc/store/selectors/progress'
+import { selectSection } from '@innodoc/store/selectors/sections'
 
 import useIsMounted from '../../../../hooks/useIsMounted.js'
 import Action from '../cards/Action.jsx'
@@ -24,10 +23,10 @@ function ExerciseCard({ attributes, content, extra, id: exId }) {
   const isMounted = useIsMounted()
   const dispatch = useDispatch()
   const [showResult, setShowResult] = useState(false)
-  const { id: sectionId, type: sectionType } = useSelector(getCurrentSection)
-  const { isSubmitted } = useSelector(getTest)
+  const { id: sectionId, type: sectionType } = useSelector(selectSection)
+  const { isSubmitted } = useSelector(selectTest)
   const globalExId = `${sectionId}#${exId}`
-  const exercise = useSelector((state) => getExercise(state, globalExId))
+  const exercise = useSelector((state) => selectById(state, globalExId))
 
   // Result shown only if all questions are answered on first render.
   const initialIsAnswered = useRef(exercise.isAnswered)

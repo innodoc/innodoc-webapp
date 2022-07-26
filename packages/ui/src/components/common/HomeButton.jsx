@@ -3,21 +3,24 @@ import { Button } from 'antd'
 import { useTranslation } from 'next-i18next'
 import { useSelector } from 'react-redux'
 
-import { getCurrentCourse } from '@innodoc/store/selectors/course'
+import { selectCourse } from '@innodoc/store/selectors/content'
 
 import ContentLink from '../content/links/ContentLink.jsx'
 
 function HomeButton() {
   const { t } = useTranslation()
-  const course = useSelector(getCurrentCourse)
+  const course = useSelector(selectCourse)
+  const homeLink = course?.homeLink
 
-  return course ? (
-    <ContentLink href={course.homeLink}>
-      <Button icon={<HomeOutlined />} type="primary">
-        {t('common.home')}
-      </Button>
-    </ContentLink>
-  ) : null
+  return (
+    homeLink && (
+      <ContentLink href={homeLink}>
+        <Button icon={<HomeOutlined />} type="primary">
+          {t('common.home')}
+        </Button>
+      </ContentLink>
+    )
+  )
 }
 
 export default HomeButton

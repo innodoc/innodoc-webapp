@@ -2,8 +2,8 @@ import { Col, Row, Typography } from 'antd'
 
 import { useTranslation } from 'next-i18next'
 
-import getStaticPageProps from '../lib/getStaticPageProps'
-import serversideBootstrap from '../lib/serversideBootstrap'
+import getTranslationProps from '../lib/getTranslationProps.js'
+import serversideBootstrap from '../lib/serversideBootstrap.js'
 import useRequireLogin from '../hooks/useRequireLogin'
 import Layout from '../components/Layout/Layout'
 import PageTitle from '../components/common/PageTitle'
@@ -29,7 +29,7 @@ function ChangePassword() {
   )
 }
 
-const getStaticProps = serversideBootstrap(getStaticPageProps)
+const getStaticProps = serversideBootstrap(getTranslationProps)
 
 export { getStaticProps }
 export default ChangePassword

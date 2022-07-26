@@ -11,8 +11,8 @@ import '@innodoc/ui/style/global.sss'
 import { PageTitle } from '@innodoc/ui/common'
 // import { useRouteNotifier } from '@innodoc/ui/hooks'
 
-import nextI18NextConfig from '../../next.config/next-i18next.config.js'
-import nextReduxWrapper from '../store.js'
+// import nextI18NextConfig from '../../next.config/next-i18next.config.js'
+import nextReduxWrapper from '../lib/nextReduxWrapper.js'
 // import withServerVars from './withServerVars'
 // import withLoadManifest from './withLoadManifest'
 // import withMathJaxOptions from './withMathJaxOptions'
@@ -21,6 +21,7 @@ import nextReduxWrapper from '../store.js'
 
 function InnoDocApp({ Component, pageProps }) {
   // useRouteNotifier() // Notify store about Next.js route changes
+
   return (
     <>
       <Head>
@@ -59,4 +60,5 @@ InnoDocApp.propTypes = {
 
 export { InnoDocApp } // for testing
 // export default hocs.reduce((acc, hoc) => hoc(acc), InnoDocApp)
-export default nextReduxWrapper.withRedux(appWithTranslation(InnoDocApp, nextI18NextConfig))
+// export default nextReduxWrapper.withRedux(appWithTranslation(InnoDocApp, nextI18NextConfig))
+export default nextReduxWrapper.withRedux(appWithTranslation(InnoDocApp))

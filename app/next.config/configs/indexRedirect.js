@@ -1,6 +1,6 @@
 export default async (phase, config) => {
-  const pagePathPrefix = process.env.PAGE_PATH_PREFIX
-  const sectionPathPrefix = process.env.SECTION_PATH_PREFIX
+  const pagePathPrefix = process.env.NEXT_PUBLIC_PAGE_PATH_PREFIX
+  const sectionPathPrefix = process.env.NEXT_PUBLIC_SECTION_PATH_PREFIX
 
   const { homeLink } = config.courseManifest
 

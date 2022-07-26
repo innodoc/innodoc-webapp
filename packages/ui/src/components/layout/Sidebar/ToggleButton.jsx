@@ -5,12 +5,12 @@ import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { toggleSidebar } from '@innodoc/store/actions/ui'
-import { getApp } from '@innodoc/store/selectors/misc'
+import { selectSidebarVisible } from '@innodoc/store/selectors/ui'
 
 function ToggleButton({ className, icon }) {
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const { sidebarVisible } = useSelector(getApp)
+  const sidebarVisible = useSelector(selectSidebarVisible)
 
   return (
     <Button

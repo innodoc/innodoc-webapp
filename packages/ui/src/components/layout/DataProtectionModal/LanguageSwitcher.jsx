@@ -3,26 +3,23 @@ import { Button, Dropdown, Menu } from 'antd'
 import classNames from 'classnames'
 import LanguageOutlineSvg from 'ionicons/dist/svg/language-outline.svg'
 import { useTranslation } from 'next-i18next'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-import { changeLanguage } from '@innodoc/store/actions/i18n'
-import { getCurrentCourse } from '@innodoc/store/selectors/course'
-import { getApp } from '@innodoc/store/selectors/misc'
+import { selectCourse } from '@innodoc/store/selectors/content'
 
 import css from './LanguageSwitcher.module.sss'
 
 function LanguageSwitcher() {
-  const { t } = useTranslation()
-  const course = useSelector(getCurrentCourse)
-  const { language: currentLanguage } = useSelector(getApp)
-  const dispatch = useDispatch()
+  const { t, i18n } = useTranslation()
+  const { language: currentLanguage } = i18n
+  const course = useSelector(selectCourse)
 
   const languageList = course && course.languages ? course.languages : []
   const languageOptions = languageList.map((lang) => (
     <Menu.Item
       className={classNames({ [css.active]: lang === currentLanguage })}
       key={lang}
-      onClick={() => dispatch(changeLanguage(lang, currentLanguage))}
+      onClick={() => i18n.changeLanguage(lang)}
     >
       {t(`languages.${lang}`)}
     </Menu.Item>

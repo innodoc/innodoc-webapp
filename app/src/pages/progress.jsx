@@ -2,15 +2,15 @@ import { Typography } from 'antd'
 
 import { useTranslation } from 'next-i18next'
 
-import getStaticPageProps from '../lib/getStaticPageProps'
-import serversideBootstrap from '../lib/serversideBootstrap'
+import getTranslationProps from '../lib/getTranslationProps.js'
+import serversideBootstrap from '../lib/serversideBootstrap.js'
 import Layout from '../Layout'
 import PageTitle from '../common/PageTitle'
 import UserProgress from '../user/Progress'
 import SidebarToggleButton from '../Layout/Sidebar/ToggleButton'
 import css from '../content/content.module.sss'
 
-const ProgressPage = () => {
+function Progress() {
   const { t } = useTranslation()
   const title = t('progress.title')
   return (
@@ -27,7 +27,7 @@ const ProgressPage = () => {
   )
 }
 
-const getStaticProps = serversideBootstrap(getStaticPageProps)
+const getStaticProps = serversideBootstrap(getTranslationProps)
 
 export { getStaticProps }
-export default ProgressPage
+export default Progress

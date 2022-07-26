@@ -1,14 +1,14 @@
 import { Typography } from 'antd'
-
 import { useTranslation } from 'next-i18next'
 
-import getStaticPageProps from '../lib/getStaticPageProps'
-import serversideBootstrap from '../lib/serversideBootstrap'
-import Layout from '../Layout'
-import PageTitle from '../common/PageTitle'
-import Toc from '../Toc'
+import { PageTitle } from '@innodoc/ui/common'
+import Layout from '@innodoc/ui/layout'
+import TocComponent from '@innodoc/ui/toc'
 
-const TocPage = () => {
+import getTranslationProps from '../lib/getTranslationProps.js'
+import serversideBootstrap from '../lib/serversideBootstrap.js'
+
+function Toc() {
   const { t } = useTranslation()
   const title = t('common.toc')
   return (
@@ -16,13 +16,13 @@ const TocPage = () => {
       <PageTitle>{title}</PageTitle>
       <Layout disableSidebar>
         <Typography.Title>{t('common.toc')}</Typography.Title>
-        <Toc expandAll />
+        <TocComponent expandAll />
       </Layout>
     </>
   )
 }
 
-const getStaticProps = serversideBootstrap(getStaticPageProps)
+const getStaticProps = serversideBootstrap(getTranslationProps)
 
 export { getStaticProps }
-export default TocPage
+export default Toc

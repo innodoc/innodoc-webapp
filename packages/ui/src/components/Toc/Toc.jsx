@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { getCurrentCourse } from '@innodoc/store/selectors/course'
-import { getToc } from '@innodoc/store/selectors/section'
+// import { selectCourse } from '@innodoc/store/selectors/content'
+// import { getToc } from '@innodoc/store/selectors/section'
 
 import getTreeData from './getTreeData.jsx'
 import css from './Toc.module.sss'
@@ -13,8 +13,10 @@ import useAutoExpand from './useAutoExpand.js'
 
 function Toc({ expandAll }) {
   const { t } = useTranslation()
-  const course = useSelector(getCurrentCourse)
-  const tocData = useSelector(getToc)
+  // const course = useSelector(selectCourse)
+  // const tocData = useSelector(getToc)
+  return 'TOC'
+
   const currentSectionId = course ? course.currentSectionId : undefined
   const [expandedKeys, setExpandedKeys] = useState(
     new Set(currentSectionId ? [currentSectionId] : null)

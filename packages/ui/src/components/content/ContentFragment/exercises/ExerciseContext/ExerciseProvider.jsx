@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { childrenType } from '@innodoc/misc/propTypes'
-import { addQuestion, questionAnswered } from '@innodoc/store/actions/question'
+import { questionAdded, questionAnswered } from '@innodoc/store/actions/questions'
 
 import ExerciseContext from './ExerciseContext.js'
 
@@ -19,7 +19,7 @@ function ExerciseProvider({
 
   // Register a question in the store
   const addQuestionWrapper = useCallback(
-    (qId, points) => dispatch(addQuestion(globalExId, qId, points)),
+    (qId, points) => dispatch(questionsSelectors.questionAdded(globalExId, qId, points)),
     [dispatch, globalExId]
   )
 
@@ -30,7 +30,7 @@ function ExerciseProvider({
       isCorrect,
       dispatchAnswer: (qId, answer, attrs) => {
         setShowResult(false)
-        dispatch(questionAnswered(qId, answer, attrs))
+        dispatch(questionsSelectors.questionAnswered(qId, answer, attrs))
       },
       showResult,
     }),

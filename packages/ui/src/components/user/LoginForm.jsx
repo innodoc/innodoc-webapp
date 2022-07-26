@@ -5,10 +5,9 @@ import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { loginUser } from '@innodoc/misc/api'
-import { userLoggedIn } from '@innodoc/store/actions/user'
-import { getCurrentCourse } from '@innodoc/store/selectors/course'
-import { getApp } from '@innodoc/store/selectors/misc'
+// import { loginUser } from '@innodoc/misc/api'
+// import { userLoggedIn } from '@innodoc/store/actions/user'
+import { selectCourse } from '@innodoc/store/selectors/content'
 
 import Link from '../common/Link.jsx'
 import ContentLink from '../content/links/ContentLink.jsx'
@@ -33,12 +32,17 @@ function ErrorDescription() {
   )
 }
 
+const loginUser = () => {}
+const userLoggedIn = () => {}
+
 function LoginForm() {
   const router = useRouter()
-  const { csrfToken, loggedInEmail } = useSelector(getApp)
-  const course = useSelector(getCurrentCourse)
+  const course = useSelector(selectCourse)
   const dispatch = useDispatch()
   const { t } = useTranslation()
+
+  const csrfToken = '' // TODO
+  const loggedInEmail = null
 
   const onFinish = useCallback(
     ({ email, password }, setDisabled, setMessage) =>

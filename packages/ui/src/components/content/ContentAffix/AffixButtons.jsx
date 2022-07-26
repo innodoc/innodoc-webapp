@@ -3,7 +3,7 @@ import { Button } from 'antd'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 
-import { getNextPrevSections } from '@innodoc/store/selectors/section'
+import { selectNextPrevSections } from '@innodoc/store/selectors/sections'
 
 import SidebarToggleButton from '../../layout/Sidebar/ToggleButton.jsx'
 import SectionLink from '../links/SectionLink.js'
@@ -28,7 +28,7 @@ SectionButton.propTypes = {
 }
 
 function AffixButtons() {
-  const { prevId, nextId } = useSelector(getNextPrevSections)
+  const { prevId, nextId } = useSelector(selectNextPrevSections)
   return (
     <div className={css.affixButtons}>
       <SectionButton direction="left" sectionId={prevId} />

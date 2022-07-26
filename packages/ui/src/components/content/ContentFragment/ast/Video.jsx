@@ -3,16 +3,13 @@ import { useTranslation } from 'next-i18next'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 
-import { getApp } from '@innodoc/store/selectors/misc'
-
 import css from './ast.module.sss'
 
 function StaticVideo({ src }) {
-  const { staticRoot } = useSelector(getApp)
   const { t } = useTranslation()
   const videoSrc = /^https?:\/\//i.test(src)
     ? src
-    : `${staticRoot}${src.startsWith('/') ? src.substr(1) : src}`
+    : `${process.env.NEXT_PUBLIC_STATIC_ROOT}${src.startsWith('/') ? src.substr(1) : src}`
   /* eslint-disable jsx-a11y/media-has-caption */
   return (
     <video controls src={videoSrc} className={css.video}>
@@ -26,7 +23,9 @@ StaticVideo.propTypes = { src: PropTypes.string.isRequired }
 const ytIdRegexp = /(youtu\.be\/|youtube\.com\/(watch\?(.*&)?v=|(embed|v)\/))([^?&"'>]+)/
 
 function YouTubeVideo({ src, title }) {
-  const { language } = useSelector(getApp)
+  // TODO
+  // const { language } = useSelector(getApp)
+  const language = 'en'
   const { t } = useTranslation()
   const match = ytIdRegexp.exec(src)
   if (!match) {

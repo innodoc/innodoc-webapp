@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { getCurrentCourse } from '@innodoc/store/selectors/course'
+import { selectCourse } from '@innodoc/store/selectors/content'
 
 import ContentLink from '../../content/links/ContentLink.jsx'
 
@@ -20,18 +20,20 @@ function Header({ enableSearch }) {
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const { md } = Grid.useBreakpoint()
   const isMobile = !md
-  const course = useSelector(getCurrentCourse)
+  const course = useSelector(selectCourse)
 
-  const logo =
-    course && course.homeLink ? (
-      <ContentLink href={course.homeLink}>
-        <a className={css.logoLink}>
-          <Logo />
-        </a>
-      </ContentLink>
-    ) : (
-      <Logo />
-    )
+  const logo = <Logo />
+
+  // const logo =
+  //   course && course.homeLink ? (
+  //     <ContentLink href={course.homeLink}>
+  //       <a className={css.logoLink}>
+  //         <Logo />
+  //       </a>
+  //     </ContentLink>
+  //   ) : (
+  //     <Logo />
+  //   )
 
   const menuMode = isMobile ? 'inline' : 'horizontal'
   const navMenu = <NavMenu menuMode={menuMode} />

@@ -17,30 +17,30 @@
   "type": "module",
   "exports": {
     "./actions/content": "./src/actions/content.js",
-    "./actions/exercise": "./src/actions/exercise.js",
-    "./actions/i18n": "./src/actions/i18n.js",
-    "./actions/question": "./src/actions/question.js",
+    "./actions/exercises": "./src/actions/exercises.js",
+    "./actions/progress": "./src/actions/progress.js",
+    "./actions/questions": "./src/actions/questions.js",
     "./actions/ui": "./src/actions/ui.js",
     "./actions/user": "./src/actions/user.js",
-    "./getMakeStore": "./src/getMakeStore.js",
-    "./selectors/course": "./src/selectors/course.js",
-    "./selectors/fragment": "./src/selectors/fragment.js",
-    "./selectors/getExercise": "./src/selectors/getExercise.js",
-    "./selectors/getIndexTerms": "./src/selectors/getIndexTerms.js",
-    "./selectors/getLatestUserMessages": "./src/selectors/getLatestUserMessages.js",
-    "./selectors/makeGetQuestion": "./src/selectors/makeGetQuestion.js",
-    "./selectors/misc": "./src/selectors/misc.js",
-    "./selectors/page": "./src/selectors/page.js",
+    "./actions/userMessages": "./src/actions/userMessages.js",
+    "./api/content": "./src/api/contentApi.js",
+    "./makeStore": "./src/makeStore.js",
+    "./selectors/content": "./src/selectors/content.js",
+    "./selectors/exercises": "./src/selectors/exercises.js",
+    "./selectors/pages": "./src/selectors/pages.js",
     "./selectors/progress": "./src/selectors/progress.js",
-    "./selectors/section": "./src/selectors/section/section.js"
+    "./selectors/questions": "./src/selectors/questions.js",
+    "./selectors/sections": "./src/selectors/sections.js",
+    "./selectors/ui": "./src/selectors/ui.js",
+    "./selectors/userMessages": "./src/selectors/userMessages.js"
   },
   "sideEffects": false,
   "dependencies": {
-    "@innodoc/misc": "workspace:^",
+    "@reduxjs/toolkit": "^1.8.3",
+    "react-redux": "^8.0.2"
+  },
+  "peerDependencies": {
     "next-redux-wrapper": "^7.0.5",
-    "react-redux": "^8.0.2",
-    "redux": "^4.2.0",
-    "redux-orm": "^0.16.2",
-    "redux-saga": "^1.1.3"
+    "react": "^18.2.0"
   }
 }
