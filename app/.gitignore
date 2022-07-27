@@ -1,6 +1,0 @@
-/src/.next
-/src/.next-dev
-/swc
-/src/.env*.local
-/src/public/locales/*/*.missing.json
-/src/public/fonts/mathjax-woff-v2
