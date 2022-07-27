@@ -4,10 +4,10 @@ module.exports = {
   root: true,
   ignorePatterns: ['coverage'],
   extends: [
+    '@innodoc/eslint-config/base',
     '@innodoc/eslint-config/filenames',
     '@innodoc/eslint-config/promise',
-    '@innodoc/eslint-config/security',
     '@innodoc/eslint-config/prettier',
-    '@innodoc/eslint-config/import-settings',
+    '@innodoc/eslint-config/import',
   ],
 }

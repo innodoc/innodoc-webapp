@@ -10,7 +10,11 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/+(jest|next|next-i18next|postcss|prettier).config.+(cjs|js)', '**/.eslintrc.cjs'],
+      files: [
+        '**/+(jest|next|next-i18next|postcss|prettier).config.+(cjs|js)',
+        '**/.eslintrc.cjs',
+        '**/*-env.d.ts',
+      ],
       rules: {
         'filenames/match-regex': 'off',
       },
