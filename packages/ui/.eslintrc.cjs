@@ -1,5 +1,3 @@
-const path = require('path')
-
 require('@innodoc/eslint-config/patch/modern-module-resolution')
 
 module.exports = {

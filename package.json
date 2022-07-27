@@ -3,6 +3,7 @@
   "version": "0.2.3",
   "private": true,
   "scripts": {
+    "dev": "cd web-app && pnpm dev",
     "type-check": "tsc -p .",
     "lint": "pnpm lint:eslint && pnpm type-check",
     "lint:eslint": "eslint ."

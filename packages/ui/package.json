@@ -4,7 +4,13 @@
   "private": true,
   "license": "GPL-3.0-or-later",
   "main": "src/ui.ts",
+  "dependencies": {
+    "next": "^12.2.3"
+  },
   "peerDependencies": {
+    "@innodoc/types": "workspace:^",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.9.2",
     "react": "*",
     "react-dom": "*"
   }

@@ -10,10 +10,14 @@
 
 import withTMFactory from 'next-transpile-modules'
 
-const withTM = withTMFactory(['@innodoc/ui']);
+const withTM = withTMFactory(['@innodoc/ui'])
+
+const config = {
+  reactStrictMode: true,
+}
 
 /** type {NextConfig} */
 export default (_phase, { defaultConfig }) => {
   const plugins = [withTM]
-  return plugins.reduce((acc, plugin) => plugin(acc), defaultConfig)
+  return plugins.reduce((acc, plugin) => plugin(acc), { ...defaultConfig, ...config })
 }

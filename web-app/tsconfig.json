@@ -1,16 +1,15 @@
 {
   "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "jsx": "preserve",
-    "incremental": true
-  },
   "exclude": [
     "node_modules"
   ],
   "include": [
-    "../@types/*.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ]
+  ],
+  "compilerOptions": {
+    "incremental": true,
+    "jsx": "preserve"
+  }
 }

@@ -1,0 +1,7 @@
+{
+  "name": "@innodoc/types",
+  "version": "1.0.0",
+  "private": true,
+  "license": "GPL-3.0-or-later",
+  "main": "src/types.ts"
+}
