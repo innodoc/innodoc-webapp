@@ -2,6 +2,7 @@
 *~
 /coverage
 /e2e/screenshots
+/_*.txt
 # shelfio/jest-mongodb temp config
 /globalConfig.json
 # yarn berry
