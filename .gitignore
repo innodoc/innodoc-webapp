@@ -5,10 +5,6 @@
 /_*.txt
 # shelfio/jest-mongodb temp config
 /globalConfig.json
-# yarn berry
-.yarn/*
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-.pnp.*
+node_modules
+next-env.d.ts
+.next*

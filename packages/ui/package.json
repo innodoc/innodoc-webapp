@@ -1,0 +1,11 @@
+{
+  "name": "@innodoc/ui",
+  "version": "1.0.0",
+  "private": true,
+  "license": "GPL-3.0-or-later",
+  "main": "src/ui.ts",
+  "peerDependencies": {
+    "react": "*",
+    "react-dom": "*"
+  }
+}

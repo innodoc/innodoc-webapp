@@ -30,8 +30,8 @@ anything useful.
 #### Requirements
 
 Please make sure you have a current version of [Node.js](https://nodejs.org/)
-and [Yarn](https://yarnpkg.com/) installed on your system. For Node.js use your
-package manager of choice. [nvm](https://github.com/creationix/nvm) is also an
+and [pnpm](https://pnpm.io/) installed on your system. For Node.js use your
+distro package manager. [nvm](https://github.com/creationix/nvm) is also an
 excellent option to install a current version of Node.js into your home
 directory.
 
@@ -43,7 +43,7 @@ systems might work, but your mileage may vary.
 Install node packages.
 
 ```sh
-$ yarn install
+$ pnpm install
 ```
 
 #### 2. Configuration
@@ -54,7 +54,7 @@ liking.
 #### 3. Build the application
 
 ```sh
-$ yarn build
+$ pnpm build
 ```
 
 An optimized production build can be found in the directory `app/src/.next`.
@@ -64,7 +64,7 @@ An optimized production build can be found in the directory `app/src/.next`.
 This will start the web server that serves the web application.
 
 ```sh
-$ yarn start
+$ pnpm start
 ```
 
 ### Serving content to the application
@@ -100,7 +100,7 @@ Currently the application should be served directly from the domain root (like
 
 The codebase is split into separate sub-packages for organizational purposes
 and to enable sharing of code. This is managed by
-[Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/).
+[workspaces](https://pnpm.io/pnpm-workspace_yaml).
 
 ### Development server
 
@@ -110,7 +110,7 @@ to build in advance.
 is activated by default.
 
 ```sh
-$ yarn dev
+$ pnpm dev
 ```
 
 ### Automated Tests
@@ -132,7 +132,7 @@ tests.
 #### Unit tests
 
 ```sh
-$ yarn test:unit
+$ pnpm test:unit
 ```
 
 TODO Coverage still needed?
@@ -141,7 +141,7 @@ Shows detailed coverage report and also produces `./coverage/lcov-report` that
 can be viewed in a web browser.
 
 ```sh
-$ yarn test:unit:coverage
+$ pnpm test:unit:coverage
 ```
 
 #### Integration tests
@@ -152,7 +152,7 @@ writing maintainable tests, avoiding testing implentation details of our
 components.
 
 ```sh
-$ yarn test:integration
+$ pnpm test:integration
 ```
 
 #### E2E tests
@@ -164,13 +164,13 @@ tests. Afterwards both servers are shut down. Don't forget to build the
 application before as this runs directly on the production build.
 
 ```sh
-$ yarn test:e2e
+$ pnpm test:e2e
 ```
 
 E2E tests can also be looked at while running.
 
 ```sh
-$ yarn test:e2e:show
+$ pnpm test:e2e:show
 ```
 
 For failed tests a screenshot will be taken automatically and placed into the
@@ -183,7 +183,7 @@ comes in handy for development and testing. For production you should set up a
 proper web server to handle static content.
 
 ```sh
-$ yarn test:e2e:content
+$ pnpm test:e2e:content
 ```
 
 ### Linting
@@ -193,7 +193,7 @@ Most notable difference: No [semicolon](https://eslint.org/docs/rules/semi) at
 the end of a statement.
 
 ```sh
-$ yarn lint
+$ pnpm lint
 ```
 
 ### Bundle analyzer
@@ -202,5 +202,5 @@ Visualize bundle contents using
 [Webpack Bundle Analyzer](https://www.npmjs.com/package/webpack-bundle-analyzer).
 
 ```sh
-$ yarn workspace @innodoc/app build:analyze
+$ pnpm @innodoc/app build:analyze
 ```

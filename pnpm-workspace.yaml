@@ -1,0 +1,5 @@
+packages:
+  - "packages/*"
+  - "web-app"
+  - "!e2e/**"
+  - "!**/__test__/**"

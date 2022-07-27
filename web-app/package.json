@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "@innodoc/web-app",
+  "version": "1.0.0",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@innodoc/ui": "workspace:^",
+    "next": "^12.2.3",
+    "next-transpile-modules": "^9.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
