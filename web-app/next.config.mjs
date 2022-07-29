@@ -10,7 +10,7 @@
 
 import withTMFactory from 'next-transpile-modules'
 
-const withTM = withTMFactory(['@innodoc/ui'])
+const withTM = withTMFactory(['@innodoc/store', '@innodoc/ui'])
 
 const config = {
   reactStrictMode: true,

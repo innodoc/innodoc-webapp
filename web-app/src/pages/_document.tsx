@@ -1,33 +1,41 @@
-// Follow emotion setup from
+// Follows emotion/Next.js integration from
 // https://github.com/mui/material-ui/tree/master/examples/nextjs-with-typescript
 
 import createEmotionServer from '@emotion/server/create-instance'
-import NextDocument, { Html, Head, Main, NextScript } from 'next/document'
+import type { NextComponentType } from 'next'
+import type { AppContextType, AppPropsType } from 'next/dist/shared/lib/utils'
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  type DocumentProps,
+  type DocumentContext,
+} from 'next/document'
 
 import createEmotionCache from '../lib/createEmotionCache'
 
-class Document extends NextDocument {
-  render() {
-    return (
-      <Html lang="en">
-        <Head>
-          {/* PWA primary color */}
-          <link rel="shortcut icon" href="/static/favicon.ico" />
-          <meta name="emotion-insertion-point" content="" />
-          {this.props.emotionStyleTags}
-        </Head>
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    )
-  }
+import type { EmotionCacheProps, InnodocAppInitialProps } from './_app'
+
+function InnodocDocument(props: InnodocDocumentProps) {
+  return (
+    <Html lang="en">
+      <Head>
+        <link rel="shortcut icon" href="/static/favicon.ico" />
+        <meta name="emotion-insertion-point" content="" />
+        {props.emotionStyleTags}
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  )
 }
 
 // `getInitialProps` belongs to `_document` (instead of `_app`),
 // it's compatible with static-site generation (SSG).
-Document.getInitialProps = async (ctx) => {
+InnodocDocument.getInitialProps = async (ctx: DocumentContext) => {
   // Resolution order
   //
   // On the server:
@@ -55,17 +63,18 @@ Document.getInitialProps = async (ctx) => {
   // You can consider sharing the same Emotion cache between all the SSR requests to speed up performance.
   // However, be aware that it can have global side effects.
   const cache = createEmotionCache()
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   const { extractCriticalToChunks } = createEmotionServer(cache)
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: (App: any) =>
+      enhanceApp: (App: InnodocAppType) =>
         function EnhanceApp(props) {
           return <App emotionCache={cache} {...props} />
         },
     })
 
-  const initialProps = await NextDocument.getInitialProps(ctx)
+  const initialProps = await Document.getInitialProps(ctx)
   // This is important. It prevents Emotion to render invalid HTML.
   // See https://github.com/mui/material-ui/issues/26561#issuecomment-855286153
   const emotionStyles = extractCriticalToChunks(initialProps.html)
@@ -84,4 +93,8 @@ Document.getInitialProps = async (ctx) => {
   }
 }
 
-export default Document
+type InnodocAppType = NextComponentType<AppContextType, InnodocAppInitialProps, InnodocAppPropsType>
+type InnodocAppPropsType = AppPropsType & EmotionCacheProps
+type InnodocDocumentProps = DocumentProps & { emotionStyleTags: readonly JSX.Element[] }
+
+export default InnodocDocument

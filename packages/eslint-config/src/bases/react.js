@@ -5,9 +5,4 @@ module.exports = {
     'plugin:react-hooks/recommended',
   ],
   plugins: ['jsx-a11y'],
-  settings: {
-    react: {
-      version: 'detect',
-    },
-  },
 }

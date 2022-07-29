@@ -13,7 +13,7 @@ function NavMenu({ pages }: NavMenuProps) {
         justifyContent: 'center',
       }}
     >
-      {pages.map(({ id, icon, title }) => (
+      {pages.map(({ id, icon, title }: Page) => (
         <Button
           key={id}
           startIcon={icon}

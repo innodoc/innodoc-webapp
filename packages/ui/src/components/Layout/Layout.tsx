@@ -1,4 +1,3 @@
-import { Home as HomeIcon, Speed as SpeedIcon } from '@mui/icons-material'
 import { Container } from '@mui/material'
 import type { ReactNode } from 'react'
 
@@ -10,16 +9,14 @@ import Footer from './Footer/Footer'
 function Layout({ children }: LayoutProps) {
   const pages: Page[] = [
     {
-      icon: <HomeIcon />,
+      icon: 'home',
       id: 'home',
       title: 'Home',
-      to: '/home',
     },
     {
-      icon: <SpeedIcon />,
+      icon: 'speed',
       id: 'progress',
       title: 'Progress',
-      to: '/progress',
     },
   ]
 

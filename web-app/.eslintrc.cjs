@@ -15,6 +15,11 @@ module.exports = {
     '@innodoc/eslint-config/prettier',
     '@innodoc/eslint-config/import',
   ],
+
+  settings: {
+    next: { rootDir: path.join(__dirname, 'src') },
+  },
+
   overrides: [
     // As per nextjs convention filenames in pages function as URL patterns
     {
@@ -38,7 +43,4 @@ module.exports = {
       },
     },
   ],
-  settings: {
-    next: { rootDir: path.join(__dirname, 'src') },
-  },
 }

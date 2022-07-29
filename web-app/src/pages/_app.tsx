@@ -1,6 +1,6 @@
-import { CacheProvider, EmotionCache } from '@emotion/react'
+import { CacheProvider, type EmotionCache } from '@emotion/react'
 import CssBaseline from '@mui/material/CssBaseline'
-import { AppProps as NextAppProps } from 'next/app'
+import type { AppProps } from 'next/app'
 import Head from 'next/head'
 
 // Material UI font
@@ -9,6 +9,7 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
+import { wrapper } from '@innodoc/store'
 import { SwitchableThemeProvider, Layout } from '@innodoc/ui'
 
 import createEmotionCache from '../lib/createEmotionCache'
@@ -16,11 +17,7 @@ import createEmotionCache from '../lib/createEmotionCache'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
-interface AppProps extends NextAppProps {
-  emotionCache?: EmotionCache
-}
-
-function App(props: AppProps) {
+function InnodocApp(props: InnodocAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   return (
@@ -38,4 +35,8 @@ function App(props: AppProps) {
   )
 }
 
-export default App
+type InnodocAppProps = Omit<AppProps, 'pageProps'> & InnodocAppInitialProps & EmotionCacheProps
+export type InnodocAppInitialProps = { pageProps: Record<string, never> }
+export type EmotionCacheProps = { emotionCache?: EmotionCache }
+
+export default wrapper.withRedux(InnodocApp)
