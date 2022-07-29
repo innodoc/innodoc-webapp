@@ -3,8 +3,7 @@
 /coverage
 /e2e/screenshots
 /_*.txt
-# shelfio/jest-mongodb temp config
-/globalConfig.json
 node_modules
 next-env.d.ts
 .next*
+**/public/locales/*/*.missing.json

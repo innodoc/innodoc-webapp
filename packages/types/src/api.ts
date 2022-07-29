@@ -1,7 +1,7 @@
-import { Locale, PageLinkLocation } from './common'
+import { Locale, LocalizedString, PageLinkLocation } from './common'
 
 export interface Manifest {
-  title: string
+  title: LocalizedString
   languages: ReadonlyArray<Locale>
   homeLink: string
   logo?: string
@@ -30,10 +30,10 @@ export interface Page {
   linked?: PageLinkLocation[]
 
   /** Short version of the page title for places with limited space */
-  shortTitle?: string
+  shortTitle?: LocalizedString
 
   /** Page title */
-  title: string
+  title: LocalizedString
 }
 
 export interface Section {
@@ -41,7 +41,7 @@ export interface Section {
   id: string
 
   /** Section title */
-  title: string
+  title: LocalizedString
 
   /** Sections sub-sections */
   children: Section[]

@@ -10,9 +10,12 @@
 
 import withTMFactory from 'next-transpile-modules'
 
+import nextI18nextConfig from './next-i18next.config.js'
+
 const withTM = withTMFactory(['@innodoc/store', '@innodoc/ui'])
 
 const config = {
+  i18n: nextI18nextConfig.i18n,
   reactStrictMode: true,
 }
 

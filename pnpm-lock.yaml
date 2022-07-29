@@ -136,6 +136,7 @@ importers:
       '@mui/material': ^5.9.2
       '@reduxjs/toolkit': ^1.8.3
       next: ^12.2.3
+      next-i18next: ^11.3.0
       next-redux-wrapper: ^7.0.5
       next-transpile-modules: ^9.0.0
       react: ^18.2.0
@@ -155,6 +156,7 @@ importers:
       '@mui/material': 5.9.2_qsuhhlyfbpdicstla2jcf7xfmy
       '@reduxjs/toolkit': 1.8.3_kkwg4cbsojnjnupd3btipussee
       next: 12.2.3_qugu52izettqdqqm5qcjcltcia
+      next-i18next: 11.3.0_53oqlnqnxhbetdy4ljlkkvmoby
       next-redux-wrapper: 7.0.5_fhgeyzrk5acniojoowetxediqa
       next-transpile-modules: 9.0.0
       react: 18.2.0
@@ -1572,7 +1574,7 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.18.9
-      '@mui/material': 5.9.2_biqbaboplfbrettd7655fr4n2y
+      '@mui/material': 5.9.2_qsuhhlyfbpdicstla2jcf7xfmy
       react: 18.2.0
     dev: false
 
@@ -2428,6 +2430,11 @@ packages:
     requiresBuild: true
     dev: false
 
+  /core-js/3.24.0:
+    resolution: {integrity: sha512-IeOyT8A6iK37Ep4kZDD423mpi6JfPRoPUdQwEWYiGolvn4o6j2diaRzNfDfpTdu3a5qMbrGUzKUpYpRY8jXCkQ==}
+    requiresBuild: true
+    dev: false
+
   /core-util-is/1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
     dev: false
@@ -3236,6 +3243,12 @@ packages:
     dependencies:
       react-is: 16.13.1
 
+  /html-parse-stringify/3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+    dependencies:
+      void-elements: 3.1.0
+    dev: false
+
   /html-tokenize/2.0.1:
     resolution: {integrity: sha512-QY6S+hZ0f5m1WT8WffYN+Hg+xm/w5I8XeUcAq/ZYP5wVC8xbKi4Whhru3FtrAebD5EhBW8rmFzkDI6eCAuFe2w==}
     hasBin: true
@@ -3245,6 +3258,16 @@ packages:
       minimist: 1.2.6
       readable-stream: 1.0.34
       through2: 0.4.2
+    dev: false
+
+  /i18next-fs-backend/1.1.4:
+    resolution: {integrity: sha512-/MfAGMP0jHonV966uFf9PkWWuDjPYLIcsipnSO3NxpNtAgRUKLTwvm85fEmsF6hGeu0zbZiCQ3W74jwO6K9uXA==}
+    dev: false
+
+  /i18next/21.8.14:
+    resolution: {integrity: sha512-4Yi+DtexvMm/Yw3Q9fllzY12SgLk+Mcmar+rCAccsOPul/2UmnBzoHbTGn/L48IPkFcmrNaH7xTLboBWIbH6pw==}
+    dependencies:
+      '@babel/runtime': 7.18.9
     dev: false
 
   /ignore/5.2.0:
@@ -3578,6 +3601,27 @@ packages:
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
+  /next-i18next/11.3.0_53oqlnqnxhbetdy4ljlkkvmoby:
+    resolution: {integrity: sha512-xl0oIRtiVrk9ZaWBRUbNk/prva4Htdu59o9rFWzd9ax/KemaDVuTTuBZTQMkmXohUQk/MJ7w1rV/mICL6TzyGw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      next: '>= 10.0.0'
+      react: '>= 16.8.0'
+    dependencies:
+      '@babel/runtime': 7.18.9
+      '@types/hoist-non-react-statics': 3.3.1
+      core-js: 3.24.0
+      hoist-non-react-statics: 3.3.2
+      i18next: 21.8.14
+      i18next-fs-backend: 1.1.4
+      next: 12.2.3_qugu52izettqdqqm5qcjcltcia
+      react: 18.2.0
+      react-i18next: 11.18.3_76fbphthii3jxinh3ka5k7ds7q
+    transitivePeerDependencies:
+      - react-dom
+      - react-native
+    dev: false
+
   /next-redux-wrapper/7.0.5_fhgeyzrk5acniojoowetxediqa:
     resolution: {integrity: sha512-UFXdAWG5i+GFT8+Hoqpx3GArkPh34fVWF9YoA2VSHlBzsrPtnRd7NWM6FNSYUennpommTpWJ09mu+r/1UxyIkg==}
     peerDependencies:
@@ -3585,7 +3629,7 @@ packages:
       react: '*'
       react-redux: '*'
     dependencies:
-      next: 12.2.3_biqbaboplfbrettd7655fr4n2y
+      next: 12.2.3_qugu52izettqdqqm5qcjcltcia
       react: 18.2.0
       react-redux: 8.0.2_e42enmjmqb4imi3q3iaq2rrebm
     dev: false
@@ -3897,6 +3941,26 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-i18next/11.18.3_76fbphthii3jxinh3ka5k7ds7q:
+    resolution: {integrity: sha512-EttTX31HbqzZymUM3SIrMPuvamfSXFZVsDHm/ZAqoDfTLjhzlwyxqfbDNxcKNAGOi2mjZaXfR7hSNMlvLNpB/g==}
+    peerDependencies:
+      i18next: '>= 19.0.0'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.18.9
+      html-parse-stringify: 3.0.1
+      i18next: 21.8.14
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react-is/16.13.1:
@@ -4445,6 +4509,11 @@ packages:
 
   /v8-compile-cache/2.3.0:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
+
+  /void-elements/3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
+    engines: {node: '>=0.10.0'}
+    dev: false
 
   /which-boxed-primitive/1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}
