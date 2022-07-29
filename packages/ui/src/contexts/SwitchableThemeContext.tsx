@@ -12,6 +12,7 @@ export function SwitchableThemeProvider({ children }: SwitchableThemeProviderPro
   const systemDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
   const [paletteMode, setPaletteMode] = useState<PaletteMode>(systemDarkMode ? 'dark' : 'light')
 
+  // TODO: add current locale
   const theme = useMemo(
     () =>
       createTheme({

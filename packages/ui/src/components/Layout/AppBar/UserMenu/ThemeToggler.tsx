@@ -1,37 +1,43 @@
 import { DarkMode as DarkModeIcon, LightMode as LightModeIcon } from '@mui/icons-material'
-import { PaletteMode, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material'
-import { MouseEvent, useContext } from 'react'
+import { PaletteMode } from '@mui/material'
+import { type ElementType, type MouseEvent, useContext } from 'react'
 
 import { SwitchableThemeContext } from '../../../../ui'
+import MenuToggleButtonGroup, { Option } from '../../../common/MenuToggleButtonGroup'
+
+function ThemeIcon({ icon: Icon }: { icon: ElementType }) {
+  return <Icon fontSize="small" />
+}
 
 function ThemeToggler() {
   const { paletteMode, setPaletteMode } = useContext(SwitchableThemeContext)
 
-  const onChange = (event: MouseEvent<HTMLElement>, newPaletteMode: PaletteMode) => {
+  const onChange = (event: MouseEvent, newPaletteMode: string) => {
     if (newPaletteMode !== null) {
-      setPaletteMode(newPaletteMode)
+      setPaletteMode(newPaletteMode as PaletteMode)
     }
   }
 
-  const iconSx = { px: 1, py: 0.5 }
+  const options: Option[] = [
+    {
+      component: <ThemeIcon icon={DarkModeIcon} />,
+      label: 'Select dark theme',
+      value: 'dark',
+    },
+    {
+      component: <ThemeIcon icon={LightModeIcon} />,
+      label: 'Select light theme',
+      value: 'light',
+    },
+  ]
 
   return (
-    <Tooltip arrow placement="left" title="Switch theme">
-      <ToggleButtonGroup
-        exclusive
-        onChange={onChange}
-        size="small"
-        sx={{ px: 2, py: 0 }}
-        value={paletteMode}
-      >
-        <ToggleButton aria-label="Select dark theme" sx={iconSx} value="dark">
-          <DarkModeIcon fontSize="small" />
-        </ToggleButton>
-        <ToggleButton aria-label="Select light theme" sx={iconSx} value="light">
-          <LightModeIcon fontSize="small" />
-        </ToggleButton>
-      </ToggleButtonGroup>
-    </Tooltip>
+    <MenuToggleButtonGroup
+      onChange={onChange}
+      options={options}
+      tooltipText="Switch theme"
+      value={paletteMode}
+    />
   )
 }
 

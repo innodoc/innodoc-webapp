@@ -1,16 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-import type { LocalizedString } from '@innodoc/types'
+import { isNotNull, LocalizedString } from '@innodoc/types'
 
 import { selectManifest } from '../slices/contentApi'
 
 import { selectLocale } from './ui'
 
 type TranslateFn = (locString: LocalizedString) => string | undefined
-
-function isNotNull<T>(arg: T): arg is Exclude<T, null> {
-  return arg !== null
-}
 
 /** Select a translation function for localized content strings. */
 const selectTranslateFn = createSelector(

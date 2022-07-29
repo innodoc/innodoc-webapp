@@ -11,6 +11,7 @@ const NAME = 'ui'
 interface UiSliceState {
   showTocDrawer: boolean
   locale: Locale | null
+  locales: Locale[]
 }
 
 type HydrateAction = PayloadAction<{ [NAME]: UiSliceState }>
@@ -18,6 +19,7 @@ type HydrateAction = PayloadAction<{ [NAME]: UiSliceState }>
 const initialState: UiSliceState = {
   showTocDrawer: false,
   locale: null,
+  locales: [],
 }
 
 const uiSlice = createSlice({
@@ -28,6 +30,11 @@ const uiSlice = createSlice({
     changeLocale(state, action: PayloadAction<Locale>) {
       state.locale = action.payload
     },
+
+    setLocales(state, action: PayloadAction<Locale[]>) {
+      state.locales = action.payload
+    },
+
     toggleTocDrawer(state) {
       state.showTocDrawer = !state.showTocDrawer
     },
@@ -35,12 +42,14 @@ const uiSlice = createSlice({
 
   extraReducers: {
     [HYDRATE]: (state, action: HydrateAction) => {
-      state.locale = action.payload[NAME].locale
+      const subState = action.payload[NAME]
+      state.locale = subState.locale
+      state.locales = subState.locales
     },
   },
 })
 
 export const selectUi = (state: RootState) => state[uiSlice.name]
 
-export const { changeLocale, toggleTocDrawer } = uiSlice.actions
+export const { changeLocale, setLocales, toggleTocDrawer } = uiSlice.actions
 export default uiSlice

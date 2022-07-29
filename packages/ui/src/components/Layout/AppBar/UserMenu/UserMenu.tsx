@@ -11,6 +11,7 @@ import {
 } from '@mui/material'
 import { MouseEvent, useState } from 'react'
 
+import LanguageSwitcher from './LanguageSwitcher'
 import ThemeToggler from './ThemeToggler'
 
 function UserMenu() {
@@ -47,6 +48,7 @@ function UserMenu() {
           horizontal: 'right',
         }}
       >
+        <LanguageSwitcher />
         <ThemeToggler />
         <Divider sx={{ mt: 0.7 }} />
         <MenuItem>

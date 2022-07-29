@@ -8,9 +8,11 @@
     "next": "^12.2.3"
   },
   "peerDependencies": {
+    "@innodoc/store": "workspace:^",
     "@innodoc/types": "workspace:^",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.2",
+    "next-i18next": "^11.3.0",
     "react": "*",
     "react-dom": "*"
   }
