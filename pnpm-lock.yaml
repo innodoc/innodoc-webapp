@@ -145,6 +145,7 @@ importers:
       next-transpile-modules: ^9.0.0
       react: ^18.2.0
       react-dom: ^18.2.0
+      react-i18next: ^11.18.3
       react-redux: ^8.0.2
       redux: ^4.2.0
     dependencies:
@@ -165,6 +166,7 @@ importers:
       next-transpile-modules: 9.0.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      react-i18next: 11.18.3_76fbphthii3jxinh3ka5k7ds7q
       react-redux: 8.0.2_e42enmjmqb4imi3q3iaq2rrebm
       redux: 4.2.0
 

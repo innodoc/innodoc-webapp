@@ -5,11 +5,13 @@ import uiSlice from './slices/uiSlice'
 
 const makeStore = () =>
   configureStore({
+    devTools: process.env.NODE_ENV === 'development',
+
     reducer: {
       [contentApi.reducerPath]: contentApi.reducer,
       [uiSlice.name]: uiSlice.reducer,
     },
-    devTools: true,
+
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(contentApi.middleware),
   })
 

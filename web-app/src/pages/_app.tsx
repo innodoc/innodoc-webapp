@@ -1,9 +1,8 @@
 import { CacheProvider, type EmotionCache } from '@emotion/react'
 import CssBaseline from '@mui/material/CssBaseline'
-import { appWithTranslation, useTranslation } from 'next-i18next'
+import { appWithTranslation } from 'next-i18next'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import { useEffect } from 'react'
 
 // Material UI font
 import '@fontsource/roboto/300.css'
@@ -11,7 +10,7 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
-import { changeLocale, useDispatch, wrapper } from '@innodoc/store'
+import { wrapper } from '@innodoc/store'
 import { SwitchableThemeProvider, Layout } from '@innodoc/ui'
 
 import createEmotionCache from '../lib/createEmotionCache'
@@ -21,16 +20,6 @@ const clientSideEmotionCache = createEmotionCache()
 
 function InnodocApp(props: InnodocAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
-
-  const { i18n } = useTranslation()
-  const { language } = i18n
-
-  const dispatch = useDispatch()
-
-  // Pass inital language to store
-  useEffect(() => {
-    dispatch(changeLocale(language))
-  }, [dispatch, language])
 
   return (
     <CacheProvider value={emotionCache}>

@@ -1,7 +1,8 @@
 import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 import type { MouseEvent } from 'react'
 
-import { changeLocale, useSelector } from '@innodoc/store'
+import { useSelector } from '@innodoc/store'
 import { selectLocale, selectLocales } from '@innodoc/store/src/selectors/ui'
 import { isNotNull, Locale } from '@innodoc/types'
 
@@ -11,12 +12,13 @@ function LanguageSwitcher() {
   const { t } = useTranslation()
   const locale = useSelector(selectLocale)
   const locales = useSelector(selectLocales)
+  const router = useRouter()
+  const { pathname, asPath, query } = router
 
   if (isNotNull(locale)) {
     const onChange = (event: MouseEvent, newLocale: Locale) => {
-      console.log(newLocale)
       if (newLocale !== null) {
-        changeLocale(newLocale)
+        void router.push({ pathname, query }, asPath, { locale: newLocale })
       }
     }
 

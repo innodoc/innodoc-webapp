@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
 
-import { Locale } from '@innodoc/types'
+import type { Locale } from '@innodoc/types'
 
 import { RootState } from '../makeStore'
 
@@ -27,12 +27,10 @@ const uiSlice = createSlice({
   initialState,
 
   reducers: {
-    changeLocale(state, action: PayloadAction<Locale>) {
-      state.locale = action.payload
-    },
-
-    setLocales(state, action: PayloadAction<Locale[]>) {
-      state.locales = action.payload
+    /** Only dispatched server-side */
+    changeLocale(state, action: PayloadAction<{ locale: Locale; locales: Locale[] }>) {
+      state.locale = action.payload.locale
+      state.locales = action.payload.locales
     },
 
     toggleTocDrawer(state) {
@@ -42,6 +40,7 @@ const uiSlice = createSlice({
 
   extraReducers: {
     [HYDRATE]: (state, action: HydrateAction) => {
+      // Locale is managed by next/router and passed to client store here
       const subState = action.payload[NAME]
       state.locale = subState.locale
       state.locales = subState.locales
@@ -51,5 +50,5 @@ const uiSlice = createSlice({
 
 export const selectUi = (state: RootState) => state[uiSlice.name]
 
-export const { changeLocale, setLocales, toggleTocDrawer } = uiSlice.actions
+export const { changeLocale, toggleTocDrawer } = uiSlice.actions
 export default uiSlice

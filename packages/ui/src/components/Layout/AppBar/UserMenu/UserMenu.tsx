@@ -9,22 +9,26 @@ import {
   MenuItem,
   Tooltip,
 } from '@mui/material'
+import { useTranslation } from 'next-i18next'
 import { MouseEvent, useState } from 'react'
 
 import LanguageSwitcher from './LanguageSwitcher'
 import ThemeToggler from './ThemeToggler'
 
 function UserMenu() {
+  const { t } = useTranslation()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const onOpenMenu = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)
 
+  const openUserMenuLabel = t('header.openUserMenu')
+
   return (
     <Box sx={{ flexGrow: 0, ml: 1 }}>
-      <Tooltip arrow title="Open user menu" placement="left">
+      <Tooltip arrow title={openUserMenuLabel} placement="left">
         <IconButton
           aria-controls="user-menu"
-          aria-label="Open user menu"
+          aria-label={openUserMenuLabel}
           color="inherit"
           onClick={onOpenMenu}
         >
