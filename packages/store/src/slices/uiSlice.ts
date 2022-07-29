@@ -26,7 +26,6 @@ const uiSlice = createSlice({
 
   reducers: {
     changeLocale(state, action: PayloadAction<Locale>) {
-      // console.log(`REDUCER changeLocale(${action.payload})`)
       state.locale = action.payload
     },
     toggleTocDrawer(state) {
@@ -36,7 +35,6 @@ const uiSlice = createSlice({
 
   extraReducers: {
     [HYDRATE]: (state, action: HydrateAction) => {
-      // console.log('HYDRATE', state, action.payload)
       state.locale = action.payload[NAME].locale
     },
   },

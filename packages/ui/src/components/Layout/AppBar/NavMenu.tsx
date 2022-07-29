@@ -1,8 +1,6 @@
 import { Button, Stack } from '@mui/material'
 
-import type { Page } from '@innodoc/types'
-
-function NavMenu({ pages }: NavMenuProps) {
+function NavMenu() {
   return (
     <Stack
       direction="row"
@@ -13,7 +11,7 @@ function NavMenu({ pages }: NavMenuProps) {
         justifyContent: 'center',
       }}
     >
-      {pages.map(({ id, icon, title }: Page) => (
+      {/* {pages.map(({ id, icon, title }: Page) => (
         <Button
           key={id}
           startIcon={icon}
@@ -24,11 +22,9 @@ function NavMenu({ pages }: NavMenuProps) {
         >
           {title}
         </Button>
-      ))}
+      ))} */}
     </Stack>
   )
 }
-
-type NavMenuProps = { pages: Page[] }
 
 export default NavMenu

@@ -10,9 +10,7 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 
-import type { Page } from '@innodoc/types'
-
-function MobileMenu({ pages }: MobileMenuProps) {
+function MobileMenu() {
   const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
   const onOpenMenu = () => setMenuOpen(true)
@@ -43,16 +41,14 @@ function MobileMenu({ pages }: MobileMenuProps) {
           <ListItemText>Close</ListItemText>
         </MenuItem>
         <Divider />
-        {pages.map(({ id, title }) => (
+        {/* {pages.map(({ id, title }) => (
           <MenuItem key={id} onClick={onClickMenuItem}>
             <ListItemText>{title}</ListItemText>
           </MenuItem>
-        ))}
+        ))} */}
       </SwipeableDrawer>
     </Box>
   )
 }
-
-type MobileMenuProps = { pages: Page[] }
 
 export default MobileMenu

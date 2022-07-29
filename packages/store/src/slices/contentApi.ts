@@ -21,6 +21,10 @@ function isHydrateAction(action: AnyAction): action is HydrateAction {
 const contentApi = createApi({
   reducerPath: REDUCER_PATH,
 
+  // Content should never be refetched (use highest possible value)
+  // https://github.com/reduxjs/redux-toolkit/issues/2535
+  keepUnusedDataFor: Math.floor((2 ** 31 - 1) / 1000),
+
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_CONTENT_ROOT }),
 
   endpoints: (builder) => ({
