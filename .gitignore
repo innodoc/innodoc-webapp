@@ -4,6 +4,6 @@
 /e2e/screenshots
 /_*.txt
 node_modules
-next-env.d.ts
-.next*
+dist
 **/public/locales/*/*.missing.json
+*.local

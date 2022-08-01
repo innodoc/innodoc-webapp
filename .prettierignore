@@ -1,3 +1,2 @@
 /coverage
-/app/.next*
-/app/.swc
+/dist

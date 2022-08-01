@@ -1,7 +1,6 @@
 module.exports = {
   plugins: ['filenames'],
   rules: {
-    // Allow camelCase.js + PascalCase.js filenames
     'filenames/match-exported': 'error',
     // Allow camelCase.js + PascalCase.js filenames
     'filenames/match-regex': ['error', '^[A-Za-z][a-z0-9]*(?:[A-Z][a-z0-9]*)*(?:[A-Z]?)$', false],
@@ -10,12 +9,16 @@ module.exports = {
   },
   overrides: [
     {
-      files: [
-        '**/+(jest|next|next-i18next|postcss|prettier).config.+(cjs|js)',
-        '**/.eslintrc.cjs',
-        '**/*-env.d.ts',
-      ],
+      files: ['**/+(jest|postcss|prettier).config.+(cjs|js)', '**/.eslintrc.cjs', '**/*-env.d.ts'],
       rules: {
+        'filenames/match-regex': 'off',
+      },
+    },
+
+    {
+      files: ['**/*.d.ts'],
+      rules: {
+        'filenames/match-exported': 'off',
         'filenames/match-regex': 'off',
       },
     },
