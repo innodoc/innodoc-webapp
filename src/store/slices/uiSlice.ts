@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 // import { HYDRATE } from 'next-redux-wrapper'
 
-import type { Locale } from '@innodoc/types'
+import type { Locale } from '@/types/common'
 
 import { RootState } from '../makeStore'
 

@@ -17,7 +17,7 @@ import ThemeToggler from './ThemeToggler'
 
 function UserMenu() {
   // const { t } = useTranslation()
-  const t = (s) => s
+  const t = (s: string): string => s
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const onOpenMenu = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)

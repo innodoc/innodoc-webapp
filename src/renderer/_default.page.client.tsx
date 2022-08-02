@@ -1,12 +1,11 @@
 import createCache from '@emotion/cache'
 import { hydrateRoot } from 'react-dom/client'
-import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client/router'
 
 import makeStore from '@/store/makeStore'
-import type { PageContext } from '@/types/page'
+import type { PageContextClient } from '@/types/page'
 import PageShell from '@/ui/components/PageShell'
 
-function render(pageContext: PageContextBuiltInClient & PageContext) {
+function render(pageContext: PageContextClient) {
   const { Page, pageProps, PRELOADED_STATE } = pageContext
 
   const store = makeStore(PRELOADED_STATE)

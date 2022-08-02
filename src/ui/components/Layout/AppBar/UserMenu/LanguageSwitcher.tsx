@@ -2,16 +2,16 @@
 // import { useRouter } from 'next/router'
 import type { MouseEvent } from 'react'
 
-import { useSelector } from '@/ui/hooks/store'
 import { selectLocale, selectLocales } from '@/store/selectors/ui'
 import { Locale } from '@/types/common'
 import { isNotNull } from '@/types/utils'
+import { useSelector } from '@/ui/hooks/store'
 
 import MenuToggleButtonGroup from '../../../common/MenuToggleButtonGroup'
 
 function LanguageSwitcher() {
   // const { t } = useTranslation()
-  const t = (s) => s
+  const t = (s: string): string => s
   const locale = useSelector(selectLocale)
   const locales = useSelector(selectLocales)
   // const router = useRouter()

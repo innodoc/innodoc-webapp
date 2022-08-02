@@ -2,8 +2,8 @@ import { DarkMode as DarkModeIcon, LightMode as LightModeIcon } from '@mui/icons
 import { PaletteMode } from '@mui/material'
 import { type ElementType, type MouseEvent, useContext } from 'react'
 
-import SwitchableThemeContext from '@/ui/contexts/SwitchableThemeContext'
 import MenuToggleButtonGroup, { type Option } from '@/ui/components/common/MenuToggleButtonGroup'
+import SwitchableThemeContext from '@/ui/contexts/SwitchableThemeContext'
 
 function ThemeIcon({ icon: Icon }: { icon: ElementType }) {
   return <Icon fontSize="small" />

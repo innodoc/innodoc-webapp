@@ -1,0 +1,150 @@
+---
+env:
+  es6: true
+  node: true
+
+ignorePatterns:
+  - '**/coverage'
+  - '**/.cache'
+  - '**/node_modules'
+
+extends:
+  - plugin:import/typescript
+  - plugin:react/recommended
+  - plugin:react/jsx-runtime
+  - plugin:react-hooks/recommended
+  - plugin:react-redux/recommended
+  - plugin:regexp/recommended
+  - plugin:promise/recommended
+  # - plugin:jest/recommended
+  # - plugin:testing-library/react
+  # - plugin:playwright/playwright-test
+  - plugin:prettier/recommended
+
+overrides:
+  # TypeScript sources
+  - files:
+      - '*.ts'
+      - '*.tsx'
+    extends:
+      - plugin:@typescript-eslint/recommended
+      - plugin:@typescript-eslint/recommended-requiring-type-checking
+    parser: '@typescript-eslint/parser'
+    parserOptions:
+      ecmaVersion: 2020
+      project: ./tsconfig.json
+    plugins:
+      - '@typescript-eslint'
+    rules:
+      # https://github.com/typescript-eslint/typescript-eslint/issues/1824
+      '@typescript-eslint/indent': off
+
+      # Warn when using hooks from react-redux directly
+      # https://redux.js.org/usage/usage-with-typescript#use-typed-hooks-in-components
+      no-restricted-imports: off
+      '@typescript-eslint/no-restricted-imports':
+        - warn
+        - name: react-redux
+          importNames:
+            - useSelector
+            - useDispatch
+          message: Use typed hooks `useDispatch` and `useSelector` from `@innodoc/store` instead.
+
+      # TypeScript provides the same checks
+      # https://typescript-eslint.io/docs/linting/troubleshooting#eslint-plugin-import
+      import/named: off
+      import/namespace: off
+      import/default: off
+      import/no-named-as-default-member: off
+
+  # Filename exceptions
+  - files:
+      - '**/+(jest|postcss|prettier).config.+(cjs|js)'
+      - '**/.eslintrc.cjs'
+    rules:
+      filenames/match-regex: off
+  - files:
+      - vite.config.ts
+      - '**/*.d.ts'
+    rules:
+      filenames/match-exported: off
+      filenames/match-regex: off
+
+parser: '@babel/eslint-parser'
+
+parserOptions:
+  requireConfigFile: false
+  babelOptions:
+    babelrc: false
+    configFile: false
+    presets:
+      - '@babel/preset-env'
+
+plugins:
+  - filenames
+  - import
+  - react-redux
+  - jsx-a11y
+  - prettier
+
+root: true
+
+rules:
+  ########### Filenames
+
+  filenames/match-exported: error
+
+  # Allow camelCase.js + PascalCase.js filenames
+  filenames/match-regex:
+    - error
+    - ^[A-Za-z][a-z0-9]*(?:[A-Z][a-z0-9]*)*(?:[A-Z]?)$
+    - false
+
+  # No index files as it makes searching for files horrible
+  filenames/no-index: error
+
+  ########### Imports
+
+  # Setup import order
+  import/order:
+    - error
+    - alphabetize:
+        order: asc
+        caseInsensitive: true
+      groups: [builtin, external, internal, unknown, parent, sibling, index]
+      newlines-between: always
+
+  # Turn on errors for missing imports
+  import/no-unresolved: error
+
+  ########### Jest
+
+  # jest/no-disabled-tests: off
+  # jest/no-focused-tests: error
+  # jest/no-identical-title: error
+  # jest/prefer-to-have-length: warn
+  # jest/valid-expect: error
+
+  ########### Prettier
+
+  prettier/prettier: error
+  arrow-body-style: off
+  prefer-arrow-callback: off
+
+settings:
+  react:
+    version: detect
+
+  ########### Imports
+
+  import/extensions: [.js, .jsx, .ts, .tsx]
+
+  # Mark workspaces as internal for proper import sorting
+  import/internal-regex: '^@/'
+
+  import/parsers:
+    '@typescript-eslint/parser': [.ts, .tsx]
+
+  import/resolver:
+    typescript:
+      project: ./tsconfig.json

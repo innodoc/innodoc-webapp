@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-restricted-imports */
 import {
   type TypedUseSelectorHook,
   useDispatch as useDispatchReactRedux,

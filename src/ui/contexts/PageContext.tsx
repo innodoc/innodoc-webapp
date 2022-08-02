@@ -1,20 +1,38 @@
 import { createContext } from 'react'
 
-import type { PageContext as PageContextType } from '@innodoc/types'
+import type { PageContextClient } from '@/types/page'
 
-const PageContext = createContext<PageContextType>({
+const defaultPageContext: PageContextClient = {
+  exports: {},
+  isHydration: false,
   Page: () => null,
+  pageExports: {},
   pageProps: {},
-})
+  url: '',
+  urlParsed: {
+    hash: '',
+    hashOriginal: null,
+    hashString: null,
+    origin: null,
+    pathname: '',
+    pathnameOriginal: '',
+    search: {},
+    searchAll: {},
+    searchOriginal: null,
+    searchString: null,
+  },
+  urlPathname: '',
+}
 
-function PageContextProvider({
-  pageContext,
-  children,
-}: {
-  pageContext: PageContextType
-  children: React.ReactNode
-}) {
+const PageContext = createContext<PageContextClient>(defaultPageContext)
+
+function PageContextProvider({ pageContext, children }: PageContextProviderProps) {
   return <PageContext.Provider value={pageContext}>{children}</PageContext.Provider>
+}
+
+type PageContextProviderProps = {
+  pageContext: PageContextClient
+  children: React.ReactNode
 }
 
 export { PageContextProvider }
