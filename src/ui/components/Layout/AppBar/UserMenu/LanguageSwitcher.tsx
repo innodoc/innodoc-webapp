@@ -4,7 +4,6 @@ import type { MouseEvent } from 'react'
 
 import { selectLocale, selectLocales } from '@/store/selectors/ui'
 import { Locale } from '@/types/common'
-import { isNotNull } from '@/types/utils'
 import { useSelector } from '@/ui/hooks/store'
 
 import MenuToggleButtonGroup from '../../../common/MenuToggleButtonGroup'
@@ -16,7 +15,7 @@ function LanguageSwitcher() {
   const locales = useSelector(selectLocales)
   // const router = useRouter()
 
-  if (isNotNull(locale)) {
+  if (locale !== null) {
     const onChange = (event: MouseEvent, newLocale: Locale) => {
       if (newLocale !== null) {
         // void router.push({ pathname, query }, asPath, { locale: newLocale })

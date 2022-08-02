@@ -17,7 +17,7 @@ function render(pageContext: PageContextClient) {
   if (emotionInsertionPoint === null) {
     throw new Error('Could not find emotion insertion meta tag.')
   }
-  const emotionCache = createCache({ key: 'mui-style', insertionPoint: emotionInsertionPoint })
+  const emotionCache = createCache({ key: 'emotion-style', insertionPoint: emotionInsertionPoint })
 
   const rootEl = document.getElementById('root')
 

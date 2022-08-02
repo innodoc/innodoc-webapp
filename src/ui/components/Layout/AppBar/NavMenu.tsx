@@ -1,6 +1,11 @@
 import { Button, Stack } from '@mui/material'
 
+import { selectPages } from '@/store/selectors/content'
+import { useSelector } from '@/ui/hooks/store'
+
 function NavMenu() {
+  const pages = useSelector(selectPages)
+
   return (
     <Stack
       direction="row"
@@ -11,7 +16,7 @@ function NavMenu() {
         justifyContent: 'center',
       }}
     >
-      {/* {pages.map(({ id, icon, title }: Page) => (
+      {pages.map(({ id, icon, title }) => (
         <Button
           key={id}
           startIcon={icon}
@@ -22,7 +27,7 @@ function NavMenu() {
         >
           {title}
         </Button>
-      ))} */}
+      ))}
     </Stack>
   )
 }

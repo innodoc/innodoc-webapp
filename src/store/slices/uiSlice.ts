@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-// import { HYDRATE } from 'next-redux-wrapper'
 
 import type { Locale } from '@/types/common'
 
@@ -13,8 +12,6 @@ interface UiSliceState {
   locale: Locale | null
   locales: Locale[]
 }
-
-type HydrateAction = PayloadAction<{ [NAME]: UiSliceState }>
 
 const initialState: UiSliceState = {
   showTocDrawer: false,
@@ -36,15 +33,6 @@ const uiSlice = createSlice({
     toggleTocDrawer(state) {
       state.showTocDrawer = !state.showTocDrawer
     },
-  },
-
-  extraReducers: {
-    // [HYDRATE]: (state, action: HydrateAction) => {
-    //   // Locale is managed by next/router and passed to client store here
-    //   const subState = action.payload[NAME]
-    //   state.locale = subState.locale
-    //   state.locales = subState.locales
-    // },
   },
 })
 

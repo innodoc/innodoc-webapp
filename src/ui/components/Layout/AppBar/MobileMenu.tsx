@@ -10,7 +10,12 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 
+import { selectPages } from '@/store/selectors/content'
+import { useSelector } from '@/ui/hooks/store'
+
 function MobileMenu() {
+  const pages = useSelector(selectPages)
+
   const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
   const onOpenMenu = () => setMenuOpen(true)
@@ -41,11 +46,11 @@ function MobileMenu() {
           <ListItemText>Close</ListItemText>
         </MenuItem>
         <Divider />
-        {/* {pages.map(({ id, title }) => (
+        {pages.map(({ id, title }) => (
           <MenuItem key={id} onClick={onClickMenuItem}>
             <ListItemText>{title}</ListItemText>
           </MenuItem>
-        ))} */}
+        ))}
       </SwipeableDrawer>
     </Box>
   )

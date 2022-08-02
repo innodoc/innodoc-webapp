@@ -3,24 +3,22 @@ import createEmotionServer from '@emotion/server/create-instance'
 import { renderToString } from 'react-dom/server'
 import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr'
 
-import logoUrl from '@/assets/logo.svg'
-import makeStore from '@/store/makeStore'
-import contentApi from '@/store/slices/contentApi'
-import type { PageContextServer } from '@/types/page'
-import PageShell from '@/ui/components/PageShell'
-
 // Material UI font
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
+import logoUrl from '@/assets/logo.svg'
+import makeStore from '@/store/makeStore'
+import type { PageContextServer } from '@/types/page'
+import PageShell from '@/ui/components/PageShell'
+
+import { loadManifest } from './fetchData'
+
 const passToClient = ['PRELOADED_STATE', 'pageProps']
 
 function render({ documentProps, pageHtml, emotionStyleTags }: PageContextServer) {
-  // console.log('emotionStyleTags')
-  // console.log(emotionStyleTags)
-
   const title = (documentProps && documentProps.title) || 'Vite SSR app'
   const desc = (documentProps && documentProps.description) || 'App using Vite + vite-plugin-ssr'
 
@@ -46,10 +44,9 @@ async function onBeforeRender(pageContext: PageContextServer) {
   const { Page } = pageContext
   const pageProps = {}
 
-  const emotionCache = createCache({ key: 'mui-style' })
+  const emotionCache = createCache({ key: 'emotion-style' })
 
-  void store.dispatch(contentApi.endpoints.getManifest.initiate())
-  await Promise.all(contentApi.util.getRunningOperationPromises())
+  await loadManifest(store)
 
   const pageHtml = renderToString(
     <PageShell
