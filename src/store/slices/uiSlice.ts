@@ -10,13 +10,11 @@ const NAME = 'ui'
 interface UiSliceState {
   showTocDrawer: boolean
   locale: Locale | null
-  locales: Locale[]
 }
 
 const initialState: UiSliceState = {
   showTocDrawer: false,
   locale: null,
-  locales: [],
 }
 
 const uiSlice = createSlice({
@@ -25,9 +23,8 @@ const uiSlice = createSlice({
 
   reducers: {
     /** Only dispatched server-side */
-    changeLocale(state, action: PayloadAction<{ locale: Locale; locales: Locale[] }>) {
-      state.locale = action.payload.locale
-      state.locales = action.payload.locales
+    changeLocale(state, action: PayloadAction<Locale>) {
+      state.locale = action.payload
     },
 
     toggleTocDrawer(state) {

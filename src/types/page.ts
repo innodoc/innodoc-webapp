@@ -1,13 +1,15 @@
 import type { PageContextBuiltIn } from 'vite-plugin-ssr'
 import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client/router'
 
-import { RootState } from '@/store/makeStore'
+import type { RootState } from '@/store/makeStore'
+
+import type { Locale } from './common'
 
 export type PageProps = Record<string, never>
 
 /** Custom client-side page context. */
 export type PageContextClient = Omit<PageContextBuiltInClient, 'Page'> &
-  Pick<PageContextServer, 'documentProps' | 'Page' | 'pageProps' | 'PRELOADED_STATE'>
+  Pick<PageContextServer, 'documentProps' | 'locale' | 'Page' | 'pageProps' | 'PRELOADED_STATE'>
 
 /** Custom server-side page context. */
 export type PageContextServer = Omit<PageContextBuiltIn, 'Page'> & {
@@ -27,6 +29,9 @@ export type PageContextServer = Omit<PageContextBuiltIn, 'Page'> & {
     /** Page description. */
     description?: string
   }
+
+  /** Current locale. */
+  locale: Locale
 
   Page: PageComponent
 

@@ -1,0 +1,322 @@
+{
+  "common": {
+    "account": "Konto",
+    "hideToc": "Inhaltsverzeichnis schließen",
+    "home": "Zurück zu Home",
+    "language": "Sprache",
+    "ok": "OK",
+    "sectionTypes": {
+      "exercises": "Aufgaben",
+      "test": "Test"
+    },
+    "showToc": "Inhaltsverzeichnis öffnen",
+    "toc": "Inhaltsverzeichnis"
+  },
+  "content": {
+    "example": "Beispiel",
+    "exercise": {
+      "reset": "Reset",
+      "title": "Aufgabe",
+      "verify": "Eingabe kontrollieren"
+    },
+    "exerciseRoulette": {
+      "counter": "{{num}} von {{total}}",
+      "next": "Nächste Aufgabe zeigen",
+      "prev": "Vorherige Aufgabe zeigen"
+    },
+    "hint": "Hinweis",
+    "home": "Start",
+    "info": "Info",
+    "inputHint": "Hilfe zur Eingabe",
+    "noHtml5Video": "Dein Browser unterstützt kein HTML5-Video. Hier is ein <a href=\"{{src}}\">Link zum Video</a>.",
+    "subsections": "Unterabschnitte",
+    "test": {
+      "actions": {
+        "reset": "Test löschen und neu starten",
+        "submit": "Test auswerten"
+      },
+      "introduction": {
+        "item1": "Im Gegensatz zu den offenen Aufgaben werden beim Eingeben keine Hinweise zur Formulierung der mathematischen Ausdrücke gegeben.",
+        "item2": "Der Test kann jederzeit neu gestartet oder verlassen werden.",
+        "item3": "Der Test kann durch die Buttons am Ende der Seite beendet und abgeschickt, oder zurückgesetzt werden.",
+        "item4": "Der Test kann mehrfach probiert werden. Für die Statistik zählt die zuletzt abgeschickte Version.",
+        "title": "Dies ist ein einreichbarer Test."
+      },
+      "resultText": {
+        "notSubmitted": "Der Test kann abgeschickt werden, wenn mindestens eine Aufgabe bearbeitet wurde.",
+        "submitted": "Der Test wurde abgeschickt. Er kann jedoch noch bearbeitet und erneut eingereicht werden."
+      },
+      "resultTitle": {
+        "notSubmitted": "Der Test wurde noch nicht abgeschickt.",
+        "submitted": "Im Test wurden <1>{{score}}</1> von <3>{{total}}</3> Punkten erreicht."
+      }
+    },
+    "ytIdError": "Konnte YouTube-Video-ID nicht extrahieren: {{src}}"
+  },
+  "emails": {
+    "emailVerification": {
+      "subject": "Konto erstellt: Bitte bestätige Deine E-Mail-Adresse",
+      "text": "Ein neues Konto wurde erstellt. Bitte verifiziere Deine E-Mail-Adresse, indem Du auf folgenden Link klickst:\n{{verificationLink}}"
+    },
+    "passwordReset": {
+      "subject": "Zurücksetzung des Passworts angefordert",
+      "text": "Die Zurücksetzung Deines Passworts wurde angefordert. Du kannst ein neues Passwort wählen, indem Du auf den folgenden Link klickst:\n{{passwordResetLink}}\nBitte ignoriere diese Nachricht, falls Du die Zurücksetzung des Passworts nicht angefordert hast."
+    }
+  },
+  "errorPage": {
+    "404": {
+      "title": "404 Not found",
+      "msg": "Diese Seite konnte nicht gefunden werden."
+    },
+    "unspecific": {
+      "title": "Fehler",
+      "msg": "Leider ist etwas schief gelaufen."
+    }
+  },
+  "dataProtectionConsent": {
+    "cookies": {
+      "text": "Diese Website verwendet ausschließlich funktionale Cookies. Diese speichern keine persönlich identifizierenden Informationen. Beispiele für die Verwendung von Cookies sind Sitzungsauthentifizierung oder Sprachpräferenz. Cookies von Drittanbietern werden nicht verwendet.",
+      "title": "Cookies"
+    },
+    "dataProtection": {
+      "text": "Diese Website arbeitet nach dem Prinzip der Datensparsamkeit. Persönlich identifizierende Informationen werden nur erfasst und gespeichert, falls absolut notwending. Im Falle einer Kontoerstellung wird eine E-Mail-Adresse gespeichert, die zum Anmelden sowie zum Zurücksetzen des Kennwortes verwendet wird. Daten werden nicht mit Dritten geteilt.",
+      "title": "Persönliche Daten"
+    },
+    "text": "Um diese Website nutzen zu können, müssen die Richtlinien zum Datenschutz und zur Verwendung von Cookies bestätigt werden.",
+    "title": "Cookies und Verwendung persönlicher Daten"
+  },
+  "header": {
+    "downloadPDF": "PDF",
+    "downloadPDFTitle": "PDF herunterladen",
+    "forum": "Forum",
+    "forumTitle": "Diskussionsforum",
+    "menu": "Menü",
+    "openUserMenu": "Nutzermenü",
+    "searchPlaceholder": "Suche…"
+  },
+  "index": {
+    "emptyText": "Keine Stichwörter gefunden!",
+    "searchPlaceholder": "Stichwort suchen…",
+    "title": "Stichwortverzeichnis"
+  },
+  "languages": {
+    "de": "Deutsch",
+    "en": "English"
+  },
+  "userMessage": {
+    "levels": {
+      "error": "Fehler!",
+      "success": "Erfolg!"
+    },
+    "types": {
+      "deleteAccountSuccess": {
+        "text": "Das Konto wurde inklusive aller persönlichen Daten erfolgreich gelöscht.",
+        "title": "Konto gelöscht!"
+      },
+      "loadManifestFailure": {
+        "text": "Konnte Kurs-Manifest nicht laden. Die Fehlermeldung war:",
+        "title": "Laden des Manifests fehlgeschlagen!"
+      },
+      "loadSectionFailure": {
+        "text": "Konnte Abschnitt nicht laden. Die Fehlermeldung war:",
+        "title": "Laden des Abschnitts fehlgeschlagen!"
+      },
+      "registerUserSuccess": {
+        "text": "Ein neues Benutzerkonto wurde angelegt. Bitte checke Dein E-Mail-Postfach und bestätige die Aktivierungsmail, um das Konto zu nutzen.",
+        "title": "Konto erstellt!"
+      }
+    }
+  },
+  "questions": {
+    "feedback": {
+      "correct-answer": "Dies ist eine richtige Lösung.",
+      "exact-fraction": {
+        "denominator-not-integer": "Nenner soll ganze Zahl sein.",
+        "denominator-not-positive": "Nenner soll positiv sein.",
+        "fraction-not-reduced": "Bruch soll maximal gekürzt sein.",
+        "numerator-not-integer": "Zähler soll ganze Zahl sein.",
+        "only-integer": "Nur ganze Zahl erlaubt."
+      },
+      "incorrect-interval": "Falsches Intervall",
+      "incorrect-solution-set": "Falsche Lösungsmenge",
+      "incorrect-value": "Falscher Wert",
+      "malformed-input": "Die Form der Eingabe ist fehlerhaft.",
+      "simplification": {
+        "abs": "<1>{{need}}</1> anstatt <4>{{got}}</4>",
+        "backslash": "Backslash-Notation verwendet.",
+        "case-differentiation-required": "Betragsstriche sollen durch eine Fallunterscheidung geschrieben werden.",
+        "exp": "<1>{{need}}</1> anstatt <4>{{got}}</4>",
+        "exponentiation-not-combined": "Potenzen sind nicht zusammengefasst.",
+        "fraction-not-combined": "Bruch ist nicht zusammengefasst.",
+        "natural-number-required": "Soll eine natürliche Zahl sein.",
+        "no-denominator-or-exponentiation": "Darf keine Nenner oder Potenzen enthalten.",
+        "product-brackets": "<1>{{need}}</1> anstatt <4>{{got}}</4>",
+        "product-form": "Produkte in Form <1>{{need}}</1> statt <4>{{got}}</4>.",
+        "resolve-denominators-and-factors": "Nenner und Faktoren sollen aufgelöst werden.",
+        "roots-as-exponents": "Wurzeln sollen als Exponenten geschrieben werden.",
+        "solution-not-simplified": "Lösung ist nicht vereinfacht."
+      },
+      "still-incorrect-answer": "Eingabe ist noch nicht richtig."
+    },
+    "feedbackIcon": {
+      "correct": "Richtig",
+      "incorrect": "Falsch"
+    }
+  },
+  "progress": {
+    "title": "Fortschritt",
+    "titleLong": "Eigenen Fortschritt zeigen",
+    "chapter": "Kapitel",
+    "chapterComplete": "Abgeschlossen",
+    "introduction": {
+      "description": "Der Bearbeitungsstand der Kursmodule wird aufgrund der bearbeiteten Übungsaufgaben sowie der Ergebnisse der Abschlusstests gemessen. Der Kurs gilt als erfolgreich absolviert, wenn sämtliche Abschlusstests mit mindestens {{minScore}} % der Punkte bestanden wurden.",
+      "message": "Bewertung"
+    },
+    "pieCharts": {
+      "exercises": {
+        "description": "<1>{{value}}</1> von <3>{{total}}</3> Punkte erreicht.",
+        "title": "Aufgaben",
+        "titleDisabled": "Keine Aufgaben"
+      },
+      "finalTest": {
+        "description": "<1>{{value}}</1> von <3>{{total}}</3> Punkte erreicht.",
+        "title": "Abschlusstest",
+        "titleDisabled": "Keine Abschlusstest"
+      },
+      "moduleUnits": {
+        "description": "<1>{{value}}</1> von <3>{{total}}</3> besucht.",
+        "title": "Lerneinheiten"
+      }
+    }
+  },
+  "user": {
+    "changePassword": {
+      "error": {
+        "description": "Dein Passwort konnte nicht geändert werden.<1></1><2>Ich habe mein Passwort vergessen</2>",
+        "message": "Ändern des Passworts fehlgeschlagen!"
+      },
+      "newPassword": "Neues Passwort",
+      "oldPassword": "Altes Passwort",
+      "submit": "Passwort ändern",
+      "success": {
+        "description": "Dein Passwort wurde erfolgreich geändert.",
+        "message": "Passwort geändert."
+      },
+      "title": "Password ändern"
+    },
+    "confirmPassword": "Passwort bestätigen",
+    "deleteAccount": {
+      "error": {
+        "description": "Das Konto konnte leider nicht gelöscht werden. Bitte beim Support melden.",
+        "message": "Löschung des Kontos fehlgeschlagen!"
+      },
+      "hint": "Zum Fortfahren bitte Passwort eingeben und bestätigen.",
+      "title": "Konto löschen",
+      "submit": "Konto unwiderruflich löschen",
+      "warning": {
+        "description": "Sobald das Konto gelöscht ist, kann es nicht mehr reaktiviert werden. Alle persönlichen Daten einschließlich E-Mail und Fortschritte werden von unseren Servern entfernt.",
+        "message": "Die Löschung des Kontos ist endgültig!"
+      }
+    },
+    "email": "E-Mail",
+    "emailValidation": {
+      "alreadyUsed": "Diese E-Mail-Adresse wird schon von einem anderen Konto verwendet!",
+      "invalid": "Bitte gültige E-Mail eintragen!",
+      "missing": "Bitte E-Mail eintragen!"
+    },
+    "login": {
+      "error": {
+        "description": "Bitte E-Mail und Passwort überprüfen.<1></1><2>Ich habe mein Passwort vergessen</2><3></3><4></4>Bevor Du Dich anmelden kannst, musst du den Link in der Bestätigungsmail aufrufen.<6></6><7>Bestätigungsmail erneut anfordern</7>",
+        "message": "Anmeldung fehlgeschlagen!"
+      },
+      "orCreateAccount": "oder <1>neues Konto erstellen</1>.",
+      "signIn": "Anmelden",
+      "success": {
+        "description": "Deine Ergebnisse werden auf dem Server gespeichert.",
+        "message": "Die Anmeldung war erfolgreich."
+      },
+      "title": "Login"
+    },
+    "logout": {
+      "errorMessage": "Abmelden fehlgeschlagen!",
+      "pendingMessage": "Abmelden…",
+      "successMessage": "Du wurdest abgemeldet.",
+      "title": "Abmelden"
+    },
+    "registration": {
+      "createAccount": "Konto erstellen",
+      "error": {
+        "description": "Leider konnte die Registrierung nicht abgeschlossen werden. Fehlermeldung:",
+        "message": "Registrierung fehlgeschlagen!"
+      },
+      "orLogin": "oder <1>melde Dich an</1> wenn Du schon ein Konto hast.",
+      "title": "Konto erstellen"
+    },
+    "requestPasswordReset": {
+      "error": {
+        "description": "Die eingegebene E-Mail-Adresse konnte nicht gefunden werden.",
+        "message": "Fehler!"
+      },
+      "success": {
+        "description": "Du wirst in Kürze eine E-Mail mit weiteren Informationen zum Zurücksetzen des Passworts erhalten.",
+        "message": "E-Mail zum Zurücksetzen des Passworts versandt."
+      },
+      "title": "Passwort zurücksetzen"
+    },
+    "password": "Passwort",
+    "passwordValidation": {
+      "confirm": "Bitte Passwort bestätigen!",
+      "digits": "Das Passwort muss mindestens eine Ziffer enthalten!",
+      "lowercase": "Das Passwort muss mindestens einen Kleinbuchstaben enthalten!",
+      "max": "Das Passwort darf höchstens {{max}} Zeichen lang sein!",
+      "min": "Das Passwort muss mindestens {{min}} Zeichen lang sein!",
+      "mismatch": "Beide Passwörter müssen übereinstimmen!",
+      "missing": "Bitte Passwort eintragen!",
+      "spaces": "Das Passwort darf keine Leerzeichen enthalten!",
+      "symbols": "Das Passwort muss mindestens ein Sonderzeichen enthalten!",
+      "uppercase": "Das Passwort muss mindestens einen Großbuchstaben enthalten!"
+    },
+    "request": "Anfordern",
+    "requestVerification": {
+      "error": {
+        "description": "Die angegebene E-Mail konnte nicht gefunden werden.",
+        "message": "Bestätigungsmail wurde nicht verschickt!"
+      },
+      "success": {
+        "description": "Eine neue Bestätigungsmail wurde verschickt. Bitte checke Dein E-Mail-Postfach und bestätige die Aktivierungsmail, um das Konto zu nutzen.",
+        "message": "Bestätigungsmail wurde verschickt."
+      },
+      "title": "Bestätigungsmail anfordern"
+    },
+    "resetPassword": {
+      "error": {
+        "description": "Das neue Passwort konnte nicht gesetzt werden.",
+        "message": "Fehler!"
+      },
+      "submit": "Neues Passwort setzen",
+      "success": {
+        "description": "Das neue Passwort wurde erfolgreich gesetzt. Du kannst Dich jetzt mit dem neuen Passwort <2>anmelden</2>.",
+        "message": "Neues Passwort wurde gesetzt."
+      },
+      "title": "Neues Passwort setzen"
+    },
+    "verification": {
+      "error": {
+        "subTitle": "Dein neues Konto konnte nicht aktiviert werden.",
+        "title": "Aktivierung fehlgeschlagen!"
+      },
+      "pending": {
+        "subTitle": "Dein neues Konto wird nun aktiviert. Bitte warten…",
+        "title": "Aktivierung Deines Kontos"
+      },
+      "success": {
+        "subTitle": "Dein neues Konto wurde erfolgreich aktiviert und kann nun genutzt werden.",
+        "title": "Konto aktiviert"
+      }
+    }
+  },
+  "useRequireLogin": {
+    "title": "Nicht eingeloggt.",
+    "text": "Um diese Seite zu sehen, musst Du eingeloggt sein."
+  }
+}

@@ -11,8 +11,7 @@ const reducer = {
 
 function makeStore(preloadedState?: PreloadedState<RootState>) {
   return configureStore({
-    // devTools: import.meta.env.MODE === 'development',
-    devTools: true,
+    devTools: import.meta.env.MODE === 'development',
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(contentApi.middleware),
     preloadedState,
     reducer,
