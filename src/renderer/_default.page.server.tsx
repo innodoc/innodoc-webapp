@@ -62,6 +62,10 @@ async function onBeforeRender(pageContext: PageContextServer) {
 
   // Check if locale is valid
   const locales = selectLocales(store.getState())
+  if (locales.length < 1) {
+    throw RenderErrorPage({ pageContext: { errorMsg: 'Could not retrieve course locales!' } })
+  }
+
   if (!locales.includes(locale)) {
     throw RenderErrorPage({ pageContext: { is404: true } })
   }

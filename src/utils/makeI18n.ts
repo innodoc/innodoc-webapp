@@ -17,8 +17,10 @@ async function makeI18n(
   currentLocale: Locale,
   store: Store
 ) {
-  // i18next is used as a singleton
+  // i18next is used as a singleton. Thus we're using the same instance while
+  // prerendering
   if (i18next.isInitialized) {
+    store.dispatch(changeLocale(i18next.language))
     return i18next
   }
 

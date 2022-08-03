@@ -1,13 +1,10 @@
 import { PageContextServer } from '@/types/page'
 import { extractLocale } from '@/utils/locales'
 
-const isBrowser = typeof window !== 'undefined'
-
 function onBeforeRoute(pageContext: PageContextServer) {
-  // URL is evaluated on server, the client has the extracted locale already
-  if (!isBrowser) {
+  // URL is evaluated on the server only, the client has the hydrated result already
+  if (import.meta.env.SSR) {
     const { urlWithoutLocale, locale } = extractLocale(pageContext.url)
-
     return {
       pageContext: {
         locale,
