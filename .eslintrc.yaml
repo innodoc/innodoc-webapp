@@ -4,8 +4,9 @@ env:
   node: true
 
 ignorePatterns:
-  - '**/coverage'
   - '**/.cache'
+  - '**/coverage'
+  - '**/dist'
   - '**/node_modules'
 
 extends:

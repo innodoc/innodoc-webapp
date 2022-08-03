@@ -2,7 +2,7 @@
 overrides:
   # Ignore vite-plugin-ssr special files
   - files:
-      - pages/**/*.tsx
+      - pages/**/*.+(ts|tsx)
       - renderer/_+(default|error).page*.+(ts|tsx)
     rules:
       filenames/match-exported: off
