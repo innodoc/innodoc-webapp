@@ -1,11 +1,10 @@
+import type { ElementType } from 'react'
 import type { PageContextBuiltIn } from 'vite-plugin-ssr'
 import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client/router'
 
 import type { RootState } from '@/store/makeStore'
 
 import type { Locale } from './common'
-
-export type PageProps = Record<string, never>
 
 /** Custom client-side page context. */
 export type PageContextClient = Omit<PageContextBuiltInClient, 'Page'> &
@@ -33,10 +32,9 @@ export type PageContextServer = Omit<PageContextBuiltIn, 'Page'> & {
   /** Current locale. */
   locale: Locale
 
-  Page: PageComponent
+  /** Page component */
+  Page: ElementType
 
-  pageProps: PageProps
+  /** Props to pass to page component. */
+  pageProps: Record<string, unknown>
 }
-
-/** The `export { Page }` of `.page.js` file. */
-type PageComponent = (pageProps: PageProps) => React.ReactElement | null

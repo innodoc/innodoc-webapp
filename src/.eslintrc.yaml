@@ -1,19 +1,8 @@
 ---
 overrides:
-  # Page routing naming convenction
-  - files:
-      - pages/**/*.tsx
-    rules:
-      filenames/match-exported:
-        - error
-        - kebab
-      filenames/match-regex:
-        - error
-        - ^[a-z-]+\.page$
-        - false
-
   # Ignore vite-plugin-ssr special files
   - files:
+      - pages/**/*.tsx
       - renderer/_+(default|error).page*.+(ts|tsx)
     rules:
       filenames/match-exported: off

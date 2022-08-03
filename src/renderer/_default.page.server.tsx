@@ -54,18 +54,18 @@ function render({ documentProps, pageHtml, emotionStyleTags }: PageContextServer
 
 async function onBeforeRender(pageContext: PageContextServer) {
   const store = makeStore()
-  const { locale, Page } = pageContext
-  const pageProps = {}
+  const { locale, Page, pageProps } = pageContext
 
   // Fetch course manifest
   await loadManifest(store)
 
-  // Check if locale is valid
+  // Assert we received locales from manifest
   const locales = selectLocales(store.getState())
   if (locales.length < 1) {
     throw RenderErrorPage({ pageContext: { errorMsg: 'Could not retrieve course locales!' } })
   }
 
+  // Check if locale is valid
   if (!locales.includes(locale)) {
     throw RenderErrorPage({ pageContext: { is404: true } })
   }
@@ -74,7 +74,7 @@ async function onBeforeRender(pageContext: PageContextServer) {
   const emotionCache = createCache({ key: 'emotion-style' })
 
   // Initialize i18next
-  const i18n = await makeI18n(I18NextFsBackend, i18nBackendOpts, pageContext.locale, store)
+  const i18n = await makeI18n(I18NextFsBackend, i18nBackendOpts, locale, store)
 
   // Render page
   const pageHtml = renderToString(
@@ -99,10 +99,11 @@ async function onBeforeRender(pageContext: PageContextServer) {
 
   return {
     pageContext: {
+      emotionStyleTags,
       pageHtml,
       pageProps,
       PRELOADED_STATE,
-      emotionStyleTags,
+      store,
     },
   }
 }

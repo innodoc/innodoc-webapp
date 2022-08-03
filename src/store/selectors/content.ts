@@ -1,8 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-import { LocalizedString } from '@/types/common'
-
-import { selectManifest } from '../slices/contentApi'
+import { selectManifest } from '@/store/slices/contentApi'
+import type { Page } from '@/types/api'
+import type { LocalizedString } from '@/types/common'
 
 import { selectLocale } from './ui'
 
@@ -38,4 +38,10 @@ export const selectPages = createSelector(
       title: translate(page.title),
     }))
   }
+)
+
+/** Select page. */
+export const selectPageById = createSelector(
+  [selectPages, (_, pageId: Page['id']) => pageId],
+  (pages, pageId) => pages.find((page) => page.id === pageId)
 )
