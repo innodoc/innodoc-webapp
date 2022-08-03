@@ -1,42 +1,82 @@
-import createCache from '@emotion/cache'
+import createCache, { type EmotionCache } from '@emotion/cache'
+import type { i18n as I18nInstance } from 'i18next'
 import I18NextHttpBackend from 'i18next-http-backend'
-import { hydrateRoot } from 'react-dom/client'
+import { hydrateRoot, type Root } from 'react-dom/client'
 
-import makeStore from '@/store/makeStore'
+import makeStore, { type Store } from '@/store/makeStore'
 import type { PageContextClient } from '@/types/page'
 import PageShell from '@/ui/components/PageShell'
-import makeI18n from '@/utils/makeI18n'
+import getI18n from '@/utils/getI18n'
 
 const i18nBackendOpts = { loadPath: import.meta.env.BASE_URL + 'locales/{{lng}}/{{ns}}.json' }
 
-async function render(pageContext: PageContextClient) {
-  const { Page, pageProps, PRELOADED_STATE } = pageContext
+// ReactDom root
+let root: Root
 
-  const store = makeStore(PRELOADED_STATE)
+// root DOM node
+let rootEl: HTMLElement
 
-  // Initialize i18next
-  const i18n = await makeI18n(I18NextHttpBackend, i18nBackendOpts, pageContext.locale, store)
+// Redux store
+let store: Store
 
-  // Client-side cache, shared for the whole session of the user in the browser.
+// i18n instance
+let i18n: I18nInstance
+
+// Emotion cache
+let emotionCache: EmotionCache
+
+function createEmotionCache() {
   const emotionInsertionPoint = document.querySelector<HTMLMetaElement>(
     'meta[name="emotion-insertion-point"]'
   )
   if (emotionInsertionPoint === null) {
     throw new Error('Could not find emotion insertion meta tag.')
   }
-  const emotionCache = createCache({ key: 'emotion-style', insertionPoint: emotionInsertionPoint })
+  return createCache({ key: 'emotion-style', insertionPoint: emotionInsertionPoint })
+}
 
-  // Hydrate app
-  const rootEl = document.getElementById('root')
-  if (rootEl === null) {
-    throw new Error('Could not hydrate. Root container not found!')
+function findRootElement() {
+  if (rootEl === undefined) {
+    const elem = document.getElementById('root')
+    if (elem === null) {
+      throw new Error('React root element not found!')
+    }
+    rootEl = elem
   }
-  hydrateRoot(
-    rootEl,
+}
+
+async function render(pageContext: PageContextClient) {
+  const { locale, Page, pageProps, PRELOADED_STATE } = pageContext
+
+  findRootElement()
+
+  // Initialize store
+  if (store === undefined) {
+    store = makeStore(PRELOADED_STATE)
+  }
+
+  // Get i18next instance
+  if (i18n === undefined) {
+    i18n = await getI18n(I18NextHttpBackend, i18nBackendOpts, locale, store)
+  }
+
+  // Create Emotion cache
+  if (emotionCache === undefined) {
+    emotionCache = createEmotionCache()
+  }
+
+  const page = (
     <PageShell emotionCache={emotionCache} i18n={i18n} pageContext={pageContext} store={store}>
       <Page {...pageProps} />
     </PageShell>
   )
+
+  if (pageContext.isHydration) {
+    root = hydrateRoot(rootEl, page)
+  } else {
+    // Client-side user navigation
+    root.render(page)
+  }
 }
 
 export { render }

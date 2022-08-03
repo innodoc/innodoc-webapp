@@ -18,7 +18,7 @@ import makeStore from '@/store/makeStore'
 import { selectLocales } from '@/store/selectors/content'
 import type { PageContextServer } from '@/types/page'
 import PageShell from '@/ui/components/PageShell'
-import makeI18n from '@/utils/makeI18n'
+import getI18n from '@/utils/getI18n'
 
 import { loadManifest } from './fetchData'
 
@@ -74,7 +74,7 @@ async function onBeforeRender(pageContext: PageContextServer) {
   const emotionCache = createCache({ key: 'emotion-style' })
 
   // Initialize i18next
-  const i18n = await makeI18n(I18NextFsBackend, i18nBackendOpts, locale, store)
+  const i18n = await getI18n(I18NextFsBackend, i18nBackendOpts, locale, store)
 
   // Render page
   const pageHtml = renderToString(

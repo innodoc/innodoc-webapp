@@ -24,7 +24,6 @@ async function startServer() {
       app.use(sirv(distDir))
     } catch (err) {
       if (isErrnoException(err) && err.code === 'ENOENT') {
-        console.error(`Build not found in ${distDir}. Did you forget to build?`)
         process.exit(-1)
       }
       throw err

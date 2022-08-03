@@ -9,15 +9,14 @@ import {
   MenuItem,
   Tooltip,
 } from '@mui/material'
-// import { useTranslation } from 'next-i18next'
 import { MouseEvent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-// import LanguageSwitcher from './LanguageSwitcher'
+import LanguageSwitcher from './LanguageSwitcher'
 import ThemeToggler from './ThemeToggler'
 
 function UserMenu() {
-  // const { t } = useTranslation()
-  const t = (s: string): string => s
+  const { t } = useTranslation()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const onOpenMenu = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)
@@ -53,7 +52,7 @@ function UserMenu() {
           horizontal: 'right',
         }}
       >
-        {/* <LanguageSwitcher /> */}
+        <LanguageSwitcher />
         <ThemeToggler />
         <Divider sx={{ mt: 0.7 }} />
         <MenuItem>

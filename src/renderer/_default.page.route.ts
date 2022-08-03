@@ -1,20 +1,17 @@
 import { PageContextServer } from '@/types/page'
 import { extractLocale } from '@/utils/locales'
 
+// Save extracted locale in pageContext (client and server)
 function onBeforeRoute(pageContext: PageContextServer) {
-  // URL is evaluated on the server only, the client has the hydrated result already
-  if (import.meta.env.SSR) {
-    const { urlWithoutLocale, locale } = extractLocale(pageContext.url)
-    return {
-      pageContext: {
-        locale,
-        // Overwrite original URL
-        url: urlWithoutLocale,
-      },
-    }
-  }
+  const { urlWithoutLocale, locale } = extractLocale(pageContext.url)
 
-  return undefined
+  return {
+    pageContext: {
+      locale,
+      // Overwrite original URL
+      url: urlWithoutLocale,
+    },
+  }
 }
 
 export { onBeforeRoute }

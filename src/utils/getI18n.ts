@@ -11,16 +11,18 @@ const isBrowser = typeof window !== 'undefined'
 
 const NAMESPACE = 'common'
 
-async function makeI18n(
+async function getI18n(
   backend: Parameters<i18n['use']>[0],
   backendOpts: Record<string, unknown>,
   currentLocale: Locale,
   store: Store
 ) {
-  // i18next is used as a singleton. Thus we're using the same instance while
-  // prerendering
+  // i18next as a singleton is reused. Just load translations and update store.
   if (i18next.isInitialized) {
-    store.dispatch(changeLocale(i18next.language))
+    if (i18next.language !== currentLocale) {
+      await i18next.changeLanguage(currentLocale)
+    }
+    store.dispatch(changeLocale(currentLocale))
     return i18next
   }
 
@@ -52,4 +54,4 @@ async function makeI18n(
   return i18next
 }
 
-export default makeI18n
+export default getI18n

@@ -1,23 +1,25 @@
-// import { useTranslation } from 'next-i18next'
-// import { useRouter } from 'next/router'
-import type { MouseEvent } from 'react'
+import { type MouseEvent } from 'react'
+import { useTranslation } from 'react-i18next'
+import { navigate } from 'vite-plugin-ssr/client/router'
 
-import { selectLocale, selectLocales } from '@/store/selectors/ui'
+import { selectLocales } from '@/store/selectors/content'
+import { selectLocale } from '@/store/selectors/ui'
 import { Locale } from '@/types/common'
+import MenuToggleButtonGroup from '@/ui/components/common/MenuToggleButtonGroup'
 import { useSelector } from '@/ui/hooks/store'
 
-import MenuToggleButtonGroup from '../../../common/MenuToggleButtonGroup'
-
 function LanguageSwitcher() {
-  // const { t } = useTranslation()
-  const t = (s: string): string => s
+  const { t } = useTranslation()
   const locale = useSelector(selectLocale)
   const locales = useSelector(selectLocales)
-  // const router = useRouter()
 
   if (locale !== null) {
     const onChange = (event: MouseEvent, newLocale: Locale) => {
       if (newLocale !== null) {
+        void navigate(`/de/page/about`, {
+          keepScrollPosition: true,
+          overwriteLastHistoryEntry: true,
+        })
         // void router.push({ pathname, query }, asPath, { locale: newLocale })
       }
     }
