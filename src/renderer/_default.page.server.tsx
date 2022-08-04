@@ -18,7 +18,7 @@ import makeStore from '@/store/makeStore'
 import { selectLocales } from '@/store/selectors/content'
 import { changeLocale, changeUrlWithoutLocale } from '@/store/slices/uiSlice'
 import type { PageContextServer } from '@/types/page'
-import PageShell from '@/ui/components/PageShell'
+import PageShell from '@/ui/components/PageShell/PageShell'
 import getI18n from '@/utils/getI18n'
 
 import { loadManifest } from './fetchData'

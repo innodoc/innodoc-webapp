@@ -34,7 +34,7 @@ type MenuToggleButtonGroupProps = {
   onChange: (event: MouseEvent<HTMLElement>, value: string) => void
   options: Option[]
   tooltipText: string
-  value: string
+  value: string | null
 }
 
 export type Option = {

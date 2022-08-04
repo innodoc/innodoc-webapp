@@ -1,10 +1,12 @@
 import { DarkMode as DarkModeIcon, LightMode as LightModeIcon } from '@mui/icons-material'
-import { PaletteMode } from '@mui/material'
-import { type ElementType, type MouseEvent, useContext } from 'react'
+import type { PaletteMode } from '@mui/material'
+import { type ElementType, type MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { selectTheme } from '@/store/selectors/ui'
+import { changeTheme } from '@/store/slices/uiSlice'
 import MenuToggleButtonGroup, { type Option } from '@/ui/components/common/MenuToggleButtonGroup'
-import SwitchableThemeContext from '@/ui/contexts/SwitchableThemeContext'
+import { useDispatch, useSelector } from '@/ui/hooks/store'
 
 function ThemeIcon({ icon: Icon }: { icon: ElementType }) {
   return <Icon fontSize="small" />
@@ -12,11 +14,12 @@ function ThemeIcon({ icon: Icon }: { icon: ElementType }) {
 
 function ThemeToggler() {
   const { t } = useTranslation()
-  const { paletteMode, setPaletteMode } = useContext(SwitchableThemeContext)
+  const dispatch = useDispatch()
+  const selectedTheme = useSelector(selectTheme)
 
-  const onChange = (event: MouseEvent, newPaletteMode: string) => {
-    if (newPaletteMode !== null) {
-      setPaletteMode(newPaletteMode as PaletteMode)
+  const onChange = (event: MouseEvent, newTheme: string | null) => {
+    if (newTheme !== null) {
+      dispatch(changeTheme(newTheme as PaletteMode))
     }
   }
 
@@ -38,7 +41,7 @@ function ThemeToggler() {
       onChange={onChange}
       options={options}
       tooltipText={t('common.theme.switch')}
-      value={paletteMode}
+      value={selectedTheme}
     />
   )
 }

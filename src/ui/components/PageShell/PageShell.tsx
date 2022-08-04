@@ -8,14 +8,18 @@ import { Provider as ReduxProvider } from 'react-redux'
 import type { Store } from '@/store/makeStore'
 import Layout from '@/ui/components/Layout/Layout'
 
+import ThemeProvider from './ThemeProvider'
+
 function PageShell({ children, emotionCache, i18n, store }: PageShellProps) {
   return (
     <StrictMode>
       <CacheProvider value={emotionCache}>
         <ReduxProvider store={store}>
           <I18nextProvider i18n={i18n}>
-            <CssBaseline />
-            <Layout>{children}</Layout>
+            <ThemeProvider>
+              <CssBaseline />
+              <Layout>{children}</Layout>
+            </ThemeProvider>
           </I18nextProvider>
         </ReduxProvider>
       </CacheProvider>
