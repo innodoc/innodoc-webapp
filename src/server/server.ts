@@ -4,6 +4,8 @@ import compression from 'compression'
 import express, { type RequestHandler } from 'express'
 import { renderPage } from 'vite-plugin-ssr'
 
+import { extractLocale } from '../utils/locales'
+
 import { isErrnoException } from './types'
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -40,10 +42,17 @@ async function startServer() {
 
   app.get('*', (async (req, res, next) => {
     const url = req.originalUrl
-    const pageContextInit = { url }
+
+    // Extract locale from URL
+    const { locale, urlWithoutLocale } = extractLocale(url)
+    const pageContextInit = { locale, url: urlWithoutLocale }
+
     const pageContext = await renderPage(pageContextInit)
     const { httpResponse } = pageContext
-    if (!httpResponse) return next()
+
+    if (!httpResponse) {
+      return next()
+    }
     const { body, statusCode, contentType } = httpResponse
     return res.status(statusCode).type(contentType).send(body)
   }) as RequestHandler) // workaround until https://github.com/DefinitelyTyped/DefinitelyTyped/issues/50871 is resolved

@@ -16,6 +16,7 @@ import '@fontsource/roboto/700.css'
 import logoUrl from '@/assets/logo.svg'
 import makeStore from '@/store/makeStore'
 import { selectLocales } from '@/store/selectors/content'
+import { changeLocale, changeUrlWithoutLocale } from '@/store/slices/uiSlice'
 import type { PageContextServer } from '@/types/page'
 import PageShell from '@/ui/components/PageShell'
 import getI18n from '@/utils/getI18n'
@@ -52,9 +53,13 @@ function render({ documentProps, pageHtml, emotionStyleTags }: PageContextServer
     </html>`
 }
 
-async function onBeforeRender(pageContext: PageContextServer) {
+async function onBeforeRender({ locale, Page, pageProps, url }: PageContextServer) {
+  // Initialize store
   const store = makeStore()
-  const { locale, Page, pageProps } = pageContext
+
+  // Seed initial data to store
+  store.dispatch(changeUrlWithoutLocale(url))
+  store.dispatch(changeLocale(locale))
 
   // Fetch course manifest
   await loadManifest(store)
@@ -78,12 +83,7 @@ async function onBeforeRender(pageContext: PageContextServer) {
 
   // Render page
   const pageHtml = renderToString(
-    <PageShell
-      emotionCache={emotionCache}
-      i18n={i18n}
-      pageContext={{ ...pageContext, isHydration: true }}
-      store={store}
-    >
+    <PageShell emotionCache={emotionCache} i18n={i18n} store={store}>
       <Page {...pageProps} />
     </PageShell>
   )
@@ -103,7 +103,6 @@ async function onBeforeRender(pageContext: PageContextServer) {
       pageHtml,
       pageProps,
       PRELOADED_STATE,
-      store,
     },
   }
 }

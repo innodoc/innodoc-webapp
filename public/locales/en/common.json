@@ -1,6 +1,7 @@
 {
   "common": {
     "account": "Account",
+    "changeLanguage": "Change language",
     "hideToc": "Close table of contents",
     "home": "Back home",
     "language": "Language",
@@ -10,6 +11,11 @@
       "test": "Test"
     },
     "showToc": "Show table of contents",
+    "theme": {
+      "dark": "Dark",
+      "light": "Light",
+      "switch": "Switch theme"
+    },
     "toc": "Table of contents"
   },
   "content": {

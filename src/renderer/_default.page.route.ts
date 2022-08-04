@@ -1,15 +1,20 @@
 import { PageContextServer } from '@/types/page'
 import { extractLocale } from '@/utils/locales'
 
-// Save extracted locale in pageContext (client and server)
+// Extract locale on client-side navigation
 function onBeforeRoute(pageContext: PageContextServer) {
-  const { urlWithoutLocale, locale } = extractLocale(pageContext.url)
+  let { locale, url } = pageContext
+
+  if (locale === undefined) {
+    const { urlWithoutLocale, locale: extractedLocale } = extractLocale(url)
+    locale = extractedLocale
+    url = urlWithoutLocale
+  }
 
   return {
     pageContext: {
       locale,
-      // Overwrite original URL
-      url: urlWithoutLocale,
+      url,
     },
   }
 }

@@ -1,6 +1,7 @@
 {
   "common": {
     "account": "Konto",
+    "changeLanguage": "Sprache wechseln",
     "hideToc": "Inhaltsverzeichnis schließen",
     "home": "Zurück zu Home",
     "language": "Sprache",
@@ -10,6 +11,11 @@
       "test": "Test"
     },
     "showToc": "Inhaltsverzeichnis öffnen",
+    "theme": {
+      "dark": "Dunkel",
+      "light": "Hell",
+      "switch": "Theme umschalten"
+    },
     "toc": "Inhaltsverzeichnis"
   },
   "content": {

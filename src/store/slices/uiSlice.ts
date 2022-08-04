@@ -10,11 +10,13 @@ const NAME = 'ui'
 interface UiSliceState {
   showTocDrawer: boolean
   locale: Locale | null
+  urlWithoutLocale: string | null
 }
 
 const initialState: UiSliceState = {
   showTocDrawer: false,
   locale: null,
+  urlWithoutLocale: null,
 }
 
 const uiSlice = createSlice({
@@ -22,9 +24,14 @@ const uiSlice = createSlice({
   initialState,
 
   reducers: {
-    /** Only dispatched server-side */
+    /** Change locale */
     changeLocale(state, action: PayloadAction<Locale>) {
       state.locale = action.payload
+    },
+
+    /** Update url info */
+    changeUrlWithoutLocale(state, action: PayloadAction<string>) {
+      state.urlWithoutLocale = action.payload
     },
 
     toggleTocDrawer(state) {
@@ -35,5 +42,5 @@ const uiSlice = createSlice({
 
 export const selectUi = (state: RootState) => state[uiSlice.name]
 
-export const { changeLocale, toggleTocDrawer } = uiSlice.actions
+export const { changeLocale, toggleTocDrawer, changeUrlWithoutLocale } = uiSlice.actions
 export default uiSlice

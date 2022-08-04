@@ -4,6 +4,7 @@ import I18NextHttpBackend from 'i18next-http-backend'
 import { hydrateRoot, type Root } from 'react-dom/client'
 
 import makeStore, { type Store } from '@/store/makeStore'
+import { changeUrlWithoutLocale } from '@/store/slices/uiSlice'
 import type { PageContextClient } from '@/types/page'
 import PageShell from '@/ui/components/PageShell'
 import getI18n from '@/utils/getI18n'
@@ -45,14 +46,22 @@ function findRootElement() {
   }
 }
 
-async function render(pageContext: PageContextClient) {
-  const { locale, Page, pageProps, PRELOADED_STATE } = pageContext
-
+async function render({
+  isHydration,
+  locale,
+  Page,
+  pageProps,
+  PRELOADED_STATE,
+  url,
+}: PageContextClient) {
   findRootElement()
 
-  // Initialize store
   if (store === undefined) {
+    // Create store on first hydration
     store = makeStore(PRELOADED_STATE)
+  } else {
+    // Update store on navigation
+    store.dispatch(changeUrlWithoutLocale(url))
   }
 
   // Get i18next instance
@@ -66,12 +75,12 @@ async function render(pageContext: PageContextClient) {
   }
 
   const page = (
-    <PageShell emotionCache={emotionCache} i18n={i18n} pageContext={pageContext} store={store}>
+    <PageShell emotionCache={emotionCache} i18n={i18n} store={store}>
       <Page {...pageProps} />
     </PageShell>
   )
 
-  if (pageContext.isHydration) {
+  if (isHydration) {
     root = hydrateRoot(rootEl, page)
   } else {
     // Client-side user navigation

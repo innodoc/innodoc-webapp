@@ -3,7 +3,6 @@ import { initReactI18next } from 'react-i18next'
 
 import type { Store } from '@/store/makeStore'
 import { selectLocales } from '@/store/selectors/content'
-import { changeLocale } from '@/store/slices/uiSlice'
 import type { Locale } from '@/types/common'
 
 const isDev = import.meta.env.MODE === 'development'
@@ -22,14 +21,8 @@ async function getI18n(
     if (i18next.language !== currentLocale) {
       await i18next.changeLanguage(currentLocale)
     }
-    store.dispatch(changeLocale(currentLocale))
     return i18next
   }
-
-  // Setup event listener that sync's i18next locale to redux store
-  i18next.on('languageChanged', (lng) => {
-    store.dispatch(changeLocale(lng))
-  })
 
   // Initialize i18next
   await i18next
