@@ -1,12 +1,17 @@
 import path from 'path'
 
 import compression from 'compression'
+import dotenv from 'dotenv'
 import express, { type RequestHandler } from 'express'
 import { renderPage } from 'vite-plugin-ssr'
 
+import fetchManifest from '../utils/fetchManifest'
 import { extractLocale } from '../utils/locales'
 
 import { isErrnoException } from './types'
+
+// Load .env config
+dotenv.config({ path: path.resolve(__dirname, '..', '..', '.env') })
 
 const isProduction = process.env.NODE_ENV === 'production'
 const rootDir = path.resolve(__dirname, '..', '..')
@@ -15,8 +20,14 @@ const distDir = path.join(rootDir, 'dist')
 void startServer()
 
 async function startServer() {
-  const app = express()
+  // Fetch content locales
+  const contentRoot = process.env.INNODOC_CONTENT_ROOT
+  if (contentRoot === undefined) {
+    throw new Error('You need to set the env variable INNODOC_CONTENT_ROOT.')
+  }
+  const { languages: locales } = await fetchManifest(contentRoot)
 
+  const app = express()
   app.use(compression())
 
   if (isProduction) {
@@ -44,7 +55,7 @@ async function startServer() {
     const url = req.originalUrl
 
     // Extract locale from URL
-    const { locale, urlWithoutLocale } = extractLocale(url)
+    const { locale, urlWithoutLocale } = extractLocale(url, locales)
     const pageContextInit = { locale, url: urlWithoutLocale }
 
     const pageContext = await renderPage(pageContextInit)

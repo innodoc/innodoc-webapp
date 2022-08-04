@@ -12,8 +12,7 @@ const contentApi = createApi({
   // https://github.com/reduxjs/redux-toolkit/issues/2535
   keepUnusedDataFor: Math.floor((2 ** 31 - 1) / 1000),
 
-  // baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.INNODOC_CONTENT_ROOT }),
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8001/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.INNODOC_CONTENT_ROOT }),
 
   endpoints: (builder) => ({
     getManifest: builder.query<Manifest, void>({

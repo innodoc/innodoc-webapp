@@ -4,6 +4,9 @@ interface ImportMetaEnv {
   /** Base URL for content (e.g. `https://example.com/content`) */
   readonly INNODOC_CONTENT_ROOT: string
 
+  /** Supported locales */
+  readonly INNODOC_LOCALES: import('./types/common').Locale[]
+
   /** URL path prefix for content pages (e.g. `page`) */
   readonly INNODOC_PAGE_PATH_PREFIX: string
 

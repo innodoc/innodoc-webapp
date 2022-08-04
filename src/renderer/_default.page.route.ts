@@ -6,7 +6,9 @@ function onBeforeRoute(pageContext: PageContextServer) {
   let { locale, url } = pageContext
 
   if (locale === undefined) {
-    const { urlWithoutLocale, locale: extractedLocale } = extractLocale(url)
+    const locales = import.meta.env.INNODOC_LOCALES
+
+    const { urlWithoutLocale, locale: extractedLocale } = extractLocale(url, locales)
     locale = extractedLocale
     url = urlWithoutLocale
   }
