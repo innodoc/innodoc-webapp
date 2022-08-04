@@ -1,10 +1,38 @@
-import { Button, Stack } from '@mui/material'
+import { Button, Stack, styled } from '@mui/material'
 
-import { selectPages } from '@/store/selectors/content'
+import { selectNavPages } from '@/store/selectors/content'
+import { PageLink } from '@/ui/components/common/Link'
 import { useSelector } from '@/ui/hooks/store'
 
+const generalPages = [
+  {
+    href: '/toc',
+    icon: 'toc',
+    id: 'toc',
+    title: 'TOC',
+  },
+]
+
+const NavButton = styled(Button)({
+  color: 'rgb(255 255 255 / 80%)',
+  textDecoration: 'underline',
+  textDecorationColor: 'rgb(255 255 255 / 0%)',
+  textTransform: 'inherit',
+  transitionProperty: 'background-color, box-shadow, border-color, color, text-decoration-color',
+  '&:hover': {
+    color: 'white',
+    textDecoration: 'underline',
+    textDecorationColor: 'rgb(255 255 255 / 0%)',
+  },
+  '&.active': {
+    color: 'white',
+    textDecorationColor: 'rgb(255 255 255 / 100%)',
+  },
+})
+
 function NavMenu() {
-  const pages = useSelector(selectPages)
+  const coursePages = useSelector(selectNavPages)
+  const pages = [...coursePages, ...generalPages]
 
   return (
     <Stack
@@ -17,16 +45,9 @@ function NavMenu() {
       }}
     >
       {pages.map(({ id, icon, title }) => (
-        <Button
-          key={id}
-          startIcon={icon}
-          sx={{
-            color: 'white',
-            textTransform: 'inherit',
-          }}
-        >
+        <NavButton component={PageLink} key={id} pageId={id} size="small" startIcon={icon}>
           {title}
-        </Button>
+        </NavButton>
       ))}
     </Stack>
   )

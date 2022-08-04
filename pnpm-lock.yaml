@@ -31,6 +31,7 @@ specifiers:
   '@typescript-eslint/parser': ^5.31.0
   '@typescript-eslint/utils': ^5.31.0
   '@vitejs/plugin-react': ^1.3.2
+  clsx: ^1.2.1
   compression: ^1.7.4
   dotenv: ^16.0.1
   eslint: ^8.20.0
@@ -73,6 +74,7 @@ dependencies:
   '@mui/material': 5.9.3_x23mn2l7fw5e56g6ttw67k5uxm
   '@reduxjs/toolkit': 1.8.3_kkwg4cbsojnjnupd3btipussee
   '@vitejs/plugin-react': 1.3.2
+  clsx: 1.2.1
   compression: 1.7.4
   dotenv: 16.0.1
   express: 4.18.1

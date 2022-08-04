@@ -40,6 +40,16 @@ export const selectPages = createSelector(
   }
 )
 
+/** Select main nav pages */
+export const selectNavPages = createSelector([selectPages], (pages) =>
+  pages.filter((page) => page.linked?.includes('nav'))
+)
+
+/** Select footer pages */
+export const selectFooterPages = createSelector([selectPages], (pages) =>
+  pages.filter((page) => page.linked?.includes('footer'))
+)
+
 /** Select page. */
 export const selectPageById = createSelector(
   [selectPages, (_, pageId: Page['id']) => pageId],
