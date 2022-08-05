@@ -1,4 +1,3 @@
-import { ChevronLeft as ChevronLeftIcon, Menu as MenuIcon } from '@mui/icons-material'
 import {
   Box,
   Divider,
@@ -11,6 +10,7 @@ import {
 import { useState } from 'react'
 
 import { selectPages } from '@/store/selectors/content'
+import Icon from '@/ui/components/common/Icon'
 import { useSelector } from '@/ui/hooks/store'
 
 function MobileMenu() {
@@ -36,12 +36,12 @@ function MobileMenu() {
         onClick={onOpenMenu}
         color="inherit"
       >
-        <MenuIcon />
+        <Icon name="menu" />
       </IconButton>
       <SwipeableDrawer anchor="left" open={menuOpen} onOpen={openDrawer} onClose={closeDrawer}>
         <MenuItem onClick={closeDrawer}>
           <ListItemIcon>
-            <ChevronLeftIcon />
+            <Icon name="chevron-left" />
           </ListItemIcon>
           <ListItemText>Close</ListItemText>
         </MenuItem>

@@ -1,16 +1,12 @@
-import { DarkMode as DarkModeIcon, LightMode as LightModeIcon } from '@mui/icons-material'
 import type { PaletteMode } from '@mui/material'
-import { type ElementType, type MouseEvent } from 'react'
+import { type MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { selectTheme } from '@/store/selectors/ui'
 import { changeTheme } from '@/store/slices/uiSlice'
+import Icon from '@/ui/components/common/Icon'
 import MenuToggleButtonGroup, { type Option } from '@/ui/components/common/MenuToggleButtonGroup'
 import { useDispatch, useSelector } from '@/ui/hooks/store'
-
-function ThemeIcon({ icon: Icon }: { icon: ElementType }) {
-  return <Icon fontSize="small" />
-}
 
 function ThemeToggler() {
   const { t } = useTranslation()
@@ -25,12 +21,12 @@ function ThemeToggler() {
 
   const options: Option[] = [
     {
-      component: <ThemeIcon icon={DarkModeIcon} />,
+      component: <Icon fontSize="small" name="weather-night" />,
       label: t('common.theme.dark'),
       value: 'dark',
     },
     {
-      component: <ThemeIcon icon={LightModeIcon} />,
+      component: <Icon fontSize="small" name="weather-sunny" />,
       label: t('common.theme.light'),
       value: 'light',
     },

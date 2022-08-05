@@ -1,4 +1,3 @@
-import { AccountCircle as AccountCircleIcon, Login as LoginIcon } from '@mui/icons-material'
 import {
   Box,
   Divider,
@@ -11,6 +10,8 @@ import {
 } from '@mui/material'
 import { MouseEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import Icon from '@/ui/components/common/Icon'
 
 import LanguageSwitcher from './LanguageSwitcher'
 import ThemeToggler from './ThemeToggler'
@@ -32,7 +33,7 @@ function UserMenu() {
           color="inherit"
           onClick={onOpenMenu}
         >
-          <AccountCircleIcon />
+          <Icon name="account-circle" />
         </IconButton>
       </Tooltip>
       <Menu
@@ -57,7 +58,7 @@ function UserMenu() {
         <Divider sx={{ mt: 0.7 }} />
         <MenuItem>
           <ListItemIcon>
-            <LoginIcon />
+            <Icon name="login" />
           </ListItemIcon>
           <ListItemText>Login</ListItemText>
         </MenuItem>

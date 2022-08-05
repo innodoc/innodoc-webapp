@@ -4,6 +4,9 @@ interface ImportMetaEnv {
   /** Base URL for content (e.g. `https://example.com/content`) */
   readonly INNODOC_CONTENT_ROOT: string
 
+  /** Custom Iconify JSON icon bundle */
+  readonly INNODOC_ICON_DATA: import('@iconify/types').IconifyJSON
+
   /** Supported locales */
   readonly INNODOC_LOCALES: import('./types/common').Locale[]
 

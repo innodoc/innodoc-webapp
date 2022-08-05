@@ -44,12 +44,17 @@ overrides:
       # https://redux.js.org/usage/usage-with-typescript#use-typed-hooks-in-components
       no-restricted-imports: off
       '@typescript-eslint/no-restricted-imports':
-        - warn
-        - name: react-redux
-          importNames:
-            - useSelector
-            - useDispatch
-          message: Use typed hooks `useDispatch` and `useSelector` from `@innodoc/store` instead.
+        - error
+        - paths:
+            - name: react-redux
+              importNames:
+                - useSelector
+                - useDispatch
+              message: Use typed hooks `useDispatch` and `useSelector` from `@innodoc/store` instead.
+            - name: '@mui/material'
+              importNames:
+                - Icon
+              message: Use `@/ui/components/common/Icon` instead.
 
       # TypeScript provides the same checks
       # https://typescript-eslint.io/docs/linting/troubleshooting#eslint-plugin-import

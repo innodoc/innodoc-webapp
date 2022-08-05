@@ -1,7 +1,7 @@
-import { School } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 
 import { selectCourseTitle } from '@/store/selectors/content'
+import Icon from '@/ui/components/common/Icon'
 import { useSelector } from '@/ui/hooks/store'
 
 function Logo() {
@@ -9,7 +9,7 @@ function Logo() {
 
   return (
     <>
-      <School sx={{ mr: 1 }} />
+      <Icon name="school" sx={{ mr: 1 }} />
       <Typography variant="h6" color="inherit" noWrap>
         {title}
       </Typography>
