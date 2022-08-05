@@ -25,6 +25,9 @@ export const selectCourseTitle = createSelector(
   (manifest, translate) => (manifest !== undefined ? translate(manifest.title) : undefined)
 )
 
+/** Select the course logo. */
+export const selectCourseLogo = createSelector([selectManifest], (manifest) => manifest?.logo)
+
 /** Select pages. */
 export const selectPages = createSelector(
   [selectManifest, selectTranslateFn],

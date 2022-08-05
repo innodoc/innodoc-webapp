@@ -33,7 +33,7 @@ function UserMenu() {
           color="inherit"
           onClick={onOpenMenu}
         >
-          <Icon name="account-circle" />
+          <Icon name="mdi:account-circle" />
         </IconButton>
       </Tooltip>
       <Menu
@@ -58,7 +58,7 @@ function UserMenu() {
         <Divider sx={{ mt: 0.7 }} />
         <MenuItem>
           <ListItemIcon>
-            <Icon name="login" />
+            <Icon name="mdi:login" />
           </ListItemIcon>
           <ListItemText>Login</ListItemText>
         </MenuItem>

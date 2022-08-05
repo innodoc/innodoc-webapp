@@ -21,12 +21,12 @@ function ThemeToggler() {
 
   const options: Option[] = [
     {
-      component: <Icon fontSize="small" name="weather-night" />,
+      component: <Icon fontSize="small" name="mdi:weather-night" />,
       label: t('common.theme.dark'),
       value: 'dark',
     },
     {
-      component: <Icon fontSize="small" name="weather-sunny" />,
+      component: <Icon fontSize="small" name="mdi:weather-sunny" />,
       label: t('common.theme.light'),
       value: 'light',
     },

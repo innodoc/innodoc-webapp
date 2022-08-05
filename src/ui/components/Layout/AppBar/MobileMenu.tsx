@@ -36,12 +36,12 @@ function MobileMenu() {
         onClick={onOpenMenu}
         color="inherit"
       >
-        <Icon name="menu" />
+        <Icon name="mdi:menu" />
       </IconButton>
       <SwipeableDrawer anchor="left" open={menuOpen} onOpen={openDrawer} onClose={closeDrawer}>
         <MenuItem onClick={closeDrawer}>
           <ListItemIcon>
-            <Icon name="chevron-left" />
+            <Icon name="mdi:chevron-left" />
           </ListItemIcon>
           <ListItemText>Close</ListItemText>
         </MenuItem>

@@ -21,11 +21,7 @@ void startServer()
 
 async function startServer() {
   // Fetch content locales
-  const contentRoot = process.env.INNODOC_CONTENT_ROOT
-  if (contentRoot === undefined) {
-    throw new Error('You need to set the env variable INNODOC_CONTENT_ROOT.')
-  }
-  const { languages: locales } = await fetchManifest(contentRoot)
+  const { languages: locales } = await fetchManifest()
 
   const app = express()
   app.use(compression())
