@@ -14,7 +14,7 @@ function ErrorPage({ errorMsg, is404 }: ErrorPageProps) {
 
   return (
     <>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h1" gutterBottom>
         {captionText}
       </Typography>
       <Typography variant="subtitle1" gutterBottom component="p">

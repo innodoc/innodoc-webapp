@@ -13,7 +13,7 @@ function ContentPage({ pageId }: ContentPageProps) {
     return null
   }
 
-  return <Typography variant="h2">{page.title}</Typography>
+  return <Typography variant="h1">{page.title}</Typography>
 }
 
 type ContentPageProps = {
