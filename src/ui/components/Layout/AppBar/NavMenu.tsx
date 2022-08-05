@@ -1,19 +1,19 @@
-import { Button, Stack, styled } from '@mui/material'
+import { Button, type ButtonProps, Stack, styled } from '@mui/material'
+import { forwardRef } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { selectNavPages } from '@/store/selectors/content'
-import { PageLink } from '@/ui/components/common/Link'
+import Icon from '@/ui/components/common/Icon'
+import Link, { PageLink } from '@/ui/components/common/Link'
 import { useSelector } from '@/ui/hooks/store'
 
-const generalPages = [
-  {
-    href: '/toc',
-    icon: 'toc',
-    id: 'toc',
-    title: 'TOC',
-  },
-]
+const NavButton = forwardRef<HTMLButtonElement | null, Omit<ButtonProps, 'size'>>(
+  function NavButton(props, ref) {
+    return <Button ref={ref} size="small" {...props} />
+  }
+)
 
-const NavButton = styled(Button)({
+const StyledNavButton = styled(NavButton)({
   color: 'rgb(255 255 255 / 80%)',
   textDecoration: 'underline',
   textDecorationColor: 'rgb(255 255 255 / 0%)',
@@ -28,11 +28,12 @@ const NavButton = styled(Button)({
     color: 'white',
     textDecorationColor: 'rgb(255 255 255 / 100%)',
   },
-})
+}) as typeof Button
 
 function NavMenu() {
+  const { t } = useTranslation()
+
   const coursePages = useSelector(selectNavPages)
-  const pages = [...coursePages, ...generalPages]
 
   return (
     <Stack
@@ -44,11 +45,19 @@ function NavMenu() {
         justifyContent: 'center',
       }}
     >
-      {pages.map(({ id, icon, title }) => (
-        <NavButton component={PageLink} key={id} pageId={id} size="small" startIcon={icon}>
+      {coursePages.map(({ id, icon, title }) => (
+        <StyledNavButton
+          component={PageLink}
+          key={id}
+          pageId={id}
+          startIcon={icon !== undefined ? <Icon name={icon} /> : undefined}
+        >
           {title}
-        </NavButton>
+        </StyledNavButton>
       ))}
+      <StyledNavButton component={Link} startIcon={<Icon name="mdi:table-of-contents" />} to="/toc">
+        {t('common.toc')}
+      </StyledNavButton>
     </Stack>
   )
 }

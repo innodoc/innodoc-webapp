@@ -5,53 +5,32 @@ import { selectLocale, selectUrlWithoutLocale } from '@/store/selectors/ui'
 import { Page } from '@/types/api'
 import { useSelector } from '@/ui/hooks/store'
 
-const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { href, children, ...other },
+const LinkWithLocale = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
+  { to, children, ...other },
   ref
 ) {
   return (
-    <a href={href} ref={ref} {...other}>
+    <a href={to} ref={ref} {...other}>
       {children}
     </a>
   )
 })
 
-type LinkProps = {
-  children: ReactNode
-  className?: string
-  href: string
-}
-
-const LinkWithLocale = forwardRef<HTMLAnchorElement, LinkProps>(function LinkWithLocale(
-  { children, className, href, ...other },
+const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
+  { children, className, to, ...other },
   ref
 ) {
   const locale = useSelector(selectLocale)
   const urlWithoutLocale = useSelector(selectUrlWithoutLocale)
 
   if (locale === null) {
-    return <>children</>
+    return <>{children}</>
   }
 
   return (
-    <Link
-      className={clsx(className, urlWithoutLocale === href && 'active')}
-      href={`/${locale}${href}`}
-      ref={ref}
-      {...other}
-    >
-      {children}
-    </Link>
-  )
-})
-
-const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
-  { pageId, children, ...other },
-  ref
-) {
-  return (
     <LinkWithLocale
-      href={`/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/${pageId}`}
+      className={clsx(className, urlWithoutLocale === to && 'active')}
+      to={`/${locale}${to}`}
       ref={ref}
       {...other}
     >
@@ -60,10 +39,22 @@ const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
   )
 })
 
-type PageLinkProps = {
+type LinkProps = {
   children: ReactNode
+  className?: string
+  to: string
+}
+
+const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
+  { pageId, ...other },
+  ref
+) {
+  return <Link to={`/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/${pageId}`} ref={ref} {...other} />
+})
+
+type PageLinkProps = Omit<LinkProps, 'to'> & {
   pageId: Page['id']
 }
 
-export { PageLink }
+export { LinkWithLocale, PageLink }
 export default Link
