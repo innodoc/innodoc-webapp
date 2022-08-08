@@ -7,10 +7,10 @@
     "Mirko Dietrich <dietrich@math.tu-berlin.de>"
   ],
   "description": "innoDoc client store",
-  "homepage": "https://gitlab.tubit.tu-berlin.de/innodoc/innodoc/tree/master/packages/client-store#readme",
+  "homepage": "https://git.tu-berlin.de/innodoc/innodoc/tree/master/packages/client-store#readme",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.tu-berlin.de/innodoc/innodoc",
+    "url": "https://git.tu-berlin.de/innodoc/innodoc",
     "directory": "packages/client-store"
   },
   "license": "GPL-3.0-or-later",

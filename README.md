@@ -1,4 +1,4 @@
-[![build status](https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp/badges/master/build.svg)](https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp/commits/master) [![coverage report](https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp/badges/master/coverage.svg)](https://gitlab.tubit.tu-berlin.de/innodoc/innodoc-webapp/commits/master)
+[![pipeline status](https://git.tu-berlin.de/innodoc/innodoc-webapp/badges/main/pipeline.svg)](https://git.tu-berlin.de/innodoc/innodoc-webapp/-/commits/main) [![Latest Release](https://git.tu-berlin.de/innodoc/innodoc-webapp/-/badges/release.svg)](https://git.tu-berlin.de/innodoc/innodoc-webapp/-/releases)
 
 # innoDoc web app
 
@@ -74,7 +74,7 @@ For the application to do anything useful, you will need content to display.
 
 Content is static data in the shape of JSON and image files. To produce such
 content a separate program
-[innoConv](https://gitlab.tu-berlin.de/innodoc/innoconv) can be used. The
+[innoConv](https://git.tu-berlin.de/innodoc/innoconv) can be used. The
 content needs to be served via HTTP(S) (see [`CONTENT_ROOT`](#content_root)).
 Don't forget to send [CORS
 headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) if needed.
