@@ -17,7 +17,7 @@ variables:
   # taken from https://github.com/semver/semver/issues/232#issue-48635632
   SEMVER_REGEXP: '^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$'
 
-.docker-base-login-script: &docker-base-login-script echo "$CI_JOB_TOKEN" | docker login --username gitlab-ci-token --password-stdin "$CI_REGISTRY"
+.docker-base-login-script: &docker-base-login-script docker login -u "$CI_REGISTRY_USER" -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
 .docker-base-logout-script: &docker-base-logout-script docker logout "$CI_REGISTRY"
 .docker-base: &docker-base
   services:
