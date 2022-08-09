@@ -14,30 +14,30 @@ function LanguageSwitcher() {
   const locale = useSelector(selectLocale)
   const locales = useSelector(selectLocales)
 
-  if (locale !== null) {
-    const onChange = (event: MouseEvent, newLocale: Locale) => {
-      if (newLocale !== null) {
-        dispatch(changeLocale(newLocale))
-      }
-    }
-
-    const options = locales.map((locale) => ({
-      component: t(`languages.${locale}`),
-      label: t(`languages.${locale}`),
-      value: locale,
-    }))
-
-    return (
-      <MenuToggleButtonGroup
-        onChange={onChange}
-        options={options}
-        tooltipText={t('nav.changeLanguage')}
-        value={locale}
-      />
-    )
+  if (locale === null) {
+    return null
   }
 
-  return null
+  const onChange = (event: MouseEvent, newLocale: Locale) => {
+    if (newLocale !== null) {
+      dispatch(changeLocale(newLocale))
+    }
+  }
+
+  const options = locales.map((locale) => ({
+    component: t(`languages.${locale}`),
+    label: t(`languages.${locale}`),
+    value: locale,
+  }))
+
+  return (
+    <MenuToggleButtonGroup
+      onChange={onChange}
+      options={options}
+      tooltipText={t('nav.language')}
+      value={locale}
+    />
+  )
 }
 
 export default LanguageSwitcher

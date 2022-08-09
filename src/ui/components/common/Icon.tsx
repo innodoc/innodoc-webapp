@@ -1,4 +1,5 @@
 import {
+  // eslint-disable-next-line @typescript-eslint/no-restricted-imports
   Icon as MuiIcon,
   styled,
   SvgIcon as MuiSvgIcon,
@@ -18,7 +19,7 @@ function getIconDataFromBundle(iconName: string) {
   }
 }
 
-function SvgIcon({ name, sx }: SvgIconProps) {
+function SvgIcon({ fontSize, name, sx }: SvgIconProps) {
   const svgRef = useRef<SVGSVGElement>(null)
 
   useEffect(() => {
@@ -27,10 +28,11 @@ function SvgIcon({ name, sx }: SvgIconProps) {
     }
   }, [name])
 
-  return <MuiSvgIcon ref={svgRef} sx={sx} />
+  return <MuiSvgIcon fontSize={fontSize} ref={svgRef} sx={sx} />
 }
 
 type SvgIconProps = {
+  fontSize?: FontSize
   /**
    * Icon name as defined in icon bundle.
    *
@@ -60,9 +62,9 @@ type SvgFileIconProps = {
   sx?: SxProps<Theme>
 }
 
-function Icon({ name, sx }: IconProps) {
+function Icon({ fontSize, name, sx }: IconProps) {
   if (name.startsWith('mdi:')) {
-    return <SvgIcon name={name.replace(/^mdi:/, '')} sx={sx} />
+    return <SvgIcon fontSize={fontSize} name={name.replace(/^mdi:/, '')} sx={sx} />
   }
 
   if (name.startsWith('file:')) {
@@ -73,9 +75,12 @@ function Icon({ name, sx }: IconProps) {
 }
 
 type IconProps = {
+  fontSize?: FontSize
   /** Icon name, either `mdi:...` or `file:...`. */
   name: string
   sx?: SxProps<Theme>
 }
+
+type FontSize = 'inherit' | 'large' | 'medium' | 'small'
 
 export default Icon

@@ -4,8 +4,8 @@
     "en": "English"
   },
   "nav": {
-    "changeLanguage": "Change language",
     "close": "Close",
+    "language": "Language",
     "openUserMenu": "User menu",
     "theme": {
       "dark": "Dark",

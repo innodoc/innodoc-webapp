@@ -4,8 +4,8 @@
     "en": "English"
   },
   "nav": {
-    "changeLanguage": "Sprache wechseln",
     "close": "Schließen",
+    "language": "Sprache",
     "openUserMenu": "Nutzermenü",
     "theme": {
       "dark": "Dunkel",

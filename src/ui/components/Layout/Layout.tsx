@@ -9,7 +9,7 @@ function Layout({ children }: LayoutProps) {
     <>
       <AppBar />
       <main>
-        <Container sx={{ py: 4 }} maxWidth="md">
+        <Container sx={{ py: 4 }} maxWidth="lg">
           {children}
         </Container>
       </main>

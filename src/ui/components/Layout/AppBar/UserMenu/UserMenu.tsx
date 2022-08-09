@@ -7,8 +7,10 @@ import {
   Menu,
   MenuItem,
   Tooltip,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
-import { MouseEvent, useState } from 'react'
+import { type MouseEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Icon from '@/ui/components/common/Icon'
@@ -19,16 +21,25 @@ import ThemeToggler from './ThemeToggler'
 function UserMenu() {
   const { t } = useTranslation()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const theme = useTheme()
+  const smDownMatches = useMediaQuery(theme.breakpoints.down('sm'))
+  const openUserMenuLabel = t('nav.openUserMenu')
 
   const onOpenMenu = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)
 
-  const openUserMenuLabel = t('nav.openUserMenu')
+  const themeAndLanguageSwitcher = smDownMatches
+    ? [
+        <LanguageSwitcher key="languageSwitcher" />,
+        <ThemeToggler key="themeToggler" />,
+        <Divider key="divider" sx={{ mt: 0.7 }} />,
+      ]
+    : null
 
   return (
     <Box sx={{ flexGrow: 0, ml: 1 }}>
-      <Tooltip arrow title={openUserMenuLabel} placement="left">
+      <Tooltip arrow title={openUserMenuLabel}>
         <IconButton
-          aria-controls="user-menu"
+          aria-controls="appbar-user-menu"
           aria-label={openUserMenuLabel}
           color="inherit"
           onClick={onOpenMenu}
@@ -42,7 +53,7 @@ function UserMenu() {
           vertical: 'top',
           horizontal: 'right',
         }}
-        id="menu-appbar"
+        id="appbar-user-menu"
         keepMounted
         MenuListProps={{ dense: true }}
         open={Boolean(anchorEl)}
@@ -53,9 +64,7 @@ function UserMenu() {
           horizontal: 'right',
         }}
       >
-        <LanguageSwitcher />
-        <ThemeToggler />
-        <Divider sx={{ mt: 0.7 }} />
+        {themeAndLanguageSwitcher}
         <MenuItem>
           <ListItemIcon>
             <Icon name="mdi:login" />
