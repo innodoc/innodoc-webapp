@@ -1,5 +1,7 @@
 import { Typography } from '@mui/material'
 
+import PageHeader from '@/ui/components/common/PageHeader'
+
 function ErrorPage({ errorMsg, is404 }: ErrorPageProps) {
   let captionText = '500 Internal Server Error'
   let subtitle = 'Something went wrong.'
@@ -14,9 +16,7 @@ function ErrorPage({ errorMsg, is404 }: ErrorPageProps) {
 
   return (
     <>
-      <Typography variant="h1" gutterBottom>
-        {captionText}
-      </Typography>
+      <PageHeader>{captionText}</PageHeader>
       <Typography variant="subtitle1" gutterBottom component="p">
         {subtitle}
       </Typography>

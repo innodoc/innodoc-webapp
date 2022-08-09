@@ -2,8 +2,12 @@ import { Grid, Link as MuiLink, Stack, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import { selectCourseTitle, selectFooterPages } from '@/store/selectors/content'
+import { selectLocale } from '@/store/selectors/ui'
+import { useGetContentQuery } from '@/store/slices/contentApi'
 import Icon from '@/ui/components/common/Icon'
-import Link, { PageLink } from '@/ui/components/common/Link'
+import InternalLink from '@/ui/components/common/link/InternalLink'
+import PageLink from '@/ui/components/common/link/PageLink'
+import ContentTree from '@/ui/components/content/ContentTree'
 import { otherPagesFooter } from '@/ui/components/Layout/AppBar/otherPages'
 import { useSelector } from '@/ui/hooks/store'
 
@@ -13,9 +17,12 @@ function Footer() {
   const { t } = useTranslation()
   const title = useSelector(selectCourseTitle)
   const coursePages = useSelector(selectFooterPages)
+  const locale = useSelector(selectLocale)
+  const { data: blocksFooterA } = useGetContentQuery({ locale, path: 'footerA' })
+  const { data: blocksFooterB } = useGetContentQuery({ locale, path: 'footerB' })
 
   const internalLinks = otherPagesFooter.map(({ icon, to, title }) => (
-    <MuiLink component={Link} key={to} sx={linkSx} to={to} underline="hover">
+    <MuiLink component={InternalLink} key={to} sx={linkSx} to={to} underline="hover">
       {icon}
       {t(title)}
     </MuiLink>
@@ -28,23 +35,24 @@ function Footer() {
     </MuiLink>
   ))
 
+  const contentFooterA =
+    blocksFooterA !== undefined ? <ContentTree content={blocksFooterA} /> : null
+  const contentFooterB =
+    blocksFooterB !== undefined ? <ContentTree content={blocksFooterB} /> : null
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={3}>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h4" gutterBottom>
           {title}
         </Typography>
         <Stack spacing={1}>{[...internalLinks, ...courseLinks]}</Stack>
       </Grid>
       <Grid item xs={12} md={6}>
-        <Typography variant="h5" gutterBottom>
-          Über diesen Kurs
-        </Typography>
+        {contentFooterA}
       </Grid>
       <Grid item xs={12} md={3}>
-        <Typography variant="h5" gutterBottom>
-          Lizenz
-        </Typography>
+        {contentFooterB}
       </Grid>
     </Grid>
   )

@@ -1,6 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import camelcaseKeys from 'camelcase-keys'
+import decamelize from 'decamelize'
+import type { Tree } from 'pandoc-filter'
 
 import type { Manifest } from '@/types/api'
 
@@ -16,6 +18,7 @@ const contentApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.INNODOC_CONTENT_ROOT }),
 
   endpoints: (builder) => ({
+    /** Fetch manifest from content server */
     getManifest: builder.query<Manifest, void>({
       query: () => 'manifest.json',
       transformResponse: (response) =>
@@ -23,12 +26,43 @@ const contentApi = createApi({
           ? camelcaseKeys(response, { deep: true, stopPaths: ['boxes', 'indexTerms', 'mathjax'] })
           : {}) as Manifest,
     }),
+
+    /** Fetch content AST */
+    getContent: builder.query<Tree, ContentFetchArgs>({
+      query: ({ locale, path }) => `${locale}/_${decamelize(path)}.json`,
+    }),
+
+    /** Fetch content AST for a page */
+    getPageContent: builder.query<Tree, PageContentFetchArgs>({
+      query: ({ locale, id }) => `${locale}/_pages/${id}.json`,
+    }),
+
+    /** Fetch content AST for a section */
+    getSectionContent: builder.query<Tree, SectionContentFetchArgs>({
+      query: ({ locale, path }) => `${locale}/${path}.json`,
+    }),
   }),
 })
+
+export type ContentFetchArgs = {
+  locale: string
+  path: string
+}
+
+export type PageContentFetchArgs = {
+  locale: string
+  id: string
+}
+
+export type SectionContentFetchArgs = {
+  locale: string
+  path: string
+}
 
 export const selectManifest = createSelector(
   contentApi.endpoints.getManifest.select(),
   (result) => result.data
 )
 
+export const { useGetContentQuery, useGetPageContentQuery, useGetSectionContentQuery } = contentApi
 export default contentApi

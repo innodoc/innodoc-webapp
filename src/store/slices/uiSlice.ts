@@ -9,14 +9,14 @@ import { RootState } from '../makeStore'
 const NAME = 'ui'
 
 interface UiSliceState {
-  locale: Locale | null
+  locale: Locale
   showTocDrawer: boolean
   theme: PaletteMode | null
   urlWithoutLocale: string | null
 }
 
 const initialState: UiSliceState = {
-  locale: null,
+  locale: 'en',
   showTocDrawer: false,
   theme: null,
   urlWithoutLocale: null,

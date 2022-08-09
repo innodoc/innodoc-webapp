@@ -37,6 +37,7 @@ specifiers:
   camelcase-keys: ^8.0.1
   clsx: ^1.2.1
   compression: ^1.7.4
+  decamelize: ^6.0.0
   dotenv: ^16.0.1
   eslint: ^8.20.0
   eslint-config-prettier: ^8.5.0
@@ -57,6 +58,7 @@ specifiers:
   i18next: ^21.8.16
   i18next-fs-backend: ^1.1.4
   i18next-http-backend: ^1.4.1
+  pandoc-filter: ^2.0.3
   prettier: ^2.7.1
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -82,11 +84,13 @@ dependencies:
   camelcase-keys: 8.0.1
   clsx: 1.2.1
   compression: 1.7.4
+  decamelize: 6.0.0
   dotenv: 16.0.1
   express: 4.18.1
   i18next: 21.8.16
   i18next-fs-backend: 1.1.4
   i18next-http-backend: 1.4.1
+  pandoc-filter: 2.0.3
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-i18next: 11.18.3_shxxmfhtk2bc4pbx5cyq3uoph4
@@ -2575,6 +2579,11 @@ packages:
     dependencies:
       ms: 2.1.2
 
+  /decamelize/6.0.0:
+    resolution: {integrity: sha512-Fv96DCsdOgB6mdGl67MT5JaTNKRzrzill5OH5s8bjYJXVlcXyPYGyPsUkWyGV5p1TXI5esYIYMMeDJL0hEIwaA==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dev: false
+
   /deep-is/0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
     dev: true
@@ -3543,6 +3552,11 @@ packages:
       has: 1.0.3
       has-symbols: 1.0.3
 
+  /get-stdin/7.0.0:
+    resolution: {integrity: sha512-zRKcywvrXlXsA0v0i9Io4KDRaAw7+a1ZpjRwl9Wox8PFlVCCHra7E9c4kqXCoCM9nR5tBkaTTZRBoCm60bFqTQ==}
+    engines: {node: '>=8'}
+    dev: false
+
   /get-stream/6.0.1:
     resolution: {integrity: sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==}
     engines: {node: '>=10'}
@@ -4313,6 +4327,13 @@ packages:
     resolution: {integrity: sha512-U1etNYuMJoIz3ZXSrrySFjsXQTWOx2/jdi86L+2pRvph/qMKL6sbcCYdH23fqsbm8TH2Gn0OybpT4eSFlCVHww==}
     engines: {node: '>=4'}
     dev: true
+
+  /pandoc-filter/2.0.3:
+    resolution: {integrity: sha512-Ian8giUEJBH555y5IFQg3CAfsAifTeq724Nu0HEOM6NuwiHYvRO1Ma0mHinQApeFU97lhf5irT7bpgnWuyyZgg==}
+    engines: {node: '>=7.6.0'}
+    dependencies:
+      get-stdin: 7.0.0
+    dev: false
 
   /parent-module/1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}

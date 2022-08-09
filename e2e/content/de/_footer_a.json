@@ -1,1 +1,64 @@
-[{"t": "Header", "c": [4, ["\u00fcber-diesen-kurs", [], []], [{"t": "Str", "c": "\u00dcber diesen Kurs"}]]}, {"t": "Para", "c": [{"t": "Str", "c": "Der Inhalt dieses Kurses dient als Beispiel f\u00fcr die M\u00f6glichkeiten des "}, {"t": "Link", "c": [["", [], []], [{"t": "Str", "c": "Software-Pakets innoDoc"}], ["https://www.innocampus.tu-berlin.de/projekte/innodoc/", ""]]}, {"t": "Str", "c": ". Er wurde am "}, {"t": "Link", "c": [["", [], []], [{"t": "Str", "c": "innoCampus"}], ["https://www.innocampus.tu-berlin.de/", ""]]}, {"t": "Str", "c": " der "}, {"t": "Link", "c": [["", [], []], [{"t": "Str", "c": "Technischen Universit\u00e4t Berlin"}], ["https://www.tu-berlin.de/", ""]]}, {"t": "Str", "c": " entwickelt."}]}, {"t": "Para", "c": [{"t": "Link", "c": [["", [], []], [{"t": "Image", "c": [["", [], []], [{"t": "Str", "c": "Technische Universit\u00e4t Berlin"}], ["logo-tu-berlin.svg", "Technische Universit\u00e4t Berlin"]]}], ["https://www.tu-berlin.de/", ""]]}]}]
+[
+  {
+    "t": "Header",
+    "c": [4, ["\u00fcber-diesen-kurs", [], []], [{ "t": "Str", "c": "\u00dcber diesen Kurs" }]]
+  },
+  {
+    "t": "Para",
+    "c": [
+      {
+        "t": "Str",
+        "c": "Der Inhalt dieses Kurses dient als Beispiel f\u00fcr die M\u00f6glichkeiten des "
+      },
+      {
+        "t": "Link",
+        "c": [
+          ["", [], []],
+          [{ "t": "Str", "c": "Software-Pakets innoDoc" }],
+          ["https://www.innocampus.tu-berlin.de/projekte/innodoc/", ""]
+        ]
+      },
+      { "t": "Str", "c": ". Er wurde am " },
+      {
+        "t": "Link",
+        "c": [
+          ["", [], []],
+          [{ "t": "Str", "c": "innoCampus" }],
+          ["https://www.innocampus.tu-berlin.de/", ""]
+        ]
+      },
+      { "t": "Str", "c": " der " },
+      {
+        "t": "Link",
+        "c": [
+          ["", [], []],
+          [{ "t": "Str", "c": "Technischen Universit\u00e4t Berlin" }],
+          ["https://www.tu-berlin.de/", ""]
+        ]
+      },
+      { "t": "Str", "c": " entwickelt." }
+    ]
+  },
+  {
+    "t": "Para",
+    "c": [
+      {
+        "t": "Link",
+        "c": [
+          ["", [], []],
+          [
+            {
+              "t": "Image",
+              "c": [
+                ["", [], []],
+                [{ "t": "Str", "c": "Technische Universit\u00e4t Berlin" }],
+                ["logo-tu-berlin.svg", "Technische Universit\u00e4t Berlin"]
+              ]
+            }
+          ],
+          ["https://www.tu-berlin.de/", ""]
+        ]
+      }
+    ]
+  }
+]

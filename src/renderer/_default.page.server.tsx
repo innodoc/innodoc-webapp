@@ -21,7 +21,7 @@ import type { PageContextServer } from '@/types/page'
 import PageShell from '@/ui/components/PageShell/PageShell'
 import getI18n from '@/utils/getI18n'
 
-import { loadManifest } from './fetchData'
+import { fetchContent, fetchManifest, fetchPageContent, fetchSectionContent } from './fetchData'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const baseLocalesPath = path.resolve(dirname, '..', '..', 'public', 'locales')
@@ -61,8 +61,16 @@ async function onBeforeRender({ locale, Page, pageProps, url }: PageContextServe
   store.dispatch(changeUrlWithoutLocale(url))
   store.dispatch(changeLocale(locale))
 
-  // Fetch course manifest
-  await loadManifest(store)
+  // Fetch data
+  const fetchPromises = [
+    fetchManifest(store),
+    fetchContent(store, { locale, path: 'footerA' }),
+    fetchContent(store, { locale, path: 'footerB' }),
+    pageProps.pageId !== undefined && fetchPageContent(store, { locale, id: pageProps.pageId }),
+    pageProps.sectionPath !== undefined &&
+      fetchSectionContent(store, { locale, path: pageProps.sectionPath }),
+  ]
+  await Promise.all(fetchPromises)
 
   // Assert we received locales from manifest
   const locales = selectLocales(store.getState())

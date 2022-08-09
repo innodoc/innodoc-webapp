@@ -15,7 +15,8 @@ import { useTranslation } from 'react-i18next'
 import { selectNavPages } from '@/store/selectors/content'
 import { selectUrlWithoutLocale } from '@/store/selectors/ui'
 import Icon from '@/ui/components/common/Icon'
-import Link, { PageLink } from '@/ui/components/common/Link'
+import InternalLink from '@/ui/components/common/link/InternalLink'
+import PageLink from '@/ui/components/common/link/PageLink'
 import { useSelector } from '@/ui/hooks/store'
 import { pageUrl } from '@/utils/url'
 
@@ -71,11 +72,11 @@ function MobileMenu() {
               </ListItemButton>
             </ListItem>
           ))}
-          {otherPages.map(({ icon, label, to }) => (
+          {otherPages.map(({ icon, title, to }) => (
             <ListItem disablePadding key={to} onClick={closeDrawer}>
-              <ListItemButton component={Link} to={to} selected={urlWithoutLocale === to}>
+              <ListItemButton component={InternalLink} to={to} selected={urlWithoutLocale === to}>
                 <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText primary={t(label)} />
+                <ListItemText primary={t(title)} />
               </ListItemButton>
             </ListItem>
           ))}

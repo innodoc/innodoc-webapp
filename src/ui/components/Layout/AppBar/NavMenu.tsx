@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next'
 
 import { selectNavPages } from '@/store/selectors/content'
 import Icon from '@/ui/components/common/Icon'
-import Link, { PageLink } from '@/ui/components/common/Link'
+import InternalLink from '@/ui/components/common/link/InternalLink'
+import PageLink from '@/ui/components/common/link/PageLink'
 import { useSelector } from '@/ui/hooks/store'
 
 import { otherPagesNav } from './otherPages'
@@ -50,8 +51,8 @@ function NavMenu() {
           {shortTitle || title}
         </StyledNavButton>
       ))}
-      {otherPagesNav.map(({ icon, to, title }) => (
-        <StyledNavButton component={Link} key={to} startIcon={icon} to={to}>
+      {otherPagesNav.map(({ icon, title, to }) => (
+        <StyledNavButton component={InternalLink} key={to} startIcon={icon} to={to}>
           {t(title)}
         </StyledNavButton>
       ))}

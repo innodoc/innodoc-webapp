@@ -1,14 +1,11 @@
-import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+
+import PageHeader from '@/ui/components/common/PageHeader'
 
 function TocPage() {
   const { t } = useTranslation()
 
-  return (
-    <>
-      <Typography variant="h1">{t('internalPages.toc')}</Typography>
-    </>
-  )
+  return <PageHeader>{t('internalPages.toc')}</PageHeader>
 }
 
 export { TocPage as Page }
