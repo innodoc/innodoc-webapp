@@ -22,7 +22,7 @@ function UserMenu() {
 
   const onOpenMenu = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)
 
-  const openUserMenuLabel = t('header.openUserMenu')
+  const openUserMenuLabel = t('nav.openUserMenu')
 
   return (
     <Box sx={{ flexGrow: 0, ml: 1 }}>

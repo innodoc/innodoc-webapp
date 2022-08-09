@@ -31,7 +31,7 @@ function LanguageSwitcher() {
       <MenuToggleButtonGroup
         onChange={onChange}
         options={options}
-        tooltipText={t('common.changeLanguage')}
+        tooltipText={t('nav.changeLanguage')}
         value={locale}
       />
     )

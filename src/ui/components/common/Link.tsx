@@ -4,13 +4,14 @@ import { forwardRef, type ReactNode } from 'react'
 import { selectLocale, selectUrlWithoutLocale } from '@/store/selectors/ui'
 import { Page } from '@/types/api'
 import { useSelector } from '@/ui/hooks/store'
+import { pageUrl } from '@/utils/url'
 
 const LinkWithLocale = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   { to, children, ...other },
   ref
 ) {
   return (
-    <a href={to} ref={ref} {...other}>
+    <a {...other} href={to} ref={ref}>
       {children}
     </a>
   )
@@ -49,7 +50,7 @@ const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
   { pageId, ...other },
   ref
 ) {
-  return <Link to={`/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/${pageId}`} ref={ref} {...other} />
+  return <Link to={pageUrl(pageId)} ref={ref} {...other} />
 })
 
 type PageLinkProps = Omit<LinkProps, 'to'> & {

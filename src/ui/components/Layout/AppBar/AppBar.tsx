@@ -7,8 +7,8 @@ import UserMenu from './UserMenu/UserMenu'
 
 function AppBar() {
   return (
-    <MuiAppBar position="relative">
-      <Container maxWidth="xl">
+    <MuiAppBar color="transparent" position="relative" sx={{ boxShadow: 1 }}>
+      <Container disableGutters maxWidth="md">
         <Toolbar variant="dense">
           <MobileMenu />
           <Logo />

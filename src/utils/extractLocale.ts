@@ -19,4 +19,4 @@ type ExtractedLocaleInfo = {
   urlWithoutLocale: string
 }
 
-export { extractLocale }
+export default extractLocale

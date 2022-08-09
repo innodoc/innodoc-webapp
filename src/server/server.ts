@@ -5,8 +5,8 @@ import dotenv from 'dotenv'
 import express, { type RequestHandler } from 'express'
 import { renderPage } from 'vite-plugin-ssr'
 
+import extractLocale from '../utils/extractLocale'
 import fetchManifest from '../utils/fetchManifest'
-import { extractLocale } from '../utils/locales'
 
 import { isErrnoException } from './types'
 

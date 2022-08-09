@@ -22,12 +22,12 @@ function ThemeToggler() {
   const options: Option[] = [
     {
       component: <Icon fontSize="small" name="mdi:weather-night" />,
-      label: t('common.theme.dark'),
+      label: t('nav.theme.dark'),
       value: 'dark',
     },
     {
       component: <Icon fontSize="small" name="mdi:weather-sunny" />,
-      label: t('common.theme.light'),
+      label: t('nav.theme.light'),
       value: 'light',
     },
   ]
@@ -36,7 +36,7 @@ function ThemeToggler() {
     <MenuToggleButtonGroup
       onChange={onChange}
       options={options}
-      tooltipText={t('common.theme.switch')}
+      tooltipText={t('nav.theme.switch')}
       value={selectedTheme}
     />
   )

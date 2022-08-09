@@ -7,26 +7,22 @@ import Icon from '@/ui/components/common/Icon'
 import Link, { PageLink } from '@/ui/components/common/Link'
 import { useSelector } from '@/ui/hooks/store'
 
-const NavButton = forwardRef<HTMLButtonElement | null, Omit<ButtonProps, 'size'>>(
-  function NavButton(props, ref) {
-    return <Button ref={ref} size="small" {...props} />
-  }
-)
+import otherPages from './otherPages'
+
+const NavButton = forwardRef<HTMLButtonElement | null, ButtonProps>(function NavButton(props, ref) {
+  return <Button color="inherit" ref={ref} size="small" {...props} />
+})
 
 const StyledNavButton = styled(NavButton)({
-  color: 'rgb(255 255 255 / 80%)',
   textDecoration: 'underline',
   textDecorationColor: 'rgb(255 255 255 / 0%)',
   textTransform: 'inherit',
   transitionProperty: 'background-color, box-shadow, border-color, color, text-decoration-color',
   '&:hover': {
-    color: 'white',
     textDecoration: 'underline',
-    textDecorationColor: 'rgb(255 255 255 / 0%)',
   },
   '&.active': {
-    color: 'white',
-    textDecorationColor: 'rgb(255 255 255 / 100%)',
+    textDecoration: 'underline',
   },
 }) as typeof Button
 
@@ -55,9 +51,11 @@ function NavMenu() {
           {title}
         </StyledNavButton>
       ))}
-      <StyledNavButton component={Link} startIcon={<Icon name="mdi:table-of-contents" />} to="/toc">
-        {t('common.toc')}
-      </StyledNavButton>
+      {otherPages.map(({ icon, label, to }) => (
+        <StyledNavButton component={Link} key={to} startIcon={icon} to={to}>
+          {t(label)}
+        </StyledNavButton>
+      ))}
     </Stack>
   )
 }

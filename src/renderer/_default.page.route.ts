@@ -1,5 +1,5 @@
 import { PageContextServer } from '@/types/page'
-import { extractLocale } from '@/utils/locales'
+import extractLocale from '@/utils/extractLocale'
 
 // Extract locale on client-side navigation
 function onBeforeRoute(pageContext: PageContextServer) {
