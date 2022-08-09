@@ -1,4 +1,9 @@
 {
+  "internalPages": {
+    "indexPage": "Index",
+    "progress": "Progress",
+    "toc": "Table of contents"
+  },
   "languages": {
     "de": "Deutsch",
     "en": "English"
@@ -11,7 +16,6 @@
       "dark": "Dark",
       "light": "Light",
       "switch": "Switch theme"
-    },
-    "toc": "Table of contents"
+    }
   }
 }

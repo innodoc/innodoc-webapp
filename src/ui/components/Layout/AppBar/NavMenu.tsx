@@ -7,7 +7,7 @@ import Icon from '@/ui/components/common/Icon'
 import Link, { PageLink } from '@/ui/components/common/Link'
 import { useSelector } from '@/ui/hooks/store'
 
-import otherPages from './otherPages'
+import { otherPagesNav } from './otherPages'
 
 const NavButton = forwardRef<HTMLButtonElement | null, ButtonProps>(function NavButton(props, ref) {
   return <Button color="inherit" ref={ref} size="small" {...props} />
@@ -28,7 +28,6 @@ const StyledNavButton = styled(NavButton)({
 
 function NavMenu() {
   const { t } = useTranslation()
-
   const coursePages = useSelector(selectNavPages)
 
   return (
@@ -41,19 +40,19 @@ function NavMenu() {
         justifyContent: 'center',
       }}
     >
-      {coursePages.map(({ id, icon, title }) => (
+      {coursePages.map(({ id, icon, title, shortTitle }) => (
         <StyledNavButton
           component={PageLink}
           key={id}
           pageId={id}
           startIcon={icon !== undefined ? <Icon name={icon} /> : undefined}
         >
-          {title}
+          {shortTitle || title}
         </StyledNavButton>
       ))}
-      {otherPages.map(({ icon, label, to }) => (
+      {otherPagesNav.map(({ icon, to, title }) => (
         <StyledNavButton component={Link} key={to} startIcon={icon} to={to}>
-          {t(label)}
+          {t(title)}
         </StyledNavButton>
       ))}
     </Stack>

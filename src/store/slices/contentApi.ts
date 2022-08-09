@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import camelcaseKeys from 'camelcase-keys'
 
 import type { Manifest } from '@/types/api'
 
@@ -17,6 +18,10 @@ const contentApi = createApi({
   endpoints: (builder) => ({
     getManifest: builder.query<Manifest, void>({
       query: () => 'manifest.json',
+      transformResponse: (response) =>
+        (response !== null && typeof response === 'object'
+          ? camelcaseKeys(response, { deep: true, stopPaths: ['boxes', 'indexTerms', 'mathjax'] })
+          : {}) as Manifest,
     }),
   }),
 })

@@ -1,4 +1,9 @@
 {
+  "internalPages": {
+    "indexPage": "Stichwortverzeichnis",
+    "progress": "Fortschritt",
+    "toc": "Inhaltsverzeichnis"
+  },
   "languages": {
     "de": "Deutsch",
     "en": "English"
@@ -11,7 +16,6 @@
       "dark": "Dunkel",
       "light": "Hell",
       "switch": "Farbthema umschalten"
-    },
-    "toc": "Inhaltsverzeichnis"
+    }
   }
 }

@@ -6,7 +6,7 @@ function TocPage() {
 
   return (
     <>
-      <Typography variant="h1">{t('nav.toc')}</Typography>
+      <Typography variant="h1">{t('internalPages.toc')}</Typography>
     </>
   )
 }

@@ -1,19 +1,38 @@
 import type { ReactNode } from 'react'
 
+import type { PageLinkLocation } from '@/types/common'
 import Icon from '@/ui/components/common/Icon'
 
 const otherPages = [
   {
+    icon: <Icon name="mdi:chart-line" />,
+    linked: ['nav'],
+    title: 'internalPages.progress',
+    to: '/progress',
+  },
+  {
     icon: <Icon name="mdi:table-of-contents" />,
-    label: 'nav.toc',
+    linked: ['footer'],
+    title: 'internalPages.toc',
     to: '/toc',
+  },
+  {
+    icon: <Icon name="mdi:list-box" />,
+    linked: ['footer'],
+    title: 'internalPages.indexPage',
+    to: '/index',
   },
 ] as Page[]
 
 type Page = {
   icon: ReactNode
-  label: string
+  linked: PageLinkLocation[]
+  title: string
   to: string
 }
 
+const otherPagesFooter = otherPages.filter((page) => page.linked.includes('footer'))
+const otherPagesNav = otherPages.filter((page) => page.linked.includes('nav'))
+
+export { otherPagesFooter, otherPagesNav }
 export default otherPages
