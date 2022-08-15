@@ -14,10 +14,20 @@ function makeTheme(paletteMode: PaletteMode) {
   return responsiveFontSizes(
     createTheme({
       palette: { mode: paletteMode },
+
       typography: {
+        // Custom font
+        fontFamily: 'Lato, Helvetica Neue, Arial, Helvetica, sans-serif',
+
         // Scale down huge MUI font sizes
-        h1: { fontSize: '2rem' },
-        h2: { fontSize: '1.75rem' },
+        h1: {
+          fontSize: '2rem',
+          fontWeight: 'bold',
+        },
+        h2: {
+          fontSize: '1.75rem',
+          fontWeight: 'bold',
+        },
         h3: { fontSize: '1.5rem' },
         h4: { fontSize: '1.3rem' },
         h5: { fontSize: '1.1rem' },

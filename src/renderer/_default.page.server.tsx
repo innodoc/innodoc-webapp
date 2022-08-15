@@ -8,10 +8,10 @@ import { renderToString } from 'react-dom/server'
 import { escapeInject, dangerouslySkipEscape, RenderErrorPage } from 'vite-plugin-ssr'
 
 // Material UI font
-import '@fontsource/roboto/300.css'
-import '@fontsource/roboto/400.css'
-import '@fontsource/roboto/500.css'
-import '@fontsource/roboto/700.css'
+import '@fontsource/lato/400.css'
+import '@fontsource/lato/400-italic.css'
+import '@fontsource/lato/700.css'
+import '@fontsource/lato/700-italic.css'
 
 import logoUrl from '@/assets/logo.svg'
 import makeStore from '@/store/makeStore'

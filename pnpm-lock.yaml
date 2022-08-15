@@ -15,7 +15,7 @@ specifiers:
   '@emotion/react': ^11.10.0
   '@emotion/server': ^11.4.0
   '@emotion/styled': ^11.10.0
-  '@fontsource/roboto': ^4.5.7
+  '@fontsource/lato': ^4.5.9
   '@iconify-json/mdi': ^1.1.29
   '@iconify/types': ^1.1.0
   '@iconify/utils': 2.0.0-beta.4
@@ -73,7 +73,7 @@ dependencies:
   '@emotion/react': 11.10.0_dekd3qhq25os2zmp2sxj6oaoou
   '@emotion/server': 11.10.0
   '@emotion/styled': 11.10.0_cvyjuqpqzsw2jroi6znapo3uiq
-  '@fontsource/roboto': 4.5.7
+  '@fontsource/lato': 4.5.9
   '@iconify-json/mdi': 1.1.29
   '@iconify/utils': 2.0.0-beta.4
   '@mui/material': 5.9.3_x23mn2l7fw5e56g6ttw67k5uxm
@@ -1510,8 +1510,8 @@ packages:
       - supports-color
     dev: true
 
-  /@fontsource/roboto/4.5.7:
-    resolution: {integrity: sha512-m57UMER23Mk6Drg9OjtHW1Y+0KPGyZfE5XJoPTOsLARLar6013kJj4X2HICt+iFLJqIgTahA/QAvSn9lwF1EEw==}
+  /@fontsource/lato/4.5.9:
+    resolution: {integrity: sha512-VkDnHBbPee/KMAUuBwe3rEKRDECo1MsA+I+ucZNU6FYdHrsv+SKpYgNr7nk/OhoaGrn9PrpXcmcd9eoD4J3Y6Q==}
     dev: false
 
   /@humanwhocodes/config-array/0.10.4:

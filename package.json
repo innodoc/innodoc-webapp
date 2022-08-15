@@ -6,7 +6,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.10.0",
-    "@fontsource/roboto": "^4.5.7",
+    "@fontsource/lato": "^4.5.9",
     "@iconify-json/mdi": "^1.1.29",
     "@iconify/utils": "2.0.0-beta.4",
     "@mui/material": "^5.9.2",
