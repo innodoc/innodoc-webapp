@@ -30,7 +30,7 @@ const i18nBackendOpts = {
   addPath: path.join(baseLocalesPath, '{{lng}}', '{{ns}}.missing.json'),
 }
 
-const passToClient = ['locale', 'PRELOADED_STATE', 'pageProps']
+const passToClient = ['locale', 'preloadedState', 'pageProps']
 
 function render({ documentProps, pageHtml, emotionStyleTags }: PageContextServer) {
   const title = (documentProps && documentProps.title) || 'TODO'
@@ -103,14 +103,14 @@ async function onBeforeRender({ locale, Page, pageProps, url }: PageContextServe
   const emotionStyleTags = constructStyleTagsFromChunks(chunks)
 
   // Grab populated state
-  const PRELOADED_STATE = store.getState()
+  const preloadedState = store.getState()
 
   return {
     pageContext: {
       emotionStyleTags,
       pageHtml,
       pageProps,
-      PRELOADED_STATE,
+      preloadedState,
     },
   }
 }

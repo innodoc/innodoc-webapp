@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 import Icon from '@/ui/components/common/Icon'
 
 import LanguageSwitcher from './LanguageSwitcher'
-import ThemeToggler from './ThemeToggler'
+import PaletteModeToggler from './PaletteModeToggler'
 
 function UserMenu() {
   const { t } = useTranslation()
@@ -27,10 +27,10 @@ function UserMenu() {
 
   const onOpenMenu = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)
 
-  const themeAndLanguageSwitcher = smDownMatches
+  const paletteModeAndLanguageSwitcher = smDownMatches
     ? [
         <LanguageSwitcher key="languageSwitcher" />,
-        <ThemeToggler key="themeToggler" />,
+        <PaletteModeToggler key="paletteModeToggler" />,
         <Divider key="divider" sx={{ mt: 0.7 }} />,
       ]
     : null
@@ -64,7 +64,7 @@ function UserMenu() {
           horizontal: 'right',
         }}
       >
-        {themeAndLanguageSwitcher}
+        {paletteModeAndLanguageSwitcher}
         <MenuItem>
           <ListItemIcon>
             <Icon name="mdi:login" />

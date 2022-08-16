@@ -12,10 +12,10 @@
     "close": "Schließen",
     "language": "Sprache",
     "openUserMenu": "Nutzermenü",
-    "theme": {
+    "paletteMode": {
       "dark": "Dunkel",
       "light": "Hell",
-      "switch": "Farbthema umschalten"
+      "switch": "Farbmodus umschalten"
     }
   }
 }

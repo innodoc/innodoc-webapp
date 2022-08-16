@@ -9,7 +9,7 @@ import type { Locale } from './common'
 
 /** Custom client-side page context */
 export type PageContextClient = Omit<PageContextBuiltInClient, 'Page'> &
-  Pick<PageContextServer, 'documentProps' | 'locale' | 'Page' | 'pageProps' | 'PRELOADED_STATE'>
+  Pick<PageContextServer, 'documentProps' | 'locale' | 'Page' | 'pageProps' | 'preloadedState'>
 
 /** Custom server-side page context */
 export type PageContextServer = Omit<PageContextBuiltIn, 'Page'> & {
@@ -20,7 +20,7 @@ export type PageContextServer = Omit<PageContextBuiltIn, 'Page'> & {
   pageHtml: string
 
   /** Preloaded store state */
-  PRELOADED_STATE?: RootState
+  preloadedState: RootState
 
   /** Document meta data */
   documentProps?: {

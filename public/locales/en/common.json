@@ -12,10 +12,10 @@
     "close": "Close",
     "language": "Language",
     "openUserMenu": "User menu",
-    "theme": {
+    "paletteMode": {
       "dark": "Dark",
       "light": "Light",
-      "switch": "Switch theme"
+      "switch": "Switch color mode"
     }
   }
 }

@@ -9,16 +9,27 @@ import { RootState } from '../makeStore'
 const NAME = 'ui'
 
 interface UiSliceState {
+  /** User-selected color palette */
+  customPaletteMode: PaletteMode | null
+
+  /** Current locale */
   locale: Locale
+
+  /** Table of contents drawer activated */
   showTocDrawer: boolean
-  theme: PaletteMode | null
+
+  /** System prefered palette mode (`prefers-color-scheme`) */
+  systemPaletteMode: PaletteMode | null
+
+  /** Current URL path without locale prefix */
   urlWithoutLocale: string | null
 }
 
 const initialState: UiSliceState = {
+  customPaletteMode: null,
   locale: 'en',
   showTocDrawer: false,
-  theme: null,
+  systemPaletteMode: null,
   urlWithoutLocale: null,
 }
 
@@ -27,14 +38,19 @@ const uiSlice = createSlice({
   initialState,
 
   reducers: {
+    /** Switch user-selected palette mode */
+    changeCustomPaletteMode(state, action: PayloadAction<PaletteMode>) {
+      state.customPaletteMode = action.payload
+    },
+
     /** Change locale */
     changeLocale(state, action: PayloadAction<Locale>) {
       state.locale = action.payload
     },
 
-    /** Switch theme */
-    changeTheme(state, action: PayloadAction<PaletteMode>) {
-      state.theme = action.payload
+    /** Change system palette mode (`prefers-color-scheme`) */
+    changeSystemPaletteMode(state, action: PayloadAction<PaletteMode>) {
+      state.systemPaletteMode = action.payload
     },
 
     /** Update url info */
@@ -51,6 +67,11 @@ const uiSlice = createSlice({
 
 export const selectUi = (state: RootState) => state[uiSlice.name]
 
-export const { changeLocale, changeTheme, toggleTocDrawer, changeUrlWithoutLocale } =
-  uiSlice.actions
+export const {
+  changeCustomPaletteMode,
+  changeLocale,
+  changeSystemPaletteMode,
+  changeUrlWithoutLocale,
+  toggleTocDrawer,
+} = uiSlice.actions
 export default uiSlice

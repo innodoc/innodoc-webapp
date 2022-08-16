@@ -51,14 +51,14 @@ async function render({
   locale,
   Page,
   pageProps,
-  PRELOADED_STATE,
+  preloadedState,
   url,
 }: PageContextClient) {
   findRootElement()
 
   if (store === undefined) {
     // Create store on first hydration
-    store = makeStore(PRELOADED_STATE)
+    store = makeStore(preloadedState)
   } else {
     // Update store on navigation
     store.dispatch(changeUrlWithoutLocale(url))

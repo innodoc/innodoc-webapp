@@ -11,7 +11,7 @@ import LanguageMenu from './LanguageMenu'
 import Logo from './Logo'
 import MobileMenu from './MobileMenu'
 import NavMenu from './NavMenu'
-import ThemeMenu from './ThemeMenu'
+import PaletteModeMenu from './PaletteModeMenu'
 import UserMenu from './UserMenu/UserMenu'
 
 function AppBar() {
@@ -20,7 +20,7 @@ function AppBar() {
 
   const auxIconMenus = smUpMatches ? (
     <>
-      <ThemeMenu />
+      <PaletteModeMenu />
       <LanguageMenu />
     </>
   ) : null

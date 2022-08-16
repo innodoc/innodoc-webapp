@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import type { PreloadedState, StateFromReducersMapObject } from '@reduxjs/toolkit'
 
 import localeChangeMiddleware from './middlewares/localeChangeMiddleware'
+import paletteModeCookieMiddleware from './middlewares/paletteModeCookieMiddleware'
 import contentApi from './slices/contentApi'
 import uiSlice from './slices/uiSlice'
 
@@ -18,8 +19,10 @@ function makeStore(preloadedState?: PreloadedState<RootState>) {
       if (import.meta.env.SSR) {
         return middleware
       }
-      // Only relevant for client-side routing
-      return middleware.prepend(localeChangeMiddleware.middleware)
+      // Only relevant for client
+      return middleware
+        .prepend(localeChangeMiddleware.middleware)
+        .prepend(paletteModeCookieMiddleware.middleware)
     },
     preloadedState,
     reducer,

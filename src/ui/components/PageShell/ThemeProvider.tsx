@@ -6,14 +6,16 @@ import {
 } from '@mui/material/styles'
 import { useEffect, useMemo, type ReactNode } from 'react'
 
-import { selectTheme } from '@/store/selectors/ui'
-import { changeTheme } from '@/store/slices/uiSlice'
+import { COOKIE_NAME_PALETTE_MODE } from '@/constants'
+import { selectPaletteMode } from '@/store/selectors/ui'
+import { changeCustomPaletteMode, changeSystemPaletteMode } from '@/store/slices/uiSlice'
 import { useDispatch, useSelector } from '@/ui/hooks/store'
+import { readCookie } from '@/utils/cookies'
 
-function makeTheme(paletteMode: PaletteMode) {
+function makeTheme(paletteMode: PaletteMode | null) {
   return responsiveFontSizes(
     createTheme({
-      palette: { mode: paletteMode },
+      palette: paletteMode === null ? undefined : { mode: paletteMode },
 
       typography: {
         // Custom font
@@ -37,23 +39,29 @@ function makeTheme(paletteMode: PaletteMode) {
   )
 }
 
-// Use system theme unless overridden by user
 function ThemeProvider({ children }: ThemeProviderProps) {
   const dispatch = useDispatch()
+
+  // Mode from store
+  const paletteMode = useSelector(selectPaletteMode)
+
+  // System preference
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
-  const prefersPaletteMode: PaletteMode = prefersDarkMode ? 'dark' : 'light'
-  const selectedTheme = useSelector(selectTheme)
 
+  // Sync system preference to store
   useEffect(() => {
-    if (selectedTheme === null) {
-      dispatch(changeTheme(prefersPaletteMode))
-    }
-  }, [dispatch, selectedTheme, prefersPaletteMode])
+    dispatch(changeSystemPaletteMode(prefersDarkMode ? 'dark' : 'light'))
+  }, [dispatch, prefersDarkMode])
 
-  const theme = useMemo(
-    () => makeTheme(selectedTheme || prefersPaletteMode),
-    [prefersPaletteMode, selectedTheme]
-  )
+  // Restore cookie
+  useEffect(() => {
+    const value = readCookie(COOKIE_NAME_PALETTE_MODE)
+    if (value !== undefined && ['dark', 'light'].includes(value)) {
+      dispatch(changeCustomPaletteMode(value as PaletteMode))
+    }
+  }, [dispatch])
+
+  const theme = useMemo(() => makeTheme(paletteMode), [paletteMode])
   return <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
 }
 
