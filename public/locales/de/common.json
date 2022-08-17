@@ -1,8 +1,23 @@
 {
   "internalPages": {
-    "indexPage": "Stichwortverzeichnis",
-    "progress": "Fortschritt",
-    "toc": "Inhaltsverzeichnis"
+    "indexPage": {
+      "title": "Stichwortverzeichnis"
+    },
+    "login": {
+      "email": "E-Mail-Adresse",
+      "forgotPassword": "Passwort vergessen?",
+      "password": "Passwort",
+      "rememberMe": "Remember me",
+      "signIn": "Anmelden",
+      "signUpLink": "Noch kein Konto? Anmelden",
+      "title": "Login"
+    },
+    "progress": {
+      "title": "Fortschritt"
+    },
+    "toc": {
+      "title": "Inhaltsverzeichnis"
+    }
   },
   "languages": {
     "de": "Deutsch",
@@ -11,11 +26,13 @@
   "nav": {
     "close": "Schließen",
     "language": "Sprache",
+    "login": "Login",
     "openUserMenu": "Nutzermenü",
     "paletteMode": {
       "dark": "Dunkel",
       "light": "Hell",
-      "switch": "Farbmodus umschalten"
+      "switch": "Farbmodus umschalten",
+      "title": "Farbmodus"
     }
   }
 }

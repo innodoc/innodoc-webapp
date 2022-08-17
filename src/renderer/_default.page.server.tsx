@@ -53,7 +53,7 @@ function render({ documentProps, pageHtml, emotionStyleTags }: PageContextServer
     </html>`
 }
 
-async function onBeforeRender({ locale, Page, pageProps, url }: PageContextServer) {
+async function onBeforeRender({ locale, Page, pageProps = {}, url }: PageContextServer) {
   // Initialize store
   const store = makeStore()
 
@@ -62,15 +62,19 @@ async function onBeforeRender({ locale, Page, pageProps, url }: PageContextServe
   store.dispatch(changeLocale(locale))
 
   // Fetch data
-  const fetchPromises = [
-    fetchManifest(store),
-    fetchContent(store, { locale, path: 'footerA' }),
-    fetchContent(store, { locale, path: 'footerB' }),
-    pageProps.pageId !== undefined && fetchPageContent(store, { locale, id: pageProps.pageId }),
-    pageProps.sectionPath !== undefined &&
-      fetchSectionContent(store, { locale, path: pageProps.sectionPath }),
-  ]
-  await Promise.all(fetchPromises)
+  await Promise.all(
+    [
+      fetchManifest(store),
+      fetchContent(store, { locale, path: 'footerA' }),
+      fetchContent(store, { locale, path: 'footerB' }),
+      pageProps.pageId !== undefined
+        ? fetchPageContent(store, { locale, id: pageProps.pageId })
+        : false,
+      pageProps.sectionPath !== undefined
+        ? fetchSectionContent(store, { locale, path: pageProps.sectionPath })
+        : false,
+    ].filter(Boolean)
+  )
 
   // Assert we received locales from manifest
   const locales = selectLocales(store.getState())

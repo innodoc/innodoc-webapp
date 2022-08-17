@@ -40,6 +40,18 @@ async function scanIconNames() {
                 }
               })
           }
+          // All other components
+          else {
+            // iconName attribute
+            node.openingElement.attributes
+              .filter(isJSXAttribute)
+              .filter((a) => a.name.name === 'iconName')
+              .forEach((attribute) => {
+                if (isLiteral(attribute.value) && typeof attribute.value.value === 'string') {
+                  iconNames.add(attribute.value.value)
+                }
+              })
+          }
         },
       }
     },

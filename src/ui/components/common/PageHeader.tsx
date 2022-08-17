@@ -1,9 +1,15 @@
 import { Typography } from '@mui/material'
 import { ReactNode } from 'react'
 
-function PageHeader({ children }: PageHeaderProps) {
+import Icon from './Icon'
+
+function PageHeader({ children, iconName }: PageHeaderProps) {
+  const icon =
+    iconName !== undefined ? <Icon fontSize="inherit" name={iconName} sx={{ mr: 1 }} /> : null
+
   return (
-    <Typography gutterBottom variant="h1">
+    <Typography gutterBottom sx={{ alignItems: 'center', display: 'inline-flex' }} variant="h1">
+      {icon}
       {children}
     </Typography>
   )
@@ -11,6 +17,7 @@ function PageHeader({ children }: PageHeaderProps) {
 
 type PageHeaderProps = {
   children: ReactNode
+  iconName?: string
 }
 
 export default PageHeader

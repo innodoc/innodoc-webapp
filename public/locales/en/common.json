@@ -1,8 +1,23 @@
 {
   "internalPages": {
-    "indexPage": "Index",
-    "progress": "Progress",
-    "toc": "Table of contents"
+    "indexPage": {
+      "title": "Index"
+    },
+    "login": {
+      "email": "Email Address",
+      "forgotPassword": "Forgot password?",
+      "password": "Password",
+      "rememberMe": "Remember me",
+      "signIn": "Sign In",
+      "signUpLink": "Don't have an account? Sign Up",
+      "title": "Login"
+    },
+    "progress": {
+      "title": "Progress"
+    },
+    "toc": {
+      "title": "Table of contents"
+    }
   },
   "languages": {
     "de": "Deutsch",
@@ -11,11 +26,13 @@
   "nav": {
     "close": "Close",
     "language": "Language",
+    "login": "Login",
     "openUserMenu": "User menu",
     "paletteMode": {
       "dark": "Dark",
       "light": "Light",
-      "switch": "Switch color mode"
+      "switch": "Switch color mode",
+      "title": "Color mode"
     }
   }
 }

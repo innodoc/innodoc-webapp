@@ -10,13 +10,6 @@ function PaletteModeMenu() {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const currentPaletteMode = useSelector(selectPaletteMode)
-
-  const icon =
-    currentPaletteMode === 'dark' ? (
-      <Icon name="mdi:weather-night" />
-    ) : (
-      <Icon name="mdi:weather-sunny" />
-    )
   const paletteModeMenuLabel = t('nav.paletteMode.switch')
 
   const onClick = () => {
@@ -27,7 +20,7 @@ function PaletteModeMenu() {
     <Box sx={{ flexGrow: 0, ml: 1 }}>
       <Tooltip arrow title={paletteModeMenuLabel}>
         <IconButton aria-label={paletteModeMenuLabel} color="inherit" onClick={onClick}>
-          {icon}
+          <Icon name="mdi:theme-light-dark" />
         </IconButton>
       </Tooltip>
     </Box>

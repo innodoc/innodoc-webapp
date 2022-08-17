@@ -19,7 +19,7 @@ function ContentPage({ pageId }: ContentPageProps) {
 
   return (
     <>
-      <PageHeader>{page.title}</PageHeader>
+      <PageHeader iconName={page.icon}>{page.title}</PageHeader>
       <ContentTree content={content} />
     </>
   )
