@@ -15,7 +15,7 @@ const linkSx = { alignItems: 'center', display: 'flex', '& svg': { mr: 1 } }
 
 function Footer() {
   const { t } = useTranslation()
-  const title = useSelector(selectCourseTitle)
+  const courseTitle = useSelector(selectCourseTitle)
   const coursePages = useSelector(selectFooterPages)
   const locale = useSelector(selectLocale)
   const { data: blocksFooterA } = useGetContentQuery({ locale, path: 'footerA' })
@@ -31,7 +31,7 @@ function Footer() {
   const courseLinks = coursePages.map(({ icon, id, title }) => (
     <MuiLink component={PageLink} key={`page-${id}`} pageId={id} sx={linkSx} underline="hover">
       {icon !== undefined ? <Icon name={icon} /> : null}
-      {title ? t(title) : null}
+      {title || null}
     </MuiLink>
   ))
 
@@ -44,7 +44,7 @@ function Footer() {
     <Grid container spacing={2}>
       <Grid item xs={12} md={3}>
         <Typography variant="h4" gutterBottom>
-          {title}
+          {courseTitle}
         </Typography>
         <Stack spacing={1}>{[...internalLinks, ...courseLinks]}</Stack>
       </Grid>
