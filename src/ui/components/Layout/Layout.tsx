@@ -19,14 +19,19 @@ function Layout({ children }: LayoutProps) {
       </Container>
       <Box
         component="footer"
-        sx={{
+        sx={(theme) => ({
           color: 'white',
-          py: 3,
-          px: 2,
+          py: 5,
           mt: 'auto',
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light' ? theme.palette.grey[900] : theme.palette.grey[800],
-        }}
+          bgcolor: 'background.footer',
+          boxShadow:
+            theme.palette.mode === 'light'
+              ? 'inset 0 1rem 0.4rem -0.5rem rgba(0 0 0 / 35%)'
+              : 'inset 0 1rem 0.4rem -0.5rem rgba(0 0 0 / 5%)',
+          '& .MuiLink-root': {
+            color: theme.palette.mode === 'light' ? 'primary.light' : 'primary.main',
+          },
+        })}
       >
         <Container maxWidth="lg">
           <Footer />

@@ -1,9 +1,5 @@
 import { type PaletteMode, useMediaQuery } from '@mui/material'
-import {
-  createTheme,
-  responsiveFontSizes,
-  ThemeProvider as MuiThemeProvider,
-} from '@mui/material/styles'
+import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 import { useEffect, useMemo, type ReactNode } from 'react'
 
 import { COOKIE_NAME_PALETTE_MODE } from '@/constants'
@@ -11,33 +7,7 @@ import { selectPaletteMode } from '@/store/selectors/ui'
 import { changeCustomPaletteMode, changeSystemPaletteMode } from '@/store/slices/uiSlice'
 import { useDispatch, useSelector } from '@/ui/hooks/store'
 import { readCookie } from '@/utils/cookies'
-
-function makeTheme(paletteMode: PaletteMode | null) {
-  return responsiveFontSizes(
-    createTheme({
-      palette: paletteMode === null ? undefined : { mode: paletteMode },
-
-      typography: {
-        // Custom font
-        fontFamily: 'Lato, Helvetica Neue, Arial, Helvetica, sans-serif',
-
-        // Scale down huge MUI font sizes
-        h1: {
-          fontSize: '2rem',
-          fontWeight: 'bold',
-        },
-        h2: {
-          fontSize: '1.75rem',
-          fontWeight: 'bold',
-        },
-        h3: { fontSize: '1.5rem' },
-        h4: { fontSize: '1.3rem' },
-        h5: { fontSize: '1.1rem' },
-        h6: { fontSize: '1.05rem' },
-      },
-    })
-  )
-}
+import makeTheme from '@/utils/makeTheme'
 
 function ThemeProvider({ children }: ThemeProviderProps) {
   const dispatch = useDispatch()
@@ -61,7 +31,7 @@ function ThemeProvider({ children }: ThemeProviderProps) {
     }
   }, [dispatch])
 
-  const theme = useMemo(() => makeTheme(paletteMode), [paletteMode])
+  const theme = useMemo(() => makeTheme(paletteMode || 'light'), [paletteMode])
   return <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
 }
 
