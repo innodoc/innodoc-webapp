@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import { Page } from '@/types/api'
+import type { Page } from '@/types/api'
 import { pageUrl } from '@/utils/url'
 
 import InternalLink, { type InternalLinkProps } from './InternalLink'

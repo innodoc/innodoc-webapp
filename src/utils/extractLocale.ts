@@ -1,8 +1,12 @@
 import type { Locale } from '@/types/common'
 
 /** Split locale from URL, e.g. `/en/about` => `en`, `/about`. */
-function extractLocale(url: string, allowedLocales: readonly Locale[]): ExtractedLocaleInfo {
-  let locale = allowedLocales[0]
+function extractLocale(
+  url: string,
+  allowedLocales: readonly Locale[],
+  defaultLocale: Locale | undefined = undefined
+): ExtractedLocaleInfo {
+  let locale = defaultLocale === undefined ? allowedLocales[0] : defaultLocale
   let urlWithoutLocale = url
 
   const urlPaths = url.split('/')

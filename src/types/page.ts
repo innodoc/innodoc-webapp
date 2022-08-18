@@ -44,6 +44,9 @@ export type PageContextServer = Omit<PageContextBuiltIn, 'Page'> & {
 
   /** Preloaded store state */
   preloadedState: RootState
+
+  /** Instruct server to perform a redirect */
+  redirectTo?: string
 }
 
 /** Props to render a page */

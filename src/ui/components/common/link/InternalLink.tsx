@@ -15,10 +15,6 @@ const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(function L
   const locale = useSelector(selectLocale)
   const urlWithoutLocale = useSelector(selectUrlWithoutLocale)
 
-  if (locale === null) {
-    return <>{children}</>
-  }
-
   return (
     <a
       {...other}

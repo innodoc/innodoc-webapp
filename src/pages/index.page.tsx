@@ -1,5 +1,3 @@
-function IndexPage() {
-  return <div>Index</div>
-}
+// Dummy file-based route to match `/`
 
-export { IndexPage as Page }
+export {}

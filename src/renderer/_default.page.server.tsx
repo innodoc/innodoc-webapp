@@ -16,11 +16,12 @@ import '@fontsource/lato/700-italic.css'
 import logoUrl from '@/assets/logo.svg'
 import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '@/constants'
 import makeStore from '@/store/makeStore'
-import { selectLocales } from '@/store/selectors/content'
+import { selectHomeLink, selectLocales } from '@/store/selectors/content'
 import { changeLocale, changeUrlWithoutLocale } from '@/store/slices/uiSlice'
 import type { PageContextServer, QueryFactory } from '@/types/page'
 import PageShell from '@/ui/components/PageShell/PageShell'
 import getI18n from '@/utils/getI18n'
+import { replacePathPrefixes } from '@/utils/url'
 
 import { fetchContent, fetchManifest } from './fetchData'
 
@@ -40,12 +41,22 @@ const commonQueryFactories: QueryFactory[] = [
   (locale) => fetchContent({ locale, path: CONTENT_NAME_FOOTER_B }),
 ]
 
-function render({ documentProps, pageHtml, emotionStyleTags }: PageContextServer) {
+function render({
+  documentProps,
+  emotionStyleTags,
+  locale,
+  redirectTo,
+  pageHtml,
+}: PageContextServer) {
+  if (redirectTo !== undefined) {
+    return { pageContext: { redirectTo } }
+  }
+
   const title = (documentProps && documentProps.title) || 'TODO'
   const desc = (documentProps && documentProps.description) || 'TODO'
 
   return escapeInject`<!DOCTYPE html>
-    <html lang="en">
+    <html lang="${locale}">
       <head>
         <title>${title}</title>
         <link rel="icon" href="${logoUrl}" />
@@ -67,7 +78,7 @@ async function onBeforeRender({
   pageProps = {},
   pageQueryFactories = [],
   url,
-}: PageContextServer) {
+}: PageContextServer): Promise<{ pageContext: Partial<PageContextServer> }> {
   // Initialize store
   const store = makeStore()
 
@@ -91,6 +102,16 @@ async function onBeforeRender({
   // Check if locale is valid
   if (!locales.includes(locale)) {
     throw RenderErrorPage({ pageContext: { is404: true } })
+  }
+
+  // Redirect '/' to homeLink
+  const homeLink = selectHomeLink(store.getState())
+  if (url === '/' && homeLink !== undefined) {
+    return {
+      pageContext: {
+        redirectTo: `/${locale}${replacePathPrefixes(homeLink)}`,
+      },
+    }
   }
 
   // Initialize emotion cache

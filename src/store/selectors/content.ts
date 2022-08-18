@@ -8,7 +8,7 @@ import { selectLocale } from './ui'
 
 type TranslateFn = (locString?: LocalizedString) => string | undefined
 
-/** Select a translation function for localized content strings. */
+/** Select a translation function for localized content strings */
 const selectTranslateFn = createSelector(
   selectLocale,
   (locale): TranslateFn =>
@@ -16,19 +16,22 @@ const selectTranslateFn = createSelector(
       locale !== null && locString !== undefined ? locString[locale] : undefined
 )
 
-/** Select available locales. */
+/** Select available locales */
 export const selectLocales = createSelector(selectManifest, (manifest) => manifest?.languages || [])
 
-/** Select the course title. */
+/** Select the course title */
 export const selectCourseTitle = createSelector(
   [selectManifest, selectTranslateFn],
   (manifest, translate) => (manifest !== undefined ? translate(manifest.title) : undefined)
 )
 
-/** Select the course logo. */
+/** Select the course logo */
 export const selectCourseLogo = createSelector([selectManifest], (manifest) => manifest?.logo)
 
-/** Select pages. */
+/** Select `homeLink` */
+export const selectHomeLink = createSelector(selectManifest, (manifest) => manifest?.homeLink)
+
+/** Select pages */
 export const selectPages = createSelector(
   [selectManifest, selectTranslateFn],
   (manifest, translate) => {
@@ -53,7 +56,7 @@ export const selectFooterPages = createSelector([selectPages], (pages) =>
   pages.filter((page) => page.linked?.includes('footer'))
 )
 
-/** Select page. */
+/** Select page */
 export const selectPageById = createSelector(
   [selectPages, (_, pageId: Page['id']) => pageId],
   (pages, pageId) => pages.find((page) => page.id === pageId)

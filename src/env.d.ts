@@ -14,7 +14,7 @@ interface ImportMetaEnv {
   readonly INNODOC_PAGE_PATH_PREFIX: string
 
   /** URL path prefix for sections (e.g. `section`) */
-  readonly INNODOC_PAGE_SECTION_PREFIX: string
+  readonly INNODOC_SECTION_PATH_PREFIX: string
 }
 
 interface ImportMeta {
