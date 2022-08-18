@@ -20,7 +20,7 @@ const distDir = path.join(rootDir, 'dist')
 void startServer()
 
 async function startServer() {
-  // Fetch content locales
+  // Fetch manifest
   const { languages: locales } = await fetchManifest()
 
   const app = express()
@@ -42,7 +42,7 @@ async function startServer() {
 
     const viteServer = await vite.createServer({
       root: rootDir,
-      server: { middlewareMode: 'ssr' },
+      server: { middlewareMode: true },
     })
     app.use(viteServer.middlewares)
   }

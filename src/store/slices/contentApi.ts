@@ -4,7 +4,7 @@ import camelcaseKeys from 'camelcase-keys'
 import decamelize from 'decamelize'
 import type { Tree } from 'pandoc-filter'
 
-import type { Manifest } from '@/types/api'
+import type { Manifest, Page } from '@/types/api'
 
 const REDUCER_PATH = 'contentApi'
 
@@ -51,7 +51,7 @@ export type ContentFetchArgs = {
 
 export type PageContentFetchArgs = {
   locale: string
-  id: string
+  id: Page['id']
 }
 
 export type SectionContentFetchArgs = {
