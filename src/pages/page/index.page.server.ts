@@ -1,11 +1,18 @@
 import { onBeforeRender as onBeforeRenderDefault } from '@/renderer/_default.page.server'
-import { PageContextServer } from '@/types/page'
+import { fetchPageContent } from '@/renderer/fetchData'
+import type { PageContextServer } from '@/types/page'
 
-function onBeforeRender(pageContext: PageContextServer) {
-  // Pass pageId to page component
+async function onBeforeRender(pageContext: PageContextServer) {
+  const { pageId } = pageContext.routeParams
+
   return onBeforeRenderDefault({
     ...pageContext,
-    pageProps: { pageId: pageContext.routeParams.pageId },
+
+    // Pass pageId to page component
+    pageProps: { pageId },
+
+    // Pass custom query to onBeforeRender
+    pageQueryFactories: [(locale) => fetchPageContent({ locale, id: pageId })],
   })
 }
 

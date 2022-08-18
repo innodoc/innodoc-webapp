@@ -1,6 +1,7 @@
 import { Grid, Link as MuiLink, Stack, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
+import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '@/constants'
 import { selectCourseTitle, selectFooterPages } from '@/store/selectors/content'
 import { selectLocale } from '@/store/selectors/ui'
 import { useGetContentQuery } from '@/store/slices/contentApi'
@@ -18,8 +19,8 @@ function Footer() {
   const courseTitle = useSelector(selectCourseTitle)
   const coursePages = useSelector(selectFooterPages)
   const locale = useSelector(selectLocale)
-  const { data: blocksFooterA } = useGetContentQuery({ locale, path: 'footerA' })
-  const { data: blocksFooterB } = useGetContentQuery({ locale, path: 'footerB' })
+  const { data: blocksFooterA } = useGetContentQuery({ locale, path: CONTENT_NAME_FOOTER_A })
+  const { data: blocksFooterB } = useGetContentQuery({ locale, path: CONTENT_NAME_FOOTER_B })
 
   const internalLinks = otherPagesFooter.map(({ icon, to, title }) => (
     <MuiLink component={InternalLink} key={to} sx={linkSx} to={to} underline="hover">

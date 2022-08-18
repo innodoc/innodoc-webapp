@@ -14,14 +14,15 @@ import '@fontsource/lato/700.css'
 import '@fontsource/lato/700-italic.css'
 
 import logoUrl from '@/assets/logo.svg'
+import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '@/constants'
 import makeStore from '@/store/makeStore'
 import { selectLocales } from '@/store/selectors/content'
 import { changeLocale, changeUrlWithoutLocale } from '@/store/slices/uiSlice'
-import type { PageContextServer } from '@/types/page'
+import type { PageContextServer, QueryFactory } from '@/types/page'
 import PageShell from '@/ui/components/PageShell/PageShell'
 import getI18n from '@/utils/getI18n'
 
-import { fetchContent, fetchManifest, fetchPageContent, fetchSectionContent } from './fetchData'
+import { fetchContent, fetchManifest } from './fetchData'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const baseLocalesPath = path.resolve(dirname, '..', '..', 'public', 'locales')
@@ -31,6 +32,13 @@ const i18nBackendOpts = {
 }
 
 const passToClient = ['locale', 'preloadedState', 'pageProps']
+
+/** Queries needed by all pages */
+const commonQueryFactories: QueryFactory[] = [
+  () => fetchManifest(),
+  (locale) => fetchContent({ locale, path: CONTENT_NAME_FOOTER_A }),
+  (locale) => fetchContent({ locale, path: CONTENT_NAME_FOOTER_B }),
+]
 
 function render({ documentProps, pageHtml, emotionStyleTags }: PageContextServer) {
   const title = (documentProps && documentProps.title) || 'TODO'
@@ -53,7 +61,13 @@ function render({ documentProps, pageHtml, emotionStyleTags }: PageContextServer
     </html>`
 }
 
-async function onBeforeRender({ locale, Page, pageProps = {}, url }: PageContextServer) {
+async function onBeforeRender({
+  locale,
+  Page,
+  pageProps = {},
+  pageQueryFactories = [],
+  url,
+}: PageContextServer) {
   // Initialize store
   const store = makeStore()
 
@@ -61,19 +75,11 @@ async function onBeforeRender({ locale, Page, pageProps = {}, url }: PageContext
   store.dispatch(changeUrlWithoutLocale(url))
   store.dispatch(changeLocale(locale))
 
-  // Fetch data
+  // Fetch data necessary to render page
   await Promise.all(
-    [
-      fetchManifest(store),
-      fetchContent(store, { locale, path: 'footerA' }),
-      fetchContent(store, { locale, path: 'footerB' }),
-      pageProps.pageId !== undefined
-        ? fetchPageContent(store, { locale, id: pageProps.pageId })
-        : false,
-      pageProps.sectionPath !== undefined
-        ? fetchSectionContent(store, { locale, path: pageProps.sectionPath })
-        : false,
-    ].filter(Boolean)
+    [...commonQueryFactories, ...pageQueryFactories].map((makeAction) =>
+      store.dispatch(makeAction(locale))
+    )
   )
 
   // Assert we received locales from manifest
