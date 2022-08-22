@@ -1,4 +1,5 @@
 import type { PaletteMode } from '@mui/material'
+import type {} from '@mui/lab/themeAugmentation'
 import { createTheme, responsiveFontSizes } from '@mui/material/styles'
 
 function makeTheme(mode: PaletteMode) {

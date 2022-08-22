@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 
-import { selectCourseLogo, selectCourseTitle } from '@/store/selectors/content'
+import { selectCourseLogo, selectCourseTitle } from '@/store/selectors/content/course'
 import Icon from '@/ui/components/common/Icon'
 import { useSelector } from '@/ui/hooks/store'
 

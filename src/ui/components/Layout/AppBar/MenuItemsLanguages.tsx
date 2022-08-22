@@ -2,7 +2,7 @@ import { ListItemText, MenuItem } from '@mui/material'
 import type { ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { selectLocales } from '@/store/selectors/content'
+import { selectLocales } from '@/store/selectors/content/course'
 import { selectLocale } from '@/store/selectors/ui'
 import { changeLocale } from '@/store/slices/uiSlice'
 import { useDispatch, useSelector } from '@/ui/hooks/store'

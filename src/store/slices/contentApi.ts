@@ -4,9 +4,23 @@ import camelcaseKeys from 'camelcase-keys'
 import decamelize from 'decamelize'
 import type { Tree } from 'pandoc-filter'
 
-import type { Manifest, Page } from '@/types/api'
+import type { Manifest, Page, Section, TransformedManifest, TransformedSection } from '@/types/api'
 
 const REDUCER_PATH = 'contentApi'
+
+/** Add section number and path information recursively */
+const transformSection = (
+  section: Section,
+  parents: TransformedSection['parents'],
+  number: TransformedSection['number']
+): TransformedSection => ({
+  ...section,
+  number,
+  parents,
+  children: section?.children?.map((child, idx) =>
+    transformSection(child, [...parents, section.id], [...number, idx])
+  ),
+})
 
 const contentApi = createApi({
   reducerPath: REDUCER_PATH,
@@ -19,12 +33,19 @@ const contentApi = createApi({
 
   endpoints: (builder) => ({
     /** Fetch manifest from content server */
-    getManifest: builder.query<Manifest, void>({
+    getManifest: builder.query<TransformedManifest, void>({
       query: () => 'manifest.json',
-      transformResponse: (response) =>
-        (response !== null && typeof response === 'object'
-          ? camelcaseKeys(response, { deep: true, stopPaths: ['boxes', 'indexTerms', 'mathjax'] })
-          : {}) as Manifest,
+      transformResponse: (response) => {
+        const manifest = (
+          response !== null && typeof response === 'object'
+            ? camelcaseKeys(response, { deep: true, stopPaths: ['boxes', 'indexTerms', 'mathjax'] })
+            : {}
+        ) as Manifest
+        return {
+          ...manifest,
+          toc: manifest?.toc?.map((section, idx) => transformSection(section, [], [idx])),
+        } as TransformedManifest
+      },
     }),
 
     /** Fetch content AST */

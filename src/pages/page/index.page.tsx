@@ -1,5 +1,5 @@
 import { RootState } from '@/store/makeStore'
-import { selectPageById } from '@/store/selectors/content'
+import { selectPageById } from '@/store/selectors/content/page'
 import { selectLocale } from '@/store/selectors/ui'
 import { useGetPageContentQuery } from '@/store/slices/contentApi'
 import { Page } from '@/types/api'

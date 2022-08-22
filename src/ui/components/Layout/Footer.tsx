@@ -3,7 +3,8 @@ import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '@/constants'
-import { selectCourseTitle, selectFooterPages } from '@/store/selectors/content'
+import { selectCourseTitle } from '@/store/selectors/content/course'
+import { selectFooterPages } from '@/store/selectors/content/page'
 import { selectLocale } from '@/store/selectors/ui'
 import { useGetContentQuery } from '@/store/slices/contentApi'
 import Icon from '@/ui/components/common/Icon'
@@ -24,14 +25,14 @@ function Footer() {
   const { data: blocksFooterB } = useGetContentQuery({ locale, path: CONTENT_NAME_FOOTER_B })
 
   const internalLinks = otherPagesFooter.map(({ icon, to, title }) => (
-    <MuiLink component={InternalLink} key={to} sx={linkSx} to={to} underline="hover">
+    <MuiLink component={InternalLink} key={to} sx={linkSx} to={to}>
       {icon}
       {t(title)}
     </MuiLink>
   ))
 
   const courseLinks = coursePages.map(({ icon, id, title }) => (
-    <MuiLink component={PageLink} key={`page-${id}`} pageId={id} sx={linkSx} underline="hover">
+    <MuiLink component={PageLink} key={`page-${id}`} pageId={id} sx={linkSx}>
       {icon !== undefined ? <Icon name={icon} /> : null}
       {title || null}
     </MuiLink>

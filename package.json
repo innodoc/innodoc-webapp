@@ -9,6 +9,7 @@
     "@fontsource/lato": "^4.5.9",
     "@iconify-json/mdi": "^1.1.30",
     "@iconify/utils": "2.0.0-beta.4",
+    "@mui/lab": "5.0.0-alpha.95",
     "@mui/material": "^5.10.1",
     "@reduxjs/toolkit": "^1.8.4",
     "@vitejs/plugin-react": "^2.0.1",

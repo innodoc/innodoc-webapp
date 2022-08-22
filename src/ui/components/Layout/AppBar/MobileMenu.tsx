@@ -12,7 +12,7 @@ import {
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { selectNavPages } from '@/store/selectors/content'
+import { selectNavPages } from '@/store/selectors/content/page'
 import { selectUrlWithoutLocale } from '@/store/selectors/ui'
 import Icon from '@/ui/components/common/Icon'
 import InternalLink from '@/ui/components/common/link/InternalLink'

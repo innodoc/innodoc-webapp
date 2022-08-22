@@ -5,7 +5,7 @@ import {
   selectCourseDescription,
   selectCourseTitle,
   selectLocales,
-} from '@/store/selectors/content'
+} from '@/store/selectors/content/course'
 import { selectLocale, selectUrlWithoutLocale } from '@/store/selectors/ui'
 import { useSelector } from '@/ui/hooks/store'
 

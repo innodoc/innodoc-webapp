@@ -16,7 +16,7 @@ import '@fontsource/lato/700-italic.css'
 
 import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '@/constants'
 import makeStore from '@/store/makeStore'
-import { selectHomeLink, selectLocales } from '@/store/selectors/content'
+import { selectHomeLink, selectLocales } from '@/store/selectors/content/course'
 import { changeLocale, changeUrlWithoutLocale } from '@/store/slices/uiSlice'
 import type { PageContextServer, QueryFactory } from '@/types/page'
 import PageShell from '@/ui/components/PageShell/PageShell'

@@ -19,6 +19,7 @@ specifiers:
   '@iconify-json/mdi': ^1.1.30
   '@iconify/types': ^1.1.0
   '@iconify/utils': 2.0.0-beta.4
+  '@mui/lab': 5.0.0-alpha.95
   '@mui/material': ^5.10.1
   '@reduxjs/toolkit': ^1.8.3
   '@types/compression': ^1.7.2
@@ -81,6 +82,7 @@ dependencies:
   '@fontsource/lato': 4.5.9
   '@iconify-json/mdi': 1.1.30
   '@iconify/utils': 2.0.0-beta.4
+  '@mui/lab': 5.0.0-alpha.95_rxrgbjxmbxa6cxvmfcmtfba2ii
   '@mui/material': 5.10.1_sqzxty2p7kxc2tmue4tecplwku
   '@reduxjs/toolkit': 1.8.4_kkwg4cbsojnjnupd3btipussee
   '@vitejs/plugin-react': 2.0.1_vite@3.0.8
@@ -1643,6 +1645,39 @@ packages:
 
   /@mui/core-downloads-tracker/5.10.1:
     resolution: {integrity: sha512-zyzLkVSqi+WuxG8UZrrOaWbhHkDK+MlHFjLpL+vqUVU6iSUaDYREu1xoLWEQsWOznT4oT2iEiGZLpQLgkn+WiA==}
+    dev: false
+
+  /@mui/lab/5.0.0-alpha.95_rxrgbjxmbxa6cxvmfcmtfba2ii:
+    resolution: {integrity: sha512-JdJKhn0qJjk0ejtmsiZ/8e08uUzr8MZsASGbmY2VbGC7WlCntgjZrWmhuvQf3hWCtSfuD6tbCdPpz6A2NL5nVQ==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@emotion/react': ^11.5.0
+      '@emotion/styled': ^11.3.0
+      '@mui/material': ^5.0.0
+      '@types/react': ^17.0.0 || ^18.0.0
+      react: ^17.0.0 || ^18.0.0
+      react-dom: ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/react':
+        optional: true
+      '@emotion/styled':
+        optional: true
+      '@types/react':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.18.9
+      '@emotion/react': 11.10.0_msmmgljd7hl2w2irtggflhmema
+      '@emotion/styled': 11.10.0_5sec57kzpgkzooe4crua5kfcly
+      '@mui/base': 5.0.0-alpha.93_zxljzmqdrxwnuenbkrz77w74uy
+      '@mui/material': 5.10.1_sqzxty2p7kxc2tmue4tecplwku
+      '@mui/system': 5.10.1_4thu2zqr4v2ubfoxjiyrxa5urm
+      '@mui/utils': 5.9.3_react@18.2.0
+      '@types/react': 18.0.17
+      clsx: 1.2.1
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-is: 18.2.0
     dev: false
 
   /@mui/material/5.10.1_sqzxty2p7kxc2tmue4tecplwku:
