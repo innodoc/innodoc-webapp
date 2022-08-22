@@ -5,6 +5,7 @@ import createCache from '@emotion/cache'
 import createEmotionServer from '@emotion/server/create-instance'
 import I18NextFsBackend from 'i18next-fs-backend'
 import { renderToString } from 'react-dom/server'
+import type { FilledContext } from 'react-helmet-async'
 import { escapeInject, dangerouslySkipEscape, RenderErrorPage } from 'vite-plugin-ssr'
 
 // Material UI font
@@ -13,7 +14,6 @@ import '@fontsource/lato/400-italic.css'
 import '@fontsource/lato/700.css'
 import '@fontsource/lato/700-italic.css'
 
-import logoUrl from '@/assets/logo.svg'
 import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '@/constants'
 import makeStore from '@/store/makeStore'
 import { selectHomeLink, selectLocales } from '@/store/selectors/content'
@@ -41,32 +41,20 @@ const commonQueryFactories: QueryFactory[] = [
   (locale) => fetchContent({ locale, path: CONTENT_NAME_FOOTER_B }),
 ]
 
-function render({
-  documentProps,
-  emotionStyleTags,
-  locale,
-  redirectTo,
-  pageHtml,
-}: PageContextServer) {
+function render({ emotionStyleTags, helmet, pageHtml, redirectTo }: PageContextServer) {
   if (redirectTo !== undefined) {
     return { pageContext: { redirectTo } }
   }
 
-  const title = (documentProps && documentProps.title) || 'TODO'
-  const desc = (documentProps && documentProps.description) || 'TODO'
-
   return escapeInject`<!DOCTYPE html>
-    <html lang="${locale}">
+    <html ${dangerouslySkipEscape(helmet.htmlAttributes.toString())}>
       <head>
-        <title>${title}</title>
-        <link rel="icon" href="${logoUrl}" />
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="${desc}" />
-        <meta name="emotion-insertion-point" content="" />
+        ${dangerouslySkipEscape(helmet.title.toString())}
+        ${dangerouslySkipEscape(helmet.meta.toString())}
+        ${dangerouslySkipEscape(helmet.link.toString())}
         ${dangerouslySkipEscape(emotionStyleTags)}
       </head>
-      <body>
+      <body ${dangerouslySkipEscape(helmet.bodyAttributes.toString())}>
         <div id="root">${dangerouslySkipEscape(pageHtml)}</div>
       </body>
     </html>`
@@ -120,12 +108,18 @@ async function onBeforeRender({
   // Initialize i18next
   const i18n = await getI18n(I18NextFsBackend, i18nBackendOpts, locale, store)
 
+  // Initialize helmet context
+  const helmetContext = {}
+
   // Render page
   const pageHtml = renderToString(
-    <PageShell emotionCache={emotionCache} i18n={i18n} store={store}>
+    <PageShell emotionCache={emotionCache} helmetContext={helmetContext} i18n={i18n} store={store}>
       <Page {...pageProps} />
     </PageShell>
   )
+
+  // Get document head tags
+  const { helmet } = helmetContext as FilledContext
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { constructStyleTagsFromChunks, extractCriticalToChunks } =
@@ -139,6 +133,7 @@ async function onBeforeRender({
   return {
     pageContext: {
       emotionStyleTags,
+      helmet,
       pageHtml,
       pageProps,
       preloadedState,

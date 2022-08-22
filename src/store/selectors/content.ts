@@ -13,7 +13,7 @@ const selectTranslateFn = createSelector(
   selectLocale,
   (locale): TranslateFn =>
     (locString) =>
-      locale !== null && locString !== undefined ? locString[locale] : undefined
+      locString?.[locale]
 )
 
 /** Select available locales */
@@ -22,7 +22,13 @@ export const selectLocales = createSelector(selectManifest, (manifest) => manife
 /** Select the course title */
 export const selectCourseTitle = createSelector(
   [selectManifest, selectTranslateFn],
-  (manifest, translate) => (manifest !== undefined ? translate(manifest.title) : undefined)
+  (manifest, translate) => translate(manifest?.title)
+)
+
+/** Select the course description */
+export const selectCourseDescription = createSelector(
+  [selectManifest, selectTranslateFn],
+  (manifest, translate) => translate(manifest?.description)
 )
 
 /** Select the course logo */

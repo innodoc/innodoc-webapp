@@ -2,6 +2,7 @@ import { Locale, LocalizedString, PageLinkLocation } from './common'
 
 export interface Manifest {
   title: LocalizedString
+  description?: LocalizedString
   languages: ReadonlyArray<Locale>
   homeLink: string
   logo?: string

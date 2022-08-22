@@ -1,6 +1,9 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
+  /** Application base URL */
+  readonly INNODOC_APP_ROOT: string
+
   /** Base URL for content (e.g. `https://example.com/content`) */
   readonly INNODOC_CONTENT_ROOT: string
 

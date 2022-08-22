@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 
 import AppBar from './AppBar/AppBar'
 import Footer from './Footer/Footer'
+import MetaTags from './MetaTags'
 
 function Layout({ children }: LayoutProps) {
   return (
@@ -13,6 +14,7 @@ function Layout({ children }: LayoutProps) {
         minHeight: '100vh',
       }}
     >
+      <MetaTags />
       <AppBar />
       <Container component="main" sx={{ py: 4 }} maxWidth="lg">
         {children}
