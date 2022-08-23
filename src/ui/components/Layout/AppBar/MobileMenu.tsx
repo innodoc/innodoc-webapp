@@ -56,19 +56,19 @@ function MobileMenu() {
             </ListItemButton>
           </ListItem>
           <Divider />
-          {pages.map(({ id, icon, title, shortTitle }) => (
-            <ListItem disablePadding key={id} onClick={closeDrawer}>
+          {pages.map((page) => (
+            <ListItem disablePadding key={page.id} onClick={closeDrawer}>
               <ListItemButton
                 component={PageLink}
-                pageId={id}
-                selected={urlWithoutLocale === pageUrl(id)}
+                page={page}
+                selected={urlWithoutLocale === pageUrl(page.id)}
               >
-                {icon !== undefined ? (
+                {page.icon !== undefined ? (
                   <ListItemIcon>
-                    <Icon name={icon} />
+                    <Icon name={page.icon} />
                   </ListItemIcon>
                 ) : null}
-                <ListItemText primary={shortTitle || title} />
+                <ListItemText primary={page.shortTitle || page.title} />
               </ListItemButton>
             </ListItem>
           ))}

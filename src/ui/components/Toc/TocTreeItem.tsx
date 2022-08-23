@@ -3,7 +3,7 @@ import { Link } from '@mui/material'
 import clsx from 'clsx'
 import { forwardRef, type LegacyRef } from 'react'
 
-import type { TranslatedSection } from '@/types/api'
+import type { Section } from '@/types/api'
 import SectionLink from '@/ui/components/common/link/SectionLink'
 
 const SectionTreeItemContent = forwardRef<unknown, SectionTreeItemContentProps>(
@@ -24,7 +24,7 @@ const SectionTreeItemContent = forwardRef<unknown, SectionTreeItemContentProps>(
 )
 
 type SectionTreeItemContentProps = TreeItemContentProps & {
-  section: TranslatedSection
+  section: Section
 }
 
 function TocTreeItem({ section, ...other }: TocTreeItemProps) {
@@ -40,12 +40,12 @@ function TocTreeItem({ section, ...other }: TocTreeItemProps) {
 }
 
 type TocTreeItemProps = TreeItemProps & {
-  section: TranslatedSection
+  section: Section
 }
 
 declare module '@mui/lab/TreeItem' {
   interface TreeItemContentProps {
-    section: TranslatedSection
+    section: Section
   }
 }
 

@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import type { TranslatedSection } from '@/types/api'
+import type { Section } from '@/types/api'
 import { sectionUrl } from '@/utils/url'
 
 import InternalLink, { type InternalLinkProps } from './InternalLink'
@@ -24,7 +24,7 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function Sec
 
 type SectionLinkProps = Omit<InternalLinkProps, 'to'> & {
   preferShortTitle?: boolean
-  section: TranslatedSection
+  section: Section
 }
 
 export default SectionLink

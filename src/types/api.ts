@@ -1,30 +1,76 @@
 import { Locale, LocalizedString, PageLinkLocation } from './common'
 
-export interface Manifest {
+/** Object with localized titles */
+interface LocalizedTitles {
+  /** Short localized version of the title for places with limited space */
+  shortTitle?: LocalizedString
+
+  /** Localized title */
   title: LocalizedString
+}
+
+/** Object with titles as `string` value */
+interface Titles {
+  /** Short version of the title for places with limited space */
+  shortTitle?: string
+
+  /** Title */
+  title: string
+}
+
+/** Course manifest as returned by content server */
+export interface ApiManifest extends LocalizedTitles {
+  /** Course description */
   description?: LocalizedString
+
+  /** Course languages */
   languages: ReadonlyArray<Locale>
+
+  /** Course home link */
   homeLink: string
+
+  /** Course logo URL or identifier */
   logo?: string
-  pages?: ReadonlyArray<Page>
+
+  /** Custom course pages */
+  pages?: ReadonlyArray<ApiPage>
+
+  /** Minimal score a user has to achieve for a test to be passed */
   minScore?: number
+
+  /** Custom MathJax library options */
   mathjax?: MathJaxOptions
-  toc?: ReadonlyArray<Section>
+
+  /** Content tree of sections */
+  toc?: ReadonlyArray<ApiSection>
+
+  /** Index terms */
   indexTerms: {
     [language: Locale]: {
       [termId: string]: [string, ReadonlyArray<IndexTermOccurance>]
     }
   }
+
+  /** Content boxes per sections */
   boxes: {
     [sectionPath: string]: ReadonlyArray<Box>
   }
 }
 
-export interface TransformedManifest extends Omit<Manifest, 'toc'> {
+/** Transformed course manifest as saved in store */
+export interface TransformedManifest extends ApiManifest {
   toc?: ReadonlyArray<TransformedSection>
 }
 
-export interface Page {
+/** Manifest as consumed by components */
+export interface Manifest
+  extends Omit<TransformedManifest, 'description' | 'shortTitle' | 'title'>,
+    Titles {
+  description?: string
+}
+
+/** Base page object */
+interface BasePage {
   /** Unique page identifier */
   id: string
 
@@ -33,31 +79,25 @@ export interface Page {
 
   /** Where the page should be linked */
   linked?: PageLinkLocation[]
-
-  /** Short version of the page title for places with limited space */
-  shortTitle?: LocalizedString
-
-  /** Page title */
-  title: LocalizedString
 }
 
+/** Page object as returned by content server */
+export interface ApiPage extends BasePage, LocalizedTitles {}
+
+/** Page object as consumed by components */
+export interface Page extends BasePage, Titles {}
+
 /** Section object as returned by content server */
-export interface Section {
+export interface ApiSection extends LocalizedTitles {
   /** Section identifier, unique within siblings */
   id: string
 
-  /** Short version of the section title for places with limited space */
-  shortTitle?: LocalizedString
-
-  /** Section title */
-  title: LocalizedString
-
   /** Sections sub-sections */
-  children?: Section[]
+  children?: ApiSection[]
 }
 
-/** Section object augmented with path and number information */
-export interface TransformedSection extends Section {
+/** Transformed section object as saved in the store */
+export interface TransformedSection extends ApiSection {
   /** Section ID of parents, e.g. `['section-foo', 'section-bar']` */
   parents: string[]
 
@@ -68,19 +108,15 @@ export interface TransformedSection extends Section {
   children?: TransformedSection[]
 }
 
-/** Section object with `LocalizedString` fields replaced */
-export interface TranslatedSection
-  extends Omit<TransformedSection, 'shortTitle' | 'title' | 'children'> {
-  /** Short version of the translated page title for places with limited space */
-  shortTitle?: string
-
-  /** Transated section title */
-  title: string
-
+/** Section object as consumed by components */
+export interface Section
+  extends Omit<TransformedSection, 'shortTitle' | 'title' | 'children'>,
+    Titles {
   /** Sections sub-sections */
-  children?: TranslatedSection[]
+  children?: Section[]
 }
 
+/** MathJax library options */
 export interface MathJaxOptions {
   loader: {
     load: string[]
@@ -91,6 +127,8 @@ export interface MathJaxOptions {
   }
 }
 
+/** Occurence of an index term within content */
 type IndexTermOccurance = [string, string]
 
+/** A content box */
 type Box = string[]

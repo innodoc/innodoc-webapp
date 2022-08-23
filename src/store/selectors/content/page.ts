@@ -10,11 +10,14 @@ export const selectPages = createSelector([selectManifest, selectTranslateFn], (
   if (manifest?.pages === undefined) {
     return []
   }
-  return manifest.pages.map((page) => ({
-    ...page,
-    shortTitle: t(page.shortTitle),
-    title: t(page.title),
-  }))
+  return manifest.pages.map(
+    (page) =>
+      ({
+        ...page,
+        shortTitle: t(page.shortTitle),
+        title: t(page.title),
+      } as Page)
+  )
 })
 
 /** Select main nav pages */

@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Link as MuiLink, Stack, Typography } from '@mui/material'
+import { Box, Container, Grid, Link, Stack, Typography } from '@mui/material'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -7,7 +7,6 @@ import { selectCourseTitle } from '@/store/selectors/content/course'
 import { selectFooterPages } from '@/store/selectors/content/page'
 import { selectLocale } from '@/store/selectors/ui'
 import { useGetContentQuery } from '@/store/slices/contentApi'
-import Icon from '@/ui/components/common/Icon'
 import InternalLink from '@/ui/components/common/link/InternalLink'
 import PageLink from '@/ui/components/common/link/PageLink'
 import ContentTree from '@/ui/components/content/ContentTree'
@@ -25,17 +24,14 @@ function Footer() {
   const { data: blocksFooterB } = useGetContentQuery({ locale, path: CONTENT_NAME_FOOTER_B })
 
   const internalLinks = otherPagesFooter.map(({ icon, to, title }) => (
-    <MuiLink component={InternalLink} key={to} sx={linkSx} to={to}>
+    <Link component={InternalLink} key={to} sx={linkSx} to={to}>
       {icon}
       {t(title)}
-    </MuiLink>
+    </Link>
   ))
 
-  const courseLinks = coursePages.map(({ icon, id, title }) => (
-    <MuiLink component={PageLink} key={`page-${id}`} pageId={id} sx={linkSx}>
-      {icon !== undefined ? <Icon name={icon} /> : null}
-      {title || null}
-    </MuiLink>
+  const courseLinks = coursePages.map((page) => (
+    <Link component={PageLink} key={`page-${page.id}`} page={page} sx={linkSx} />
   ))
 
   const contentFooterA =

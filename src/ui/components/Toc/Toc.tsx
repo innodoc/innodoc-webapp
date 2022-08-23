@@ -3,7 +3,7 @@ import { styled } from '@mui/material'
 import { memo, useState } from 'react'
 
 import { selectToc } from '@/store/selectors/content/section'
-import type { TranslatedSection } from '@/types/api'
+import type { Section } from '@/types/api'
 import Icon from '@/ui/components/common/Icon'
 import { useSelector } from '@/ui/hooks/store'
 
@@ -12,7 +12,7 @@ import TocTreeItem from './TocTreeItem'
 const getNodeId = (idPrefix: string, sectionId: string) =>
   idPrefix === '' ? sectionId : `${idPrefix}/${sectionId}`
 
-const renderItems = (sections: TranslatedSection[], idPrefix = '') =>
+const renderItems = (sections: Section[], idPrefix = '') =>
   sections.map((section) => {
     const nodeId = getNodeId(idPrefix, section.id)
     return (
@@ -22,7 +22,7 @@ const renderItems = (sections: TranslatedSection[], idPrefix = '') =>
     )
   })
 
-const getAllNodeIds = (sections: TranslatedSection[], idPrefix = ''): string[] =>
+const getAllNodeIds = (sections: Section[], idPrefix = ''): string[] =>
   sections.reduce<string[]>((acc, section) => {
     const nodeId = getNodeId(idPrefix, section.id)
     return [

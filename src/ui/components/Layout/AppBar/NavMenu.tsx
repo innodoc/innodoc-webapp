@@ -41,14 +41,14 @@ function NavMenu() {
         justifyContent: 'center',
       }}
     >
-      {coursePages.map(({ id, icon, title, shortTitle }) => (
+      {coursePages.map((page) => (
         <StyledNavButton
           component={PageLink}
-          key={id}
-          pageId={id}
-          startIcon={icon !== undefined ? <Icon name={icon} /> : undefined}
+          key={page.id}
+          page={page}
+          startIcon={page.icon !== undefined ? <Icon name={page.icon} /> : undefined}
         >
-          {shortTitle || title}
+          {page.shortTitle || page.title}
         </StyledNavButton>
       ))}
       {otherPagesNav.map(({ icon, title, to }) => (
