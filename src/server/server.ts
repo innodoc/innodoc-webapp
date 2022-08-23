@@ -85,7 +85,7 @@ async function startServer() {
   const port = parseInt(process.env.SERVER_PORT || '3000')
   const host = process.env.SERVER_HOST || 'localhost'
   app.listen({ port, host })
-  console.log(`Server running at http://localhost:${port}`)
+  console.log(`Server running at http://${host}:${port}`)
 }
 
 type PageContextInit = {

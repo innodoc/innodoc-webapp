@@ -15,9 +15,6 @@ interface UiSliceState {
   /** Current locale */
   locale: Locale
 
-  /** Table of contents drawer activated */
-  showTocDrawer: boolean
-
   /** System prefered palette mode (`prefers-color-scheme`) */
   systemPaletteMode: PaletteMode | null
 
@@ -28,7 +25,6 @@ interface UiSliceState {
 const initialState: UiSliceState = {
   customPaletteMode: null,
   locale: 'en',
-  showTocDrawer: false,
   systemPaletteMode: null,
   urlWithoutLocale: null,
 }
@@ -57,11 +53,6 @@ const uiSlice = createSlice({
     changeUrlWithoutLocale(state, action: PayloadAction<string>) {
       state.urlWithoutLocale = action.payload
     },
-
-    /** Toggle TOC drawer */
-    toggleTocDrawer(state) {
-      state.showTocDrawer = !state.showTocDrawer
-    },
   },
 })
 
@@ -72,6 +63,5 @@ export const {
   changeLocale,
   changeSystemPaletteMode,
   changeUrlWithoutLocale,
-  toggleTocDrawer,
 } = uiSlice.actions
 export default uiSlice

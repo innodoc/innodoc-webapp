@@ -1,30 +1,17 @@
 import { Box, IconButton, Menu, Tooltip } from '@mui/material'
-import { type MouseEvent, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { type MouseEvent, useState, type ReactNode } from 'react'
 
 import Icon from '@/ui/components/common/Icon'
 
-import MenuItemsLanguages from './MenuItemsLanguages'
-
-function LanguageMenu() {
+function MenuButton({ children, iconName, id, title }: MenuButtonProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-
-  const { t } = useTranslation()
-
   const onOpenMenu = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)
-
-  const languageMenuLabel = t('nav.language')
 
   return (
     <Box sx={{ flexGrow: 0, ml: 1 }}>
-      <Tooltip arrow title={languageMenuLabel}>
-        <IconButton
-          aria-controls="appbar-language-menu"
-          aria-label={languageMenuLabel}
-          color="inherit"
-          onClick={onOpenMenu}
-        >
-          <Icon name="mdi:translate" />
+      <Tooltip arrow title={title}>
+        <IconButton aria-controls={id} aria-label={title} color="inherit" onClick={onOpenMenu}>
+          <Icon name={iconName} />
         </IconButton>
       </Tooltip>
       <Menu
@@ -33,21 +20,28 @@ function LanguageMenu() {
           vertical: 'top',
           horizontal: 'right',
         }}
-        id="appbar-language-menu"
+        id={id}
         keepMounted
         MenuListProps={{ dense: true }}
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
-        sx={{ mt: '45px' }}
+        sx={{ mt: (theme) => theme.spacing(5) }}
         transformOrigin={{
           vertical: 'top',
           horizontal: 'right',
         }}
       >
-        <MenuItemsLanguages />
+        {children}
       </Menu>
     </Box>
   )
 }
 
-export default LanguageMenu
+type MenuButtonProps = {
+  children: ReactNode
+  iconName: string
+  id: string
+  title: string
+}
+
+export default MenuButton

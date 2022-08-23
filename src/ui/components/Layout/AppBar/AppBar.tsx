@@ -1,35 +1,38 @@
 import { AppBar as MuiAppBar, Box, Container, Toolbar } from '@mui/material'
+import { grey } from '@mui/material/colors'
 import { memo } from 'react'
 
-import LanguageMenu from './LanguageMenu'
+import LanguageMenuButton from './LanguageMenuButton'
 import Logo from './Logo'
-import MobileMenu from './MobileMenu'
+import MobileNavButton from './MobileNavButton'
 import NavMenu from './NavMenu'
-import PaletteModeMenu from './PaletteModeMenu'
-import UserMenu from './UserMenu'
+import PaletteModeButton from './PaletteModeMenuButton'
+import TocButton from './TocButton'
+import UserMenuButton from './UserMenuButton'
 
 function AppBar() {
   return (
     <MuiAppBar
       position="relative"
       color="transparent"
-      sx={{
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'dark' ? 'rgba(255 255 255 / 15%)' : 'rgba(0 0 0 / 5%)',
+      sx={(theme) => ({
+        backgroundColor: grey[theme.palette.mode === 'dark' ? 800 : 50],
         boxShadow: 1,
-      }}
+        zIndex: theme.zIndex.appBar,
+      })}
     >
       <Container disableGutters maxWidth="lg">
         <Toolbar variant="dense">
-          <MobileMenu />
+          <MobileNavButton />
           <Logo />
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} />
           <NavMenu />
+          <TocButton />
           <Box sx={{ display: { xs: 'none', sm: 'inherit' } }}>
-            <PaletteModeMenu />
-            <LanguageMenu />
+            <PaletteModeButton />
+            <LanguageMenuButton />
           </Box>
-          <UserMenu />
+          <UserMenuButton />
         </Toolbar>
       </Container>
     </MuiAppBar>

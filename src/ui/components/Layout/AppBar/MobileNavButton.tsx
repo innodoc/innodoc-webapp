@@ -1,15 +1,4 @@
-import {
-  Box,
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  SwipeableDrawer,
-} from '@mui/material'
-import { useState } from 'react'
+import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import { selectNavPages } from '@/store/selectors/content/page'
@@ -18,46 +7,38 @@ import Icon from '@/ui/components/common/Icon'
 import InternalLink from '@/ui/components/common/link/InternalLink'
 import PageLink from '@/ui/components/common/link/PageLink'
 import { useSelector } from '@/ui/hooks/store'
-import { pageUrl } from '@/utils/url'
+import { pageUrl } from '@/utils/content'
 
+import DrawerButton from './common/DrawerButton'
 import otherPages from './otherPages'
 
-function MobileMenu() {
+function MobileNavButton() {
   const { t } = useTranslation()
 
   const pages = useSelector(selectNavPages)
   const urlWithoutLocale = useSelector(selectUrlWithoutLocale)
 
-  const [menuOpen, setMenuOpen] = useState<boolean>(false)
-
-  const onOpenMenu = () => setMenuOpen(true)
-
-  const openDrawer = () => setMenuOpen(true)
-  const closeDrawer = () => setMenuOpen(false)
-
   return (
-    <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' }, mr: 2 }}>
-      <IconButton
-        aria-label="Open navigation"
-        aria-controls="menu-appbar"
-        onClick={onOpenMenu}
-        color="inherit"
-      >
-        <Icon name="mdi:menu" />
-      </IconButton>
-      <SwipeableDrawer anchor="left" open={menuOpen} onOpen={openDrawer} onClose={closeDrawer}>
+    <DrawerButton
+      anchor="left"
+      boxProps={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
+      iconName="mdi:menu"
+      id="appbar-mobile-menu"
+      title={t('nav.openNav')}
+    >
+      {(close) => (
         <List>
           <ListItem disablePadding>
-            <ListItemButton onClick={closeDrawer}>
+            <ListItemButton onClick={close}>
               <ListItemIcon>
                 <Icon name="mdi:chevron-left" />
               </ListItemIcon>
-              <ListItemText primary={t('nav.close')} />
+              <ListItemText primary={t('common.close')} />
             </ListItemButton>
           </ListItem>
           <Divider />
           {pages.map((page) => (
-            <ListItem disablePadding key={page.id} onClick={closeDrawer}>
+            <ListItem disablePadding key={page.id} onClick={close}>
               <ListItemButton
                 component={PageLink}
                 page={page}
@@ -73,7 +54,7 @@ function MobileMenu() {
             </ListItem>
           ))}
           {otherPages.map(({ icon, title, to }) => (
-            <ListItem disablePadding key={to} onClick={closeDrawer}>
+            <ListItem disablePadding key={to} onClick={close}>
               <ListItemButton component={InternalLink} to={to} selected={urlWithoutLocale === to}>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={t(title)} />
@@ -81,9 +62,9 @@ function MobileMenu() {
             </ListItem>
           ))}
         </List>
-      </SwipeableDrawer>
-    </Box>
+      )}
+    </DrawerButton>
   )
 }
 
-export default MobileMenu
+export default MobileNavButton

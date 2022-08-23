@@ -1,4 +1,7 @@
 {
+  "common": {
+    "close": "Schließen"
+  },
   "internalPages": {
     "indexPage": {
       "title": "Stichwortverzeichnis"
@@ -24,9 +27,10 @@
     "en": "English"
   },
   "nav": {
-    "close": "Schließen",
     "language": "Sprache",
     "login": "Login",
+    "openNav": "Navigation öffnen",
+    "openToc": "Inhaltsverzeichnis öffnen",
     "openUserMenu": "Nutzermenü",
     "paletteMode": {
       "dark": "Dunkel",

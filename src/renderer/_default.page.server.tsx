@@ -21,7 +21,7 @@ import { changeLocale, changeUrlWithoutLocale } from '@/store/slices/uiSlice'
 import type { PageContextServer, QueryFactory } from '@/types/page'
 import PageShell from '@/ui/components/PageShell/PageShell'
 import getI18n from '@/utils/getI18n'
-import { replacePathPrefixes } from '@/utils/url'
+import { replacePathPrefixes } from '@/utils/content'
 
 import { fetchContent, fetchManifest } from './fetchData'
 

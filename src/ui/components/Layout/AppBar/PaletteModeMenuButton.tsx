@@ -6,7 +6,7 @@ import { changeCustomPaletteMode } from '@/store/slices/uiSlice'
 import Icon from '@/ui/components/common/Icon'
 import { useDispatch, useSelector } from '@/ui/hooks/store'
 
-function PaletteModeMenu() {
+function PaletteModeMenuButton() {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const currentPaletteMode = useSelector(selectPaletteMode)
@@ -27,4 +27,4 @@ function PaletteModeMenu() {
   )
 }
 
-export default PaletteModeMenu
+export default PaletteModeMenuButton

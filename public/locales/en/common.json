@@ -1,4 +1,7 @@
 {
+  "common": {
+    "close": "Close"
+  },
   "internalPages": {
     "indexPage": {
       "title": "Index"
@@ -24,9 +27,10 @@
     "en": "English"
   },
   "nav": {
-    "close": "Close",
     "language": "Language",
     "login": "Login",
+    "openNav": "Open navigation",
+    "openToc": "Open table of contents",
     "openUserMenu": "User menu",
     "paletteMode": {
       "dark": "Dark",
