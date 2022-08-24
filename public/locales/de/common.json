@@ -30,13 +30,15 @@
     "language": "Sprache",
     "login": "Login",
     "openNav": "Navigation öffnen",
-    "openToc": "Inhaltsverzeichnis öffnen",
     "openUserMenu": "Nutzermenü",
     "paletteMode": {
       "dark": "Dunkel",
       "light": "Hell",
-      "switch": "Farbmodus umschalten",
       "title": "Farbmodus"
     }
+  },
+  "toc": {
+    "collapseSection": "Abschnitt zuklappen",
+    "expandSection": "Abschnitt aufklappen"
   }
 }

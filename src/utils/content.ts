@@ -5,6 +5,11 @@ function formatSectionNumber(section: Section) {
   return section.number.map((num) => `${num + 1}.`).join('')
 }
 
+/** Get section path from `Section` */
+function getSectionPath(section: Section) {
+  return [...section.parents, section.id].join('/')
+}
+
 /** Generate page URL */
 function pageUrl(pageId: string) {
   return `/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/${pageId}`
@@ -22,4 +27,4 @@ function replacePathPrefixes(url: string) {
     .replace('/section/', `/${import.meta.env.INNODOC_SECTION_PATH_PREFIX}/`)
 }
 
-export { formatSectionNumber, pageUrl, sectionUrl, replacePathPrefixes }
+export { formatSectionNumber, getSectionPath, pageUrl, sectionUrl, replacePathPrefixes }

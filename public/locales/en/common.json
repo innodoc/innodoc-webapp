@@ -30,13 +30,15 @@
     "language": "Language",
     "login": "Login",
     "openNav": "Open navigation",
-    "openToc": "Open table of contents",
     "openUserMenu": "User menu",
     "paletteMode": {
       "dark": "Dark",
       "light": "Light",
-      "switch": "Switch color mode",
       "title": "Color mode"
     }
+  },
+  "toc": {
+    "collapseSection": "Collapse section",
+    "expandSection": "Expand section"
   }
 }

@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 
 import type { Section } from '@/types/api'
-import { formatSectionNumber, sectionUrl } from '@/utils/content'
+import { formatSectionNumber, getSectionPath, sectionUrl } from '@/utils/content'
 
 import InternalLink, { type InternalLinkProps } from './InternalLink'
 
@@ -13,7 +13,7 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function Sec
     preferShortTitle && section.shortTitle !== undefined ? section.shortTitle : section.title
 
   return (
-    <InternalLink to={sectionUrl([...section.parents, section.id].join('/'))} ref={ref} {...other}>
+    <InternalLink to={sectionUrl(getSectionPath(section))} ref={ref} {...other}>
       {children || (
         <>
           {formatSectionNumber(section)} {title}

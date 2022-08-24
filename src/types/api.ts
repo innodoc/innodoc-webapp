@@ -109,12 +109,20 @@ export interface TransformedSection extends ApiSection {
 }
 
 /** Section object as consumed by components */
-export interface Section
+export interface SectionWithChildren
   extends Omit<TransformedSection, 'shortTitle' | 'title' | 'children'>,
     Titles {
   /** Sections sub-sections */
-  children?: Section[]
+  children?: SectionWithChildren[]
 }
+
+/** Section object as consumed by components (w/o children subtree) */
+export interface SectionWithoutChildren extends Omit<SectionWithChildren, 'children'> {
+  /** Sub-section count */
+  childrenCount: number
+}
+
+export type Section = SectionWithChildren | SectionWithoutChildren
 
 /** MathJax library options */
 export interface MathJaxOptions {

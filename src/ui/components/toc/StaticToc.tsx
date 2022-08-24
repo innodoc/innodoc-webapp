@@ -1,7 +1,7 @@
 import { Link, styled } from '@mui/material'
 
 import { selectToc } from '@/store/selectors/content/section'
-import type { Section } from '@/types/api'
+import type { SectionWithChildren } from '@/types/api'
 import SectionLink from '@/ui/components/common/link/SectionLink'
 import { useSelector } from '@/ui/hooks/store'
 
@@ -33,7 +33,7 @@ function SectionItem({ section }: SectionProps) {
 }
 
 type SectionProps = {
-  section: Section
+  section: SectionWithChildren
 }
 
 function StaticToc() {

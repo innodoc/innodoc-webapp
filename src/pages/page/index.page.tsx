@@ -1,3 +1,4 @@
+import { Page as ErrorPage } from '@/renderer/_error.page'
 import { RootState } from '@/store/makeStore'
 import { selectPageById } from '@/store/selectors/content/page'
 import { selectLocale } from '@/store/selectors/ui'
@@ -14,7 +15,7 @@ function ContentPage({ pageId }: ContentPageProps) {
   const { data: content } = useGetPageContentQuery({ locale, id: pageId })
 
   if (page === undefined || content === undefined) {
-    return null
+    return <ErrorPage is404 />
   }
 
   return (

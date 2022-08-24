@@ -10,7 +10,7 @@ function PaletteModeMenuButton() {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const currentPaletteMode = useSelector(selectPaletteMode)
-  const paletteModeMenuLabel = t('nav.paletteMode.switch')
+  const paletteModeMenuLabel = t('nav.paletteMode.title')
 
   const onClick = () => {
     dispatch(changeCustomPaletteMode(currentPaletteMode === 'dark' ? 'light' : 'dark'))

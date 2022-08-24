@@ -69,7 +69,7 @@ const contentApi = createApi({
 
     /** Fetch content AST for a section */
     getSectionContent: builder.query<Tree, SectionContentFetchArgs>({
-      query: ({ locale, path }) => `${locale}/${path}.json`,
+      query: ({ locale, path }) => `${locale}/${path}/content.json`,
     }),
   }),
 })

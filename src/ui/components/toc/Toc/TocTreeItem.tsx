@@ -1,16 +1,23 @@
 import { TreeItem, useTreeItem, type TreeItemContentProps, type TreeItemProps } from '@mui/lab'
-import { Box, Link, styled, Typography } from '@mui/material'
+import { Box, IconButton, Link, styled, Typography } from '@mui/material'
 import clsx from 'clsx'
-import { forwardRef, type Ref } from 'react'
+import { forwardRef, type MouseEvent, type Ref } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import type { Section } from '@/types/api'
+import type { SectionWithChildren } from '@/types/api'
 import SectionLink from '@/ui/components/common/link/SectionLink'
 import { formatSectionNumber } from '@/utils/content'
 
 const StyledLink = styled(Link)(({ theme }) => ({
   color: theme.palette.text.primary,
   textDecoration: 'none',
-  textDecorationColor: theme.palette.text.primary,
+  '&:focus': {
+    outline: 'none',
+    backgroundColor: theme.palette.action.focus,
+  },
+  '&.Mui-selected': {
+    textDecoration: 'underline',
+  },
 })) as typeof Link
 
 const SectionTreeItemContent = forwardRef<unknown, SectionTreeItemContentProps>(
@@ -18,9 +25,16 @@ const SectionTreeItemContent = forwardRef<unknown, SectionTreeItemContentProps>(
     { classes, className, displayIcon, expansionIcon, icon: iconProp, nodeId, section },
     ref
   ) {
-    const { expanded, disabled, focused, selected } = useTreeItem(nodeId)
-
+    const { t } = useTranslation()
+    const { expanded, handleExpansion, disabled, focused, selected } = useTreeItem(nodeId)
     const icon = iconProp || expansionIcon || displayIcon
+
+    // Allow node toggle without triggering navigation
+    const onNodeToggle = (ev: MouseEvent) => {
+      ev.stopPropagation()
+      ev.preventDefault()
+      handleExpansion(ev)
+    }
 
     return (
       <StyledLink
@@ -35,8 +49,17 @@ const SectionTreeItemContent = forwardRef<unknown, SectionTreeItemContentProps>(
         section={section}
       >
         <Box sx={{ width: (theme) => theme.spacing(section.parents.length * 2) }} />
-        <div className={classes.iconContainer}>{icon}</div>
-        <Typography>
+        <Box className={classes.iconContainer}>
+          {icon !== undefined ? (
+            <IconButton
+              aria-label={t(`toc.${expanded ? 'collapseSection' : 'expandSection'}`)}
+              onClick={onNodeToggle}
+            >
+              {icon}
+            </IconButton>
+          ) : null}
+        </Box>
+        <Typography component="div">
           {formatSectionNumber(section)} {section.title}
         </Typography>
       </StyledLink>
@@ -45,7 +68,7 @@ const SectionTreeItemContent = forwardRef<unknown, SectionTreeItemContentProps>(
 )
 
 type SectionTreeItemContentProps = TreeItemContentProps & {
-  section: Section
+  section: SectionWithChildren
 }
 
 function TocTreeItem({ section, ...other }: TocTreeItemProps) {
@@ -62,12 +85,12 @@ function TocTreeItem({ section, ...other }: TocTreeItemProps) {
 }
 
 type TocTreeItemProps = TreeItemProps & {
-  section: Section
+  section: SectionWithChildren
 }
 
 declare module '@mui/lab/TreeItem' {
   interface TreeItemContentProps {
-    section: Section
+    section: SectionWithChildren
   }
 }
 
