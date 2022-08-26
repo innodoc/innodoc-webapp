@@ -1,8 +1,10 @@
 import type { Section } from '@/types/api'
 
 /** Format section number */
-function formatSectionNumber(section: Section) {
-  return section.number.map((num) => `${num + 1}.`).join('')
+function formatSectionTitle(section: Section, preferShort = false) {
+  const num = section.number.map((num) => `${num + 1}.`).join('')
+  const title = preferShort && section.shortTitle !== undefined ? section.shortTitle : section.title
+  return `${num} ${title}`
 }
 
 /** Get section path from `Section` */
@@ -27,4 +29,4 @@ function replacePathPrefixes(url: string) {
     .replace('/section/', `/${import.meta.env.INNODOC_SECTION_PATH_PREFIX}/`)
 }
 
-export { formatSectionNumber, getSectionPath, pageUrl, sectionUrl, replacePathPrefixes }
+export { formatSectionTitle, getSectionPath, pageUrl, sectionUrl, replacePathPrefixes }

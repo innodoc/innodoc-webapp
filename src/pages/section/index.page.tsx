@@ -3,10 +3,11 @@ import { RootState } from '@/store/makeStore'
 import { selectSectionByPath } from '@/store/selectors/content/section'
 import { selectLocale } from '@/store/selectors/ui'
 import { useGetSectionContentQuery } from '@/store/slices/contentApi'
+import Breadcrumbs from '@/ui/components/Breadcrumbs/Breadcrumbs'
 import PageHeader from '@/ui/components/common/PageHeader'
 import ContentTree from '@/ui/components/content/ContentTree'
 import { useSelector } from '@/ui/hooks/store'
-import { formatSectionNumber } from '@/utils/content'
+import { formatSectionTitle } from '@/utils/content'
 
 function ContentSection({ sectionPath }: ContentSectionProps) {
   const selectSection = (state: RootState) => selectSectionByPath(state, sectionPath)
@@ -20,9 +21,8 @@ function ContentSection({ sectionPath }: ContentSectionProps) {
 
   return (
     <>
-      <PageHeader>
-        {formatSectionNumber(section)} {section.title}
-      </PageHeader>
+      <Breadcrumbs />
+      <PageHeader>{formatSectionTitle(section)}</PageHeader>
       <ContentTree content={content} />
     </>
   )

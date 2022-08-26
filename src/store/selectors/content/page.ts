@@ -32,6 +32,6 @@ export const selectFooterPages = createSelector([selectPages], (pages) =>
 
 /** Select page */
 export const selectPageById = createSelector(
-  [selectPages, (_, pageId: Page['id']) => pageId],
+  [selectPages, (_, pageId: Page['id'] | undefined) => pageId],
   (pages, pageId) => pages.find((page) => page.id === pageId)
 )

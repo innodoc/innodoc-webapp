@@ -16,6 +16,18 @@ function translateSection(t: TranslateFn, section: TransformedSection): SectionW
   }
 }
 
+/** Transform `SectionWithChildren` to `SectionWithoutChildren` */
+function removeChildren(section: SectionWithChildren): SectionWithoutChildren {
+  return {
+    id: section.id,
+    title: section.title,
+    shortTitle: section.shortTitle,
+    number: section.number,
+    parents: section.parents,
+    childrenCount: section?.children?.length || 0,
+  }
+}
+
 /** Select section tree structure with fields translated */
 export const selectToc = createSelector([selectManifest, selectTranslateFn], (manifest, t) =>
   manifest?.toc?.map((section) => translateSection(t, section))
@@ -42,14 +54,31 @@ export const selectSectionByPath = createSelector(
       const part = parts.shift()
       section = sections?.find((s) => s.id === part)
     }
-    if (section === undefined) return undefined
-    return {
-      id: section.id,
-      title: section.title,
-      shortTitle: section.shortTitle,
-      number: section.number,
-      parents: section.parents,
-      childrenCount: section?.children?.length || 0,
-    }
+    return section === undefined ? undefined : removeChildren(section)
+  }
+)
+
+/**
+ * Return an array for the Breadcrumb component. E.g.:
+ * ```
+ * [
+ *  { id: 'foo', title: 'Foo' },
+ *  { id: 'foo/bar', title: 'Bar' },
+ *  { id: 'foo/bar/baz', title: 'Baz' },
+ * ]
+ * ```
+ */
+export const selectBreadcrumbSections = createSelector(
+  [selectToc, selectSectionPath],
+  (toc, currentSectionPath) => {
+    if (toc === undefined || currentSectionPath === undefined) return []
+    let sections: SectionWithChildren[] | undefined = toc
+    return currentSectionPath.split('/').reduce((acc, id) => {
+      if (sections === undefined) return acc
+      const section = sections.find((s) => s.id === id)
+      sections = section?.children
+      if (section === undefined) return acc
+      return [...acc, removeChildren(section)]
+    }, [] as SectionWithoutChildren[])
   }
 )

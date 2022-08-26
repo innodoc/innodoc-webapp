@@ -52,8 +52,9 @@ const StyledTreeView = styled(TreeView)(({ theme }) => ({
   '& .MuiTreeItem-content': {
     padding: theme.spacing(1, 2),
   },
-  '& 	.MuiTreeItem-iconContainer': {
-    marginRight: theme.spacing(1),
+  '& .MuiTreeItem-iconContainer': {
+    // TODO: fix css order
+    marginRight: theme.spacing(2),
   },
 }))
 
@@ -87,7 +88,7 @@ function Toc() {
     }
   }, [currentSectionPath, expanded, section])
 
-  if (toc === undefined || section === undefined) return null
+  if (toc === undefined) return null
 
   // Called when tree item expand button is clicked
   const onNodeToggle = (ev: SyntheticEvent, nodeIds: string[]) => {

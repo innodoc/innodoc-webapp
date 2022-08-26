@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 import type { SectionWithChildren } from '@/types/api'
 import SectionLink from '@/ui/components/common/link/SectionLink'
-import { formatSectionNumber } from '@/utils/content'
+import { formatSectionTitle } from '@/utils/content'
 
 const StyledLink = styled(Link)(({ theme }) => ({
   color: theme.palette.text.primary,
@@ -49,7 +49,7 @@ const SectionTreeItemContent = forwardRef<unknown, SectionTreeItemContentProps>(
         section={section}
       >
         <Box sx={{ width: (theme) => theme.spacing(section.parents.length * 2) }} />
-        <Box className={classes.iconContainer}>
+        <Box className={classes.iconContainer} sx={{ mr: 2 }}>
           {icon !== undefined ? (
             <IconButton
               aria-label={t(`toc.${expanded ? 'collapseSection' : 'expandSection'}`)}
@@ -59,9 +59,7 @@ const SectionTreeItemContent = forwardRef<unknown, SectionTreeItemContentProps>(
             </IconButton>
           ) : null}
         </Box>
-        <Typography component="div">
-          {formatSectionNumber(section)} {section.title}
-        </Typography>
+        <Typography component="div">{formatSectionTitle(section, true)}</Typography>
       </StyledLink>
     )
   }
