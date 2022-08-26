@@ -57,7 +57,7 @@ async function startServer() {
     const { locale, urlWithoutLocale } = extractLocale(url, locales, req.locale)
     const pageContextInit: PageContextInit = {
       locale,
-      url: urlWithoutLocale,
+      urlOriginal: urlWithoutLocale,
     }
 
     // Ensure url path is prefixed with locale
@@ -90,6 +90,6 @@ async function startServer() {
 
 type PageContextInit = {
   locale: Locale
-  url: string
+  urlOriginal: string
   redirectTo?: string
 }

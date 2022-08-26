@@ -52,7 +52,7 @@ async function render({
   Page,
   pageProps,
   preloadedState,
-  url,
+  urlPathname,
 }: PageContextClient) {
   findRootElement()
 
@@ -61,7 +61,7 @@ async function render({
     store = makeStore(preloadedState)
   } else {
     // Update store on navigation
-    store.dispatch(changeUrlWithoutLocale(url))
+    store.dispatch(changeUrlWithoutLocale(urlPathname))
   }
 
   // Get i18next instance

@@ -65,13 +65,13 @@ async function onBeforeRender({
   Page,
   pageProps = {},
   pageQueryFactories = [],
-  url,
+  urlPathname,
 }: PageContextServer): Promise<{ pageContext: Partial<PageContextServer> }> {
   // Initialize store
   const store = makeStore()
 
   // Seed initial data to store
-  store.dispatch(changeUrlWithoutLocale(url))
+  store.dispatch(changeUrlWithoutLocale(urlPathname))
   store.dispatch(changeLocale(locale))
 
   // Fetch data necessary to render page
@@ -94,7 +94,7 @@ async function onBeforeRender({
 
   // Redirect '/' to homeLink
   const homeLink = selectHomeLink(store.getState())
-  if (url === '/' && homeLink !== undefined) {
+  if (urlPathname === '/' && homeLink !== undefined) {
     return {
       pageContext: {
         redirectTo: `/${locale}${replacePathPrefixes(homeLink)}`,
