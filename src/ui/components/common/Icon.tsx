@@ -6,7 +6,7 @@ import {
   type SxProps,
   type Theme,
 } from '@mui/material'
-import { useEffect, useRef } from 'react'
+import { type ComponentProps, useEffect, useRef } from 'react'
 
 const { icons } = import.meta.env.INNODOC_ICON_DATA
 
@@ -22,6 +22,8 @@ function getIconDataFromBundle(iconName: string) {
 function SvgIcon({ fontSize, name, sx }: SvgIconProps) {
   const svgRef = useRef<SVGSVGElement>(null)
 
+  // TODO: Avoid using `innerHTML`. Doesn't render on server. There are
+  // solutions, like parsing svg and outputting react nodes.
   useEffect(() => {
     if (svgRef.current) {
       svgRef.current.innerHTML = getIconDataFromBundle(name)
@@ -81,6 +83,6 @@ type IconProps = {
   sx?: SxProps<Theme>
 }
 
-type FontSize = 'inherit' | 'large' | 'medium' | 'small'
+type FontSize = ComponentProps<typeof MuiSvgIcon>['fontSize']
 
 export default Icon

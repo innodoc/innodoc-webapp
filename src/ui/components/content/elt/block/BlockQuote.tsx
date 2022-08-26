@@ -4,8 +4,8 @@ import ContentTree from '@/ui/components/content/ContentTree'
 import type { ContentComponentProps } from '@/ui/components/content/elt/types'
 
 const StyledBlockquote = styled('blockquote')(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  borderLeftColor: theme.palette.secondary.main,
+  color: theme.vars.palette.text.secondary,
+  borderLeftColor: theme.vars.palette.secondary.main,
   borderLeftStyle: 'solid',
   borderLeftWidth: theme.spacing(0.5),
   padding: theme.spacing(0, 1),

@@ -14,18 +14,16 @@ const NavButton = forwardRef<HTMLButtonElement | null, ButtonProps>(function Nav
   return <Button color="inherit" ref={ref} size="small" {...props} />
 })
 
-const StyledNavButton = styled(NavButton)({
+const StyledNavButton = styled(NavButton)(({ theme }) => ({
+  paddingLeft: theme.spacing(1),
+  paddingRight: theme.spacing(1),
   textDecoration: 'underline',
-  textDecorationColor: 'rgb(255 255 255 / 0%)',
+  textDecorationColor: `rgb(${theme.vars.palette.text.primaryChannel} / 0%)`,
   textTransform: 'inherit',
   transitionProperty: 'background-color, box-shadow, border-color, color, text-decoration-color',
-  '&:hover': {
-    textDecoration: 'underline',
-  },
-  '&.active': {
-    textDecoration: 'underline',
-  },
-}) as typeof Button
+  '&:hover': { textDecoration: 'underline' },
+  '&.active': { textDecoration: 'underline' },
+})) as typeof Button
 
 function NavMenu() {
   const { t } = useTranslation()
@@ -34,7 +32,7 @@ function NavMenu() {
   return (
     <Stack
       direction="row"
-      spacing={2}
+      spacing={1}
       sx={{
         display: { xs: 'none', md: 'flex' },
         flexGrow: 1,

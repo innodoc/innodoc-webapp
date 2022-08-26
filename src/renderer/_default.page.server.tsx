@@ -3,8 +3,9 @@ import { fileURLToPath } from 'url'
 
 import createCache from '@emotion/cache'
 import createEmotionServer from '@emotion/server/create-instance'
+import { getInitColorSchemeScript } from '@mui/material/styles'
 import I18NextFsBackend from 'i18next-fs-backend'
-import { renderToString } from 'react-dom/server'
+import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import type { FilledContext } from 'react-helmet-async'
 import { escapeInject, dangerouslySkipEscape, RenderErrorPage } from 'vite-plugin-ssr'
 
@@ -46,6 +47,12 @@ function render({ emotionStyleTags, helmet, pageHtml, redirectTo }: PageContextS
     return { pageContext: { redirectTo } }
   }
 
+  // Script that reads from localStorage and sets mode on html tag before
+  // page is rendered (avoid color mode flicker)
+  const initColorSchemeScript = renderToStaticMarkup(
+    getInitColorSchemeScript({ enableSystem: true })
+  )
+
   return escapeInject`<!DOCTYPE html>
     <html ${dangerouslySkipEscape(helmet.htmlAttributes.toString())}>
       <head>
@@ -55,6 +62,7 @@ function render({ emotionStyleTags, helmet, pageHtml, redirectTo }: PageContextS
         ${dangerouslySkipEscape(emotionStyleTags)}
       </head>
       <body ${dangerouslySkipEscape(helmet.bodyAttributes.toString())}>
+        ${dangerouslySkipEscape(initColorSchemeScript)}
         <div id="root">${dangerouslySkipEscape(pageHtml)}</div>
       </body>
     </html>`

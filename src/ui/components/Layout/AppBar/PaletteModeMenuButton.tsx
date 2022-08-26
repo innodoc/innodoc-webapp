@@ -1,19 +1,17 @@
 import { Box, IconButton, Tooltip } from '@mui/material'
+import { useColorScheme } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 
-import { selectPaletteMode } from '@/store/selectors/ui'
-import { changeCustomPaletteMode } from '@/store/slices/uiSlice'
 import Icon from '@/ui/components/common/Icon'
-import { useDispatch, useSelector } from '@/ui/hooks/store'
 
 function PaletteModeMenuButton() {
   const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const currentPaletteMode = useSelector(selectPaletteMode)
+  const { mode, setMode } = useColorScheme()
+
   const paletteModeMenuLabel = t('nav.paletteMode.title')
 
   const onClick = () => {
-    dispatch(changeCustomPaletteMode(currentPaletteMode === 'dark' ? 'light' : 'dark'))
+    setMode(mode === 'dark' ? 'light' : 'dark')
   }
 
   return (

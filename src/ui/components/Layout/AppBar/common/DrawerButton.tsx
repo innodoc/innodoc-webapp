@@ -28,13 +28,7 @@ function DrawerButton({
   return (
     <Box sx={{ flexGrow: 0, ...boxProps.sx }} {...boxProps}>
       <Tooltip arrow title={title}>
-        <IconButton
-          aria-controls={id}
-          aria-label={title}
-          color="inherit"
-          onClick={onClick}
-          sx={(theme) => ({ color: theme.palette.text.primary })}
-        >
+        <IconButton aria-controls={id} aria-label={title} color="inherit" onClick={onClick}>
           <Icon name={iconName} />
         </IconButton>
       </Tooltip>

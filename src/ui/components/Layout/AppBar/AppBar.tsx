@@ -1,5 +1,4 @@
 import { AppBar as MuiAppBar, Box, Container, Toolbar } from '@mui/material'
-import { grey } from '@mui/material/colors'
 import { memo } from 'react'
 
 import LanguageMenuButton from './LanguageMenuButton'
@@ -16,9 +15,9 @@ function AppBar() {
       position="relative"
       color="transparent"
       sx={(theme) => ({
-        backgroundColor: grey[theme.palette.mode === 'dark' ? 800 : 50],
+        backgroundColor: theme.vars.palette.AppBar.defaultBg,
         boxShadow: 1,
-        zIndex: theme.zIndex.appBar,
+        zIndex: theme.vars.zIndex.appBar,
       })}
     >
       <Container disableGutters maxWidth="lg">

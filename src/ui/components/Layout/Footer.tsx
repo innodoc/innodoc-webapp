@@ -43,17 +43,11 @@ function Footer() {
     <Box
       component="footer"
       sx={(theme) => ({
-        color: 'white',
+        color: theme.vars.palette.common.white,
         py: 5,
         mt: 'auto',
-        bgcolor: 'background.footer',
-        boxShadow:
-          theme.palette.mode === 'light'
-            ? 'inset 0 1rem 0.4rem -0.5rem rgba(0 0 0 / 35%)'
-            : 'inset 0 1rem 0.4rem -0.5rem rgba(0 0 0 / 5%)',
-        '& .MuiLink-root': {
-          color: theme.palette.mode === 'light' ? 'primary.light' : 'primary.main',
-        },
+        backgroundColor: theme.vars.palette.Footer.defaultBg,
+        boxShadow: theme.vars.shadowFooter,
       })}
     >
       <Container maxWidth="lg">

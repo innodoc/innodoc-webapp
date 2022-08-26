@@ -5,7 +5,7 @@ import type { ContentComponentProps } from '@/ui/components/content/elt/types'
 
 const StyledPre = styled('pre')(({ theme }) => ({
   background: 'rgba(0, 0, 0, 0.06)', // TODO new color for transparent?
-  color: theme.palette.grey[300],
+  color: theme.vars.palette.grey[300],
   borderLeftStyle: 'solid',
   borderLeftWidth: theme.spacing(0.5),
   paddingLeft: theme.spacing(1),

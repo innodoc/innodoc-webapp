@@ -1,24 +1,17 @@
-import { Box, Divider, ListItemIcon, ListItemText, MenuItem, type PaletteMode } from '@mui/material'
+import { Box, Divider, ListItemIcon, ListItemText, MenuItem } from '@mui/material'
+import { useColorScheme } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 
-import { selectPaletteMode } from '@/store/selectors/ui'
-import { changeCustomPaletteMode } from '@/store/slices/uiSlice'
 import Icon from '@/ui/components/common/Icon'
 import InternalLink from '@/ui/components/common/link/InternalLink'
 import MenuItemCaption from '@/ui/components/common/MenuItemCaption'
 import MenuItemsLanguages from '@/ui/components/Layout/AppBar/MenuItemsLanguages'
-import { useDispatch, useSelector } from '@/ui/hooks/store'
 
 import MenuButton from './common/MenuButton'
 
 function UserMenuButton() {
   const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const currentPaletteMode = useSelector(selectPaletteMode)
-
-  const onClickPaletteMode = (mode: PaletteMode) => {
-    dispatch(changeCustomPaletteMode(mode))
-  }
+  const { mode, setMode } = useColorScheme()
 
   return (
     <MenuButton iconName="mdi:account-circle" id="appbar-user-menu" title={t('nav.openUserMenu')}>
@@ -34,16 +27,10 @@ function UserMenuButton() {
         <MenuItemsLanguages inset />
         <Divider />
         <MenuItemCaption iconName="mdi:theme-light-dark" text={t('nav.paletteMode.title')} />
-        <MenuItem
-          onClick={() => onClickPaletteMode('light')}
-          selected={currentPaletteMode === 'light'}
-        >
+        <MenuItem onClick={() => setMode('light')} selected={mode === 'light'}>
           <ListItemText inset primary={t('nav.paletteMode.light')} />
         </MenuItem>
-        <MenuItem
-          onClick={() => onClickPaletteMode('dark')}
-          selected={currentPaletteMode === 'dark'}
-        >
+        <MenuItem onClick={() => setMode('dark')} selected={mode === 'dark'}>
           <ListItemText inset primary={t('nav.paletteMode.dark')} />
         </MenuItem>
       </Box>

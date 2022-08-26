@@ -14,12 +14,12 @@ const StyledBreadcrumbs = styled(MuiBreadcrumbs)(({ theme }) => ({
     marginRight: 0,
   },
   '& .MuiLink-root': {
-    color: theme.palette.text.secondary,
+    color: theme.vars.palette.text.secondary,
     textDecoration: 'none',
+    transition: theme.transitions.create('color', { duration: theme.transitions.duration.short }),
   },
   '& .MuiLink-root:hover': {
-    // TODO: make hover primary color
-    color: theme.palette.primary,
+    color: theme.vars.palette.primary.main,
   },
 }))
 
@@ -35,7 +35,9 @@ function Breadcrumbs() {
         idx < sections.length - 1 ? (
           <Link component={SectionLink} key={section.id} preferShortTitle section={section} />
         ) : (
-          <Typography component="span">{formatSectionTitle(section, true)}</Typography>
+          <Typography component="span" key={section.id}>
+            {formatSectionTitle(section, true)}
+          </Typography>
         )
       )}
     </StyledBreadcrumbs>

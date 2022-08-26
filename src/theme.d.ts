@@ -1,7 +1,15 @@
-import '@mui/material/styles'
+import '@mui/material/styles/experimental_extendTheme'
 
-declare module '@mui/material/styles' {
-  interface TypeBackground {
-    footer: string
+interface PaletteFooter {
+  defaultBg: string
+}
+
+declare module '@mui/material/styles/experimental_extendTheme' {
+  interface CssVarsPalette {
+    Footer: PaletteFooter
+  }
+
+  interface ThemeVars {
+    shadowFooter: string
   }
 }

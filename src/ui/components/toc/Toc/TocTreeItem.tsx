@@ -9,11 +9,11 @@ import SectionLink from '@/ui/components/common/link/SectionLink'
 import { formatSectionTitle } from '@/utils/content'
 
 const StyledLink = styled(Link)(({ theme }) => ({
-  color: theme.palette.text.primary,
+  color: theme.vars.palette.text.primary,
   textDecoration: 'none',
   '&:focus': {
     outline: 'none',
-    backgroundColor: theme.palette.action.focus,
+    backgroundColor: theme.vars.palette.action.focus,
   },
   '&.Mui-selected': {
     textDecoration: 'underline',

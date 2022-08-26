@@ -1,4 +1,4 @@
-import type { Manifest } from '../types/api'
+import type { Manifest } from '@/types/api'
 
 function isManifest(data: unknown): data is Manifest {
   return (
