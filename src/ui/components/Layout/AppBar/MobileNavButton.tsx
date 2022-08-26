@@ -21,7 +21,7 @@ function MobileNavButton() {
   return (
     <DrawerButton
       anchor="left"
-      boxProps={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
+      boxProps={{ display: { xs: 'flex', md: 'none' }, ml: -1 }}
       iconName="mdi:menu"
       id="appbar-mobile-menu"
       title={t('nav.openNav')}

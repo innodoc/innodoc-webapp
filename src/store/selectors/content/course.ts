@@ -19,8 +19,5 @@ export const selectCourseDescription = createSelector(
   (manifest, t) => t(manifest?.description)
 )
 
-/** Select the course logo */
-export const selectCourseLogo = createSelector([selectManifest], (manifest) => manifest?.logo)
-
 /** Select `homeLink` */
 export const selectHomeLink = createSelector(selectManifest, (manifest) => manifest?.homeLink)

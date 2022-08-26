@@ -1,9 +1,53 @@
 import { icons as mdiIconSet } from '@iconify-json/mdi'
+import type { IconifyJSON } from '@iconify/types'
 import { getIcons } from '@iconify/utils/lib/icon-set/get-icons'
+import { parse as parseSvg, type RootNode } from 'svg-parser'
 
 import type { Manifest } from '@/types/api'
 
 import scanIconNames from './scanIconNames'
+
+/** Parse SVG sources into HAST */
+function parse({ icons, prefix, width = 16, height = 16 }: IconifyJSON): Record<string, RootNode> {
+  return Object.fromEntries(
+    Object.entries(icons).map(([name, { body }]) => [
+      `${prefix}:${name}`,
+      parseSvg(`<svg viewBox='0 0 ${width} ${height}'>${body}</svg>`),
+    ])
+  )
+}
+
+/** Filter by icon set */
+function filterBySet(set: string, iconNames: string[]) {
+  return (
+    iconNames
+      // Filter for and strip 'mdi:...'
+      .reduce(
+        (acc, icon) =>
+          icon.startsWith(`${set}:`) ? [...acc, icon.substring(set.length + 1)] : acc,
+        [] as string[]
+      )
+      // Unique
+      .filter((val, idx, self) => self.indexOf(val) === idx)
+  )
+}
+
+/** Parse file data from content */
+async function getFileIconData(iconNames: string[]): Promise<Record<string, RootNode>> {
+  const contentRoot = process.env.INNODOC_CONTENT_ROOT
+  if (contentRoot === undefined)
+    throw new Error('You need to set the env variable INNODOC_CONTENT_ROOT.')
+
+  return Object.fromEntries(
+    await Promise.all(
+      iconNames.map(async (iconName): Promise<[string, RootNode]> => {
+        const res = await fetch(`${contentRoot}_static/${iconName}`)
+        if (!res.ok) throw new Error(`Failed to fetch SVG icon ${iconName}`)
+        return [`file:${iconName}`, parseSvg(await res.text())]
+      })
+    )
+  )
+}
 
 /**
  * Create icon bundle from manifest pages and static info from source code.
@@ -21,25 +65,21 @@ async function getIconBundle(manifest: Manifest) {
         )
       : []
 
-  // Icon name manifest logo
-  const iconNameManifestLogo = manifest.logo !== undefined ? [manifest.logo] : []
+  const iconNamesCombined = [...iconNamesSourcecode, ...iconNamesManifestPages]
 
-  const iconNamesCombined = [
-    ...iconNamesSourcecode,
-    ...iconNamesManifestPages,
-    ...iconNameManifestLogo,
-  ]
+  // Get Material Design icons from node package
+  const mdiIconNames = filterBySet('mdi', iconNamesCombined)
+  const iconifyJson = getIcons(mdiIconSet, mdiIconNames)
+  if (iconifyJson === null) {
+    throw new Error('Failed to get icon bundle')
+  }
+  const parsedMdiIcons = parse(iconifyJson)
 
-  const mdiIconNames = iconNamesCombined
-    // Filter for and strip 'mdi:...'
-    .reduce(
-      (acc, icon) => (icon.startsWith('mdi:') ? [...acc, icon.replace(/^mdi:/, '')] : acc),
-      [] as string[]
-    )
-    // Unique
-    .filter((val, idx, self) => self.indexOf(val) === idx)
+  // Get file icons from content
+  const iconFilenames = filterBySet('file', iconNamesCombined)
+  const fileIcons = await getFileIconData(iconFilenames)
 
-  return getIcons(mdiIconSet, mdiIconNames)
+  return { ...parsedMdiIcons, ...fileIcons }
 }
 
 export default getIconBundle

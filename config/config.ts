@@ -7,6 +7,7 @@ import ssr from 'vite-plugin-ssr/plugin'
 import fetchManifest from '../src/utils/fetchManifest'
 
 import getIconBundle from './getIconBundle'
+import getLogo from './getLogo'
 
 dotenv.config()
 
@@ -18,6 +19,7 @@ async function config() {
     define: {
       'import.meta.env.INNODOC_ICON_DATA': JSON.stringify(await getIconBundle(manifest)),
       'import.meta.env.INNODOC_LOCALES': JSON.stringify(manifest.languages),
+      'import.meta.env.INNODOC_LOGO_DATA': JSON.stringify(await getLogo(manifest)),
     },
     plugins: [react(), ssr({ prerender: true })],
     resolve: {

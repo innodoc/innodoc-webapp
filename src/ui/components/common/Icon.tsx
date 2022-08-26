@@ -1,84 +1,41 @@
-import {
-  // eslint-disable-next-line @typescript-eslint/no-restricted-imports
-  Icon as MuiIcon,
-  styled,
-  SvgIcon as MuiSvgIcon,
-  type SxProps,
-  type Theme,
-} from '@mui/material'
-import { type ComponentProps, useEffect, useRef } from 'react'
+import { SvgIcon as MuiSvgIcon, type SxProps, type Theme } from '@mui/material'
+import { type ComponentProps } from 'react'
 
-const { icons } = import.meta.env.INNODOC_ICON_DATA
+import SvgNode, { isElementNode } from './SvgNode'
 
-function getIconDataFromBundle(iconName: string) {
-  try {
-    return icons[iconName].body
-  } catch {
-    console.warn(`Unknown icon name: '${iconName}'`)
-    return ''
+const iconData = import.meta.env.INNODOC_ICON_DATA
+
+function Icon({ name, ...other }: IconProps) {
+  const icon = iconData[name]
+  if (icon === undefined) {
+    throw new Error(`Unknown icon name: ${name}`)
   }
-}
 
-function SvgIcon({ fontSize, name, sx }: SvgIconProps) {
-  const svgRef = useRef<SVGSVGElement>(null)
+  const svgNode = icon.children[0]
+  if (!isElementNode(svgNode) || svgNode.tagName !== 'svg') {
+    throw new Error('Invalid root node')
+  }
 
-  // TODO: Avoid using `innerHTML`. Doesn't render on server. There are
-  // solutions, like parsing svg and outputting react nodes.
-  useEffect(() => {
-    if (svgRef.current) {
-      svgRef.current.innerHTML = getIconDataFromBundle(name)
-    }
-  }, [name])
+  const viewBox =
+    typeof svgNode?.properties?.viewBox === 'string' ? svgNode.properties.viewBox : '0 0 24 24'
 
-  return <MuiSvgIcon fontSize={fontSize} ref={svgRef} sx={sx} />
-}
-
-type SvgIconProps = {
-  fontSize?: FontSize
-  /**
-   * Icon name as defined in icon bundle.
-   *
-   * https://icon-sets.iconify.design/mdi/
-   */
-  name: string
-  sx?: SxProps<Theme>
-}
-
-const StyledImg = styled('img')({
-  display: 'flex',
-  height: 'inherit',
-  width: 'inherit',
-})
-
-function SvgFileIcon({ filename, sx }: SvgFileIconProps) {
   return (
-    <MuiIcon sx={sx}>
-      <StyledImg src={`${import.meta.env.INNODOC_CONTENT_ROOT}_static/${filename}`} />
-    </MuiIcon>
+    <MuiSvgIcon viewBox={viewBox} {...other}>
+      {svgNode.children.map((node, idx) => (
+        <SvgNode key={idx} node={node} />
+      ))}
+    </MuiSvgIcon>
   )
-}
-
-type SvgFileIconProps = {
-  /** Icon file name referencing file in course `_static` folder. */
-  filename: string
-  sx?: SxProps<Theme>
-}
-
-function Icon({ fontSize, name, sx }: IconProps) {
-  if (name.startsWith('mdi:')) {
-    return <SvgIcon fontSize={fontSize} name={name.replace(/^mdi:/, '')} sx={sx} />
-  }
-
-  if (name.startsWith('file:')) {
-    return <SvgFileIcon filename={name.replace(/^file:/, '')} sx={sx} />
-  }
-
-  throw Error('Icon `name` prop must start with `mdi:..` or `file:...`.')
 }
 
 type IconProps = {
   fontSize?: FontSize
-  /** Icon name, either `mdi:...` or `file:...`. */
+  /**
+   * Icon name as defined in icon bundle (e.g. `mdi:home`) or SVG file
+   * referencing static content file (e.g. `file:logo.svg`).
+   *
+   * See https://icon-sets.iconify.design/mdi/ for available icons.
+   */
   name: string
   sx?: SxProps<Theme>
 }
