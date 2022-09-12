@@ -1,8 +1,8 @@
 import { createElement } from 'react'
-import type { ElementNode, Node } from 'svg-parser'
+import type { ElementNode } from 'svg-parser'
 
-export function isElementNode(node: string | Node): node is ElementNode {
-  return typeof node !== 'string' && node.type === 'element'
+export function isElementNode(node: unknown): node is ElementNode {
+  return node !== null && typeof node === 'object' && (node as ElementNode).type === 'element'
 }
 
 function SvgElementNode({ node: { tagName, properties = {}, children } }: SvgElementNodeProps) {

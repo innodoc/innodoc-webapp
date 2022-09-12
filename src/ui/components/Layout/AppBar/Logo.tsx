@@ -1,12 +1,13 @@
 import { Link, styled, Typography } from '@mui/material'
 import type { Node } from 'svg-parser'
 
+import buildData from '@/__buildData.json'
 import { selectCourseTitle } from '@/store/selectors/content/course'
 import HomeLink from '@/ui/components/common/link/HomeLink'
 import SvgElementNode, { isElementNode } from '@/ui/components/common/SvgNode'
 import { useSelector } from '@/ui/hooks/store'
 
-const logoData = import.meta.env.INNODOC_LOGO_DATA
+const { logoData } = buildData
 
 const StyledSvg = styled('svg')({
   color: 'var(--mui-palette-text-primary)',
@@ -39,7 +40,7 @@ function Logo() {
   const title = useSelector(selectCourseTitle)
 
   const content =
-    logoData === undefined ? (
+    logoData === undefined || !isElementNode(logoData.children[0]) ? (
       <Typography variant="h6" color="inherit" noWrap>
         {title}
       </Typography>

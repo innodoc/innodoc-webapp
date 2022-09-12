@@ -1,22 +1,22 @@
 {
   "title": { "de": "innoDoc", "en": "innoDoc" },
   "languages": ["de", "en"],
-  "min_score": 90,
-  "home_link": "/page/about",
+  "minScore": 90,
+  "homeLink": "/page/about",
   "pages": [
     {
       "id": "about",
       "icon": "mdi:information-outline",
       "linked": ["nav"],
       "title": { "de": "\u00dcber diesen Kurs", "en": "About this course" },
-      "short_title": { "de": "\u00dcber", "en": "About" }
+      "shortTitle": { "de": "\u00dcber", "en": "About" }
     },
     {
       "id": "license",
       "icon": "mdi:copyright",
       "linked": ["footer"],
       "title": { "de": "Lizenz", "en": "License" },
-      "short_title": { "de": "Lizenz", "en": "License" }
+      "shortTitle": { "de": "Lizenz", "en": "License" }
     }
   ],
   "mathjax": {
@@ -88,7 +88,7 @@
     },
     { "id": "03-test", "title": { "de": "Beispiel-Test", "en": "Example test" }, "type": "test" }
   ],
-  "index_terms": {
+  "indexTerms": {
     "de": {
       "markdown": [
         "Markdown",

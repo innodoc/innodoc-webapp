@@ -1,7 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import camelcaseKeys from 'camelcase-keys'
-import decamelize from 'decamelize'
 import type { Tree } from 'pandoc-filter'
 
 import type {
@@ -29,17 +27,10 @@ const transformSection = (
 })
 
 /** Transform API response for `Manifest` */
-const transformResponseManifest = (response: ApiManifest): TransformedManifest => {
-  const manifest = (
-    response !== null && typeof response === 'object'
-      ? camelcaseKeys(response, { deep: true, stopPaths: ['boxes', 'indexTerms', 'mathjax'] })
-      : {}
-  ) as ApiManifest
-  return {
-    ...manifest,
-    toc: manifest?.toc?.map((section, idx) => transformSection(section, [], [idx])),
-  }
-}
+const transformResponseManifest = (response: ApiManifest): TransformedManifest => ({
+  ...response,
+  toc: response?.toc?.map((section, idx) => transformSection(section, [], [idx])),
+})
 
 const contentApi = createApi({
   reducerPath: REDUCER_PATH,
@@ -59,7 +50,7 @@ const contentApi = createApi({
 
     /** Fetch content AST */
     getContent: builder.query<Tree, ContentFetchArgs>({
-      query: ({ locale, path }) => `${locale}/_${decamelize(path)}.json`,
+      query: ({ locale, path }) => `${locale}/_${path}.json`,
     }),
 
     /** Fetch content AST for a page */

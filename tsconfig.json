@@ -13,8 +13,9 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2022",
-    "types": ["vite/client"],
+    "types": ["vite/client", "vitest/globals"],
     "paths": {
+      "@/test-utils": ["./tests/integration/utils"],
       "@/*": ["./src/*"]
     }
   },

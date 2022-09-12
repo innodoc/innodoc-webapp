@@ -1,12 +1,14 @@
 import { SvgIcon as MuiSvgIcon, type SxProps, type Theme } from '@mui/material'
 import { type ComponentProps } from 'react'
 
+import buildData from '@/__buildData.json'
+
 import SvgNode, { isElementNode } from './SvgNode'
 
-const iconData = import.meta.env.INNODOC_ICON_DATA
+const { iconBundle } = buildData
 
 function Icon({ name, ...other }: IconProps) {
-  const icon = iconData[name]
+  const icon = iconBundle[name]
   if (icon === undefined) {
     throw new Error(`Unknown icon name: ${name}`)
   }
@@ -19,11 +21,15 @@ function Icon({ name, ...other }: IconProps) {
   const viewBox =
     typeof svgNode?.properties?.viewBox === 'string' ? svgNode.properties.viewBox : '0 0 24 24'
 
+  const children = svgNode.children
+    .map((node, idx) => {
+      return isElementNode(node) ? <SvgNode key={idx} node={node} /> : false
+    })
+    .filter(Boolean)
+
   return (
     <MuiSvgIcon viewBox={viewBox} {...other}>
-      {svgNode.children.map((node, idx) => (
-        <SvgNode key={idx} node={node} />
-      ))}
+      {children}
     </MuiSvgIcon>
   )
 }
@@ -36,7 +42,7 @@ type IconProps = {
    *
    * See https://icon-sets.iconify.design/mdi/ for available icons.
    */
-  name: string
+  name: keyof typeof iconBundle
   sx?: SxProps<Theme>
 }
 

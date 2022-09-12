@@ -1,0 +1,12 @@
+---
+extends:
+  - plugin:jest/recommended
+  - plugin:testing-library/react
+
+rules:
+  jest/no-disabled-tests: off
+  jest/no-focused-tests: error
+  jest/no-identical-title: error
+  jest/prefer-to-have-length: warn
+  jest/valid-expect: error
+  filenames/match-regex: off

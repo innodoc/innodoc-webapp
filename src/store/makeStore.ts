@@ -15,11 +15,11 @@ function makeStore(preloadedState?: PreloadedState<RootState>) {
     devTools: import.meta.env.MODE === 'development',
     middleware(getDefaultMiddleware) {
       const middleware = getDefaultMiddleware().concat(contentApi.middleware)
-      if (import.meta.env.SSR) {
-        return middleware
+      if (!import.meta.env.SSR) {
+        // Only on client
+        return middleware.prepend(localeChangeMiddleware.middleware)
       }
-      // Only relevant for client
-      return middleware.prepend(localeChangeMiddleware.middleware)
+      return middleware
     },
     preloadedState,
     reducer,

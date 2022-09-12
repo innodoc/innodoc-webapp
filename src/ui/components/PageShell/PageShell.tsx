@@ -1,7 +1,7 @@
 import { CacheProvider, type EmotionCache } from '@emotion/react'
 import { CssBaseline } from '@mui/material'
 import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles/index.js'
-import type { i18n } from 'i18next'
+import type { i18n as I18n } from 'i18next'
 import { StrictMode } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
 import { I18nextProvider } from 'react-i18next'
@@ -35,7 +35,7 @@ type PageShellProps = {
   children: React.ReactNode
   helmetContext?: Record<string, never>
   emotionCache: EmotionCache
-  i18n: i18n
+  i18n: I18n
   store: Store
 }
 

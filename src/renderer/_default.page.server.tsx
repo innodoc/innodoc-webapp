@@ -34,11 +34,13 @@ const createCache = ((_createCache as any).default ?? _createCache) as typeof _c
 const createEmotionServer = ((_createEmotionServer as any).default ??
   _createEmotionServer) as typeof _createEmotionServer
 
-const dirname = path.dirname(fileURLToPath(import.meta.url))
-const baseLocalesPath = path.resolve(dirname, '..', '..', 'public', 'locales')
-const i18nBackendOpts = {
-  loadPath: path.join(baseLocalesPath, '{{lng}}', '{{ns}}.json'),
-  addPath: path.join(baseLocalesPath, '{{lng}}', '{{ns}}.missing.json'),
+function getI18nBackendOpts() {
+  const dirname = path.dirname(fileURLToPath(import.meta.url))
+  const baseLocalesPath = path.resolve(dirname, '..', '..', 'public', 'locales')
+  return {
+    loadPath: path.join(baseLocalesPath, '{{lng}}', '{{ns}}.json'),
+    addPath: path.join(baseLocalesPath, '{{lng}}', '{{ns}}.missing.json'),
+  }
 }
 
 const passToClient = ['locale', 'preloadedState', 'pageProps']
@@ -127,7 +129,7 @@ async function onBeforeRender({
   const emotionCache = createCache({ key: 'emotion-style' })
 
   // Initialize i18next
-  const i18n = await getI18n(I18NextFsBackend, i18nBackendOpts, locale, store)
+  const i18n = await getI18n(I18NextFsBackend, getI18nBackendOpts(), locale, store)
 
   // Initialize helmet context
   const helmetContext = {}
@@ -189,4 +191,4 @@ async function onBeforePrerender(globalContext: {
 
 type PrerenderingPageContext = Pick<PageContextServer, 'locale' | 'urlOriginal'>
 
-export { onBeforePrerender, onBeforeRender, passToClient, render }
+export { getI18nBackendOpts, onBeforePrerender, onBeforeRender, passToClient, render }

@@ -17,8 +17,6 @@ extends:
   - plugin:react-redux/recommended
   - plugin:regexp/recommended
   - plugin:promise/recommended
-  # - plugin:jest/recommended
-  # - plugin:testing-library/react
   # - plugin:playwright/playwright-test
   - plugin:prettier/recommended
 
@@ -64,11 +62,6 @@ overrides:
       import/no-named-as-default-member: off
 
   # Filename exceptions
-  - files:
-      - '**/+(jest|postcss|prettier).config.+(cjs|js)'
-      - '**/.eslintrc.cjs'
-    rules:
-      filenames/match-regex: off
   - files:
       - vite.config.ts
       - '**/*.d.ts'
@@ -122,14 +115,6 @@ rules:
 
   # Turn on errors for missing imports
   import/no-unresolved: error
-
-  ########### Jest
-
-  # jest/no-disabled-tests: off
-  # jest/no-focused-tests: error
-  # jest/no-identical-title: error
-  # jest/prefer-to-have-length: warn
-  # jest/valid-expect: error
 
   ########### Prettier
 
