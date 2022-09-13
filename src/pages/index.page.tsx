@@ -1,3 +1,3 @@
-// Dummy file-based route to match `/`
+// Dummy file-based route to match `/` which is always a redirect
 
-export {}
+export const doNotPrerender = true

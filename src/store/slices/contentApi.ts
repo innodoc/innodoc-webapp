@@ -1,5 +1,5 @@
-import { createSelector } from '@reduxjs/toolkit'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import * as toolkitRaw from '@reduxjs/toolkit'
+import * as toolkitQueryReactRaw from '@reduxjs/toolkit/dist/query/react/index.js'
 import camelcaseKeys from 'camelcase-keys'
 import decamelize from 'decamelize'
 import type { Tree } from 'pandoc-filter'
@@ -11,6 +11,10 @@ import type {
   TransformedManifest,
   TransformedSection,
 } from '@/types/api'
+
+const { createSelector } = ((toolkitRaw as any).default ?? toolkitRaw) as typeof toolkitRaw
+const { createApi, fetchBaseQuery } = ((toolkitQueryReactRaw as any).default ??
+  toolkitQueryReactRaw) as typeof toolkitQueryReactRaw
 
 const REDUCER_PATH = 'contentApi'
 

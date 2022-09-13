@@ -1,4 +1,4 @@
-import { createListenerMiddleware } from '@reduxjs/toolkit'
+import * as toolkitRaw from '@reduxjs/toolkit'
 import { getI18n } from 'react-i18next'
 import { navigate } from 'vite-plugin-ssr/client/router'
 
@@ -6,6 +6,9 @@ import { selectUrlWithoutLocale } from '@/store/selectors/ui'
 import { changeLocale } from '@/store/slices/uiSlice'
 
 import type { AppStartListening } from './types'
+
+const { createListenerMiddleware } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw
 
 const localeChangeMiddleware = createListenerMiddleware()
 const startAppListening = localeChangeMiddleware.startListening as AppStartListening

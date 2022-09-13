@@ -5,17 +5,14 @@ import extractLocale from '@/utils/extractLocale'
 function onBeforeRoute({ locale, urlOriginal }: PageContextServer): {
   pageContext: Partial<PageContextServer>
 } {
-  if (locale === undefined) {
-    const locales = import.meta.env.INNODOC_LOCALES
-    const { urlWithoutLocale, locale: extractedLocale } = extractLocale(urlOriginal, locales)
-    locale = extractedLocale
-    urlOriginal = urlWithoutLocale
-  }
+  const locales = import.meta.env.INNODOC_LOCALES
+  const { urlWithoutLocale, locale: extractedLocale } = extractLocale(urlOriginal, locales, locale)
+  locale = extractedLocale
 
   return {
     pageContext: {
       locale,
-      urlOriginal,
+      urlOriginal: urlWithoutLocale,
     },
   }
 }

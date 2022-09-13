@@ -1,11 +1,11 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-import createCache from '@emotion/cache'
-import createEmotionServer from '@emotion/server/create-instance'
-import { getInitColorSchemeScript } from '@mui/material/styles'
+import createCacheRaw from '@emotion/cache'
+import createEmotionServerRaw from '@emotion/server/create-instance'
+import { getInitColorSchemeScript } from '@mui/material/styles/index.js'
 import I18NextFsBackend from 'i18next-fs-backend'
-import { renderToStaticMarkup, renderToString } from 'react-dom/server'
+import { renderToStaticMarkup } from 'react-dom/server'
 import type { FilledContext } from 'react-helmet-async'
 import { escapeInject, dangerouslySkipEscape, RenderErrorPage } from 'vite-plugin-ssr'
 
@@ -25,6 +25,11 @@ import { replacePathPrefixes } from '@/utils/content'
 import getI18n from '@/utils/getI18n'
 
 import { fetchContent, fetchManifest } from './fetchData'
+import renderToHtml from './renderToHtml'
+
+const createCache = ((createCacheRaw as any).default ?? createCacheRaw) as typeof createCacheRaw
+const createEmotionServer = ((createEmotionServerRaw as any).default ??
+  createEmotionServerRaw) as typeof createEmotionServerRaw
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const baseLocalesPath = path.resolve(dirname, '..', '..', 'public', 'locales')
@@ -95,6 +100,11 @@ async function onBeforeRender({
     throw RenderErrorPage({ pageContext: { errorMsg: 'Could not retrieve course locales!' } })
   }
 
+  // TODO: how to handle this correctly?
+  if (urlPathname === '/fake-404-url') {
+    locale = 'en'
+  }
+
   // Check if locale is valid
   if (!locales.includes(locale)) {
     throw RenderErrorPage({ pageContext: { is404: true } })
@@ -120,7 +130,7 @@ async function onBeforeRender({
   const helmetContext = {}
 
   // Render page
-  const pageHtml = renderToString(
+  const pageHtml = await renderToHtml(
     <PageShell emotionCache={emotionCache} helmetContext={helmetContext} i18n={i18n} store={store}>
       <Page {...pageProps} />
     </PageShell>
@@ -132,8 +142,7 @@ async function onBeforeRender({
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { constructStyleTagsFromChunks, extractCriticalToChunks } =
     createEmotionServer(emotionCache)
-  const chunks = extractCriticalToChunks(pageHtml)
-  const emotionStyleTags = constructStyleTagsFromChunks(chunks)
+  const emotionStyleTags = constructStyleTagsFromChunks(extractCriticalToChunks(pageHtml))
 
   // Grab populated state
   const preloadedState = store.getState()
@@ -149,4 +158,32 @@ async function onBeforeRender({
   }
 }
 
-export { onBeforeRender, passToClient, render }
+// Build correct URLs with locales for prerendering from pages
+async function onBeforePrerender(globalContext: {
+  prerenderPageContexts: PrerenderingPageContext[]
+}) {
+  // Get course locales
+  const store = makeStore()
+  await store.dispatch(fetchManifest())
+  const locales = selectLocales(store.getState())
+
+  // For each page add locale pages
+  const prerenderPageContexts: PrerenderingPageContext[] = []
+  globalContext.prerenderPageContexts.forEach((pageContext) => {
+    locales.forEach((locale) => {
+      prerenderPageContexts.push({
+        ...pageContext,
+        urlOriginal: `/${locale}${pageContext.urlOriginal}`,
+        locale,
+      })
+    })
+  })
+
+  return {
+    globalContext: { prerenderPageContexts },
+  }
+}
+
+type PrerenderingPageContext = Pick<PageContextServer, 'locale' | 'urlOriginal'>
+
+export { onBeforePrerender, onBeforeRender, passToClient, render }

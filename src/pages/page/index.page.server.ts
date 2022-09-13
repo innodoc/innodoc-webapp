@@ -1,6 +1,9 @@
 import { onBeforeRender as onBeforeRenderDefault } from '@/renderer/_default.page.server'
-import { fetchPageContent } from '@/renderer/fetchData'
+import { fetchManifest, fetchPageContent } from '@/renderer/fetchData'
+import makeStore from '@/store/makeStore'
+import { selectPages } from '@/store/selectors/content/page'
 import type { PageContextServer } from '@/types/page'
+import { pageUrl } from '@/utils/content'
 
 async function onBeforeRender(pageContext: PageContextServer) {
   const { pageId } = pageContext.routeParams
@@ -16,4 +19,12 @@ async function onBeforeRender(pageContext: PageContextServer) {
   })
 }
 
-export { onBeforeRender }
+// Generate URLs for prerendering
+async function prerender() {
+  const store = makeStore()
+  await store.dispatch(fetchManifest())
+  const pages = selectPages(store.getState())
+  return pages.map((page) => pageUrl(page.id))
+}
+
+export { onBeforeRender, prerender }

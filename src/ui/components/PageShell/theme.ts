@@ -3,7 +3,7 @@ import {
   experimental_extendTheme as extendTheme,
   responsiveFontSizes,
   type ThemeOptions,
-} from '@mui/material/styles'
+} from '@mui/material/styles/index.js'
 
 // Augment theme type
 import type {} from '@mui/material/themeCssVarsAugmentation'
