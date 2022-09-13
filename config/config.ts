@@ -27,6 +27,11 @@ async function config() {
         '@': path.resolve(__dirname, '..', 'src'),
       },
     },
+    ssr: {
+      noExternal: [
+        '@reduxjs/toolkit', // otherwise can't be loaded on prerendering
+      ],
+    },
   }
 }
 

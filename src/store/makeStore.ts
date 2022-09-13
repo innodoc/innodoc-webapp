@@ -1,11 +1,9 @@
-import * as toolkitRaw from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import type { PreloadedState, StateFromReducersMapObject } from '@reduxjs/toolkit'
 
 import localeChangeMiddleware from './middlewares/localeChangeMiddleware'
 import contentApi from './slices/contentApi'
 import uiSlice from './slices/uiSlice'
-
-const { configureStore } = ((toolkitRaw as any).default ?? toolkitRaw) as typeof toolkitRaw
 
 const reducer = {
   [contentApi.reducerPath]: contentApi.reducer,

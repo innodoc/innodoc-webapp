@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 overrides:
-  '@reduxjs/toolkit': ^1.8.3
+  '@reduxjs/toolkit': ^1.8.5
   react: ^18.2.0
   react-dom: ^18.2.0
   react-redux: ^8.0.2
@@ -21,7 +21,7 @@ specifiers:
   '@iconify/utils': 2.0.0
   '@mui/lab': 5.0.0-alpha.98
   '@mui/material': ^5.10.4
-  '@reduxjs/toolkit': ^1.8.3
+  '@reduxjs/toolkit': ^1.8.5
   '@types/compression': ^1.7.2
   '@types/eslint': ^8.4.6
   '@types/express': ^4.17.13

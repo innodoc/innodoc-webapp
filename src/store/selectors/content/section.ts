@@ -1,12 +1,10 @@
-import * as toolkitRaw from '@reduxjs/toolkit'
+import { createSelector } from '@reduxjs/toolkit'
 
 import { selectUrlWithoutLocale } from '@/store/selectors/ui'
 import { selectManifest } from '@/store/slices/contentApi'
 import type { SectionWithChildren, SectionWithoutChildren, TransformedSection } from '@/types/api'
 
 import { selectTranslateFn, type TranslateFn } from './i18n'
-
-const { createSelector } = ((toolkitRaw as any).default ?? toolkitRaw) as typeof toolkitRaw
 
 /** Translate a section */
 function translateSection(t: TranslateFn, section: TransformedSection): SectionWithChildren {

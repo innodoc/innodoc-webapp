@@ -1,8 +1,8 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-import createCacheRaw from '@emotion/cache'
-import createEmotionServerRaw from '@emotion/server/create-instance'
+import _createCache from '@emotion/cache'
+import _createEmotionServer from '@emotion/server/create-instance'
 import { getInitColorSchemeScript } from '@mui/material/styles/index.js'
 import I18NextFsBackend from 'i18next-fs-backend'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -27,9 +27,12 @@ import getI18n from '@/utils/getI18n'
 import { fetchContent, fetchManifest } from './fetchData'
 import renderToHtml from './renderToHtml'
 
-const createCache = ((createCacheRaw as any).default ?? createCacheRaw) as typeof createCacheRaw
-const createEmotionServer = ((createEmotionServerRaw as any).default ??
-  createEmotionServerRaw) as typeof createEmotionServerRaw
+// Workaround to make compatible with Node ESM and vite loaders
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+const createCache = ((_createCache as any).default ?? _createCache) as typeof _createCache
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+const createEmotionServer = ((_createEmotionServer as any).default ??
+  _createEmotionServer) as typeof _createEmotionServer
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const baseLocalesPath = path.resolve(dirname, '..', '..', 'public', 'locales')

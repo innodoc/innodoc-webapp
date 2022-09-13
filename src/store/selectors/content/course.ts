@@ -1,10 +1,8 @@
-import * as toolkitRaw from '@reduxjs/toolkit'
+import { createSelector } from '@reduxjs/toolkit'
 
 import { selectManifest } from '@/store/slices/contentApi'
 
 import { selectTranslateFn } from './i18n'
-
-const { createSelector } = ((toolkitRaw as any).default ?? toolkitRaw) as typeof toolkitRaw
 
 /** Select available locales */
 export const selectLocales = createSelector(selectManifest, (manifest) => manifest?.languages || [])

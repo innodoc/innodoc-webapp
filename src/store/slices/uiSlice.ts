@@ -1,10 +1,8 @@
-import * as toolkitRaw from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import type { RootState } from '@/store/makeStore'
 import type { Locale } from '@/types/common'
-
-const { createSlice } = ((toolkitRaw as any).default ?? toolkitRaw) as typeof toolkitRaw
 
 const NAME = 'ui'
 
