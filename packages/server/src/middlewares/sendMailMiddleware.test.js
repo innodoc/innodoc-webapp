@@ -34,7 +34,6 @@ describe('sendMailMiddleware', () => {
       to: 'bob@example.com',
       subject: 'Test subject',
       text: 'Test content',
-      from: 'no-reply@example.com',
     })
   })
 })
