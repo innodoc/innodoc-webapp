@@ -136,7 +136,6 @@ const userController = async ({ appRoot, discourseSsoSecret, discourseUrl, jwtSe
       logger.info(`Account registered: ${user.email}`)
       res.status(200).json({ result: 'ok' })
     } catch (err) {
-      logger.error(`Could not send verification mail. Response: ${err.response}`)
       if (user) {
         await user.delete()
       }
@@ -227,15 +226,9 @@ const userController = async ({ appRoot, discourseSsoSecret, discourseUrl, jwtSe
       if (user) {
         user.passwordResetToken = User.generateToken()
         user.passwordResetExpires = Date.now() + 60 * 60 * 1000 // 1 hour
-        try {
-          await req.app.locals.sendMail(
-            resetPasswordMail(req.t, appRoot, email, user.passwordResetToken)
-          )
-        } catch (err) {
-          logger.error(`Could not send password reset mail. Response: ${err.response}`)
-          next(err)
-          return
-        }
+        await req.app.locals.sendMail(
+          resetPasswordMail(req.t, appRoot, email, user.passwordResetToken)
+        )
         await user.save()
         res.status(200).json({ result: 'ok' })
       } else {
@@ -254,15 +247,9 @@ const userController = async ({ appRoot, discourseSsoSecret, discourseUrl, jwtSe
         emailVerified: false,
       })
       if (user) {
-        try {
-          await req.app.locals.sendMail(
-            verificationMail(req.t, appRoot, email, user.emailVerificationToken)
-          )
-        } catch (err) {
-          logger.error(`Could not send verification request mail. Response: ${err.response}`)
-          next(err)
-          return
-        }
+        await req.app.locals.sendMail(
+          verificationMail(req.t, appRoot, email, user.emailVerificationToken)
+        )
         res.status(200).json({ result: 'ok' })
       } else {
         res.status(400).json({ result: 'NoMatchingEmailFound' })
