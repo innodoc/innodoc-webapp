@@ -35,39 +35,25 @@ describe('emailTransport', () => {
       port: 25,
       user: 'alice@example.com',
       password: 's3cr3t',
-      senderAddress: 'sender@example.com',
       skipMails: false,
     })
     expect(transport).toBe(mockTransport)
     expect(nodemailer.createTransport).toBeCalledTimes(1)
-    expect(nodemailer.createTransport).toBeCalledWith(
-      {
-        host: 'smtp.example.com',
-        port: 25,
-        secure: false,
-        auth: { user: 'alice@example.com', pass: 's3cr3t' },
-      },
-      { from: 'sender@example.com' }
-    )
+    expect(nodemailer.createTransport).toBeCalledWith({
+      host: 'smtp.example.com',
+      port: 25,
+      auth: { user: 'alice@example.com', pass: 's3cr3t' },
+    })
   })
 
   it('should create transport w/o auth', () => {
-    const transport = emailTransport({
-      host: 'smtp.example.com',
-      port: 25,
-      senderAddress: 'sender@example.com',
-      skipMails: false,
-    })
+    const transport = emailTransport({ host: 'smtp.example.com', port: 25, skipMails: false })
     expect(transport).toBe(mockTransport)
     expect(nodemailer.createTransport).toBeCalledTimes(1)
-    expect(nodemailer.createTransport).toBeCalledWith(
-      {
-        host: 'smtp.example.com',
-        port: 25,
-        secure: false,
-      },
-      { from: 'sender@example.com' }
-    )
+    expect(nodemailer.createTransport).toBeCalledWith({
+      host: 'smtp.example.com',
+      port: 25,
+    })
   })
 
   it('should provide sendMail wrapper function that logs', async () => {
