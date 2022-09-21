@@ -12,7 +12,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2017",
+    "target": "ES2022",
     "types": ["vite/client"],
     "paths": {
       "@/*": ["./src/*"]
