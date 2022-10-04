@@ -17,7 +17,7 @@ const createExpressApp = async (config, nextApp) => {
   }
 
   return app
-    .use(bodyParser.json())
+    .use(bodyParser.json({ limit: 1024 * 1024 })) // Increase upload limit for /user/progress
     .use(cookieParser())
     .use(
       csrf({
