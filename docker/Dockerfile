@@ -1,4 +1,4 @@
-FROM gitlab-registry.tubit.tu-berlin.de/innodoc/innodoc-webapp/base:latest
+FROM git.tu-berlin.de:5000/innodoc/innodoc-webapp/base:latest
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 ARG BUILD_ID
 ENV NEXTJS_WEBAPP_BUILD_ID=$BUILD_ID \

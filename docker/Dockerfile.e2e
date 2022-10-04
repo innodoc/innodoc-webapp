@@ -1,7 +1,7 @@
 ARG BUILD_IMAGE
 FROM $BUILD_IMAGE as build
 
-FROM gitlab-registry.tubit.tu-berlin.de/innodoc/innodoc-webapp/playwright:latest
+FROM git.tu-berlin.de:5000/innodoc/innodoc-webapp/playwright:latest
 LABEL maintainer="Mirko Dietrich <dietrich@math.tu-berlin.de>"
 ENV INNODOC_WEBAPP_CI=true
 

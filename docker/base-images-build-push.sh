@@ -2,7 +2,7 @@
 
 set -xe
 
-REGISTRY_NAME=gitlab-registry.tubit.tu-berlin.de/innodoc/innodoc-webapp
+REGISTRY_NAME=git.tu-berlin.de:5000/innodoc/innodoc-webapp
 BASE_IMAGE=${REGISTRY_NAME}/base:latest
 PLAYWRIGHT_IMAGE=${REGISTRY_NAME}/playwright:latest
 PLAYWRIGHT_VERSION=$(yarn workspace @innodoc/client-web node --eval "console.log(require('playwright-chromium/package.json').version)")
