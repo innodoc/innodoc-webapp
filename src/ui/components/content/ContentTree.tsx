@@ -19,7 +19,6 @@ import Emph from './elt/inline/Emph'
 import Image from './elt/inline/Image'
 import LineBreak from './elt/inline/LineBreak'
 import Link from './elt/inline/Link'
-import Math from './elt/inline/Math'
 import Note from './elt/inline/Note'
 import Plain from './elt/inline/Plain'
 import Quoted from './elt/inline/Quoted'
@@ -33,8 +32,10 @@ import Strikeout from './elt/inline/Strikeout'
 import Strong from './elt/inline/Strong'
 import Subscript from './elt/inline/Subscript'
 import Superscript from './elt/inline/Superscript'
+import Math from './elt/Math'
 
 function Elt({ elt }: EltRendererProps) {
+  if (elt.t === 'Math') return <Math content={elt.c} />
   // Block
   if (elt.t === 'BlockQuote') return <BlockQuote content={elt.c} />
   if (elt.t === 'BulletList') return <BulletList content={elt.c} />
@@ -56,7 +57,6 @@ function Elt({ elt }: EltRendererProps) {
   if (elt.t === 'Image') return <Image content={elt.c} />
   if (elt.t === 'LineBreak') return <LineBreak content={elt.c} />
   if (elt.t === 'Link') return <Link content={elt.c} />
-  if (elt.t === 'Math') return <Math content={elt.c} />
   if (elt.t === 'Note') return <Note content={elt.c} />
   if (elt.t === 'Plain') return <Plain content={elt.c} />
   if (elt.t === 'Quoted') return <Quoted content={elt.c} />

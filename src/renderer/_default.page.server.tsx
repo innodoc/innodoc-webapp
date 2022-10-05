@@ -15,6 +15,9 @@ import '@fontsource/lato/400-italic.css'
 import '@fontsource/lato/700.css'
 import '@fontsource/lato/700-italic.css'
 
+// KaTeX CSS
+import 'katex/dist/katex.min.css'
+
 import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '@/constants'
 import makeStore from '@/store/makeStore'
 import { selectHomeLink, selectLocales } from '@/store/selectors/content/course'
