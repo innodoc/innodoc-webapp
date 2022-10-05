@@ -1,3 +1,4 @@
+import { grey } from '@mui/material/colors'
 import {
   type CssVarsThemeOptions,
   experimental_extendTheme as extendTheme,
@@ -9,20 +10,43 @@ import {
 import type {} from '@mui/material/themeCssVarsAugmentation'
 import type {} from '@mui/lab/themeAugmentation'
 
+// Use custom Lato font instead of MUI default font
+const fontFamily = ['Lato', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(',')
+
+// Monospace font family
+const fontFamilyMonospace = [
+  'Consolas',
+  'Menlo',
+  'Monaco',
+  'Andale Mono',
+  'Ubuntu Mono',
+  'monospace',
+].join(',')
+
 const cssVarsThemeOptions = {
   colorSchemes: {
     light: {
       palette: {
+        CodeText: {
+          bg: grey[50],
+          border: grey[300],
+          color: grey[900],
+        },
         Footer: {
-          defaultBg: 'rgb(28, 28, 28)',
+          bg: 'rgb(28, 28, 28)',
         },
       },
       shadowFooter: 'inset 0 1rem 0.4rem -0.5rem rgba(0 0 0 / 35%)',
     },
     dark: {
       palette: {
+        CodeText: {
+          bg: grey[900],
+          border: grey[800],
+          color: grey[300],
+        },
         Footer: {
-          defaultBg: 'rgb(13, 13, 13)',
+          bg: 'rgb(13, 13, 13)',
         },
       },
       shadowFooter: 'inset 0 1rem 0.4rem -0.5rem rgba(0 0 0 / 5%)',
@@ -41,7 +65,7 @@ const theme: ThemeOptions = {
   },
   typography: {
     // Custom font
-    fontFamily: 'Lato, Helvetica Neue, Arial, Helvetica, sans-serif',
+    fontFamily,
 
     // Scale down huge MUI font sizes
     h1: {
@@ -56,6 +80,13 @@ const theme: ThemeOptions = {
     h4: { fontSize: '1.3rem' },
     h5: { fontSize: '1.1rem' },
     h6: { fontSize: '1.05rem' },
+
+    // Custom code variant
+    code: {
+      fontFamily: fontFamilyMonospace,
+      margin: '0 0.1rem',
+      padding: '0.2rem',
+    },
   },
 }
 

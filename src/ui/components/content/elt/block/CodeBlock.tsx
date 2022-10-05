@@ -4,10 +4,11 @@ import clsx from 'clsx'
 import type { ContentComponentProps } from '@/ui/components/content/elt/types'
 
 const StyledPre = styled('pre')(({ theme }) => ({
-  background: 'rgba(0, 0, 0, 0.06)', // TODO new color for transparent?
-  color: theme.vars.palette.grey[300],
+  background: theme.vars.palette.CodeText.bg,
+  borderLeftColor: theme.vars.palette.CodeText.border,
   borderLeftStyle: 'solid',
   borderLeftWidth: theme.spacing(0.5),
+  color: theme.vars.palette.CodeText.color,
   paddingLeft: theme.spacing(1),
   '& > code': { whiteSpace: 'pre' },
 }))

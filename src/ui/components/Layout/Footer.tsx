@@ -46,7 +46,7 @@ function Footer() {
         color: theme.vars.palette.common.white,
         py: 5,
         mt: 'auto',
-        backgroundColor: theme.vars.palette.Footer.defaultBg,
+        backgroundColor: theme.vars.palette.Footer.bg,
         boxShadow: theme.vars.shadowFooter,
       })}
     >
