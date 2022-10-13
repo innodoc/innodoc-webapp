@@ -63,7 +63,7 @@ function render({ emotionStyleTags, helmet, pageHtml, redirectTo }: PageContextS
   // Script that reads from localStorage and sets mode on html tag before
   // page is rendered (avoid color mode flicker)
   const initColorSchemeScript = renderToStaticMarkup(
-    getInitColorSchemeScript({ enableSystem: true })
+    getInitColorSchemeScript({ defaultMode: 'system' })
   )
 
   return escapeInject`<!DOCTYPE html>
