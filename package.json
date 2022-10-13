@@ -89,13 +89,14 @@
     "build": "NODE_ENV=production vite build",
     "dev": "pnpm run server",
     "lint:eslint": "eslint .",
-    "lint": "pnpm lint:eslint && pnpm type-check",
+    "lint": "pnpm run lint:eslint && pnpm run type-check",
     "prod": "pnpm run build && pnpm run server:prod",
     "server:prod": "NODE_ENV=production ts-node ./src/server/server.ts",
     "server": "ts-node ./src/server/server.ts",
     "test:content": "http-server tests/content -a localhost -p ${CONTENT_PORT:-8001} --cors",
+    "test:integration": "VITEST_MODE=integration CONTENT_PORT=9876 INNODOC_CONTENT_ROOT=http://localhost:9876/ start-server-and-test test:content http://localhost:9876 test:vitest",
+    "test:unit": "VITEST_MODE=unit pnpm run test:vitest",
     "test:vitest": "vitest run",
-    "test": "CONTENT_PORT=9876 INNODOC_CONTENT_ROOT=http://localhost:9876/ start-server-and-test test:content http://localhost:9876 test:vitest",
     "type-check": "tsc -p ."
   },
   "imports": {
