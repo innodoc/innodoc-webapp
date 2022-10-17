@@ -1,6 +1,6 @@
 import { ListItemIcon, ListItemText, MenuItem, styled } from '@mui/material'
 
-import Icon from './Icon'
+import Icon, { type IconProps } from './Icon'
 
 const StyledMenuItem = styled(MenuItem)({
   cursor: 'auto',
@@ -29,7 +29,7 @@ function MenuItemCaption({ iconName, text }: MenuItemCaptionProps) {
 }
 
 type MenuItemCaptionProps = {
-  iconName?: string
+  iconName?: IconProps['name']
   text: string
 }
 

@@ -40,10 +40,10 @@ export const selectSectionPath = createSelector([selectUrlWithoutLocale], (urlWi
     : undefined
 )
 
-/** Select section by path */
-export const selectSectionByPath = createSelector(
+/** Select section by path (internal lookup) */
+const selectSectionByPathInternal = createSelector(
   [selectToc, (_, sectionPath: string | undefined) => sectionPath],
-  (toc, sectionPath): SectionWithoutChildren | undefined => {
+  (toc, sectionPath) => {
     if (sectionPath === undefined) return undefined
     const parts = sectionPath.split('/')
     if (toc === undefined) return undefined
@@ -54,8 +54,22 @@ export const selectSectionByPath = createSelector(
       const part = parts.shift()
       section = sections?.find((s) => s.id === part)
     }
-    return section === undefined ? undefined : removeChildren(section)
+    return section
   }
+)
+
+/** Select section by path */
+export const selectSectionByPath = createSelector([selectSectionByPathInternal], (section) =>
+  section === undefined ? undefined : removeChildren(section)
+)
+
+/** Select children of section by path */
+export const selectSectionChildrenByPath = createSelector(
+  [selectSectionByPathInternal],
+  (section) =>
+    section === undefined || section.children === undefined
+      ? []
+      : section.children.map((child) => removeChildren(child))
 )
 
 /**

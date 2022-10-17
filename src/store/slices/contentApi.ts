@@ -9,6 +9,7 @@ import type {
   TransformedManifest,
   TransformedSection,
 } from '@/types/api'
+import { formatUrl } from '@/utils/url'
 
 const REDUCER_PATH = 'contentApi'
 
@@ -50,17 +51,17 @@ const contentApi = createApi({
 
     /** Fetch content AST */
     getContent: builder.query<Tree, ContentFetchArgs>({
-      query: ({ locale, path }) => `${locale}/_${path}.json`,
+      query: ({ locale, path }) => formatUrl(`/_${path}.json`, locale),
     }),
 
     /** Fetch content AST for a page */
     getPageContent: builder.query<Tree, PageContentFetchArgs>({
-      query: ({ locale, id }) => `${locale}/_pages/${id}.json`,
+      query: ({ locale, id }) => formatUrl(`/_pages/${id}.json`, locale),
     }),
 
     /** Fetch content AST for a section */
     getSectionContent: builder.query<Tree, SectionContentFetchArgs>({
-      query: ({ locale, path }) => `${locale}/${path}/content.json`,
+      query: ({ locale, path }) => formatUrl(`/${path}/content.json`, locale),
     }),
   }),
 })

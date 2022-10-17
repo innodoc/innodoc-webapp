@@ -7,8 +7,8 @@ import localeMiddleware from 'locale'
 import { renderPage } from 'vite-plugin-ssr'
 
 import type { Locale } from '../types/common'
-import extractLocale from '../utils/extractLocale'
 import fetchManifest from '../utils/fetchManifest'
+import { extractLocale, formatUrl } from '../utils/url'
 
 import { isErrnoException } from './utils'
 
@@ -62,8 +62,7 @@ async function startServer() {
 
     // Ensure url path is prefixed with locale
     if (url.split('/')[1] !== locale) {
-      const redirectUrl = url.length > 1 ? `/${locale}${url}` : `/${locale}`
-      return res.redirect(307, redirectUrl)
+      return res.redirect(307, formatUrl(url, locale))
     }
 
     // Render page

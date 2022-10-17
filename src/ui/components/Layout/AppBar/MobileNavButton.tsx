@@ -7,7 +7,7 @@ import Icon from '@/ui/components/common/Icon'
 import InternalLink from '@/ui/components/common/link/InternalLink'
 import PageLink from '@/ui/components/common/link/PageLink'
 import { useSelector } from '@/ui/hooks/store'
-import { pageUrl } from '@/utils/content'
+import { getPageUrl } from '@/utils/content'
 
 import DrawerButton from './common/DrawerButton'
 import otherPages from './otherPages'
@@ -42,7 +42,7 @@ function MobileNavButton() {
               <ListItemButton
                 component={PageLink}
                 page={page}
-                selected={urlWithoutLocale === pageUrl(page.id)}
+                selected={urlWithoutLocale === getPageUrl(page.id)}
               >
                 {page.icon !== undefined ? (
                   <ListItemIcon>

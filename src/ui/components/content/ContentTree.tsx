@@ -1,5 +1,7 @@
 import type { AnyElt, Tree } from 'pandoc-filter'
 
+import InlineError from '@/ui/components/common/InlineError'
+
 import BlockQuote from './elt/block/BlockQuote'
 import BulletList from './elt/block/BulletList'
 import CodeBlock from './elt/block/CodeBlock'
@@ -71,7 +73,7 @@ function Elt({ elt }: EltRendererProps) {
   if (elt.t === 'Subscript') return <Subscript content={elt.c} />
   if (elt.t === 'Superscript') return <Superscript content={elt.c} />
 
-  throw new Error('ContentTree: Invalid element encountered.')
+  return <InlineError>ContentTree: Invalid element encountered!</InlineError>
 }
 
 type EltRendererProps = {

@@ -1,36 +1,35 @@
+import { Link as MuiLink } from '@mui/material'
 import clsx from 'clsx'
-import { forwardRef, type ReactNode } from 'react'
+import { type ComponentProps, forwardRef } from 'react'
 
-import { selectLocale, selectUrlWithoutLocale } from '@/store/selectors/ui'
+import { selectUrlWithoutLocale } from '@/store/selectors/ui'
+import { selectLocale } from '@/store/selectors/ui'
 import { useSelector } from '@/ui/hooks/store'
+import { formatUrl } from '@/utils/url'
 
 /**
  * Link to an internal page, either built-in page or custom content
  * page/section.
  */
-const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(function Link(
-  { children, className, to, ...other },
+const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(function InternalLink(
+  { children, className, hash, to, ...other },
   ref
 ) {
   const locale = useSelector(selectLocale)
   const urlWithoutLocale = useSelector(selectUrlWithoutLocale)
+  const classNames = clsx(className, urlWithoutLocale === to && 'active')
 
   return (
-    <a
-      {...other}
-      className={clsx(className, urlWithoutLocale === to && 'active')}
-      href={`/${locale}${to}`}
-      ref={ref}
-    >
+    <MuiLink {...other} className={classNames} href={formatUrl(to, locale, hash)} ref={ref}>
       {children}
-    </a>
+    </MuiLink>
   )
 })
 
-export type InternalLinkProps = {
-  children: ReactNode
-  className?: string
-  /** Target path *without* locale. */
+export type InternalLinkProps = Omit<ComponentProps<typeof MuiLink>, 'href'> & {
+  /** Optional hash */
+  hash?: string
+  /** Target path *without* locale */
   to: string
 }
 

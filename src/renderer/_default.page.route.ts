@@ -1,6 +1,6 @@
 import buildData from '@/__buildData.json'
 import type { PageContextServer } from '@/types/page'
-import extractLocale from '@/utils/extractLocale'
+import { extractLocale } from '@/utils/url'
 
 const { locales } = buildData
 

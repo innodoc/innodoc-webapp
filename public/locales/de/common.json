@@ -2,6 +2,11 @@
   "common": {
     "close": "Schließen"
   },
+  "content": {
+    "example": "Beispiel",
+    "info": "Info",
+    "subsections": "Unterabschnitte"
+  },
   "internalPages": {
     "indexPage": {
       "title": "Stichwortverzeichnis"

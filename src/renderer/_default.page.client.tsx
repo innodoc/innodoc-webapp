@@ -86,6 +86,8 @@ async function render({
     // Client-side user navigation
     root.render(page)
   }
+
+  // TODO: scoll to URL hash if present
 }
 
 export { render }

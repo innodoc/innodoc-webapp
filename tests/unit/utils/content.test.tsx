@@ -1,4 +1,7 @@
+import type { Block, Inline } from 'pandoc-filter'
+
 import {
+  astToString,
   attributesToObject,
   formatNumberedTitleElt,
   formatSectionTitle,
@@ -7,7 +10,19 @@ import {
   getSectionPath,
   getSectionUrl,
   replacePathPrefixes,
+  unwrapPara,
 } from '@/utils/content'
+
+test('astToString', () => {
+  expect(astToString('foo')).toBe('foo')
+  expect(
+    astToString([
+      { t: 'Str', c: 'Hello' },
+      { t: 'Space', c: undefined },
+      { t: 'Str', c: 'World' },
+    ])
+  ).toBe('Hello World')
+})
 
 describe('attributesToObject', () => {
   test('convert null', () => {
@@ -36,19 +51,14 @@ describe('attributesToObject', () => {
   })
 })
 
-describe('formatNumberedTitleElt', () => {
-  test('generate numbered title from title and attributes', () => {
-    expect(formatNumberedTitleElt('Foo', [['data-number', '1.2.3']])).toBe('Foo 1.2.3')
-  })
-
-  test('return title if "data-number" attribute is not present', () => {
-    expect(formatNumberedTitleElt('Foo', [['bar', 'baz']])).toBe('Foo')
-  })
+test('formatNumberedTitleElt', () => {
+  expect(formatNumberedTitleElt('Foo', [['data-number', '1.2.3']])).toBe('Foo 1.2.3')
+  expect(formatNumberedTitleElt('Foo', [['bar', 'baz']])).toBe('Foo')
 })
 
-describe('formatSectionTitle', () => {
-  test('formatSectionTitle', () => {
-    const title = formatSectionTitle({
+test('formatSectionTitle', () => {
+  expect(
+    formatSectionTitle({
       id: 'test',
       childrenCount: 0,
       number: [0, 1],
@@ -56,11 +66,9 @@ describe('formatSectionTitle', () => {
       shortTitle: 'Foo',
       title: 'Foobarbaz',
     })
-    expect(title).toBe('1.2 Foobarbaz')
-  })
-
-  test('formatSectionTitle (short)', () => {
-    const shortTitle = formatSectionTitle(
+  ).toBe('1.2 Foobarbaz')
+  expect(
+    formatSectionTitle(
       {
         id: 'test',
         childrenCount: 0,
@@ -71,8 +79,7 @@ describe('formatSectionTitle', () => {
       },
       true
     )
-    expect(shortTitle).toBe('1.2 Foo')
-  })
+  ).toBe('1.2 Foo')
 })
 
 test('getClassNameToComponentMapper', () => {
@@ -102,11 +109,27 @@ test('getPageUrl', () => {
   expect(getPageUrl('foo')).toBe('/page/foo')
 })
 
-test('getPageUrl', () => {
+test('getSectionUrl', () => {
   expect(getSectionUrl('bar/baz/foo')).toBe('/section/bar/baz/foo')
 })
 
 test('replacePathPrefixes', () => {
   expect(replacePathPrefixes('/page/foo')).toBe('/page/foo')
   expect(replacePathPrefixes('/section/baz/bar/foo')).toBe('/section/baz/bar/foo')
+})
+
+test('unwrapPara', () => {
+  const inlineEl: Inline = { t: 'Str', c: 'foo' }
+  const blockEl: Block = { t: 'Plain', c: [inlineEl] }
+
+  expect(unwrapPara([{ t: 'Para', c: [inlineEl] }])).toEqual([inlineEl])
+  expect(unwrapPara([{ t: 'Plain', c: [inlineEl] }])).toEqual([{ t: 'Plain', c: [inlineEl] }])
+  expect(
+    unwrapPara([
+      { t: 'Para', c: [inlineEl] },
+      { t: 'Div', c: [['', [], []], [blockEl]] },
+      { t: 'Para', c: [inlineEl] },
+    ])
+  ).toEqual([[inlineEl], { t: 'Div', c: [['', [], []], [blockEl]] }, [inlineEl]])
+  expect(unwrapPara([])).toEqual([])
 })

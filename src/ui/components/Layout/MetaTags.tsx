@@ -8,6 +8,7 @@ import {
 } from '@/store/selectors/content/course'
 import { selectLocale, selectUrlWithoutLocale } from '@/store/selectors/ui'
 import { useSelector } from '@/ui/hooks/store'
+import { formatUrl } from '@/utils/url'
 
 function MetaTags() {
   const title = useSelector(selectCourseTitle)
@@ -27,7 +28,12 @@ function MetaTags() {
       <link rel="icon" href={logoUrl} />
       {locales.map((locale) => (
         <link
-          href={`${import.meta.env.INNODOC_APP_ROOT}${locale}${urlWithoutLocale || ''}`}
+          href={formatUrl(
+            urlWithoutLocale || '',
+            locale,
+            undefined,
+            import.meta.env.INNODOC_APP_ROOT
+          )}
           hrefLang={locale}
           key={locale}
           rel="alternate"

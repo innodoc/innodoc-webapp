@@ -3,6 +3,7 @@ import type { Node } from 'svg-parser'
 
 import buildData from '@/__buildData.json'
 import { selectCourseTitle } from '@/store/selectors/content/course'
+import InlineError from '@/ui/components/common/InlineError'
 import HomeLink from '@/ui/components/common/link/HomeLink'
 import SvgElementNode, { isElementNode } from '@/ui/components/common/SvgNode'
 import { useSelector } from '@/ui/hooks/store'
@@ -18,7 +19,9 @@ const StyledSvg = styled('svg')({
 })
 
 function SvgLogo({ svgNode }: SvgLogoProps) {
-  if (!isElementNode(svgNode) || svgNode.tagName !== 'svg') throw new Error('Invalid root node')
+  if (!isElementNode(svgNode) || svgNode.tagName !== 'svg') {
+    return <InlineError>SvgLogo: Invalid root node</InlineError>
+  }
 
   const viewBox =
     typeof svgNode?.properties?.viewBox === 'string' ? svgNode.properties.viewBox : '0 0 24 24'

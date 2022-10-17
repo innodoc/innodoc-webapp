@@ -5,7 +5,7 @@ import type { ContentComponentProps } from '@/ui/components/content/elt/types'
 
 function Para({ content }: ContentComponentProps<'Para'>) {
   return (
-    <Typography gutterBottom paragraph variant="body1">
+    <Typography paragraph sx={{ my: 2 }} variant="body1">
       <ContentTree content={content} />
     </Typography>
   )

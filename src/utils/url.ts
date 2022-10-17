@@ -18,9 +18,15 @@ function extractLocale(
   return { locale, urlWithoutLocale }
 }
 
+/** Format URL using locale, hash and base URL */
+function formatUrl(to: string, locale: Locale, hash?: string, base = '/') {
+  const href = `${base}${locale}${to}`
+  return hash ? `${href}#${hash}` : href
+}
+
 type ExtractedLocaleInfo = {
   locale: Locale
   urlWithoutLocale: string
 }
 
-export default extractLocale
+export { extractLocale, formatUrl }

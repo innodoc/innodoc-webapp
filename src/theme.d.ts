@@ -1,19 +1,32 @@
 import '@mui/material/styles/experimental_extendTheme'
+import type { CardType } from './ui/components/content/cards/types'
 
 interface PaletteFooter {
   bg: string
 }
 
-interface PaletteCodeText {
+interface PaletteCard {
+  bg: string
+  header: string
+  color: string
+}
+
+interface PaletteCode {
   bg: string
   border: string
   color: string
 }
 
+interface PaletteTransparentPaper {
+  bg: string
+}
+
 declare module '@mui/material/styles/experimental_extendTheme' {
   interface CssVarsPalette {
     Footer: PaletteFooter
-    CodeText: PaletteCodeText
+    Card: Record<CardType, PaletteCard>
+    Code: PaletteCode
+    TransparentPaper: PaletteTransparentPaper
   }
 
   interface ThemeVars {

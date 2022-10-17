@@ -3,7 +3,7 @@ import { fetchManifest, fetchPageContent } from '@/renderer/fetchData'
 import makeStore from '@/store/makeStore'
 import { selectPages } from '@/store/selectors/content/page'
 import type { PageContextServer } from '@/types/page'
-import { pageUrl } from '@/utils/content'
+import { getPageUrl } from '@/utils/content'
 
 async function onBeforeRender(pageContext: PageContextServer) {
   const { pageId } = pageContext.routeParams
@@ -24,7 +24,7 @@ async function prerender() {
   const store = makeStore()
   await store.dispatch(fetchManifest())
   const pages = selectPages(store.getState())
-  return pages.map((page) => pageUrl(page.id))
+  return pages.map((page) => getPageUrl(page.id))
 }
 
 export { onBeforeRender, prerender }

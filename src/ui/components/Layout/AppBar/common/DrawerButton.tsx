@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import { type ReactNode, useState } from 'react'
 
-import Icon from '@/ui/components/common/Icon'
+import Icon, { type IconProps } from '@/ui/components/common/Icon'
 
 function DrawerButton({
   anchor,
@@ -52,7 +52,7 @@ type DrawerButtonProps = {
   boxProps?: BoxProps
   children: (close: () => void) => ReactNode
   drawerProps?: Omit<SwipeableDrawerProps, 'onClose' | 'onOpen' | 'open'>
-  iconName: string
+  iconName: IconProps['name']
   id: string
   title: string
 }

@@ -12,6 +12,9 @@ interface ImportMetaEnv {
 
   /** URL path prefix for sections (e.g. `section`) */
   readonly INNODOC_SECTION_PATH_PREFIX: string
+
+  /** URL to load static files from */
+  readonly INNODOC_STATIC_ROOT: string
 }
 
 interface ImportMeta {

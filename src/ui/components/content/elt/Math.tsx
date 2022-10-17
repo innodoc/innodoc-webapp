@@ -1,15 +1,10 @@
 import katex from 'katex'
 import { useMemo } from 'react'
 
+import InlineError from '@/ui/components/common/InlineError'
 import type { ContentComponentProps } from '@/ui/components/content/elt/types'
 
-function Math({ content: [mathType, content] }: ContentComponentProps<'Math'>) {
-  if (!['DisplayMath', 'InlineMath'].includes(mathType.t)) {
-    throw new Error(`Invalid math type: ${mathType.t}`)
-  }
-
-  const displayMode = mathType.t === 'DisplayMath'
-
+function MemoizedMath({ content, displayMode }: MemoizedMathProps) {
   const html = useMemo(
     () =>
       katex.renderToString(content, {
@@ -22,6 +17,19 @@ function Math({ content: [mathType, content] }: ContentComponentProps<'Math'>) {
 
   const Component = displayMode ? 'div' : 'span'
   return <Component dangerouslySetInnerHTML={{ __html: html }} />
+}
+
+type MemoizedMathProps = {
+  content: string
+  displayMode: boolean
+}
+
+function Math({ content: [mathType, content] }: ContentComponentProps<'Math'>) {
+  if (!['DisplayMath', 'InlineMath'].includes(mathType.t)) {
+    return <InlineError>Invalid math type: {mathType.t}</InlineError>
+  }
+
+  return <MemoizedMath content={content} displayMode={mathType.t === 'DisplayMath'} />
 }
 
 export default Math

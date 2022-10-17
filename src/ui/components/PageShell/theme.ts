@@ -1,4 +1,3 @@
-import { grey } from '@mui/material/colors'
 import {
   type CssVarsThemeOptions,
   experimental_extendTheme as extendTheme,
@@ -27,10 +26,35 @@ const cssVarsThemeOptions = {
   colorSchemes: {
     light: {
       palette: {
-        CodeText: {
-          bg: grey[50],
-          border: grey[300],
-          color: grey[900],
+        Card: {
+          example: {
+            bg: '#fff1db',
+            color: 'inherit',
+            header: '#ffe7ba',
+          },
+          exercise: {
+            bg: 'TODO',
+            color: 'inherit',
+            header: 'TODO',
+          },
+          info: {
+            bg: '#dbf1ff',
+            color: 'inherit',
+            header: '#bae7ff',
+          },
+          inputHint: {
+            bg: 'TODO',
+            color: 'inherit',
+            header: 'TODO',
+          },
+        },
+        Code: {
+          bg: 'rgba(0, 0, 0, 0.05)',
+          border: 'rgba(0, 0, 0, 0.1)',
+          color: 'rgba(0, 0, 0, 0.85)',
+        },
+        TransparentPaper: {
+          bg: 'rgba(255, 255, 255, 0.2)',
         },
         Footer: {
           bg: 'rgb(28, 28, 28)',
@@ -40,10 +64,35 @@ const cssVarsThemeOptions = {
     },
     dark: {
       palette: {
-        CodeText: {
-          bg: grey[900],
-          border: grey[800],
-          color: grey[300],
+        Card: {
+          example: {
+            bg: 'inherit',
+            color: '#ffe7ba',
+            header: 'inherit',
+          },
+          exercise: {
+            bg: 'inherit',
+            color: 'TODO',
+            header: 'inherit',
+          },
+          info: {
+            bg: 'inherit',
+            color: '#bae7ff',
+            header: 'inherit',
+          },
+          inputHint: {
+            bg: 'inherit',
+            color: 'TODO',
+            header: 'inherit',
+          },
+        },
+        Code: {
+          bg: 'rgba(255, 255, 255, 0.2)',
+          border: 'rgba(255, 255, 255, 0.1)',
+          color: 'rgba(255, 255, 255, 0.9)',
+        },
+        TransparentPaper: {
+          bg: 'rgba(255, 255, 255, 0.03)',
         },
         Footer: {
           bg: 'rgb(13, 13, 13)',

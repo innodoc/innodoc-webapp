@@ -26,6 +26,7 @@ import type { PageContextServer, QueryFactory } from '@/types/page'
 import PageShell from '@/ui/components/PageShell/PageShell'
 import { replacePathPrefixes } from '@/utils/content'
 import getI18n from '@/utils/getI18n'
+import { formatUrl } from '@/utils/url'
 
 import { fetchContent, fetchManifest } from './fetchData'
 import renderToHtml from './renderToHtml'
@@ -123,7 +124,7 @@ async function onBeforeRender({
   if (urlPathname === '/' && homeLink !== undefined) {
     return {
       pageContext: {
-        redirectTo: `/${locale}${replacePathPrefixes(homeLink)}`,
+        redirectTo: formatUrl(replacePathPrefixes(homeLink), locale),
       },
     }
   }
@@ -181,7 +182,7 @@ async function onBeforePrerender(globalContext: {
     locales.forEach((locale) => {
       prerenderPageContexts.push({
         ...pageContext,
-        urlOriginal: `/${locale}${pageContext.urlOriginal}`,
+        urlOriginal: formatUrl(pageContext.urlOriginal, locale),
         locale,
       })
     })

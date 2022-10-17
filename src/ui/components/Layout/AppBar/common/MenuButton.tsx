@@ -1,7 +1,7 @@
 import { Box, IconButton, Menu, Tooltip } from '@mui/material'
 import { type MouseEvent, useState, type ReactNode } from 'react'
 
-import Icon from '@/ui/components/common/Icon'
+import Icon, { type IconProps } from '@/ui/components/common/Icon'
 
 function MenuButton({ children, iconName, id, title }: MenuButtonProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -39,7 +39,7 @@ function MenuButton({ children, iconName, id, title }: MenuButtonProps) {
 
 type MenuButtonProps = {
   children: ReactNode
-  iconName: string
+  iconName: IconProps['name']
   id: string
   title: string
 }

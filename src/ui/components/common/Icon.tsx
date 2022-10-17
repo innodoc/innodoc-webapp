@@ -3,6 +3,7 @@ import { type ComponentProps } from 'react'
 
 import buildData from '@/__buildData.json'
 
+import InlineError from './InlineError'
 import SvgNode, { isElementNode } from './SvgNode'
 
 const { iconBundle } = buildData
@@ -10,12 +11,12 @@ const { iconBundle } = buildData
 function Icon({ name, ...other }: IconProps) {
   const icon = iconBundle[name]
   if (icon === undefined) {
-    throw new Error(`Unknown icon name: ${name}`)
+    return <InlineError>Icon: Unknown icon name: {name}</InlineError>
   }
 
   const svgNode = icon.children[0]
   if (!isElementNode(svgNode) || svgNode.tagName !== 'svg') {
-    throw new Error('Invalid root node')
+    return <InlineError>Icon: Invalid root node</InlineError>
   }
 
   const viewBox =
@@ -34,7 +35,7 @@ function Icon({ name, ...other }: IconProps) {
   )
 }
 
-type IconProps = {
+export type IconProps = {
   fontSize?: FontSize
   /**
    * Icon name as defined in icon bundle (e.g. `mdi:home`) or SVG file

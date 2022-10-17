@@ -1,25 +1,32 @@
-import { styled } from '@mui/material'
+import { Paper, styled } from '@mui/material'
 import clsx from 'clsx'
 
 import type { ContentComponentProps } from '@/ui/components/content/elt/types'
 
 const StyledPre = styled('pre')(({ theme }) => ({
-  background: theme.vars.palette.CodeText.bg,
-  borderLeftColor: theme.vars.palette.CodeText.border,
-  borderLeftStyle: 'solid',
   borderLeftWidth: theme.spacing(0.5),
-  color: theme.vars.palette.CodeText.color,
-  paddingLeft: theme.spacing(1),
+  margin: 0,
+  overflow: 'auto',
+  padding: theme.spacing(1, 2),
   '& > code': { whiteSpace: 'pre' },
 }))
 
 function CodeBlock({ content: [[id, codeTypes], content] }: ContentComponentProps<'CodeBlock'>) {
   return (
-    <StyledPre>
-      <code className={clsx(codeTypes.map((codeType) => `code-${codeType}`))} id={id}>
-        {content}
-      </code>
-    </StyledPre>
+    <Paper
+      elevation={1}
+      sx={(theme) => ({
+        backgroundColor: theme.vars.palette.TransparentPaper.bg,
+        color: theme.vars.palette.Code.color,
+        my: 2,
+      })}
+    >
+      <StyledPre>
+        <code className={clsx(codeTypes.map((codeType) => `code-${codeType}`))} id={id}>
+          {content}
+        </code>
+      </StyledPre>
+    </Paper>
   )
 }
 

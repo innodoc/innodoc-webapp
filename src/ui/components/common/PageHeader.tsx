@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material'
 import { ReactNode } from 'react'
 
-import Icon from './Icon'
+import Icon, { type IconProps } from './Icon'
 
 function PageHeader({ children, iconName }: PageHeaderProps) {
   const icon =
@@ -17,7 +17,7 @@ function PageHeader({ children, iconName }: PageHeaderProps) {
 
 type PageHeaderProps = {
   children: ReactNode
-  iconName?: string
+  iconName?: IconProps['name']
 }
 
 export default PageHeader

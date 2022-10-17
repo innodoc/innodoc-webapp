@@ -2,6 +2,11 @@
   "common": {
     "close": "Close"
   },
+  "content": {
+    "example": "Example",
+    "info": "Info",
+    "subsections": "Subsections"
+  },
   "internalPages": {
     "indexPage": {
       "title": "Index"

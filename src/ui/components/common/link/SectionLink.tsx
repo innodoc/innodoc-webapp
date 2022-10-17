@@ -3,37 +3,60 @@ import { forwardRef } from 'react'
 import type { RootState } from '@/store/makeStore'
 import { selectSectionByPath } from '@/store/selectors/content/section'
 import type { Section } from '@/types/api'
+import InlineError from '@/ui/components/common/InlineError'
 import { useSelector } from '@/ui/hooks/store'
-import { getSectionPath, formatSectionTitle, sectionUrl } from '@/utils/content'
+import { formatSectionTitle, getSectionPath, getSectionUrl } from '@/utils/content'
 
 import InternalLink, { type InternalLinkProps } from './InternalLink'
 
-const SectionLinkSection = forwardRef<HTMLAnchorElement, Omit<SectionLinkProps, 'sectionPath'>>(
+/** SectionLinkSection takes `section` */
+const SectionLinkSection = forwardRef<HTMLAnchorElement, SectionLinkSectionProps>(
   function SectionLinkSection({ children, preferShortTitle = false, section, ...other }, ref) {
     if (section === undefined) return null
 
     return (
-      <InternalLink to={sectionUrl(getSectionPath(section))} ref={ref} {...other}>
+      <InternalLink to={getSectionUrl(getSectionPath(section))} ref={ref} {...other}>
         {children || <>{formatSectionTitle(section, preferShortTitle)}</>}
       </InternalLink>
     )
   }
 )
 
-const SectionLinkSectionPath = forwardRef<HTMLAnchorElement, Omit<SectionLinkProps, 'section'>>(
-  function SectionLinkSectionPath({ sectionPath, ...other }, ref) {
+type SectionLinkSectionProps = Omit<SectionLinkProps, 'section' | 'sectionPath'> & {
+  section: Section
+}
+
+/** SectionLinkSectionPath takes `sectionPath` */
+const SectionLinkSectionPath = forwardRef<HTMLAnchorElement, SectionLinkSectionPathProps>(
+  function SectionLinkSectionPath({ sectionPath: sectionPathFull, ...other }, ref) {
+    const [sectionPath, hash] = sectionPathFull.split('#')
     const selectSection = (state: RootState) => selectSectionByPath(state, sectionPath)
     const section = useSelector(selectSection)
-    return <SectionLinkSection ref={ref} section={section} {...other} />
+    if (section === undefined) {
+      return (
+        <InlineError>SectionLink: Section path &quot;{sectionPath}&quot; not found!</InlineError>
+      )
+    }
+
+    return <SectionLinkSection hash={hash} ref={ref} section={section} {...other} />
   }
 )
 
+type SectionLinkSectionPathProps = Omit<SectionLinkProps, 'section' | 'sectionPath'> & {
+  sectionPath: string
+}
+
+/** SectionLink takes either `section` or `sectionPath` */
 const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function SectionLink(
   { section, sectionPath, ...other },
   ref
 ) {
   if (section !== undefined && sectionPath !== undefined) {
-    throw new Error('<SectionLink> needs either section or sectionPath prop, not both.')
+    return (
+      <InlineError>
+        SectionLink: Needs either &quot;section&quot; or &quot;sectionPath&quot; prop, not both!
+      </InlineError>
+    )
   }
 
   if (section !== undefined) {
@@ -44,7 +67,11 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function Sec
     return <SectionLinkSectionPath ref={ref} sectionPath={sectionPath} {...other} />
   }
 
-  throw new Error('<SectionLink> needs either section or sectionPath prop.')
+  return (
+    <InlineError>
+      SectionLink: Needs either &quot;section&quot; or &quot;sectionPath&quot; prop!
+    </InlineError>
+  )
 })
 
 type SectionLinkProps = Omit<InternalLinkProps, 'to'> & {
