@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import type { DivProps } from '@/ui/components/content/elt/block/Div'
+import type { DivProps } from '@/ui/components/content/ast/block/Div'
 import { formatNumberedTitleElt } from '@/utils/content'
 
 import Card from './Card'
@@ -10,11 +10,11 @@ function ExampleCard({ attributes, content, id }: DivProps) {
 
   return (
     <Card
-      title={formatNumberedTitleElt(t('content.example'), attributes)}
       cardType="example"
-      iconName="mdi:eye-outline"
       content={content}
+      iconName="mdi:eye-outline"
       id={id}
+      title={formatNumberedTitleElt(t('content.example'), attributes)}
     />
   )
 }

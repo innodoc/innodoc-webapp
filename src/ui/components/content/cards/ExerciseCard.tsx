@@ -5,18 +5,18 @@ import { formatNumberedTitleElt } from '@/utils/content'
 
 import Card from './Card'
 
-function InfoCard({ attributes, content, id }: DivProps) {
+function ExerciseCard({ attributes, content, id }: DivProps) {
   const { t } = useTranslation()
 
   return (
     <Card
-      cardType="info"
+      cardType="exercise"
       content={content}
-      iconName="mdi:information-outline"
+      iconName="mdi:application-edit-outline"
       id={id}
-      title={formatNumberedTitleElt(t('content.info'), attributes)}
+      title={formatNumberedTitleElt(t('content.exercise'), attributes)}
     />
   )
 }
 
-export default InfoCard
+export default ExerciseCard

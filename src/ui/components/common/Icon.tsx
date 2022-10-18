@@ -36,7 +36,7 @@ function Icon({ name, ...other }: IconProps) {
 }
 
 export type IconProps = {
-  fontSize?: FontSize
+  fontSize?: ComponentProps<typeof MuiSvgIcon>['fontSize']
   /**
    * Icon name as defined in icon bundle (e.g. `mdi:home`) or SVG file
    * referencing static content file (e.g. `file:logo.svg`).
@@ -46,7 +46,5 @@ export type IconProps = {
   name: keyof typeof iconBundle
   sx?: SxProps<Theme>
 }
-
-type FontSize = ComponentProps<typeof MuiSvgIcon>['fontSize']
 
 export default Icon

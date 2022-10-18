@@ -5,7 +5,7 @@ import { selectLocale } from '@/store/selectors/ui'
 import { useGetPageContentQuery } from '@/store/slices/contentApi'
 import { Page } from '@/types/api'
 import PageHeader from '@/ui/components/common/PageHeader'
-import ContentTree from '@/ui/components/content/ContentTree'
+import ContentTree from '@/ui/components/content/ast/ContentTree'
 import { useSelector } from '@/ui/hooks/store'
 
 function ContentPage({ pageId }: ContentPageProps) {

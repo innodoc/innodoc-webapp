@@ -9,7 +9,7 @@ import { selectLocale } from '@/store/selectors/ui'
 import { useGetContentQuery } from '@/store/slices/contentApi'
 import InternalLink from '@/ui/components/common/link/InternalLink'
 import PageLink from '@/ui/components/common/link/PageLink'
-import ContentTree from '@/ui/components/content/ContentTree'
+import ContentTree from '@/ui/components/content/ast/ContentTree'
 import { otherPagesFooter } from '@/ui/components/Layout/AppBar/otherPages'
 import { useSelector } from '@/ui/hooks/store'
 

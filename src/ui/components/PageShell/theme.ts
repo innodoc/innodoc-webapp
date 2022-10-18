@@ -1,3 +1,5 @@
+import { grey } from '@mui/material/colors'
+import type { DefaultColorScheme } from '@mui/material/styles/experimental_extendTheme'
 import {
   type CssVarsThemeOptions,
   experimental_extendTheme as extendTheme,
@@ -8,6 +10,9 @@ import {
 // Augment theme type
 import type {} from '@mui/material/themeCssVarsAugmentation'
 import type {} from '@mui/lab/themeAugmentation'
+
+import type { PaletteCard } from '@/theme'
+import { CARD_TYPES, type CardType } from '@/ui/components/content/cards/types'
 
 // Use custom Lato font instead of MUI default font
 const fontFamily = ['Lato', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(',')
@@ -22,39 +27,69 @@ const fontFamilyMonospace = [
   'monospace',
 ].join(',')
 
+const cardColors: Record<CardType, CardColors> = {
+  example: {
+    main: '#ffdb99',
+    secondary: '#fff1db',
+  },
+  exercise: {
+    main: '#fff1b8',
+    secondary: '#fffbe6',
+  },
+  info: {
+    main: '#bae7ff',
+    secondary: '#dbf1ff',
+  },
+  inputHint: {
+    main: '#dff8c9',
+    secondary: '#f6ffed',
+  },
+  hint: {
+    main: 'hsla(0, 0%, 100%, 0.85)',
+    secondary: 'white',
+  },
+}
+
+/** Card colors */
+type CardColors = {
+  /** Main color */
+  main: string
+  /** Muted color variant */
+  secondary: string
+}
+
+function getCardColors(palette: DefaultColorScheme, cardType: CardType): PaletteCard {
+  return palette === 'light'
+    ? {
+        bg: cardColors[cardType].secondary,
+        color: 'inherit',
+        header: cardColors[cardType].main,
+      }
+    : {
+        bg: 'inherit',
+        color: cardColors[cardType].main,
+        header: 'rgba(255, 255, 255, 0.1)',
+      }
+}
+
 const cssVarsThemeOptions = {
   colorSchemes: {
     light: {
       palette: {
-        Card: {
-          example: {
-            bg: '#fff1db',
-            color: 'inherit',
-            header: '#ffe7ba',
-          },
-          exercise: {
-            bg: 'TODO',
-            color: 'inherit',
-            header: 'TODO',
-          },
-          info: {
-            bg: '#dbf1ff',
-            color: 'inherit',
-            header: '#bae7ff',
-          },
-          inputHint: {
-            bg: 'TODO',
-            color: 'inherit',
-            header: 'TODO',
-          },
+        background: {
+          default: grey[200],
         },
+        Card: CARD_TYPES.reduce(
+          (acc, cardType) => ({ ...acc, [cardType]: getCardColors('light', cardType) }),
+          {}
+        ),
         Code: {
           bg: 'rgba(0, 0, 0, 0.05)',
           border: 'rgba(0, 0, 0, 0.1)',
           color: 'rgba(0, 0, 0, 0.85)',
         },
         TransparentPaper: {
-          bg: 'rgba(255, 255, 255, 0.2)',
+          bg: 'rgba(255, 255, 255, 0.4)',
         },
         Footer: {
           bg: 'rgb(28, 28, 28)',
@@ -64,28 +99,10 @@ const cssVarsThemeOptions = {
     },
     dark: {
       palette: {
-        Card: {
-          example: {
-            bg: 'inherit',
-            color: '#ffe7ba',
-            header: 'inherit',
-          },
-          exercise: {
-            bg: 'inherit',
-            color: 'TODO',
-            header: 'inherit',
-          },
-          info: {
-            bg: 'inherit',
-            color: '#bae7ff',
-            header: 'inherit',
-          },
-          inputHint: {
-            bg: 'inherit',
-            color: 'TODO',
-            header: 'inherit',
-          },
-        },
+        Card: CARD_TYPES.reduce(
+          (acc, cardType) => ({ ...acc, [cardType]: getCardColors('dark', cardType) }),
+          {}
+        ),
         Code: {
           bg: 'rgba(255, 255, 255, 0.2)',
           border: 'rgba(255, 255, 255, 0.1)',

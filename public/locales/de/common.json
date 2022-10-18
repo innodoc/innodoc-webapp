@@ -4,7 +4,10 @@
   },
   "content": {
     "example": "Beispiel",
+    "exercise": "Aufgabe",
     "info": "Info",
+    "inputHint": "Hilfe zur Eingabe",
+    "hint": "Hinweis",
     "subsections": "Unterabschnitte"
   },
   "internalPages": {
