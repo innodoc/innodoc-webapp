@@ -1,4 +1,6 @@
-import { Locale, LocalizedString, PageLinkLocation } from './common'
+import type { IconProps } from '@/ui/components/common/Icon'
+
+import type { Locale, LocalizedString, PageLinkLocation } from './common'
 
 /** Object with localized titles */
 interface LocalizedTitles {
@@ -75,7 +77,7 @@ interface BasePage {
   id: string
 
   /** Icon string */
-  icon?: string
+  icon?: IconProps['name']
 
   /** Where the page should be linked */
   linked?: PageLinkLocation[]

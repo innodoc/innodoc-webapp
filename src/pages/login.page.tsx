@@ -7,7 +7,8 @@ import PageHeader from '@/ui/components/common/PageHeader'
 function LoginPage() {
   const { t } = useTranslation()
 
-  const onSubmit = () => {}
+  // TODO
+  const onSubmit = () => undefined
 
   return (
     <>

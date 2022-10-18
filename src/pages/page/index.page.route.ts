@@ -1,6 +1,6 @@
 import { resolveRoute } from 'vite-plugin-ssr/routing'
 
-import { PageContextServer } from '@/types/page'
+import type { PageContextServer } from '@/types/page'
 
 // Extract pageId from URL
 export default (pageContext: PageContextServer) =>

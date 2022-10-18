@@ -54,6 +54,9 @@ overrides:
                 - Icon
               message: Use `@/ui/components/common/Icon` instead.
 
+      # Consistent use of type imports
+      '@typescript-eslint/consistent-type-imports': error
+
       # TypeScript provides the same checks
       # https://typescript-eslint.io/docs/linting/troubleshooting#eslint-plugin-import
       import/named: off
@@ -112,6 +115,10 @@ rules:
         caseInsensitive: true
       groups: [builtin, external, internal, unknown, parent, sibling, index]
       newlines-between: always
+      # Move '@/test-utils' to top
+      pathGroups:
+        - pattern: '@/test-utils'
+          group: external
 
   # Turn on errors for missing imports
   import/no-unresolved: error

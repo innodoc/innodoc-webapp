@@ -1,6 +1,7 @@
-import contentApi, {
-  type PageContentFetchArgs,
-  type ContentFetchArgs,
+import contentApi from '@/store/slices/contentApi'
+import type {
+  PageContentFetchArgs,
+  ContentFetchArgs,
   SectionContentFetchArgs,
 } from '@/store/slices/contentApi'
 

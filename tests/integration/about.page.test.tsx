@@ -1,7 +1,7 @@
 import { locale, render, screen, store } from '@/test-utils'
 
-import { fetchPageContent } from '@/renderer/fetchData'
 import { Page as ContentPage } from '@/pages/page/index.page'
+import { fetchPageContent } from '@/renderer/fetchData'
 
 beforeEach(async () => {
   await store.dispatch(fetchPageContent({ locale, id: 'about' }))

@@ -1,5 +1,11 @@
 ---
 overrides:
+  # Allow to "omit" props using destructuring w/o having them marked as "unused"
+  - files:
+      - '**/*.tsx'
+    rules:
+      '@typescript-eslint/no-unused-vars': [error, { ignoreRestSiblings: true }]
+
   # Ignore vite-plugin-ssr special files
   - files:
       - pages/**/*.+(ts|tsx)

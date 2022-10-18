@@ -2,7 +2,7 @@ import type { AnyElt, AttrList, Inline } from 'pandoc-filter'
 import type { ComponentType } from 'react'
 
 import type { Section } from '@/types/api'
-import type { AttrObj, Locale } from '@/types/common'
+import type { AttrObj } from '@/types/common'
 
 /* Convert AST to string */
 function astToString(ast: string | Inline[]) {

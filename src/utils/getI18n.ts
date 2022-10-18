@@ -1,4 +1,4 @@
-import i18next, { i18n } from 'i18next'
+import i18next, { type i18n } from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
 import type { Store } from '@/store/makeStore'

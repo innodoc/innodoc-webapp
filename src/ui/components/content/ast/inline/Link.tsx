@@ -17,10 +17,11 @@ const StyledSup = styled('sup')({
 })
 
 function Link({ content: [[, classes], content, [href, title]] }: ContentComponentProps<'Link'>) {
-  // TODO
-  // if (classes.includes('video')) {
-  //   return <Video data={data} />
-  // }
+  if (classes.includes('video')) {
+    // TODO
+    // return <Video data={data} />
+    return null
+  }
 
   // External link
   if (/^https?:\/\//i.test(href)) {
