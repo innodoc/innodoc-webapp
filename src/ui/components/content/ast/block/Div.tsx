@@ -11,6 +11,7 @@ import InputHint from '@/ui/components/content/cards/InputHint'
 import Figure from '@/ui/components/content/misc/Figure'
 import { attributesToObject, getClassNameToComponentMapper } from '@/utils/content'
 
+// TODO: complete Components
 const mapClassNameToComponent = getClassNameToComponentMapper<DivProps>({
   example: ExampleCard,
   exercise: ExerciseCard,
