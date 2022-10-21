@@ -6,6 +6,7 @@ import Image from '@/ui/components/content/ast/inline/Image'
 import { unwrapPara } from '@/utils/content'
 
 const StyledFigcaption = styled('figcaption')(({ theme }) => ({
+  color: theme.vars.palette.text.secondary,
   fontStyle: 'italic',
   padding: theme.spacing(0, 1, 1),
 }))

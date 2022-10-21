@@ -1,11 +1,11 @@
-import type { AnyElt, AttrList, Inline } from 'pandoc-filter'
+import type { AnyElt, AttrList, Tree } from 'pandoc-filter'
 import type { ComponentType } from 'react'
 
 import type { Section } from '@/types/api'
 import type { AttrObj } from '@/types/common'
 
 /* Convert AST to string */
-function astToString(ast: string | Inline[]) {
+function astToString(ast: string | Tree) {
   if (typeof ast === 'string') {
     return ast
   }
@@ -13,8 +13,12 @@ function astToString(ast: string | Inline[]) {
   return ast
     .map((node) => {
       switch (node.t) {
+        case 'Code':
+          return node.c[1]
         case 'Str':
           return node.c
+        case 'LineBreak':
+        case 'SoftBreak':
         case 'Space':
           return ' '
         default:
@@ -53,7 +57,7 @@ function getClassNameToComponentMapper<P>(classNameComponentMap: Record<string, 
         return classNameComponentMap[className]
       }
     }
-    return null
+    return undefined
   }
 }
 

@@ -91,7 +91,7 @@ test('getClassNameToComponentMapper', () => {
   })
   expect(mapper(['qux', 'foo'])).toBe(Foo)
   expect(mapper(['bar'])).toBe(Bar)
-  expect(mapper(['baz', 'quz'])).toBe(null)
+  expect(mapper(['baz', 'quz'])).toBeUndefined()
 })
 
 test('getSectionPath', () => {
