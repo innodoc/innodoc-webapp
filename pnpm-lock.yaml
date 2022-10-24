@@ -70,7 +70,7 @@ specifiers:
   i18next-http-backend: ^1.4.4
   katex: ^0.16.2
   locale: ^0.1.0
-  pandoc-filter: ^2.0.3
+  pandoc-filter: ^2.1.0
   prettier: ^2.7.1
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -108,7 +108,7 @@ dependencies:
   i18next-http-backend: 1.4.4
   katex: 0.16.2
   locale: 0.1.0
-  pandoc-filter: 2.0.3
+  pandoc-filter: 2.1.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-helmet-async: 1.3.0_biqbaboplfbrettd7655fr4n2y
@@ -4895,8 +4895,8 @@ packages:
     dependencies:
       p-limit: 3.1.0
 
-  /pandoc-filter/2.0.3:
-    resolution: {integrity: sha512-Ian8giUEJBH555y5IFQg3CAfsAifTeq724Nu0HEOM6NuwiHYvRO1Ma0mHinQApeFU97lhf5irT7bpgnWuyyZgg==}
+  /pandoc-filter/2.1.0:
+    resolution: {integrity: sha512-uE6RSbzR+WsiBZgHa6u4WfvNy3DeUKtLFFJBbq03DFMmlXrtvqyJuIS0jrxM6v1VEJUlaY5lu/Tb6v3hnINWkw==}
     engines: {node: '>=7.6.0'}
     dependencies:
       get-stdin: 7.0.0
