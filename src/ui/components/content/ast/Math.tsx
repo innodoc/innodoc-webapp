@@ -15,8 +15,7 @@ function MemoizedMath({ content, displayMode }: MemoizedMathProps) {
     [content, displayMode]
   )
 
-  const Component = displayMode ? 'div' : 'span'
-  return <Component dangerouslySetInnerHTML={{ __html: html }} />
+  return <span dangerouslySetInnerHTML={{ __html: html }} />
 }
 
 type MemoizedMathProps = {
