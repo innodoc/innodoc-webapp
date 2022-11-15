@@ -8,6 +8,7 @@ ignorePatterns:
   - '**/coverage'
   - '**/dist'
   - '**/node_modules'
+  - '**/src/__build'
 
 extends:
   - plugin:import/typescript

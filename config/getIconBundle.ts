@@ -3,7 +3,7 @@ import type { IconifyJSON } from '@iconify/types'
 import { getIcons } from '@iconify/utils/lib/icon-set/get-icons'
 import { parse as parseSvg, type RootNode } from 'svg-parser'
 
-import type { Manifest } from '@/types/api'
+import type { ApiManifest } from '@/types/api'
 
 import scanIconNames from './scanIconNames'
 
@@ -52,7 +52,7 @@ async function getFileIconData(iconNames: string[]): Promise<Record<string, Root
 /**
  * Create icon bundle from manifest pages and static info from source code.
  */
-async function getIconBundle(manifest: Manifest) {
+async function getIconBundle(manifest: ApiManifest) {
   // Icon names from source code
   const iconNamesSourcecode = await scanIconNames()
 
