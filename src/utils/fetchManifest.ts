@@ -1,11 +1,11 @@
-import type { Manifest } from '@/types/api'
+import type { ApiManifest } from '@/types/api'
 
-function isManifest(data: unknown): data is Manifest {
+function isApiManifest(data: unknown): data is ApiManifest {
   return (
     data !== null &&
     typeof data === 'object' &&
-    Array.isArray((data as Manifest).languages) &&
-    typeof (data as Manifest).toc === 'object'
+    Array.isArray((data as ApiManifest).languages) &&
+    typeof (data as ApiManifest).toc === 'object'
   )
 }
 
@@ -17,7 +17,7 @@ async function fetchManifest() {
 
   const resp = await fetch(`${contentRoot}manifest.json`)
   const data = (await resp.json()) as unknown
-  if (isManifest(data)) {
+  if (isApiManifest(data)) {
     return data
   }
   throw new Error('Failed to fetch manifest.')

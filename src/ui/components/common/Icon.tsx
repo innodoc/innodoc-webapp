@@ -1,12 +1,10 @@
 import { SvgIcon as MuiSvgIcon, type SxProps, type Theme } from '@mui/material'
 import { type ComponentProps } from 'react'
 
-import buildData from '@/__buildData.json'
+import iconBundle from '@/__build/iconBundle.json'
 
 import InlineError from './InlineError'
-import SvgNode, { isElementNode } from './SvgNode'
-
-const { iconBundle } = buildData
+import SvgRootNode from './SvgRootNode'
 
 function Icon({ name, ...other }: IconProps) {
   const icon = iconBundle[name]
@@ -14,25 +12,12 @@ function Icon({ name, ...other }: IconProps) {
     return <InlineError>Icon: Unknown icon name: {name}</InlineError>
   }
 
-  const svgNode = icon.children[0]
-  if (!isElementNode(svgNode) || svgNode.tagName !== 'svg') {
-    return <InlineError>Icon: Invalid root node</InlineError>
-  }
-
   const viewBox =
-    typeof svgNode?.properties?.viewBox === 'string' ? svgNode.properties.viewBox : '0 0 24 24'
+    typeof icon?.children?.[0]?.properties?.viewBox === 'string'
+      ? icon.children[0].properties.viewBox
+      : '0 0 24 24'
 
-  const children = svgNode.children
-    .map((node, idx) => {
-      return isElementNode(node) ? <SvgNode key={idx} node={node} /> : false
-    })
-    .filter(Boolean)
-
-  return (
-    <MuiSvgIcon viewBox={viewBox} {...other}>
-      {children}
-    </MuiSvgIcon>
-  )
+  return <SvgRootNode component={MuiSvgIcon} rootNode={icon} viewBox={viewBox} {...other} />
 }
 
 export type IconProps = {
