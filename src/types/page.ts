@@ -1,12 +1,9 @@
-import type { AnyAction, ThunkAction } from '@reduxjs/toolkit'
-import type { BaseQueryFn, QueryDefinition } from '@reduxjs/toolkit/dist/query'
-import type { QueryActionCreatorResult } from '@reduxjs/toolkit/dist/query/core/buildInitiate'
 import type { ElementType } from 'react'
 import type { HelmetServerState } from 'react-helmet-async'
 import type { PageContextBuiltIn } from 'vite-plugin-ssr'
 import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client/router'
 
-import type { RootState } from '@/store/makeStore'
+import type { RootState, Store } from '@/store/makeStore'
 
 import type { Page } from './api'
 import type { Locale } from './common'
@@ -35,8 +32,8 @@ export type PageContextServer = Omit<PageContextBuiltIn, 'Page'> & {
   /** Props to pass to page component */
   pageProps: PageProps
 
-  /** Queries specific to current page */
-  pageQueryFactories: QueryFactory[]
+  /** Prepopulation task factories specific to current page */
+  pagePrepopFactories: PrepopFactory[]
 
   /** Preloaded store state */
   preloadedState: RootState
@@ -54,12 +51,5 @@ export type PageProps = {
   sectionPath?: string
 }
 
-/** Query action factory function */
-export type QueryFactory = (
-  locale: Locale
-) => ThunkAction<
-  QueryActionCreatorResult<QueryDefinition<unknown, BaseQueryFn, never, unknown>>,
-  unknown,
-  unknown,
-  AnyAction
->
+/** Store prepopulation task factory function */
+export type PrepopFactory = (store: Store, locale: Locale) => Promise<unknown>

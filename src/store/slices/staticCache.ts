@@ -3,6 +3,7 @@ import { parse as parseSvg, type RootNode } from 'svg-parser'
 
 import { MAX_KEEP_UNUSED_DATA_FOR_MAX } from '@/constants'
 
+/** Cache SVG content images */
 const staticCache = createApi({
   reducerPath: 'staticCache',
 
@@ -26,5 +27,5 @@ type SvgFetchArgs = {
   id: string
 }
 
-export const { useLazyGetSvgQuery } = staticCache
+export const { useGetSvgQuery } = staticCache
 export default staticCache

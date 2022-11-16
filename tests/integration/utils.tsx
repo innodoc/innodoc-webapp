@@ -7,8 +7,9 @@ import { afterEach } from 'vitest'
 
 import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '@/constants'
 import { getI18nBackendOpts } from '@/renderer/_default.page.server'
-import { fetchContent, fetchManifest } from '@/renderer/fetchData'
+import fetchContent from '@/renderer/fetchContent'
 import makeStore, { type Store } from '@/store/makeStore'
+import contentApi from '@/store/slices/contentApi'
 import PageShell from '@/ui/components/PageShell/PageShell'
 import getI18n from '@/utils/getI18n'
 
@@ -20,9 +21,10 @@ const locale = 'en'
 beforeEach(async () => {
   emotionCache = createCache({ key: 'emotion-style' })
   store = makeStore()
-  await store.dispatch(fetchManifest())
-  await store.dispatch(fetchContent({ locale, path: CONTENT_NAME_FOOTER_A }))
-  await store.dispatch(fetchContent({ locale, path: CONTENT_NAME_FOOTER_B }))
+  const { initiate: getContent } = contentApi.endpoints.getContent
+  await store.dispatch(contentApi.endpoints.getManifest.initiate())
+  await fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_A }))
+  await fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_B }))
   i18n = await getI18n(I18NextFsBackend, getI18nBackendOpts(), 'cimode', store)
 })
 

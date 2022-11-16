@@ -1,7 +1,8 @@
 import { onBeforeRender as onBeforeRenderDefault } from '@/renderer/_default.page.server'
-import { fetchManifest, fetchSectionContent } from '@/renderer/fetchData'
+import fetchContent from '@/renderer/fetchContent'
 import makeStore from '@/store/makeStore'
 import { selectToc } from '@/store/selectors/content/section'
+import contentApi from '@/store/slices/contentApi'
 import type { SectionWithChildren } from '@/types/api'
 import type { PageContextServer } from '@/types/page'
 import { getSectionUrl } from '@/utils/content'
@@ -15,8 +16,14 @@ async function onBeforeRender(pageContext: PageContextServer) {
     // Pass sectionPath to page component
     pageProps: { sectionPath },
 
-    // Pass custom query to onBeforeRender
-    pageQueryFactories: [(locale) => fetchSectionContent({ locale, path: sectionPath })],
+    // Pass custom prepopulation task to onBeforeRender
+    pagePrepopFactories: [
+      (store, locale) =>
+        fetchContent(
+          store,
+          contentApi.endpoints.getSectionContent.initiate({ locale, path: sectionPath })
+        ),
+    ],
   })
 }
 
@@ -37,7 +44,7 @@ function getUrls(sections: SectionWithChildren[], prefix: string[] = []): string
 
 async function prerender() {
   const store = makeStore()
-  await store.dispatch(fetchManifest())
+  await store.dispatch(contentApi.endpoints.getManifest.initiate())
   const toc = selectToc(store.getState())
   return toc !== undefined ? getUrls(toc) : []
 }
