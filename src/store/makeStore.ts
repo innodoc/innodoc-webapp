@@ -3,10 +3,12 @@ import type { PreloadedState, StateFromReducersMapObject } from '@reduxjs/toolki
 
 import localeChangeMiddleware from './middlewares/localeChangeMiddleware'
 import contentApi from './slices/contentApi'
+import staticCache from './slices/staticCache'
 import uiSlice from './slices/uiSlice'
 
 const reducer = {
   [contentApi.reducerPath]: contentApi.reducer,
+  [staticCache.reducerPath]: staticCache.reducer,
   [uiSlice.name]: uiSlice.reducer,
 }
 
@@ -14,7 +16,10 @@ function makeStore(preloadedState?: PreloadedState<RootState>) {
   return configureStore({
     devTools: import.meta.env.MODE === 'development',
     middleware(getDefaultMiddleware) {
-      const middleware = getDefaultMiddleware().concat(contentApi.middleware)
+      const middleware = getDefaultMiddleware().concat([
+        contentApi.middleware,
+        staticCache.middleware,
+      ])
       if (!import.meta.env.SSR) {
         // Only on client
         return middleware.prepend(localeChangeMiddleware.middleware)

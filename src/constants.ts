@@ -28,3 +28,9 @@ type BuiltinPage = {
 export const CONTENT_NAME_FOOTER_A = 'footerA'
 /** Filename for footer B content */
 export const CONTENT_NAME_FOOTER_B = 'footerB'
+
+/**
+ * Content should never be refetched (use highest possible value)
+ * https://github.com/reduxjs/redux-toolkit/issues/2535
+ */
+export const MAX_KEEP_UNUSED_DATA_FOR_MAX = Math.floor((2 ** 31 - 1) / 1000)

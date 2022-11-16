@@ -9,12 +9,12 @@ const StyledImage = styled('img')({
 })
 
 function Image({ content: [[id], content, [url, title]] }: ContentComponentProps<'Image'>) {
+  if (url.endsWith('.svg')) {
+    return <SvgImage id={url} />
+  }
+
   const src = /^https?:\/\//i.test(url) ? url : `${import.meta.env.INNODOC_STATIC_ROOT}${url}`
   const alt = title || astToString(content)
-
-  if (src.endsWith('.svg')) {
-    return <SvgImage src={src} />
-  }
 
   return <StyledImage alt={alt} id={id} src={src} />
 }

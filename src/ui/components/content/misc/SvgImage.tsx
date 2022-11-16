@@ -1,44 +1,36 @@
 import { Skeleton, styled } from '@mui/material'
-import { useEffect, useState } from 'react'
-import { parse, type RootNode } from 'svg-parser'
+import { useEffect } from 'react'
 
+import { useLazyGetSvgQuery } from '@/store/slices/staticCache'
+import InlineError from '@/ui/components/common/InlineError'
 import SvgRootNode from '@/ui/components/common/SvgRootNode'
 
 const StyledSvg = styled('svg')({
   color: 'var(--mui-palette-text-primary)',
-  width: '100%',
+  maxWidth: '100%',
 })
 
-function SvgImage({ src }: SvgImageProps) {
-  const [parsedSvg, setParsedSvg] = useState<RootNode>()
+function SvgImage({ id }: SvgImageProps) {
+  const [trigger, { data: rootNode, isError }] = useLazyGetSvgQuery()
 
-  // TODO: cache in store, prepopulate store for SSR
   useEffect(() => {
-    fetch(src)
-      .then((res) => {
-        if (res.status !== 200) {
-          throw new Error(`Could not load SVG: ${src}`)
-        }
-        return res.text()
-      })
-      .then((svgCode) => {
-        setParsedSvg(parse(svgCode))
-        return undefined
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }, [src])
+    // Only fetch client-side, on server the cache is always prepopulated
+    void trigger({ id }, true)
+  }, [id, trigger])
 
-  if (parsedSvg === undefined) {
+  if (isError) {
+    return <InlineError>Failed to fetch SVG!</InlineError>
+  }
+
+  if (rootNode === undefined) {
     return <Skeleton sx={{ mb: 2 }} variant="rectangular" />
   }
 
-  return <SvgRootNode component={StyledSvg} rootNode={parsedSvg} />
+  return <SvgRootNode component={StyledSvg} rootNode={rootNode} />
 }
 
 type SvgImageProps = {
-  src: string
+  id: string
 }
 
 export default SvgImage

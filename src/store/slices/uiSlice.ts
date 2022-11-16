@@ -4,8 +4,6 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '@/store/makeStore'
 import type { Locale } from '@/types/common'
 
-const NAME = 'ui'
-
 interface UiSliceState {
   /** Current locale */
   locale: Locale
@@ -20,7 +18,7 @@ const initialState: UiSliceState = {
 }
 
 const uiSlice = createSlice({
-  name: NAME,
+  name: 'ui',
   initialState,
 
   reducers: {

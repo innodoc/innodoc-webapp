@@ -2,6 +2,7 @@ import { createSelector } from '@reduxjs/toolkit'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { Tree } from 'pandoc-filter'
 
+import { MAX_KEEP_UNUSED_DATA_FOR_MAX } from '@/constants'
 import type {
   ApiManifest,
   ApiSection,
@@ -10,8 +11,6 @@ import type {
   TransformedSection,
 } from '@/types/api'
 import { formatUrl } from '@/utils/url'
-
-const REDUCER_PATH = 'contentApi'
 
 /** Add section number and path information recursively */
 const transformSection = (
@@ -34,11 +33,9 @@ const transformResponseManifest = (response: ApiManifest): TransformedManifest =
 })
 
 const contentApi = createApi({
-  reducerPath: REDUCER_PATH,
+  reducerPath: 'contentApi',
 
-  // Content should never be refetched (use highest possible value)
-  // https://github.com/reduxjs/redux-toolkit/issues/2535
-  keepUnusedDataFor: Math.floor((2 ** 31 - 1) / 1000),
+  keepUnusedDataFor: MAX_KEEP_UNUSED_DATA_FOR_MAX,
 
   baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.INNODOC_CONTENT_ROOT }),
 
