@@ -15,10 +15,11 @@ function testConfig(testMode: string) {
   const config: VitestInlineConfig = {
     globals: true,
     include: [`tests/${testMode}/**/*.test.{ts,tsx}`],
+    sequence: { hooks: 'stack' },
   }
 
   if (testMode === 'integration') {
-    config.environment = 'happy-dom'
+    config.environment = 'jsdom'
     config.setupFiles = path.resolve(__dirname, '..', 'tests', 'integration', 'setup.ts')
   }
 
