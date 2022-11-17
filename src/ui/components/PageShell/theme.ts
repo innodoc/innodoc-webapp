@@ -72,7 +72,7 @@ function getCardColors(palette: DefaultColorScheme, cardType: CardType): Palette
       }
 }
 
-const cssVarsThemeOptions = {
+const cssVarsOpts = {
   colorSchemes: {
     light: {
       palette: {
@@ -120,7 +120,7 @@ const cssVarsThemeOptions = {
   },
 } as CssVarsThemeOptions // Can't augment `ColorSystemOptions['palette']`...
 
-const theme: ThemeOptions = {
+const baseThemeOpts: ThemeOptions = {
   palette: {
     primary: { main: 'rgb(15, 112, 172)' },
     secondary: { main: 'rgb(197, 14, 31)' },
@@ -156,4 +156,11 @@ const theme: ThemeOptions = {
   },
 }
 
-export default responsiveFontSizes(extendTheme(cssVarsThemeOptions, theme))
+function makeTheme(themeOpts: ThemeOptions = baseThemeOpts) {
+  return responsiveFontSizes(extendTheme(cssVarsOpts, themeOpts))
+}
+
+const theme = makeTheme()
+
+export { baseThemeOpts, makeTheme }
+export default theme

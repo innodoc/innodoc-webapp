@@ -1,4 +1,9 @@
 import { Box, Container, Grid, Link, Stack, Typography } from '@mui/material'
+import getTextDecoration from '@mui/material/Link/getTextDecoration'
+import {
+  Experimental_CssVarsProvider as CssVarsProvider,
+  useColorScheme,
+} from '@mui/material/styles/index.js'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -11,12 +16,33 @@ import InternalLink from '@/ui/components/common/link/InternalLink'
 import PageLink from '@/ui/components/common/link/PageLink'
 import ContentTree from '@/ui/components/content/ast/ContentTree'
 import { otherPagesFooter } from '@/ui/components/Layout/AppBar/otherPages'
+import defaultTheme, { baseThemeOpts, makeTheme } from '@/ui/components/PageShell/theme'
 import { useSelector } from '@/ui/hooks/store'
+
+// Override link color on light theme for better readability
+const footerTheme = makeTheme({
+  ...baseThemeOpts,
+  components: {
+    ...baseThemeOpts.components,
+    MuiLink: {
+      styleOverrides: {
+        root: ({ theme, ownerState }) => ({
+          color: theme.vars.palette.primary.light,
+          textDecorationColor: getTextDecoration({
+            theme,
+            ownerState: { ...ownerState, color: 'primary.light' },
+          }),
+        }),
+      },
+    },
+  },
+})
 
 const linkSx = { alignItems: 'center', display: 'flex', '& svg': { mr: 1 } }
 
 function Footer() {
   const { t } = useTranslation()
+  const { mode } = useColorScheme()
   const courseTitle = useSelector(selectCourseTitle)
   const coursePages = useSelector(selectFooterPages)
   const locale = useSelector(selectLocale)
@@ -40,33 +66,35 @@ function Footer() {
     blocksFooterB !== undefined ? <ContentTree content={blocksFooterB} /> : null
 
   return (
-    <Box
-      component="footer"
-      sx={(theme) => ({
-        color: theme.vars.palette.common.white,
-        py: 5,
-        mt: 'auto',
-        backgroundColor: theme.vars.palette.Footer.bg,
-        boxShadow: theme.vars.shadowFooter,
-      })}
-    >
-      <Container maxWidth="lg">
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={3} sx={{ mb: 3 }}>
-            <Typography variant="h4" gutterBottom>
-              {courseTitle}
-            </Typography>
-            <Stack spacing={1}>{[...internalLinks, ...courseLinks]}</Stack>
+    <CssVarsProvider theme={mode === 'light' ? footerTheme : defaultTheme}>
+      <Box
+        component="footer"
+        sx={(theme) => ({
+          color: theme.vars.palette.common.white,
+          py: 5,
+          mt: 'auto',
+          backgroundColor: theme.vars.palette.Footer.bg,
+          boxShadow: theme.vars.shadowFooter,
+        })}
+      >
+        <Container maxWidth="lg">
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={3} sx={{ mb: 3 }}>
+              <Typography variant="h4" gutterBottom>
+                {courseTitle}
+              </Typography>
+              <Stack spacing={1}>{[...internalLinks, ...courseLinks]}</Stack>
+            </Grid>
+            <Grid item xs={12} md={6} sx={{ mb: 3 }}>
+              {contentFooterA}
+            </Grid>
+            <Grid item xs={12} md={3} sx={{ mb: 3 }}>
+              {contentFooterB}
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={6} sx={{ mb: 3 }}>
-            {contentFooterA}
-          </Grid>
-          <Grid item xs={12} md={3} sx={{ mb: 3 }}>
-            {contentFooterB}
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
+        </Container>
+      </Box>
+    </CssVarsProvider>
   )
 }
 
