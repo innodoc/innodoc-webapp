@@ -91,4 +91,5 @@ async function render({
 }
 
 export { render }
+export const hydrationCanBeAborted = true // true for React
 export const clientRouting = true
