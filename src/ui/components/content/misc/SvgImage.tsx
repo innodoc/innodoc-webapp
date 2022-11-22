@@ -1,8 +1,8 @@
 import { Skeleton, styled } from '@mui/material'
 
-import { useGetSvgQuery } from '@/store/slices/staticCache'
-import InlineError from '@/ui/components/common/InlineError'
-import SvgRootNode from '@/ui/components/common/SvgRootNode'
+import { useGetSvgQuery } from '#store/slices/staticCache'
+import InlineError from '#ui/components/common/error/InlineError'
+import SvgRootNode from '#ui/components/common/SvgRootNode'
 
 const StyledSvg = styled('svg')({
   color: 'var(--mui-palette-text-primary)',

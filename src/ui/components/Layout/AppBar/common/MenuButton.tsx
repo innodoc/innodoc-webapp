@@ -1,7 +1,7 @@
 import { Box, IconButton, Menu, Tooltip } from '@mui/material'
 import { type MouseEvent, useState, type ReactNode } from 'react'
 
-import Icon, { type IconProps } from '@/ui/components/common/Icon'
+import Icon, { type IconProps } from '#ui/components/common/Icon'
 
 function MenuButton({ children, iconName, id, title }: MenuButtonProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)

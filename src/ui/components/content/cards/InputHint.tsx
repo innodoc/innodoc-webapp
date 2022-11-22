@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import type { DivProps } from '@/ui/components/content/ast/block/Div'
+import type { DivProps } from '#ui/components/content/ast/block/Div'
 
 import Card from './Card'
 

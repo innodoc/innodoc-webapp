@@ -1,11 +1,11 @@
 import { forwardRef } from 'react'
 
-import type { RootState } from '@/store/makeStore'
-import { selectSectionByPath } from '@/store/selectors/content/section'
-import type { Section } from '@/types/api'
-import InlineError from '@/ui/components/common/InlineError'
-import { useSelector } from '@/ui/hooks/store'
-import { formatSectionTitle, getSectionPath, getSectionUrl } from '@/utils/content'
+import type { RootState } from '#store/makeStore'
+import { selectSectionByPath } from '#store/selectors/content/section'
+import type { Section } from '#types/api'
+import InlineError from '#ui/components/common/error/InlineError'
+import { useSelector } from '#ui/hooks/store'
+import { formatSectionTitle, getSectionPath, getSectionUrl } from '#utils/content'
 
 import InternalLink, { type InternalLinkProps } from './InternalLink'
 

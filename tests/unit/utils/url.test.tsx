@@ -1,4 +1,4 @@
-import { extractLocale, formatUrl } from '@/utils/url'
+import { extractLocale, formatUrl } from '#utils/url'
 
 test('extractLocale', () => {
   expect(extractLocale('/de/foo/bar', ['de', 'en'], 'en')).toEqual({

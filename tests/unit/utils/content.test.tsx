@@ -11,7 +11,7 @@ import {
   getSectionUrl,
   replacePathPrefixes,
   unwrapPara,
-} from '@/utils/content'
+} from '#utils/content'
 
 test('astToString', () => {
   expect(astToString('foo')).toBe('foo')

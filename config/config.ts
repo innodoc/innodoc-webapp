@@ -6,9 +6,20 @@ import ssr from 'vite-plugin-ssr/plugin'
 import { type InlineConfig as VitestInlineConfig } from 'vitest'
 import { type UserConfigExport } from 'vitest/config'
 
+import { imports } from '../package.json'
+
 import buildData from './buildData'
 
 dotenv.config()
+
+/* Take package.json import mapping as source of truth for aliases */
+const projectDir = path.resolve(__dirname, '..')
+const alias = Object.fromEntries(
+  Object.entries(imports).map(([key, val]) => [
+    key.replace('/*', ''),
+    path.join(projectDir, val.replace('/*', '')),
+  ])
+)
 
 /* Configure tests */
 function testConfig(testMode: string) {
@@ -37,12 +48,7 @@ async function config() {
   const config: UserConfigExport = {
     envPrefix: 'INNODOC_', // Exposed to client
     plugins: [react(), ssr({ prerender: true })],
-    resolve: {
-      alias: {
-        '@/test-utils': path.resolve(__dirname, '..', 'tests', 'integration', 'utils.tsx'),
-        '@': path.resolve(__dirname, '..', 'src'),
-      },
-    },
+    resolve: { alias },
     ssr: {
       noExternal: [
         '@reduxjs/toolkit', // otherwise can't be loaded on prerendering

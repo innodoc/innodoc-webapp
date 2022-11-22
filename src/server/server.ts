@@ -1,94 +1,53 @@
-import path from 'path'
-
-import compression from 'compression'
-import dotenv from 'dotenv'
-import express, { type RequestHandler } from 'express'
+import express, { type Express } from 'express'
 import localeMiddleware from 'locale'
-import { renderPage } from 'vite-plugin-ssr'
 
-import type { Locale } from '../types/common'
-import fetchManifest from '../utils/fetchManifest'
-import { extractLocale, formatUrl } from '../utils/url'
-
+import apiRouter from './api/apiRouter'
+import frontendRouter from './frontendRouter'
+import getConfig, { type ServerConfig } from './getConfig'
 import { isErrnoException } from './utils'
-
-// Load .env config
-dotenv.config({ path: path.resolve(__dirname, '..', '..', '.env') })
-
-const isProduction = process.env.NODE_ENV === 'production'
-const rootDir = path.resolve(__dirname, '..', '..')
-const distDir = path.join(rootDir, 'dist')
 
 void startServer()
 
-async function startServer() {
-  // Fetch manifest
-  const { languages: locales } = await fetchManifest()
+async function setupServeStatic(app: Express, config: ServerConfig) {
+  const sirv = (await import('sirv')).default
 
-  const app = express()
-  app.use(compression())
-  app.use(localeMiddleware(locales, locales[0]))
-
-  if (isProduction) {
-    const sirv = (await import('sirv')).default
-
-    try {
-      app.use(sirv(distDir))
-    } catch (err) {
-      if (isErrnoException(err) && err.code === 'ENOENT') {
-        process.exit(-1)
-      }
-      throw err
+  try {
+    app.use(sirv(config.distDir))
+  } catch (err) {
+    if (isErrnoException(err) && err.code === 'ENOENT') {
+      console.error(`dist directory not found: ${config.distDir}`)
+      console.error('Did you forget to build?')
+      process.exit(-1)
     }
-  } else {
-    const vite = await import('vite')
-
-    const viteServer = await vite.createServer({
-      root: rootDir,
-      server: { middlewareMode: true },
-    })
-    app.use(viteServer.middlewares)
+    throw err
   }
-
-  app.get('*', (async (req, res, next) => {
-    const url = req.originalUrl
-
-    // Extract locale from URL, fallback to browser Accept-Language
-    const { locale, urlWithoutLocale } = extractLocale(url, locales, req.locale)
-    const pageContextInit: PageContextInit = {
-      locale,
-      urlOriginal: urlWithoutLocale,
-    }
-
-    // Ensure url path is prefixed with locale
-    if (url.split('/')[1] !== locale) {
-      return res.redirect(307, formatUrl(url, locale))
-    }
-
-    // Render page
-    const pageContext = await renderPage(pageContextInit)
-
-    // Honor redirection directive from app
-    if (pageContext.redirectTo !== undefined) {
-      return res.redirect(307, pageContext.redirectTo)
-    }
-
-    if (!pageContext.httpResponse) {
-      return next()
-    }
-
-    const { body, statusCode, contentType } = pageContext.httpResponse
-    return res.status(statusCode).type(contentType).send(body)
-  }) as RequestHandler) // workaround until https://github.com/DefinitelyTyped/DefinitelyTyped/issues/50871 is resolved
-
-  const port = parseInt(process.env.SERVER_PORT || '3000')
-  const host = process.env.SERVER_HOST || 'localhost'
-  app.listen({ port, host })
-  console.log(`Server running at http://${host}:${port}`)
 }
 
-type PageContextInit = {
-  locale: Locale
-  urlOriginal: string
-  redirectTo?: string
+async function setupDevServer(app: Express, config: ServerConfig) {
+  const vite = await import('vite')
+
+  const viteServer = await vite.createServer({
+    root: config.rootDir,
+    server: { middlewareMode: true },
+  })
+  app.use(viteServer.middlewares)
+}
+
+async function startServer() {
+  const config = await getConfig()
+  const app = express()
+
+  app.use(localeMiddleware(config.manifest.locales, config.manifest.locales[0]))
+
+  if (config.isProduction) {
+    await setupServeStatic(app, config)
+  } else {
+    await setupDevServer(app, config)
+  }
+
+  app.use('/api', apiRouter(config))
+  app.use(frontendRouter(config))
+
+  app.listen({ host: config.host, port: config.port })
+  console.log(`Server running at http://${config.host}:${config.port}`)
 }

@@ -1,6 +1,6 @@
 import { transform } from '@svgr/core'
 
-import type { ApiManifest } from '@/types/api'
+import type { ApiManifest } from '#types/api'
 
 async function getLogo(manifest: ApiManifest): Promise<string> {
   const contentRoot = process.env.INNODOC_CONTENT_ROOT

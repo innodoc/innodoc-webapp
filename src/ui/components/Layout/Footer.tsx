@@ -7,17 +7,17 @@ import {
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '@/constants'
-import { selectCourseTitle } from '@/store/selectors/content/course'
-import { selectFooterPages } from '@/store/selectors/content/page'
-import { selectLocale } from '@/store/selectors/ui'
-import { useGetContentQuery } from '@/store/slices/contentApi'
-import InternalLink from '@/ui/components/common/link/InternalLink'
-import PageLink from '@/ui/components/common/link/PageLink'
-import ContentTree from '@/ui/components/content/ast/ContentTree'
-import { otherPagesFooter } from '@/ui/components/Layout/AppBar/otherPages'
-import defaultTheme, { baseThemeOpts, makeTheme } from '@/ui/components/PageShell/theme'
-import { useSelector } from '@/ui/hooks/store'
+import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '#constants'
+import { selectCourseTitle } from '#store/selectors/content/course'
+import { selectFooterPages } from '#store/selectors/content/page'
+import { selectLocale } from '#store/selectors/ui'
+import { useGetContentQuery } from '#store/slices/contentApi'
+import InternalLink from '#ui/components/common/link/InternalLink'
+import PageLink from '#ui/components/common/link/PageLink'
+import RootNode from '#ui/components/content/mdast/RootNode'
+import { otherPagesFooter } from '#ui/components/Layout/AppBar/otherPages'
+import defaultTheme, { baseThemeOpts, makeTheme } from '#ui/components/PageShell/theme'
+import { useSelector } from '#ui/hooks/store'
 
 // Override link color on light theme for better readability
 const footerTheme = makeTheme({
@@ -60,10 +60,8 @@ function Footer() {
     <Link component={PageLink} key={`page-${page.id}`} page={page} sx={linkSx} />
   ))
 
-  const contentFooterA =
-    blocksFooterA !== undefined ? <ContentTree content={blocksFooterA} /> : null
-  const contentFooterB =
-    blocksFooterB !== undefined ? <ContentTree content={blocksFooterB} /> : null
+  const contentFooterA = blocksFooterA !== undefined ? <RootNode node={blocksFooterA} /> : null
+  const contentFooterB = blocksFooterB !== undefined ? <RootNode node={blocksFooterB} /> : null
 
   return (
     <CssVarsProvider theme={mode === 'light' ? footerTheme : defaultTheme}>

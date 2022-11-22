@@ -1,9 +1,9 @@
 import i18next, { type i18n } from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
-import type { Store } from '@/store/makeStore'
-import { selectLocales } from '@/store/selectors/content/course'
-import type { Locale } from '@/types/common'
+import type { Store } from '#store/makeStore'
+import { selectLocales } from '#store/selectors/content/course'
+import type { Locale } from '#types/common'
 
 const isDev = import.meta.env.MODE === 'development'
 const isBrowser = typeof window !== 'undefined'

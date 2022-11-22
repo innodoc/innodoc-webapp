@@ -1,11 +1,11 @@
 import { Card, CardContent, CardHeader, List, ListItem, ListItemText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import type { RootState } from '@/store/makeStore'
-import { selectSectionChildrenByPath } from '@/store/selectors/content/section'
-import Icon from '@/ui/components/common/Icon'
-import SectionLink from '@/ui/components/common/link/SectionLink'
-import { useSelector } from '@/ui/hooks/store'
+import type { RootState } from '#store/makeStore'
+import { selectSectionChildrenByPath } from '#store/selectors/content/section'
+import Icon from '#ui/components/common/Icon'
+import SectionLink from '#ui/components/common/link/SectionLink'
+import { useSelector } from '#ui/hooks/store'
 
 function SubsectionList({ sectionPath }: SubsectionListProps) {
   const { t } = useTranslation()

@@ -10,8 +10,8 @@ import type { CardHeaderProps } from '@mui/material'
 import type { Block } from 'pandoc-filter'
 import { type ComponentProps, useState } from 'react'
 
-import Icon, { type IconProps } from '@/ui/components/common/Icon'
-import ContentTree from '@/ui/components/content/ast/ContentTree'
+import Icon, { type IconProps } from '#ui/components/common/Icon'
+import ContentTree from '#ui/components/content/ast/ContentTree'
 
 import type { CardType } from './types'
 

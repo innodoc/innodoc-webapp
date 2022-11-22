@@ -2,16 +2,12 @@ import { TreeView } from '@mui/lab'
 import { styled } from '@mui/material'
 import { type SyntheticEvent, useState, useEffect, useRef } from 'react'
 
-import type { RootState } from '@/store/makeStore'
-import {
-  selectSectionByPath,
-  selectSectionPath,
-  selectToc,
-} from '@/store/selectors/content/section'
-import type { SectionWithChildren } from '@/types/api'
-import Icon from '@/ui/components/common/Icon'
-import { useSelector } from '@/ui/hooks/store'
-import { getSectionPath } from '@/utils/content'
+import type { RootState } from '#store/makeStore'
+import { selectSectionByPath, selectSectionPath, selectToc } from '#store/selectors/content/section'
+import type { SectionWithChildren } from '#types/api'
+import Icon from '#ui/components/common/Icon'
+import { useSelector } from '#ui/hooks/store'
+import { getSectionPath } from '#utils/content'
 
 import TocTreeItem from './TocTreeItem'
 

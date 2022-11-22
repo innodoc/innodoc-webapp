@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-import { selectLocale } from '@/store/selectors/ui'
-import type { LocalizedString } from '@/types/common'
+import { selectLocale } from '#store/selectors/ui'
+import type { LocalizedString } from '#types/common'
 
 export type TranslateFn = (locString?: LocalizedString) => string | undefined
 

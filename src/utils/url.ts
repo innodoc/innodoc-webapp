@@ -1,4 +1,4 @@
-import type { Locale } from '@/types/common'
+import type { Locale } from '#types/common'
 
 /** Split locale from URL, e.g. `/en/about` => `en`, `/about`. */
 function extractLocale(

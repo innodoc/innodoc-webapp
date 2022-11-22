@@ -1,10 +1,10 @@
-import { onBeforeRender as onBeforeRenderDefault } from '@/renderer/_default.page.server'
-import fetchContent from '@/renderer/fetchContent'
-import makeStore from '@/store/makeStore'
-import { selectPages } from '@/store/selectors/content/page'
-import contentApi from '@/store/slices/contentApi'
-import type { PageContextServer } from '@/types/page'
-import { getPageUrl } from '@/utils/content'
+import { onBeforeRender as onBeforeRenderDefault } from '#renderer/_default.page.server'
+import fetchContent from '#renderer/fetchContent'
+import makeStore from '#store/makeStore'
+import { selectPages } from '#store/selectors/content/page'
+import contentApi from '#store/slices/contentApi'
+import type { PageContextServer } from '#types/page'
+import { getPageUrl } from '#utils/content'
 
 async function onBeforeRender(pageContext: PageContextServer) {
   const { pageId } = pageContext.routeParams

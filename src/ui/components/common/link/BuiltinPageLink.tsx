@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { type BuiltinPagesKey, BUILTIN_PAGES } from '@/constants'
+import { type BuiltinPagesKey, BUILTIN_PAGES } from '#constants'
 
 import InternalLink, { type InternalLinkProps } from './InternalLink'
 

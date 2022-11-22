@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 
-import { selectHomeLink } from '@/store/selectors/content/course'
-import { useSelector } from '@/ui/hooks/store'
+import { selectHomeLink } from '#store/selectors/content/course'
+import { useSelector } from '#ui/hooks/store'
 
 import ContentLink from './ContentLink'
 import type { InternalLinkProps } from './InternalLink'

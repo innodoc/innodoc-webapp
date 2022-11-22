@@ -7,8 +7,8 @@ import { HelmetProvider } from 'react-helmet-async'
 import { I18nextProvider } from 'react-i18next'
 import { Provider as ReduxProvider } from 'react-redux'
 
-import type { Store } from '@/store/makeStore'
-import Layout from '@/ui/components/Layout/Layout'
+import type { Store } from '#store/makeStore'
+import Layout from '#ui/components/Layout/Layout'
 
 import theme from './theme'
 

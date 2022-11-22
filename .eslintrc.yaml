@@ -8,7 +8,7 @@ ignorePatterns:
   - '**/coverage'
   - '**/dist'
   - '**/node_modules'
-  - '**/src/__build'
+  - '**/build'
 
 extends:
   - plugin:import/typescript
@@ -53,7 +53,7 @@ overrides:
             - name: '@mui/material'
               importNames:
                 - Icon
-              message: Use `@/ui/components/common/Icon` instead.
+              message: Use `#ui/components/common/Icon` instead.
 
       # Consistent use of type imports
       '@typescript-eslint/consistent-type-imports': error
@@ -116,9 +116,9 @@ rules:
         caseInsensitive: true
       groups: [builtin, external, internal, unknown, parent, sibling, index]
       newlines-between: always
-      # Move '@/test-utils' to top
+      # Move '#test-utils' to top
       pathGroups:
-        - pattern: '@/test-utils'
+        - pattern: '#test-utils'
           group: external
 
   # Turn on errors for missing imports

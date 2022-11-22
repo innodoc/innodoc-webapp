@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-import { selectUi } from '@/store/slices/uiSlice'
+import { selectUi } from '#store/slices/uiSlice'
 
 /** Select the current locale */
 export const selectLocale = createSelector(selectUi, (ui) => ui.locale)

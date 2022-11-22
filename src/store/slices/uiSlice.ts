@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import type { RootState } from '@/store/makeStore'
-import type { Locale } from '@/types/common'
+import type { RootState } from '#store/makeStore'
+import type { Locale } from '#types/common'
 
 interface UiSliceState {
   /** Current locale */

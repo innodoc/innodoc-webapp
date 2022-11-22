@@ -1,9 +1,11 @@
-import { icons as mdiIconSet } from '@iconify-json/mdi'
+import fs from 'fs/promises'
+import { resolve } from 'path'
+
 import type { IconifyJSON } from '@iconify/types'
 import { getIcons } from '@iconify/utils/lib/icon-set/get-icons'
 import { parse as parseSvg, type RootNode } from 'svg-parser'
 
-import type { ApiManifest } from '@/types/api'
+import type { ApiManifest } from '#types/api'
 
 import scanIconNames from './scanIconNames'
 
@@ -67,9 +69,14 @@ async function getIconBundle(manifest: ApiManifest) {
 
   const iconNamesCombined = [...iconNamesSourcecode, ...iconNamesManifestPages]
 
-  // Get Material Design icons from node package
+  // Read all icons
+  const iconsPath = resolve(__dirname, '..', 'node_modules', '@iconify-json', 'mdi', 'icons.json')
+  const iconsFile = await fs.readFile(iconsPath)
+  const icons = JSON.parse(iconsFile.toString()) as IconifyJSON
+
+  // Create icon set
   const mdiIconNames = filterBySet('mdi', iconNamesCombined)
-  const iconifyJson = getIcons(mdiIconSet, mdiIconNames)
+  const iconifyJson = getIcons(icons, mdiIconNames)
   if (iconifyJson === null) {
     throw new Error('Failed to get icon bundle')
   }

@@ -1,11 +1,16 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "baseUrl": ".",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "lib": ["dom", "dom.iterable", "ESNext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "ESNext"
+    ],
     "module": "ESNext",
     "moduleResolution": "node",
     "noEmit": true,
@@ -13,18 +18,54 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2022",
-    "types": ["vite/client", "vitest/globals"],
+    "types": [
+      "vite/client",
+      "vitest/globals"
+    ],
     "paths": {
-      "@/test-utils": ["./tests/integration/utils"],
-      "@/*": ["./src/*"]
+      "#build/*": [
+        "./build/*"
+      ],
+      "#constants/*": [
+        "./src/constants.ts"
+      ],
+      "#pages/*": [
+        "./src/pages/*"
+      ],
+      "#renderer/*": [
+        "./src/renderer/*"
+      ],
+      "#server/*": [
+        "./src/server/*"
+      ],
+      "#store/*": [
+        "./src/store/*"
+      ],
+      "#test-utils": [
+        "./tests/integration/utils.tsx"
+      ],
+      "#types/*": [
+        "./src/types/*"
+      ],
+      "#ui/*": [
+        "./src/ui/*"
+      ],
+      "#utils/*": [
+        "./src/utils/*"
+      ]
     }
   },
-  "exclude": ["node_modules"],
-  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
   "ts-node": {
-    "transpileOnly": true,
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
+    "esm": true,
+    "experimentalResolver": true,
+    "experimentalSpecifierResolution": "node",
+    "transpileOnly": true
   }
 }

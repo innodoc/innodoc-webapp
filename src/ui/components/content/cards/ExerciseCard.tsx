@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
-import type { DivProps } from '@/ui/components/content/ast/block/Div'
-import { formatNumberedTitleElt } from '@/utils/content'
+import type { DivProps } from '#ui/components/content/ast/block/Div'
+import { formatNumberedTitleElt } from '#utils/content'
 
 import Card from './Card'
 

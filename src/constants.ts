@@ -25,9 +25,9 @@ type BuiltinPage = {
 }
 
 /** Filename for footer A content */
-export const CONTENT_NAME_FOOTER_A = 'footerA'
+export const CONTENT_NAME_FOOTER_A = 'footer_a'
 /** Filename for footer B content */
-export const CONTENT_NAME_FOOTER_B = 'footerB'
+export const CONTENT_NAME_FOOTER_B = 'footer_b'
 
 /**
  * Content should never be refetched (use highest possible value)

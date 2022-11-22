@@ -1,8 +1,8 @@
 import { type ComponentType, createElement, type SVGProps } from 'react'
 import type { ElementNode, RootNode } from 'svg-parser'
 
-import InlineError from '@/ui/components/common/InlineError'
-import attributesToProps from '@/utils/attributesToProps'
+import InlineError from '#ui/components/common/error/InlineError'
+import attributesToProps from '#utils/attributesToProps'
 
 function isElementNode(node: unknown): node is ElementNode {
   if (node === null || typeof node !== 'object') return false

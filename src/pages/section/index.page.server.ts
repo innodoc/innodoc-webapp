@@ -1,11 +1,11 @@
-import { onBeforeRender as onBeforeRenderDefault } from '@/renderer/_default.page.server'
-import fetchContent from '@/renderer/fetchContent'
-import makeStore from '@/store/makeStore'
-import { selectToc } from '@/store/selectors/content/section'
-import contentApi from '@/store/slices/contentApi'
-import type { SectionWithChildren } from '@/types/api'
-import type { PageContextServer } from '@/types/page'
-import { getSectionUrl } from '@/utils/content'
+import { onBeforeRender as onBeforeRenderDefault } from '#renderer/_default.page.server'
+import fetchContent from '#renderer/fetchContent'
+import makeStore from '#store/makeStore'
+import { selectToc } from '#store/selectors/content/section'
+import contentApi from '#store/slices/contentApi'
+import type { SectionWithChildren } from '#types/api'
+import type { PageContextServer } from '#types/page'
+import { getSectionUrl } from '#utils/content'
 
 async function onBeforeRender(pageContext: PageContextServer) {
   const { sectionPath } = pageContext.routeParams

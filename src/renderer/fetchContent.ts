@@ -3,8 +3,8 @@ import type { BaseQueryFn, QueryDefinition } from '@reduxjs/toolkit/dist/query'
 import type { QueryActionCreatorResult } from '@reduxjs/toolkit/dist/query/core/buildInitiate'
 import { type AnyElt, type Tree, walk } from 'pandoc-filter'
 
-import type { Store } from '@/store/makeStore'
-import staticCache from '@/store/slices/staticCache'
+import type { Store } from '#store/makeStore'
+import staticCache from '#store/slices/staticCache'
 
 async function fetchSvgImages(store: Store, content: Tree): Promise<void[]> {
   const promises: Promise<void>[] = []
@@ -39,7 +39,8 @@ async function fetchContent(
   // Fetch content
   const { data: content, error } = await store.dispatch(action)
   if (error !== undefined) {
-    throw error
+    console.error('fetchContent: ', error)
+    return
   }
   if (content === undefined) {
     throw new Error('Content fetch returned undefined!')

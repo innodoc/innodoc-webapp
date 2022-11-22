@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import InlineError from '@/ui/components/common/InlineError'
+import InlineError from '#ui/components/common/error/InlineError'
 
 import type { InternalLinkProps } from './InternalLink'
 import PageLink from './PageLink'

@@ -1,4 +1,4 @@
-import attributesToProps from '@/utils/attributesToProps'
+import attributesToProps from '#utils/attributesToProps'
 
 test('attributesToProps', () => {
   expect(attributesToProps(undefined)).toBeUndefined()

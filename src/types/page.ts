@@ -3,7 +3,7 @@ import type { HelmetServerState } from 'react-helmet-async'
 import type { PageContextBuiltIn } from 'vite-plugin-ssr'
 import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client/router'
 
-import type { RootState, Store } from '@/store/makeStore'
+import type { RootState, Store } from '#store/makeStore'
 
 import type { Page } from './api'
 import type { Locale } from './common'

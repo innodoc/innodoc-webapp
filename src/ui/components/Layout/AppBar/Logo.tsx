@@ -1,17 +1,20 @@
 import { Link, styled, Typography } from '@mui/material'
 
-import SvgLogo from '@/__build/Logo'
-import { selectCourseTitle } from '@/store/selectors/content/course'
-import HomeLink from '@/ui/components/common/link/HomeLink'
-import { useSelector } from '@/ui/hooks/store'
+import SvgLogo from '#build/Logo'
+import { selectCourseTitle } from '#store/selectors/content/course'
+import HomeLink from '#ui/components/common/link/HomeLink'
+import { useSelector } from '#ui/hooks/store'
 
-const StyledSvgLogo = styled(SvgLogo)({
-  color: 'var(--mui-palette-text-primary)',
-  height: '1em',
-  userSelect: 'none',
-  width: 'auto',
-  fill: 'currentColor',
-})
+const StyledSvgLogo =
+  SvgLogo !== null
+    ? styled(SvgLogo)({
+        color: 'var(--mui-palette-text-primary)',
+        height: '1em',
+        userSelect: 'none',
+        width: 'auto',
+        fill: 'currentColor',
+      })
+    : () => null
 
 function Logo() {
   const title = useSelector(selectCourseTitle)

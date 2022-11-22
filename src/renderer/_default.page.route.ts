@@ -1,6 +1,6 @@
-import locales from '@/__build/locales.json'
-import type { PageContextServer } from '@/types/page'
-import { extractLocale } from '@/utils/url'
+import locales from '#build/locales.json'
+import type { PageContextServer } from '#types/page'
+import { extractLocale } from '#utils/url'
 
 // Extract locale on client-side navigation
 function onBeforeRoute({ locale, urlOriginal }: PageContextServer): {

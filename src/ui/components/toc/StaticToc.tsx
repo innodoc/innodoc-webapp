@@ -1,9 +1,9 @@
 import { Link, styled } from '@mui/material'
 
-import { selectToc } from '@/store/selectors/content/section'
-import type { SectionWithChildren } from '@/types/api'
-import SectionLink from '@/ui/components/common/link/SectionLink'
-import { useSelector } from '@/ui/hooks/store'
+import { selectToc } from '#store/selectors/content/section'
+import type { SectionWithChildren } from '#types/api'
+import SectionLink from '#ui/components/common/link/SectionLink'
+import { useSelector } from '#ui/hooks/store'
 
 const StyledUl = styled('ul')(({ theme }) => ({
   listStyleType: 'none',

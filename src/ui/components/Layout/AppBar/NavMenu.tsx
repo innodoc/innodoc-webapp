@@ -2,11 +2,11 @@ import { Button, type ButtonProps, Stack, styled } from '@mui/material'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { selectNavPages } from '@/store/selectors/content/page'
-import Icon from '@/ui/components/common/Icon'
-import InternalLink from '@/ui/components/common/link/InternalLink'
-import PageLink from '@/ui/components/common/link/PageLink'
-import { useSelector } from '@/ui/hooks/store'
+import { selectNavPages } from '#store/selectors/content/page'
+import Icon from '#ui/components/common/Icon'
+import InternalLink from '#ui/components/common/link/InternalLink'
+import PageLink from '#ui/components/common/link/PageLink'
+import { useSelector } from '#ui/hooks/store'
 
 import { otherPagesNav } from './otherPages'
 

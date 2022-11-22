@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
-import PageHeader from '@/ui/components/common/PageHeader'
-import StaticToc from '@/ui/components/toc/StaticToc'
+import PageHeader from '#ui/components/common/PageHeader'
+import StaticToc from '#ui/components/toc/StaticToc'
 
 function TocPage() {
   const { t } = useTranslation()

@@ -4,12 +4,12 @@ import type { i18n as I18n } from 'i18next'
 import I18NextFsBackend from 'i18next-fs-backend'
 import { type ReactElement, type ReactNode } from 'react'
 
-import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '@/constants'
-import fetchContent from '@/renderer/fetchContent'
-import makeStore, { type Store } from '@/store/makeStore'
-import contentApi from '@/store/slices/contentApi'
-import PageShell from '@/ui/components/PageShell/PageShell'
-import getI18n from '@/utils/getI18n'
+import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '#constants'
+import fetchContent from '#renderer/fetchContent'
+import makeStore, { type Store } from '#store/makeStore'
+import contentApi from '#store/slices/contentApi'
+import PageShell from '#ui/components/PageShell/PageShell'
+import getI18n from '#utils/getI18n'
 
 let i18n: I18n
 let store: Store

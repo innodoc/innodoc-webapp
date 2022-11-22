@@ -4,9 +4,9 @@ import clsx from 'clsx'
 import { forwardRef, type MouseEvent, type Ref } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import type { SectionWithChildren } from '@/types/api'
-import SectionLink from '@/ui/components/common/link/SectionLink'
-import { formatSectionTitle } from '@/utils/content'
+import type { SectionWithChildren } from '#types/api'
+import SectionLink from '#ui/components/common/link/SectionLink'
+import { formatSectionTitle } from '#utils/content'
 
 const StyledLink = styled(Link)(({ theme }) => ({
   color: theme.vars.palette.text.primary,

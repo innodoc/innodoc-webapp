@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-import { selectManifest } from '@/store/slices/contentApi'
-import type { Page } from '@/types/api'
+import { selectManifest } from '#store/slices/contentApi'
+import type { Page } from '#types/api'
 
 import { selectTranslateFn } from './i18n'
 

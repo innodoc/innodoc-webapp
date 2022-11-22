@@ -2,10 +2,10 @@ import { Box, Divider, ListItemIcon, ListItemText, MenuItem } from '@mui/materia
 import { useColorScheme } from '@mui/material/styles/index.js'
 import { useTranslation } from 'react-i18next'
 
-import Icon from '@/ui/components/common/Icon'
-import InternalLink from '@/ui/components/common/link/InternalLink'
-import MenuItemCaption from '@/ui/components/common/MenuItemCaption'
-import MenuItemsLanguages from '@/ui/components/Layout/AppBar/MenuItemsLanguages'
+import Icon from '#ui/components/common/Icon'
+import InternalLink from '#ui/components/common/link/InternalLink'
+import MenuItemCaption from '#ui/components/common/MenuItemCaption'
+import MenuItemsLanguages from '#ui/components/Layout/AppBar/MenuItemsLanguages'
 
 import MenuButton from './common/MenuButton'
 

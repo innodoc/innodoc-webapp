@@ -2,10 +2,10 @@ import { Link as MuiLink } from '@mui/material'
 import clsx from 'clsx'
 import { type ComponentProps, forwardRef } from 'react'
 
-import { selectUrlWithoutLocale } from '@/store/selectors/ui'
-import { selectLocale } from '@/store/selectors/ui'
-import { useSelector } from '@/ui/hooks/store'
-import { formatUrl } from '@/utils/url'
+import { selectUrlWithoutLocale } from '#store/selectors/ui'
+import { selectLocale } from '#store/selectors/ui'
+import { useSelector } from '#ui/hooks/store'
+import { formatUrl } from '#utils/url'
 
 /**
  * Link to an internal page, either built-in page or custom content

@@ -1,8 +1,8 @@
 import { Box, Button, Checkbox, FormControlLabel, Grid, Link, TextField } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import InternalLink from '@/ui/components/common/link/InternalLink'
-import PageHeader from '@/ui/components/common/PageHeader'
+import InternalLink from '#ui/components/common/link/InternalLink'
+import PageHeader from '#ui/components/common/PageHeader'
 
 function LoginPage() {
   const { t } = useTranslation()

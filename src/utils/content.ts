@@ -1,8 +1,8 @@
 import type { AnyElt, AttrList, Tree } from 'pandoc-filter'
 import type { ComponentType } from 'react'
 
-import type { Section } from '@/types/api'
-import type { AttrObj } from '@/types/common'
+import type { Section } from '#types/api'
+import type { AttrObj } from '#types/common'
 
 /* Convert AST to string */
 function astToString(ast: string | Tree) {

@@ -9,8 +9,8 @@ import {
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import Icon from '@/ui/components/common/Icon'
-import Toc from '@/ui/components/toc/Toc/Toc'
+import Icon from '#ui/components/common/Icon'
+import Toc from '#ui/components/toc/Toc/Toc'
 
 import DrawerButton from './common/DrawerButton'
 

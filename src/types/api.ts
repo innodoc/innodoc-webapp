@@ -1,4 +1,4 @@
-import type { IconProps } from '@/ui/components/common/Icon'
+import type { IconProps } from '#ui/components/common/Icon'
 
 import type { Locale, LocalizedString, PageLinkLocation } from './common'
 
@@ -25,8 +25,8 @@ export interface ApiManifest extends LocalizedTitles {
   /** Course description */
   description?: LocalizedString
 
-  /** Course languages */
-  languages: ReadonlyArray<Locale>
+  /** Course locales */
+  locales: ReadonlyArray<Locale>
 
   /** Course home link */
   homeLink: string
@@ -48,7 +48,7 @@ export interface ApiManifest extends LocalizedTitles {
 
   /** Index terms */
   indexTerms: {
-    [language: Locale]: {
+    [locale: Locale]: {
       [termId: string]: [string, ReadonlyArray<IndexTermOccurance>]
     }
   }

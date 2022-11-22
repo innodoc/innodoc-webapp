@@ -1,9 +1,9 @@
 import { Card, CardMedia, styled } from '@mui/material'
 
-import type { DivProps } from '@/ui/components/content/ast/block/Div'
-import ContentTree from '@/ui/components/content/ast/ContentTree'
-import Image from '@/ui/components/content/ast/inline/Image'
-import { unwrapPara } from '@/utils/content'
+import type { DivProps } from '#ui/components/content/ast/block/Div'
+import ContentTree from '#ui/components/content/ast/ContentTree'
+import Image from '#ui/components/content/ast/inline/Image'
+import { unwrapPara } from '#utils/content'
 
 const StyledFigcaption = styled('figcaption')(({ theme }) => ({
   color: theme.vars.palette.text.secondary,

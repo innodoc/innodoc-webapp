@@ -1,9 +1,9 @@
 import { SvgIcon as MuiSvgIcon, type SxProps, type Theme } from '@mui/material'
 import { type ComponentProps } from 'react'
 
-import iconBundle from '@/__build/iconBundle.json'
+import iconBundle from '#build/iconBundle.json'
 
-import InlineError from './InlineError'
+import InlineError from './error/InlineError'
 import SvgRootNode from './SvgRootNode'
 
 function Icon({ name, ...other }: IconProps) {

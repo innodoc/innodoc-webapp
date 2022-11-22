@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
-import type { PageLinkLocation } from '@/types/common'
-import Icon from '@/ui/components/common/Icon'
+import type { PageLinkLocation } from '#types/common'
+import Icon from '#ui/components/common/Icon'
 
 const otherPages = [
   {

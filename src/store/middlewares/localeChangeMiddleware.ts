@@ -2,8 +2,8 @@ import { createListenerMiddleware } from '@reduxjs/toolkit'
 import { getI18n } from 'react-i18next'
 import { navigate } from 'vite-plugin-ssr/client/router'
 
-import { selectUrlWithoutLocale } from '@/store/selectors/ui'
-import { changeLocale } from '@/store/slices/uiSlice'
+import { selectUrlWithoutLocale } from '#store/selectors/ui'
+import { changeLocale } from '#store/slices/uiSlice'
 
 import type { AppStartListening } from './types'
 

@@ -1,8 +1,8 @@
-import { locale, render, screen, store } from '@/test-utils'
+import { locale, render, screen, store } from '#test-utils'
 
-import { Page as ContentPage } from '@/pages/page/index.page'
-import fetchContent from '@/renderer/fetchContent'
-import contentApi from '@/store/slices/contentApi'
+import { Page as ContentPage } from '#pages/page/index.page'
+import fetchContent from '#renderer/fetchContent'
+import contentApi from '#store/slices/contentApi'
 
 beforeEach(async () => {
   await fetchContent(store, contentApi.endpoints.getPageContent.initiate({ locale, id: 'about' }))

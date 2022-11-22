@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { parse as parseSvg, type RootNode } from 'svg-parser'
 
-import { MAX_KEEP_UNUSED_DATA_FOR_MAX } from '@/constants'
+import { MAX_KEEP_UNUSED_DATA_FOR_MAX } from '#constants'
 
 /** Cache SVG content images */
 const staticCache = createApi({

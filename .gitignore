@@ -8,4 +8,4 @@ dist
 **/public/locales/*/*.missing.json
 *.local
 .env
-/src/__build
+/build

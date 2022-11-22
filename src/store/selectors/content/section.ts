@@ -1,8 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-import { selectUrlWithoutLocale } from '@/store/selectors/ui'
-import { selectManifest } from '@/store/slices/contentApi'
-import type { SectionWithChildren, SectionWithoutChildren, TransformedSection } from '@/types/api'
+import { selectUrlWithoutLocale } from '#store/selectors/ui'
+import { selectManifest } from '#store/slices/contentApi'
+import type { SectionWithChildren, SectionWithoutChildren, TransformedSection } from '#types/api'
 
 import { selectTranslateFn, type TranslateFn } from './i18n'
 

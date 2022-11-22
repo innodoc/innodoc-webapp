@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 
-import PageHeader from '@/ui/components/common/PageHeader'
+import PageHeader from '#ui/components/common/PageHeader'
 
 function ErrorPage({ errorMsg, is404 }: ErrorPageProps) {
   let captionText = '500 Internal Server Error'

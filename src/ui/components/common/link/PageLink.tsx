@@ -1,12 +1,12 @@
 import { forwardRef } from 'react'
 
-import type { RootState } from '@/store/makeStore'
-import { selectPageById } from '@/store/selectors/content/page'
-import type { Page } from '@/types/api'
-import Icon from '@/ui/components/common/Icon'
-import InlineError from '@/ui/components/common/InlineError'
-import { useSelector } from '@/ui/hooks/store'
-import { getPageUrl } from '@/utils/content'
+import type { RootState } from '#store/makeStore'
+import { selectPageById } from '#store/selectors/content/page'
+import type { Page } from '#types/api'
+import InlineError from '#ui/components/common/error/InlineError'
+import Icon from '#ui/components/common/Icon'
+import { useSelector } from '#ui/hooks/store'
+import { getPageUrl } from '#utils/content'
 
 import InternalLink, { type InternalLinkProps } from './InternalLink'
 
