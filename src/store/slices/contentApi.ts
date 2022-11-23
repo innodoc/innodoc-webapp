@@ -3,7 +3,7 @@ import type { LanguageCode } from 'iso-639-1'
 import type { Root } from 'mdast'
 
 import { MAX_KEEP_UNUSED_DATA_FOR_MAX } from '#constants'
-import type { ApiCourse, Page, TransformedCourse } from '#types/api'
+import type { ApiCourse, ApiPage, Course, Page } from '#types/api'
 import { formatUrl } from '#utils/url'
 
 // /** Add section number and path information recursively */
@@ -34,9 +34,14 @@ const contentApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.INNODOC_APP_ROOT}api/course` }),
 
   endpoints: (builder) => ({
-    /** Fetch course from content server */
-    getCourse: builder.query<TransformedCourse, ApiCourse['name']>({
+    /** Fetch course info */
+    getCourse: builder.query<ApiCourse, ApiCourse['name']>({
       query: (name) => formatUrl(name),
+    }),
+
+    /** Fetch course pages */
+    getCoursePages: builder.query<ApiPage[], ApiCourse['name']>({
+      query: (name) => formatUrl(`${name}/pages`),
     }),
 
     /** Fetch content AST */
@@ -46,7 +51,7 @@ const contentApi = createApi({
 
     /** Fetch content AST for a page */
     getPageContent: builder.query<Root, PageContentFetchArgs>({
-      query: ({ locale, id }) => formatUrl(`/page/${id}`, locale),
+      query: ({ courseName, locale, pageName }) => `/${courseName}/${locale}/page/${pageName}`,
     }),
 
     /** Fetch content AST for a section */
@@ -62,8 +67,9 @@ export type ContentFetchArgs = {
 }
 
 export type PageContentFetchArgs = {
+  courseName: Course['name']
   locale: LanguageCode
-  id: Page['id']
+  pageName: Page['name']
 }
 
 export type SectionContentFetchArgs = {

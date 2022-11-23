@@ -4,7 +4,7 @@ import makeStore from '#store/makeStore'
 import { selectToc } from '#store/selectors/content/section'
 import contentApi from '#store/slices/contentApi'
 import type { SectionWithChildren } from '#types/api'
-import type { PageContextServer } from '#types/page'
+import type { PageContextServer } from '#types/pageContext'
 import { getSectionUrl } from '#utils/content'
 
 async function onBeforeRender(pageContext: PageContextServer) {

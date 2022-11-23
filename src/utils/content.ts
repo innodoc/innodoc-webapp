@@ -1,7 +1,7 @@
 import type { AnyElt, AttrList, Tree } from 'pandoc-filter'
 import type { ComponentType } from 'react'
 
-import type { Section } from '#types/api'
+import type { Section, Page } from '#types/api'
 import type { AttrObj } from '#types/common'
 
 /* Convert AST to string */
@@ -67,8 +67,8 @@ function getSectionPath(section: Section) {
 }
 
 /** Generate page URL */
-function getPageUrl(pageId: string) {
-  return `/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/${pageId}`
+function getPageUrl(pageName: Page['name']) {
+  return `/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/${pageName}`
 }
 
 /** Generate section URL */

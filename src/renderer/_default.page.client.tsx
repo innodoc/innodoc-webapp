@@ -5,7 +5,7 @@ import { hydrateRoot, type Root } from 'react-dom/client'
 
 import makeStore, { type Store } from '#store/makeStore'
 import { changeUrlWithoutLocale } from '#store/slices/uiSlice'
-import type { PageContextClient } from '#types/page'
+import type { PageContextClient } from '#types/pageContext'
 import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
 

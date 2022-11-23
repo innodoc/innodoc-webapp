@@ -1,4 +1,4 @@
-import type { PageContextServer } from '#types/page'
+import type { PageContextServer } from '#types/pageContext'
 import { extractLocale } from '#utils/url'
 
 // Extract locale on client-side navigation

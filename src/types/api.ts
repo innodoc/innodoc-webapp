@@ -5,9 +5,6 @@ import type { IconProps } from '#ui/components/common/Icon'
 
 import type { PageLinkLocation } from './common'
 
-/** Transform database to API type */
-type DbToApi<T> = CamelCasedProperties<Omit<T, 'id'>>
-
 /** Object with localized titles */
 export type LocalizedTitles = CamelCasedProperties<DbLocalizedTitles>
 
@@ -21,7 +18,7 @@ interface Titles {
 }
 
 /** Course as returned by content server */
-export type ApiCourse = DbToApi<DbCourse>
+export type ApiCourse = CamelCasedProperties<DbCourse>
 // /** Content tree of sections */
 // toc?: ReadonlyArray<ApiSection>
 
@@ -38,9 +35,9 @@ export type ApiCourse = DbToApi<DbCourse>
 // }
 
 /** Transformed course as saved in store */
-export interface TransformedCourse extends ApiCourse {
-  toc?: ReadonlyArray<TransformedSection>
-}
+// export interface TransformedCourse extends ApiCourse {
+//   toc?: ReadonlyArray<TransformedSection>
+// }
 
 /** Course as consumed by components */
 export interface Course
@@ -52,7 +49,7 @@ export interface Course
 /** Base page object */
 interface BasePage {
   /** Unique page identifier */
-  id: string
+  name: string
 
   /** Icon string */
   icon?: IconProps['name']

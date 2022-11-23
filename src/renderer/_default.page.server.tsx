@@ -23,7 +23,7 @@ import makeStore from '#store/makeStore'
 import { selectHomeLink, selectLocales } from '#store/selectors/content/course'
 import contentApi from '#store/slices/contentApi'
 import { changeCourseName, changeLocale, changeUrlWithoutLocale } from '#store/slices/uiSlice'
-import type { PageContextServer, PrepopFactory } from '#types/page'
+import type { PageContextServer, PrepopFactory } from '#types/pageContext'
 import PageShell from '#ui/components/PageShell/PageShell'
 import { replacePathPrefixes } from '#utils/content'
 import getI18n from '#utils/getI18n'
@@ -103,6 +103,7 @@ async function onBeforeRender({
   // Prepopulate store with data necessary to render page
   const prepopFactories: PrepopFactory[] = [
     (store) => store.dispatch(contentApi.endpoints.getCourse.initiate(courseName)),
+    (store) => store.dispatch(contentApi.endpoints.getCoursePages.initiate(courseName)),
     // (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_A })),
     // (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_B })),
   ]

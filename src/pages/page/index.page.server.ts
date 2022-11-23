@@ -1,19 +1,14 @@
 import { onBeforeRender as onBeforeRenderDefault } from '#renderer/_default.page.server'
-import fetchContent from '#renderer/fetchContent'
-import makeStore from '#store/makeStore'
-import { selectPages } from '#store/selectors/content/page'
-import contentApi from '#store/slices/contentApi'
-import type { PageContextServer } from '#types/page'
-import { getPageUrl } from '#utils/content'
+import type { PageContextServer } from '#types/pageContext'
 
 async function onBeforeRender(pageContext: PageContextServer) {
-  const { pageId } = pageContext.routeParams
+  const { pageName } = pageContext.routeParams
 
   return onBeforeRenderDefault({
     ...pageContext,
 
     // Pass pageId to page component
-    pageProps: { pageId },
+    pageProps: { pageName },
 
     // Pass custom prepopulation task to onBeforeRender
     pagePrepopFactories: [
@@ -24,11 +19,12 @@ async function onBeforeRender(pageContext: PageContextServer) {
 }
 
 // Generate URLs for prerendering
-async function prerender() {
-  const store = makeStore()
-  await store.dispatch(contentApi.endpoints.getCourse.initiate())
-  const pages = selectPages(store.getState())
-  return pages.map((page) => getPageUrl(page.id))
+function prerender() {
+  // const store = makeStore()
+  // await store.dispatch(contentApi.endpoints.getCourse.initiate())
+  // const pages = selectPages(store.getState())
+  // return pages.map((page) => getPageUrl(page.id))
+  return {}
 }
 
 export { onBeforeRender, prerender }

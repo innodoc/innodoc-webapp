@@ -1,38 +1,48 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-import type { Page } from '#types/api'
+import type { RootState } from '#store/makeStore'
+import contentApi from '#store/slices/contentApi'
+import type { ApiCourse, Page } from '#types/api'
 
-import { selectCourse } from './course'
+import { selectCurrentCourse } from './course'
 import { selectTranslateFn } from './i18n'
 
-/** Select pages */
-export const selectPages = createSelector([selectCourse, selectTranslateFn], (course, t) => {
-  return []
-  // if (course?.pages === undefined) {
-  //   return []
-  // }
-  // return course.pages.map(
-  //   (page) =>
-  //     ({
-  //       ...page,
-  //       shortTitle: t(page.shortTitle),
-  //       title: t(page.title),
-  //     } as Page)
-  // )
-})
+/** Select translated course pages by course name */
+const selectCoursePages = createSelector(
+  [
+    (state: RootState, name: ApiCourse['name']) =>
+      contentApi.endpoints.getCoursePages.select(name)(state),
+    selectTranslateFn,
+  ],
+  (result, t) =>
+    result.data !== undefined
+      ? result.data.map<Page>((page) => ({
+          ...page,
+          shortTitle: page.shortTitle !== undefined ? t(page.shortTitle) : undefined,
+          title: t(page.title) ?? '',
+        }))
+      : []
+)
+
+/** Select translated pages of current course */
+const selectCurrentCoursePages = createSelector(
+  [(state: RootState) => state, selectCurrentCourse],
+  (state, currentCourse) =>
+    currentCourse !== undefined ? selectCoursePages(state, currentCourse.name) : []
+)
 
 /** Select main nav pages */
-export const selectNavPages = createSelector([selectPages], (pages) =>
+export const selectNavPages = createSelector([selectCurrentCoursePages], (pages) =>
   pages.filter((page) => page.linked?.includes('nav'))
 )
 
 /** Select footer pages */
-export const selectFooterPages = createSelector([selectPages], (pages) =>
+export const selectFooterPages = createSelector([selectCurrentCoursePages], (pages) =>
   pages.filter((page) => page.linked?.includes('footer'))
 )
 
 /** Select page */
-export const selectPageById = createSelector(
-  [selectPages, (_, pageId: Page['id'] | undefined) => pageId],
-  (pages, pageId) => pages.find((page) => page.id === pageId)
+export const selectPageByName = createSelector(
+  [selectCurrentCoursePages, (_, pageName: Page['name'] | undefined) => pageName],
+  (pages, pageName) => pages.find((page) => page.name === pageName)
 )

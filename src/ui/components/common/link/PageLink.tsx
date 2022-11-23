@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 
 import type { RootState } from '#store/makeStore'
-import { selectPageById } from '#store/selectors/content/page'
+import { selectPageByName } from '#store/selectors/content/page'
 import type { Page } from '#types/api'
 import InlineError from '#ui/components/common/error/InlineError'
 import Icon from '#ui/components/common/Icon'
@@ -16,10 +16,10 @@ const PageLinkPage = forwardRef<HTMLAnchorElement, PageLinkPageProps>(function P
   ref
 ) {
   if (page === undefined) return null
-  const { id, icon, shortTitle, title } = page
+  const { name, icon, shortTitle, title } = page
 
   return (
-    <InternalLink to={getPageUrl(id)} ref={ref} {...other}>
+    <InternalLink to={getPageUrl(name)} ref={ref} {...other}>
       {children || (
         <>
           {icon !== undefined ? <Icon name={icon} /> : null}
@@ -30,38 +30,37 @@ const PageLinkPage = forwardRef<HTMLAnchorElement, PageLinkPageProps>(function P
   )
 })
 
-type PageLinkPageProps = Omit<PageLinkProps, 'page' | 'pageId'> & {
+type PageLinkPageProps = Omit<PageLinkProps, 'page' | 'pageName'> & {
   page: Page
 }
 
-/** PageLinkPageId takes `pageId` */
-const PageLinkPageId = forwardRef<HTMLAnchorElement, PageLinkPageIdProps>(function PageLinkPageId(
-  { pageId: pageIdFull, ...other },
-  ref
-) {
-  const [pageId, hash] = pageIdFull.split('#')
-  const selectPage = (state: RootState) => selectPageById(state, pageId)
-  const page = useSelector(selectPage)
-  if (page === undefined) {
-    return <InlineError>PageLink: Page ID &quot;{pageId}&quot; not found!</InlineError>
+/** PageLinkPageName takes `pageName` */
+const PageLinkPageName = forwardRef<HTMLAnchorElement, PageLinkPageNameProps>(
+  function PageLinkPageName({ pageName: pageNameFull, ...other }, ref) {
+    const [pageName, hash] = pageNameFull.split('#')
+    const selectPage = (state: RootState) => selectPageByName(state, pageName)
+    const page = useSelector(selectPage)
+    if (page === undefined) {
+      return <InlineError>PageLink: Page &quot;{pageName}&quot; not found!</InlineError>
+    }
+
+    return <PageLinkPage hash={hash} ref={ref} page={page} {...other} />
   }
+)
 
-  return <PageLinkPage hash={hash} ref={ref} page={page} {...other} />
-})
-
-type PageLinkPageIdProps = Omit<PageLinkProps, 'page' | 'pageId'> & {
-  pageId: Page['id']
+type PageLinkPageNameProps = Omit<PageLinkProps, 'page' | 'pageName'> & {
+  pageName: Page['name']
 }
 
-/** PageLink takes either `page` or `pageId` */
+/** PageLink takes either `page` or `pageName` */
 const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
-  { page, pageId, ...other },
+  { page, pageName, ...other },
   ref
 ) {
-  if (page !== undefined && pageId !== undefined) {
+  if (page !== undefined && pageName !== undefined) {
     return (
       <InlineError>
-        PageLink: Set either &quot;page&quot; or &quot;pageId&quot; prop, not both!
+        PageLink: Set either &quot;page&quot; or &quot;pageName&quot; prop, not both!
       </InlineError>
     )
   }
@@ -70,19 +69,19 @@ const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
     return <PageLinkPage ref={ref} page={page} {...other} />
   }
 
-  if (pageId !== undefined) {
-    return <PageLinkPageId ref={ref} pageId={pageId} {...other} />
+  if (pageName !== undefined) {
+    return <PageLinkPageName ref={ref} pageName={pageName} {...other} />
   }
 
   return (
-    <InlineError>PageLink: Needs either &quot;page&quot; or &quot;pageId&quot; prop!</InlineError>
+    <InlineError>PageLink: Needs either &quot;page&quot; or &quot;pageName&quot; prop!</InlineError>
   )
 })
 
 type PageLinkProps = Omit<InternalLinkProps, 'to'> & {
   preferShortTitle?: boolean
   page?: Page
-  pageId?: Page['id']
+  pageName?: Page['name']
 }
 
 export default PageLink

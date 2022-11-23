@@ -48,7 +48,7 @@ export type PageContextServer = Omit<PageContextBuiltIn, 'Page'> & {
 /** Props to render a page */
 export type PageProps = {
   /** Page Id */
-  pageId?: Page['id']
+  pageName?: Page['name']
 
   /** Section path */
   sectionPath?: string
