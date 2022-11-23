@@ -2,8 +2,8 @@ import express, { type Express } from 'express'
 import localeMiddleware from 'locale'
 
 import apiRouter from './api/apiRouter'
+import config, { type ServerConfig } from './config'
 import frontendRouter from './frontendRouter'
-import getConfig, { type ServerConfig } from './getConfig'
 import { isErrnoException } from './utils'
 
 void startServer()
@@ -23,7 +23,7 @@ async function setupServeStatic(app: Express, config: ServerConfig) {
   }
 }
 
-async function setupDevServer(app: Express, config: ServerConfig) {
+async function setupViteServer(app: Express, config: ServerConfig) {
   const vite = await import('vite')
 
   const viteServer = await vite.createServer({
@@ -34,19 +34,19 @@ async function setupDevServer(app: Express, config: ServerConfig) {
 }
 
 async function startServer() {
-  const config = await getConfig()
   const app = express()
 
-  app.use(localeMiddleware(config.manifest.locales, config.manifest.locales[0]))
+  // Determine user locale from request headers
+  app.use(localeMiddleware())
 
   if (config.isProduction) {
     await setupServeStatic(app, config)
-  } else {
-    await setupDevServer(app, config)
   }
 
-  app.use('/api', apiRouter(config))
-  app.use(frontendRouter(config))
+  await setupViteServer(app, config)
+
+  app.use('/api', apiRouter)
+  app.use(frontendRouter)
 
   app.listen({ host: config.host, port: config.port })
   console.log(`Server running at http://${config.host}:${config.port}`)

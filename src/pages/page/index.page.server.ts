@@ -17,8 +17,8 @@ async function onBeforeRender(pageContext: PageContextServer) {
 
     // Pass custom prepopulation task to onBeforeRender
     pagePrepopFactories: [
-      (store, locale) =>
-        fetchContent(store, contentApi.endpoints.getPageContent.initiate({ locale, id: pageId })),
+      // (store, locale) =>
+      //   fetchContent(store, contentApi.endpoints.getPageContent.initiate({ locale, id: pageId })),
     ],
   })
 }
@@ -26,7 +26,7 @@ async function onBeforeRender(pageContext: PageContextServer) {
 // Generate URLs for prerendering
 async function prerender() {
   const store = makeStore()
-  await store.dispatch(contentApi.endpoints.getManifest.initiate())
+  await store.dispatch(contentApi.endpoints.getCourse.initiate())
   const pages = selectPages(store.getState())
   return pages.map((page) => getPageUrl(page.id))
 }

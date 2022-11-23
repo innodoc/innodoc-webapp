@@ -1,9 +1,9 @@
 import { createSelector } from '@reduxjs/toolkit'
 
 import { selectUrlWithoutLocale } from '#store/selectors/ui'
-import { selectManifest } from '#store/slices/contentApi'
 import type { SectionWithChildren, SectionWithoutChildren, TransformedSection } from '#types/api'
 
+import { selectCourse } from './course'
 import { selectTranslateFn, type TranslateFn } from './i18n'
 
 /** Translate a section */
@@ -29,8 +29,8 @@ function removeChildren(section: SectionWithChildren): SectionWithoutChildren {
 }
 
 /** Select section tree structure with fields translated */
-export const selectToc = createSelector([selectManifest, selectTranslateFn], (manifest, t) =>
-  manifest?.toc?.map((section) => translateSection(t, section))
+export const selectToc = createSelector([selectCourse, selectTranslateFn], (course, t) =>
+  course?.toc?.map((section) => translateSection(t, section))
 )
 
 /** Select current section path */

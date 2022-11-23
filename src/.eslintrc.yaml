@@ -10,6 +10,7 @@ overrides:
   - files:
       - pages/**/*.+(ts|tsx)
       - renderer/_+(default|error).page*.+(ts|tsx)
+      - server/database/migrations/*.ts
     rules:
       filenames/match-exported: off
       filenames/match-regex: off

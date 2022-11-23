@@ -20,7 +20,7 @@ const { initiate: getContent } = contentApi.endpoints.getContent
 beforeEach(async () => {
   store = makeStore()
   i18n = await getI18n(I18NextFsBackend, {}, 'cimode', store)
-  await store.dispatch(contentApi.endpoints.getManifest.initiate())
+  await store.dispatch(contentApi.endpoints.getCourse.initiate())
   await fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_A }))
   await fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_B }))
 })

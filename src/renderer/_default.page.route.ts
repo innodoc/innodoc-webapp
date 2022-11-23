@@ -1,4 +1,3 @@
-import locales from '#build/locales.json'
 import type { PageContextServer } from '#types/page'
 import { extractLocale } from '#utils/url'
 
@@ -6,7 +5,7 @@ import { extractLocale } from '#utils/url'
 function onBeforeRoute({ locale, urlOriginal }: PageContextServer): {
   pageContext: Partial<PageContextServer>
 } {
-  const { urlWithoutLocale, locale: extractedLocale } = extractLocale(urlOriginal, locales, locale)
+  const { urlWithoutLocale, locale: extractedLocale } = extractLocale(urlOriginal, locale)
   locale = extractedLocale
 
   return {

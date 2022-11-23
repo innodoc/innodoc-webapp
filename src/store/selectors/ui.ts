@@ -1,9 +1,14 @@
-import { createSelector } from '@reduxjs/toolkit'
+import type { RootState } from '#store/makeStore'
+import uiSlice from '#store/slices/uiSlice'
 
-import { selectUi } from '#store/slices/uiSlice'
+/** Select ui slice */
+const selectUi = (state: RootState) => state[uiSlice.name]
 
-/** Select the current locale */
-export const selectLocale = createSelector(selectUi, (ui) => ui.locale)
+/** Select current course name */
+export const selectCourseName = (state: RootState) => selectUi(state).courseName
+
+/** Select current locale */
+export const selectLocale = (state: RootState) => selectUi(state).locale
 
 /** Select url info */
-export const selectUrlWithoutLocale = createSelector(selectUi, (ui) => ui.urlWithoutLocale)
+export const selectUrlWithoutLocale = (state: RootState) => selectUi(state).urlWithoutLocale

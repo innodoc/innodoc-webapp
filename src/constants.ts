@@ -24,13 +24,25 @@ type BuiltinPage = {
   title: string
 }
 
-/** Filename for footer A content */
+/** Fragment name for footer A */
 export const CONTENT_NAME_FOOTER_A = 'footer_a'
-/** Filename for footer B content */
+/** Fragment name for footer B */
 export const CONTENT_NAME_FOOTER_B = 'footer_b'
+
+/** Content fragment types */
+export const CONTENT_FRAGMENT_TYPES = [CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B] as const
+
+/** Section types */
+export const SECTION_TYPES = ['regular', 'test'] as const
+
+/** Location in the layout where page links can appear */
+export const PAGE_LINK_LOCACTIONS = ['nav', 'footer'] as const
 
 /**
  * Content should never be refetched (use highest possible value)
  * https://github.com/reduxjs/redux-toolkit/issues/2535
  */
 export const MAX_KEEP_UNUSED_DATA_FOR_MAX = Math.floor((2 ** 31 - 1) / 1000)
+
+/** Default required score to pass a test */
+export const DEFAULT_MIN_SCORE = 90

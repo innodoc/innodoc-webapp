@@ -1,8 +1,8 @@
 import { transform } from '@svgr/core'
 
-import type { ApiManifest } from '#types/api'
+import type { ApiCourse } from '#types/api'
 
-async function getLogo(manifest: ApiManifest): Promise<string> {
+async function getLogo(manifest: ApiCourse): Promise<string> {
   const contentRoot = process.env.INNODOC_CONTENT_ROOT
   if (contentRoot === undefined) {
     throw new Error('You need to set the env variable INNODOC_CONTENT_ROOT.')

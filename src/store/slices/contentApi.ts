@@ -1,49 +1,42 @@
-import { createSelector } from '@reduxjs/toolkit'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import type { LanguageCode } from 'iso-639-1'
 import type { Root } from 'mdast'
 
 import { MAX_KEEP_UNUSED_DATA_FOR_MAX } from '#constants'
-import type {
-  ApiManifest,
-  ApiSection,
-  Page,
-  TransformedManifest,
-  TransformedSection,
-} from '#types/api'
+import type { ApiCourse, Page, TransformedCourse } from '#types/api'
 import { formatUrl } from '#utils/url'
 
-/** Add section number and path information recursively */
-const transformSection = (
-  section: ApiSection,
-  parents: TransformedSection['parents'],
-  number: TransformedSection['number']
-): TransformedSection => ({
-  ...section,
-  number,
-  parents,
-  children: section?.children?.map((child, idx) =>
-    transformSection(child, [...parents, section.id], [...number, idx])
-  ),
-})
+// /** Add section number and path information recursively */
+// const transformSection = (
+//   section: ApiSection,
+//   parents: TransformedSection['parents'],
+//   number: TransformedSection['number']
+// ): TransformedSection => ({
+//   ...section,
+//   number,
+//   parents,
+//   children: section?.children?.map((child, idx) =>
+//     transformSection(child, [...parents, section.id], [...number, idx])
+//   ),
+// })
 
-/** Transform API response for `Manifest` */
-const transformResponseManifest = (response: ApiManifest): TransformedManifest => ({
-  ...response,
-  toc: response?.toc?.map((section, idx) => transformSection(section, [], [idx])),
-})
+// /** Transform API response for `Course` */
+// const transformResponseCourse = (response: ApiCourse): TransformedCourse => ({
+//   ...response,
+//   toc: response?.toc?.map((section, idx) => transformSection(section, [], [idx])),
+// })
 
 const contentApi = createApi({
   reducerPath: 'contentApi',
 
   keepUnusedDataFor: MAX_KEEP_UNUSED_DATA_FOR_MAX,
 
-  baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.INNODOC_APP_ROOT}api/content` }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.INNODOC_APP_ROOT}api/course` }),
 
   endpoints: (builder) => ({
-    /** Fetch manifest from content server */
-    getManifest: builder.query<TransformedManifest, void>({
-      query: () => 'manifest',
-      transformResponse: transformResponseManifest,
+    /** Fetch course from content server */
+    getCourse: builder.query<TransformedCourse, ApiCourse['name']>({
+      query: (name) => formatUrl(name),
     }),
 
     /** Fetch content AST */
@@ -64,24 +57,19 @@ const contentApi = createApi({
 })
 
 export type ContentFetchArgs = {
-  locale: string
+  locale: LanguageCode
   path: string
 }
 
 export type PageContentFetchArgs = {
-  locale: string
+  locale: LanguageCode
   id: Page['id']
 }
 
 export type SectionContentFetchArgs = {
-  locale: string
+  locale: LanguageCode
   path: string
 }
-
-export const selectManifest = createSelector(
-  contentApi.endpoints.getManifest.select(),
-  (result) => result.data
-)
 
 export const { useGetContentQuery, useGetPageContentQuery, useGetSectionContentQuery } = contentApi
 export default contentApi

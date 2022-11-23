@@ -68,6 +68,7 @@ overrides:
   # Filename exceptions
   - files:
       - vite.config.ts
+      - knexfile.ts
       - '**/*.d.ts'
     rules:
       filenames/match-exported: off

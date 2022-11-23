@@ -1,46 +1,45 @@
 import { type RequestHandler, Router } from 'express'
+import type { LanguageCode } from 'iso-639-1'
 import { renderPage } from 'vite-plugin-ssr'
 
-import type { Locale } from '#types/common'
+import type { ApiCourse } from '#types/api'
 import { extractLocale, formatUrl } from '#utils/url'
 
-import type { ServerConfig } from './getConfig'
+const frontendRouter = Router().get('*', (async (req, res, next) => {
+  const url = req.originalUrl
 
-function frontendRouter(config: ServerConfig) {
-  return Router().get('*', (async (req, res, next) => {
-    const url = req.originalUrl
+  // Extract locale from URL, fallback to browser Accept-Language
+  const { locale, urlWithoutLocale } = extractLocale(url, req.rawLocale.language as LanguageCode)
+  const pageContextInit: PageContextInit = {
+    locale,
+    urlOriginal: urlWithoutLocale,
+    courseName: 'innodoc', // TODO: extract from domain name, url path and fallback?
+  }
 
-    // Extract locale from URL, fallback to browser Accept-Language
-    const { locale, urlWithoutLocale } = extractLocale(url, config.manifest.locales, req.locale)
-    const pageContextInit: PageContextInit = {
-      locale,
-      urlOriginal: urlWithoutLocale,
-    }
+  // Ensure url path is prefixed with locale
+  if (url.split('/')[1] !== locale) {
+    return res.redirect(307, formatUrl(url, locale))
+  }
 
-    // Ensure url path is prefixed with locale
-    if (url.split('/')[1] !== locale) {
-      return res.redirect(307, formatUrl(url, locale))
-    }
+  // Render page
+  const pageContext = await renderPage(pageContextInit)
 
-    // Render page
-    const pageContext = await renderPage(pageContextInit)
+  // Honor redirection directive from app
+  if (pageContext.redirectTo !== undefined) {
+    return res.redirect(307, pageContext.redirectTo)
+  }
 
-    // Honor redirection directive from app
-    if (pageContext.redirectTo !== undefined) {
-      return res.redirect(307, pageContext.redirectTo)
-    }
+  if (!pageContext.httpResponse) {
+    return next()
+  }
 
-    if (!pageContext.httpResponse) {
-      return next()
-    }
-
-    const { body, statusCode, contentType } = pageContext.httpResponse
-    return res.status(statusCode).type(contentType).send(body)
-  }) as RequestHandler) // workaround until https://github.com/DefinitelyTyped/DefinitelyTyped/issues/50871 is resolved
-}
+  const { body, statusCode, contentType } = pageContext.httpResponse
+  return res.status(statusCode).type(contentType).send(body)
+}) as RequestHandler) // workaround until https://github.com/DefinitelyTyped/DefinitelyTyped/issues/50871 is resolved
 
 type PageContextInit = {
-  locale: Locale
+  locale: LanguageCode
+  courseName: ApiCourse['name']
   urlOriginal: string
   redirectTo?: string
 }

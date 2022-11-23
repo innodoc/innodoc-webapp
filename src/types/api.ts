@@ -1,15 +1,15 @@
+import type { CamelCasedProperties } from 'type-fest'
+
+import type { DbCourse, DbLocalizedTitles } from '#server/database/types'
 import type { IconProps } from '#ui/components/common/Icon'
 
-import type { Locale, LocalizedString, PageLinkLocation } from './common'
+import type { PageLinkLocation } from './common'
+
+/** Transform database to API type */
+type DbToApi<T> = CamelCasedProperties<Omit<T, 'id'>>
 
 /** Object with localized titles */
-interface LocalizedTitles {
-  /** Short localized version of the title for places with limited space */
-  shortTitle?: LocalizedString
-
-  /** Localized title */
-  title: LocalizedString
-}
+export type LocalizedTitles = CamelCasedProperties<DbLocalizedTitles>
 
 /** Object with titles as `string` value */
 interface Titles {
@@ -20,53 +20,31 @@ interface Titles {
   title: string
 }
 
-/** Course manifest as returned by content server */
-export interface ApiManifest extends LocalizedTitles {
-  /** Course description */
-  description?: LocalizedString
+/** Course as returned by content server */
+export type ApiCourse = DbToApi<DbCourse>
+// /** Content tree of sections */
+// toc?: ReadonlyArray<ApiSection>
 
-  /** Course locales */
-  locales: ReadonlyArray<Locale>
+// /** Index terms */
+// indexTerms: {
+//   [locale in LanguageCode]: {
+//     [termId: string]: [string, ReadonlyArray<IndexTermOccurance>]
+//   }
+// }
 
-  /** Course home link */
-  homeLink: string
+// /** Content boxes per sections */
+// boxes: {
+//   [sectionPath: string]: ReadonlyArray<Box>
+// }
 
-  /** Course logo URL or identifier */
-  logo?: string
-
-  /** Custom course pages */
-  pages?: ReadonlyArray<ApiPage>
-
-  /** Minimal score a user has to achieve for a test to be passed */
-  minScore?: number
-
-  /** Custom MathJax library options */
-  mathjax?: MathJaxOptions
-
-  /** Content tree of sections */
-  toc?: ReadonlyArray<ApiSection>
-
-  /** Index terms */
-  indexTerms: {
-    [locale: Locale]: {
-      [termId: string]: [string, ReadonlyArray<IndexTermOccurance>]
-    }
-  }
-
-  /** Content boxes per sections */
-  boxes: {
-    [sectionPath: string]: ReadonlyArray<Box>
-  }
-}
-
-/** Transformed course manifest as saved in store */
-export interface TransformedManifest extends ApiManifest {
+/** Transformed course as saved in store */
+export interface TransformedCourse extends ApiCourse {
   toc?: ReadonlyArray<TransformedSection>
 }
 
-/** Manifest as consumed by components */
-export interface Manifest
-  extends Omit<TransformedManifest, 'description' | 'shortTitle' | 'title'>,
+/** Course as consumed by components */
+export interface Course
+  extends Omit<TransformedCourse, 'description' | 'shortTitle' | 'title'>,
     Titles {
   description?: string
 }

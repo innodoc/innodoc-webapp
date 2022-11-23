@@ -1,18 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import type { LanguageCode } from 'iso-639-1'
 
-import type { RootState } from '#store/makeStore'
-import type { Locale } from '#types/common'
+import type { ApiCourse } from '#types/api'
 
 interface UiSliceState {
+  /** Current course name */
+  courseName: ApiCourse['name'] | null
+
   /** Current locale */
-  locale: Locale
+  locale: LanguageCode
 
   /** Current URL path without locale prefix */
   urlWithoutLocale: string | null
 }
 
 const initialState: UiSliceState = {
+  courseName: null,
   locale: 'en',
   urlWithoutLocale: null,
 }
@@ -22,8 +26,13 @@ const uiSlice = createSlice({
   initialState,
 
   reducers: {
+    /** Change current course */
+    changeCourseName(state, action: PayloadAction<ApiCourse['name']>) {
+      state.courseName = action.payload
+    },
+
     /** Change locale */
-    changeLocale(state, action: PayloadAction<Locale>) {
+    changeLocale(state, action: PayloadAction<LanguageCode>) {
       state.locale = action.payload
     },
 
@@ -34,7 +43,5 @@ const uiSlice = createSlice({
   },
 })
 
-export const selectUi = (state: RootState) => state[uiSlice.name]
-
-export const { changeLocale, changeUrlWithoutLocale } = uiSlice.actions
+export const { changeCourseName, changeLocale, changeUrlWithoutLocale } = uiSlice.actions
 export default uiSlice

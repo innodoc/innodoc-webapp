@@ -44,7 +44,7 @@ function getUrls(sections: SectionWithChildren[], prefix: string[] = []): string
 
 async function prerender() {
   const store = makeStore()
-  await store.dispatch(contentApi.endpoints.getManifest.initiate())
+  await store.dispatch(contentApi.endpoints.getCourse.initiate())
   const toc = selectToc(store.getState())
   return toc !== undefined ? getUrls(toc) : []
 }

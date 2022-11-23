@@ -18,18 +18,18 @@ import '@fontsource/lato/700-italic.css'
 // KaTeX CSS
 import 'katex/dist/katex.min.css'
 
-import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '#constants'
+// import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '#constants'
 import makeStore from '#store/makeStore'
 import { selectHomeLink, selectLocales } from '#store/selectors/content/course'
 import contentApi from '#store/slices/contentApi'
-import { changeLocale, changeUrlWithoutLocale } from '#store/slices/uiSlice'
+import { changeCourseName, changeLocale, changeUrlWithoutLocale } from '#store/slices/uiSlice'
 import type { PageContextServer, PrepopFactory } from '#types/page'
 import PageShell from '#ui/components/PageShell/PageShell'
 import { replacePathPrefixes } from '#utils/content'
 import getI18n from '#utils/getI18n'
 import { formatUrl } from '#utils/url'
 
-import fetchContent from './fetchContent'
+// import fetchContent from './fetchContent'
 import renderToHtml from './renderToHtml'
 
 // Workaround to make compatible with Node ESM and vite loaders
@@ -51,12 +51,12 @@ function getI18nBackendOpts() {
 const passToClient = ['locale', 'preloadedState', 'pageProps']
 
 /** Queries needed by all pages */
-const { initiate: getContent } = contentApi.endpoints.getContent
-const commonPrepopFactories: PrepopFactory[] = [
-  (store) => store.dispatch(contentApi.endpoints.getManifest.initiate()),
-  (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_A })),
-  (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_B })),
-]
+// const { initiate: getContent } = contentApi.endpoints.getContent
+// const commonPrepopFactories: PrepopFactory[] = [
+//   (store) => store.dispatch(contentApi.endpoints.getCourse.initiate({ name: 'innodoc' })),
+//   (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_A })),
+//   (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_B })),
+// ]
 
 function render({ emotionStyleTags, helmet, pageHtml, redirectTo }: PageContextServer) {
   if (redirectTo !== undefined) {
@@ -70,21 +70,22 @@ function render({ emotionStyleTags, helmet, pageHtml, redirectTo }: PageContextS
   )
 
   return escapeInject`<!DOCTYPE html>
-    <html ${dangerouslySkipEscape(helmet.htmlAttributes.toString())}>
+    <html ${dangerouslySkipEscape(helmet?.htmlAttributes?.toString() ?? '')}>
       <head>
-        ${dangerouslySkipEscape(helmet.title.toString())}
-        ${dangerouslySkipEscape(helmet.meta.toString())}
-        ${dangerouslySkipEscape(helmet.link.toString())}
-        ${dangerouslySkipEscape(emotionStyleTags)}
+        ${dangerouslySkipEscape(helmet?.title?.toString() ?? '')}
+        ${dangerouslySkipEscape(helmet?.meta?.toString() ?? '')}
+        ${dangerouslySkipEscape(helmet?.link?.toString() ?? '')}
+        ${dangerouslySkipEscape(emotionStyleTags ?? '')}
       </head>
-      <body ${dangerouslySkipEscape(helmet.bodyAttributes.toString())}>
+      <body ${dangerouslySkipEscape(helmet?.bodyAttributes?.toString() ?? '')}>
         ${dangerouslySkipEscape(initColorSchemeScript)}
-        <div id="root">${dangerouslySkipEscape(pageHtml)}</div>
+        <div id="root">${dangerouslySkipEscape(pageHtml ?? '')}</div>
       </body>
     </html>`
 }
 
 async function onBeforeRender({
+  courseName,
   locale,
   Page,
   pageProps = {},
@@ -95,12 +96,18 @@ async function onBeforeRender({
   const store = makeStore()
 
   // Seed initial data to store
+  store.dispatch(changeCourseName(courseName))
   store.dispatch(changeUrlWithoutLocale(urlPathname))
   store.dispatch(changeLocale(locale))
 
   // Prepopulate store with data necessary to render page
+  const prepopFactories: PrepopFactory[] = [
+    (store) => store.dispatch(contentApi.endpoints.getCourse.initiate(courseName)),
+    // (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_A })),
+    // (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_B })),
+  ]
   await Promise.all(
-    [...commonPrepopFactories, ...pagePrepopFactories].map((factory) => factory(store, locale))
+    [...prepopFactories, ...pagePrepopFactories].map((factory) => factory(store, locale))
   )
 
   // Assert we received locales from manifest
@@ -173,7 +180,7 @@ async function onBeforePrerender(globalContext: {
 }) {
   // Get course locales
   const store = makeStore()
-  await store.dispatch(contentApi.endpoints.getManifest.initiate())
+  await store.dispatch(contentApi.endpoints.getCourse.initiate())
   const locales = selectLocales(store.getState())
 
   // For each page add locale pages

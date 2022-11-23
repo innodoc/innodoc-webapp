@@ -7,7 +7,7 @@ export type TranslateFn = (locString?: LocalizedString) => string | undefined
 
 /** Select a translation function for localized content strings */
 export const selectTranslateFn = createSelector(
-  selectLocale,
+  [selectLocale],
   (locale): TranslateFn =>
     (locString) =>
       locString?.[locale]
