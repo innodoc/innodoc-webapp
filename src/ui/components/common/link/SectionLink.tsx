@@ -5,7 +5,7 @@ import { selectSectionByPath } from '#store/selectors/content/section'
 import type { Section } from '#types/api'
 import InlineError from '#ui/components/common/error/InlineError'
 import { useSelector } from '#ui/hooks/store'
-import { formatSectionTitle, getSectionPath, getSectionUrl } from '#utils/content'
+import { formatSectionTitle, getSectionUrl } from '#utils/content'
 
 import InternalLink, { type InternalLinkProps } from './InternalLink'
 
@@ -15,7 +15,7 @@ const SectionLinkSection = forwardRef<HTMLAnchorElement, SectionLinkSectionProps
     if (section === undefined) return null
 
     return (
-      <InternalLink to={getSectionUrl(getSectionPath(section))} ref={ref} {...other}>
+      <InternalLink to={getSectionUrl(section.path)} ref={ref} {...other}>
         {children || <>{formatSectionTitle(section, preferShortTitle)}</>}
       </InternalLink>
     )

@@ -1,9 +1,9 @@
 import type { LanguageCode } from 'iso-639-1'
 
-import type { LocalizedString, DateISO8601, PageLinkLocation } from '#types/common'
+import type { LocalizedString, DateISO8601, PageLinkLocation, SectionType } from '#types/common'
 import type { IconProps } from '#ui/components/common/Icon'
 
-interface BaseModel {
+export interface BaseModel {
   /** Primary key */
   id: number
 
@@ -57,4 +57,22 @@ export interface DbPage extends BaseModel, DbLocalizedTitles {
 
   /** Location in the page layout where a link should appear */
   linked?: PageLinkLocation[]
+}
+
+/** Section object for database */
+export interface DbSection extends BaseModel, DbLocalizedTitles {
+  /** Section path */
+  path: string
+
+  /** Course ID */
+  course_id: number
+
+  /** Parent path */
+  parent: string | null
+
+  /** Section type */
+  type: SectionType
+
+  /** Order in table of contents */
+  order: number
 }

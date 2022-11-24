@@ -1,10 +1,30 @@
 import { createSelector } from '@reduxjs/toolkit'
 
+import type { RootState } from '#store/makeStore'
 import { selectUrlWithoutLocale } from '#store/selectors/ui'
-import type { SectionWithChildren, SectionWithoutChildren, TransformedSection } from '#types/api'
+import contentApi from '#store/slices/contentApi'
+import type { Section } from '#types/api'
 
-import { selectCourse } from './course'
-import { selectTranslateFn, type TranslateFn } from './i18n'
+import { selectCourse, selectCurrentCourse } from './course'
+import { selectTranslateFn, translateTitles, type TranslateFn } from './i18n'
+
+/** Select translated sections of current course */
+const selectCourseSections = createSelector(
+  [(state: RootState) => state, selectCurrentCourse, selectTranslateFn],
+  (state, course, t) => {
+    if (course === undefined) return []
+    const { data } = contentApi.endpoints.getCourseSections.select(course.name)(state)
+    return data !== undefined ? translateTitles(data, t) : []
+  }
+)
+
+/** Select sections by parent path */
+export const selectSectionsByParent = createSelector(
+  [selectCourseSections, (state: RootState, parent: Section['parent']) => parent],
+  (sections, parent) => sections.filter((section) => section.parent === parent)
+)
+
+/** TODO OLD STUFF BELOW */
 
 /** Translate a section */
 function translateSection(t: TranslateFn, section: TransformedSection): SectionWithChildren {

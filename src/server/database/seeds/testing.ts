@@ -1,6 +1,6 @@
 import type { Knex } from 'knex'
 
-import type { DbCourse, DbPage } from '#server/database/types'
+import type { DbCourse, DbPage, DbSection } from '#server/database/types'
 
 export async function seed(knex: Knex) {
   try {
@@ -91,6 +91,138 @@ export async function seed(knex: Knex) {
             type: 'root',
             children: [
               { type: 'paragraph', children: [{ type: 'text', value: "Yep, it's working!" }] },
+            ],
+          }),
+          locale: 'en',
+        },
+      ])
+
+      // Section 1
+
+      const [{ id: section1Id }] = await trx<DbSection>('sections').insert(
+        [{ path: 'section1', course_id: courseId, order: 0 }],
+        ['id']
+      )
+      await trx('sections_title_trans').insert([
+        { section_id: section1Id, value: 'Section 1', locale: 'de' },
+        { section_id: section1Id, value: 'Section 1', locale: 'en' },
+      ])
+      await trx('sections_content_trans').insert([
+        {
+          section_id: section1Id,
+          value: JSON.stringify({
+            type: 'root',
+            children: [
+              { type: 'paragraph', children: [{ type: 'text', value: 'Section 1 content de' }] },
+            ],
+          }),
+          locale: 'de',
+        },
+        {
+          section_id: section1Id,
+          value: JSON.stringify({
+            type: 'root',
+            children: [
+              { type: 'paragraph', children: [{ type: 'text', value: 'Section 1 content en' }] },
+            ],
+          }),
+          locale: 'en',
+        },
+      ])
+
+      // Section 1.1
+
+      const [{ id: section11Id }] = await trx<DbSection>('sections').insert(
+        [{ path: 'section1.section1', course_id: courseId, order: 0 }],
+        ['id']
+      )
+      await trx('sections_title_trans').insert([
+        { section_id: section11Id, value: 'Section 1.1', locale: 'de' },
+        { section_id: section11Id, value: 'Section 1.1', locale: 'en' },
+      ])
+      await trx('sections_content_trans').insert([
+        {
+          section_id: section11Id,
+          value: JSON.stringify({
+            type: 'root',
+            children: [
+              { type: 'paragraph', children: [{ type: 'text', value: 'Section 1.1 content de' }] },
+            ],
+          }),
+          locale: 'de',
+        },
+        {
+          section_id: section11Id,
+          value: JSON.stringify({
+            type: 'root',
+            children: [
+              { type: 'paragraph', children: [{ type: 'text', value: 'Section 1.1 content en' }] },
+            ],
+          }),
+          locale: 'en',
+        },
+      ])
+
+      // Section 1.2
+
+      const [{ id: section12Id }] = await trx<DbSection>('sections').insert(
+        [{ path: 'section1.section2', course_id: courseId, order: 1 }],
+        ['id']
+      )
+      await trx('sections_title_trans').insert([
+        { section_id: section12Id, value: 'Section 1.2', locale: 'de' },
+        { section_id: section12Id, value: 'Section 1.2', locale: 'en' },
+      ])
+      await trx('sections_content_trans').insert([
+        {
+          section_id: section12Id,
+          value: JSON.stringify({
+            type: 'root',
+            children: [
+              { type: 'paragraph', children: [{ type: 'text', value: 'Section 1.2 content de' }] },
+            ],
+          }),
+          locale: 'de',
+        },
+        {
+          section_id: section12Id,
+          value: JSON.stringify({
+            type: 'root',
+            children: [
+              { type: 'paragraph', children: [{ type: 'text', value: 'Section 1.2 content en' }] },
+            ],
+          }),
+          locale: 'en',
+        },
+      ])
+
+      // Section 2
+
+      const [{ id: section2Id }] = await trx<DbSection>('sections').insert(
+        [{ path: 'section2', course_id: courseId, order: 1 }],
+        ['id']
+      )
+      await trx('sections_title_trans').insert([
+        { section_id: section2Id, value: 'Section 2', locale: 'de' },
+        { section_id: section2Id, value: 'Section 2', locale: 'en' },
+      ])
+      await trx('sections_content_trans').insert([
+        {
+          section_id: section2Id,
+          value: JSON.stringify({
+            type: 'root',
+            children: [
+              { type: 'paragraph', children: [{ type: 'text', value: 'Section 2 content de' }] },
+            ],
+          }),
+          locale: 'de',
+        },
+        {
+          section_id: section2Id,
+          value: JSON.stringify({
+            type: 'root',
+            children: [
+              { type: 'paragraph', children: [{ type: 'text', value: 'Section 2 content en' }] },
             ],
           }),
           locale: 'en',

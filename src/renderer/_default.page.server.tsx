@@ -50,14 +50,6 @@ function getI18nBackendOpts() {
 
 const passToClient = ['locale', 'preloadedState', 'pageProps']
 
-/** Queries needed by all pages */
-// const { initiate: getContent } = contentApi.endpoints.getContent
-// const commonPrepopFactories: PrepopFactory[] = [
-//   (store) => store.dispatch(contentApi.endpoints.getCourse.initiate({ name: 'innodoc' })),
-//   (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_A })),
-//   (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_B })),
-// ]
-
 function render({ emotionStyleTags, helmet, pageHtml, redirectTo }: PageContextServer) {
   if (redirectTo !== undefined) {
     return { pageContext: { redirectTo } }
@@ -104,6 +96,7 @@ async function onBeforeRender({
   const prepopFactories: PrepopFactory[] = [
     (store) => store.dispatch(contentApi.endpoints.getCourse.initiate(courseName)),
     (store) => store.dispatch(contentApi.endpoints.getCoursePages.initiate(courseName)),
+    (store) => store.dispatch(contentApi.endpoints.getCourseSections.initiate(courseName)),
     // (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_A })),
     // (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_B })),
   ]

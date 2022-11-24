@@ -1,9 +1,8 @@
 import type { CamelCasedProperties } from 'type-fest'
 
-import type { DbCourse, DbLocalizedTitles } from '#server/database/types'
-import type { IconProps } from '#ui/components/common/Icon'
+import type { DbCourse, DbLocalizedTitles, DbPage, DbSection } from '#server/database/types'
 
-import type { PageLinkLocation } from './common'
+type Translated<T> = Omit<T, 'shortTitle' | 'title'> & Titles
 
 /** Object with localized titles */
 export type LocalizedTitles = CamelCasedProperties<DbLocalizedTitles>
@@ -46,61 +45,35 @@ export interface Course
   description?: string
 }
 
-/** Base page object */
-interface BasePage {
-  /** Unique page identifier */
-  name: string
-
-  /** Icon string */
-  icon?: IconProps['name']
-
-  /** Where the page should be linked */
-  linked?: PageLinkLocation[]
-}
-
 /** Page object as returned by content server */
-export interface ApiPage extends BasePage, LocalizedTitles {}
+export type ApiPage = CamelCasedProperties<DbPage>
 
 /** Page object as consumed by components */
-export interface Page extends BasePage, Titles {}
+export type Page = Translated<ApiPage>
 
 /** Section object as returned by content server */
-export interface ApiSection extends LocalizedTitles {
-  /** Section identifier, unique within siblings */
-  id: string
+export type ApiSection = CamelCasedProperties<DbSection>
 
-  /** Sections sub-sections */
-  children?: ApiSection[]
-}
-
-/** Transformed section object as saved in the store */
-export interface TransformedSection extends ApiSection {
-  /** Section ID of parents, e.g. `['section-foo', 'section-bar']` */
-  parents: string[]
-
-  /** Section section number */
-  number: number[]
-
-  /** Sections sub-sections */
-  children?: TransformedSection[]
-}
+/** Page object as consumed by components */
+export type Section = Translated<ApiSection>
 
 /** Section object as consumed by components */
-export interface SectionWithChildren
-  extends Omit<TransformedSection, 'shortTitle' | 'title' | 'children'>,
-    Titles {
-  /** Sections sub-sections */
-  children?: SectionWithChildren[]
-}
+// export interface SectionWithChildren
+//   extends Omit<TransformedSection, 'shortTitle' | 'title' | 'children'>,
+//     Titles {
+//   /** Sections sub-sections */
+//   children?: SectionWithChildren[]
+// }
 
 /** Section object as consumed by components (w/o children subtree) */
-export interface SectionWithoutChildren extends Omit<SectionWithChildren, 'children'> {
-  /** Sub-section count */
-  childrenCount: number
-}
+// export interface SectionWithoutChildren extends Omit<SectionWithChildren, 'children'> {
+//   /** Sub-section count */
+//   childrenCount: number
+// }
 
-export type Section = SectionWithChildren | SectionWithoutChildren
+// export type Section = SectionWithChildren | SectionWithoutChildren
 
+// TODO Remove
 /** MathJax library options */
 export interface MathJaxOptions {
   loader: {

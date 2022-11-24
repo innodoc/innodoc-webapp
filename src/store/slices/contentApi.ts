@@ -3,28 +3,8 @@ import type { LanguageCode } from 'iso-639-1'
 import type { Root } from 'mdast'
 
 import { MAX_KEEP_UNUSED_DATA_FOR_MAX } from '#constants'
-import type { ApiCourse, ApiPage, Course, Page } from '#types/api'
+import type { ApiCourse, ApiPage, ApiSection, Course, Page } from '#types/api'
 import { formatUrl } from '#utils/url'
-
-// /** Add section number and path information recursively */
-// const transformSection = (
-//   section: ApiSection,
-//   parents: TransformedSection['parents'],
-//   number: TransformedSection['number']
-// ): TransformedSection => ({
-//   ...section,
-//   number,
-//   parents,
-//   children: section?.children?.map((child, idx) =>
-//     transformSection(child, [...parents, section.id], [...number, idx])
-//   ),
-// })
-
-// /** Transform API response for `Course` */
-// const transformResponseCourse = (response: ApiCourse): TransformedCourse => ({
-//   ...response,
-//   toc: response?.toc?.map((section, idx) => transformSection(section, [], [idx])),
-// })
 
 const contentApi = createApi({
   reducerPath: 'contentApi',
@@ -36,22 +16,27 @@ const contentApi = createApi({
   endpoints: (builder) => ({
     /** Fetch course info */
     getCourse: builder.query<ApiCourse, ApiCourse['name']>({
-      query: (name) => formatUrl(name),
+      query: (name) => `/${name}`,
     }),
 
     /** Fetch course pages */
     getCoursePages: builder.query<ApiPage[], ApiCourse['name']>({
-      query: (name) => formatUrl(`${name}/pages`),
+      query: (courseName) => `/${courseName}/pages`,
     }),
 
     /** Fetch content AST */
     getContent: builder.query<Root, ContentFetchArgs>({
-      query: ({ locale, path }) => formatUrl(`/_${path}`, locale),
+      query: ({ locale, path }) => `/${locale}/page/${path}`,
     }),
 
     /** Fetch content AST for a page */
     getPageContent: builder.query<Root, PageContentFetchArgs>({
       query: ({ courseName, locale, pageName }) => `/${courseName}/${locale}/page/${pageName}`,
+    }),
+
+    /** Fetch course sections */
+    getCourseSections: builder.query<ApiSection[], ApiCourse['name']>({
+      query: (courseName) => `/${courseName}/sections`,
     }),
 
     /** Fetch content AST for a section */

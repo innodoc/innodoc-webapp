@@ -36,11 +36,14 @@ export async function up(knex: Knex) {
       enumName: 'section_type',
       existingType: true,
       useNative: true,
-    }).notNullable()
+    })
+      .notNullable()
+      .defaultTo('regular')
     t.specificType('path', 'ltree')
-    t.index('path', 'idx_path', 'gist')
+    t.smallint('order').notNullable().defaultTo(0)
     t.timestamp('created_at').defaultTo(knex.fn.now())
     t.timestamp('updated_at').defaultTo(knex.fn.now())
+    t.index('path', 'idx_path', 'gist')
     t.unique(['type', 'course_id', 'path']) // unique per course
   })
 

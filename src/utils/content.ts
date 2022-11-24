@@ -63,7 +63,7 @@ function getClassNameToComponentMapper<P>(classNameComponentMap: Record<string, 
 
 /** Get section path from `Section` */
 function getSectionPath(section: Section) {
-  return [...section.parents, section.id].join('/')
+  return section.path.replace('.', '/')
 }
 
 /** Generate page URL */
