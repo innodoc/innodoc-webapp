@@ -19,7 +19,7 @@ async function onBeforeRender(pageContext: PageContextServer) {
       //   fetchContent(
       //     store,
       //     sections.endpoints.getSectionContent.initiate({
-      //       courseName: pageContext.courseName,
+      //       courseSlug: pageContext.courseSlug,
       //       locale,
       //       path: sectionPath, // TODO need section id here
       //     })

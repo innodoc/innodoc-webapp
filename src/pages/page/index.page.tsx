@@ -17,9 +17,9 @@ function Content({ course, page }: ContentProps) {
     isError,
     isLoading,
   } = useGetPageContentQuery({
-    courseName: course.name,
+    courseId: course.id,
     locale,
-    pageName: page.name,
+    pageId: page.id,
   })
 
   if (isLoading === undefined) {
@@ -47,9 +47,9 @@ interface ContentProps {
   page: TranslatedPage
 }
 
-function ContentPage({ pageName }: ContentPageProps) {
+function ContentPage({ pageSlug }: ContentPageProps) {
   const { course } = useSelectCurrentCourse()
-  const { page } = useSelectPage(pageName)
+  const { page } = useSelectPage(pageSlug)
 
   if (course === undefined) return <InlineError>No course found</InlineError>
   if (page === undefined) return <ErrorPage is404 />
@@ -58,7 +58,7 @@ function ContentPage({ pageName }: ContentPageProps) {
 }
 
 interface ContentPageProps {
-  pageName: TranslatedPage['name']
+  pageSlug: TranslatedPage['slug']
 }
 
 export { ContentPage as Page }

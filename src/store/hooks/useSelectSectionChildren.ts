@@ -3,7 +3,7 @@ import type { LanguageCode } from 'iso-639-1'
 import { useMemo } from 'react'
 
 import { useGetCourseSectionsQuery } from '#store/slices/entities/sections'
-import { selectCourseName, selectLocale } from '#store/slices/uiSlice'
+import { selectCourseId, selectLocale } from '#store/slices/uiSlice'
 import { defaultTranslatableFields } from '#types/entities/base'
 import type { ApiSection, TranslatedSection } from '#types/entities/section'
 import { useSelector } from '#ui/hooks/store'
@@ -12,7 +12,7 @@ import { translateEntityArray } from '#utils/i18n'
 /** Return sections children */
 function useSelectSectionChildren(parentId: ApiSection['parentId']) {
   const locale = useSelector(selectLocale)
-  const courseName = useSelector(selectCourseName)
+  const courseId = useSelector(selectCourseId)
 
   const selectSectionChildren = useMemo(() => {
     const emptyArray: TranslatedSection[] = []
@@ -32,10 +32,10 @@ function useSelectSectionChildren(parentId: ApiSection['parentId']) {
   }, [])
 
   const result = useGetCourseSectionsQuery(
-    { courseName: courseName ?? '' },
+    { courseId: courseId ?? 0 },
     {
       selectFromResult: (result) => ({ sections: selectSectionChildren(result, parentId, locale) }),
-      skip: courseName === null,
+      skip: courseId === null,
     }
   )
 

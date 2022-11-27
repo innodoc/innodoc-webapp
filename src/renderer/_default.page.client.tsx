@@ -47,7 +47,7 @@ function findRootElement() {
 }
 
 async function render({
-  courseName,
+  courseId,
   isHydration,
   locale,
   Page,
@@ -67,7 +67,7 @@ async function render({
 
   // Get i18next instance
   if (i18n === undefined) {
-    i18n = await getI18n(I18NextHttpBackend, i18nBackendOpts, locale, courseName, store)
+    i18n = await getI18n(I18NextHttpBackend, i18nBackendOpts, locale, courseId, store)
   }
 
   // Create Emotion cache

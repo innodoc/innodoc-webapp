@@ -1,6 +1,8 @@
 import type { AnyElt, AttrList, Tree } from 'pandoc-filter'
 import type { ComponentType } from 'react'
 
+import { CONTENT_FRAGMENT_TYPES } from '#constants'
+import type { ContentFragmentType } from '#types/entities/base'
 import type { TranslatedPage } from '#types/entities/page'
 import type { TranslatedSection } from '#types/entities/section'
 
@@ -62,13 +64,18 @@ function getClassNameToComponentMapper<P>(classNameComponentMap: Record<string, 
 }
 
 /** Generate page URL */
-function getPageUrl(pageName: Page['name']) {
-  return `/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/${pageName}`
+function getPageUrl(pageSlug: TranslatedPage['slug']) {
+  return `/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/${pageSlug}`
 }
 
 /** Generate section URL */
 function getSectionUrl(sectionPath: string) {
   return `/${import.meta.env.INNODOC_SECTION_PATH_PREFIX}/${sectionPath}`
+}
+
+/** Type guard for ContentFragmentType */
+function isContentFragmentType(t: string): t is ContentFragmentType {
+  return CONTENT_FRAGMENT_TYPES.includes(t as ContentFragmentType)
 }
 
 /** Replace generic with custom path prefixes */
@@ -78,23 +85,13 @@ function replacePathPrefixes(url: string) {
     .replace('/section/', `/${import.meta.env.INNODOC_SECTION_PATH_PREFIX}/`)
 }
 
-/* Unwraps all Paras in a list of content elements */
-function unwrapPara(content: AnyElt[]) {
-  if (content.length === 1) {
-    return content[0].t === 'Para' ? content[0].c : content
-  }
-  return content.map((item) => (item.t === 'Para' ? item.c : item))
-}
-
 export {
   astToString,
-  attributesToObject,
   formatNumberedTitleElt,
   formatSectionTitle,
   getClassNameToComponentMapper,
-  getSectionPath,
   getPageUrl,
   getSectionUrl,
+  isContentFragmentType,
   replacePathPrefixes,
-  unwrapPara,
 }

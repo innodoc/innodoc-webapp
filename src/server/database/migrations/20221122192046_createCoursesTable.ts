@@ -1,18 +1,19 @@
 import type { Knex } from 'knex'
 
-import { DEFAULT_MIN_SCORE } from '#constants'
+import { DEFAULT_MIN_SCORE, SLUG_REGEX_POSIX } from '#constants'
 
 export async function up(knex: Knex) {
   // courses table
 
   await knex.schema.createTable('courses', (t) => {
     t.increments('id').primary()
-    t.string('name').notNullable().unique()
+    t.string('slug').notNullable().unique().checkRegex(`^${SLUG_REGEX_POSIX}$`)
     t.string('home_link')
     t.specificType('locales', 'locale[]')
     t.smallint('min_score').notNullable().defaultTo(DEFAULT_MIN_SCORE).checkBetween([0, 100])
     t.timestamp('created_at').defaultTo(knex.fn.now())
     t.timestamp('updated_at').defaultTo(knex.fn.now())
+    t.index(['slug'], 'courses_slug')
   })
 
   // Translations

@@ -6,8 +6,8 @@ import type { RootState } from '#store/makeStore'
 import type { ApiCourse } from '#types/entities/course'
 
 interface UiSliceState {
-  /** Current course name */
-  courseName: ApiCourse['name'] | null
+  /** Current course ID */
+  courseId: ApiCourse['id'] | null
 
   /** Current locale */
   locale: LanguageCode
@@ -17,7 +17,7 @@ interface UiSliceState {
 }
 
 const initialState: UiSliceState = {
-  courseName: null,
+  courseId: null,
   locale: 'en',
   urlWithoutLocale: null,
 }
@@ -28,8 +28,8 @@ const uiSlice = createSlice({
 
   reducers: {
     /** Change current course */
-    changeCourseName(state, action: PayloadAction<ApiCourse['name']>) {
-      state.courseName = action.payload
+    changeCourseId(state, action: PayloadAction<ApiCourse['id']>) {
+      state.courseId = action.payload
     },
 
     /** Change locale */
@@ -47,8 +47,8 @@ const uiSlice = createSlice({
 /** Select ui slice */
 const selectUi = (state: RootState) => state[uiSlice.name]
 
-/** Select current course name */
-export const selectCourseName = (state: RootState) => selectUi(state).courseName
+/** Select current course ID */
+export const selectCourseId = (state: RootState) => selectUi(state).courseId
 
 /** Select current locale */
 export const selectLocale = (state: RootState) => selectUi(state).locale
@@ -65,5 +65,5 @@ export const selectCurrentSectionPath = createSelector(
       : undefined
 )
 
-export const { changeCourseName, changeLocale, changeUrlWithoutLocale } = uiSlice.actions
+export const { changeCourseId, changeLocale, changeUrlWithoutLocale } = uiSlice.actions
 export default uiSlice

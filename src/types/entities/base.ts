@@ -2,6 +2,7 @@ import camelCase from 'camelcase'
 import type { LanguageCode } from 'iso-639-1'
 import type { CamelCase } from 'type-fest'
 
+import type { CONTENT_FRAGMENT_TYPES } from '#constants'
 import type { DateISO8601 } from '#types/common'
 
 /** Base database entity */
@@ -41,3 +42,6 @@ export type DbTranslatableFields<T extends string = DbDefaultTranslatableFields>
 export type TranslatedEntity<T extends Record<string, unknown>> = {
   [Property in keyof T]: T[Property] extends TranslatableString ? string | null : T[Property]
 }
+
+/** Content fragment type */
+export type ContentFragmentType = typeof CONTENT_FRAGMENT_TYPES[number]

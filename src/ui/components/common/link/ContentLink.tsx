@@ -16,8 +16,8 @@ const ContentLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(function Co
   }
 
   if (to.startsWith('/page/')) {
-    const pageName = to.replace(/^\/page\//, '')
-    return <PageLink pageName={pageName} ref={ref} {...other} />
+    const pageSlug = to.replace(/^\/page\//, '')
+    return <PageLink pageSlug={pageSlug} ref={ref} {...other} />
   }
 
   return (

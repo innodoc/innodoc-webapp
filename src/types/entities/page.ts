@@ -7,8 +7,8 @@ import type { BaseEntity, DbTranslatableFields, TranslatedEntity } from './base'
 
 /** Page object for database */
 export interface DbPage extends BaseEntity, DbTranslatableFields {
-  /** Page identifier (unique within course) */
-  name: string
+  /** Page slug (unique within course) */
+  slug: string
 
   /** Course ID */
   course_id: number

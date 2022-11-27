@@ -3,28 +3,28 @@ import type { LanguageCode } from 'iso-639-1'
 import { useMemo } from 'react'
 
 import { useGetCoursePagesQuery } from '#store/slices/entities/pages'
-import { selectCourseName, selectLocale } from '#store/slices/uiSlice'
+import { selectCourseId, selectLocale } from '#store/slices/uiSlice'
 import { defaultTranslatableFields } from '#types/entities/base'
 import type { ApiPage } from '#types/entities/page'
 import { useSelector } from '#ui/hooks/store'
 import { translateEntity } from '#utils/i18n'
 
-/** Return page by name */
-function useSelectPage(pageName: ApiPage['name']) {
+/** Return page by slug */
+function useSelectPage(pageSlug: ApiPage['slug']) {
   const locale = useSelector(selectLocale)
-  const courseName = useSelector(selectCourseName)
+  const courseId = useSelector(selectCourseId)
 
   const selectPage = useMemo(
     () =>
       createSelector(
         [
           (_result: { data: ApiPage[] | undefined }) => _result.data,
-          (_result, _pageName: ApiPage['name']) => _pageName,
-          (result, _pageName, _locale: LanguageCode) => _locale,
+          (_result, _pageSlug: ApiPage['slug']) => _pageSlug,
+          (result, _pageSlug, _locale: LanguageCode) => _locale,
         ],
-        (pages, _pageName, _locale) => {
+        (pages, _pageSlug, _locale) => {
           if (pages === undefined) return undefined
-          const page = pages.find((p) => p.name === _pageName)
+          const page = pages.find((p) => p.slug === _pageSlug)
           if (page === undefined) return undefined
           return translateEntity(page, defaultTranslatableFields, _locale)
         }
@@ -33,10 +33,10 @@ function useSelectPage(pageName: ApiPage['name']) {
   )
 
   const result = useGetCoursePagesQuery(
-    { courseName: courseName ?? '' },
+    { courseId: courseId ?? 0 },
     {
-      selectFromResult: (result) => ({ page: selectPage(result, pageName, locale) }),
-      skip: courseName === null,
+      selectFromResult: (result) => ({ page: selectPage(result, pageSlug, locale) }),
+      skip: courseId === null,
     }
   )
 

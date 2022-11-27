@@ -4,13 +4,13 @@ import pages from '#store/slices/entities/pages'
 import type { PageContextServer } from '#types/pageContext'
 
 async function onBeforeRender(pageContext: PageContextServer) {
-  const { pageName } = pageContext.routeParams
+  const { pageSlug } = pageContext.routeParams
 
   return onBeforeRenderDefault({
     ...pageContext,
 
-    // Pass pageId to page component
-    pageProps: { pageName },
+    // Pass page slug to page component
+    pageProps: { pageSlug },
 
     // Pass custom prepopulation task to onBeforeRender
     pagePrepopFactories: [
@@ -18,9 +18,9 @@ async function onBeforeRender(pageContext: PageContextServer) {
         fetchContent(
           store,
           pages.endpoints.getPageContent.initiate({
-            courseName: pageContext.courseName,
+            courseId: pageContext.courseId,
             locale,
-            pageName,
+            pageSlug,
           })
         ),
     ],

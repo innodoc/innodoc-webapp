@@ -1,5 +1,3 @@
-import ISO6391 from 'iso-639-1'
-
 /** Built-in pages */
 export const BUILTIN_PAGES_KEYS = ['___INDEX_PAGE___', '___TOC___', '___PROGRESS___'] as const
 export const BUILTIN_PAGES: BuiltinPages = {
@@ -27,9 +25,9 @@ type BuiltinPage = {
 }
 
 /** Fragment name for footer A */
-export const CONTENT_NAME_FOOTER_A = 'footer_a'
+export const CONTENT_NAME_FOOTER_A = 'footer-a'
 /** Fragment name for footer B */
-export const CONTENT_NAME_FOOTER_B = 'footer_b'
+export const CONTENT_NAME_FOOTER_B = 'footer-b'
 
 /** Content fragment types */
 export const CONTENT_FRAGMENT_TYPES = [CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B] as const
@@ -49,11 +47,11 @@ export const MAX_KEEP_UNUSED_DATA_FOR_MAX = Math.floor((2 ** 31 - 1) / 1000)
 /** Default required score to pass a test */
 export const DEFAULT_MIN_SCORE = 90
 
-/** Page/section/course name regex */
-export const NAME_REGEX = '[a-z0-9_-]+'
+/** Page/section/course slug regex */
+export const SLUG_REGEX = '[a-z0-9]+(?:-[a-z0-9]+)*'
 
-/** Locale ISO-639-1 language code */
-export const LOCALE_REGEX = '[a-z]{2}'
+/** Page/section/course slug regex (Posix variant for PostgreSQL) */
+export const SLUG_REGEX_POSIX = SLUG_REGEX.replace('(?:', '(')
 
 /** Props to be passed to client */
-export const passToClientProps = ['courseName', 'locale', 'preloadedState', 'pageProps'] as const
+export const passToClientProps = ['courseId', 'locale', 'preloadedState', 'pageProps'] as const

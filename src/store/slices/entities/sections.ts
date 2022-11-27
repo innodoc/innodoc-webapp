@@ -14,7 +14,6 @@ export const sections = contentApi.injectEndpoints({
     /** Fetch course sections */
     getCourseSections: builder.query<ApiSection[], CourseNameQueryArg>({
       query: (args) => {
-        console.log('getCourseSections', args)
         return generateUrl('api/course/sections', args, `${API_COURSE_PREFIX}`)
       },
     }),
@@ -27,7 +26,7 @@ export const sections = contentApi.injectEndpoints({
 })
 
 type SectionContentFetchArgs = {
-  courseName: ApiCourse['name']
+  courseId: ApiCourse['id']
   locale: LanguageCode
   sectionId: ApiSection['id']
 }

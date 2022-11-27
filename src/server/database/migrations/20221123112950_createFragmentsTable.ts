@@ -30,9 +30,9 @@ export async function up(knex: Knex) {
   // Translations
 
   await knex.schema.createTable('fragments_content_trans', (t) => {
-    t.integer('course_id')
+    t.integer('fragment_id')
       .notNullable()
-      .references('courses.id')
+      .references('fragments.id')
       .onUpdate('CASCADE')
       .onDelete('CASCADE')
     t.jsonb('value').notNullable().defaultTo(JSON.stringify({}))
@@ -41,7 +41,7 @@ export async function up(knex: Knex) {
       existingType: true,
       useNative: true,
     }).notNullable()
-    t.unique(['course_id', 'locale'])
+    t.unique(['fragment_id', 'locale'])
   })
 }
 

@@ -1,14 +1,34 @@
+import camelcaseKeys from 'camelcase-keys'
 import type { LanguageCode } from 'iso-639-1'
 import type { Root } from 'mdast'
 
 import getDatabase from '#server/database/getDatabase'
-import type { DbCourse } from '#types/entities/course'
-import type { DbPage } from '#types/entities/page'
-import type { DbSection } from '#types/entities/section'
+import type { ContentFragmentType } from '#types/entities/base'
+import type { ApiCourse, DbCourse } from '#types/entities/course'
+import type { ApiPage, DbPage } from '#types/entities/page'
+import type { ApiSection, DbQuerySection, DbSection } from '#types/entities/section'
 
-function getCourse(name: DbCourse['name']): Promise<DbCourse> {
+export async function getCourse({
+  courseId,
+  courseSlug,
+}: {
+  courseId?: DbCourse['id']
+  courseSlug?: DbCourse['slug']
+}): Promise<ApiCourse | null> {
+  let field
+  let val
+  if (courseId !== undefined) {
+    field = 'c.id'
+    val = courseId
+  } else if (courseSlug !== undefined) {
+    field = 'c.slug'
+    val = courseSlug
+  } else {
+    throw new Error('getCourse() must receiver either courseId or courseSlug')
+  }
+
   const db = getDatabase()
-  return db
+  const result = await db
     .first<DbCourse | null>(
       'c.*',
       db.raw('array_to_json(c.locales) as locales'),
@@ -20,13 +40,15 @@ function getCourse(name: DbCourse['name']): Promise<DbCourse> {
     .join('courses_title_trans as t', 'c.id', 't.course_id')
     .join('courses_short_title_trans as st', 'c.id', 'st.course_id')
     .join('courses_description_trans as d', 'c.id', 'd.course_id')
-    .where({ name })
+    .where(field, val)
     .groupBy('c.id')
+
+  return result ? camelcaseKeys(result) : null
 }
 
-function getCoursePages(name: DbCourse['name']): Promise<DbPage[]> {
+export async function getCoursePages(courseId: DbCourse['id']): Promise<ApiPage[]> {
   const db = getDatabase()
-  return db
+  const result = await db
     .select<DbPage[]>(
       'p.*',
       db.raw('array_to_json(p.linked) as linked'),
@@ -39,14 +61,16 @@ function getCoursePages(name: DbCourse['name']): Promise<DbPage[]> {
     .join('courses as c', 'p.course_id', 'c.id')
     .join('pages_title_trans as t', 'p.id', 't.page_id')
     .leftOuterJoin('pages_short_title_trans as st', 'p.id', 'st.page_id')
-    .where('c.name', name)
+    .where('c.id', courseId)
     .groupBy('p.id')
+
+  return camelcaseKeys(result)
 }
 
-async function getPageContent(
-  courseName: DbCourse['name'],
+export async function getPageContent(
+  courseId: DbCourse['id'],
   locale: LanguageCode,
-  pageName: DbPage['name']
+  pageId: DbPage['id']
 ): Promise<Root | undefined> {
   const db = getDatabase()
   const result = await db
@@ -54,25 +78,26 @@ async function getPageContent(
     .from('pages as p')
     .join('courses as c', 'p.course_id', 'c.id')
     .leftOuterJoin('pages_content_trans as ct', 'p.id', 'ct.page_id')
-    .where('p.name', pageName)
-    .where('c.name', courseName)
+    .where('p.id', pageId)
+    .where('c.id', courseId)
     .where('ct.locale', locale)
-  return result !== undefined ? result.value : undefined
+
+  return result ? result.value : undefined
 }
 
-function getCourseSections(courseName: DbCourse['name']): Promise<DbSection[]> {
+export async function getCourseSections(courseId: DbCourse['id']): Promise<ApiSection[]> {
   const db = getDatabase()
-  return db
+  const result = (await db
     .withRecursive(
       'cre',
-      ['id', 'name', 'path', 'course_id', 'type', 'parent_id', 'order', 'created_at', 'updated_at'],
+      ['id', 'slug', 'path', 'course_id', 'type', 'parent_id', 'order', 'created_at', 'updated_at'],
       (qb) => {
         void qb
           // Start with root node
           .select(
             's.id',
-            's.name',
-            db.raw('s.name::varchar'),
+            's.slug',
+            db.raw('s.slug::varchar'),
             's.course_id',
             's.type',
             's.parent_id',
@@ -83,14 +108,14 @@ function getCourseSections(courseName: DbCourse['name']): Promise<DbSection[]> {
           .from('sections as s')
           .join('courses as c', 's.course_id', 'c.id')
           .where('s.parent_id', null)
-          .where('c.name', courseName)
+          .where('c.id', courseId)
           .union((qb) => {
             // Add one level of children on each iteration
             void qb
               .select(
                 's.id',
-                's.name',
-                db.raw("cre.path || '/' || s.name"),
+                's.slug',
+                db.raw("cre.path || '/' || s.slug"),
                 's.course_id',
                 's.type',
                 's.parent_id',
@@ -105,7 +130,7 @@ function getCourseSections(courseName: DbCourse['name']): Promise<DbSection[]> {
     )
     .select(
       'cre.id',
-      'cre.name',
+      'cre.slug',
       'cre.path',
       'cre.course_id',
       'cre.type',
@@ -123,7 +148,7 @@ function getCourseSections(courseName: DbCourse['name']): Promise<DbSection[]> {
     .leftOuterJoin('sections_short_title_trans as st', 'cre.id', 'st.section_id')
     .groupBy(
       'cre.id',
-      'cre.name',
+      'cre.slug',
       'cre.path',
       'cre.course_id',
       'cre.type',
@@ -132,11 +157,13 @@ function getCourseSections(courseName: DbCourse['name']): Promise<DbSection[]> {
       'cre.created_at',
       'cre.updated_at'
     )
-    .orderBy('cre.order') as Promise<DbSection[]>
+    .orderBy('cre.order')) as DbQuerySection[]
+
+  return camelcaseKeys(result)
 }
 
-async function getSectionContent(
-  courseName: DbCourse['name'],
+export async function getSectionContent(
+  courseId: DbCourse['id'],
   locale: LanguageCode,
   sectionId: DbSection['id']
 ): Promise<Root | undefined> {
@@ -147,37 +174,28 @@ async function getSectionContent(
     .join('courses as c', 's.course_id', 'c.id')
     .leftOuterJoin('sections_content_trans as ct', 's.id', 'ct.section_id')
     .where('s.id', sectionId)
-    .where('c.name', courseName)
+    .where('c.id', courseId)
     .where('ct.locale', locale)
 
-  return result !== undefined ? result.value : undefined
+  return result ? result.value : undefined
 }
 
-async function getFragmentContent(
-  courseName: DbCourse['name'],
+export async function getFragmentContent(
+  courseId: DbCourse['id'],
   locale: LanguageCode,
-  fragmentName: string
+  fragmentType: ContentFragmentType
 ): Promise<Root | undefined> {
   const db = getDatabase()
   const result = await db
     .first<{ value: Root } | undefined>('ct.value')
     .from('fragments as f')
     .join('courses as c', 'f.course_id', 'c.id')
-    .leftOuterJoin('fragments_content_trans as ct', 'f.id', 'ct.section_id')
-    .where('f.name', fragmentName)
-    .where('c.name', courseName)
+    .leftOuterJoin('fragments_content_trans as ct', 'f.id', 'ct.fragment_id')
+    .where('f.type', fragmentType)
+    .where('c.id', courseId)
     .where('ct.locale', locale)
 
-  return result !== undefined ? result.value : undefined
+  return result ? result.value : undefined
 }
 
 type ContentResult = { value: Root } | undefined
-
-export {
-  getCourse,
-  getCoursePages,
-  getFragmentContent,
-  getPageContent,
-  getCourseSections,
-  getSectionContent,
-}

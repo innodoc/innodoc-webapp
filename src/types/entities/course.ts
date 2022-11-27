@@ -13,8 +13,8 @@ export type DbCourseTranslatableFields = DbDefaultTranslatableFields | 'descript
 
 /** Course object for database */
 export interface DbCourse extends BaseEntity, DbTranslatableFields<DbCourseTranslatableFields> {
-  /** Course identifier */
-  name: string
+  /** Course slug (unique among courses) */
+  slug: string
 
   /** Course home link */
   home_link: string

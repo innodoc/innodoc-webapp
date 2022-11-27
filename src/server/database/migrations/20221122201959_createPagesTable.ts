@@ -1,6 +1,6 @@
 import type { Knex } from 'knex'
 
-import { NAME_REGEX, PAGE_LINK_LOCACTIONS } from '#constants'
+import { SLUG_REGEX_POSIX, PAGE_LINK_LOCACTIONS } from '#constants'
 
 export async function up(knex: Knex) {
   // Page link location enum type
@@ -12,7 +12,7 @@ export async function up(knex: Knex) {
 
   await knex.schema.createTable('pages', (t) => {
     t.increments('id').primary()
-    t.string('name').notNullable().checkRegex(NAME_REGEX)
+    t.string('slug').notNullable().checkRegex(`^${SLUG_REGEX_POSIX}$`)
     t.integer('course_id')
       .notNullable()
       .references('courses.id')
@@ -22,7 +22,7 @@ export async function up(knex: Knex) {
     t.string('icon')
     t.timestamp('created_at').defaultTo(knex.fn.now())
     t.timestamp('updated_at').defaultTo(knex.fn.now())
-    t.unique(['course_id', 'name']) // unique per course
+    t.unique(['course_id', 'slug']) // unique per course
   })
 
   // Translations

@@ -41,7 +41,7 @@ function NavMenu() {
       {pages.map((page) => (
         <StyledNavButton
           component={PageLink}
-          key={page.name}
+          key={page.slug}
           page={page}
           startIcon={page.icon !== undefined ? <Icon name={page.icon} /> : undefined}
         >

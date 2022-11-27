@@ -10,7 +10,7 @@ export async function seed(knex: Knex) {
       // Course
 
       const [{ id: courseId }] = await trx<DbCourse>('courses').insert(
-        [{ name: 'innodoc', locales: ['de', 'en'], home_link: '/page/about' }],
+        [{ slug: 'innodoc', locales: ['de', 'en'], home_link: '/page/about' }],
         ['id']
       )
       await trx('courses_title_trans').insert([
@@ -31,7 +31,7 @@ export async function seed(knex: Knex) {
       const [{ id: aPageId }] = await trx<DbPage>('pages').insert(
         [
           {
-            name: 'about',
+            slug: 'about',
             course_id: courseId,
             icon: 'mdi:information-outline',
             linked: ['nav', 'footer'],
@@ -71,7 +71,7 @@ export async function seed(knex: Knex) {
       // License page
 
       const [{ id: lPageId }] = await trx<DbPage>('pages').insert(
-        [{ name: 'license', course_id: courseId, icon: 'mdi:copyright', linked: ['footer'] }],
+        [{ slug: 'license', course_id: courseId, icon: 'mdi:copyright', linked: ['footer'] }],
         ['id']
       )
       await trx('pages_title_trans').insert([
@@ -102,7 +102,7 @@ export async function seed(knex: Knex) {
       // Section 1
 
       const [{ id: section1Id }] = await trx<DbSection>('sections').insert(
-        [{ name: 'section1', course_id: courseId, order: 0 }],
+        [{ slug: 'section1', course_id: courseId, order: 0 }],
         ['id']
       )
       await trx('sections_title_trans').insert([
@@ -135,7 +135,14 @@ export async function seed(knex: Knex) {
       // Section 1.1
 
       const [{ id: section1_1Id }] = await trx<DbSection>('sections').insert(
-        [{ name: 'section1_1', course_id: courseId, order: 0, parent_id: section1Id }],
+        [
+          {
+            slug: 'section1-1',
+            course_id: courseId,
+            order: 0,
+            parent_id: section1Id,
+          },
+        ],
         ['id']
       )
       await trx('sections_title_trans').insert([
@@ -168,7 +175,7 @@ export async function seed(knex: Knex) {
       // Section 1.2
 
       const [{ id: section1_2Id }] = await trx<DbSection>('sections').insert(
-        [{ name: 'section1_2', course_id: courseId, order: 1, parent_id: section1Id }],
+        [{ slug: 'section1-2', course_id: courseId, order: 1, parent_id: section1Id }],
         ['id']
       )
       await trx('sections_title_trans').insert([
@@ -201,7 +208,7 @@ export async function seed(knex: Knex) {
       // Section 2
 
       const [{ id: section2Id }] = await trx<DbSection>('sections').insert(
-        [{ name: 'section2', course_id: courseId, order: 1 }],
+        [{ slug: 'section2', course_id: courseId, order: 1 }],
         ['id']
       )
       await trx('sections_title_trans').insert([

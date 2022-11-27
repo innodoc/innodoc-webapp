@@ -6,13 +6,15 @@ import { generateUrl } from '#utils/url'
 export const courses = contentApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Fetch course info */
-    getCourseByName: builder.query<ApiCourse, CourseNameQueryArg>({
+    getCourse: builder.query<ApiCourse, CourseNameQueryArg>({
       query: (args) => generateUrl('api/course', args, `${API_COURSE_PREFIX}`),
     }),
   }),
 })
 
-export type CourseNameQueryArg = { courseName: ApiCourse['name'] }
+export type CourseNameQueryArg = {
+  courseId: ApiCourse['id']
+}
 
-export const { useGetCourseByNameQuery } = courses
+export const { useGetCourseQuery } = courses
 export default courses

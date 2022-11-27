@@ -20,7 +20,7 @@ function Content({ course, section }: ContentProps) {
     isError,
     isLoading,
   } = useGetSectionContentQuery({
-    courseName: course.name,
+    courseId: course.id,
     locale,
     sectionId: section.id,
   })

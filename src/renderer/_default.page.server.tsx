@@ -24,7 +24,7 @@ import makeStore from '#store/makeStore'
 import courses from '#store/slices/entities/courses'
 import pages from '#store/slices/entities/pages'
 import sections from '#store/slices/entities/sections'
-import { changeCourseName, changeLocale, changeUrlWithoutLocale } from '#store/slices/uiSlice'
+import { changeCourseId, changeLocale, changeUrlWithoutLocale } from '#store/slices/uiSlice'
 import type { PageContextServer, PrepopFactory } from '#types/pageContext'
 import PageShell from '#ui/components/PageShell/PageShell'
 import { replacePathPrefixes } from '#utils/content'
@@ -79,7 +79,7 @@ function render({ emotionStyleTags, helmet, pageHtml, redirectTo }: PageContextS
 }
 
 async function onBeforeRender({
-  courseName,
+  courseId,
   locale,
   Page,
   pageProps = {},
@@ -90,15 +90,15 @@ async function onBeforeRender({
   const store = makeStore()
 
   // Seed initial data to store
-  store.dispatch(changeCourseName(courseName))
+  store.dispatch(changeCourseId(courseId))
   store.dispatch(changeUrlWithoutLocale(urlPathname))
   store.dispatch(changeLocale(locale))
 
   // Prepopulate store with data necessary to render page
   const prepopFactories: PrepopFactory[] = [
-    (store) => store.dispatch(courses.endpoints.getCourseByName.initiate({ courseName })),
-    (store) => store.dispatch(pages.endpoints.getCoursePages.initiate({ courseName })),
-    (store) => store.dispatch(sections.endpoints.getCourseSections.initiate({ courseName })),
+    (store) => store.dispatch(courses.endpoints.getCourse.initiate({ courseId })),
+    (store) => store.dispatch(pages.endpoints.getCoursePages.initiate({ courseId })),
+    (store) => store.dispatch(sections.endpoints.getCourseSections.initiate({ courseId })),
     // (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_A })),
     // (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_B })),
   ]
@@ -107,7 +107,7 @@ async function onBeforeRender({
   )
 
   // Retrieve course from store
-  const selectCurrentCourse = courses.endpoints.getCourseByName.select({ courseName })
+  const selectCurrentCourse = courses.endpoints.getCourse.select({ courseId })
   const { data: course } = selectCurrentCourse(store.getState())
   if (course === undefined) throw new Error(`No course loaded`)
 
@@ -140,7 +140,7 @@ async function onBeforeRender({
   const emotionCache = createCache({ key: 'emotion-style' })
 
   // Initialize i18next
-  const i18n = await getI18n(I18NextFsBackend, getI18nBackendOpts(), locale, courseName, store)
+  const i18n = await getI18n(I18NextFsBackend, getI18nBackendOpts(), locale, courseId, store)
 
   // Initialize helmet context
   const helmetContext = {}

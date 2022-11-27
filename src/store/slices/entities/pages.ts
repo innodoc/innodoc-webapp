@@ -24,9 +24,9 @@ export const pages = contentApi.injectEndpoints({
 })
 
 type PageContentFetchArgs = {
-  courseName: ApiCourse['name']
+  courseId: ApiCourse['id']
   locale: LanguageCode
-  pageName: ApiPage['name']
+  pageId: ApiPage['id']
 }
 
 export const { useGetCoursePagesQuery, useGetPageContentQuery } = pages

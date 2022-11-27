@@ -46,8 +46,22 @@ function Footer() {
   const { pages: coursePages } = useSelectLinkedPages('footer')
   const { course } = useSelectCurrentCourse()
   const locale = useSelector(selectLocale)
-  const { data: blocksFooterA } = useGetContentQuery({ locale, path: CONTENT_NAME_FOOTER_A })
-  const { data: blocksFooterB } = useGetContentQuery({ locale, path: CONTENT_NAME_FOOTER_B })
+  const { data: blocksFooterA } = useGetContentQuery(
+    {
+      courseId: course?.id ?? 0,
+      locale,
+      fragmentType: CONTENT_NAME_FOOTER_A,
+    },
+    { skip: course === undefined }
+  )
+  const { data: blocksFooterB } = useGetContentQuery(
+    {
+      courseId: course?.id ?? 0,
+      locale,
+      fragmentType: CONTENT_NAME_FOOTER_B,
+    },
+    { skip: course === undefined }
+  )
 
   if (course === undefined) return null
 

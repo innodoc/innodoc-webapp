@@ -3,6 +3,8 @@ import type { Root } from 'mdast'
 
 import { API_COURSE_PREFIX } from '#routes'
 import contentApi from '#store/slices/contentApi'
+import type { ContentFragmentType } from '#types/entities/base'
+import type { ApiCourse } from '#types/entities/course'
 import { generateUrl } from '#utils/url'
 
 export const fragments = contentApi.injectEndpoints({
@@ -15,8 +17,9 @@ export const fragments = contentApi.injectEndpoints({
 })
 
 type ContentFetchArgs = {
+  courseId: ApiCourse['id']
   locale: LanguageCode
-  path: string
+  fragmentType: ContentFragmentType
 }
 
 export const { useGetContentQuery } = fragments

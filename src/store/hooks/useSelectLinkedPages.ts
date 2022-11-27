@@ -3,7 +3,7 @@ import type { LanguageCode } from 'iso-639-1'
 import { useMemo } from 'react'
 
 import { useGetCoursePagesQuery } from '#store/slices/entities/pages'
-import { selectCourseName, selectLocale } from '#store/slices/uiSlice'
+import { selectCourseId, selectLocale } from '#store/slices/uiSlice'
 import type { PageLinkLocation } from '#types/common'
 import { defaultTranslatableFields } from '#types/entities/base'
 import type { ApiPage, TranslatedPage } from '#types/entities/page'
@@ -13,7 +13,7 @@ import { translateEntityArray } from '#utils/i18n'
 /** Return pages for link lists */
 function useSelectLinkedPages(linkLocation: PageLinkLocation) {
   const locale = useSelector(selectLocale)
-  const courseName = useSelector(selectCourseName)
+  const courseId = useSelector(selectCourseId)
 
   const selectNavPages = useMemo(() => {
     const emptyArray: TranslatedPage[] = []
@@ -32,10 +32,10 @@ function useSelectLinkedPages(linkLocation: PageLinkLocation) {
   }, [linkLocation])
 
   const result = useGetCoursePagesQuery(
-    { courseName: courseName ?? '' },
+    { courseId: courseId ?? 0 },
     {
       selectFromResult: (result) => ({ pages: selectNavPages(result, locale) }),
-      skip: courseName === null,
+      skip: courseId === null,
     }
   )
 

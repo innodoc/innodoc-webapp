@@ -5,17 +5,25 @@ import { renderPage } from 'vite-plugin-ssr'
 import type { ApiCourse } from '#types/entities/course'
 import { extractLocale, formatUrl } from '#utils/url'
 
+import { getCourse } from './database/queries/course'
+
 const frontendRouter = Router().get('*', (async (req, res, next) => {
   const url = req.originalUrl
+
+  // TODO: extract from domain name, url path and fallback?, something like
+  // https://github.com/edwardhotchkiss/subdomain
+  const courseSlug = 'innodoc'
+
+  // Find ID for course slug
+  const course = await getCourse({ courseSlug })
+  if (!course) return res.sendStatus(404)
 
   // Extract locale from URL, fallback to browser Accept-Language
   const { locale, urlWithoutLocale } = extractLocale(url, req.rawLocale.language as LanguageCode)
   const pageContextInit: PageContextInit = {
     locale,
     urlOriginal: urlWithoutLocale,
-    // TODO: extract from domain name, url path and fallback?, something like
-    // https://github.com/edwardhotchkiss/subdomain
-    courseName: 'innodoc',
+    courseId: course.id,
   }
 
   // Ensure url path is prefixed with locale
@@ -41,7 +49,7 @@ const frontendRouter = Router().get('*', (async (req, res, next) => {
 
 type PageContextInit = {
   locale: LanguageCode
-  courseName: ApiCourse['name']
+  courseId: ApiCourse['id']
   urlOriginal: string
   redirectTo?: string
 }
