@@ -1,3 +1,5 @@
+import ISO6391 from 'iso-639-1'
+
 /** Built-in pages */
 export const BUILTIN_PAGES_KEYS = ['___INDEX_PAGE___', '___TOC___', '___PROGRESS___'] as const
 export const BUILTIN_PAGES: BuiltinPages = {
@@ -46,3 +48,12 @@ export const MAX_KEEP_UNUSED_DATA_FOR_MAX = Math.floor((2 ** 31 - 1) / 1000)
 
 /** Default required score to pass a test */
 export const DEFAULT_MIN_SCORE = 90
+
+/** Page/section/course name regex */
+export const NAME_REGEX = '[a-z0-9_-]+'
+
+/** Locale ISO-639-1 language code */
+export const LOCALE_REGEX = '[a-z]{2}'
+
+/** Props to be passed to client */
+export const passToClientProps = ['courseName', 'locale', 'preloadedState', 'pageProps'] as const

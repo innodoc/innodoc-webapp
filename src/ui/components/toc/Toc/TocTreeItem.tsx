@@ -1,95 +1,36 @@
-import { TreeItem, useTreeItem, type TreeItemContentProps, type TreeItemProps } from '@mui/lab'
-import { Box, IconButton, Link, styled, Typography } from '@mui/material'
-import clsx from 'clsx'
-import { forwardRef, type MouseEvent, type Ref } from 'react'
-import { useTranslation } from 'react-i18next'
+import { TreeItem, type TreeItemProps } from '@mui/lab'
 
-import type { SectionWithChildren } from '#types/api'
-import SectionLink from '#ui/components/common/link/SectionLink'
-import { formatSectionTitle } from '#utils/content'
+import useSelectSectionChildren from '#store/hooks/useSelectSectionChildren'
+import type { TranslatedSection } from '#types/entities/section'
 
-const StyledLink = styled(Link)(({ theme }) => ({
-  color: theme.vars.palette.text.primary,
-  textDecoration: 'none',
-  '&:focus': {
-    outline: 'none',
-    backgroundColor: theme.vars.palette.action.focus,
-  },
-  '&.Mui-selected': {
-    textDecoration: 'underline',
-  },
-})) as typeof Link
+import TocTreeItemContent from './TocTreeItemContent'
 
-const SectionTreeItemContent = forwardRef<unknown, SectionTreeItemContentProps>(
-  function SectionTreeItemContent(
-    { classes, className, displayIcon, expansionIcon, icon: iconProp, nodeId, section },
-    ref
-  ) {
-    const { t } = useTranslation()
-    const { expanded, handleExpansion, disabled, focused, selected } = useTreeItem(nodeId)
-    const icon = iconProp || expansionIcon || displayIcon
+function TocTreeItem({ section, nodeId }: TocTreeItemProps) {
+  const { sections } = useSelectSectionChildren(section.id)
 
-    // Allow node toggle without triggering navigation
-    const onNodeToggle = (ev: MouseEvent) => {
-      ev.stopPropagation()
-      ev.preventDefault()
-      handleExpansion(ev)
-    }
+  const children = sections.map((s) => <TocTreeItem key={s.id} nodeId={s.path} section={s} />)
 
-    return (
-      <StyledLink
-        className={clsx(className, classes.root, {
-          [classes.expanded]: expanded,
-          [classes.selected]: selected,
-          [classes.focused]: focused,
-          [classes.disabled]: disabled,
-        })}
-        component={SectionLink}
-        ref={ref as Ref<HTMLAnchorElement>}
-        section={section}
-      >
-        <Box sx={{ width: (theme) => theme.spacing(section.parents.length * 2) }} />
-        <Box className={classes.iconContainer} sx={{ mr: 2 }}>
-          {icon !== undefined ? (
-            <IconButton
-              aria-label={t(`toc.${expanded ? 'collapseSection' : 'expandSection'}`)}
-              onClick={onNodeToggle}
-            >
-              {icon}
-            </IconButton>
-          ) : null}
-        </Box>
-        <Typography component="div">{formatSectionTitle(section, true)}</Typography>
-      </StyledLink>
-    )
-  }
-)
-
-type SectionTreeItemContentProps = TreeItemContentProps & {
-  section: SectionWithChildren
-}
-
-function TocTreeItem({ section, ...other }: TocTreeItemProps) {
   return (
     <TreeItem
-      ContentComponent={SectionTreeItemContent}
+      ContentComponent={TocTreeItemContent}
       // Currently there's no way to augment: https://github.com/mui/material-ui/issues/28668
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
       ContentProps={{ section } as any}
-      // sx={{ display: 'inline-flex', flexDirection: 'row' }}
-      {...other}
-    />
+      nodeId={nodeId}
+    >
+      {children}
+    </TreeItem>
   )
-}
-
-type TocTreeItemProps = TreeItemProps & {
-  section: SectionWithChildren
 }
 
 declare module '@mui/lab/TreeItem' {
   interface TreeItemContentProps {
-    section: SectionWithChildren
+    section: TranslatedSection
   }
+}
+
+type TocTreeItemProps = TreeItemProps & {
+  section: TranslatedSection
 }
 
 export default TocTreeItem

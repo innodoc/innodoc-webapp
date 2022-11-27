@@ -5,7 +5,7 @@ import type { IconifyJSON } from '@iconify/types'
 import { getIcons } from '@iconify/utils/lib/icon-set/get-icons'
 import { parse as parseSvg, type RootNode } from 'svg-parser'
 
-import type { ApiCourse } from '#types/api'
+import type { ApiCourse } from '#types/entities/course'
 
 import scanIconNames from './scanIconNames'
 

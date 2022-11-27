@@ -1,10 +1,9 @@
 import { Breadcrumbs as MuiBreadcrumbs, Link, styled, Typography } from '@mui/material'
 
-import { selectBreadcrumbSections } from '#store/selectors/content/section'
+import useSelectBreadcrumbSections from '#store/hooks/useSelectBreadcrumbSections'
 import Icon from '#ui/components/common/Icon'
 import HomeLink from '#ui/components/common/link/HomeLink'
 import SectionLink from '#ui/components/common/link/SectionLink'
-import { useSelector } from '#ui/hooks/store'
 import { formatSectionTitle } from '#utils/content'
 
 const StyledBreadcrumbs = styled(MuiBreadcrumbs)(({ theme }) => ({
@@ -24,7 +23,7 @@ const StyledBreadcrumbs = styled(MuiBreadcrumbs)(({ theme }) => ({
 }))
 
 function Breadcrumbs() {
-  const sections = useSelector(selectBreadcrumbSections)
+  const { sections } = useSelectBreadcrumbSections()
 
   return (
     <StyledBreadcrumbs separator={<Icon name="mdi:chevron-right" />}>

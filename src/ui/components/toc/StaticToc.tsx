@@ -1,10 +1,8 @@
 import { Link, styled } from '@mui/material'
 
-import type { RootState } from '#store/makeStore'
-import { selectSectionsByParent } from '#store/selectors/content/section'
-import type { Section } from '#types/api'
+import useSelectSectionChildren from '#store/hooks/useSelectSectionChildren'
+import type { TranslatedSection } from '#types/entities/section'
 import SectionLink from '#ui/components/common/link/SectionLink'
-import { useSelector } from '#ui/hooks/store'
 
 const StyledUl = styled('ul')(({ theme }) => ({
   listStyleType: 'none',
@@ -19,8 +17,7 @@ const StyledUlRoot = styled('ul')(({ theme }) => ({
 }))
 
 function SectionItem({ section }: SectionProps) {
-  const selectSections = (state: RootState) => selectSectionsByParent(state, section.path)
-  const sections = useSelector(selectSections)
+  const { sections } = useSelectSectionChildren(section.id)
 
   const children =
     sections !== undefined ? (
@@ -40,12 +37,11 @@ function SectionItem({ section }: SectionProps) {
 }
 
 type SectionProps = {
-  section: Section
+  section: TranslatedSection
 }
 
 function StaticToc() {
-  const selectSections = (state: RootState) => selectSectionsByParent(state, null)
-  const sections = useSelector(selectSections)
+  const { sections } = useSelectSectionChildren(null)
 
   const children = sections.map((section) => <SectionItem key={section.path} section={section} />)
   return sections !== undefined ? <StyledUlRoot>{children}</StyledUlRoot> : null

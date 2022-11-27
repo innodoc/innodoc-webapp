@@ -13,7 +13,7 @@ function SvgImage({ id }: SvgImageProps) {
   const { data: rootNode, isError } = useGetSvgQuery({ id })
 
   if (isError) {
-    return <InlineError>Failed to fetch SVG!</InlineError>
+    return <InlineError>Failed to fetch SVG</InlineError>
   }
 
   if (rootNode === undefined) {

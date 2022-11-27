@@ -7,7 +7,7 @@ import { type ReactElement, type ReactNode } from 'react'
 import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '#constants'
 import fetchContent from '#renderer/fetchContent'
 import makeStore, { type Store } from '#store/makeStore'
-import contentApi from '#store/slices/contentApi'
+import courses from '#store/slices/entities/courses'
 import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
 
@@ -15,12 +15,12 @@ let i18n: I18n
 let store: Store
 const locale = 'en'
 
-const { initiate: getContent } = contentApi.endpoints.getContent
+const { initiate: getContent } = courses.endpoints.getContent
 
 beforeEach(async () => {
   store = makeStore()
-  i18n = await getI18n(I18NextFsBackend, {}, 'cimode', store)
-  await store.dispatch(contentApi.endpoints.getCourse.initiate())
+  i18n = await getI18n(I18NextFsBackend, {}, 'cimode', 'innodoc', store)
+  await store.dispatch(courses.endpoints.getCourse.initiate())
   await fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_A }))
   await fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_B }))
 })

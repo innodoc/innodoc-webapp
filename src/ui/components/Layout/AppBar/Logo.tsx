@@ -1,9 +1,8 @@
 import { Link, styled, Typography } from '@mui/material'
 
 import SvgLogo from '#build/Logo'
-import { selectCourseTitle } from '#store/selectors/content/course'
+import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
 import HomeLink from '#ui/components/common/link/HomeLink'
-import { useSelector } from '#ui/hooks/store'
 
 const StyledSvgLogo =
   SvgLogo !== null
@@ -17,19 +16,21 @@ const StyledSvgLogo =
     : () => null
 
 function Logo() {
-  const title = useSelector(selectCourseTitle)
+  const { course } = useSelectCurrentCourse()
+
+  if (course === undefined) return null
 
   const content =
     SvgLogo !== null ? (
       <StyledSvgLogo />
     ) : (
       <Typography variant="h6" color="inherit" noWrap>
-        {title}
+        {course.title}
       </Typography>
     )
 
   return (
-    <Link component={HomeLink} sx={{ display: 'inline-flex' }} title={title}>
+    <Link component={HomeLink} sx={{ display: 'inline-flex' }} title={course.title}>
       {content}
     </Link>
   )

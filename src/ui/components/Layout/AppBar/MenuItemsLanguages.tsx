@@ -2,20 +2,24 @@ import { ListItemText, MenuItem } from '@mui/material'
 import type { ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { selectLocales } from '#store/selectors/content/course'
-import { selectLocale } from '#store/selectors/ui'
-import { changeLocale } from '#store/slices/uiSlice'
+import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
+import { changeLocale, selectLocale } from '#store/slices/uiSlice'
 import { useDispatch, useSelector } from '#ui/hooks/store'
 
 function MenuItemsLanguages({ inset }: MenuItemsLanguagesProps) {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const locales = useSelector(selectLocales)
+
+  const { course } = useSelectCurrentCourse()
   const currentLocale = useSelector(selectLocale)
+
+  if (course === undefined) {
+    return null
+  }
 
   return (
     <>
-      {locales.map((locale) => (
+      {course.locales.map((locale) => (
         <MenuItem
           key={locale}
           onClick={() => dispatch(changeLocale(locale))}

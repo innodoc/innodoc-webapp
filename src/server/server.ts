@@ -1,6 +1,8 @@
 import express, { type Express } from 'express'
 import localeMiddleware from 'locale'
 
+import { API_PREFIX } from '#routes'
+
 import apiRouter from './api/apiRouter'
 import config, { type ServerConfig } from './config'
 import frontendRouter from './frontendRouter'
@@ -45,7 +47,7 @@ async function startServer() {
 
   await setupViteServer(app, config)
 
-  app.use('/api', apiRouter)
+  app.use(API_PREFIX, apiRouter(config))
   app.use(frontendRouter)
 
   app.listen({ host: config.host, port: config.port })

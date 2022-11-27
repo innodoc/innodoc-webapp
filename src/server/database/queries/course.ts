@@ -2,7 +2,9 @@ import type { LanguageCode } from 'iso-639-1'
 import type { Root } from 'mdast'
 
 import getDatabase from '#server/database/getDatabase'
-import type { DbCourse, DbPage, DbSection } from '#server/database/types'
+import type { DbCourse } from '#types/entities/course'
+import type { DbPage } from '#types/entities/page'
+import type { DbSection } from '#types/entities/section'
 
 function getCourse(name: DbCourse['name']): Promise<DbCourse> {
   const db = getDatabase()
@@ -22,9 +24,9 @@ function getCourse(name: DbCourse['name']): Promise<DbCourse> {
     .groupBy('c.id')
 }
 
-async function getCoursePages(name: DbCourse['name']): Promise<DbPage[]> {
+function getCoursePages(name: DbCourse['name']): Promise<DbPage[]> {
   const db = getDatabase()
-  const result = await db
+  return db
     .select<DbPage[]>(
       'p.*',
       db.raw('array_to_json(p.linked) as linked'),
@@ -39,12 +41,6 @@ async function getCoursePages(name: DbCourse['name']): Promise<DbPage[]> {
     .leftOuterJoin('pages_short_title_trans as st', 'p.id', 'st.page_id')
     .where('c.name', name)
     .groupBy('p.id')
-
-  // Fix short_title
-  return result.map((page) => ({
-    ...page,
-    short_title: page.short_title === null ? undefined : page.short_title,
-  }))
 }
 
 async function getPageContent(
@@ -54,50 +50,134 @@ async function getPageContent(
 ): Promise<Root | undefined> {
   const db = getDatabase()
   const result = await db
-    .first<{ value: Root } | undefined>('ct.value')
+    .first<ContentResult>('ct.value')
     .from('pages as p')
     .join('courses as c', 'p.course_id', 'c.id')
     .leftOuterJoin('pages_content_trans as ct', 'p.id', 'ct.page_id')
     .where('p.name', pageName)
     .where('c.name', courseName)
     .where('ct.locale', locale)
+  return result !== undefined ? result.value : undefined
+}
+
+function getCourseSections(courseName: DbCourse['name']): Promise<DbSection[]> {
+  const db = getDatabase()
+  return db
+    .withRecursive(
+      'cre',
+      ['id', 'name', 'path', 'course_id', 'type', 'parent_id', 'order', 'created_at', 'updated_at'],
+      (qb) => {
+        void qb
+          // Start with root node
+          .select(
+            's.id',
+            's.name',
+            db.raw('s.name::varchar'),
+            's.course_id',
+            's.type',
+            's.parent_id',
+            db.raw('array[s.order]::integer[]'),
+            's.created_at',
+            's.updated_at'
+          )
+          .from('sections as s')
+          .join('courses as c', 's.course_id', 'c.id')
+          .where('s.parent_id', null)
+          .where('c.name', courseName)
+          .union((qb) => {
+            // Add one level of children on each iteration
+            void qb
+              .select(
+                's.id',
+                's.name',
+                db.raw("cre.path || '/' || s.name"),
+                's.course_id',
+                's.type',
+                's.parent_id',
+                db.raw('cre.order || s.order'),
+                's.created_at',
+                's.updated_at'
+              )
+              .from('sections as s')
+              .join('cre', 'cre.id', 's.parent_id')
+          })
+      }
+    )
+    .select(
+      'cre.id',
+      'cre.name',
+      'cre.path',
+      'cre.course_id',
+      'cre.type',
+      'cre.parent_id',
+      'cre.order',
+      'cre.created_at',
+      'cre.updated_at',
+      db.raw('json_object_agg(t.locale, t.value) as title'),
+      db.raw(
+        'json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title'
+      )
+    )
+    .from('cre')
+    .join('sections_title_trans as t', 'cre.id', 't.section_id')
+    .leftOuterJoin('sections_short_title_trans as st', 'cre.id', 'st.section_id')
+    .groupBy(
+      'cre.id',
+      'cre.name',
+      'cre.path',
+      'cre.course_id',
+      'cre.type',
+      'cre.parent_id',
+      'cre.order',
+      'cre.created_at',
+      'cre.updated_at'
+    )
+    .orderBy('cre.order') as Promise<DbSection[]>
+}
+
+async function getSectionContent(
+  courseName: DbCourse['name'],
+  locale: LanguageCode,
+  sectionId: DbSection['id']
+): Promise<Root | undefined> {
+  const db = getDatabase()
+  const result = await db
+    .first<{ value: Root } | undefined>('ct.value')
+    .from('sections as s')
+    .join('courses as c', 's.course_id', 'c.id')
+    .leftOuterJoin('sections_content_trans as ct', 's.id', 'ct.section_id')
+    .where('s.id', sectionId)
+    .where('c.name', courseName)
+    .where('ct.locale', locale)
 
   return result !== undefined ? result.value : undefined
 }
 
-async function getCourseSections(name: DbCourse['name']): Promise<DbSection[]> {
+async function getFragmentContent(
+  courseName: DbCourse['name'],
+  locale: LanguageCode,
+  fragmentName: string
+): Promise<Root | undefined> {
   const db = getDatabase()
   const result = await db
-    .select<DbSection[]>(
-      's.id',
-      's.course_id',
-      's.type',
-      's.path',
-      's.created_at',
-      's.updated_at',
-      's.order',
-      db.raw('s.order'),
-      db.raw('json_object_agg(t.locale, t.value) as title'),
-      db.raw(
-        'json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title'
-      ),
-      db.raw("nullif(subpath(s.path, 0, -1), '') as parent"),
-      db.raw('array_agg(distinct ch.path::text) filter (where ch.id is not null) as children')
-    )
-    .from('sections as s')
-    .join('courses as c', 's.course_id', 'c.id')
-    .join('sections_title_trans as t', 's.id', 't.section_id')
-    .leftOuterJoin('sections_short_title_trans as st', 's.id', 'st.section_id')
-    .joinRaw("left outer join sections ch on ch.path ~ (s.path::text || '.*{1}')::lquery")
-    .where('c.name', name)
-    .orderBy('s.path', 'asc')
-    .groupBy('s.id')
+    .first<{ value: Root } | undefined>('ct.value')
+    .from('fragments as f')
+    .join('courses as c', 'f.course_id', 'c.id')
+    .leftOuterJoin('fragments_content_trans as ct', 'f.id', 'ct.section_id')
+    .where('f.name', fragmentName)
+    .where('c.name', courseName)
+    .where('ct.locale', locale)
 
-  // Fix short_title
-  return result.map((section) => ({
-    ...section,
-    short_title: section.short_title === null ? undefined : section.short_title,
-  }))
+  return result !== undefined ? result.value : undefined
 }
 
-export { getCourse, getCoursePages, getPageContent, getCourseSections }
+type ContentResult = { value: Root } | undefined
+
+export {
+  getCourse,
+  getCoursePages,
+  getFragmentContent,
+  getPageContent,
+  getCourseSections,
+  getSectionContent,
+}

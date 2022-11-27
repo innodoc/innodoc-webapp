@@ -1,4 +1,6 @@
 import { onBeforeRender as onBeforeRenderDefault } from '#renderer/_default.page.server'
+import fetchContent from '#renderer/fetchContent'
+import pages from '#store/slices/entities/pages'
 import type { PageContextServer } from '#types/pageContext'
 
 async function onBeforeRender(pageContext: PageContextServer) {
@@ -12,8 +14,15 @@ async function onBeforeRender(pageContext: PageContextServer) {
 
     // Pass custom prepopulation task to onBeforeRender
     pagePrepopFactories: [
-      // (store, locale) =>
-      //   fetchContent(store, contentApi.endpoints.getPageContent.initiate({ locale, id: pageId })),
+      (store, locale) =>
+        fetchContent(
+          store,
+          pages.endpoints.getPageContent.initiate({
+            courseName: pageContext.courseName,
+            locale,
+            pageName,
+          })
+        ),
     ],
   })
 }

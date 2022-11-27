@@ -2,11 +2,10 @@ import { Button, type ButtonProps, Stack, styled } from '@mui/material'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { selectNavPages } from '#store/selectors/content/page'
+import useSelectLinkedPages from '#store/hooks/useSelectLinkedPages'
 import Icon from '#ui/components/common/Icon'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
-import { useSelector } from '#ui/hooks/store'
 
 import { otherPagesNav } from './otherPages'
 
@@ -27,7 +26,7 @@ const StyledNavButton = styled(NavButton)(({ theme }) => ({
 
 function NavMenu() {
   const { t } = useTranslation()
-  const coursePages = useSelector(selectNavPages)
+  const { pages } = useSelectLinkedPages('nav')
 
   return (
     <Stack
@@ -39,7 +38,7 @@ function NavMenu() {
         justifyContent: 'center',
       }}
     >
-      {coursePages.map((page) => (
+      {pages.map((page) => (
         <StyledNavButton
           component={PageLink}
           key={page.name}

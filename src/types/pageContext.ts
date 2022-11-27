@@ -4,13 +4,15 @@ import type { HelmetServerState } from 'react-helmet-async'
 import type { PageContextBuiltIn } from 'vite-plugin-ssr'
 import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client/router'
 
+import type { passToClientProps } from '#constants'
 import type { RootState, Store } from '#store/makeStore'
 
-import type { ApiCourse, Page } from './api'
+import type { ApiCourse } from './entities/course'
+import type { ApiPage } from './entities/page'
 
 /** Custom client-side page context */
 export type PageContextClient = Omit<PageContextBuiltInClient, 'Page'> &
-  Pick<PageContextServer, 'locale' | 'Page' | 'pageProps' | 'preloadedState'>
+  Pick<PageContextServer, 'Page' | typeof passToClientProps[number]>
 
 /** Custom server-side page context */
 export type PageContextServer = Omit<PageContextBuiltIn, 'Page'> & {
@@ -48,7 +50,7 @@ export type PageContextServer = Omit<PageContextBuiltIn, 'Page'> & {
 /** Props to render a page */
 export type PageProps = {
   /** Page Id */
-  pageName?: Page['name']
+  pageName?: ApiPage['name']
 
   /** Section path */
   sectionPath?: string

@@ -3,17 +3,20 @@ import type { LanguageCode } from 'iso-639-1'
 import { initReactI18next } from 'react-i18next'
 
 import type { Store } from '#store/makeStore'
-import { selectLocales } from '#store/selectors/content/course'
+import courses from '#store/slices/entities/courses'
+import type { ApiCourse } from '#types/entities/course'
 
 const isDev = import.meta.env.MODE === 'development'
 const isBrowser = typeof window !== 'undefined'
 
 const NAMESPACE = 'common'
 
+// TODO: replace singleton with createSelector cache?
 async function getI18n(
   backend: Parameters<i18n['use']>[0],
   backendOpts: Record<string, unknown>,
   currentLocale: LanguageCode,
+  courseName: ApiCourse['name'],
   store: Store
 ) {
   // i18next as a singleton is reused. Just load translations and update store.
@@ -23,6 +26,11 @@ async function getI18n(
     }
     return i18next
   }
+
+  // Select current course
+  const selectCurrentCourse = courses.endpoints.getCourseByName.select({ courseName })
+  const { data: course } = selectCurrentCourse(store.getState())
+  if (course === undefined) throw new Error(`No course loaded`)
 
   // Initialize i18next
   await i18next
@@ -41,7 +49,7 @@ async function getI18n(
       ns: NAMESPACE,
       preload: [currentLocale],
       saveMissing: !isBrowser && isDev,
-      supportedLngs: selectLocales(store.getState()),
+      supportedLngs: course.locales,
     })
 
   return i18next

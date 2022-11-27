@@ -9,3 +9,4 @@ dist
 *.local
 .env
 /build
+/vite.config.ts.timestamp-*.mjs

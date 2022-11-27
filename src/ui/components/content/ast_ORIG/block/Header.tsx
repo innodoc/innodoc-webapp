@@ -8,7 +8,7 @@ import type { ContentComponentProps } from '#ui/components/content/ast/types'
 
 function Header({ content: [level, [id, classes], content] }: ContentComponentProps<'Header'>) {
   if (level < 1 || level > 6) {
-    return <InlineError>Header level must be in range from 1 to 6, got {level}!</InlineError>
+    return <InlineError>Header level must be in range from 1 to 6, got {level}</InlineError>
   }
 
   return (

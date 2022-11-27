@@ -1,26 +1,37 @@
 import { Page as ErrorPage } from '#renderer/_error.page'
-import type { RootState } from '#store/makeStore'
-import { selectCurrentCourse } from '#store/selectors/content/course'
-import { selectPageByName } from '#store/selectors/content/page'
-import { selectLocale } from '#store/selectors/ui'
-import { useGetPageContentQuery } from '#store/slices/contentApi'
-import type { Page } from '#types/api'
+import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
+import useSelectPage from '#store/hooks/useSelectPage'
+import { useGetPageContentQuery } from '#store/slices/entities/pages'
+import { selectLocale } from '#store/slices/uiSlice'
+import type { TranslatedCourse } from '#types/entities/course'
+import type { TranslatedPage } from '#types/entities/page'
+import InlineError from '#ui/components/common/error/InlineError'
 import PageHeader from '#ui/components/common/PageHeader'
 import RootNode from '#ui/components/content/mdast/RootNode'
 import { useSelector } from '#ui/hooks/store'
 
-function ContentPage({ pageName }: ContentPageProps) {
-  const selectPage = (state: RootState) => selectPageByName(state, pageName)
-  const course = useSelector(selectCurrentCourse)
-  const page = useSelector(selectPage)
+function Content({ course, page }: ContentProps) {
   const locale = useSelector(selectLocale)
-  const { data: rootNode } = useGetPageContentQuery(
-    { courseName: course?.name, locale, pageName },
-    { skip: course === undefined }
-  )
+  const {
+    data: rootNode,
+    isError,
+    isLoading,
+  } = useGetPageContentQuery({
+    courseName: course.name,
+    locale,
+    pageName: page.name,
+  })
 
-  if (page === undefined || rootNode === undefined) {
+  if (isLoading === undefined) {
+    return null
+  }
+
+  if (isError === undefined) {
     return <ErrorPage is404 />
+  }
+
+  if (rootNode === undefined) {
+    return null
   }
 
   return (
@@ -31,8 +42,23 @@ function ContentPage({ pageName }: ContentPageProps) {
   )
 }
 
-type ContentPageProps = {
-  pageName: Page['name']
+interface ContentProps {
+  course: TranslatedCourse
+  page: TranslatedPage
+}
+
+function ContentPage({ pageName }: ContentPageProps) {
+  const { course } = useSelectCurrentCourse()
+  const { page } = useSelectPage(pageName)
+
+  if (course === undefined) return <InlineError>No course found</InlineError>
+  if (page === undefined) return <ErrorPage is404 />
+
+  return <Content course={course} page={page} />
+}
+
+interface ContentPageProps {
+  pageName: TranslatedPage['name']
 }
 
 export { ContentPage as Page }

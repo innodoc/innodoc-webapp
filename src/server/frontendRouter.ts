@@ -2,7 +2,7 @@ import { type RequestHandler, Router } from 'express'
 import type { LanguageCode } from 'iso-639-1'
 import { renderPage } from 'vite-plugin-ssr'
 
-import type { ApiCourse } from '#types/api'
+import type { ApiCourse } from '#types/entities/course'
 import { extractLocale, formatUrl } from '#utils/url'
 
 const frontendRouter = Router().get('*', (async (req, res, next) => {
@@ -13,7 +13,9 @@ const frontendRouter = Router().get('*', (async (req, res, next) => {
   const pageContextInit: PageContextInit = {
     locale,
     urlOriginal: urlWithoutLocale,
-    courseName: 'innodoc', // TODO: extract from domain name, url path and fallback?
+    // TODO: extract from domain name, url path and fallback?, something like
+    // https://github.com/edwardhotchkiss/subdomain
+    courseName: 'innodoc',
   }
 
   // Ensure url path is prefixed with locale
@@ -24,7 +26,7 @@ const frontendRouter = Router().get('*', (async (req, res, next) => {
   // Render page
   const pageContext = await renderPage(pageContextInit)
 
-  // Honor redirection directive from app
+  // Follow redirection directive from app
   if (pageContext.redirectTo !== undefined) {
     return res.redirect(307, pageContext.redirectTo)
   }

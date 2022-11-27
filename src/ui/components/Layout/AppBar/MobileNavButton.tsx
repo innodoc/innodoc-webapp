@@ -1,8 +1,8 @@
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import { selectNavPages } from '#store/selectors/content/page'
-import { selectUrlWithoutLocale } from '#store/selectors/ui'
+import useSelectLinkedPages from '#store/hooks/useSelectLinkedPages'
+import { selectUrlWithoutLocale } from '#store/slices/uiSlice'
 import Icon from '#ui/components/common/Icon'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
@@ -15,7 +15,7 @@ import otherPages from './otherPages'
 function MobileNavButton() {
   const { t } = useTranslation()
 
-  const pages = useSelector(selectNavPages)
+  const { pages } = useSelectLinkedPages('nav')
   const urlWithoutLocale = useSelector(selectUrlWithoutLocale)
 
   return (

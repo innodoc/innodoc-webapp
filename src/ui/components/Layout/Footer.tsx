@@ -8,10 +8,10 @@ import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '#constants'
-import { selectCourseTitle } from '#store/selectors/content/course'
-import { selectFooterPages } from '#store/selectors/content/page'
-import { selectLocale } from '#store/selectors/ui'
-import { useGetContentQuery } from '#store/slices/contentApi'
+import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
+import useSelectLinkedPages from '#store/hooks/useSelectLinkedPages'
+import { useGetContentQuery } from '#store/slices/entities/fragments'
+import { selectLocale } from '#store/slices/uiSlice'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
 import RootNode from '#ui/components/content/mdast/RootNode'
@@ -43,11 +43,13 @@ const linkSx = { alignItems: 'center', display: 'flex', '& svg': { mr: 1 } }
 function Footer() {
   const { t } = useTranslation()
   const { mode } = useColorScheme()
-  const courseTitle = useSelector(selectCourseTitle)
-  const coursePages = useSelector(selectFooterPages)
+  const { pages: coursePages } = useSelectLinkedPages('footer')
+  const { course } = useSelectCurrentCourse()
   const locale = useSelector(selectLocale)
   const { data: blocksFooterA } = useGetContentQuery({ locale, path: CONTENT_NAME_FOOTER_A })
   const { data: blocksFooterB } = useGetContentQuery({ locale, path: CONTENT_NAME_FOOTER_B })
+
+  if (course === undefined) return null
 
   const internalLinks = otherPagesFooter.map(({ icon, to, title }) => (
     <Link component={InternalLink} key={to} sx={linkSx} to={to}>
@@ -79,7 +81,7 @@ function Footer() {
           <Grid container spacing={4}>
             <Grid item xs={12} md={3} sx={{ mb: 3 }}>
               <Typography variant="h4" gutterBottom>
-                {courseTitle}
+                {course.title}
               </Typography>
               <Stack spacing={1}>{[...internalLinks, ...courseLinks]}</Stack>
             </Grid>

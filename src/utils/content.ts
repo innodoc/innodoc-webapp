@@ -1,8 +1,8 @@
 import type { AnyElt, AttrList, Tree } from 'pandoc-filter'
 import type { ComponentType } from 'react'
 
-import type { Section, Page } from '#types/api'
-import type { AttrObj } from '#types/common'
+import type { TranslatedPage } from '#types/entities/page'
+import type { TranslatedSection } from '#types/entities/section'
 
 /* Convert AST to string */
 function astToString(ast: string | Tree) {
@@ -29,9 +29,9 @@ function astToString(ast: string | Tree) {
 }
 
 /* Convert `[[key, val], [key, val], ...]` style attribute list to object */
-function attributesToObject(attrs: AttrList | null): AttrObj {
-  return attrs ? attrs.reduce((obj, [key, val]) => ({ ...obj, [key]: val }), {}) : {}
-}
+// function attributesToObject(attrs: AttrList | null): AttrObj {
+//   return attrs ? attrs.reduce((obj, [key, val]) => ({ ...obj, [key]: val }), {}) : {}
+// }
 
 /* Format numbered title for `Elt` from attributes (e.g. "Example 1.2.1") */
 function formatNumberedTitleElt(title: string, attributes: AttrList) {
@@ -41,9 +41,9 @@ function formatNumberedTitleElt(title: string, attributes: AttrList) {
 }
 
 /** Format section number */
-function formatSectionTitle(section: Section, preferShort = false) {
-  const num = section.number.map((n) => (n + 1).toString()).join('.')
-  const title = preferShort && section.shortTitle !== undefined ? section.shortTitle : section.title
+function formatSectionTitle(section: TranslatedSection, preferShort = false) {
+  const num = section.order.map((n) => (n + 1).toString()).join('.')
+  const title = preferShort && section.shortTitle !== null ? section.shortTitle : section.title
   return `${num} ${title}`
 }
 
@@ -59,11 +59,6 @@ function getClassNameToComponentMapper<P>(classNameComponentMap: Record<string, 
     }
     return undefined
   }
-}
-
-/** Get section path from `Section` */
-function getSectionPath(section: Section) {
-  return section.path.replace('.', '/')
 }
 
 /** Generate page URL */

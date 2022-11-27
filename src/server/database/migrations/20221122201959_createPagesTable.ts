@@ -1,6 +1,6 @@
 import type { Knex } from 'knex'
 
-import { PAGE_LINK_LOCACTIONS } from '#constants'
+import { NAME_REGEX, PAGE_LINK_LOCACTIONS } from '#constants'
 
 export async function up(knex: Knex) {
   // Page link location enum type
@@ -12,7 +12,7 @@ export async function up(knex: Knex) {
 
   await knex.schema.createTable('pages', (t) => {
     t.increments('id').primary()
-    t.string('name').notNullable().checkRegex('[a-z0-9_-]')
+    t.string('name').notNullable().checkRegex(NAME_REGEX)
     t.integer('course_id')
       .notNullable()
       .references('courses.id')

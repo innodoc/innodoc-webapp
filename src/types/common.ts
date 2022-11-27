@@ -1,18 +1,10 @@
-import type { LanguageCode } from 'iso-639-1'
-
 import type { PAGE_LINK_LOCACTIONS, SECTION_TYPES } from '#constants'
-
-/** String that is translated to different languages */
-export type LocalizedString = Record<LanguageCode, string>
 
 /** Location in the layout where page links can appear */
 export type PageLinkLocation = typeof PAGE_LINK_LOCACTIONS[number]
 
 /** Section type */
 export type SectionType = typeof SECTION_TYPES[number]
-
-// TODO: remove
-export type AttrObj = Record<string, string>
 
 type TYear = `${number}${number}${number}${number}`
 type TMonth = `${number}${number}`

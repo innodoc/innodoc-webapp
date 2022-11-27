@@ -1,8 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { LanguageCode } from 'iso-639-1'
 
-import type { ApiCourse } from '#types/api'
+import type { RootState } from '#store/makeStore'
+import type { ApiCourse } from '#types/entities/course'
 
 interface UiSliceState {
   /** Current course name */
@@ -42,6 +43,27 @@ const uiSlice = createSlice({
     },
   },
 })
+
+/** Select ui slice */
+const selectUi = (state: RootState) => state[uiSlice.name]
+
+/** Select current course name */
+export const selectCourseName = (state: RootState) => selectUi(state).courseName
+
+/** Select current locale */
+export const selectLocale = (state: RootState) => selectUi(state).locale
+
+/** Select url info */
+export const selectUrlWithoutLocale = (state: RootState) => selectUi(state).urlWithoutLocale
+
+/** Select current section path */
+export const selectCurrentSectionPath = createSelector(
+  [selectUrlWithoutLocale],
+  (urlWithoutLocale) =>
+    urlWithoutLocale?.startsWith(`/${import.meta.env.INNODOC_SECTION_PATH_PREFIX}/`)
+      ? urlWithoutLocale.substring(import.meta.env.INNODOC_SECTION_PATH_PREFIX.length + 2)
+      : undefined
+)
 
 export const { changeCourseName, changeLocale, changeUrlWithoutLocale } = uiSlice.actions
 export default uiSlice

@@ -1,16 +1,16 @@
 import { forwardRef } from 'react'
 
-import { selectHomeLink } from '#store/selectors/content/course'
-import { useSelector } from '#ui/hooks/store'
+import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
 
 import ContentLink from './ContentLink'
 import type { InternalLinkProps } from './InternalLink'
 
 const HomeLink = forwardRef<HTMLAnchorElement, HomeLinkProps>(function HomeLink(props, ref) {
-  const homeLink = useSelector(selectHomeLink)
-  if (homeLink === undefined) return null
+  const { course } = useSelectCurrentCourse()
 
-  return <ContentLink ref={ref} to={homeLink} {...props} />
+  if (course === undefined) return null
+
+  return <ContentLink ref={ref} to={course.homeLink} {...props} />
 })
 
 type HomeLinkProps = Omit<InternalLinkProps, 'to'>

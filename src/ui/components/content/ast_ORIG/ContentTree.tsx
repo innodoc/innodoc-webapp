@@ -73,7 +73,7 @@ function Elt({ elt }: EltRendererProps) {
   if (elt.t === 'Subscript') return <Subscript content={elt.c} />
   if (elt.t === 'Superscript') return <Superscript content={elt.c} />
 
-  return <InlineError>ContentTree: Invalid element encountered!</InlineError>
+  return <InlineError>ContentTree: Invalid element encountered</InlineError>
 }
 
 type EltRendererProps = {

@@ -1,0 +1,46 @@
+import { createSelector } from '@reduxjs/toolkit'
+import type { LanguageCode } from 'iso-639-1'
+import { useMemo } from 'react'
+
+import { useGetCourseSectionsQuery } from '#store/slices/entities/sections'
+import { selectCourseName, selectLocale } from '#store/slices/uiSlice'
+import { defaultTranslatableFields } from '#types/entities/base'
+import type { ApiSection } from '#types/entities/section'
+import { useSelector } from '#ui/hooks/store'
+import { translateEntity } from '#utils/i18n'
+
+/** Return section by path */
+function useSelectSection(sectionPath?: ApiSection['path']) {
+  const locale = useSelector(selectLocale)
+  const courseName = useSelector(selectCourseName)
+
+  const selectSection = useMemo(
+    () =>
+      createSelector(
+        [
+          (_result: { data: ApiSection[] | undefined }) => _result.data,
+          (_result, _sectionPath: ApiSection['path']) => _sectionPath,
+          (_result, _sectionPath, _locale: LanguageCode) => _locale,
+        ],
+        (sections, _sectionPath, _locale) => {
+          if (sections === undefined) return undefined
+          const section = sections.find((p) => p.path === _sectionPath)
+          if (section === undefined) return undefined
+          return translateEntity(section, defaultTranslatableFields, _locale)
+        }
+      ),
+    []
+  )
+
+  const result = useGetCourseSectionsQuery(
+    { courseName: courseName ?? '' },
+    {
+      selectFromResult: (result) => ({ section: selectSection(result, sectionPath, locale) }),
+      skip: courseName === null || sectionPath === undefined,
+    }
+  )
+
+  return result
+}
+
+export default useSelectSection

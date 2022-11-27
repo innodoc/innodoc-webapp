@@ -1,10 +1,8 @@
 import { forwardRef } from 'react'
 
-import type { RootState } from '#store/makeStore'
-import { selectSectionByPath } from '#store/selectors/content/section'
-import type { Section } from '#types/api'
+import useSelectSection from '#store/hooks/useSelectSection'
+import type { ApiSection, TranslatedSection } from '#types/entities/section'
 import InlineError from '#ui/components/common/error/InlineError'
-import { useSelector } from '#ui/hooks/store'
 import { formatSectionTitle, getSectionUrl } from '#utils/content'
 
 import InternalLink, { type InternalLinkProps } from './InternalLink'
@@ -23,18 +21,18 @@ const SectionLinkSection = forwardRef<HTMLAnchorElement, SectionLinkSectionProps
 )
 
 type SectionLinkSectionProps = Omit<SectionLinkProps, 'section' | 'sectionPath'> & {
-  section: Section
+  section: TranslatedSection
 }
 
 /** SectionLinkSectionPath takes `sectionPath` */
 const SectionLinkSectionPath = forwardRef<HTMLAnchorElement, SectionLinkSectionPathProps>(
   function SectionLinkSectionPath({ sectionPath: sectionPathFull, ...other }, ref) {
     const [sectionPath, hash] = sectionPathFull.split('#')
-    const selectSection = (state: RootState) => selectSectionByPath(state, sectionPath)
-    const section = useSelector(selectSection)
+    const { section } = useSelectSection(sectionPath)
+
     if (section === undefined) {
       return (
-        <InlineError>SectionLink: Section path &quot;{sectionPath}&quot; not found!</InlineError>
+        <InlineError>SectionLink: Section path &quot;{sectionPath}&quot; not found</InlineError>
       )
     }
 
@@ -43,7 +41,7 @@ const SectionLinkSectionPath = forwardRef<HTMLAnchorElement, SectionLinkSectionP
 )
 
 type SectionLinkSectionPathProps = Omit<SectionLinkProps, 'section' | 'sectionPath'> & {
-  sectionPath: string
+  sectionPath: ApiSection['path']
 }
 
 /** SectionLink takes either `section` or `sectionPath` */
@@ -76,8 +74,8 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function Sec
 
 type SectionLinkProps = Omit<InternalLinkProps, 'to'> & {
   preferShortTitle?: boolean
-  section?: Section
-  sectionPath?: string
+  section?: TranslatedSection
+  sectionPath?: ApiSection['path']
 }
 
 export default SectionLink

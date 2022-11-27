@@ -19,9 +19,11 @@ import '@fontsource/lato/700-italic.css'
 import 'katex/dist/katex.min.css'
 
 // import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '#constants'
+import { passToClientProps } from '#constants'
 import makeStore from '#store/makeStore'
-import { selectHomeLink, selectLocales } from '#store/selectors/content/course'
-import contentApi from '#store/slices/contentApi'
+import courses from '#store/slices/entities/courses'
+import pages from '#store/slices/entities/pages'
+import sections from '#store/slices/entities/sections'
 import { changeCourseName, changeLocale, changeUrlWithoutLocale } from '#store/slices/uiSlice'
 import type { PageContextServer, PrepopFactory } from '#types/pageContext'
 import PageShell from '#ui/components/PageShell/PageShell'
@@ -48,7 +50,7 @@ function getI18nBackendOpts() {
   }
 }
 
-const passToClient = ['locale', 'preloadedState', 'pageProps']
+const passToClient = passToClientProps
 
 function render({ emotionStyleTags, helmet, pageHtml, redirectTo }: PageContextServer) {
   if (redirectTo !== undefined) {
@@ -94,9 +96,9 @@ async function onBeforeRender({
 
   // Prepopulate store with data necessary to render page
   const prepopFactories: PrepopFactory[] = [
-    (store) => store.dispatch(contentApi.endpoints.getCourse.initiate(courseName)),
-    (store) => store.dispatch(contentApi.endpoints.getCoursePages.initiate(courseName)),
-    (store) => store.dispatch(contentApi.endpoints.getCourseSections.initiate(courseName)),
+    (store) => store.dispatch(courses.endpoints.getCourseByName.initiate({ courseName })),
+    (store) => store.dispatch(pages.endpoints.getCoursePages.initiate({ courseName })),
+    (store) => store.dispatch(sections.endpoints.getCourseSections.initiate({ courseName })),
     // (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_A })),
     // (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_B })),
   ]
@@ -104,10 +106,14 @@ async function onBeforeRender({
     [...prepopFactories, ...pagePrepopFactories].map((factory) => factory(store, locale))
   )
 
+  // Retrieve course from store
+  const selectCurrentCourse = courses.endpoints.getCourseByName.select({ courseName })
+  const { data: course } = selectCurrentCourse(store.getState())
+  if (course === undefined) throw new Error(`No course loaded`)
+
   // Assert we received locales from manifest
-  const locales = selectLocales(store.getState())
-  if (locales.length < 1) {
-    throw RenderErrorPage({ pageContext: { errorMsg: 'Could not retrieve course locales!' } })
+  if (course.locales.length < 1) {
+    throw RenderErrorPage({ pageContext: { errorMsg: 'Course has no locales' } })
   }
 
   // TODO: how to handle this correctly?
@@ -115,17 +121,17 @@ async function onBeforeRender({
     locale = 'en'
   }
 
-  // Check if locale is valid
-  if (!locales.includes(locale)) {
+  // Check if current locale is valid
+  if (!course.locales.includes(locale)) {
+    // TODO: should redirect to default locale instead
     throw RenderErrorPage({ pageContext: { is404: true } })
   }
 
   // Redirect '/' to homeLink
-  const homeLink = selectHomeLink(store.getState())
-  if (urlPathname === '/' && homeLink !== undefined) {
+  if (urlPathname === '/' && course.homeLink !== undefined) {
     return {
       pageContext: {
-        redirectTo: formatUrl(replacePathPrefixes(homeLink), locale),
+        redirectTo: formatUrl(replacePathPrefixes(course.homeLink), locale),
       },
     }
   }
@@ -134,7 +140,7 @@ async function onBeforeRender({
   const emotionCache = createCache({ key: 'emotion-style' })
 
   // Initialize i18next
-  const i18n = await getI18n(I18NextFsBackend, getI18nBackendOpts(), locale, store)
+  const i18n = await getI18n(I18NextFsBackend, getI18nBackendOpts(), locale, courseName, store)
 
   // Initialize helmet context
   const helmetContext = {}
@@ -173,25 +179,23 @@ async function onBeforePrerender(globalContext: {
   prerenderPageContexts: PrerenderingPageContext[]
 }) {
   // Get course locales
-  const store = makeStore()
-  await store.dispatch(contentApi.endpoints.getCourse.initiate())
-  const locales = selectLocales(store.getState())
-
-  // For each page add locale pages
-  const prerenderPageContexts: PrerenderingPageContext[] = []
-  globalContext.prerenderPageContexts.forEach((pageContext) => {
-    locales.forEach((locale) => {
-      prerenderPageContexts.push({
-        ...pageContext,
-        urlOriginal: formatUrl(pageContext.urlOriginal, locale),
-        locale,
-      })
-    })
-  })
-
-  return {
-    globalContext: { prerenderPageContexts },
-  }
+  // const store = makeStore()
+  // await store.dispatch(contentApi.endpoints.getCourse.initiate())
+  // const locales = selectLocales(store.getState())
+  // // For each page add locale pages
+  // const prerenderPageContexts: PrerenderingPageContext[] = []
+  // globalContext.prerenderPageContexts.forEach((pageContext) => {
+  //   locales.forEach((locale) => {
+  //     prerenderPageContexts.push({
+  //       ...pageContext,
+  //       urlOriginal: formatUrl(pageContext.urlOriginal, locale),
+  //       locale,
+  //     })
+  //   })
+  // })
+  // return {
+  //   globalContext: { prerenderPageContexts },
+  // }
 }
 
 type PrerenderingPageContext = Pick<PageContextServer, 'locale' | 'urlOriginal'>

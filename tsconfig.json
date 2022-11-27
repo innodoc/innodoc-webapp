@@ -35,6 +35,9 @@
       "#renderer/*": [
         "./src/renderer/*"
       ],
+      "#routes": [
+        "./src/routes.ts"
+      ],
       "#server/*": [
         "./src/server/*"
       ],

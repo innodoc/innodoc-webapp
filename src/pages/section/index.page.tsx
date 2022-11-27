@@ -1,33 +1,65 @@
 import { Page as ErrorPage } from '#renderer/_error.page'
-import type { RootState } from '#store/makeStore'
-import { selectSectionByPath } from '#store/selectors/content/section'
-import { selectLocale } from '#store/selectors/ui'
-import { useGetSectionContentQuery } from '#store/slices/contentApi'
+import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
+import useSelectSection from '#store/hooks/useSelectSection'
+import { useGetSectionContentQuery } from '#store/slices/entities/sections'
+import { selectLocale } from '#store/slices/uiSlice'
+import type { TranslatedCourse } from '#types/entities/course'
+import type { TranslatedSection } from '#types/entities/section'
 import Breadcrumbs from '#ui/components/Breadcrumbs/Breadcrumbs'
+import InlineError from '#ui/components/common/error/InlineError'
 import PageHeader from '#ui/components/common/PageHeader'
-import ContentTree from '#ui/components/content/ast/ContentTree'
+import RootNode from '#ui/components/content/mdast/RootNode'
 import SubsectionList from '#ui/components/content/SubsectionList'
 import { useSelector } from '#ui/hooks/store'
 import { formatSectionTitle } from '#utils/content'
 
-function ContentSection({ sectionPath }: ContentSectionProps) {
-  const selectSection = (state: RootState) => selectSectionByPath(state, sectionPath)
-  const section = useSelector(selectSection)
+function Content({ course, section }: ContentProps) {
   const locale = useSelector(selectLocale)
-  const { data: content } = useGetSectionContentQuery({ locale, path: sectionPath })
+  const {
+    data: rootNode,
+    isError,
+    isLoading,
+  } = useGetSectionContentQuery({
+    courseName: course.name,
+    locale,
+    sectionId: section.id,
+  })
 
-  if (section === undefined || content === undefined) {
+  if (isLoading === undefined) {
+    return null
+  }
+
+  if (isError === undefined) {
     return <ErrorPage is404 />
+  }
+
+  if (rootNode === undefined) {
+    return null
   }
 
   return (
     <>
       <Breadcrumbs />
       <PageHeader>{formatSectionTitle(section)}</PageHeader>
-      <SubsectionList sectionPath={sectionPath} />
-      <ContentTree content={content} />
+      <SubsectionList sectionPath={section.path} />
+      <RootNode node={rootNode} />
     </>
   )
+}
+
+interface ContentProps {
+  course: TranslatedCourse
+  section: TranslatedSection
+}
+
+function ContentSection({ sectionPath }: ContentSectionProps) {
+  const { course } = useSelectCurrentCourse()
+  const { section } = useSelectSection(sectionPath)
+
+  if (course === undefined) return <InlineError>No course found</InlineError>
+  if (section === undefined) return <ErrorPage is404 />
+
+  return <Content course={course} section={section} />
 }
 
 type ContentSectionProps = {

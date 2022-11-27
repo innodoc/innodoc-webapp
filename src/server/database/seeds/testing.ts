@@ -1,6 +1,8 @@
 import type { Knex } from 'knex'
 
-import type { DbCourse, DbPage, DbSection } from '#server/database/types'
+import type { DbCourse } from '#types/entities/course'
+import type { DbPage } from '#types/entities/page'
+import type { DbSection } from '#types/entities/section'
 
 export async function seed(knex: Knex) {
   try {
@@ -100,7 +102,7 @@ export async function seed(knex: Knex) {
       // Section 1
 
       const [{ id: section1Id }] = await trx<DbSection>('sections').insert(
-        [{ path: 'section1', course_id: courseId, order: 0 }],
+        [{ name: 'section1', course_id: courseId, order: 0 }],
         ['id']
       )
       await trx('sections_title_trans').insert([
@@ -132,17 +134,17 @@ export async function seed(knex: Knex) {
 
       // Section 1.1
 
-      const [{ id: section11Id }] = await trx<DbSection>('sections').insert(
-        [{ path: 'section1.section1', course_id: courseId, order: 0 }],
+      const [{ id: section1_1Id }] = await trx<DbSection>('sections').insert(
+        [{ name: 'section1_1', course_id: courseId, order: 0, parent_id: section1Id }],
         ['id']
       )
       await trx('sections_title_trans').insert([
-        { section_id: section11Id, value: 'Section 1.1', locale: 'de' },
-        { section_id: section11Id, value: 'Section 1.1', locale: 'en' },
+        { section_id: section1_1Id, value: 'Section 1.1', locale: 'de' },
+        { section_id: section1_1Id, value: 'Section 1.1', locale: 'en' },
       ])
       await trx('sections_content_trans').insert([
         {
-          section_id: section11Id,
+          section_id: section1_1Id,
           value: JSON.stringify({
             type: 'root',
             children: [
@@ -152,7 +154,7 @@ export async function seed(knex: Knex) {
           locale: 'de',
         },
         {
-          section_id: section11Id,
+          section_id: section1_1Id,
           value: JSON.stringify({
             type: 'root',
             children: [
@@ -165,17 +167,17 @@ export async function seed(knex: Knex) {
 
       // Section 1.2
 
-      const [{ id: section12Id }] = await trx<DbSection>('sections').insert(
-        [{ path: 'section1.section2', course_id: courseId, order: 1 }],
+      const [{ id: section1_2Id }] = await trx<DbSection>('sections').insert(
+        [{ name: 'section1_2', course_id: courseId, order: 1, parent_id: section1Id }],
         ['id']
       )
       await trx('sections_title_trans').insert([
-        { section_id: section12Id, value: 'Section 1.2', locale: 'de' },
-        { section_id: section12Id, value: 'Section 1.2', locale: 'en' },
+        { section_id: section1_2Id, value: 'Section 1.2', locale: 'de' },
+        { section_id: section1_2Id, value: 'Section 1.2', locale: 'en' },
       ])
       await trx('sections_content_trans').insert([
         {
-          section_id: section12Id,
+          section_id: section1_2Id,
           value: JSON.stringify({
             type: 'root',
             children: [
@@ -185,7 +187,7 @@ export async function seed(knex: Knex) {
           locale: 'de',
         },
         {
-          section_id: section12Id,
+          section_id: section1_2Id,
           value: JSON.stringify({
             type: 'root',
             children: [
@@ -199,7 +201,7 @@ export async function seed(knex: Knex) {
       // Section 2
 
       const [{ id: section2Id }] = await trx<DbSection>('sections').insert(
-        [{ path: 'section2', course_id: courseId, order: 1 }],
+        [{ name: 'section2', course_id: courseId, order: 1 }],
         ['id']
       )
       await trx('sections_title_trans').insert([

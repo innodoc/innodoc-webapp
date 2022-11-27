@@ -1,11 +1,9 @@
 import { forwardRef } from 'react'
 
-import type { RootState } from '#store/makeStore'
-import { selectPageByName } from '#store/selectors/content/page'
-import type { Page } from '#types/api'
+import useSelectPage from '#store/hooks/useSelectPage'
+import type { ApiPage, TranslatedPage } from '#types/entities/page'
 import InlineError from '#ui/components/common/error/InlineError'
 import Icon from '#ui/components/common/Icon'
-import { useSelector } from '#ui/hooks/store'
 import { getPageUrl } from '#utils/content'
 
 import InternalLink, { type InternalLinkProps } from './InternalLink'
@@ -15,7 +13,6 @@ const PageLinkPage = forwardRef<HTMLAnchorElement, PageLinkPageProps>(function P
   { children, page, preferShortTitle = false, ...other },
   ref
 ) {
-  if (page === undefined) return null
   const { name, icon, shortTitle, title } = page
 
   return (
@@ -31,17 +28,17 @@ const PageLinkPage = forwardRef<HTMLAnchorElement, PageLinkPageProps>(function P
 })
 
 type PageLinkPageProps = Omit<PageLinkProps, 'page' | 'pageName'> & {
-  page: Page
+  page: TranslatedPage
 }
 
 /** PageLinkPageName takes `pageName` */
 const PageLinkPageName = forwardRef<HTMLAnchorElement, PageLinkPageNameProps>(
   function PageLinkPageName({ pageName: pageNameFull, ...other }, ref) {
     const [pageName, hash] = pageNameFull.split('#')
-    const selectPage = (state: RootState) => selectPageByName(state, pageName)
-    const page = useSelector(selectPage)
+    const { page } = useSelectPage(pageName)
+
     if (page === undefined) {
-      return <InlineError>PageLink: Page &quot;{pageName}&quot; not found!</InlineError>
+      return <InlineError>PageLink: Page &quot;{pageName}&quot; not found</InlineError>
     }
 
     return <PageLinkPage hash={hash} ref={ref} page={page} {...other} />
@@ -49,7 +46,7 @@ const PageLinkPageName = forwardRef<HTMLAnchorElement, PageLinkPageNameProps>(
 )
 
 type PageLinkPageNameProps = Omit<PageLinkProps, 'page' | 'pageName'> & {
-  pageName: Page['name']
+  pageName: ApiPage['name']
 }
 
 /** PageLink takes either `page` or `pageName` */
@@ -74,14 +71,14 @@ const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
   }
 
   return (
-    <InlineError>PageLink: Needs either &quot;page&quot; or &quot;pageName&quot; prop!</InlineError>
+    <InlineError>PageLink: Needs either &quot;page&quot; or &quot;pageName&quot; prop</InlineError>
   )
 })
 
 type PageLinkProps = Omit<InternalLinkProps, 'to'> & {
   preferShortTitle?: boolean
-  page?: Page
-  pageName?: Page['name']
+  page?: TranslatedPage
+  pageName?: ApiPage['name']
 }
 
 export default PageLink

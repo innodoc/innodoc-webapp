@@ -1,6 +1,6 @@
 import type { Knex } from 'knex'
 
-import { SECTION_TYPES } from '#constants'
+import { NAME_REGEX, SECTION_TYPES } from '#constants'
 
 type InstalledInfo = {
   installed_version: string | null
@@ -27,6 +27,7 @@ export async function up(knex: Knex) {
 
   await knex.schema.createTable('sections', (t) => {
     t.increments('id').primary()
+    t.string('name').notNullable().checkRegex(NAME_REGEX)
     t.integer('course_id')
       .notNullable()
       .references('courses.id')
@@ -39,12 +40,11 @@ export async function up(knex: Knex) {
     })
       .notNullable()
       .defaultTo('regular')
-    t.specificType('path', 'ltree')
+    t.integer('parent_id').references('sections.id').onUpdate('CASCADE').onDelete('CASCADE')
     t.smallint('order').notNullable().defaultTo(0)
     t.timestamp('created_at').defaultTo(knex.fn.now())
     t.timestamp('updated_at').defaultTo(knex.fn.now())
-    t.index('path', 'idx_path', 'gist')
-    t.unique(['type', 'course_id', 'path']) // unique per course
+    t.unique(['course_id', 'name', 'parent_id']) // unique per course
   })
 
   // Translations

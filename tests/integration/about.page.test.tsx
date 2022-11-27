@@ -2,10 +2,10 @@ import { locale, render, screen, store } from '#test-utils'
 
 import { Page as ContentPage } from '#pages/page/index.page'
 import fetchContent from '#renderer/fetchContent'
-import contentApi from '#store/slices/contentApi'
+import pages from '#store/slices/entities/pages'
 
 beforeEach(async () => {
-  await fetchContent(store, contentApi.endpoints.getPageContent.initiate({ locale, id: 'about' }))
+  await fetchContent(store, pages.endpoints.getPageContent.initiate({ locale, id: 'about' }))
 })
 
 test('<ContentPage pageId="about" />', () => {

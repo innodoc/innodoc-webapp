@@ -1,4 +1,7 @@
 import ISO6391, { type LanguageCode } from 'iso-639-1'
+import { compile } from 'path-to-regexp'
+
+import routes, { type RoutesDefinition } from '#routes'
 
 /** Split locale from URL, e.g. `/en/about` => `en`, `/about`. */
 function extractLocale(url: string, defaultLocale?: LanguageCode): ExtractedLocaleInfo {
@@ -22,9 +25,32 @@ function formatUrl(to: string, locale?: LanguageCode, hash?: string, base = '/')
   return hash ? `${href}#${hash}` : href
 }
 
+const compilers = Object.fromEntries(
+  Object.entries(routes).map(([name, pattern]) => [
+    name,
+    compile(pattern, { encode: encodeURIComponent }),
+  ])
+)
+
+/** Generate route URL path from paramers  */
+function generateUrl(
+  name: keyof RoutesDefinition,
+  params: Record<string, string | number>,
+  prefix?: string
+) {
+  const paramsAsStrings = Object.fromEntries(
+    Object.entries(params).map(([key, val]) => [key, val.toString()])
+  )
+  const url = compilers[name](paramsAsStrings)
+  if (prefix !== undefined) {
+    return url.replace(new RegExp(`^${prefix.replace('/', '\\/')}`), '')
+  }
+  return url
+}
+
 type ExtractedLocaleInfo = {
   locale: LanguageCode
   urlWithoutLocale: string
 }
 
-export { extractLocale, formatUrl }
+export { extractLocale, formatUrl, generateUrl }

@@ -2,8 +2,7 @@ import { Link as MuiLink } from '@mui/material'
 import clsx from 'clsx'
 import { type ComponentProps, forwardRef } from 'react'
 
-import { selectUrlWithoutLocale } from '#store/selectors/ui'
-import { selectLocale } from '#store/selectors/ui'
+import { selectLocale, selectUrlWithoutLocale } from '#store/slices/uiSlice'
 import { useSelector } from '#ui/hooks/store'
 import { formatUrl } from '#utils/url'
 
