@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 
+import { EMOTION_STYLE_INSERTION_POINT_NAME } from '#constants'
 import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
 import { selectLocale, selectUrlWithoutLocale } from '#store/slices/uiSlice'
 import { useSelector } from '#ui/hooks/store'
@@ -32,7 +33,7 @@ function MetaTags() {
           rel="alternate"
         />
       ))}
-      <meta name="emotion-insertion-point" content="" />
+      <meta name={EMOTION_STYLE_INSERTION_POINT_NAME} content="" />
     </Helmet>
   )
 }

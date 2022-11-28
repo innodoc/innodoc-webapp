@@ -3,6 +3,7 @@ import type { i18n as I18nInstance } from 'i18next'
 import I18NextHttpBackend from 'i18next-http-backend'
 import { hydrateRoot, type Root } from 'react-dom/client'
 
+import { EMOTION_STYLE_INSERTION_POINT_NAME, EMOTION_STYLE_KEY } from '#constants'
 import makeStore, { type Store } from '#store/makeStore'
 import { changeUrlWithoutLocale } from '#store/slices/uiSlice'
 import type { PageContextClient } from '#types/pageContext'
@@ -28,12 +29,12 @@ let emotionCache: EmotionCache
 
 function createEmotionCache() {
   const emotionInsertionPoint = document.querySelector<HTMLMetaElement>(
-    'meta[name="emotion-insertion-point"]'
+    `meta[name="${EMOTION_STYLE_INSERTION_POINT_NAME}"]`
   )
   if (emotionInsertionPoint === null) {
     throw new Error('Could not find emotion insertion meta tag.')
   }
-  return createCache({ key: 'emotion-style', insertionPoint: emotionInsertionPoint })
+  return createCache({ key: EMOTION_STYLE_KEY, insertionPoint: emotionInsertionPoint })
 }
 
 function findRootElement() {

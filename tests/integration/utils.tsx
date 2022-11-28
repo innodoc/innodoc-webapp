@@ -4,7 +4,7 @@ import type { i18n as I18n } from 'i18next'
 import I18NextFsBackend from 'i18next-fs-backend'
 import { type ReactElement, type ReactNode } from 'react'
 
-import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '#constants'
+import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B, EMOTION_STYLE_KEY } from '#constants'
 import fetchContent from '#renderer/fetchContent'
 import makeStore, { type Store } from '#store/makeStore'
 import courses from '#store/slices/entities/courses'
@@ -27,7 +27,7 @@ beforeEach(async () => {
 
 function TestPageShell({ children }: { children: ReactNode }) {
   return (
-    <PageShell emotionCache={createCache({ key: 'emotion-style' })} i18n={i18n} store={store}>
+    <PageShell emotionCache={createCache({ key: EMOTION_STYLE_KEY })} i18n={i18n} store={store}>
       {children}
     </PageShell>
   )

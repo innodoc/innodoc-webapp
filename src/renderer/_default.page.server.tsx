@@ -19,7 +19,7 @@ import '@fontsource/lato/700-italic.css'
 import 'katex/dist/katex.min.css'
 
 // import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '#constants'
-import { passToClientProps } from '#constants'
+import { EMOTION_STYLE_KEY, passToClientProps } from '#constants'
 import makeStore from '#store/makeStore'
 import courses from '#store/slices/entities/courses'
 import pages from '#store/slices/entities/pages'
@@ -137,7 +137,7 @@ async function onBeforeRender({
   }
 
   // Initialize emotion cache
-  const emotionCache = createCache({ key: 'emotion-style' })
+  const emotionCache = createCache({ key: EMOTION_STYLE_KEY })
 
   // Initialize i18next
   const i18n = await getI18n(I18NextFsBackend, getI18nBackendOpts(), locale, courseId, store)

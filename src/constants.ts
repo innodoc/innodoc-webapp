@@ -17,7 +17,7 @@ export const BUILTIN_PAGES: BuiltinPages = {
 
 export type BuiltinPagesKey = typeof BUILTIN_PAGES_KEYS[number]
 type BuiltinPages = Record<BuiltinPagesKey, BuiltinPage>
-type BuiltinPage = {
+interface BuiltinPage {
   /** URL path */
   path: string
   /** Page title i18n key */
@@ -55,3 +55,9 @@ export const SLUG_RE_POSIX = SLUG_RE.replace('(?:', '(')
 
 /** Props to be passed to client */
 export const passToClientProps = ['courseId', 'locale', 'preloadedState', 'pageProps'] as const
+
+/** Emotion style cache key */
+export const EMOTION_STYLE_KEY = 'emotion-style'
+
+/** Emotion style insertion point meta name */
+export const EMOTION_STYLE_INSERTION_POINT_NAME = 'emotion-insertion-point'
