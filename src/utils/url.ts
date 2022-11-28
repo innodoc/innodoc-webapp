@@ -48,7 +48,7 @@ function generateUrl(
   return url
 }
 
-type ExtractedLocaleInfo = {
+interface ExtractedLocaleInfo {
   locale: LanguageCode
   urlWithoutLocale: string
 }

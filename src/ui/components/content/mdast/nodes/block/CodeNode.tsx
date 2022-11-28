@@ -6,7 +6,7 @@ function CodeNode({ node }: CodeNodeProps) {
   return null
 }
 
-type CodeNodeProps = {
+interface CodeNodeProps {
   node: Code
 }
 

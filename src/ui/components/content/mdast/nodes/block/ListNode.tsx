@@ -16,7 +16,7 @@ function ListNode({ node }: ListNodeProps) {
   return <ListComponent>{listItems}</ListComponent>
 }
 
-type ListNodeProps = {
+interface ListNodeProps {
   node: List
 }
 

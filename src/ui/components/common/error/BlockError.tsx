@@ -9,7 +9,7 @@ function BlockError({ children }: BlockErrorProps) {
   return <StyledDiv>{children}</StyledDiv>
 }
 
-type BlockErrorProps = {
+interface BlockErrorProps {
   children: ReactNode
 }
 

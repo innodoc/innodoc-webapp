@@ -12,7 +12,7 @@ function EmphasisNode({ node }: EmphasisNodeProps) {
   )
 }
 
-type EmphasisNodeProps = {
+interface EmphasisNodeProps {
   node: Emphasis
 }
 

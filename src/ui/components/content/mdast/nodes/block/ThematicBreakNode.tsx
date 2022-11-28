@@ -4,7 +4,7 @@ function ThematicBreakNode({ node }: ThematicBreakNodeProps) {
   return null // TODO
 }
 
-type ThematicBreakNodeProps = {
+interface ThematicBreakNodeProps {
   node: ThematicBreak
 }
 

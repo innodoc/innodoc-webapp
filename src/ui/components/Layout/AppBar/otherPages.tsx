@@ -24,7 +24,7 @@ const otherPages = [
   },
 ] as Page[]
 
-type Page = {
+interface Page {
   icon: ReactNode
   linked: PageLinkLocation[]
   title: string

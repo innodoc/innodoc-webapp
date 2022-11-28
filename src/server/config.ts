@@ -23,7 +23,7 @@ const config: ServerConfig = {
   dbDebug: process.env.DB_DEBUG === 'true',
 }
 
-export type ServerConfig = {
+export interface ServerConfig {
   /** Server host */
   host: string
   /** Server port */

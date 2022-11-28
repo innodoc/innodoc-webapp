@@ -13,7 +13,7 @@ function TableContentNode({ node }: TableContentNodeProps) {
   return <UnknownNode node={node} />
 }
 
-type TableContentNodeProps = {
+interface TableContentNodeProps {
   node: TableContent
 }
 

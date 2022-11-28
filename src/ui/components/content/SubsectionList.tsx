@@ -40,7 +40,7 @@ function SubsectionList({ sectionPath }: SubsectionListProps) {
   )
 }
 
-type SubsectionListProps = {
+interface SubsectionListProps {
   sectionPath: string
 }
 

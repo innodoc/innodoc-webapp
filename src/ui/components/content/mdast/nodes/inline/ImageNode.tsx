@@ -4,7 +4,7 @@ function ImageNode({ node }: ImageNodeProps) {
   return null // TODO
 }
 
-type ImageNodeProps = {
+interface ImageNodeProps {
   node: Image
 }
 

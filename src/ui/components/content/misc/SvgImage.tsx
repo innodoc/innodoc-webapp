@@ -23,7 +23,7 @@ function SvgImage({ id }: SvgImageProps) {
   return <SvgRootNode component={StyledSvg} rootNode={rootNode} />
 }
 
-type SvgImageProps = {
+interface SvgImageProps {
   id: string
 }
 

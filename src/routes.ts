@@ -1,29 +1,29 @@
-import { SLUG_REGEX } from '#constants'
+import { SLUG_RE } from '#constants'
 
 export const API_PREFIX = '/api'
 export const COURSE_PREFIX = '/course'
 export const API_COURSE_PREFIX = `${API_PREFIX}${COURSE_PREFIX}`
 
 /** Locale ISO-639-1 language code */
-const LOCALE_REGEX = '[a-z]{2}'
+const LOCALE_RE = '[a-z]{2}'
 
 /** Number regex */
-const NUMBER_REGEX = '\\d+'
+const NUMBER_RE = '\\d+'
 
 const routes: RoutesDefinition = {
   // Course
-  'api/course': `${API_COURSE_PREFIX}/:courseId(${NUMBER_REGEX})`,
+  'api/course': `${API_COURSE_PREFIX}/:courseId(${NUMBER_RE})`,
 
   // Page
-  'api/course/pages': `${API_COURSE_PREFIX}/:courseId(${NUMBER_REGEX})/pages`,
-  'api/course/page/content': `${API_COURSE_PREFIX}/:courseId(${NUMBER_REGEX})/page/:locale(${LOCALE_REGEX})/:pageId(${NUMBER_REGEX})`,
+  'api/course/pages': `${API_COURSE_PREFIX}/:courseId(${NUMBER_RE})/pages`,
+  'api/course/page/content': `${API_COURSE_PREFIX}/:courseId(${NUMBER_RE})/page/:locale(${LOCALE_RE})/:pageId(${NUMBER_RE})`,
 
   // Section
-  'api/course/sections': `${API_COURSE_PREFIX}/:courseId(${NUMBER_REGEX})/sections`,
-  'api/course/section/content': `${API_COURSE_PREFIX}/:courseId(${NUMBER_REGEX})/section/:locale(${LOCALE_REGEX})/:sectionId(${NUMBER_REGEX})`,
+  'api/course/sections': `${API_COURSE_PREFIX}/:courseId(${NUMBER_RE})/sections`,
+  'api/course/section/content': `${API_COURSE_PREFIX}/:courseId(${NUMBER_RE})/section/:locale(${LOCALE_RE})/:sectionId(${NUMBER_RE})`,
 
   // Fragment
-  'api/course/fragment/content': `${API_COURSE_PREFIX}/:courseId(${NUMBER_REGEX})/fragment/:locale(${LOCALE_REGEX})/:fragmentType(${SLUG_REGEX})`,
+  'api/course/fragment/content': `${API_COURSE_PREFIX}/:courseId(${NUMBER_RE})/fragment/:locale(${LOCALE_RE})/:fragmentType(${SLUG_RE})`,
 }
 
 /** Route definition */

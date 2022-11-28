@@ -15,7 +15,7 @@ export type PageContextClient = Omit<PageContextBuiltInClient, 'Page'> &
   Pick<PageContextServer, 'Page' | typeof passToClientProps[number]>
 
 /** Custom server-side page context */
-export type PageContextServer = Omit<PageContextBuiltIn, 'Page'> & {
+export interface PageContextServer extends Omit<PageContextBuiltIn, 'Page'> {
   /** Course ID */
   courseId: ApiCourse['id']
 
@@ -48,7 +48,7 @@ export type PageContextServer = Omit<PageContextBuiltIn, 'Page'> & {
 }
 
 /** Props to render a page */
-export type PageProps = {
+export interface PageProps {
   /** Page Id */
   pageSlug?: ApiPage['slug']
 

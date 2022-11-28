@@ -37,7 +37,7 @@ function MenuButton({ children, iconName, id, title }: MenuButtonProps) {
   )
 }
 
-type MenuButtonProps = {
+interface MenuButtonProps {
   children: ReactNode
   iconName: IconProps['name']
   id: string

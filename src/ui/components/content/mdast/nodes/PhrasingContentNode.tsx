@@ -27,7 +27,7 @@ function PhrasingContentNode({ node }: PhrasingContentNodeProps) {
   return <UnknownNode node={node} />
 }
 
-type PhrasingContentNodeProps = {
+interface PhrasingContentNodeProps {
   node: PhrasingContent
 }
 

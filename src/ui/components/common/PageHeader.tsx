@@ -15,7 +15,7 @@ function PageHeader({ children, iconName }: PageHeaderProps) {
   )
 }
 
-type PageHeaderProps = {
+interface PageHeaderProps {
   children: ReactNode
   iconName?: IconProps['name']
 }

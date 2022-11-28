@@ -27,7 +27,7 @@ const PageLinkPage = forwardRef<HTMLAnchorElement, PageLinkPageProps>(function P
   )
 })
 
-type PageLinkPageProps = Omit<PageLinkProps, 'page' | 'pageSlug'> & {
+interface PageLinkPageProps extends Omit<PageLinkProps, 'page' | 'pageSlug'> {
   page: TranslatedPage
 }
 
@@ -45,7 +45,7 @@ const PageLinkPageSlug = forwardRef<HTMLAnchorElement, PageLinkPageSlugProps>(
   }
 )
 
-type PageLinkPageSlugProps = Omit<PageLinkProps, 'page' | 'pageSlug'> & {
+interface PageLinkPageSlugProps extends Omit<PageLinkProps, 'page' | 'pageSlug'> {
   pageSlug: ApiPage['slug']
 }
 
@@ -75,7 +75,7 @@ const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
   )
 })
 
-type PageLinkProps = Omit<InternalLinkProps, 'to'> & {
+interface PageLinkProps extends Omit<InternalLinkProps, 'to'> {
   preferShortTitle?: boolean
   page?: TranslatedPage
   pageSlug?: ApiPage['slug']

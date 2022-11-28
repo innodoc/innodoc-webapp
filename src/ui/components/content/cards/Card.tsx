@@ -25,7 +25,7 @@ const ExpandIcon = styled(({ expand, ...other }: ExpandIconProps) => {
   }),
 }))
 
-type ExpandIconProps = Omit<IconProps, 'name'> & {
+interface ExpandIconProps extends Omit<IconProps, 'name'> {
   expand: boolean
 }
 
@@ -42,7 +42,7 @@ const StyledCardHeader = styled(
   '& > .MuiCardHeader-action': { marginTop: 0 },
 }))
 
-type StyledCardHeaderProps = CardHeaderProps & {
+interface StyledCardHeaderProps extends CardHeaderProps {
   cardType: CardType
   collapsible: boolean
   dense: boolean
@@ -113,7 +113,7 @@ function Card({
   )
 }
 
-type CardProps = Pick<ComponentProps<typeof MuiCard>, 'elevation' | 'sx'> & {
+interface CardProps extends Pick<ComponentProps<typeof MuiCard>, 'elevation' | 'sx'> {
   cardType: CardType
   content: Block[]
   collapsible?: boolean

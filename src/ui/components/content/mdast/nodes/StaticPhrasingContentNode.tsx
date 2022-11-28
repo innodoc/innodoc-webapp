@@ -75,7 +75,7 @@ function StaticPhrasingContentNode({ node }: StaticPhrasingContentNodeProps) {
   return <UnknownNode node={node} />
 }
 
-type StaticPhrasingContentNodeProps = {
+interface StaticPhrasingContentNodeProps {
   node: StaticPhrasingContent
 }
 

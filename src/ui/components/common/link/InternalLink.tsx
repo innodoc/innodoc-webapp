@@ -25,7 +25,7 @@ const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(function I
   )
 })
 
-export type InternalLinkProps = Omit<ComponentProps<typeof MuiLink>, 'href'> & {
+export interface InternalLinkProps extends Omit<ComponentProps<typeof MuiLink>, 'href'> {
   /** Optional hash */
   hash?: string
   /** Target path *without* locale */

@@ -62,7 +62,7 @@ function ContentSection({ sectionPath }: ContentSectionProps) {
   return <Content course={course} section={section} />
 }
 
-type ContentSectionProps = {
+interface ContentSectionProps {
   sectionPath: string
 }
 

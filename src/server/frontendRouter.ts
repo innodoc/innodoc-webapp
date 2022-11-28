@@ -47,7 +47,7 @@ const frontendRouter = Router().get('*', (async (req, res, next) => {
   return res.status(statusCode).type(contentType).send(body)
 }) as RequestHandler) // workaround until https://github.com/DefinitelyTyped/DefinitelyTyped/issues/50871 is resolved
 
-type PageContextInit = {
+interface PageContextInit {
   locale: LanguageCode
   courseId: ApiCourse['id']
   urlOriginal: string

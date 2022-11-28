@@ -6,7 +6,7 @@ function TableRowNode({ node }: TableRowNodeProps) {
   return null
 }
 
-type TableRowNodeProps = {
+interface TableRowNodeProps {
   node: TableRow
 }
 

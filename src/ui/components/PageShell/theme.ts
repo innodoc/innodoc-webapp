@@ -51,7 +51,7 @@ const cardColors: Record<CardType, CardColors> = {
 }
 
 /** Card colors */
-type CardColors = {
+interface CardColors {
   /** Main color */
   main: string
   /** Muted color variant */

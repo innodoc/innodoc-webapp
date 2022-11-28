@@ -9,7 +9,7 @@ function InlineError({ children }: InlineErrorProps) {
   return <StyledSpan>{children}</StyledSpan>
 }
 
-type InlineErrorProps = {
+interface InlineErrorProps {
   children: ReactNode
 }
 

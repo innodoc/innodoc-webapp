@@ -48,10 +48,10 @@ export const MAX_KEEP_UNUSED_DATA_FOR_MAX = Math.floor((2 ** 31 - 1) / 1000)
 export const DEFAULT_MIN_SCORE = 90
 
 /** Page/section/course slug regex */
-export const SLUG_REGEX = '[a-z0-9]+(?:-[a-z0-9]+)*'
+export const SLUG_RE = '[a-z0-9]+(?:-[a-z0-9]+)*'
 
 /** Page/section/course slug regex (Posix variant for PostgreSQL) */
-export const SLUG_REGEX_POSIX = SLUG_REGEX.replace('(?:', '(')
+export const SLUG_RE_POSIX = SLUG_RE.replace('(?:', '(')
 
 /** Props to be passed to client */
 export const passToClientProps = ['courseId', 'locale', 'preloadedState', 'pageProps'] as const

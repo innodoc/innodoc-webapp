@@ -29,7 +29,7 @@ declare module '@mui/lab/TreeItem' {
   }
 }
 
-type TocTreeItemProps = TreeItemProps & {
+interface TocTreeItemProps extends TreeItemProps {
   section: TranslatedSection
 }
 

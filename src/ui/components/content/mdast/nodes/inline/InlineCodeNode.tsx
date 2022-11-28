@@ -17,7 +17,7 @@ function InlineCodeNode({ node }: InlineCodeNodeProps) {
   return <StyledCode>{node.value}</StyledCode>
 }
 
-type InlineCodeNodeProps = {
+interface InlineCodeNodeProps {
   node: InlineCode
 }
 

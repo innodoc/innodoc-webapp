@@ -4,7 +4,7 @@ function FootnoteNode({ node }: FootnoteNodeProps) {
   return null // TODO
 }
 
-type FootnoteNodeProps = {
+interface FootnoteNodeProps {
   node: Footnote
 }
 

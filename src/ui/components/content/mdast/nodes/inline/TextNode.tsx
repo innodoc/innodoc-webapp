@@ -4,7 +4,7 @@ function TextNode({ node }: TextNodeProps) {
   return <>{node.value}</>
 }
 
-type TextNodeProps = {
+interface TextNodeProps {
   node: Text
 }
 

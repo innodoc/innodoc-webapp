@@ -20,7 +20,7 @@ function Icon({ name, ...other }: IconProps) {
   return <SvgRootNode component={MuiSvgIcon} rootNode={icon} viewBox={viewBox} {...other} />
 }
 
-export type IconProps = {
+export interface IconProps {
   fontSize?: ComponentProps<typeof MuiSvgIcon>['fontSize']
   /**
    * Icon name as defined in icon bundle (e.g. `mdi:home`) or SVG file

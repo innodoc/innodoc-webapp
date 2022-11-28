@@ -18,7 +18,7 @@ const BuiltinPageLink = forwardRef<HTMLAnchorElement, BuiltinPageLinkProps>(
   }
 )
 
-export type BuiltinPageLinkProps = Omit<InternalLinkProps, 'to'> & {
+export interface BuiltinPageLinkProps extends Omit<InternalLinkProps, 'to'> {
   to: BuiltinPagesKey
 }
 

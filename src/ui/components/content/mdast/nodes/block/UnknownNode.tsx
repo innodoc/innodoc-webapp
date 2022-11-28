@@ -6,7 +6,7 @@ function UnknownNode({ node }: UnknownNodeProps) {
   return <BlockError>Unknown block element encountered: {node.type}</BlockError>
 }
 
-type UnknownNodeProps = {
+interface UnknownNodeProps {
   node: Node
 }
 

@@ -12,7 +12,7 @@ function DeleteNode({ node }: DeleteNodeProps) {
   )
 }
 
-type DeleteNodeProps = {
+interface DeleteNodeProps {
   node: Delete
 }
 

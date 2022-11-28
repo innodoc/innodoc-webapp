@@ -73,7 +73,7 @@ const TocTreeItemContent = forwardRef(function TocTreeItemContent(
   )
 })
 
-type TocTreeItemContentProps = TreeItemContentProps & {
+interface TocTreeItemContentProps extends TreeItemContentProps {
   section: TranslatedSection
 }
 

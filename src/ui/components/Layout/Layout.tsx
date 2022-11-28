@@ -24,6 +24,8 @@ function Layout({ children }: LayoutProps) {
   )
 }
 
-type LayoutProps = { children: ReactNode }
+interface LayoutProps {
+  children: ReactNode
+}
 
 export default Layout

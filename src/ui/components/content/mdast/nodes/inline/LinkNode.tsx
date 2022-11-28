@@ -4,7 +4,7 @@ function LinkNode({ node }: LinkNodeProps) {
   return null // TODO
 }
 
-type LinkNodeProps = {
+interface LinkNodeProps {
   node: Link
 }
 

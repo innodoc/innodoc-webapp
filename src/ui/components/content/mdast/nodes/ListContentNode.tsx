@@ -13,7 +13,7 @@ function ListContentNode({ node }: ListContentNodeProps) {
   return <UnknownNode node={node} />
 }
 
-type ListContentNodeProps = {
+interface ListContentNodeProps {
   node: ListContent
 }
 

@@ -18,7 +18,7 @@ function TopLevelContentNode({ node }: TopLevelContentNodeProps) {
   return <UnknownNode node={node} />
 }
 
-type TopLevelContentNodeProps = {
+interface TopLevelContentNodeProps {
   node: TopLevelContent
 }
 

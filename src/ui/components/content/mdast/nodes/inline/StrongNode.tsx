@@ -12,7 +12,7 @@ function StrongNode({ node }: StrongNodeProps) {
   )
 }
 
-type StrongNodeProps = {
+interface StrongNodeProps {
   node: Strong
 }
 

@@ -12,7 +12,7 @@ function RootNode({ node }: RootProps) {
   )
 }
 
-type RootProps = {
+interface RootProps {
   node: Root
 }
 

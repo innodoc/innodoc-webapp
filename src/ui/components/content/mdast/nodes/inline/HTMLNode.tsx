@@ -10,7 +10,7 @@ function HTMLNode({ node }: HTMLNodeProps) {
   )
 }
 
-type HTMLNodeProps = {
+interface HTMLNodeProps {
   node: HTML
 }
 

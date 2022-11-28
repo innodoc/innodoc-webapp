@@ -4,7 +4,7 @@ function ImageReferenceNode({ node }: ImageReferenceNodeProps) {
   return null // TODO
 }
 
-type ImageReferenceNodeProps = {
+interface ImageReferenceNodeProps {
   node: ImageReference
 }
 

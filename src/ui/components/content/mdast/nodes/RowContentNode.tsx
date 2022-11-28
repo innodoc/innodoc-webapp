@@ -6,7 +6,7 @@ function RowContentNode({ node }: RowContentNodeProps) {
   return <UnknownNode node={node} />
 }
 
-type RowContentNodeProps = {
+interface RowContentNodeProps {
   node: RowContent
 }
 

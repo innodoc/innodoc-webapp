@@ -6,7 +6,7 @@ function UnknownNode({ node }: UnknownNodeProps) {
   return <InlineError>Unknown inline element encountered: {node.type}</InlineError>
 }
 
-type UnknownNodeProps = {
+interface UnknownNodeProps {
   node: Node
 }
 

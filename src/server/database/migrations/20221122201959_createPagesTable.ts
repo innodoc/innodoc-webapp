@@ -1,6 +1,6 @@
 import type { Knex } from 'knex'
 
-import { SLUG_REGEX_POSIX, PAGE_LINK_LOCACTIONS } from '#constants'
+import { SLUG_RE_POSIX, PAGE_LINK_LOCACTIONS } from '#constants'
 
 export async function up(knex: Knex) {
   // Page link location enum type
@@ -12,7 +12,7 @@ export async function up(knex: Knex) {
 
   await knex.schema.createTable('pages', (t) => {
     t.increments('id').primary()
-    t.string('slug').notNullable().checkRegex(`^${SLUG_REGEX_POSIX}$`)
+    t.string('slug').notNullable().checkRegex(`^${SLUG_RE_POSIX}$`)
     t.integer('course_id')
       .notNullable()
       .references('courses.id')

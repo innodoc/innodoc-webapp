@@ -20,7 +20,7 @@ const SectionLinkSection = forwardRef<HTMLAnchorElement, SectionLinkSectionProps
   }
 )
 
-type SectionLinkSectionProps = Omit<SectionLinkProps, 'section' | 'sectionPath'> & {
+interface SectionLinkSectionProps extends Omit<SectionLinkProps, 'section' | 'sectionPath'> {
   section: TranslatedSection
 }
 
@@ -40,7 +40,7 @@ const SectionLinkSectionPath = forwardRef<HTMLAnchorElement, SectionLinkSectionP
   }
 )
 
-type SectionLinkSectionPathProps = Omit<SectionLinkProps, 'section' | 'sectionPath'> & {
+interface SectionLinkSectionPathProps extends Omit<SectionLinkProps, 'section' | 'sectionPath'> {
   sectionPath: ApiSection['path']
 }
 
@@ -72,7 +72,7 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function Sec
   )
 })
 
-type SectionLinkProps = Omit<InternalLinkProps, 'to'> & {
+interface SectionLinkProps extends Omit<InternalLinkProps, 'to'> {
   preferShortTitle?: boolean
   section?: TranslatedSection
   sectionPath?: ApiSection['path']

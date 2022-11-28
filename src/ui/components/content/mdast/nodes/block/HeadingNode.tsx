@@ -4,7 +4,7 @@ function HeadingNode({ node }: HeadingNodeProps) {
   return null // TODO
 }
 
-type HeadingNodeProps = {
+interface HeadingNodeProps {
   node: Heading
 }
 

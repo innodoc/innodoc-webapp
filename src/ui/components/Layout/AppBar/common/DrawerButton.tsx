@@ -47,7 +47,7 @@ function DrawerButton({
   )
 }
 
-type DrawerButtonProps = {
+interface DrawerButtonProps {
   anchor: SwipeableDrawerProps['anchor']
   boxProps?: BoxProps
   children: (close: () => void) => ReactNode

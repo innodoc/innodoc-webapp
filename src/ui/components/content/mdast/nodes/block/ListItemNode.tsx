@@ -11,7 +11,7 @@ function ListItemNode({ node }: ListItemNodeProps) {
   return <li>{children}</li>
 }
 
-type ListItemNodeProps = {
+interface ListItemNodeProps {
   node: ListItem
 }
 

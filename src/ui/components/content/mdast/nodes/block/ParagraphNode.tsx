@@ -13,7 +13,7 @@ function ParagraphNode({ node }: ParagraphNodeProps) {
   )
 }
 
-type ParagraphNodeProps = {
+interface ParagraphNodeProps {
   node: Paragraph
 }
 

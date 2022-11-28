@@ -1,15 +1,14 @@
-import { createListenerMiddleware } from '@reduxjs/toolkit'
+import { createListenerMiddleware, type TypedStartListening } from '@reduxjs/toolkit'
 import { getI18n } from 'react-i18next'
 import { navigate } from 'vite-plugin-ssr/client/router'
 
+import type { AppDispatch, RootState } from '#store/makeStore'
 import { changeLocale, selectUrlWithoutLocale } from '#store/slices/uiSlice'
-
-import type { AppStartListening } from './types'
 
 const localeChangeMiddleware = createListenerMiddleware()
 const startAppListening = localeChangeMiddleware.startListening as AppStartListening
 
-// Relay locale changes
+// Relay locale change from store to i18next
 startAppListening({
   actionCreator: changeLocale,
   effect: async (action, listenerApi) => {
@@ -28,5 +27,7 @@ startAppListening({
     }
   },
 })
+
+type AppStartListening = TypedStartListening<RootState, AppDispatch>
 
 export default localeChangeMiddleware

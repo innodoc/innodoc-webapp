@@ -36,7 +36,7 @@ function SectionItem({ section }: SectionProps) {
   )
 }
 
-type SectionProps = {
+interface SectionProps {
   section: TranslatedSection
 }
 

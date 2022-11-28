@@ -40,7 +40,7 @@ function ContentNode({ node }: ContentNodeProps) {
   return <UnknownNode node={node} />
 }
 
-type ContentNodeProps = {
+interface ContentNodeProps {
   node: Content
 }
 

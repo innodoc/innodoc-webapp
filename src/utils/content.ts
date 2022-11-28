@@ -1,3 +1,5 @@
+// TODO check if functions here are needed
+
 import type { AnyElt, AttrList, Tree } from 'pandoc-filter'
 import type { ComponentType } from 'react'
 

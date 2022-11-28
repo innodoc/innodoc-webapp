@@ -28,7 +28,7 @@ function MenuItemCaption({ iconName, text }: MenuItemCaptionProps) {
   )
 }
 
-type MenuItemCaptionProps = {
+interface MenuItemCaptionProps {
   iconName?: IconProps['name']
   text: string
 }

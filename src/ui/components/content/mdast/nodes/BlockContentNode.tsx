@@ -57,7 +57,7 @@ function BlockContentNode({ node }: BlockContentNodeProps) {
   return <UnknownNode node={node} />
 }
 
-type BlockContentNodeProps = {
+interface BlockContentNodeProps {
   node: BlockContent
 }
 

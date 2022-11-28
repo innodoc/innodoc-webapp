@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import type { PreloadedState, StateFromReducersMapObject } from '@reduxjs/toolkit'
 
-import localeChangeMiddleware from './middlewares/localeChangeMiddleware'
+import localeChangeMiddleware from './localeChangeMiddleware'
 import contentApi from './slices/contentApi'
 import staticCache from './slices/staticCache'
 import uiSlice from './slices/uiSlice'

@@ -4,7 +4,7 @@ function BlockquoteNode({ node }: BlockquoteNodeProps) {
   return null // TODO
 }
 
-type BlockquoteNodeProps = {
+interface BlockquoteNodeProps {
   node: Blockquote
 }
 

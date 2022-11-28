@@ -31,7 +31,7 @@ function PageShell({ children, emotionCache, helmetContext, i18n, store }: PageS
   )
 }
 
-type PageShellProps = {
+interface PageShellProps {
   children: React.ReactNode
   helmetContext?: Record<string, never>
   emotionCache: EmotionCache

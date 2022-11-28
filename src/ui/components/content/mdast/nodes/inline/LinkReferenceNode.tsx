@@ -4,7 +4,7 @@ function LinkReferenceNode({ node }: LinkReferenceNodeProps) {
   return null // TODO
 }
 
-type LinkReferenceNodeProps = {
+interface LinkReferenceNodeProps {
   node: LinkReference
 }
 

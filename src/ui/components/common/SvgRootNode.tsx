@@ -28,7 +28,7 @@ function SvgElementNode({ node: { tagName, properties = {}, children } }: SvgEle
     : null
 }
 
-type SvgElementNodeProps = {
+interface SvgElementNodeProps {
   node: ElementNode
 }
 
@@ -40,7 +40,7 @@ function SvgNode({ node }: SvgNodeProps) {
   return <>{node.value}</>
 }
 
-type SvgNodeProps = {
+interface SvgNodeProps {
   node: ElementNode['children'][number]
 }
 
@@ -69,7 +69,7 @@ function SvgRootNode({ component: Component, rootNode, ...props }: SvgRootNodePr
   )
 }
 
-type SvgRootNodeProps = SVGProps<SVGSVGElement> & {
+interface SvgRootNodeProps extends SVGProps<SVGSVGElement> {
   component: ComponentType | string
   rootNode: unknown
 }

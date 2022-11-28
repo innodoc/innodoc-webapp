@@ -16,7 +16,7 @@ function DefinitionContentNode({ node }: DefinitionContentNodeProps) {
   return <UnknownNode node={node} />
 }
 
-type DefinitionContentNodeProps = {
+interface DefinitionContentNodeProps {
   node: DefinitionContent
 }
 

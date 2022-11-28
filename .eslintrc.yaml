@@ -12,6 +12,7 @@ ignorePatterns:
 
 extends:
   - plugin:import/typescript
+  - plugin:etc/recommended
   - plugin:react/recommended
   - plugin:react/jsx-runtime
   - plugin:react-hooks/recommended
@@ -94,6 +95,14 @@ plugins:
 root: true
 
 rules:
+  ########### Typescript
+
+  # Prefer interfaces over type aliases for performance
+  etc/prefer-interface: error
+
+  # Leads to false positives in MUI
+  etc/no-internal: off
+
   ########### Filenames
 
   filenames/match-exported: error
