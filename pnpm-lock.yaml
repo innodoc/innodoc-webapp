@@ -37,7 +37,6 @@ specifiers:
   '@types/js-yaml': ^4.0.5
   '@types/katex': ^0.14.0
   '@types/locale': ^0.1.1
-  '@types/mathjax': ^0.0.37
   '@types/mdast': ^3.0.10
   '@types/node': ^18.11.9
   '@types/react': ^18.0.25
@@ -188,7 +187,6 @@ devDependencies:
   '@types/js-yaml': 4.0.5
   '@types/katex': 0.14.0
   '@types/locale': 0.1.1
-  '@types/mathjax': 0.0.37
   '@types/mdast': 3.0.10
   '@types/node': 18.11.9
   '@types/react': 18.0.25
@@ -2370,10 +2368,6 @@ packages:
 
   /@types/locale/0.1.1:
     resolution: {integrity: sha512-BgFL2Ik6SnDPM2RQOwMH0HiBKiooVHNSc4KM+yoS39g1KGIyhYOK9Xvckwhu11m6lc3dK/vLnE/Suy8XGJ2jmw==}
-    dev: true
-
-  /@types/mathjax/0.0.37:
-    resolution: {integrity: sha512-y0WSZBtBNQwcYipTU/BhgeFu1EZNlFvUNCmkMXV9kBQZq7/o5z82dNVyH3yy2Xv5zzeNeQoHSL4Xm06+EQiH+g==}
     dev: true
 
   /@types/mdast/3.0.10:

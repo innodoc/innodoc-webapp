@@ -74,7 +74,6 @@
     "@types/js-yaml": "^4.0.5",
     "@types/katex": "^0.14.0",
     "@types/locale": "^0.1.1",
-    "@types/mathjax": "^0.0.37",
     "@types/mdast": "^3.0.10",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
