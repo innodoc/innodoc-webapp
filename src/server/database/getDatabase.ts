@@ -4,7 +4,7 @@ import knexConfig from './knexConfig'
 
 let connection: Knex
 
-// TODO use createSelector instead of singleton?
+/** knex database instance singleton factory */
 function getDatabase() {
   if (connection === undefined) {
     connection = knex(knexConfig)

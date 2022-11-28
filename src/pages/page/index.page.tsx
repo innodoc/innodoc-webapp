@@ -22,15 +22,11 @@ function Content({ course, page }: ContentProps) {
     pageId: page.id,
   })
 
-  if (isLoading === undefined) {
-    return null
-  }
-
   if (isError === undefined) {
     return <ErrorPage is404 />
   }
 
-  if (rootNode === undefined) {
+  if (isLoading === undefined || rootNode === undefined) {
     return null
   }
 

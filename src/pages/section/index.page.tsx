@@ -25,15 +25,11 @@ function Content({ course, section }: ContentProps) {
     sectionId: section.id,
   })
 
-  if (isLoading === undefined) {
-    return null
-  }
-
   if (isError === undefined) {
     return <ErrorPage is404 />
   }
 
-  if (rootNode === undefined) {
+  if (isLoading === undefined || rootNode === undefined) {
     return null
   }
 
@@ -41,7 +37,7 @@ function Content({ course, section }: ContentProps) {
     <>
       <Breadcrumbs />
       <PageHeader>{formatSectionTitle(section)}</PageHeader>
-      <SubsectionList sectionPath={section.path} />
+      <SubsectionList sectionId={section.id} />
       <RootNode node={rootNode} />
     </>
   )

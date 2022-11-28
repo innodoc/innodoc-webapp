@@ -5,7 +5,7 @@ import { renderPage } from 'vite-plugin-ssr'
 import type { ApiCourse } from '#types/entities/course'
 import { extractLocale, formatUrl } from '#utils/url'
 
-import { getCourse } from './database/queries/course'
+import { getCourse } from './database/queries/courses'
 
 const frontendRouter = Router().get('*', (async (req, res, next) => {
   const url = req.originalUrl

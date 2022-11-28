@@ -22,6 +22,7 @@ export async function up(knex: Knex) {
     t.string('icon')
     t.timestamp('created_at').defaultTo(knex.fn.now())
     t.timestamp('updated_at').defaultTo(knex.fn.now())
+    t.index(['slug'], 'pages_slug')
     t.unique(['course_id', 'slug']) // unique per course
   })
 

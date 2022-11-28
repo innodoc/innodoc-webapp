@@ -23,7 +23,7 @@ export const pages = contentApi.injectEndpoints({
   }),
 })
 
-type PageContentFetchArgs = {
+interface PageContentFetchArgs {
   courseId: ApiCourse['id']
   locale: LanguageCode
   pageId: ApiPage['id']

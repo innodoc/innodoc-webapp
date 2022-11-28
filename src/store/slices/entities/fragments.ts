@@ -16,7 +16,7 @@ export const fragments = contentApi.injectEndpoints({
   }),
 })
 
-type ContentFetchArgs = {
+interface ContentFetchArgs {
   courseId: ApiCourse['id']
   locale: LanguageCode
   fragmentType: ContentFragmentType

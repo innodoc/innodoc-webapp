@@ -1,6 +1,8 @@
 import routes, { type RoutesDefinition } from '#routes'
 
-type ArbitraryObject = { [key: string]: unknown }
+interface ArbitraryObject {
+  [key: string]: unknown
+}
 
 // TODO remove this or move to cental place?
 function isArbitraryObject(potentialObject: unknown): potentialObject is ArbitraryObject {

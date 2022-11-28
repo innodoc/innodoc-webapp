@@ -11,7 +11,7 @@ const isBrowser = typeof window !== 'undefined'
 
 const NAMESPACE = 'common'
 
-// TODO: replace singleton with createSelector cache?
+/** i18next instance singleton factory */
 async function getI18n(
   backend: Parameters<i18n['use']>[0],
   backendOpts: Record<string, unknown>,

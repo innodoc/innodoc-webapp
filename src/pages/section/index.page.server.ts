@@ -1,10 +1,33 @@
 import { onBeforeRender as onBeforeRenderDefault } from '#renderer/_default.page.server'
 import fetchContent from '#renderer/fetchContent'
+import { getSectionIdByPath } from '#server/database/queries/sections'
 import sections from '#store/slices/entities/sections'
-import type { PageContextServer } from '#types/pageContext'
+import type { PageContextServer, PrepopFactory } from '#types/pageContext'
 
 async function onBeforeRender(pageContext: PageContextServer) {
-  const { sectionPath } = pageContext.routeParams
+  const {
+    courseId,
+    routeParams: { sectionPath },
+  } = pageContext
+
+  // Need to fetch section ID for this path
+  const sectionId = await getSectionIdByPath(courseId, sectionPath)
+
+  const pagePrepopFactories: PrepopFactory[] =
+    sectionId !== undefined
+      ? [
+          // Fetch section content
+          (store, locale) =>
+            fetchContent(
+              store,
+              sections.endpoints.getSectionContent.initiate({
+                courseId,
+                locale,
+                sectionId,
+              })
+            ),
+        ]
+      : []
 
   return onBeforeRenderDefault({
     ...pageContext,
@@ -13,18 +36,7 @@ async function onBeforeRender(pageContext: PageContextServer) {
     pageProps: { sectionPath },
 
     // Pass custom prepopulation task to onBeforeRender
-    pagePrepopFactories: [
-      // TODO
-      // (store, locale) =>
-      //   fetchContent(
-      //     store,
-      //     sections.endpoints.getSectionContent.initiate({
-      //       courseSlug: pageContext.courseSlug,
-      //       locale,
-      //       path: sectionPath, // TODO need section id here
-      //     })
-      //   ),
-    ],
+    pagePrepopFactories,
   })
 }
 

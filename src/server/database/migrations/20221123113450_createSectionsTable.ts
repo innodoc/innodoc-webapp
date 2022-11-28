@@ -29,6 +29,7 @@ export async function up(knex: Knex) {
     t.smallint('order').notNullable().defaultTo(0)
     t.timestamp('created_at').defaultTo(knex.fn.now())
     t.timestamp('updated_at').defaultTo(knex.fn.now())
+    t.index(['slug'], 'sections_slug')
     t.unique(['course_id', 'slug', 'parent_id']) // unique per course
   })
 

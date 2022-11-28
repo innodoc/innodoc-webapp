@@ -1,7 +1,7 @@
 import type { AnyAction, ThunkAction } from '@reduxjs/toolkit'
 import type { BaseQueryFn, QueryDefinition } from '@reduxjs/toolkit/dist/query'
 import type { QueryActionCreatorResult } from '@reduxjs/toolkit/dist/query/core/buildInitiate'
-import type { RootNode } from 'svg-parser'
+import type { Root } from 'mdast'
 
 import type { Store } from '#store/makeStore'
 
@@ -33,11 +33,7 @@ import type { Store } from '#store/makeStore'
 // }
 
 /** Fetch content and contained SVG images */
-async function fetchContent(
-  store: Store,
-  // action: ThunkAction<QueryActionCreatorResult<QD<RootNode>>, unknown, unknown, AnyAction>
-  action: ThunkAction<QueryActionCreatorResult<QD>, any, any, AnyAction>
-) {
+async function fetchContent(store: Store, action: Action) {
   // Fetch content
   const { data: content, error } = await store.dispatch(action)
   if (error !== undefined) {
@@ -51,6 +47,7 @@ async function fetchContent(
   // return fetchSvgImages(store, content)
 }
 
-type QD = QueryDefinition<unknown, BaseQueryFn, never, RootNode>
+type Action = ThunkAction<QueryActionCreatorResult<QD>, unknown, unknown, AnyAction>
+type QD = QueryDefinition<unknown, BaseQueryFn, never, Root>
 
 export default fetchContent

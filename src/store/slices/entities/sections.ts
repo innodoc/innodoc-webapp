@@ -25,7 +25,7 @@ export const sections = contentApi.injectEndpoints({
   }),
 })
 
-type SectionContentFetchArgs = {
+interface SectionContentFetchArgs {
   courseId: ApiCourse['id']
   locale: LanguageCode
   sectionId: ApiSection['id']

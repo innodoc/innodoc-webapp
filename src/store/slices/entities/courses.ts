@@ -12,7 +12,7 @@ export const courses = contentApi.injectEndpoints({
   }),
 })
 
-export type CourseNameQueryArg = {
+export interface CourseNameQueryArg {
   courseId: ApiCourse['id']
 }
 
