@@ -11,15 +11,12 @@ export async function getCourse({
   courseId?: DbCourse['id']
   courseSlug?: DbCourse['slug']
 }): Promise<ApiCourse | undefined> {
-  let field
-  let val
+  let where
 
   if (courseId !== undefined) {
-    field = 'c.id'
-    val = courseId
+    where = { 'c.id': courseId }
   } else if (courseSlug !== undefined) {
-    field = 'c.slug'
-    val = courseSlug
+    where = { 'c.slug': courseSlug }
   } else {
     throw new Error('getCourse() must receive either courseId or courseSlug')
   }
@@ -29,15 +26,19 @@ export async function getCourse({
     .first<DbCourse | undefined>(
       'c.*',
       db.raw('array_to_json(c.locales) as locales'),
-      db.raw('json_object_agg(t.locale, t.value) as title'),
-      db.raw('json_object_agg(st.locale, st.value) as short_title'),
-      db.raw('json_object_agg(d.locale, d.value) as description')
+      db.raw('json_object_agg(t.locale, t.value) filter (where t.locale is not null) as title'),
+      db.raw(
+        'json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title'
+      ),
+      db.raw(
+        'json_object_agg(d.locale, d.value) filter (where d.locale is not null) as description'
+      )
     )
     .from('courses as c')
-    .join('courses_title_trans as t', 'c.id', 't.course_id')
-    .join('courses_short_title_trans as st', 'c.id', 'st.course_id')
-    .join('courses_description_trans as d', 'c.id', 'd.course_id')
-    .where(field, val)
+    .leftOuterJoin('courses_title_trans as t', 'c.id', 't.course_id')
+    .leftOuterJoin('courses_short_title_trans as st', 'c.id', 'st.course_id')
+    .leftOuterJoin('courses_description_trans as d', 'c.id', 'd.course_id')
+    .where(where)
     .groupBy('c.id')
 
   return result ? camelcaseKeys(result) : undefined
