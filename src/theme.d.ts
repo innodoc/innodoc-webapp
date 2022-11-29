@@ -1,25 +1,8 @@
 import '@mui/material/styles/experimental_extendTheme'
-import type { CardType } from './ui/components/content/cards/types'
+import type { CSSProperties } from 'react'
 
-interface PaletteFooter {
-  bg: string
-}
-
-interface PaletteCard {
-  bg: string
-  header: string
-  color: string
-}
-
-interface PaletteCode {
-  bg: string
-  border: string
-  color: string
-}
-
-interface PaletteTransparentPaper {
-  bg: string
-}
+import type { PaletteCard, PaletteCode, PaletteFooter, PaletteTransparentPaper } from '#types/theme'
+import type { CardType } from '#ui/components/content/cards/types'
 
 declare module '@mui/material/styles/experimental_extendTheme' {
   interface CssVarsPalette {
@@ -37,12 +20,12 @@ declare module '@mui/material/styles/experimental_extendTheme' {
 // Add custom code font variant
 declare module '@mui/material/styles' {
   interface TypographyVariants {
-    code: React.CSSProperties
+    code: CSSProperties
   }
 
   // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
-    code?: React.CSSProperties
+    code?: CSSProperties
   }
 }
 

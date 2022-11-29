@@ -1,20 +1,21 @@
 import { useTranslation } from 'react-i18next'
 
-import type { DivProps } from '#ui/components/content/ast/block/Div'
 import { formatNumberedTitleElt } from '#utils/content'
 
 import Card from './Card'
+import type { ContentCardProps } from './types'
 
-function InfoCard({ attributes, content, id }: DivProps) {
+function InfoCard({ content }: ContentCardProps) {
   const { t } = useTranslation()
+
+  // TODO id, title
 
   return (
     <Card
       cardType="info"
       content={content}
       iconName="mdi:information-outline"
-      id={id}
-      title={formatNumberedTitleElt(t('content.info'), attributes)}
+      title={formatNumberedTitleElt(t('content.info'))}
     />
   )
 }

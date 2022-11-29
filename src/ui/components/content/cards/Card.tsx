@@ -7,13 +7,12 @@ import {
   styled,
 } from '@mui/material'
 import type { CardHeaderProps } from '@mui/material'
-import type { Block } from 'pandoc-filter'
 import { type ComponentProps, useState } from 'react'
 
 import Icon, { type IconProps } from '#ui/components/common/Icon'
-import ContentTree from '#ui/components/content/ast/ContentTree'
+import MarkdownNode from '#ui/components/content/mdast/MarkdownNode'
 
-import type { CardType } from './types'
+import type { CardType, ContentCardProps } from './types'
 
 const ExpandIcon = styled(({ expand, ...other }: ExpandIconProps) => {
   return <Icon name="mdi:chevron-down" {...other} />
@@ -86,7 +85,7 @@ function Card({
 
   const cardContent = (
     <CardContent sx={{ py: 0, '&:last-child': { pb: 0 } }}>
-      <ContentTree content={content} />
+      <MarkdownNode node={content} />
     </CardContent>
   )
 
@@ -113,9 +112,10 @@ function Card({
   )
 }
 
-interface CardProps extends Pick<ComponentProps<typeof MuiCard>, 'elevation' | 'sx'> {
+interface CardProps
+  extends ContentCardProps,
+    Pick<ComponentProps<typeof MuiCard>, 'elevation' | 'sx'> {
   cardType: CardType
-  content: Block[]
   collapsible?: boolean
   dense?: boolean
   iconName?: IconProps['name']

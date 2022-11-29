@@ -1,3 +1,5 @@
+// TODO: how to handle SVG with mdast?
+
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { parse as parseSvg, type RootNode } from 'svg-parser'
 
@@ -23,7 +25,7 @@ const staticCache = createApi({
   }),
 })
 
-type SvgFetchArgs = {
+interface SvgFetchArgs {
   id: string
 }
 

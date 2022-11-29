@@ -15,7 +15,7 @@ const NAMESPACE = 'common'
 async function getI18n(
   backend: Parameters<i18n['use']>[0],
   backendOpts: Record<string, unknown>,
-  currentLocale: LanguageCode,
+  currentLocale: LanguageCode | 'cimode',
   courseId: ApiCourse['id'],
   store: Store
 ) {

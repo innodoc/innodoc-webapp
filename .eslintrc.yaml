@@ -12,7 +12,6 @@ ignorePatterns:
 
 extends:
   - plugin:import/typescript
-  - plugin:etc/recommended
   - plugin:react/recommended
   - plugin:react/jsx-runtime
   - plugin:react-hooks/recommended
@@ -37,8 +36,14 @@ overrides:
     plugins:
       - '@typescript-eslint'
     rules:
-      # https://github.com/typescript-eslint/typescript-eslint/issues/1824
+      # Indentation is handled by prettier
+      # https://typescript-eslint.io/rules/indent/
       '@typescript-eslint/indent': off
+
+      # Prefer interfaces for type definitions
+      '@typescript-eslint/consistent-type-definitions':
+        - error
+        - interface
 
       # Warn when using hooks from react-redux directly
       # https://redux.js.org/usage/usage-with-typescript#use-typed-hooks-in-components
@@ -95,14 +100,6 @@ plugins:
 root: true
 
 rules:
-  ########### Typescript
-
-  # Prefer interfaces over type aliases for performance
-  etc/prefer-interface: error
-
-  # Leads to false positives in MUI
-  etc/no-internal: off
-
   ########### Filenames
 
   filenames/match-exported: error

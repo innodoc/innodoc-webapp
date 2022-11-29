@@ -14,7 +14,7 @@ import { useGetContentQuery } from '#store/slices/entities/fragments'
 import { selectLocale } from '#store/slices/uiSlice'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
-import RootNode from '#ui/components/content/mdast/RootNode'
+import MarkdownNode from '#ui/components/content/mdast/MarkdownNode'
 import { otherPagesFooter } from '#ui/components/Layout/AppBar/otherPages'
 import defaultTheme, { baseThemeOpts, makeTheme } from '#ui/components/PageShell/theme'
 import { useSelector } from '#ui/hooks/store'
@@ -76,8 +76,8 @@ function Footer() {
     <Link component={PageLink} key={`page-${page.id}`} page={page} sx={linkSx} />
   ))
 
-  const contentFooterA = blocksFooterA !== undefined ? <RootNode node={blocksFooterA} /> : null
-  const contentFooterB = blocksFooterB !== undefined ? <RootNode node={blocksFooterB} /> : null
+  const contentFooterA = blocksFooterA !== undefined ? <MarkdownNode node={blocksFooterA} /> : null
+  const contentFooterB = blocksFooterB !== undefined ? <MarkdownNode node={blocksFooterB} /> : null
 
   return (
     <CssVarsProvider theme={mode === 'light' ? footerTheme : defaultTheme}>

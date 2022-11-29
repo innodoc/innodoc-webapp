@@ -1,7 +1,4 @@
-/**
- * Finds all `<Icon name="..." />` components and extacts `name` attribute from
- * source code tree.
- */
+// TODO: migrate to database
 
 import path from 'path'
 
@@ -16,6 +13,10 @@ const isLiteral = isNodeOfType(AST_NODE_TYPES.Literal)
 const PLUGIN_NAME = 'eslint-scan-icon-names'
 const RULE_NAME = 'icon-name'
 
+/**
+ * Finds all `<Icon name="..." />` components and extacts `name` attribute from
+ * source code tree.
+ */
 async function scanIconNames() {
   // Collect icon names
   const iconNames = new Set<string>()

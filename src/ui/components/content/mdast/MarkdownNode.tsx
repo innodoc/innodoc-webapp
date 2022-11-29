@@ -2,7 +2,8 @@ import type { Root } from 'mdast'
 
 import ContentNode from './nodes/ContentNode'
 
-function RootNode({ node }: RootProps) {
+/** Markdown document root node */
+function MarkdownNode({ node }: RootProps) {
   return (
     <>
       {node.children.map((child, idx) => (
@@ -16,4 +17,4 @@ interface RootProps {
   node: Root
 }
 
-export default RootNode
+export default MarkdownNode

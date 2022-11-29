@@ -7,7 +7,7 @@ import type { TranslatedCourse } from '#types/entities/course'
 import type { TranslatedPage } from '#types/entities/page'
 import InlineError from '#ui/components/common/error/InlineError'
 import PageHeader from '#ui/components/common/PageHeader'
-import RootNode from '#ui/components/content/mdast/RootNode'
+import MarkdownNode from '#ui/components/content/mdast/MarkdownNode'
 import { useSelector } from '#ui/hooks/store'
 
 function Content({ course, page }: ContentProps) {
@@ -33,7 +33,7 @@ function Content({ course, page }: ContentProps) {
   return (
     <>
       <PageHeader iconName={page.icon}>{page.title}</PageHeader>
-      <RootNode node={rootNode} />
+      <MarkdownNode node={rootNode} />
     </>
   )
 }

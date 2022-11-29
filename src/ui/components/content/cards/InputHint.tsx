@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next'
 
-import type { DivProps } from '#ui/components/content/ast/block/Div'
-
 import Card from './Card'
+import type { ContentCardProps } from './types'
 
-function InputHint({ content, id }: DivProps) {
+function InputHint({ content }: ContentCardProps) {
   const { t } = useTranslation()
+
+  // TODO id, title
 
   return (
     <Card
@@ -14,7 +15,6 @@ function InputHint({ content, id }: DivProps) {
       dense
       elevation={1}
       iconName="mdi:keyboard-outline"
-      id={id}
       title={t('content.inputHint')}
     />
   )

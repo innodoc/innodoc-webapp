@@ -1,20 +1,21 @@
 import { useTranslation } from 'react-i18next'
 
-import type { DivProps } from '#ui/components/content/ast/block/Div'
 import { formatNumberedTitleElt } from '#utils/content'
 
 import Card from './Card'
+import type { ContentCardProps } from './types'
 
-function ExerciseCard({ attributes, content, id }: DivProps) {
+function ExerciseCard({ content }: ContentCardProps) {
   const { t } = useTranslation()
+
+  // TODO id, title
 
   return (
     <Card
       cardType="exercise"
       content={content}
       iconName="mdi:application-edit-outline"
-      id={id}
-      title={formatNumberedTitleElt(t('content.exercise'), attributes)}
+      title={formatNumberedTitleElt(t('content.exercise'))}
     />
   )
 }

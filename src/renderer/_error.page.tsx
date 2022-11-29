@@ -24,7 +24,7 @@ function ErrorPage({ errorMsg, is404 }: ErrorPageProps) {
   )
 }
 
-type ErrorPageProps = {
+interface ErrorPageProps {
   errorMsg?: string
   is404?: boolean
 }

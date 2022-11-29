@@ -1,6 +1,6 @@
 // TODO check if functions here are needed
 
-import type { AnyElt, AttrList, Tree } from 'pandoc-filter'
+import type { Tree } from 'pandoc-filter'
 import type { ComponentType } from 'react'
 
 import { CONTENT_FRAGMENT_TYPES } from '#constants'
@@ -37,10 +37,12 @@ function astToString(ast: string | Tree) {
 //   return attrs ? attrs.reduce((obj, [key, val]) => ({ ...obj, [key]: val }), {}) : {}
 // }
 
+// TODO: how to do numbering?
 /* Format numbered title for `Elt` from attributes (e.g. "Example 1.2.1") */
-function formatNumberedTitleElt(title: string, attributes: AttrList) {
-  const attrsObj = attributesToObject(attributes)
-  const number = attrsObj['data-number']
+function formatNumberedTitleElt(title: string) {
+  // const attrsObj = attributesToObject(attributes)
+  // const number = attrsObj['data-number']
+  const number = '0'
   return number ? `${title} ${number}` : title
 }
 
@@ -48,7 +50,7 @@ function formatNumberedTitleElt(title: string, attributes: AttrList) {
 function formatSectionTitle(section: TranslatedSection, preferShort = false) {
   const num = section.order.map((n) => (n + 1).toString()).join('.')
   const title = preferShort && section.shortTitle !== null ? section.shortTitle : section.title
-  return `${num} ${title}`
+  return `${num} ${title ?? ''}`
 }
 
 /* Return a function that maps classNames to Components, used by AST components */

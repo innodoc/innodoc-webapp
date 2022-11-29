@@ -8,7 +8,7 @@ import type { TranslatedSection } from '#types/entities/section'
 import Breadcrumbs from '#ui/components/Breadcrumbs/Breadcrumbs'
 import InlineError from '#ui/components/common/error/InlineError'
 import PageHeader from '#ui/components/common/PageHeader'
-import RootNode from '#ui/components/content/mdast/RootNode'
+import MarkdownNode from '#ui/components/content/mdast/MarkdownNode'
 import SubsectionList from '#ui/components/content/SubsectionList'
 import { useSelector } from '#ui/hooks/store'
 import { formatSectionTitle } from '#utils/content'
@@ -38,7 +38,7 @@ function Content({ course, section }: ContentProps) {
       <Breadcrumbs />
       <PageHeader>{formatSectionTitle(section)}</PageHeader>
       <SubsectionList sectionId={section.id} />
-      <RootNode node={rootNode} />
+      <MarkdownNode node={rootNode} />
     </>
   )
 }

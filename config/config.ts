@@ -12,7 +12,7 @@ import buildData from './buildData'
 
 dotenv.config()
 
-/* Take package.json import mapping as source of truth for aliases */
+/* Use package.json import mapping as source of truth for aliases */
 const projectDir = path.resolve(__dirname, '..')
 const alias = Object.fromEntries(
   Object.entries(imports).map(([key, val]) => [
@@ -42,7 +42,7 @@ async function config() {
   const testMode = process.env.VITEST_MODE
 
   if (testMode !== 'unit') {
-    await buildData() // Don't require running web server for unit tests
+    await buildData()
   }
 
   const config: UserConfigExport = {

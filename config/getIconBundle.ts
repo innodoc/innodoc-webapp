@@ -1,11 +1,11 @@
+// TODO: migrate to database
+
 import fs from 'fs/promises'
 import { resolve } from 'path'
 
 import type { IconifyJSON } from '@iconify/types'
 import { getIcons } from '@iconify/utils/lib/icon-set/get-icons'
 import { parse as parseSvg, type RootNode } from 'svg-parser'
-
-import type { ApiCourse } from '#types/entities/course'
 
 import scanIconNames from './scanIconNames'
 
@@ -54,18 +54,19 @@ async function getFileIconData(iconNames: string[]): Promise<Record<string, Root
 /**
  * Create icon bundle from manifest pages and static info from source code.
  */
-async function getIconBundle(manifest: ApiCourse) {
+async function getIconBundle() {
   // Icon names from source code
   const iconNamesSourcecode = await scanIconNames()
 
   // Icon names from manifest
-  const iconNamesManifestPages =
-    manifest.pages !== undefined
-      ? manifest.pages.reduce(
-          (acc, p) => (p.icon !== undefined ? [...acc, p.icon] : acc),
-          [] as string[]
-        )
-      : []
+  // const iconNamesManifestPages =
+  //   manifest.pages !== undefined
+  //     ? manifest.pages.reduce(
+  //         (acc, p) => (p.icon !== undefined ? [...acc, p.icon] : acc),
+  //         [] as string[]
+  //       )
+  //     : []
+  const iconNamesManifestPages: string[] = []
 
   const iconNamesCombined = [...iconNamesSourcecode, ...iconNamesManifestPages]
 

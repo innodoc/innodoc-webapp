@@ -22,6 +22,7 @@ class HtmlWritable extends Writable {
   }
 }
 
+/** Render to HTML string using `renderToPipeableStream` under the hood */
 const renderToHtml = (children: ReactNode): Promise<string> =>
   new Promise((resolve, reject) => {
     const writable = new HtmlWritable()

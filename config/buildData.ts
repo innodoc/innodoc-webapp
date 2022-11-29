@@ -1,14 +1,12 @@
 import fs from 'fs/promises'
 import path from 'path'
 
-import { fetchManifest } from '#server/content/fetch'
-
-import getIconBundle from './getIconBundle'
-import getLogo from './getLogo'
+// import getIconBundle from './getIconBundle'
+// import getLogo from './getLogo'
 
 const BUILD_DIRNAME = path.resolve(__dirname, '..', 'build')
-const ICON_BUNDLE_FILENAME = path.join(BUILD_DIRNAME, 'iconBundle.json')
-const LOGO_FILENAME = path.join(BUILD_DIRNAME, 'Logo.tsx')
+// const ICON_BUNDLE_FILENAME = path.join(BUILD_DIRNAME, 'iconBundle.json')
+// const LOGO_FILENAME = path.join(BUILD_DIRNAME, 'Logo.tsx')
 
 interface SystemError extends Error {
   code: string

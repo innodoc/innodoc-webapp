@@ -11,7 +11,7 @@ import {
 import type {} from '@mui/material/themeCssVarsAugmentation'
 import type {} from '@mui/lab/themeAugmentation'
 
-import type { PaletteCard } from '#theme'
+import type { PaletteCard } from '#types/theme'
 import { CARD_TYPES, type CardType } from '#ui/components/content/cards/types'
 
 // Use custom Lato font instead of MUI default font

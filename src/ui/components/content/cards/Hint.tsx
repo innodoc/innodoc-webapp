@@ -1,13 +1,12 @@
 import { useTranslation } from 'react-i18next'
 
-import type { DivProps } from '#ui/components/content/ast/block/Div'
-import { attributesToObject } from '#utils/content'
-
 import Card from './Card'
+import type { ContentCardProps } from './types'
 
-function Hint({ attributes, content, id }: DivProps) {
+function Hint({ content }: ContentCardProps) {
   const { t } = useTranslation()
-  const attrsObj = attributesToObject(attributes)
+
+  // TODO id, title
 
   return (
     <Card
@@ -17,8 +16,7 @@ function Hint({ attributes, content, id }: DivProps) {
       dense
       elevation={1}
       iconName="mdi:lightbulb-outline"
-      id={id}
-      title={attrsObj.caption ?? t('content.hint')}
+      title={t('content.hint')}
     />
   )
 }

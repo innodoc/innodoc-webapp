@@ -175,29 +175,29 @@ async function onBeforeRender({
 }
 
 // Build correct URLs with locales for prerendering from pages
-async function onBeforePrerender(globalContext: {
-  prerenderPageContexts: PrerenderingPageContext[]
-}) {
-  // Get course locales
-  // const store = makeStore()
-  // await store.dispatch(contentApi.endpoints.getCourse.initiate())
-  // const locales = selectLocales(store.getState())
-  // // For each page add locale pages
-  // const prerenderPageContexts: PrerenderingPageContext[] = []
-  // globalContext.prerenderPageContexts.forEach((pageContext) => {
-  //   locales.forEach((locale) => {
-  //     prerenderPageContexts.push({
-  //       ...pageContext,
-  //       urlOriginal: formatUrl(pageContext.urlOriginal, locale),
-  //       locale,
-  //     })
-  //   })
-  // })
-  // return {
-  //   globalContext: { prerenderPageContexts },
-  // }
-}
+// async function onBeforePrerender(globalContext: {
+//   prerenderPageContexts: PrerenderingPageContext[]
+// }) {
+// Get course locales
+// const store = makeStore()
+// await store.dispatch(contentApi.endpoints.getCourse.initiate())
+// const locales = selectLocales(store.getState())
+// // For each page add locale pages
+// const prerenderPageContexts: PrerenderingPageContext[] = []
+// globalContext.prerenderPageContexts.forEach((pageContext) => {
+//   locales.forEach((locale) => {
+//     prerenderPageContexts.push({
+//       ...pageContext,
+//       urlOriginal: formatUrl(pageContext.urlOriginal, locale),
+//       locale,
+//     })
+//   })
+// })
+// return {
+//   globalContext: { prerenderPageContexts },
+// }
+// }
 
-type PrerenderingPageContext = Pick<PageContextServer, 'locale' | 'urlOriginal'>
+// type PrerenderingPageContext = Pick<PageContextServer, 'locale' | 'urlOriginal'>
 
-export { getI18nBackendOpts, onBeforePrerender, onBeforeRender, passToClient, render }
+export { getI18nBackendOpts, onBeforeRender, passToClient, render }
