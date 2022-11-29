@@ -4,7 +4,7 @@ import useSelectPage from '#store/hooks/useSelectPage'
 import type { ApiPage, TranslatedPage } from '#types/entities/page'
 import InlineError from '#ui/components/common/error/InlineError'
 import Icon from '#ui/components/common/Icon'
-import { getPageUrl } from '#utils/content'
+import { getPageUrl } from '#utils/url'
 
 import InternalLink, { type InternalLinkProps } from './InternalLink'
 

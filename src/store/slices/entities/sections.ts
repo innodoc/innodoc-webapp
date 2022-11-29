@@ -5,7 +5,7 @@ import { API_COURSE_PREFIX } from '#routes'
 import contentApi from '#store/slices/contentApi'
 import type { ApiCourse } from '#types/entities/course'
 import type { ApiSection } from '#types/entities/section'
-import { generateUrl } from '#utils/url'
+import { getUrl } from '#utils/url'
 
 import type { CourseNameQueryArg } from './courses'
 
@@ -14,13 +14,13 @@ export const sections = contentApi.injectEndpoints({
     /** Fetch course sections */
     getCourseSections: builder.query<ApiSection[], CourseNameQueryArg>({
       query: (args) => {
-        return generateUrl('api/course/sections', args, `${API_COURSE_PREFIX}`)
+        return getUrl('api/course/sections', args, `${API_COURSE_PREFIX}`)
       },
     }),
 
     /** Fetch content AST for a section */
     getSectionContent: builder.query<Root, SectionContentFetchArgs>({
-      query: (args) => generateUrl('api/course/section/content', args, `${API_COURSE_PREFIX}`),
+      query: (args) => getUrl('api/course/section/content', args, `${API_COURSE_PREFIX}`),
     }),
   }),
 })

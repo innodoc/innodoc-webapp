@@ -8,8 +8,8 @@ import { getFragmentContent } from '#server/database/queries/fragments'
 import { getCoursePages, getPageContent } from '#server/database/queries/pages'
 import { getCourseSections, getSectionContent } from '#server/database/queries/sections'
 import { getRoutePath } from '#server/utils'
-import type { ContentFragmentType } from '#types/entities/base'
-import { isContentFragmentType } from '#utils/content'
+import type { FragmentType } from '#types/entities/base'
+import { isFragmentType } from '#utils/content'
 
 const p = (path: keyof RoutesDefinition) => getRoutePath(path, `${API_COURSE_PREFIX}`)
 
@@ -83,13 +83,13 @@ const courseRouter = Router()
     p('api/course/fragment/content'),
     param('locale').isLocale(),
     param('courseId').isInt(),
-    param('fragmentType').custom((ft: string) => isContentFragmentType(ft)),
+    param('fragmentType').custom(isFragmentType),
     checkErrors,
     (async (req, res) => {
       const sectionContent = await getFragmentContent(
         parseInt(req.params.courseId),
         req.params.locale as LanguageCode,
-        req.params.fragmentType as ContentFragmentType
+        req.params.fragmentType as FragmentType
       )
 
       if (sectionContent === undefined) {

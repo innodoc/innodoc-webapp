@@ -24,13 +24,14 @@ interface BuiltinPage {
   title: string
 }
 
-/** Fragment name for footer A */
-export const CONTENT_NAME_FOOTER_A = 'footer-a'
-/** Fragment name for footer B */
-export const CONTENT_NAME_FOOTER_B = 'footer-b'
+/** Fragment type for footer A */
+export const FRAGMENT_TYPE_FOOTER_A = 'footer-a'
+
+/** Fragment type for footer B */
+export const FRAGMENT_TYPE_FOOTER_B = 'footer-b'
 
 /** Content fragment types */
-export const CONTENT_FRAGMENT_TYPES = [CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B] as const
+export const FRAGMENT_TYPES = [FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B] as const
 
 /** Section types */
 export const SECTION_TYPES = ['regular', 'test'] as const

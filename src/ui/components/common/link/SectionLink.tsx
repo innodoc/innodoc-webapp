@@ -3,7 +3,8 @@ import { forwardRef } from 'react'
 import useSelectSection from '#store/hooks/useSelectSection'
 import type { ApiSection, TranslatedSection } from '#types/entities/section'
 import InlineError from '#ui/components/common/error/InlineError'
-import { formatSectionTitle, getSectionUrl } from '#utils/content'
+import { formatSectionTitle } from '#utils/content'
+import { getSectionUrl } from '#utils/url'
 
 import InternalLink, { type InternalLinkProps } from './InternalLink'
 

@@ -7,10 +7,10 @@ import {
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '#constants'
+import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '#constants'
 import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
 import useSelectLinkedPages from '#store/hooks/useSelectLinkedPages'
-import { useGetContentQuery } from '#store/slices/entities/fragments'
+import { useGetFragmentContentQuery } from '#store/slices/entities/fragments'
 import { selectLocale } from '#store/slices/uiSlice'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
@@ -46,19 +46,19 @@ function Footer() {
   const { pages: coursePages } = useSelectLinkedPages('footer')
   const { course } = useSelectCurrentCourse()
   const locale = useSelector(selectLocale)
-  const { data: blocksFooterA } = useGetContentQuery(
+  const { data: blocksFooterA } = useGetFragmentContentQuery(
     {
       courseId: course?.id ?? 0,
       locale,
-      fragmentType: CONTENT_NAME_FOOTER_A,
+      fragmentType: FRAGMENT_TYPE_FOOTER_A,
     },
     { skip: course === undefined }
   )
-  const { data: blocksFooterB } = useGetContentQuery(
+  const { data: blocksFooterB } = useGetFragmentContentQuery(
     {
       courseId: course?.id ?? 0,
       locale,
-      fragmentType: CONTENT_NAME_FOOTER_B,
+      fragmentType: FRAGMENT_TYPE_FOOTER_B,
     },
     { skip: course === undefined }
   )

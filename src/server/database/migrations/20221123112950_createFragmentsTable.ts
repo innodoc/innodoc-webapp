@@ -1,11 +1,11 @@
 import type { Knex } from 'knex'
 
-import { CONTENT_FRAGMENT_TYPES } from '#constants'
+import { FRAGMENT_TYPES } from '#constants'
 
 export async function up(knex: Knex) {
   // fragment enum type
 
-  const values = CONTENT_FRAGMENT_TYPES.join("', '")
+  const values = FRAGMENT_TYPES.join("', '")
   await knex.schema.raw(`create type fragment_type as enum ('${values}')`)
 
   // fragments table

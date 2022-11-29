@@ -18,7 +18,7 @@ import '@fontsource/lato/700-italic.css'
 // KaTeX CSS
 import 'katex/dist/katex.min.css'
 
-// import { CONTENT_NAME_FOOTER_A, CONTENT_NAME_FOOTER_B } from '#constants'
+// import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '#constants'
 import { EMOTION_STYLE_KEY, passToClientProps } from '#constants'
 import makeStore from '#store/makeStore'
 import courses from '#store/slices/entities/courses'
@@ -27,9 +27,8 @@ import sections from '#store/slices/entities/sections'
 import { changeCourseId, changeLocale, changeUrlWithoutLocale } from '#store/slices/uiSlice'
 import type { PageContextServer, PrepopFactory } from '#types/pageContext'
 import PageShell from '#ui/components/PageShell/PageShell'
-import { replacePathPrefixes } from '#utils/content'
 import getI18n from '#utils/getI18n'
-import { formatUrl } from '#utils/url'
+import { formatUrl, replacePathPrefixes } from '#utils/url'
 
 // import fetchContent from './fetchContent'
 import renderToHtml from './renderToHtml'
@@ -99,8 +98,8 @@ async function onBeforeRender({
     (store) => store.dispatch(courses.endpoints.getCourse.initiate({ courseId })),
     (store) => store.dispatch(pages.endpoints.getCoursePages.initiate({ courseId })),
     (store) => store.dispatch(sections.endpoints.getCourseSections.initiate({ courseId })),
-    // (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_A })),
-    // (store, locale) => fetchContent(store, getContent({ locale, path: CONTENT_NAME_FOOTER_B })),
+    // (store, locale) => fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_A })),
+    // (store, locale) => fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_B })),
   ]
   await Promise.all(
     [...prepopFactories, ...pagePrepopFactories].map((factory) => factory(store, locale))

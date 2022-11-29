@@ -1,11 +1,9 @@
 // TODO check if functions here are needed
 
 import type { Tree } from 'pandoc-filter'
-import type { ComponentType } from 'react'
 
-import { CONTENT_FRAGMENT_TYPES } from '#constants'
-import type { ContentFragmentType } from '#types/entities/base'
-import type { TranslatedPage } from '#types/entities/page'
+import { FRAGMENT_TYPES } from '#constants'
+import type { FragmentType } from '#types/entities/base'
 import type { TranslatedSection } from '#types/entities/section'
 
 /* Convert AST to string */
@@ -53,49 +51,9 @@ function formatSectionTitle(section: TranslatedSection, preferShort = false) {
   return `${num} ${title ?? ''}`
 }
 
-/* Return a function that maps classNames to Components, used by AST components */
-function getClassNameToComponentMapper<P>(classNameComponentMap: Record<string, ComponentType<P>>) {
-  const availableClassNames = Object.keys(classNameComponentMap)
-  return (classNames: string[]) => {
-    for (let i = 0; i < availableClassNames.length; i += 1) {
-      const className = availableClassNames[i]
-      if (classNames.includes(className)) {
-        return classNameComponentMap[className]
-      }
-    }
-    return undefined
-  }
+/** Type guard for FragmentType */
+function isFragmentType(t: string): t is FragmentType {
+  return FRAGMENT_TYPES.includes(t as FragmentType)
 }
 
-/** Generate page URL */
-function getPageUrl(pageSlug: TranslatedPage['slug']) {
-  return `/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/${pageSlug}`
-}
-
-/** Generate section URL */
-function getSectionUrl(sectionPath: string) {
-  return `/${import.meta.env.INNODOC_SECTION_PATH_PREFIX}/${sectionPath}`
-}
-
-/** Type guard for ContentFragmentType */
-function isContentFragmentType(t: string): t is ContentFragmentType {
-  return CONTENT_FRAGMENT_TYPES.includes(t as ContentFragmentType)
-}
-
-/** Replace generic with custom path prefixes */
-function replacePathPrefixes(url: string) {
-  return url
-    .replace('/page/', `/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/`)
-    .replace('/section/', `/${import.meta.env.INNODOC_SECTION_PATH_PREFIX}/`)
-}
-
-export {
-  astToString,
-  formatNumberedTitleElt,
-  formatSectionTitle,
-  getClassNameToComponentMapper,
-  getPageUrl,
-  getSectionUrl,
-  isContentFragmentType,
-  replacePathPrefixes,
-}
+export { astToString, formatNumberedTitleElt, formatSectionTitle, isFragmentType }

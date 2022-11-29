@@ -1,7 +1,7 @@
 import type { LanguageCode } from 'iso-639-1'
 
 import getDatabase from '#server/database/getDatabase'
-import type { ContentFragmentType } from '#types/entities/base'
+import type { FragmentType } from '#types/entities/base'
 import type { DbCourse } from '#types/entities/course'
 
 import type { ContentResult, ContentResultFromValue } from './types'
@@ -9,7 +9,7 @@ import type { ContentResult, ContentResultFromValue } from './types'
 export async function getFragmentContent(
   courseId: DbCourse['id'],
   locale: LanguageCode,
-  fragmentType: ContentFragmentType
+  fragmentType: FragmentType
 ): Promise<ContentResult> {
   const db = getDatabase()
   const result = await db

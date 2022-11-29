@@ -2,6 +2,7 @@ import ISO6391, { type LanguageCode } from 'iso-639-1'
 import { compile } from 'path-to-regexp'
 
 import routes, { type RoutesDefinition } from '#routes'
+import type { TranslatedPage } from '#types/entities/page'
 
 /** Split locale from URL, e.g. `/en/about` => `en`, `/about`. */
 function extractLocale(url: string, defaultLocale?: LanguageCode): ExtractedLocaleInfo {
@@ -25,6 +26,7 @@ function formatUrl(to: string, locale?: LanguageCode, hash?: string, base = '/')
   return hash ? `${href}#${hash}` : href
 }
 
+/** URL compilers for all routes */
 const compilers = Object.fromEntries(
   Object.entries(routes).map(([name, pattern]) => [
     name,
@@ -32,25 +34,48 @@ const compilers = Object.fromEntries(
   ])
 )
 
-/** Generate route URL path from paramers  */
-function generateUrl(
-  name: keyof RoutesDefinition,
-  params: Record<string, string | number>,
-  prefix?: string
-) {
+/** Generate route URL path from paramers */
+function getUrl<Args extends object>(name: keyof RoutesDefinition, params: Args, prefix?: string) {
+  // Convert number values to string
   const paramsAsStrings = Object.fromEntries(
-    Object.entries(params).map(([key, val]) => [key, val.toString()])
+    Object.entries(params).map(([key, val]) => [
+      key,
+      typeof val === 'number' ? val.toString() : val,
+    ])
   )
+
+  // Params to route url
   const url = compilers[name](paramsAsStrings)
+
+  // Remove prefix from route
   if (prefix !== undefined) {
     return url.replace(new RegExp(`^${prefix.replace('/', '\\/')}`), '')
   }
+
   return url
 }
 
+/** Generate page URL */
+function getPageUrl(pageSlug: TranslatedPage['slug']) {
+  return `/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/${pageSlug}`
+}
+
+/** Generate section URL */
+function getSectionUrl(sectionPath: string) {
+  return `/${import.meta.env.INNODOC_SECTION_PATH_PREFIX}/${sectionPath}`
+}
+
+/** Replace generic with custom path prefixes */
+function replacePathPrefixes(url: string) {
+  return url
+    .replace('/page/', `/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/`)
+    .replace('/section/', `/${import.meta.env.INNODOC_SECTION_PATH_PREFIX}/`)
+}
+
+/** Locale info extracted from URL */
 interface ExtractedLocaleInfo {
   locale: LanguageCode
   urlWithoutLocale: string
 }
 
-export { extractLocale, formatUrl, generateUrl }
+export { extractLocale, formatUrl, getUrl, getPageUrl, getSectionUrl, replacePathPrefixes }
