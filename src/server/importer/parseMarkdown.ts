@@ -30,11 +30,11 @@ function remarkGfm(this: Processor) {
 
 const parser = unified()
   .use(remarkParse)
-  .use(remarkSqueezeParagraphs)
-  .use(remarkInlineLinks)
   .use(remarkFrontmatter)
   .use(remarkDirective)
+  .use(remarkInlineLinks)
   .use(remarkGfm)
+  .use(remarkSqueezeParagraphs)
 
 /** Parse Markdown code to mdast */
 function parseMarkdown(markdown: string) {

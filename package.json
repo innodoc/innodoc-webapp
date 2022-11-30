@@ -119,7 +119,7 @@
     "dev": "nodemon --ext ts --watch ./src/server --exec pnpm -- run server",
     "generate-tsconfig-paths": "ts-node config/generateTsConfigPaths.ts",
     "knex": "ts-node node_modules/knex/bin/cli.js",
-    "import": "ts-node src/server/importer/importFromV1.ts",
+    "import-v1": "ts-node src/server/importer/importFromV1.ts",
     "lint:eslint": "eslint .",
     "lint": "pnpm run lint:eslint && pnpm run type-check",
     "prepush": "pnpm run lint && pnpm run test",
