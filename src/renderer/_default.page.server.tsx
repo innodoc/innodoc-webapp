@@ -1,8 +1,8 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-import _createCache from '@emotion/cache'
-import _createEmotionServer from '@emotion/server/create-instance'
+import createCache from '@emotion/cache'
+import createEmotionServer from '@emotion/server/create-instance'
 import { getInitColorSchemeScript } from '@mui/material/styles/index.js'
 import I18NextFsBackend from 'i18next-fs-backend'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -32,13 +32,6 @@ import { formatUrl, replacePathPrefixes } from '#utils/url'
 
 // import fetchContent from './fetchContent'
 import renderToHtml from './renderToHtml'
-
-// Workaround to make compatible with Node ESM and vite loaders
-// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-const createCache = ((_createCache as any).default ?? _createCache) as typeof _createCache
-// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-const createEmotionServer = ((_createEmotionServer as any).default ??
-  _createEmotionServer) as typeof _createEmotionServer
 
 function getI18nBackendOpts() {
   const dirname = path.dirname(fileURLToPath(import.meta.url))

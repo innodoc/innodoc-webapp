@@ -2,6 +2,7 @@ import path from 'path'
 
 import react from '@vitejs/plugin-react'
 import dotenv from 'dotenv'
+import { cjsInterop } from 'vite-plugin-cjs-interop'
 import ssr from 'vite-plugin-ssr/plugin'
 import { type InlineConfig as VitestInlineConfig } from 'vitest'
 import { type UserConfigExport } from 'vitest/config'
@@ -47,7 +48,14 @@ async function config() {
 
   const config: UserConfigExport = {
     envPrefix: 'INNODOC_', // Exposed to client
-    plugins: [react(), ssr({ prerender: true })],
+    plugins: [
+      cjsInterop({
+        // unwrap default imports from CJS dependencies during SSR
+        dependencies: ['@emotion/*'],
+      }),
+      react(),
+      ssr({ prerender: true }),
+    ],
     resolve: { alias },
     ssr: {
       noExternal: [

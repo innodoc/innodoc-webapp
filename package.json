@@ -57,6 +57,7 @@
     "unified": "^10.1.2",
     "unist-util-remove-position": "^4.0.1",
     "vite": "^3.2.4",
+    "vite-plugin-cjs-interop": "^0.0.7",
     "vite-plugin-ssr": "^0.4.48"
   },
   "devDependencies": {
