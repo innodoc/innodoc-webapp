@@ -1,4 +1,5 @@
 import { forwardRef } from 'react'
+import { Trans } from 'react-i18next'
 
 import InlineError from '#ui/components/common/error/InlineError'
 
@@ -22,8 +23,10 @@ const ContentLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(function Co
 
   return (
     <InlineError>
-      ContentLink: prop &qout;to&qout; (<code>{to}</code>) needs to start with either
-      &qout;/section/&qout; or &qout;/page/&qout;
+      <Trans i18nKey="error.contentLinkToProp">
+        <code>ContentLink:</code> Prop <code>to</code> needs to start with either{' '}
+        <code>/section/</code> or <code>/page/</code>.
+      </Trans>
     </InlineError>
   )
 })

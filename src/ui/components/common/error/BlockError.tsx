@@ -1,12 +1,16 @@
-import { styled } from '@mui/material'
+import { Alert, AlertTitle } from '@mui/material'
 import type { ReactNode } from 'react'
-
-const StyledDiv = styled('div')(({ theme }) => ({
-  color: theme.vars.palette.error.main,
-}))
+import { useTranslation } from 'react-i18next'
 
 function BlockError({ children }: BlockErrorProps) {
-  return <StyledDiv>{children}</StyledDiv>
+  const { t } = useTranslation()
+
+  return (
+    <Alert severity="error">
+      <AlertTitle>{t('common.error')}</AlertTitle>
+      {children}
+    </Alert>
+  )
 }
 
 interface BlockErrorProps {

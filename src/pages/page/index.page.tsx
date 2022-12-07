@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 import { Page as ErrorPage } from '#renderer/_error.page'
 import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
 import useSelectPage from '#store/hooks/useSelectPage'
@@ -44,10 +46,11 @@ interface ContentProps {
 }
 
 function ContentPage({ pageSlug }: ContentPageProps) {
+  const { t } = useTranslation()
   const { course } = useSelectCurrentCourse()
   const { page } = useSelectPage(pageSlug)
 
-  if (course === undefined) return <InlineError>No course found</InlineError>
+  if (course === undefined) return <InlineError>{t('error.noCourse')}</InlineError>
   if (page === undefined) return <ErrorPage is404 />
 
   return <Content course={course} page={page} />

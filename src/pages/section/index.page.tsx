@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 import { Page as ErrorPage } from '#renderer/_error.page'
 import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
 import useSelectSection from '#store/hooks/useSelectSection'
@@ -49,10 +51,11 @@ interface ContentProps {
 }
 
 function ContentSection({ sectionPath }: ContentSectionProps) {
+  const { t } = useTranslation()
   const { course } = useSelectCurrentCourse()
   const { section } = useSelectSection(sectionPath)
 
-  if (course === undefined) return <InlineError>No course found</InlineError>
+  if (course === undefined) return <InlineError>{t('error.noCourse')}</InlineError>
   if (section === undefined) return <ErrorPage is404 />
 
   return <Content course={course} section={section} />

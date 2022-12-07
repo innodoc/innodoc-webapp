@@ -1,6 +1,7 @@
 {
   "common": {
-    "close": "Close"
+    "close": "Close",
+    "error": "Error"
   },
   "content": {
     "example": "Example",
@@ -9,6 +10,18 @@
     "inputHint": "Input help",
     "hint": "Hint",
     "subsections": "Subsections"
+  },
+  "error": {
+    "contentLinkToProp": "<0>ContentLink:</0> Prop <2>to</2> needs to start with either <5>/section/</5> or <7>/page/</7>.",
+    "invalidSvgRoot": "Invalid SVG root node.",
+    "noCourse": "No course found.",
+    "pageLinkPageSlugProp": "<0>PageLink</0>: Page <2>{{pageSlug}}</2> not found.",
+    "sectionLinkSectionPathProp": "<0>SectionLink</0>: Section path <2>{{sectionPath}}</2> not found.",
+    "svgFetchFailed": "Failed to fetch SVG data.",
+    "unexpectedHtmlNode": "Unexpected HTML node encountered.",
+    "unknownBlockElement": "Unknown block element encountered.",
+    "unknownInlineElement": "Unknown inline element encountered.",
+    "unknownIcon": "Unknown icon name encountered."
   },
   "internalPages": {
     "indexPage": {

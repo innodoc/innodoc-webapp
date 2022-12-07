@@ -1,4 +1,5 @@
 import { type ComponentType, createElement, type SVGProps } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { ElementNode, RootNode } from 'svg-parser'
 
 import InlineError from '#ui/components/common/error/InlineError'
@@ -45,13 +46,15 @@ interface SvgNodeProps {
 }
 
 function SvgRootNode({ component: Component, rootNode, ...props }: SvgRootNodeProps) {
+  const { t } = useTranslation()
+
   if (!isRootNode(rootNode)) {
-    return <InlineError>SvgRootNode: Invalid root node</InlineError>
+    return <InlineError>{t('error.invalidSvgRoot')}</InlineError>
   }
 
   const svgNode = rootNode.children[0]
   if (!isElementNode(svgNode)) {
-    return <InlineError>SvgRootNode: Invalid svg node</InlineError>
+    return <InlineError>{t('error.invalidSvgRoot')}</InlineError>
   }
 
   const svgProps = attributesToProps(svgNode.properties)

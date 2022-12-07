@@ -1,4 +1,5 @@
 import { Skeleton, styled } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 import { useGetSvgQuery } from '#store/slices/staticCache'
 import InlineError from '#ui/components/common/error/InlineError'
@@ -10,10 +11,11 @@ const StyledSvg = styled('svg')({
 })
 
 function SvgImage({ id }: SvgImageProps) {
+  const { t } = useTranslation()
   const { data: rootNode, isError } = useGetSvgQuery({ id })
 
   if (isError) {
-    return <InlineError>Failed to fetch SVG</InlineError>
+    return <InlineError>{t('error.svgFetchFailed')}</InlineError>
   }
 
   if (rootNode === undefined) {

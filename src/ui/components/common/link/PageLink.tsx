@@ -1,4 +1,5 @@
 import { forwardRef } from 'react'
+import { Trans } from 'react-i18next'
 
 import useSelectPage from '#store/hooks/useSelectPage'
 import type { ApiPage, TranslatedPage } from '#types/entities/page'
@@ -38,7 +39,17 @@ const PageLinkPageSlug = forwardRef<HTMLAnchorElement, PageLinkPageSlugProps>(
     const { page } = useSelectPage(pageSlug)
 
     if (page === undefined) {
-      return <InlineError>PageLink: Page &quot;{pageSlug}&quot; not found</InlineError>
+      return (
+        <InlineError>
+          <Trans
+            i18nKey="error.pageLinkPageSlugProp"
+            components={{ 0: <code />, 2: <code /> }}
+            values={{ pageSlug }}
+          >
+            {`<0>PageLink</0>: Page <2>{{pageSlug}}</2> not found.`}
+          </Trans>
+        </InlineError>
+      )
     }
 
     return <PageLinkPage hash={hash} ref={ref} page={page} {...other} />
@@ -55,11 +66,7 @@ const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
   ref
 ) {
   if (page !== undefined && pageSlug !== undefined) {
-    return (
-      <InlineError>
-        PageLink: Set either &quot;page&quot; or &quot;pageSlug&quot; prop, not both!
-      </InlineError>
-    )
+    throw new Error('Use either page or pageSlug prop, not both.')
   }
 
   if (page !== undefined) {
@@ -70,9 +77,7 @@ const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
     return <PageLinkPageSlug ref={ref} pageSlug={pageSlug} {...other} />
   }
 
-  return (
-    <InlineError>PageLink: Needs either &quot;page&quot; or &quot;pageSlug&quot; prop</InlineError>
-  )
+  throw new Error('Use either page or pageSlug prop.')
 })
 
 interface PageLinkProps extends Omit<InternalLinkProps, 'to'> {

@@ -1,4 +1,5 @@
 import { forwardRef } from 'react'
+import { Trans } from 'react-i18next'
 
 import useSelectSection from '#store/hooks/useSelectSection'
 import type { ApiSection, TranslatedSection } from '#types/entities/section'
@@ -33,7 +34,15 @@ const SectionLinkSectionPath = forwardRef<HTMLAnchorElement, SectionLinkSectionP
 
     if (section === undefined) {
       return (
-        <InlineError>SectionLink: Section path &quot;{sectionPath}&quot; not found</InlineError>
+        <InlineError>
+          <Trans
+            i18nKey="error.sectionLinkSectionPathProp"
+            components={{ 0: <code />, 2: <code /> }}
+            values={{ sectionPath }}
+          >
+            {`<0>SectionLink</0>: Section path <2>{{sectionPath}}</2> not found.`}
+          </Trans>
+        </InlineError>
       )
     }
 
@@ -51,11 +60,7 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function Sec
   ref
 ) {
   if (section !== undefined && sectionPath !== undefined) {
-    return (
-      <InlineError>
-        SectionLink: Needs either &quot;section&quot; or &quot;sectionPath&quot; prop, not both!
-      </InlineError>
-    )
+    throw new Error('Use either section or sectionPath prop, not both.')
   }
 
   if (section !== undefined) {
@@ -66,11 +71,7 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function Sec
     return <SectionLinkSectionPath ref={ref} sectionPath={sectionPath} {...other} />
   }
 
-  return (
-    <InlineError>
-      SectionLink: Needs either &quot;section&quot; or &quot;sectionPath&quot; prop!
-    </InlineError>
-  )
+  throw new Error('Use either section or sectionPath prop.')
 })
 
 interface SectionLinkProps extends Omit<InternalLinkProps, 'to'> {
