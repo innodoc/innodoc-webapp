@@ -9,8 +9,8 @@ const StyledOl = styled('ol')(({ theme }) => ({ paddingLeft: theme.spacing(4) })
 function ListNode({ node }: ListNodeProps) {
   const ListComponent = node.ordered ? StyledOl : StyledUl
 
-  const listItems = node.children.map((child, i) => (
-    <ListItemNode key={i.toString()} node={child} />
+  const listItems = node.children.map((child, idx) => (
+    <ListItemNode key={child?.data?.uuid ?? idx.toString()} node={child} />
   ))
 
   return <ListComponent>{listItems}</ListComponent>

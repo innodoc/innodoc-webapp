@@ -15,7 +15,7 @@ import { useSelector } from '#ui/hooks/store'
 function Content({ course, page }: ContentProps) {
   const locale = useSelector(selectLocale)
   const {
-    data: rootNode,
+    data: content,
     isError,
     isLoading,
   } = useGetPageContentQuery({
@@ -28,14 +28,14 @@ function Content({ course, page }: ContentProps) {
     return <ErrorPage is404 />
   }
 
-  if (isLoading === undefined || rootNode === undefined) {
+  if (isLoading === undefined || content === undefined) {
     return null
   }
 
   return (
     <>
       <PageHeader iconName={page.icon}>{page.title}</PageHeader>
-      <MarkdownNode node={rootNode} />
+      <MarkdownNode content={content} />
     </>
   )
 }

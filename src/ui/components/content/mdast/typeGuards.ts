@@ -1,3 +1,6 @@
+// TODO: replace with https://unifiedjs.com/learn/recipe/narrow-node-typescript/
+// https://github.com/syntax-tree/unist-util-is
+
 import type {
   BlockContent,
   Blockquote,
@@ -36,6 +39,7 @@ import type {
   TopLevelContent,
   YAML,
 } from 'mdast'
+import type { ContainerDirective, LeafDirective, TextDirective } from 'mdast-util-directive'
 import type { Node } from 'unist'
 
 export function isRoot(node: Node): node is Root {
@@ -56,6 +60,8 @@ export function isBlockContent(node: Node): node is BlockContent {
     'table',
     'html',
     'code',
+    'leafDirective',
+    'containerDirective',
   ].includes(node.type)
 }
 
@@ -96,6 +102,7 @@ export function isStaticPhrasingContent(node: Node): node is StaticPhrasingConte
     'imageReference',
     'footnote',
     'footnoteReference',
+    'textDirective',
   ].includes(node.type)
 }
 
@@ -201,4 +208,16 @@ export function isFootnote(node: Node): node is Footnote {
 
 export function isFootnoteReference(node: Node): node is FootnoteReference {
   return node.type === 'footnoteReference'
+}
+
+export function isTextDirective(node: Node): node is TextDirective {
+  return node.type === 'textDirective'
+}
+
+export function isLeafDirective(node: Node): node is LeafDirective {
+  return node.type === 'leafDirective'
+}
+
+export function isContainerDirective(node: Node): node is ContainerDirective {
+  return node.type === 'containerDirective'
 }

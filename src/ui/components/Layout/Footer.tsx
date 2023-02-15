@@ -46,7 +46,7 @@ function Footer() {
   const { pages: coursePages } = useSelectLinkedPages('footer')
   const { course } = useSelectCurrentCourse()
   const locale = useSelector(selectLocale)
-  const { data: blocksFooterA } = useGetFragmentContentQuery(
+  const { data: contentA } = useGetFragmentContentQuery(
     {
       courseId: course?.id ?? 0,
       locale,
@@ -54,7 +54,7 @@ function Footer() {
     },
     { skip: course === undefined }
   )
-  const { data: blocksFooterB } = useGetFragmentContentQuery(
+  const { data: contentB } = useGetFragmentContentQuery(
     {
       courseId: course?.id ?? 0,
       locale,
@@ -76,8 +76,8 @@ function Footer() {
     <Link component={PageLink} key={`page-${page.id}`} page={page} sx={linkSx} />
   ))
 
-  const contentFooterA = blocksFooterA !== undefined ? <MarkdownNode node={blocksFooterA} /> : null
-  const contentFooterB = blocksFooterB !== undefined ? <MarkdownNode node={blocksFooterB} /> : null
+  const contentFooterA = contentA !== undefined ? <MarkdownNode content={contentA} /> : null
+  const contentFooterB = contentB !== undefined ? <MarkdownNode content={contentB} /> : null
 
   return (
     <CssVarsProvider theme={mode === 'light' ? footerTheme : defaultTheme}>

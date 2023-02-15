@@ -13,15 +13,17 @@
   },
   "error": {
     "contentLinkToProp": "<0>ContentLink:</0> Prop <2>to</2> muss entweder mit <5>/section/</5> oder <7>/page/</7> anfangen.",
+    "invalidHeaderDepth": "Überschriftentiefe muss zwischen 1 und 6 liegen, ist aber <1>{{depth}}</1>.",
     "invalidSvgRoot": "Ungültiger SVG-Wurzelknoten.",
     "noCourse": "Kein Kurs gefunden.",
     "pageLinkPageSlugProp": "<0>PageLink</0>: Seite <2>{{pageSlug}}</2> nicht gefunden.",
     "sectionLinkSectionPathProp": "<0>SectionLink</0>: Abschnittspfad <2>{{sectionPath}}</2> nicht gefunden.",
     "svgFetchFailed": "SVG-Daten konnten nicht geladen werden.",
-    "unexpectedHtmlNode": "Unerwarteter HTML-Knoten aufgetreten.",
-    "unknownBlockElement": "Unbekanntes Block-Element aufgetreten.",
-    "unknownInlineElement": "Unbekanntes Inline-Element aufgetreten.",
-    "unknownIcon": "Unbekannter Icon-Name aufgetreten."
+    "unexpectedHtmlNode": "Unerwarteter HTML-Knoten aufgetreten",
+    "unknownBlockElement": "Unbekanntes Block-Element aufgetreten",
+    "unknownContainerDirective": "Unbekannter Container-Directive-Name aufgetreten",
+    "unknownInlineElement": "Unbekanntes Inline-Element aufgetreten",
+    "unknownIcon": "Unbekannter Icon-Name aufgetreten"
   },
   "internalPages": {
     "indexPage": {

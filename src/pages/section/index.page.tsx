@@ -18,7 +18,7 @@ import { formatSectionTitle } from '#utils/content'
 function Content({ course, section }: ContentProps) {
   const locale = useSelector(selectLocale)
   const {
-    data: rootNode,
+    data: content,
     isError,
     isLoading,
   } = useGetSectionContentQuery({
@@ -31,7 +31,7 @@ function Content({ course, section }: ContentProps) {
     return <ErrorPage is404 />
   }
 
-  if (isLoading === undefined || rootNode === undefined) {
+  if (isLoading === undefined || content === undefined) {
     return null
   }
 
@@ -40,7 +40,7 @@ function Content({ course, section }: ContentProps) {
       <Breadcrumbs />
       <PageHeader>{formatSectionTitle(section)}</PageHeader>
       <SubsectionList sectionId={section.id} />
-      <MarkdownNode node={rootNode} />
+      <MarkdownNode content={content} />
     </>
   )
 }

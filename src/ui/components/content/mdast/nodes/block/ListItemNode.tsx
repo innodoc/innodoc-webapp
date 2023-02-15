@@ -4,8 +4,10 @@ import BlockContentNode from '#ui/components/content/mdast/nodes/BlockContentNod
 import { isBlockContent } from '#ui/components/content/mdast/typeGuards'
 
 function ListItemNode({ node }: ListItemNodeProps) {
-  const children = node.children.map((child, i) =>
-    isBlockContent(child) ? <BlockContentNode key={i.toString()} node={child} /> : null
+  const children = node.children.map((child, idx) =>
+    isBlockContent(child) ? (
+      <BlockContentNode key={child?.data?.uuid ?? idx.toString()} node={child} />
+    ) : null
   )
 
   return <li>{children}</li>

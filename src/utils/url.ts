@@ -35,7 +35,7 @@ const compilers = Object.fromEntries(
 )
 
 /** Generate route URL path from paramers */
-function getUrl<Args extends object>(name: keyof RoutesDefinition, params: Args, prefix?: string) {
+function getUrl<Args extends object>(name: keyof RoutesDefinition, params: Args) {
   // Convert number values to string
   const paramsAsStrings = Object.fromEntries(
     Object.entries(params).map(([key, val]) => [
@@ -45,14 +45,7 @@ function getUrl<Args extends object>(name: keyof RoutesDefinition, params: Args,
   )
 
   // Params to route url
-  const url = compilers[name](paramsAsStrings)
-
-  // Remove prefix from route
-  if (prefix !== undefined) {
-    return url.replace(new RegExp(`^${prefix.replace('/', '\\/')}`), '')
-  }
-
-  return url
+  return compilers[name](paramsAsStrings)
 }
 
 /** Generate page URL */

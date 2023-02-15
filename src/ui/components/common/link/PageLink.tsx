@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { Children, forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 
 import useSelectPage from '#store/hooks/useSelectPage'
@@ -7,7 +7,8 @@ import InlineError from '#ui/components/common/error/InlineError'
 import Icon from '#ui/components/common/Icon'
 import { getPageUrl } from '#utils/url'
 
-import InternalLink, { type InternalLinkProps } from './InternalLink'
+import InternalLink from './InternalLink'
+import type { LinkProps } from './types'
 
 /** PageLinkPage takes `page` */
 const PageLinkPage = forwardRef<HTMLAnchorElement, PageLinkPageProps>(function PageLinkPage(
@@ -18,7 +19,9 @@ const PageLinkPage = forwardRef<HTMLAnchorElement, PageLinkPageProps>(function P
 
   return (
     <InternalLink to={getPageUrl(slug)} ref={ref} {...other}>
-      {children || (
+      {Children.count(children) ? (
+        children
+      ) : (
         <>
           {icon !== undefined ? <Icon name={icon} /> : null}
           {(preferShortTitle && shortTitle !== undefined ? shortTitle : title) || null}
@@ -80,7 +83,7 @@ const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
   throw new Error('Use either page or pageSlug prop.')
 })
 
-interface PageLinkProps extends Omit<InternalLinkProps, 'to'> {
+interface PageLinkProps extends Omit<LinkProps, 'to'> {
   preferShortTitle?: boolean
   page?: TranslatedPage
   pageSlug?: ApiPage['slug']

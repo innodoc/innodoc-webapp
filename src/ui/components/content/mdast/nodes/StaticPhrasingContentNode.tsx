@@ -12,6 +12,7 @@ import {
   isInlineCode,
   isStrong,
   isText,
+  isTextDirective,
 } from '#ui/components/content/mdast/typeGuards'
 
 import BreakNode from './inline/BreakNode'
@@ -26,6 +27,7 @@ import InlineCodeNode from './inline/InlineCodeNode'
 import StrongNode from './inline/StrongNode'
 import TextNode from './inline/TextNode'
 import UnknownNode from './inline/UnknownNode'
+import TextDirectiveNode from './inline/TextDirectiveNode'
 
 function StaticPhrasingContentNode({ node }: StaticPhrasingContentNodeProps) {
   if (isText(node)) {
@@ -70,6 +72,10 @@ function StaticPhrasingContentNode({ node }: StaticPhrasingContentNodeProps) {
 
   if (isFootnoteReference(node)) {
     return <FootnoteReferenceNode node={node} />
+  }
+
+  if (isTextDirective(node)) {
+    return <TextDirectiveNode node={node} />
   }
 
   return <UnknownNode node={node} />

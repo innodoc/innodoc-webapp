@@ -1,9 +1,10 @@
-import { forwardRef } from 'react'
+import { Children, forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { type BuiltinPagesKey, BUILTIN_PAGES } from '#constants'
 
-import InternalLink, { type InternalLinkProps } from './InternalLink'
+import InternalLink from './InternalLink'
+import type { LinkProps } from './types'
 
 const BuiltinPageLink = forwardRef<HTMLAnchorElement, BuiltinPageLinkProps>(
   function BuiltinPageLink({ children, to, ...other }, ref) {
@@ -12,13 +13,13 @@ const BuiltinPageLink = forwardRef<HTMLAnchorElement, BuiltinPageLinkProps>(
 
     return (
       <InternalLink to={path} ref={ref} {...other}>
-        {children || t(titleI18nKey)}
+        {Children.count(children) ? children : t(titleI18nKey)}
       </InternalLink>
     )
   }
 )
 
-export interface BuiltinPageLinkProps extends Omit<InternalLinkProps, 'to'> {
+export interface BuiltinPageLinkProps extends Omit<LinkProps, 'to'> {
   to: BuiltinPagesKey
 }
 

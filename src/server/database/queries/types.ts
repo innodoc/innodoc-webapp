@@ -1,5 +1,7 @@
-import type { Root } from 'mdast'
+export interface IdResult {
+  id: number
+}
 
-export type ContentResultFromValue = { value: Root } | undefined
-export type ContentResult = Root | undefined
-export type IdResult = { id: number } | undefined
+export interface ResultFromValue<T> {
+  value: T
+}

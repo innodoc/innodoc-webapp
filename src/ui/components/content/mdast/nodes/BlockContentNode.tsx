@@ -3,8 +3,10 @@ import type { BlockContent } from 'mdast'
 import {
   isBlockquote,
   isCode,
+  isContainerDirective,
   isHeading,
   isHTML,
+  isLeafDirective,
   isList,
   isParagraph,
   isTable,
@@ -13,8 +15,10 @@ import {
 
 import BlockquoteNode from './block/BlockquoteNode'
 import CodeNode from './block/CodeNode'
+import ContainerDirectiveNode from './block/ContainerDirectiveNode'
 import HeadingNode from './block/HeadingNode'
 import HTMLNode from './block/HTMLNode'
+import LeafDirectiveNode from './block/LeafDirectiveNode'
 import ListNode from './block/ListNode'
 import ParagraphNode from './block/ParagraphNode'
 import TableNode from './block/TableNode'
@@ -52,6 +56,14 @@ function BlockContentNode({ node }: BlockContentNodeProps) {
 
   if (isCode(node)) {
     return <CodeNode node={node} />
+  }
+
+  if (isLeafDirective(node)) {
+    return <LeafDirectiveNode node={node} />
+  }
+
+  if (isContainerDirective(node)) {
+    return <ContainerDirectiveNode node={node} />
   }
 
   return <UnknownNode node={node} />

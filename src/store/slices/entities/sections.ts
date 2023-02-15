@@ -1,9 +1,8 @@
 import type { LanguageCode } from 'iso-639-1'
-import type { Root } from 'mdast'
 
-import { API_COURSE_PREFIX } from '#routes'
 import contentApi from '#store/slices/contentApi'
 import type { ApiCourse } from '#types/entities/course'
+import type { MarkdownDoc } from '#types/entities/markdown'
 import type { ApiSection } from '#types/entities/section'
 import { getUrl } from '#utils/url'
 
@@ -14,13 +13,13 @@ export const sections = contentApi.injectEndpoints({
     /** Fetch course sections */
     getCourseSections: builder.query<ApiSection[], CourseNameQueryArg>({
       query: (args) => {
-        return getUrl('api/course/sections', args, `${API_COURSE_PREFIX}`)
+        return getUrl('api/course/sections', args)
       },
     }),
 
     /** Fetch content AST for a section */
-    getSectionContent: builder.query<Root, SectionContentFetchArgs>({
-      query: (args) => getUrl('api/course/section/content', args, `${API_COURSE_PREFIX}`),
+    getSectionContent: builder.query<MarkdownDoc, SectionContentFetchArgs>({
+      query: (args) => getUrl('api/course/section/content', args),
     }),
   }),
 })

@@ -6,7 +6,7 @@ function BlockError({ children }: BlockErrorProps) {
   const { t } = useTranslation()
 
   return (
-    <Alert severity="error">
+    <Alert severity="error" sx={{ mb: 2 }}>
       <AlertTitle>{t('common.error')}</AlertTitle>
       {children}
     </Alert>

@@ -10,7 +10,7 @@ import type { CardHeaderProps } from '@mui/material'
 import { type ComponentProps, useState } from 'react'
 
 import Icon, { type IconProps } from '#ui/components/common/Icon'
-import MarkdownNode from '#ui/components/content/mdast/MarkdownNode'
+import BlockContentNode from '#ui/components/content/mdast/nodes/BlockContentNode'
 
 import type { CardType, ContentCardProps } from './types'
 
@@ -49,12 +49,12 @@ interface StyledCardHeaderProps extends CardHeaderProps {
 
 function Card({
   cardType,
-  content,
   collapsible = false,
   dense = false,
   elevation = 3,
   iconName,
   id,
+  node,
   title,
 }: CardProps) {
   const [expanded, setExpanded] = useState<boolean>(false)
@@ -83,10 +83,12 @@ function Card({
     cardHeader
   )
 
+  const children = node.children.map((child, idx) => (
+    <BlockContentNode key={child?.data?.uuid ?? idx.toString()} node={child} />
+  ))
+
   const cardContent = (
-    <CardContent sx={{ py: 0, '&:last-child': { pb: 0 } }}>
-      <MarkdownNode node={content} />
-    </CardContent>
+    <CardContent sx={{ py: 0, '&:last-child': { pb: 0 } }}>{children}</CardContent>
   )
 
   const wrappedCardContent = collapsible ? (

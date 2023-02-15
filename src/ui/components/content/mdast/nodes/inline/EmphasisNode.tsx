@@ -6,7 +6,7 @@ function EmphasisNode({ node }: EmphasisNodeProps) {
   return (
     <em>
       {node.children.map((child, idx) => (
-        <PhrasingContentNode node={child} key={idx.toString()} />
+        <PhrasingContentNode node={child} key={child?.data?.uuid ?? idx.toString()} />
       ))}
     </em>
   )

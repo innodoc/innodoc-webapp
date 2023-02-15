@@ -1,16 +1,18 @@
 import { Link as MuiLink } from '@mui/material'
 import clsx from 'clsx'
-import { type ComponentProps, forwardRef } from 'react'
+import { forwardRef } from 'react'
 
 import { selectLocale, selectUrlWithoutLocale } from '#store/slices/uiSlice'
 import { useSelector } from '#ui/hooks/store'
 import { formatUrl } from '#utils/url'
 
+import type { LinkProps } from './types'
+
 /**
  * Link to an internal page, either built-in page or custom content
  * page/section.
  */
-const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(function InternalLink(
+const InternalLink = forwardRef<HTMLAnchorElement, LinkProps>(function InternalLink(
   { children, className, hash, to, ...other },
   ref
 ) {
@@ -24,12 +26,5 @@ const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(function I
     </MuiLink>
   )
 })
-
-export interface InternalLinkProps extends Omit<ComponentProps<typeof MuiLink>, 'href'> {
-  /** Optional hash */
-  hash?: string
-  /** Target path *without* locale */
-  to: string
-}
 
 export default InternalLink

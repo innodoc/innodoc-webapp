@@ -3,9 +3,10 @@ import type { LanguageCode } from 'iso-639-1'
 
 import getDatabase from '#server/database/getDatabase'
 import type { DbCourse } from '#types/entities/course'
+import type { MarkdownDoc } from '#types/entities/markdown'
 import type { DbPage, ApiPage } from '#types/entities/page'
 
-import type { ContentResult, ContentResultFromValue, IdResult } from './types'
+import type { ResultFromValue, IdResult } from './types'
 
 export async function getCoursePages(courseId: DbCourse['id']): Promise<ApiPage[]> {
   const db = getDatabase()
@@ -34,7 +35,7 @@ export async function getPageIdBySlug(
 ): Promise<ApiPage['id'] | undefined> {
   const db = getDatabase()
   const result = await db
-    .first<IdResult>('p.id')
+    .first<IdResult | undefined>('p.id')
     .from('pages as p')
     .join('courses as c', 'p.course_id', 'c.id')
     .where('p.slug', pageSlug)
@@ -47,10 +48,10 @@ export async function getPageContent(
   courseId: DbCourse['id'],
   locale: LanguageCode,
   pageId: DbPage['id']
-): Promise<ContentResult> {
+): Promise<MarkdownDoc | undefined> {
   const db = getDatabase()
   const result = await db
-    .first<ContentResultFromValue>('ct.value')
+    .first<ResultFromValue<MarkdownDoc>>('ct.value')
     .from('pages as p')
     .join('courses as c', 'p.course_id', 'c.id')
     .leftOuterJoin('pages_content_trans as ct', 'p.id', 'ct.page_id')

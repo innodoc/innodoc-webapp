@@ -1,20 +1,24 @@
-import type { Root } from 'mdast'
+import type { MarkdownDoc } from '#types/entities/markdown'
 
+import { IndexProvider } from './IndexContext'
 import ContentNode from './nodes/ContentNode'
+import { CardTitleProvider } from './useCardTitle'
 
 /** Markdown document root node */
-function MarkdownNode({ node }: RootProps) {
+function MarkdownNode({ content: { root, indices } }: RootProps) {
+  const children = root.children.map((child, idx) => (
+    <ContentNode node={child} key={child?.data?.uuid ?? idx.toString()} />
+  ))
+
   return (
-    <>
-      {node.children.map((child, idx) => (
-        <ContentNode node={child} key={idx.toString()} />
-      ))}
-    </>
+    <CardTitleProvider>
+      <IndexProvider indices={indices}>{children}</IndexProvider>
+    </CardTitleProvider>
   )
 }
 
 interface RootProps {
-  node: Root
+  content: MarkdownDoc
 }
 
 export default MarkdownNode

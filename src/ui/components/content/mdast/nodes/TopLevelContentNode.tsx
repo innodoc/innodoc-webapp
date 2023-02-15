@@ -12,7 +12,7 @@ function TopLevelContentNode({ node }: TopLevelContentNodeProps) {
   }
 
   if (isDefinitionContent(node)) {
-    return <DefinitionContentNode node={node} />
+    return <DefinitionContentNode />
   }
 
   return <UnknownNode node={node} />

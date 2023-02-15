@@ -3,11 +3,11 @@ import { Trans } from 'react-i18next'
 
 import InlineError from '#ui/components/common/error/InlineError'
 
-import type { InternalLinkProps } from './InternalLink'
 import PageLink from './PageLink'
 import SectionLink from './SectionLink'
+import type { LinkProps } from './types'
 
-const ContentLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(function ContentLink(
+const ContentLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLink(
   { to, ...other },
   ref
 ) {

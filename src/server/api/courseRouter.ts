@@ -11,7 +11,7 @@ import { getRoutePath } from '#server/utils'
 import type { FragmentType } from '#types/entities/base'
 import { isFragmentType } from '#utils/content'
 
-const p = (path: keyof RoutesDefinition) => getRoutePath(path, `${API_COURSE_PREFIX}`)
+const p = (path: keyof RoutesDefinition) => getRoutePath(path, API_COURSE_PREFIX)
 
 const checkErrors: RequestHandler = (req, res, next) => {
   const errors = validationResult(req)

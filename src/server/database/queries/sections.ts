@@ -3,9 +3,10 @@ import type { LanguageCode } from 'iso-639-1'
 
 import getDatabase from '#server/database/getDatabase'
 import type { DbCourse } from '#types/entities/course'
+import type { MarkdownDoc } from '#types/entities/markdown'
 import type { ApiSection, DbQuerySection, DbSection } from '#types/entities/section'
 
-import type { ContentResult, ContentResultFromValue, IdResult } from './types'
+import type { ResultFromValue, IdResult } from './types'
 
 /** Get course sections by course ID */
 export async function getCourseSections(courseId: DbCourse['id']): Promise<ApiSection[]> {
@@ -119,7 +120,7 @@ export async function getSectionIdByPath(courseId: DbCourse['id'], sectionPath: 
             .where('s.slug', db.raw('cte.path[1]'))
         })
     })
-    .first<IdResult>('cte.id')
+    .first<IdResult | undefined>('cte.id')
     .from('cte')
     .where('cte.path', db.raw('array[]::varchar[]'))
 
@@ -131,10 +132,10 @@ export async function getSectionContent(
   courseId: DbCourse['id'],
   locale: LanguageCode,
   sectionId: DbSection['id']
-): Promise<ContentResult> {
+): Promise<MarkdownDoc | undefined> {
   const db = getDatabase()
   const result = await db
-    .first<ContentResultFromValue>('ct.value')
+    .first<ResultFromValue<MarkdownDoc>>('ct.value')
     .from('sections as s')
     .join('courses as c', 's.course_id', 'c.id')
     .leftOuterJoin('sections_content_trans as ct', 's.id', 'ct.section_id')

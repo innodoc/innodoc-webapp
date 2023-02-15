@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Card from './Card'
 import type { ContentCardProps } from './types'
 
-function InputHint({ content }: ContentCardProps) {
+function InputHintCard({ node }: ContentCardProps) {
   const { t } = useTranslation()
 
   // TODO id, title
@@ -11,7 +11,7 @@ function InputHint({ content }: ContentCardProps) {
   return (
     <Card
       cardType="inputHint"
-      content={content}
+      node={node}
       dense
       elevation={1}
       iconName="mdi:keyboard-outline"
@@ -20,4 +20,4 @@ function InputHint({ content }: ContentCardProps) {
   )
 }
 
-export default InputHint
+export default InputHintCard

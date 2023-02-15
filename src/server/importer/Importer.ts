@@ -5,29 +5,26 @@ import yaml from 'js-yaml'
 import type { Knex } from 'knex'
 
 import getDatabase from '#server/database/getDatabase'
+import MarkdownParser from '#server/markdown/MarkdownParser'
 import type { DbCourse } from '#types/entities/course'
+import type { MarkdownDoc } from '#types/entities/markdown'
 import type { DbPage } from '#types/entities/page'
 import type { DbSection } from '#types/entities/section'
 
-import parseMarkdown from './parseMarkdown'
-import type { Frontmatter, InsertResult, Manifest, ManifestPage } from './types'
+import type { InsertResult, Manifest, ManifestPage } from './types'
 
-/** Importer from v1 content folders */
+/** Importer for v1 content folders */
 class Importer {
-  protected db: Knex | null
-  protected trx: Knex.Transaction | null
-  protected importFolder: string | null
-  protected courseSlug: DbCourse['slug'] | null
-  protected manifest: Manifest | null
-  protected courseId: DbCourse['id'] | null
+  protected db: Knex | null = null
+  protected trx: Knex.Transaction | null = null
+  protected importFolder: string | null = null
+  protected courseSlug: DbCourse['slug'] | null = null
+  protected manifest: Manifest | null = null
+  protected courseId: DbCourse['id'] | null = null
+  protected parser: MarkdownParser
 
   constructor() {
-    this.db = null
-    this.trx = null
-    this.importFolder = null
-    this.courseSlug = null
-    this.manifest = null
-    this.courseId = null
+    this.parser = new MarkdownParser()
   }
 
   /** Import a course from a folder */
@@ -82,14 +79,14 @@ class Importer {
     const courseData = {
       slug: this.courseSlug,
       home_link: this.manifest.home_link,
-      locales: this.manifest.locales,
+      locales: this.manifest.languages,
       min_score: this.manifest.min_score,
     }
     const result = (await this.trx('courses').insert([courseData], ['id'])) as InsertResult
     this.courseId = result[0].id
 
     // Insert titles
-    for (const locale of this.manifest.locales) {
+    for (const locale of this.manifest.languages) {
       for (const field of ['title', 'short_title'] as const) {
         const value = this.manifest[field]
         if (value) {
@@ -130,9 +127,9 @@ class Importer {
     if (!this.trx || !this.manifest || !this.importFolder)
       throw new Error("Importer wasn't initialized")
 
-    for (const locale of this.manifest.locales) {
+    for (const locale of this.manifest.languages) {
       const pageFilepath = path.join(this.importFolder, locale, '_pages', `${page.id}.md`)
-      const { rootNode, title, shortTitle } = await Importer.readContentFile(pageFilepath)
+      const { root, title, shortTitle, indices } = await this.readContentFile(pageFilepath)
 
       // Insert title
       const titleData = { page_id: pageId, value: title, locale: locale }
@@ -145,7 +142,8 @@ class Importer {
       }
 
       // Insert content
-      const contentData = { page_id: pageId, value: rootNode, locale: locale }
+      const value: MarkdownDoc = { root, indices }
+      const contentData = { page_id: pageId, value, locale: locale }
       await this.trx('pages_content_trans').insert([contentData])
     }
   }
@@ -155,7 +153,7 @@ class Importer {
     if (!this.importFolder || !this.manifest) throw new Error("Importer wasn't initialized")
 
     // Walk down first tree of first locale
-    const startDir = path.join(this.importFolder, this.manifest.locales[0])
+    const startDir = path.join(this.importFolder, this.manifest.languages[0])
 
     const findSectionPaths = async (dirpath: string, parentId: DbSection['parent_id']) => {
       const entries = await fs.readdir(dirpath)
@@ -191,7 +189,8 @@ class Importer {
 
     // Parse content file (only for section type)
     const filepath = this.getSectionFilepath(sectionPath)
-    const { type: sectionType } = await Importer.readContentFile(filepath)
+    // TODO: avoid parsing file twice
+    const { type: sectionType } = await this.readContentFile(filepath)
 
     const sectionPathParts = sectionPath.split('/')
     const slug = sectionPathParts.at(-1)
@@ -213,10 +212,10 @@ class Importer {
     if (!this.trx || !this.manifest || !this.importFolder)
       throw new Error("Importer wasn't initialized")
 
-    for (const locale of this.manifest.locales) {
+    for (const locale of this.manifest.languages) {
       // Parse content file
       const filepath = this.getSectionFilepath(sectionPath)
-      const { rootNode, title, shortTitle } = await Importer.readContentFile(filepath)
+      const { root, title, shortTitle, indices } = await this.readContentFile(filepath)
 
       // Insert title
       const titleData = { section_id: sectionId, value: title, locale: locale }
@@ -229,7 +228,11 @@ class Importer {
       }
 
       // Insert content
-      const contentData = { section_id: sectionId, value: rootNode, locale: locale }
+      const contentData = {
+        section_id: sectionId,
+        value: { root, indices },
+        locale: locale,
+      }
       await this.trx('sections_content_trans').insert([contentData])
     }
   }
@@ -238,26 +241,31 @@ class Importer {
   protected getSectionFilepath(sectionPath: DbSection['path']) {
     if (!this.manifest || !this.importFolder) throw new Error("Importer wasn't initialized")
 
-    return path.join(this.importFolder, this.manifest.locales[0], sectionPath, 'content.md')
+    return path.join(this.importFolder, this.manifest.languages[0], sectionPath, 'content.md')
   }
 
   /** Read and parse Markdown content file, parse YAML frontmatter */
-  protected static async readContentFile(filepath: string) {
-    const markdownString = (await fs.readFile(filepath))
-      .toString()
-      // remark generic directives do not support whitespaces
-      .replace('::: {', ':::{')
-    const rootNode = parseMarkdown(markdownString)
+  protected async readContentFile(filepath: string) {
+    const markdownFile = await fs.readFile(filepath)
+    const markdownRemark = Importer.convertPandocSyntax(markdownFile.toString())
+    return this.parser.parse(markdownRemark)
+  }
 
-    // Parse YAML frontmatter
-    const yamlNode = rootNode.children.shift()
-    if (!yamlNode || yamlNode.type !== 'yaml') {
-      throw new Error(`YAML frontmatter not found for file ${filepath}`)
-    }
-    const yamlData = yaml.load(yamlNode.value) as Frontmatter
-    const { title, short_title: shortTitle, type } = yamlData
+  /** Convert Pandoc syntax to remark-compatible generic directives */
+  protected static convertPandocSyntax(markdown: string) {
+    return markdown
+      .replace(/(:{3,}) ?\{.hint-text\}/g, '$1hint-input')
+      .replace(/(:{3,}) ?\{.hint\}/g, '$1hint')
+      .replace(/(:{3,}) ?\{.hint caption="([^"]+)"\}/g, '$1hint[$2]')
+      .replace(/(:{3,}) ?\{\.(example|exercise|figure|info) (#[^}]+)\}/g, '$1$2{$3}')
+      .replace(/(:{3,}) ?\{\.(example|exercise|figure|info)\}/g, '$1$2')
+      .replace(/:{3,} ?\{\.verify-input-button\}\n(.+)\n:{3,}\n/g, '::verify-button[$1]\n')
+      .replace(/(:{3,}) ?\{\.row\}/g, '$1row')
+      .replace(/(:{3,}) ?\{\.col ([^}]+)\}/g, '$1col{$2}')
+      .replace(/\[\]\{\.question \.(text|checkbox) ([^}]+)\}/g, ':question-$1{$2}')
 
-    return { rootNode, title, shortTitle, type }
+    // TODO
+    // [Seiten]{data-index-term="Seite"}
   }
 }
 

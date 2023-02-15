@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { Children, forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 
 import useSelectSection from '#store/hooks/useSelectSection'
@@ -7,7 +7,8 @@ import InlineError from '#ui/components/common/error/InlineError'
 import { formatSectionTitle } from '#utils/content'
 import { getSectionUrl } from '#utils/url'
 
-import InternalLink, { type InternalLinkProps } from './InternalLink'
+import InternalLink from './InternalLink'
+import type { LinkProps } from './types'
 
 /** SectionLinkSection takes `section` */
 const SectionLinkSection = forwardRef<HTMLAnchorElement, SectionLinkSectionProps>(
@@ -16,7 +17,7 @@ const SectionLinkSection = forwardRef<HTMLAnchorElement, SectionLinkSectionProps
 
     return (
       <InternalLink to={getSectionUrl(section.path)} ref={ref} {...other}>
-        {children || <>{formatSectionTitle(section, preferShortTitle)}</>}
+        {Children.count(children) ? children : <>{formatSectionTitle(section, preferShortTitle)}</>}
       </InternalLink>
     )
   }
@@ -74,7 +75,7 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function Sec
   throw new Error('Use either section or sectionPath prop.')
 })
 
-interface SectionLinkProps extends Omit<InternalLinkProps, 'to'> {
+interface SectionLinkProps extends Omit<LinkProps, 'to'> {
   preferShortTitle?: boolean
   section?: TranslatedSection
   sectionPath?: ApiSection['path']
