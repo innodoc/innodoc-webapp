@@ -2,6 +2,7 @@ import path from 'path'
 
 import react from '@vitejs/plugin-react'
 import dotenv from 'dotenv'
+import { visualizer } from 'rollup-plugin-visualizer'
 import { cjsInterop } from 'vite-plugin-cjs-interop'
 import ssr from 'vite-plugin-ssr/plugin'
 import { type InlineConfig as VitestInlineConfig } from 'vitest'
@@ -54,7 +55,7 @@ async function config() {
         dependencies: ['@emotion/*'],
       }),
       react(),
-      ssr({ prerender: true }),
+      ssr({ prerender: false }),
     ],
     resolve: { alias },
     ssr: {
@@ -66,6 +67,10 @@ async function config() {
 
   if (testMode && ['integration', 'unit'].includes(testMode)) {
     config.test = testConfig(testMode)
+  }
+
+  if (process.env.VISUALIZE_BUNDLE === 'true') {
+    config.plugins?.push(visualizer())
   }
 
   return config

@@ -107,6 +107,7 @@
     "mdast-util-directive": "^2.2.2",
     "nodemon": "^2.0.20",
     "prettier": "^2.7.1",
+    "rollup-plugin-visualizer": "^5.9.0",
     "start-server-and-test": "^1.14.0",
     "svg-parser": "^2.0.4",
     "vitest": "^0.25.2"
@@ -134,7 +135,8 @@
     "test:unit": "VITEST_MODE=unit pnpm run test:vitest",
     "test:vitest": "vitest run",
     "test": "pnpm run test:unit && pnpm run test:integration",
-    "type-check": "tsc -p ."
+    "type-check": "tsc -p .",
+    "visualize-bundle": "VISUALIZE_BUNDLE=true pnpm run build"
   },
   "imports": {
     "#build/*": "./build/*",

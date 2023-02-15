@@ -10,3 +10,4 @@ dist
 .env
 /build
 /vite.config.ts.timestamp-*.mjs
+/stats.html
