@@ -146,7 +146,7 @@ settings:
   import/extensions: [.js, .jsx, .ts, .tsx]
 
   # Mark workspaces as internal for proper import sorting
-  import/internal-regex: '^@/'
+  import/internal-regex: '^#'
 
   import/parsers:
     '@typescript-eslint/parser': [.ts, .tsx]
