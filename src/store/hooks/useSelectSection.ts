@@ -10,7 +10,7 @@ import { useSelector } from '#ui/hooks/store'
 import { translateEntity } from '#utils/i18n'
 
 /** Return section by path */
-function useSelectSection(sectionPath?: ApiSection['path']) {
+function useSelectSection(sectionPath: ApiSection['path'] | null) {
   const locale = useSelector(selectLocale)
   const courseId = useSelector(selectCourseId)
 

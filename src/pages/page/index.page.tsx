@@ -4,7 +4,7 @@ import { Page as ErrorPage } from '#renderer/_error.page'
 import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
 import useSelectPage from '#store/hooks/useSelectPage'
 import { useGetPageContentQuery } from '#store/slices/entities/pages'
-import { selectLocale } from '#store/slices/uiSlice'
+import { selectCurrentPageSlug, selectLocale } from '#store/slices/uiSlice'
 import type { TranslatedCourse } from '#types/entities/course'
 import type { TranslatedPage } from '#types/entities/page'
 import InlineError from '#ui/components/common/error/InlineError'
@@ -45,19 +45,16 @@ interface ContentProps {
   page: TranslatedPage
 }
 
-function ContentPage({ pageSlug }: ContentPageProps) {
+function ContentPage() {
   const { t } = useTranslation()
   const { course } = useSelectCurrentCourse()
+  const pageSlug = useSelector(selectCurrentPageSlug)
   const { page } = useSelectPage(pageSlug)
 
   if (course === undefined) return <InlineError>{t('error.noCourse')}</InlineError>
-  if (page === undefined) return <ErrorPage is404 />
+  if (page === undefined) return pageSlug === null ? null : <ErrorPage is404 />
 
   return <Content course={course} page={page} />
-}
-
-interface ContentPageProps {
-  pageSlug: TranslatedPage['slug']
 }
 
 export { ContentPage as Page }

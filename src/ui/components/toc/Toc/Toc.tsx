@@ -11,8 +11,8 @@ import { useSelector } from '#ui/hooks/store'
 import TocTreeItem from './TocTreeItem'
 
 /** Return array of initially expanded section paths/node IDs (all parents) */
-function getInitialExpanded(sectionPath?: ApiSection['path']) {
-  if (sectionPath === undefined) return []
+function getInitialExpanded(sectionPath: ApiSection['path'] | null) {
+  if (sectionPath === null) return []
   const parts = sectionPath.split('/')
   return parts.slice(0, parts.length - 1).map((_, idx) => {
     return parts.slice(0, idx + 1).join('/')
@@ -60,7 +60,7 @@ function Toc() {
         disableSelection
         expanded={expanded}
         onNodeToggle={onNodeToggle}
-        selected={currentSectionPath !== undefined ? [currentSectionPath] : []}
+        selected={currentSectionPath !== null ? [currentSectionPath] : []}
       >
         {children}
       </StyledTreeView>

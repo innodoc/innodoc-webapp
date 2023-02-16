@@ -5,12 +5,16 @@ import { hydrateRoot, type Root } from 'react-dom/client'
 
 import { EMOTION_STYLE_INSERTION_POINT_NAME, EMOTION_STYLE_KEY } from '#constants'
 import makeStore, { type Store } from '#store/makeStore'
-import { changeUrlWithoutLocale } from '#store/slices/uiSlice'
+import {
+  changeCurrentPageSlug,
+  changeCurrentSectionPath,
+  changeUrlWithoutLocale,
+} from '#store/slices/uiSlice'
 import type { PageContextClient } from '#types/pageContext'
 import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
 
-const i18nBackendOpts = { loadPath: import.meta.env.BASE_URL + 'locales/{{lng}}/{{ns}}.json' }
+const i18nBackendOpts = { loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.json` }
 
 // ReactDom root
 let root: Root
@@ -40,9 +44,7 @@ function createEmotionCache() {
 function findRootElement() {
   if (rootEl === undefined) {
     const elem = document.getElementById('root')
-    if (elem === null) {
-      throw new Error('React root element not found!')
-    }
+    if (elem === null) throw new Error('React root element not found!')
     rootEl = elem
   }
 }
@@ -64,6 +66,8 @@ async function render({
   } else {
     // Update store on navigation
     store.dispatch(changeUrlWithoutLocale(urlPathname))
+    store.dispatch(changeCurrentPageSlug(pageProps.pageSlug ?? null))
+    store.dispatch(changeCurrentSectionPath(pageProps.sectionPath ?? null))
   }
 
   // Get i18next instance
@@ -78,7 +82,7 @@ async function render({
 
   const page = (
     <PageShell emotionCache={emotionCache} i18n={i18n} store={store}>
-      <Page {...pageProps} />
+      <Page />
     </PageShell>
   )
 

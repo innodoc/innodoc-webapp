@@ -10,7 +10,7 @@ import { useSelector } from '#ui/hooks/store'
 import { translateEntity } from '#utils/i18n'
 
 /** Return page by slug */
-function useSelectPage(pageSlug: ApiPage['slug']) {
+function useSelectPage(pageSlug: ApiPage['slug'] | null) {
   const locale = useSelector(selectLocale)
   const courseId = useSelector(selectCourseId)
 

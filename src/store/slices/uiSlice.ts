@@ -14,12 +14,20 @@ interface UiSliceState {
 
   /** Current URL path without locale prefix */
   urlWithoutLocale: string | null
+
+  /** Current page slug */
+  currentPageSlug: string | null
+
+  /** Current section path */
+  currentSectionPath: string | null
 }
 
 const initialState: UiSliceState = {
   courseId: null,
   locale: 'en',
   urlWithoutLocale: null,
+  currentPageSlug: null,
+  currentSectionPath: null,
 }
 
 const uiSlice = createSlice({
@@ -41,6 +49,16 @@ const uiSlice = createSlice({
     changeUrlWithoutLocale(state, action: PayloadAction<string>) {
       state.urlWithoutLocale = action.payload
     },
+
+    /** Update current page slug */
+    changeCurrentPageSlug(state, action: PayloadAction<string | null>) {
+      state.currentPageSlug = action.payload
+    },
+
+    /** Update current section path */
+    changeCurrentSectionPath(state, action: PayloadAction<string | null>) {
+      state.currentSectionPath = action.payload
+    },
   },
 })
 
@@ -56,13 +74,17 @@ export const selectLocale = (state: RootState) => selectUi(state).locale
 /** Select url info */
 export const selectUrlWithoutLocale = (state: RootState) => selectUi(state).urlWithoutLocale
 
-/** Select current section path */
-export const selectCurrentSectionPath = (state: RootState) => {
-  const urlWithoutLocale = selectUrlWithoutLocale(state)
-  return urlWithoutLocale?.startsWith(`/${import.meta.env.INNODOC_SECTION_PATH_PREFIX}/`)
-    ? urlWithoutLocale.substring(import.meta.env.INNODOC_SECTION_PATH_PREFIX.length + 2)
-    : undefined
-}
+/** Select current page slug */
+export const selectCurrentPageSlug = (state: RootState) => selectUi(state).currentPageSlug
 
-export const { changeCourseId, changeLocale, changeUrlWithoutLocale } = uiSlice.actions
+/** Select current section path */
+export const selectCurrentSectionPath = (state: RootState) => selectUi(state).currentSectionPath
+
+export const {
+  changeCourseId,
+  changeCurrentPageSlug,
+  changeCurrentSectionPath,
+  changeLocale,
+  changeUrlWithoutLocale,
+} = uiSlice.actions
 export default uiSlice

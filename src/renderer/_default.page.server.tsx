@@ -24,7 +24,13 @@ import makeStore from '#store/makeStore'
 import courses from '#store/slices/entities/courses'
 import pages from '#store/slices/entities/pages'
 import sections from '#store/slices/entities/sections'
-import { changeCourseId, changeLocale, changeUrlWithoutLocale } from '#store/slices/uiSlice'
+import {
+  changeCourseId,
+  changeCurrentPageSlug,
+  changeCurrentSectionPath,
+  changeLocale,
+  changeUrlWithoutLocale,
+} from '#store/slices/uiSlice'
 import type { PageContextServer, PrepopFactory } from '#types/pageContext'
 import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
@@ -85,6 +91,8 @@ async function onBeforeRender({
   store.dispatch(changeCourseId(courseId))
   store.dispatch(changeUrlWithoutLocale(urlPathname))
   store.dispatch(changeLocale(locale))
+  if (pageProps.pageSlug) store.dispatch(changeCurrentPageSlug(pageProps.pageSlug))
+  if (pageProps.sectionPath) store.dispatch(changeCurrentSectionPath(pageProps.sectionPath))
 
   // Prepopulate store with data necessary to render page
   const prepopFactories: PrepopFactory[] = [

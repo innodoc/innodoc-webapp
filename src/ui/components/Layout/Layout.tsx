@@ -1,9 +1,14 @@
-import { Box, Container } from '@mui/material'
+import { Box, Container, styled } from '@mui/material'
 import type { ReactNode } from 'react'
 
 import AppBar from './AppBar/AppBar'
 import Footer from './Footer'
 import MetaTags from './MetaTags'
+
+const MainContainer = styled(Container)(({ theme }) => ({
+  paddingBottom: theme.spacing(4),
+  paddingTop: theme.spacing(4),
+})) as typeof Container
 
 function Layout({ children }: LayoutProps) {
   return (
@@ -16,9 +21,9 @@ function Layout({ children }: LayoutProps) {
     >
       <MetaTags />
       <AppBar />
-      <Container component="main" sx={{ py: 4 }} maxWidth="lg">
+      <MainContainer component="main" maxWidth="lg">
         {children}
-      </Container>
+      </MainContainer>
       <Footer />
     </Box>
   )

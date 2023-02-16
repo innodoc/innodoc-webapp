@@ -4,7 +4,7 @@ import { Page as ErrorPage } from '#renderer/_error.page'
 import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
 import useSelectSection from '#store/hooks/useSelectSection'
 import { useGetSectionContentQuery } from '#store/slices/entities/sections'
-import { selectLocale } from '#store/slices/uiSlice'
+import { selectCurrentSectionPath, selectLocale } from '#store/slices/uiSlice'
 import type { TranslatedCourse } from '#types/entities/course'
 import type { TranslatedSection } from '#types/entities/section'
 import Breadcrumbs from '#ui/components/Breadcrumbs/Breadcrumbs'
@@ -50,19 +50,16 @@ interface ContentProps {
   section: TranslatedSection
 }
 
-function ContentSection({ sectionPath }: ContentSectionProps) {
+function ContentSection() {
   const { t } = useTranslation()
   const { course } = useSelectCurrentCourse()
+  const sectionPath = useSelector(selectCurrentSectionPath)
   const { section } = useSelectSection(sectionPath)
 
   if (course === undefined) return <InlineError>{t('error.noCourse')}</InlineError>
-  if (section === undefined) return <ErrorPage is404 />
+  if (section === undefined) return sectionPath === null ? null : <ErrorPage is404 />
 
   return <Content course={course} section={section} />
-}
-
-interface ContentSectionProps {
-  sectionPath: string
 }
 
 export { ContentSection as Page }
