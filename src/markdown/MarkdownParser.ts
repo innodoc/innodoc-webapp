@@ -30,10 +30,12 @@ class MarkdownParser {
     for (const [plugin, pluginArgs] of extraPlugins) {
       this.parser.use(plugin, pluginArgs)
     }
+
+    this.parser.freeze()
   }
 
   parse(markdown: string): MarkdownDoc {
-    const root = this.parser.parse(markdown)
+    const root = this.parser.runSync(this.parser.parse(markdown))
 
     const indices = indexTypes.reduce<MarkdownDoc['indices']>((acc, type) => {
       const index = MarkdownParser.createIndex(root, type)
