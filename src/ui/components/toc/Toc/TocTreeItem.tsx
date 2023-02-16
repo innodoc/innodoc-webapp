@@ -1,9 +1,16 @@
 import { TreeItem, type TreeItemProps } from '@mui/lab'
+import { styled } from '@mui/material'
 
 import useSelectSectionChildren from '#store/hooks/useSelectSectionChildren'
 import type { TranslatedSection } from '#types/entities/section'
 
 import TocTreeItemContent from './TocTreeItemContent'
+
+const StyledTreeItem = styled(TreeItem)(({ theme }) => ({
+  '& .MuiTreeItem-iconContainer': {
+    marginRight: theme.spacing(1),
+  },
+}))
 
 function TocTreeItem({ section, nodeId }: TocTreeItemProps) {
   const { sections } = useSelectSectionChildren(section.id)
@@ -11,7 +18,7 @@ function TocTreeItem({ section, nodeId }: TocTreeItemProps) {
   const children = sections.map((s) => <TocTreeItem key={s.id} nodeId={s.path} section={s} />)
 
   return (
-    <TreeItem
+    <StyledTreeItem
       ContentComponent={TocTreeItemContent}
       // Currently there's no way to augment: https://github.com/mui/material-ui/issues/28668
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
@@ -19,7 +26,7 @@ function TocTreeItem({ section, nodeId }: TocTreeItemProps) {
       nodeId={nodeId}
     >
       {children}
-    </TreeItem>
+    </StyledTreeItem>
   )
 }
 
