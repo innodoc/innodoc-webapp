@@ -25,9 +25,9 @@ import ImageNode from './inline/ImageNode'
 import ImageReferenceNode from './inline/ImageReferenceNode'
 import InlineCodeNode from './inline/InlineCodeNode'
 import StrongNode from './inline/StrongNode'
+import TextDirectiveNode from './inline/TextDirectiveNode'
 import TextNode from './inline/TextNode'
 import UnknownNode from './inline/UnknownNode'
-import TextDirectiveNode from './inline/TextDirectiveNode'
 
 function StaticPhrasingContentNode({ node }: StaticPhrasingContentNodeProps) {
   if (isText(node)) {

@@ -23,7 +23,7 @@ function useSelectBreadcrumbSections() {
   const locale = useSelector(selectLocale)
   const courseId = useSelector(selectCourseId)
   const sectionPath = useSelector(selectCurrentSectionPath)
-  const sectionSlug = sectionPath !== undefined ? sectionPath.split('/').pop() : undefined
+  const sectionSlug = sectionPath !== null ? sectionPath.split('/').pop() : undefined
 
   const selectBreadcrumbSections = useMemo(() => {
     const emptyArray: TranslatedSection[] = []

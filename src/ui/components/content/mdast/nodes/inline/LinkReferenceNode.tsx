@@ -21,7 +21,7 @@ function LinkReferenceNode({ node }: LinkReferenceNodeProps) {
     )
   }
 
-  return content
+  return <>content</>
 }
 
 interface LinkReferenceNodeProps {

@@ -6,7 +6,7 @@ import { useSelector } from '#ui/hooks/store'
 import { getSectionNumberFromOrder } from '#utils/content'
 
 /** Provide consistent auto-incrementing numbering for cards within a document */
-const CardTitleContext = createContext((id: string, title: string) => title)
+const CardTitleContext = createContext((id: string | undefined, title: string) => title)
 
 interface Titles {
   [id: string]: string
@@ -28,7 +28,8 @@ export function CardTitleProvider({ children }: NumberingProviderProps) {
   // with y = 2nd level section number
   // with z = sequential number for whole subtree
   const formatTitle = useCallback(
-    (id: string, title: string) => {
+    (id: string | undefined, title: string) => {
+      if (id === undefined) return title
       const ids = Object.keys(titles.current)
       if (!ids.includes(id)) {
         const cardTitle = `${title} ${sectionNumber}.${ids.length + 1}`
@@ -48,7 +49,7 @@ interface NumberingProviderProps {
 }
 
 /** Utility for consistent card title numbering within a document */
-function useCardTitle(id: string, title: string) {
+function useCardTitle(id: string | undefined, title: string) {
   const formatTitle = useContext(CardTitleContext)
   return formatTitle(id, title)
 }

@@ -11,7 +11,7 @@ const staticCache = createApi({
 
   keepUnusedDataFor: MAX_KEEP_UNUSED_DATA_FOR_MAX,
 
-  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.INNODOC_STATIC_ROOT }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'TODO' }), // TODO
 
   endpoints: (builder) => ({
     /** Fetch SVG and parse into HAST */
