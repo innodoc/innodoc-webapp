@@ -1,7 +1,6 @@
 import type { AnyAction, ThunkAction } from '@reduxjs/toolkit'
 import type { BaseQueryFn, QueryDefinition } from '@reduxjs/toolkit/dist/query'
 import type { QueryActionCreatorResult } from '@reduxjs/toolkit/dist/query/core/buildInitiate'
-import type { Root } from 'mdast'
 
 import type { Store } from '#store/makeStore'
 
@@ -48,6 +47,6 @@ async function fetchContent(store: Store, action: Action) {
 }
 
 type Action = ThunkAction<QueryActionCreatorResult<QD>, unknown, unknown, AnyAction>
-type QD = QueryDefinition<unknown, BaseQueryFn, never, Root>
+type QD = QueryDefinition<unknown, BaseQueryFn, never, string>
 
 export default fetchContent
