@@ -7,7 +7,6 @@ import { parse as yamlParse } from 'yaml'
 
 import getDatabase from '#server/database/getDatabase'
 import type { DbCourse } from '#types/entities/course'
-import type { DbPage } from '#types/entities/page'
 import type { DbSection } from '#types/entities/section'
 
 import type { InsertResult, Manifest, ManifestPage } from './types'
@@ -99,11 +98,33 @@ class Importer {
 
   /** Create all course pages */
   protected async createPages() {
-    if (!this.trx || !this.manifest) throw new Error("Importer wasn't initialized")
+    if (!this.trx || !this.manifest || !this.importFolder)
+      throw new Error("Importer wasn't initialized")
 
     for (const page of this.manifest.pages) {
       const pageId = await this.createPage(page)
-      await this.createPageContent(pageId, page)
+
+      for (const locale of this.manifest.languages) {
+        const pageFilepath = path.join(this.importFolder, locale, '_pages', `${page.id}.md`)
+        const {
+          frontmatter: { shortTitle, title },
+          source,
+        } = await this.readContentFile(pageFilepath)
+
+        // Insert title
+        const titleData = { page_id: pageId, value: title, locale: locale }
+        await this.trx('pages_title_trans').insert([titleData])
+
+        // Insert short title
+        if (shortTitle) {
+          const shortTitleData = { page_id: pageId, value: shortTitle, locale: locale }
+          await this.trx('pages_short_title_trans').insert([shortTitleData])
+        }
+
+        // Insert content
+        const contentData = { page_id: pageId, value: source, locale: locale }
+        await this.trx('pages_content_trans').insert([contentData])
+      }
     }
   }
 
@@ -120,34 +141,6 @@ class Importer {
     const result = (await this.trx('pages').insert([pageData], ['id'])) as InsertResult
 
     return result[0].id
-  }
-
-  /** Create page content, title, optional short title */
-  protected async createPageContent(pageId: DbPage['id'], page: ManifestPage) {
-    if (!this.trx || !this.manifest || !this.importFolder)
-      throw new Error("Importer wasn't initialized")
-
-    for (const locale of this.manifest.languages) {
-      const pageFilepath = path.join(this.importFolder, locale, '_pages', `${page.id}.md`)
-      const {
-        frontmatter: { shortTitle, title },
-        source,
-      } = await this.readContentFile(pageFilepath)
-
-      // Insert title
-      const titleData = { page_id: pageId, value: title, locale: locale }
-      await this.trx('pages_title_trans').insert([titleData])
-
-      // Insert short title
-      if (shortTitle) {
-        const shortTitleData = { page_id: pageId, value: shortTitle, locale: locale }
-        await this.trx('pages_short_title_trans').insert([shortTitleData])
-      }
-
-      // Insert content
-      const contentData = { page_id: pageId, value: source, locale: locale }
-      await this.trx('pages_content_trans').insert([contentData])
-    }
   }
 
   /** Create all course sections */
@@ -168,6 +161,7 @@ class Importer {
             // Got section dir
             const sectionPath = entrypath.replace(`${startDir}/`, '')
             const sectionId = await this.createSection(sectionPath, order, parentId)
+
             // Handle child sections
             await findSectionPaths(entrypath, sectionId)
             ++order
@@ -188,41 +182,32 @@ class Importer {
     if (!this.trx || !this.importFolder || !this.courseId || !this.manifest)
       throw new Error("Importer wasn't initialized")
 
-    // Parse content file
-    const filepath = this.getSectionFilepath(sectionPath)
-    const {
-      frontmatter: { shortTitle, title, type: sectionType },
-      source,
-    } = await this.readContentFile(filepath)
-
-    const sectionPathParts = sectionPath.split('/')
-    const slug = sectionPathParts.at(-1)
-    if (!slug) throw new Error('slug is empty')
-
-    const sectionData = {
-      slug,
-      course_id: this.courseId,
-      parent_id: parentId,
-      order,
-      type: sectionType === 'test' ? sectionType : 'regular',
-    }
-    const result = (await this.trx('sections').insert([sectionData], ['id'])) as InsertResult
-    const sectionId = result[0].id
-
-    await this.createSectionContent(sectionId, { shortTitle, source, title })
-
-    return sectionId
-  }
-
-  /** Create section content, title, optional short title */
-  protected async createSectionContent(
-    sectionId: DbSection['id'],
-    { shortTitle, source, title }: { shortTitle?: string; source: string; title: string }
-  ) {
-    if (!this.trx || !this.manifest || !this.importFolder)
-      throw new Error("Importer wasn't initialized")
+    let sectionId = 0
 
     for (const locale of this.manifest.languages) {
+      const sectionFilepath = path.join(this.importFolder, locale, sectionPath, 'content.md')
+      const {
+        frontmatter: { shortTitle, title, type: sectionType },
+        source,
+      } = await this.readContentFile(sectionFilepath)
+
+      // Create section
+      if (locale === this.manifest.languages[0]) {
+        const sectionPathParts = sectionPath.split('/')
+        const slug = sectionPathParts.at(-1)
+        if (!slug) throw new Error('slug is empty')
+
+        const sectionData = {
+          slug,
+          course_id: this.courseId,
+          parent_id: parentId,
+          order,
+          type: sectionType === 'test' ? sectionType : 'regular',
+        }
+        const result = (await this.trx('sections').insert([sectionData], ['id'])) as InsertResult
+        sectionId = result[0].id
+      }
+
       // Insert title
       const titleData = { section_id: sectionId, value: title, locale: locale }
       await this.trx('sections_title_trans').insert([titleData])
@@ -237,13 +222,8 @@ class Importer {
       const contentData = { section_id: sectionId, value: source, locale: locale }
       await this.trx('sections_content_trans').insert([contentData])
     }
-  }
 
-  /** Return section file path */
-  protected getSectionFilepath(sectionPath: DbSection['path']) {
-    if (!this.manifest || !this.importFolder) throw new Error("Importer wasn't initialized")
-
-    return path.join(this.importFolder, this.manifest.languages[0], sectionPath, 'content.md')
+    return sectionId
   }
 
   /** Read and parse Markdown content file, parse YAML frontmatter */
