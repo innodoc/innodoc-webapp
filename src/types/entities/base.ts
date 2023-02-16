@@ -29,7 +29,7 @@ export const defaultTranslatableFields = dbDefaultTranslatableFields.map((key) =
 export type DbDefaultTranslatableFields = typeof dbDefaultTranslatableFields[number]
 
 /** Field that holds string in different languages */
-export type TranslatableString = Record<LanguageCode, string> | null
+export type TranslatableString = Partial<Record<LanguageCode, string>> | null
 
 /** Mixin for entity with localized fields */
 export type TranslatableFields<T extends string> = Record<T, TranslatableString>

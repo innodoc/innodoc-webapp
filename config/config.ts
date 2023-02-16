@@ -12,7 +12,15 @@ import { imports } from '../package.json'
 
 import buildData from './buildData'
 
-dotenv.config()
+function loadDotEnv() {
+  const dotEnvFilepath = path.resolve(
+    __dirname,
+    '..',
+    process.env.VITEST_MODE ? '.env.test' : '.env'
+  )
+  const { error } = dotenv.config({ path: dotEnvFilepath })
+  if (error) throw error
+}
 
 /* Use package.json import mapping as source of truth for aliases */
 const projectDir = path.resolve(__dirname, '..')
@@ -41,6 +49,8 @@ function testConfig(testMode: string) {
 
 /* vite configuration */
 async function config() {
+  loadDotEnv()
+
   const testMode = process.env.VITEST_MODE
 
   if (testMode !== 'unit') {
