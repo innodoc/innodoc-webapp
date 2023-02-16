@@ -56,6 +56,10 @@ overrides:
                 - useSelector
                 - useDispatch
               message: Use typed hooks `useDispatch` and `useSelector` from `@innodoc/store` instead.
+            - name: '@emotion/styled'
+              importNames:
+                - default
+              message: Use `styled` from `@mui/material` instead.
             - name: '@mui/material'
               importNames:
                 - Icon
