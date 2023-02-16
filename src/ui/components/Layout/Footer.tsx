@@ -3,7 +3,7 @@ import getTextDecoration from '@mui/material/Link/getTextDecoration'
 import {
   Experimental_CssVarsProvider as CssVarsProvider,
   useColorScheme,
-} from '@mui/material/styles/index.js'
+} from '@mui/material/styles'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 

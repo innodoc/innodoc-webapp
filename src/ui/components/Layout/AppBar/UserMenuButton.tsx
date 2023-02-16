@@ -1,5 +1,5 @@
 import { Box, Divider, ListItemIcon, ListItemText, MenuItem } from '@mui/material'
-import { useColorScheme } from '@mui/material/styles/index.js'
+import { useColorScheme } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 
 import Icon from '#ui/components/common/Icon'

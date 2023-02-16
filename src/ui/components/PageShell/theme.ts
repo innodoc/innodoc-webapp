@@ -1,11 +1,11 @@
 import { grey } from '@mui/material/colors'
-import type { DefaultColorScheme } from '@mui/material/styles/experimental_extendTheme'
 import {
   type CssVarsThemeOptions,
   experimental_extendTheme as extendTheme,
-  responsiveFontSizes,
   type ThemeOptions,
-} from '@mui/material/styles/index.js'
+  responsiveFontSizes,
+} from '@mui/material/styles'
+import type { DefaultColorScheme } from '@mui/material/styles/experimental_extendTheme'
 
 // Augment theme type
 import type {} from '@mui/material/themeCssVarsAugmentation'

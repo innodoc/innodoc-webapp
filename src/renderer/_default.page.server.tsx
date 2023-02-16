@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url'
 
 import createCache from '@emotion/cache'
 import createEmotionServer from '@emotion/server/create-instance'
-import { getInitColorSchemeScript } from '@mui/material/styles/index.js'
+import { getInitColorSchemeScript } from '@mui/material/styles'
 import I18NextFsBackend from 'i18next-fs-backend'
 import { renderToStaticMarkup } from 'react-dom/server'
 import type { FilledContext } from 'react-helmet-async'
