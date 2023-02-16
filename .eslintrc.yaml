@@ -71,6 +71,9 @@ overrides:
       import/default: off
       import/no-named-as-default-member: off
 
+      # ignore exponential and polynomial backtracking
+      regexp/no-super-linear-backtracking: off
+
   # Filename exceptions
   - files:
       - vite.config.ts

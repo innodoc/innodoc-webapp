@@ -64,7 +64,7 @@ export async function up(knex: Knex) {
       .references('pages.id')
       .onUpdate('CASCADE')
       .onDelete('CASCADE')
-    t.jsonb('value').notNullable().defaultTo(JSON.stringify({}))
+    t.text('value').notNullable()
     t.enum('locale', null, {
       enumName: 'locale',
       existingType: true,

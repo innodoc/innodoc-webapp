@@ -17,7 +17,7 @@ function HeadingNode({ node: { children, depth } }: HeadingNodeProps) {
   }
 
   const childrenNodes = children.map((child, idx) => (
-    <PhrasingContentNode key={child?.data?.uuid ?? idx.toString()} node={child} />
+    <PhrasingContentNode key={child?.data?.id ?? idx.toString()} node={child} />
   ))
 
   return (

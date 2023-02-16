@@ -7,7 +7,7 @@ function ParagraphNode({ node }: ParagraphNodeProps) {
   return (
     <Typography paragraph sx={{ my: 2 }} variant="body1">
       {node.children.map((child, idx) => (
-        <PhrasingContentNode node={child} key={child?.data?.uuid ?? idx.toString()} />
+        <PhrasingContentNode node={child} key={child?.data?.id ?? idx.toString()} />
       ))}
     </Typography>
   )

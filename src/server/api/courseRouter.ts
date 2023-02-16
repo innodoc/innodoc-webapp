@@ -49,7 +49,7 @@ const courseRouter = Router()
       )
       if (pageContent === undefined) res.status(404)
 
-      res.json(pageContent)
+      res.type('text/markdown').send(pageContent)
     }) as RequestHandler
   )
 
@@ -74,7 +74,7 @@ const courseRouter = Router()
       )
       if (sectionContent === undefined) res.status(404)
 
-      res.json(sectionContent)
+      res.type('text/markdown').send(sectionContent)
     }) as RequestHandler
   )
 
@@ -86,17 +86,17 @@ const courseRouter = Router()
     param('fragmentType').custom(isFragmentType),
     checkErrors,
     (async (req, res) => {
-      const sectionContent = await getFragmentContent(
+      const fragmentContent = await getFragmentContent(
         parseInt(req.params.courseId),
         req.params.locale as LanguageCode,
         req.params.fragmentType as FragmentType
       )
 
-      if (sectionContent === undefined) {
+      if (fragmentContent === undefined) {
         res.status(404)
       }
 
-      res.json(sectionContent)
+      res.type('text/markdown').send(fragmentContent)
     }) as RequestHandler
   )
 

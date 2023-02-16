@@ -1,17 +1,22 @@
 import fs from 'fs/promises'
 import path from 'path'
 
-import yaml from 'js-yaml'
+import camelcaseKeys from 'camelcase-keys'
 import type { Knex } from 'knex'
+import { parse as yamlParse } from 'yaml'
 
 import getDatabase from '#server/database/getDatabase'
-import MarkdownParser from '#server/markdown/MarkdownParser'
 import type { DbCourse } from '#types/entities/course'
-import type { MarkdownDoc } from '#types/entities/markdown'
 import type { DbPage } from '#types/entities/page'
 import type { DbSection } from '#types/entities/section'
 
 import type { InsertResult, Manifest, ManifestPage } from './types'
+
+interface Frontmatter {
+  title: string
+  shortTitle?: string
+  type?: string
+}
 
 /** Importer for v1 content folders */
 class Importer {
@@ -21,11 +26,6 @@ class Importer {
   protected courseSlug: DbCourse['slug'] | null = null
   protected manifest: Manifest | null = null
   protected courseId: DbCourse['id'] | null = null
-  protected parser: MarkdownParser
-
-  constructor() {
-    this.parser = new MarkdownParser()
-  }
 
   /** Import a course from a folder */
   public async import(importFolder: string, courseSlug: string) {
@@ -69,7 +69,7 @@ class Importer {
     if (!this.importFolder) throw new Error("Importer wasn't initialized")
 
     const yamlBuffer = await fs.readFile(path.join(this.importFolder, 'manifest.yml'))
-    this.manifest = yaml.load(yamlBuffer.toString()) as Manifest
+    this.manifest = yamlParse(yamlBuffer.toString()) as Manifest
   }
 
   /** Create course entity */
@@ -129,7 +129,10 @@ class Importer {
 
     for (const locale of this.manifest.languages) {
       const pageFilepath = path.join(this.importFolder, locale, '_pages', `${page.id}.md`)
-      const { root, title, shortTitle, indices } = await this.readContentFile(pageFilepath)
+      const {
+        frontmatter: { shortTitle, title },
+        source,
+      } = await this.readContentFile(pageFilepath)
 
       // Insert title
       const titleData = { page_id: pageId, value: title, locale: locale }
@@ -142,8 +145,7 @@ class Importer {
       }
 
       // Insert content
-      const value: MarkdownDoc = { root, indices }
-      const contentData = { page_id: pageId, value, locale: locale }
+      const contentData = { page_id: pageId, value: source, locale: locale }
       await this.trx('pages_content_trans').insert([contentData])
     }
   }
@@ -166,7 +168,6 @@ class Importer {
             // Got section dir
             const sectionPath = entrypath.replace(`${startDir}/`, '')
             const sectionId = await this.createSection(sectionPath, order, parentId)
-            await this.createSectionContent(sectionId, sectionPath)
             // Handle child sections
             await findSectionPaths(entrypath, sectionId)
             ++order
@@ -187,10 +188,12 @@ class Importer {
     if (!this.trx || !this.importFolder || !this.courseId || !this.manifest)
       throw new Error("Importer wasn't initialized")
 
-    // Parse content file (only for section type)
+    // Parse content file
     const filepath = this.getSectionFilepath(sectionPath)
-    // TODO: avoid parsing file twice
-    const { type: sectionType } = await this.readContentFile(filepath)
+    const {
+      frontmatter: { shortTitle, title, type: sectionType },
+      source,
+    } = await this.readContentFile(filepath)
 
     const sectionPathParts = sectionPath.split('/')
     const slug = sectionPathParts.at(-1)
@@ -204,19 +207,22 @@ class Importer {
       type: sectionType === 'test' ? sectionType : 'regular',
     }
     const result = (await this.trx('sections').insert([sectionData], ['id'])) as InsertResult
-    return result[0].id
+    const sectionId = result[0].id
+
+    await this.createSectionContent(sectionId, { shortTitle, source, title })
+
+    return sectionId
   }
 
   /** Create section content, title, optional short title */
-  protected async createSectionContent(sectionId: DbSection['id'], sectionPath: DbSection['path']) {
+  protected async createSectionContent(
+    sectionId: DbSection['id'],
+    { shortTitle, source, title }: { shortTitle?: string; source: string; title: string }
+  ) {
     if (!this.trx || !this.manifest || !this.importFolder)
       throw new Error("Importer wasn't initialized")
 
     for (const locale of this.manifest.languages) {
-      // Parse content file
-      const filepath = this.getSectionFilepath(sectionPath)
-      const { root, title, shortTitle, indices } = await this.readContentFile(filepath)
-
       // Insert title
       const titleData = { section_id: sectionId, value: title, locale: locale }
       await this.trx('sections_title_trans').insert([titleData])
@@ -228,11 +234,7 @@ class Importer {
       }
 
       // Insert content
-      const contentData = {
-        section_id: sectionId,
-        value: { root, indices },
-        locale: locale,
-      }
+      const contentData = { section_id: sectionId, value: source, locale: locale }
       await this.trx('sections_content_trans').insert([contentData])
     }
   }
@@ -247,13 +249,20 @@ class Importer {
   /** Read and parse Markdown content file, parse YAML frontmatter */
   protected async readContentFile(filepath: string) {
     const markdownFile = await fs.readFile(filepath)
-    const markdownRemark = Importer.convertPandocSyntax(markdownFile.toString())
-    return this.parser.parse(markdownRemark)
+    const { frontmatter, source } = Importer.convertPandocSyntax(markdownFile.toString())
+    return { frontmatter, source }
   }
 
   /** Convert Pandoc syntax to remark-compatible generic directives */
-  protected static convertPandocSyntax(markdown: string) {
-    return markdown
+  protected static convertPandocSyntax(content: string) {
+    // Extract meta data
+    const matches = content.match(/---\s([\s\S]*?)---[\s\S]{2}([\s\S]+)/)
+    if (!matches) throw new Error('Could not extract YAML frontmatter')
+    const [, yaml, rest] = matches
+    const frontmatter = camelcaseKeys(yamlParse(yaml)) as Frontmatter
+
+    // TODO: [Seiten]{data-index-term="Seite"}
+    const source = rest
       .replace(/(:{3,}) ?\{.hint-text\}/g, '$1hint-input')
       .replace(/(:{3,}) ?\{.hint\}/g, '$1hint')
       .replace(/(:{3,}) ?\{.hint caption="([^"]+)"\}/g, '$1hint[$2]')
@@ -264,8 +273,7 @@ class Importer {
       .replace(/(:{3,}) ?\{\.col ([^}]+)\}/g, '$1col{$2}')
       .replace(/\[\]\{\.question \.(text|checkbox) ([^}]+)\}/g, ':question-$1{$2}')
 
-    // TODO
-    // [Seiten]{data-index-term="Seite"}
+    return { frontmatter, source }
   }
 }
 

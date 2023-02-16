@@ -3,7 +3,6 @@ import type { LanguageCode } from 'iso-639-1'
 
 import getDatabase from '#server/database/getDatabase'
 import type { DbCourse } from '#types/entities/course'
-import type { MarkdownDoc } from '#types/entities/markdown'
 import type { ApiSection, DbQuerySection, DbSection } from '#types/entities/section'
 
 import type { ResultFromValue, IdResult } from './types'
@@ -132,10 +131,10 @@ export async function getSectionContent(
   courseId: DbCourse['id'],
   locale: LanguageCode,
   sectionId: DbSection['id']
-): Promise<MarkdownDoc | undefined> {
+): Promise<string | undefined> {
   const db = getDatabase()
   const result = await db
-    .first<ResultFromValue<MarkdownDoc>>('ct.value')
+    .first<ResultFromValue<string>>('ct.value')
     .from('sections as s')
     .join('courses as c', 's.course_id', 'c.id')
     .leftOuterJoin('sections_content_trans as ct', 's.id', 'ct.section_id')

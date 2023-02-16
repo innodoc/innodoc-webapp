@@ -10,7 +10,7 @@ function ListNode({ node }: ListNodeProps) {
   const ListComponent = node.ordered ? StyledOl : StyledUl
 
   const listItems = node.children.map((child, idx) => (
-    <ListItemNode key={child?.data?.uuid ?? idx.toString()} node={child} />
+    <ListItemNode key={child?.data?.id ?? idx.toString()} node={child} />
   ))
 
   return <ListComponent>{listItems}</ListComponent>

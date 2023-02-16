@@ -6,7 +6,7 @@ import { isBlockContent } from '#ui/components/content/mdast/typeGuards'
 function ListItemNode({ node }: ListItemNodeProps) {
   const children = node.children.map((child, idx) =>
     isBlockContent(child) ? (
-      <BlockContentNode key={child?.data?.uuid ?? idx.toString()} node={child} />
+      <BlockContentNode key={child?.data?.id ?? idx.toString()} node={child} />
     ) : null
   )
 

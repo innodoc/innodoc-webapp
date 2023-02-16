@@ -10,7 +10,7 @@ function LinkReferenceNode({ node }: LinkReferenceNodeProps) {
   const definition = getEntry('definition', node.identifier)
 
   const content = node.children.map((child, idx) => (
-    <StaticPhrasingContentNode key={child?.data?.uuid ?? idx.toString()} node={child} />
+    <StaticPhrasingContentNode key={child?.data?.id ?? idx.toString()} node={child} />
   ))
 
   if (definition) {

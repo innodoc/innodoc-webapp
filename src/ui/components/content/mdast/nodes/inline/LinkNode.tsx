@@ -5,7 +5,7 @@ import StaticPhrasingContentNode from '#ui/components/content/mdast/nodes/Static
 
 function LinkNode({ node: { children, url, title } }: LinkNodeProps) {
   const content = children.map((child, idx) => (
-    <StaticPhrasingContentNode key={child?.data?.uuid ?? idx.toString()} node={child} />
+    <StaticPhrasingContentNode key={child?.data?.id ?? idx.toString()} node={child} />
   ))
 
   return (

@@ -2,7 +2,6 @@ import type { LanguageCode } from 'iso-639-1'
 
 import contentApi from '#store/slices/contentApi'
 import type { ApiCourse } from '#types/entities/course'
-import type { MarkdownDoc } from '#types/entities/markdown'
 import type { ApiSection } from '#types/entities/section'
 import { getUrl } from '#utils/url'
 
@@ -17,9 +16,12 @@ export const sections = contentApi.injectEndpoints({
       },
     }),
 
-    /** Fetch content AST for a section */
-    getSectionContent: builder.query<MarkdownDoc, SectionContentFetchArgs>({
-      query: (args) => getUrl('api/course/section/content', args),
+    /** Fetch content for a section */
+    getSectionContent: builder.query<string, SectionContentFetchArgs>({
+      query: (args) => ({
+        responseHandler: 'text',
+        url: getUrl('api/course/section/content', args),
+      }),
     }),
   }),
 })

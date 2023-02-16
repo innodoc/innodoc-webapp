@@ -29,6 +29,9 @@
       "#constants": [
         "./src/constants.ts"
       ],
+      "#markdown/*": [
+        "./src/markdown/*"
+      ],
       "#pages/*": [
         "./src/pages/*"
       ],

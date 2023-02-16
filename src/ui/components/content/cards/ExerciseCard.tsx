@@ -7,7 +7,7 @@ import type { ContentCardProps } from './types'
 
 function ExerciseCard({ node }: ContentCardProps) {
   const { t } = useTranslation()
-  const title = useCardTitle(node.data?.uuid, t('content.exercise'))
+  const title = useCardTitle(node.data?.id, t('content.exercise'))
 
   // TODO id, title
 

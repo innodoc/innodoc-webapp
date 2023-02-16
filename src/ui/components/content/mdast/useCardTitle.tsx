@@ -48,9 +48,9 @@ interface NumberingProviderProps {
 }
 
 /** Utility for consistent card title numbering within a document */
-function useCardTitle(uuid: string, title: string) {
+function useCardTitle(id: string, title: string) {
   const formatTitle = useContext(CardTitleContext)
-  return formatTitle(uuid, title)
+  return formatTitle(id, title)
 }
 
 export default useCardTitle
