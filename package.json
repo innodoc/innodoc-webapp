@@ -30,6 +30,7 @@
     "katex": "^0.16.4",
     "knex": "^2.4.2",
     "locale": "^0.1.0",
+    "mdast-builder": "^1.1.1",
     "mdast-util-gfm-strikethrough": "^1.0.3",
     "mdast-util-gfm-table": "^1.0.7",
     "micromark-extension-gfm-strikethrough": "^1.0.4",
@@ -48,12 +49,14 @@
     "remark-inline-links": "^6.0.1",
     "remark-parse": "^10.0.1",
     "remark-squeeze-paragraphs": "^5.0.1",
+    "remark-stringify": "^10.0.2",
     "sirv": "^2.0.2",
     "ts-node": "^10.9.1",
     "type-fest": "^3.5.7",
     "typescript": "^4.9.5",
     "unified": "^10.1.2",
     "unist-util-index": "^3.0.2",
+    "unist-util-is": "^5.2.0",
     "unist-util-visit": "^4.1.2",
     "vite": "^4.1.1",
     "vite-plugin-cjs-interop": "^0.0.8",
@@ -64,6 +67,7 @@
     "@babel/core": "^7.20.12",
     "@babel/eslint-parser": "^7.19.1",
     "@babel/preset-env": "^7.20.2",
+    "@faker-js/faker": "^7.6.0",
     "@iconify/types": "^2.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -83,9 +87,11 @@
     "@types/svg-parser": "^2.0.3",
     "@types/testing-library__jest-dom": "^5.14.5",
     "@types/unist": "^2.0.6",
+    "@types/unist-util-is": "^4.0.1",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@typescript-eslint/parser": "^5.52.0",
     "@typescript-eslint/utils": "^5.52.0",
+    "cross-fetch": "^3.1.5",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-import-resolver-typescript": "^3.5.3",
@@ -104,10 +110,10 @@
     "eslint-plugin-testing-library": "^5.10.2",
     "jsdom": "^21.1.0",
     "mdast-util-directive": "^2.2.4",
+    "msw": "^1.0.1",
     "nodemon": "^2.0.20",
     "prettier": "^2.8.4",
     "rollup-plugin-visualizer": "^5.9.0",
-    "start-server-and-test": "^1.15.4",
     "svg-parser": "^2.0.4",
     "vitest": "^0.28.5"
   },
@@ -120,6 +126,7 @@
   "scripts": {
     "build": "NODE_ENV=production vite build",
     "dev": "nodemon --ext ts --watch ./src/server --exec pnpm -- run server",
+    "dev:mock": "INNODOC_API_MOCK=true pnpm run dev",
     "generate-tsconfig-paths": "ts-node config/generateTsConfigPaths.ts",
     "knex": "ts-node node_modules/knex/bin/cli.js",
     "import-v1": "ts-node src/server/importer/cli.ts",
@@ -129,8 +136,7 @@
     "prod": "pnpm run build && pnpm run server:prod",
     "server:prod": "NODE_ENV=production pnpm run server",
     "server": "ts-node ./src/server/server.ts",
-    "test:content": "http-server tests/content -a localhost -p ${CONTENT_PORT:-8001} --cors",
-    "test:integration": "VITEST_MODE=integration CONTENT_PORT=9876 INNODOC_CONTENT_ROOT=http://localhost:9876/ start-server-and-test test:content http://localhost:9876 test:vitest",
+    "test:integration": "VITEST_MODE=integration pnpm run test:vitest",
     "test:unit": "VITEST_MODE=unit pnpm run test:vitest",
     "test:vitest": "vitest run",
     "test": "pnpm run test:unit && pnpm run test:integration",
@@ -160,5 +166,8 @@
       "react-redux": "^8.0.5",
       "redux": "^4.2.0"
     }
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

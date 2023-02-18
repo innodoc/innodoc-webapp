@@ -9,6 +9,9 @@ import fetchContent from '#renderer/fetchContent'
 import makeStore, { type Store } from '#store/makeStore'
 import courses from '#store/slices/entities/courses'
 import fragments from '#store/slices/entities/fragments'
+import pages from '#store/slices/entities/pages'
+import sections from '#store/slices/entities/sections'
+import { changeCourseId } from '#store/slices/uiSlice'
 import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
 
@@ -20,8 +23,11 @@ const { initiate: getContent } = fragments.endpoints.getFragmentContent
 
 beforeEach(async () => {
   store = makeStore()
-  i18n = await getI18n(I18NextFsBackend, {}, 'cimode', 0, store)
-  await store.dispatch(courses.endpoints.getCourse.initiate({ courseId: 0 }))
+  const courseId = 0
+  await store.dispatch(courses.endpoints.getCourse.initiate({ courseId }))
+  store.dispatch(changeCourseId(courseId))
+  await store.dispatch(pages.endpoints.getCoursePages.initiate({ courseId }))
+  await store.dispatch(sections.endpoints.getCourseSections.initiate({ courseId }))
   await fetchContent(
     store,
     getContent({ courseId: 0, locale, fragmentType: FRAGMENT_TYPE_FOOTER_A })
@@ -30,6 +36,7 @@ beforeEach(async () => {
     store,
     getContent({ courseId: 0, locale, fragmentType: FRAGMENT_TYPE_FOOTER_B })
   )
+  i18n = await getI18n(I18NextFsBackend, {}, 'cimode', 0, store)
 })
 
 function TestPageShell({ children }: { children: ReactNode }) {

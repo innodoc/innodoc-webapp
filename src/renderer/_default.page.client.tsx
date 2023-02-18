@@ -1,6 +1,7 @@
 import createCache, { type EmotionCache } from '@emotion/cache'
 import type { i18n as I18nInstance } from 'i18next'
 import I18NextHttpBackend from 'i18next-http-backend'
+import type { SetupWorkerApi } from 'msw'
 import { hydrateRoot, type Root } from 'react-dom/client'
 
 import { EMOTION_STYLE_INSERTION_POINT_NAME, EMOTION_STYLE_KEY } from '#constants'
@@ -31,6 +32,9 @@ let i18n: I18nInstance
 // Emotion cache
 let emotionCache: EmotionCache
 
+// API mock
+let mockWorker: SetupWorkerApi
+
 function createEmotionCache() {
   const emotionInsertionPoint = document.querySelector<HTMLMetaElement>(
     `meta[name="${EMOTION_STYLE_INSERTION_POINT_NAME}"]`
@@ -59,6 +63,13 @@ async function render({
   urlPathname,
 }: PageContextClient) {
   findRootElement()
+
+  // Enable API mock
+  if (import.meta.env.INNODOC_API_MOCK === 'true' && mockWorker === undefined) {
+    const makeWorker = (await import('../../tests/integration/mocks/browser')).default
+    mockWorker = makeWorker(import.meta.env.INNODOC_APP_ROOT)
+    await mockWorker.start({ onUnhandledRequest: 'bypass' })
+  }
 
   if (store === undefined) {
     // Create store on first hydration
