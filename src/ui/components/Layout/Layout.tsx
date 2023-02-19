@@ -21,7 +21,7 @@ function Layout({ children }: LayoutProps) {
     >
       <MetaTags />
       <AppBar />
-      <MainContainer component="main" maxWidth="lg">
+      <MainContainer component="main" data-testid="main-container" maxWidth="lg">
         {children}
       </MainContainer>
       <Footer />
