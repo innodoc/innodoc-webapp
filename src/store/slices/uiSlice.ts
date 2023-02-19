@@ -34,6 +34,7 @@ const uiSlice = createSlice({
   name: 'ui',
   initialState,
 
+  // TODO: rename change->set, remove current
   reducers: {
     /** Change current course */
     changeCourseId(state, action: PayloadAction<ApiCourse['id']>) {
