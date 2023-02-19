@@ -36,6 +36,13 @@ const makePages = (courseId: number, locales: LanguageCode[]) => {
 
 [linkRef]: https://www.example.com/reference
 `
+  pages[0][1].de = `Dies ist der Beginn der Reise.
+
+[Beispiel-Link](https://www.example.com/)
+[Beispiel-Referenz-Link][linkRef]
+
+[linkRef]: https://www.example.com/reference
+`
 
   pages[1][0] = {
     ...pages[1][0],
