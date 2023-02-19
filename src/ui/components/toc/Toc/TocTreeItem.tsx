@@ -8,7 +8,7 @@ import TocTreeItemContent from './TocTreeItemContent'
 
 const StyledTreeItem = styled(TreeItem)(({ theme }) => ({
   '& .MuiTreeItem-iconContainer': {
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(1) + ' !important',
   },
 }))
 
