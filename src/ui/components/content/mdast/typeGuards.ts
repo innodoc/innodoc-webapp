@@ -41,10 +41,9 @@ import type {
 } from 'mdast'
 import type { ContainerDirective, LeafDirective, TextDirective } from 'mdast-util-directive'
 import type { Node } from 'unist'
+import { convert } from 'unist-util-is'
 
-export function isRoot(node: Node): node is Root {
-  return node.type === 'root'
-}
+export const isRoot = convert<Root>('root')
 
 export function isTopLevelContent(node: Node): node is TopLevelContent {
   return isBlockContent(node) || isFrontmatterContent(node) || isDefinitionContent(node)
