@@ -1,16 +1,9 @@
-import { locale, render, screen, store } from '#test-utils'
+import { loadPage, render, screen } from '#test-utils'
 
 import { Page as ContentPage } from '#pages/page/index.page'
-import fetchContent from '#renderer/fetchContent'
-import pages from '#store/slices/entities/pages'
-import { changeCurrentPageSlug } from '#store/slices/uiSlice'
 
 test('<ContentPage />', async () => {
-  await fetchContent(
-    store,
-    pages.endpoints.getPageContent.initiate({ courseId: 0, locale, pageId: 0 })
-  )
-  store.dispatch(changeCurrentPageSlug('home'))
+  await loadPage('home')
 
   render(<ContentPage />)
   expect(screen.getByRole('heading', { name: 'Home page', exact: true })).toBeInTheDocument()

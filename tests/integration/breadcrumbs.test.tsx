@@ -1,19 +1,10 @@
-import { locale, render, screen, store, within } from '#test-utils'
+import { loadSection, render, screen, within } from '#test-utils'
 
 import { Page as ContentSection } from '#pages/section/index.page'
-import fetchContent from '#renderer/fetchContent'
-import sections from '#store/slices/entities/sections'
-import { changeCurrentSectionPath } from '#store/slices/uiSlice'
 
 test('<Breadcrumbs />', async () => {
-  await fetchContent(
-    store,
-    sections.endpoints.getSectionContent.initiate({ courseId: 0, locale, sectionId: 27 })
-  )
-  store.dispatch(
-    changeCurrentSectionPath(
-      'eaque-inventore-non/sapiente-similique-id/maxime-sed-voluptatum/mollitia-neque-vitae'
-    )
+  await loadSection(
+    'eaque-inventore-non/sapiente-similique-id/maxime-sed-voluptatum/mollitia-neque-vitae'
   )
 
   render(<ContentSection />)

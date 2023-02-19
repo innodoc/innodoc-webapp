@@ -11,19 +11,27 @@ import courses from '#store/slices/entities/courses'
 import fragments from '#store/slices/entities/fragments'
 import pages from '#store/slices/entities/pages'
 import sections from '#store/slices/entities/sections'
-import { changeCourseId } from '#store/slices/uiSlice'
+import {
+  changeCourseId,
+  changeCurrentPageSlug,
+  changeCurrentSectionPath,
+} from '#store/slices/uiSlice'
+import type { ApiPage } from '#types/entities/page'
+import type { ApiSection } from '#types/entities/section'
 import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
+
+import getData from '../mocks/getData'
 
 let i18n: I18n
 let store: Store
 const locale = 'en'
+const courseId = 0
 
 const { initiate: getContent } = fragments.endpoints.getFragmentContent
 
 beforeEach(async () => {
   store = makeStore()
-  const courseId = 0
   await store.dispatch(courses.endpoints.getCourse.initiate({ courseId }))
   store.dispatch(changeCourseId(courseId))
   await store.dispatch(pages.endpoints.getCoursePages.initiate({ courseId }))
@@ -51,5 +59,33 @@ function render(ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) {
   return renderOrig(ui, { wrapper: TestPageShell, ...options })
 }
 
+async function loadPage(pageSlug: ApiPage['slug']) {
+  const courses = getData()
+  const page = Object.entries(courses[0].pages).find(([, [p]]) => p.slug === pageSlug)
+  if (page === undefined) throw new Error(`Could not find mock page ${pageSlug}`)
+  const pageObj = page[1][0]
+  await fetchContent(
+    store,
+    pages.endpoints.getPageContent.initiate({ courseId, locale, pageId: pageObj.id })
+  )
+  store.dispatch(changeCurrentPageSlug(pageObj.slug))
+}
+
+async function loadSection(sectionPath: ApiSection['path']) {
+  const courses = getData()
+  const section = Object.entries(courses[0].sections).find(([, [s]]) => s.path === sectionPath)
+  if (section === undefined) throw new Error(`Could not find mock section ${sectionPath}`)
+  const sectionObj = section[1][0]
+  await fetchContent(
+    store,
+    sections.endpoints.getSectionContent.initiate({
+      courseId,
+      locale,
+      sectionId: section[1][0].id,
+    })
+  )
+  store.dispatch(changeCurrentSectionPath(sectionObj.path))
+}
+
 export * from '@testing-library/react'
-export { locale, render, store }
+export { loadPage, loadSection, locale, render, store }

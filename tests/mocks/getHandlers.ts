@@ -28,7 +28,7 @@ const getContent = (
 function getHandlers(baseUrl: string) {
   const base = (path: string) => new URL(path, baseUrl).toString()
 
-  const courses = getData(['en', 'de'])
+  const courses = getData()
 
   const getCourse = (req: RestRequest) => courses[getIntParam(req, 'courseId')]
 
