@@ -1,7 +1,6 @@
 ---
 extends:
   - plugin:jest/recommended
-  - plugin:testing-library/react
 
 rules:
   jest/consistent-test-it: [error, { fn: test }]

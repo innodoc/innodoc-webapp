@@ -18,7 +18,6 @@ extends:
   - plugin:react-redux/recommended
   - plugin:regexp/recommended
   - plugin:promise/recommended
-  # - plugin:playwright/playwright-test
   - plugin:prettier/recommended
 
 overrides:
@@ -82,6 +81,7 @@ overrides:
   - files:
       - vite.config.ts
       - knexfile.ts
+      - playwright.config.ts
       - '**/*.d.ts'
     rules:
       filenames/match-exported: off

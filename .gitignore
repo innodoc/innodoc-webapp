@@ -11,3 +11,6 @@ dist
 /build
 /vite.config.ts.timestamp-*.mjs
 /stats.html
+/test-results/
+/playwright-report/
+/playwright/.cache/
