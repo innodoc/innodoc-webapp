@@ -26,6 +26,9 @@
     "unknownIcon": "Unknown icon name encountered"
   },
   "internalPages": {
+    "home": {
+      "title": "Home"
+    },
     "indexPage": {
       "title": "Index"
     },

@@ -23,7 +23,6 @@ function useSelectBreadcrumbSections() {
   const locale = useSelector(selectLocale)
   const courseId = useSelector(selectCourseId)
   const sectionPath = useSelector(selectCurrentSectionPath)
-  const sectionSlug = sectionPath !== null ? sectionPath.split('/').pop() : undefined
 
   const selectBreadcrumbSections = useMemo(() => {
     const emptyArray: TranslatedSection[] = []
@@ -31,19 +30,21 @@ function useSelectBreadcrumbSections() {
     return createSelector(
       [
         (result: { data: ApiSection[] | undefined }) => result.data,
-        (result, _sectionSlug: ApiSection['slug'] | undefined) => _sectionSlug,
-        (result, _sectionSlug, _locale: LanguageCode) => _locale,
+        (result, _sectionPath: string | null) => _sectionPath,
+        (result, _sectionPath, _locale: LanguageCode) => _locale,
       ],
-      (sections, _sectionSlug, _locale) => {
-        if (sections === undefined || _sectionSlug === undefined) return emptyArray
-        const section = sections.find((s) => s.slug === _sectionSlug)
+      (sections, _sectionPath, _locale) => {
+        if (sections === undefined || _sectionPath === null) return emptyArray
+
+        const section = sections.find((s) => s.path === _sectionPath)
         if (section === undefined) return emptyArray
+
         const parts = section.path.split('/')
-        const bcSections = parts.reduce((acc, slug, idx) => {
+        const bcSections = parts.reduce<ApiSection[]>((acc, _, idx) => {
           const _path = parts.slice(0, idx + 1).join('/')
           const sec = sections.find((s) => s.path === _path)
           return sec !== undefined ? [...acc, sec] : acc
-        }, [] as ApiSection[])
+        }, [])
         return translateEntityArray(bcSections, defaultTranslatableFields, _locale)
       }
     )
@@ -53,7 +54,7 @@ function useSelectBreadcrumbSections() {
     { courseId: courseId ?? 0 },
     {
       selectFromResult: (result) => ({
-        sections: selectBreadcrumbSections(result, sectionSlug, locale),
+        sections: selectBreadcrumbSections(result, sectionPath, locale),
       }),
       skip: courseId === null,
     }

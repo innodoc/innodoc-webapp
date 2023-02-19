@@ -26,6 +26,9 @@
     "unknownIcon": "Unbekannter Icon-Name aufgetreten"
   },
   "internalPages": {
+    "home": {
+      "title": "Home"
+    },
     "indexPage": {
       "title": "Stichwortverzeichnis"
     },
