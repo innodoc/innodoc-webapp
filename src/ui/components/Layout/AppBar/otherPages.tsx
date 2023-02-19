@@ -31,8 +31,4 @@ interface Page {
   to: string
 }
 
-const otherPagesFooter = otherPages.filter((page) => page.linked.includes('footer'))
-const otherPagesNav = otherPages.filter((page) => page.linked.includes('nav'))
-
-export { otherPagesFooter, otherPagesNav }
 export default otherPages

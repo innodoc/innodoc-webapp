@@ -29,7 +29,7 @@ function Logo() {
   )
 
   return (
-    <Link component={HomeLink} sx={{ display: 'inline-flex' }} title={course.title ?? ''}>
+    <Link component={HomeLink} sx={{ display: 'inline-flex', mr: 2 }} title={course.title ?? ''}>
       {content}
     </Link>
   )

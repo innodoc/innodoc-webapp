@@ -3,18 +3,17 @@ import type { LanguageCode } from 'iso-639-1'
 import type { CamelCase } from 'type-fest'
 
 import type { FRAGMENT_TYPES } from '#constants'
-import type { DateISO8601 } from '#types/common'
 
 /** Base database entity */
 export interface BaseEntity {
   /** Primary key */
   id: number
 
-  /** Creation date */
-  created_at: DateISO8601
+  /** Creation date (ISO8601) */
+  created_at: string
 
-  /** Update date */
-  updated_at: DateISO8601
+  /** Update date (ISO8601) */
+  updated_at: string
 }
 
 /** Default fields that are translatable (snake case) */
@@ -26,7 +25,7 @@ export const defaultTranslatableFields = dbDefaultTranslatableFields.map((key) =
 ) as CamelCase<DbDefaultTranslatableFields>[]
 
 /** Default fields that are translatable */
-export type DbDefaultTranslatableFields = typeof dbDefaultTranslatableFields[number]
+export type DbDefaultTranslatableFields = (typeof dbDefaultTranslatableFields)[number]
 
 /** Field that holds string in different languages */
 export type TranslatableString = Partial<Record<LanguageCode, string>> | null
@@ -44,4 +43,4 @@ export type TranslatedEntity<T extends Record<string, unknown>> = {
 }
 
 /** Content fragment type */
-export type FragmentType = typeof FRAGMENT_TYPES[number]
+export type FragmentType = (typeof FRAGMENT_TYPES)[number]

@@ -2,6 +2,7 @@ import { Box, Container, Grid, Link, Stack, Typography } from '@mui/material'
 import getTextDecoration from '@mui/material/Link/getTextDecoration'
 import {
   Experimental_CssVarsProvider as CssVarsProvider,
+  styled,
   useColorScheme,
 } from '@mui/material/styles'
 import { memo } from 'react'
@@ -15,9 +16,11 @@ import { selectLocale } from '#store/slices/uiSlice'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
 import MarkdownNode from '#ui/components/content/mdast/MarkdownNode'
-import { otherPagesFooter } from '#ui/components/Layout/AppBar/otherPages'
+import otherPages from '#ui/components/Layout/AppBar/otherPages'
 import defaultTheme, { baseThemeOpts, makeTheme } from '#ui/components/PageShell/theme'
 import { useSelector } from '#ui/hooks/store'
+
+const otherPagesFooter = otherPages.filter((page) => page.linked.includes('footer'))
 
 // Override link color on light theme for better readability
 const footerTheme = makeTheme({
@@ -38,7 +41,19 @@ const footerTheme = makeTheme({
   },
 })
 
-const linkSx = { alignItems: 'center', display: 'flex', '& svg': { mr: 1 } }
+const StyledGrid = styled(Grid)(({ theme }) => ({
+  '& > :first-of-type': {
+    marginTop: 0,
+    marginBottom: theme.spacing(3),
+  },
+}))
+
+const StyledLink = styled(Link)(({ theme }) => ({
+  alignItems: 'center',
+  display: 'flex',
+  lineHeight: theme.spacing(2.5),
+  '& svg': { marginRight: theme.spacing(1) },
+})) as typeof Link
 
 function Footer() {
   const { t } = useTranslation()
@@ -66,14 +81,14 @@ function Footer() {
   if (course === undefined) return null
 
   const internalLinks = otherPagesFooter.map(({ icon, to, title }) => (
-    <Link component={InternalLink} key={to} sx={linkSx} to={to}>
+    <StyledLink component={InternalLink} key={to} to={to}>
       {icon}
       {t(title)}
-    </Link>
+    </StyledLink>
   ))
 
   const courseLinks = coursePages.map((page) => (
-    <Link component={PageLink} key={`page-${page.id}`} page={page} sx={linkSx} />
+    <StyledLink component={PageLink} key={`page-${page.id}`} page={page} />
   ))
 
   const contentFooterA = contentA !== undefined ? <MarkdownNode content={contentA} /> : null
@@ -93,18 +108,16 @@ function Footer() {
       >
         <Container maxWidth="lg">
           <Grid container spacing={4}>
-            <Grid item xs={12} md={3} sx={{ mb: 3 }}>
-              <Typography variant="h4" gutterBottom>
-                {course.title}
-              </Typography>
+            <StyledGrid item xs={12} md={3}>
+              <Typography variant="h4">{course.title}</Typography>
               <Stack spacing={1}>{[...internalLinks, ...courseLinks]}</Stack>
-            </Grid>
-            <Grid item xs={12} md={6} sx={{ mb: 3 }}>
+            </StyledGrid>
+            <StyledGrid item xs={12} md={6}>
               {contentFooterA}
-            </Grid>
-            <Grid item xs={12} md={3} sx={{ mb: 3 }}>
+            </StyledGrid>
+            <StyledGrid item xs={12} md={3}>
               {contentFooterB}
-            </Grid>
+            </StyledGrid>
           </Grid>
         </Container>
       </Box>

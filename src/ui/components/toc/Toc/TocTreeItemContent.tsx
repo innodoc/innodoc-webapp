@@ -15,9 +15,6 @@ const StyledLink = styled(Link)(({ theme }) => ({
     outline: 'none',
     backgroundColor: theme.vars.palette.action.focus,
   },
-  '&.Mui-selected': {
-    textDecoration: 'underline',
-  },
 })) as typeof Link
 
 const TocTreeItemContent = forwardRef(function TocTreeItemContent(

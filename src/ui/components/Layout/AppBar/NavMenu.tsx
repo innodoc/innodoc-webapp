@@ -7,19 +7,23 @@ import Icon from '#ui/components/common/Icon'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
 
-import { otherPagesNav } from './otherPages'
+import otherPages from './otherPages'
+
+const otherPagesNav = otherPages.filter((page) => page.linked.includes('nav'))
 
 const NavButton = forwardRef<HTMLButtonElement | null, ButtonProps>(function NavButton(props, ref) {
   return <Button color="inherit" ref={ref} size="small" {...props} />
 })
 
 const StyledNavButton = styled(NavButton)(({ theme }) => ({
+  lineHeight: theme.spacing(2),
   paddingLeft: theme.spacing(1),
   paddingRight: theme.spacing(1),
   textDecoration: 'underline',
   textDecorationColor: `rgb(${theme.vars.palette.text.primaryChannel} / 0%)`,
   textTransform: 'inherit',
   transitionProperty: 'background-color, box-shadow, border-color, color, text-decoration-color',
+  whiteSpace: 'nowrap',
   '&:hover': { textDecoration: 'underline' },
   '&.active': { textDecoration: 'underline' },
 })) as typeof Button

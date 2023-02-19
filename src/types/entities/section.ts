@@ -6,9 +6,6 @@ import type { BaseEntity, DbTranslatableFields, TranslatedEntity } from './base'
 
 /** Section object for database */
 export interface DbSection extends BaseEntity, DbTranslatableFields {
-  /** Section slug (unique within course) */
-  slug: string
-
   /** Section path */
   path: string
 
