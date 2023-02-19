@@ -5,12 +5,12 @@ test('test home page', async ({ page }) => {
 
   await expect(page).toHaveURL('/en/page/home')
   await expect(page).toHaveTitle(/Course for integration tests/)
-  await expect(page.getByRole('heading', { name: 'home page' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Home page', exact: true })).toBeVisible()
   await expect(page.getByText('This is the start of the journey.')).toBeVisible()
 
   const link = page.getByRole('link', { name: 'example link', exact: true })
-  expect(await link.getAttribute('href')).toBe('https://www.example.com/')
+  await expect(link).toHaveAttribute('href', 'https://www.example.com/')
 
-  const linkRef = page.getByRole('link', { name: 'example link reference' })
-  expect(await linkRef.getAttribute('href')).toBe('https://www.example.com/reference')
+  const linkRef = page.getByRole('link', { name: 'example link reference', exact: true })
+  await expect(linkRef).toHaveAttribute('href', 'https://www.example.com/reference')
 })

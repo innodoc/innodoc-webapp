@@ -3,22 +3,13 @@ import type { LanguageCode } from 'iso-639-1'
 import { root, paragraph, text, heading, list, listItem, code } from 'mdast-builder'
 import stringify from 'remark-stringify'
 import { unified } from 'unified'
-import type { Node } from 'unist'
 
 import { isRoot } from '#ui/components/content/mdast/typeGuards'
 
-import { capitalize, range } from './utils'
+import type { Content, ContentOptions, NodeMakers } from './types'
+import { capitalize, range, seed } from './utils'
 
-export type Content = Partial<Record<LanguageCode, string>>
-
-interface Options {
-  headerDepth?: number
-  nodeCount: number
-}
-
-type NodeMakers = [number, () => Node][]
-
-const defaultOptions: Options = {
+const defaultOptions: ContentOptions = {
   nodeCount: 5,
 }
 
@@ -58,8 +49,10 @@ function makeNode() {
   throw new Error('Should not happen')
 }
 
-function makeMarkdown(options: Partial<Options>) {
+function makeMarkdown(options: Partial<ContentOptions>) {
   const mergedOps = { ...defaultOptions, ...options }
+
+  if (options.seed) seed(options.seed)
 
   const nodes = range(mergedOps.nodeCount).map(makeNode)
 
@@ -73,7 +66,7 @@ function makeMarkdown(options: Partial<Options>) {
   return processor.stringify(rootNode)
 }
 
-const makeContent = (locales: LanguageCode[], options: Partial<Options> = {}): Content =>
+const makeContent = (locales: LanguageCode[], options: Partial<ContentOptions> = {}): Content =>
   Object.fromEntries(locales.map((locale) => [locale, makeMarkdown(options)]))
 
 export default makeContent

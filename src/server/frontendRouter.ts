@@ -23,7 +23,7 @@ const frontendRouter = Router().get('*', (async (req, res, next) => {
   const pageContextInit: PageContextInit = {
     locale,
     urlOriginal: urlWithoutLocale,
-    courseId: course.id,
+    courseId: 0,
   }
 
   // Ensure url path is prefixed with locale

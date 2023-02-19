@@ -2,14 +2,9 @@ import type { LanguageCode } from 'iso-639-1'
 
 import type { ApiSection } from '#types/entities/section'
 
-import makeContent, { type Content } from './makeContent'
-import { getDates, getTitlesPath, range } from './utils'
-
-type Section = [ApiSection, Content]
-
-type Sections = Record<number, Section>
-
-type SectionDef = number | null | SectionDef[]
+import makeContent from './makeContent'
+import type { Section, SectionDef, Sections } from './types'
+import { getDates, getTitlesPath, range, seed } from './utils'
 
 let id = 0
 
@@ -20,6 +15,7 @@ const makeSection = (
   courseId: number,
   locales: LanguageCode[]
 ): Section => {
+  seed(`section-${courseId}-${id}`)
   const section: ApiSection = {
     id: id++,
     courseId,
@@ -61,9 +57,9 @@ const mapSectionDef = (
 const sectionDef: SectionDef[] = [
   null, // no children
   4, // children w/o children
-  [null, 1, 2, 2, 3], // children that have children
-  [3, 2, 2, 4],
-  [2, 3, 2],
+  [null, [2, [2, 3, 4]], [2, 1], [[4, 2, 3], [1, 2], 3], 3], // children that have children
+  [3, 2, 4],
+  [2, 3],
   2,
   null,
 ]

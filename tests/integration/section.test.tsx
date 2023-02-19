@@ -5,16 +5,15 @@ import fetchContent from '#renderer/fetchContent'
 import sections from '#store/slices/entities/sections'
 import { changeCurrentSectionPath } from '#store/slices/uiSlice'
 
-beforeEach(async () => {
+test('<ContentSection />', async () => {
   await fetchContent(
     store,
     sections.endpoints.getSectionContent.initiate({ courseId: 0, locale, sectionId: 0 })
   )
-  store.dispatch(changeCurrentSectionPath('ex-possimus-repellat'))
-})
+  store.dispatch(changeCurrentSectionPath('tempore-ut-id'))
 
-test('<ContentSection />', () => {
   render(<ContentSection />)
-  expect(screen.getAllByText(/Ipsa soluta consequuntur sint hic recusandae/)[0]).toBeInTheDocument()
-  expect(screen.getAllByText(/Quam voluptatum consequatur necessitatibus/)[0]).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: '1 Tempore ut id', exact: true })).toBeInTheDocument()
+  expect(screen.getByText(/Nesciunt possimus dolores molestias/)).toBeInTheDocument()
+  expect(screen.getByText(/Vero impedit quas fugiat facilis/)).toBeInTheDocument()
 })

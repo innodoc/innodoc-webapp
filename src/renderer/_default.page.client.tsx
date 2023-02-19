@@ -66,7 +66,7 @@ async function render({
 
   // Enable API mock
   if (import.meta.env.INNODOC_API_MOCK === 'true' && mockWorker === undefined) {
-    const makeWorker = (await import('../../tests/integration/mocks/browser')).default
+    const makeWorker = (await import('../../tests/mocks/browser')).default
     mockWorker = makeWorker(import.meta.env.INNODOC_APP_ROOT)
     await mockWorker.start({ onUnhandledRequest: 'bypass' })
   }

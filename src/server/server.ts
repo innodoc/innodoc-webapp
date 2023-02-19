@@ -37,7 +37,7 @@ async function setupViteServer(app: Express, config: ServerConfig) {
 
 async function enableApiMock() {
   if (process.env.INNODOC_API_MOCK === 'true' && process.env.INNODOC_APP_ROOT !== undefined) {
-    const { makeServer } = await import('../../tests/integration/mocks/node')
+    const { makeServer } = await import('../../tests/mocks/node')
     const mockServer = makeServer(process.env.INNODOC_APP_ROOT)
     mockServer.listen({ onUnhandledRequest: 'error' })
     console.log('Mock API server started...')

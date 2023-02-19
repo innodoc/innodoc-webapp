@@ -13,12 +13,12 @@ test('<ContentPage />', async () => {
   store.dispatch(changeCurrentPageSlug('home'))
 
   render(<ContentPage />)
-  expect(screen.getAllByText(/home page/i)[0]).toBeInTheDocument()
-  expect(screen.getAllByText(/this is the start of the journey/i)[0]).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: 'Home page', exact: true })).toBeInTheDocument()
+  expect(screen.getByText(/this is the start of the journey/i)).toBeInTheDocument()
 
-  const linkEl = screen.getAllByRole('link', { name: 'example link' }).at(0)
+  const linkEl = screen.getByRole('link', { name: 'example link' })
   expect(linkEl).toHaveAttribute('href', 'https://www.example.com/')
 
-  const linkElRef = screen.getAllByRole('link', { name: 'example link reference' }).at(0)
+  const linkElRef = screen.getByRole('link', { name: 'example link reference' })
   expect(linkElRef).toHaveAttribute('href', 'https://www.example.com/reference')
 })

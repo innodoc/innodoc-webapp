@@ -2,7 +2,7 @@ import type { LanguageCode } from 'iso-639-1'
 import { rest } from 'msw'
 import type { ResponseComposition, RestContext, RestRequest } from 'msw'
 
-import type { Content } from './fakeData/makeContent'
+import type { Content } from './fakeData/types'
 import getData from './getData'
 
 const getStringParam = (req: RestRequest, name: string) => {

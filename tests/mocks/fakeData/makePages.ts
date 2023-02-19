@@ -1,22 +1,22 @@
 import type { LanguageCode } from 'iso-639-1'
 
-import type { ApiPage } from '#types/entities/page'
+import makeContent from './makeContent'
+import type { Page } from './types'
+import { getDates, getTitlesSlug, range, seed } from './utils'
 
-import makeContent, { type Content } from './makeContent'
-import { getDates, getTitlesSlug, range } from './utils'
-
-type Page = [ApiPage, Content]
-
-const makePage = (id: number, courseId: number, locales: LanguageCode[]): Page => [
-  {
-    id,
-    courseId,
-    linked: ['footer'],
-    ...getTitlesSlug(locales),
-    ...getDates(),
-  },
-  makeContent(locales),
-]
+const makePage = (id: number, courseId: number, locales: LanguageCode[]): Page => {
+  seed(`page-${courseId}-${id}`)
+  return [
+    {
+      id,
+      courseId,
+      linked: ['footer'],
+      ...getTitlesSlug(locales),
+      ...getDates(),
+    },
+    makeContent(locales),
+  ]
+}
 
 const makePages = (courseId: number, locales: LanguageCode[]) => {
   const pages = range(6).map((i) => makePage(i, courseId, locales))

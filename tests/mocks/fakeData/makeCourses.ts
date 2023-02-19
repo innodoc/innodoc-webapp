@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker'
 import type { LanguageCode } from 'iso-639-1'
 
 import type { ApiCourse } from '#types/entities/course'
@@ -6,24 +5,27 @@ import type { ApiCourse } from '#types/entities/course'
 import makeContent from './makeContent'
 import makePages from './makePages'
 import makeSections from './makeSections'
-import { getDates } from './utils'
+import { getDates, seed } from './utils'
 
-const makeFooterContent = (locales: LanguageCode[]) =>
-  makeContent(locales, { headerDepth: 4, nodeCount: 2 })
+const makeFooterContent = (locales: LanguageCode[], seed: string) =>
+  makeContent(locales, { headerDepth: 4, nodeCount: 2, seed })
 
 const makeCourse = (course: ApiCourse, locales: LanguageCode[]) => ({
   data: course,
-  footerContent: { a: makeFooterContent(locales), b: makeFooterContent(locales) },
+  footerContent: {
+    a: makeFooterContent(locales, 'footer-a'),
+    b: makeFooterContent(locales, 'footer-b'),
+  },
   pages: makePages(course.id, locales),
   sections: makeSections(course.id, locales),
 })
 
-const makeCourses = (locales: LanguageCode[]) => {
-  faker.seed(161) // Consistent random results
-
-  const courses: ApiCourse[] = [
+const makeCoursesData = (locales: LanguageCode[]): ApiCourse[] => {
+  const courseId = 0
+  seed(`course-${courseId}`)
+  return [
     {
-      id: 0,
+      id: courseId,
       slug: 'testcourse',
       homeLink: '/page/home',
       locales,
@@ -39,6 +41,10 @@ const makeCourses = (locales: LanguageCode[]) => {
       ...getDates(),
     },
   ]
+}
+
+const makeCourses = (locales: LanguageCode[]) => {
+  const courses = makeCoursesData(locales)
 
   return courses.reduce<Record<number, ReturnType<typeof makeCourse>>>(
     (acc, course) => ({

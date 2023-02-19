@@ -12,6 +12,18 @@ export const capitalize = (words: string) => words.charAt(0).toUpperCase() + wor
 
 export const range = (number: number) => Array.from(Array(number).keys())
 
+/** faker seed from string or number */
+export function seed(seedVal: number | string) {
+  faker.seed(
+    typeof seedVal === 'number'
+      ? seedVal
+      : seedVal
+          .split('')
+          .map((c) => c.charCodeAt(0))
+          .reduce((acc, code) => acc + code, 0)
+  )
+}
+
 export function getDates() {
   const toDate = new Date('2023-01-01T00:00:00')
   const fromDate = new Date(toDate)
