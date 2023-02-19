@@ -26,6 +26,7 @@ function Toc() {
   return (
     <>
       <StyledTreeView
+        data-testid="sidebar-toc"
         defaultCollapseIcon={<Icon name="mdi:chevron-down" />}
         defaultExpandIcon={<Icon name="mdi:chevron-right" />}
         disableSelection
