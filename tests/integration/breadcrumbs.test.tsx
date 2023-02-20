@@ -13,31 +13,27 @@ test('<Breadcrumbs />', async () => {
 
   const homeLink = within(breadcrumbs).getByRole('link', {
     name: 'internalPages.home.title',
-    exact: true,
   })
   expect(homeLink).toHaveAttribute('href', '/en/pagetest/home')
 
   const firstLink = within(breadcrumbs).getByRole('link', {
     name: '3 Eaque inventore',
-    exact: true,
   })
   expect(firstLink).toHaveAttribute('href', '/en/sectiontest/eaque-inventore-non')
 
   const secondLink = within(breadcrumbs).getByRole('link', {
     name: '3.3 Sapiente similique',
-    exact: true,
   })
   expect(secondLink).toHaveAttribute(
     'href',
     '/en/sectiontest/eaque-inventore-non/sapiente-similique-id'
   )
 
-  const thirdLink = within(breadcrumbs).getByRole('link', { name: '3.3.1 Maxime sed', exact: true })
+  const thirdLink = within(breadcrumbs).getByRole('link', { name: '3.3.1 Maxime sed' })
   expect(thirdLink).toHaveAttribute(
     'href',
     '/en/sectiontest/eaque-inventore-non/sapiente-similique-id/maxime-sed-voluptatum'
   )
 
-  const sectionLabel = within(breadcrumbs).getByText('3.3.1.1 Mollitia neque', { exact: true })
-  expect(sectionLabel).toBeInTheDocument()
+  await within(breadcrumbs).findByText('3.3.1.1 Mollitia neque')
 })
