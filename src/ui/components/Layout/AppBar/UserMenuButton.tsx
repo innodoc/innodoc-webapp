@@ -5,16 +5,16 @@ import { useTranslation } from 'react-i18next'
 import Icon from '#ui/components/common/Icon'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import MenuItemCaption from '#ui/components/common/MenuItemCaption'
-import MenuItemsLanguages from '#ui/components/Layout/AppBar/MenuItemsLanguages'
 
 import MenuButton from './common/MenuButton'
+import MenuItemsLanguages from './LanguageMenuButton/MenuItemsLanguages'
 
-function UserMenuButton() {
+function UserMenuItems() {
   const { t } = useTranslation()
   const { mode, setMode } = useColorScheme()
 
   return (
-    <MenuButton iconName="mdi:account-circle" id="appbar-user-menu" title={t('nav.openUserMenu')}>
+    <>
       <MenuItem component={InternalLink} to="/login">
         <ListItemIcon>
           <Icon name="mdi:login" />
@@ -34,6 +34,16 @@ function UserMenuButton() {
           <ListItemText inset primary={t('nav.paletteMode.dark')} />
         </MenuItem>
       </Box>
+    </>
+  )
+}
+
+function UserMenuButton() {
+  const { t } = useTranslation()
+
+  return (
+    <MenuButton iconName="mdi:account-circle" id="appbar-user-menu" title={t('nav.openUserMenu')}>
+      {() => <UserMenuItems />}
     </MenuButton>
   )
 }

@@ -1,7 +1,7 @@
 import { AppBar as MuiAppBar, Box, Container, Toolbar } from '@mui/material'
 import { memo } from 'react'
 
-import LanguageMenuButton from './LanguageMenuButton'
+import LanguageMenuButton from './LanguageMenuButton/LanguageMenuButton'
 import Logo from './Logo'
 import MobileNavButton from './MobileNavButton'
 import NavMenu from './NavMenu'

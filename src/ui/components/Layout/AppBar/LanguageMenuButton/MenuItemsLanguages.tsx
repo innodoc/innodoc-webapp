@@ -6,7 +6,7 @@ import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
 import { changeLocale, selectLocale } from '#store/slices/uiSlice'
 import { useDispatch, useSelector } from '#ui/hooks/store'
 
-function MenuItemsLanguages({ inset }: MenuItemsLanguagesProps) {
+function MenuItemsLanguages({ closeMenu = () => undefined, inset }: MenuItemsLanguagesProps) {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
@@ -19,19 +19,23 @@ function MenuItemsLanguages({ inset }: MenuItemsLanguagesProps) {
 
   return (
     <>
-      {course.locales.map((locale) => (
-        <MenuItem
-          key={locale}
-          onClick={() => dispatch(changeLocale(locale))}
-          selected={locale === currentLocale}
-        >
-          <ListItemText inset={inset}>{t(`languages.${locale}`)}</ListItemText>
-        </MenuItem>
-      ))}
+      {course.locales.map((locale) => {
+        const handleClick = () => {
+          dispatch(changeLocale(locale))
+          closeMenu()
+        }
+        return (
+          <MenuItem key={locale} onClick={handleClick} selected={locale === currentLocale}>
+            <ListItemText inset={inset}>{t(`languages.${locale}`)}</ListItemText>
+          </MenuItem>
+        )
+      })}
     </>
   )
 }
 
-type MenuItemsLanguagesProps = Pick<ComponentProps<typeof ListItemText>, 'inset'>
+interface MenuItemsLanguagesProps extends Pick<ComponentProps<typeof ListItemText>, 'inset'> {
+  closeMenu?: () => void
+}
 
 export default MenuItemsLanguages

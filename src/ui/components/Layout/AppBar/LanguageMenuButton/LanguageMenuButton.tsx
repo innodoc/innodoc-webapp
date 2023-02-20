@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
-import MenuButton from './common/MenuButton'
+import MenuButton from '#ui/components/Layout/AppBar/common/MenuButton'
+
 import MenuItemsLanguages from './MenuItemsLanguages'
 
 function LanguageMenuButton() {
@@ -8,7 +9,7 @@ function LanguageMenuButton() {
 
   return (
     <MenuButton iconName="mdi:translate" id="appbar-language-menu" title={t('nav.language')}>
-      <MenuItemsLanguages />
+      {(closeMenu) => <MenuItemsLanguages closeMenu={closeMenu} />}
     </MenuButton>
   )
 }

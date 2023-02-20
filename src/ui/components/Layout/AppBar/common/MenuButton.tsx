@@ -5,12 +5,13 @@ import Icon, { type IconProps } from '#ui/components/common/Icon'
 
 function MenuButton({ children, iconName, id, title }: MenuButtonProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const onOpenMenu = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)
+  const handleClick = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)
+  const handleClose = () => setAnchorEl(null)
 
   return (
     <Box sx={{ flexGrow: 0, ml: 1 }}>
       <Tooltip arrow title={title}>
-        <IconButton aria-controls={id} aria-label={title} color="inherit" onClick={onOpenMenu}>
+        <IconButton aria-controls={id} aria-label={title} color="inherit" onClick={handleClick}>
           <Icon name={iconName} />
         </IconButton>
       </Tooltip>
@@ -24,21 +25,21 @@ function MenuButton({ children, iconName, id, title }: MenuButtonProps) {
         keepMounted
         MenuListProps={{ dense: true }}
         open={Boolean(anchorEl)}
-        onClose={() => setAnchorEl(null)}
+        onClose={handleClose}
         sx={{ mt: (theme) => theme.spacing(5) }}
         transformOrigin={{
           vertical: 'top',
           horizontal: 'right',
         }}
       >
-        {children}
+        {children(handleClose)}
       </Menu>
     </Box>
   )
 }
 
 interface MenuButtonProps {
-  children: ReactNode
+  children: (closeMenu: () => void) => ReactNode
   iconName: IconProps['name']
   id: string
   title: string
