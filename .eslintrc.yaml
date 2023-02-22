@@ -65,7 +65,9 @@ overrides:
               message: Use `#ui/components/common/Icon` instead.
 
       # Consistent use of type imports
-      '@typescript-eslint/consistent-type-imports': error
+      '@typescript-eslint/consistent-type-imports':
+        - error
+        - disallowTypeAnnotations: false
 
       # TypeScript provides the same checks
       # https://typescript-eslint.io/docs/linting/troubleshooting#eslint-plugin-import

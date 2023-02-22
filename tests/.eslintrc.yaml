@@ -20,6 +20,7 @@ rules:
   jest/require-top-level-describe: off
   jest/valid-expect: error
   filenames/match-regex: off
+  '@typescript-eslint/unbound-method': off
 
 settings:
   jest:

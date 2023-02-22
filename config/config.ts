@@ -37,6 +37,7 @@ function testConfig(testMode: string) {
     globals: true,
     include: [`tests/${testMode}/**/*.test.{ts,tsx}`],
     sequence: { hooks: 'stack' },
+    mockReset: true,
   }
 
   if (testMode === 'integration') {

@@ -5,7 +5,7 @@ import { API_PREFIX } from '#routes'
 
 import apiRouter from './api/apiRouter'
 import config, { type ServerConfig } from './config'
-import frontendRouter from './frontendRouter'
+import frontendRouter from './frontendRouter/frontendRouter'
 import { isErrnoException } from './utils'
 
 void startServer()
@@ -53,14 +53,12 @@ async function startServer() {
   // Determine user locale from request headers
   app.use(localeMiddleware())
 
-  if (config.isProduction) {
-    await setupServeStatic(app, config)
-  }
+  if (config.isProduction) await setupServeStatic(app, config)
 
   await setupViteServer(app, config)
 
   app.use(API_PREFIX, apiRouter(config))
-  app.use(frontendRouter)
+  app.use(frontendRouter(config))
 
   app.listen({ host: config.host, port: config.port })
   console.log(`Server running at http://${config.host}:${config.port}`)

@@ -15,7 +15,7 @@ export const BUILTIN_PAGES: BuiltinPages = {
   },
 }
 
-export type BuiltinPagesKey = typeof BUILTIN_PAGES_KEYS[number]
+export type BuiltinPagesKey = (typeof BUILTIN_PAGES_KEYS)[number]
 type BuiltinPages = Record<BuiltinPagesKey, BuiltinPage>
 interface BuiltinPage {
   /** URL path */
@@ -53,6 +53,9 @@ export const SLUG_RE = '[a-z0-9]+(?:-[a-z0-9]+)*'
 
 /** Page/section/course slug regex (Posix variant for PostgreSQL) */
 export const SLUG_RE_POSIX = SLUG_RE.replace('(?:', '(')
+
+/** Extract course slug from subdomain/url */
+export const COURSE_SLUG_MODES = ['SUBDOMAIN', 'URL', 'DISABLE'] as const
 
 /** Props to be passed to client */
 export const passToClientProps = ['courseId', 'locale', 'preloadedState', 'pageProps'] as const
