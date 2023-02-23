@@ -31,6 +31,22 @@ const courseId = 0
 const { initiate: getContent } = fragments.endpoints.getFragmentContent
 
 beforeEach(async () => {
+  // window.match is not implemented in jsdom
+  // https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: vi.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(), // deprecated
+      removeListener: vi.fn(), // deprecated
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    })),
+  })
+
   store = makeStore()
   await store.dispatch(courses.endpoints.getCourse.initiate({ courseId }))
   store.dispatch(changeCourseId(courseId))
