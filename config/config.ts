@@ -1,7 +1,6 @@
 import path from 'path'
 
 import react from '@vitejs/plugin-react'
-import dotenv from 'dotenv'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { cjsInterop } from 'vite-plugin-cjs-interop'
 import ssr from 'vite-plugin-ssr/plugin'
@@ -9,21 +8,13 @@ import { type InlineConfig as VitestInlineConfig } from 'vitest'
 import { type UserConfigExport } from 'vitest/config'
 
 import { imports } from '../package.json'
+import loadDotEnv from '../src/utils/loadDotEnv'
 
 import buildData from './buildData'
 
-function loadDotEnv() {
-  const dotEnvFilepath = path.resolve(
-    __dirname,
-    '..',
-    process.env.VITEST_MODE ? '.env.test' : '.env'
-  )
-  const { error } = dotenv.config({ path: dotEnvFilepath })
-  if (error) throw error
-}
+const projectDir = path.resolve(__dirname, '..')
 
 /* Use package.json import mapping as source of truth for aliases */
-const projectDir = path.resolve(__dirname, '..')
 const alias = Object.fromEntries(
   Object.entries(imports).map(([key, val]) => [
     key.replace('/*', ''),
@@ -50,7 +41,7 @@ function testConfig(testMode: string) {
 
 /* vite configuration */
 async function config() {
-  loadDotEnv()
+  loadDotEnv(projectDir)
 
   const testMode = process.env.VITEST_MODE
 

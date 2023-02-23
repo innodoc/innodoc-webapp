@@ -1,16 +1,13 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-import dotenv from 'dotenv'
-
 import { COURSE_SLUG_MODES } from '#constants'
+import loadDotEnv from '#utils/loadDotEnv'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const rootDir = path.resolve(__dirname, '..', '..')
 
-// Load .env config
-// TODO: parse .env.test and put into helper function that's used in vite config
-dotenv.config({ path: path.resolve(rootDir, '.env') })
+loadDotEnv(path.resolve(rootDir))
 
 type CourseSlugMode = (typeof COURSE_SLUG_MODES)[number]
 
