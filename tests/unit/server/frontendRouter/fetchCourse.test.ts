@@ -1,21 +1,20 @@
 import type { NextFunction, Request, Response } from 'express'
 
-import type { ServerConfig } from '#server/config'
 import type { ApiCourse } from '#types/entities/course'
 
 async function setupMocks(courseSlugMode: string, findsCourse = true) {
   vi.resetModules()
 
+  vi.doMock('#server/config', () => ({ default: { courseSlugMode, defaultCourseSlug: 'default' } }))
+
   const mockCourse = { slug: 'innodoc' } as ApiCourse
   const getCourseMock = vi.fn().mockResolvedValueOnce(findsCourse ? mockCourse : undefined)
-  vi.doUnmock('#server/database/queries/courses')
   vi.doMock('#server/database/queries/courses', () => ({ getCourse: getCourseMock }))
 
-  const config = { defaultCourseSlug: 'default', courseSlugMode } as ServerConfig
-  const makeFetchCourse = (await import('#server/frontendRouter/fetchCourse')).default
+  const fetchCourse_ = (await import('#server/frontendRouter/fetchCourse')).default
   const res = { sendStatus: vi.fn() } as unknown as Response
   const next = vi.fn()
-  const fetchCourse = makeFetchCourse(config) as (
+  const fetchCourse = fetchCourse_ as (
     req: Request,
     res: Response,
     next: NextFunction
@@ -23,6 +22,11 @@ async function setupMocks(courseSlugMode: string, findsCourse = true) {
 
   return { fetchCourse, getCourseMock, mockCourse, next, res }
 }
+
+afterEach(() => {
+  vi.doUnmock('#server/config')
+  vi.doUnmock('#server/database/queries/courses')
+})
 
 test('fetchCourse (SUBDOMAIN)', async () => {
   const req = { headers: { host: 'innodoc.example.com' }, urlWithoutLocale: '/page/bar' } as Request

@@ -27,9 +27,13 @@ if (process.env.COURSE_SLUG_MODE === undefined)
 if (process.env.DEFAULT_COURSE_SLUG === undefined)
   throw new Error('You need to set the env variable DEFAULT_COURSE_SLUG.')
 
+if (process.env.INNODOC_APP_ROOT === undefined)
+  throw new Error('You need to set the env variable INNODOC_APP_ROOT.')
+
 const config: ServerConfig = {
   host: process.env.SERVER_HOST || 'localhost',
   port: parseInt(process.env.SERVER_PORT || '3000'),
+  appRoot: process.env.INNODOC_APP_ROOT,
   isProduction: process.env.NODE_ENV === 'production',
   rootDir,
   distDir: path.join(rootDir, 'dist'),
@@ -39,6 +43,7 @@ const config: ServerConfig = {
     ? process.env.COURSE_SLUG_MODE
     : 'DISABLE',
   defaultCourseSlug: process.env.DEFAULT_COURSE_SLUG,
+  enableMockApi: process.env.INNODOC_API_MOCK === 'true',
 }
 
 export interface ServerConfig {
@@ -47,6 +52,9 @@ export interface ServerConfig {
 
   /** Server port */
   port: number
+
+  /** Application base URL */
+  appRoot: string
 
   /** Is production environment */
   isProduction: boolean
@@ -68,6 +76,9 @@ export interface ServerConfig {
 
   /** Default course slug */
   defaultCourseSlug: string
+
+  /** Enable mock API */
+  enableMockApi: boolean
 }
 
 export default config

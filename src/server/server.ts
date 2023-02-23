@@ -4,13 +4,13 @@ import localeMiddleware from 'locale'
 import { API_PREFIX } from '#routes'
 
 import apiRouter from './api/apiRouter'
-import config, { type ServerConfig } from './config'
+import config from './config'
 import frontendRouter from './frontendRouter/frontendRouter'
 import { isErrnoException } from './utils'
 
 void startServer()
 
-async function setupServeStatic(app: Express, config: ServerConfig) {
+async function setupServeStatic(app: Express) {
   const sirv = (await import('sirv')).default
 
   try {
@@ -25,7 +25,7 @@ async function setupServeStatic(app: Express, config: ServerConfig) {
   }
 }
 
-async function setupViteServer(app: Express, config: ServerConfig) {
+async function setupViteServer(app: Express) {
   const vite = await import('vite')
 
   const viteServer = await vite.createServer({
@@ -36,29 +36,24 @@ async function setupViteServer(app: Express, config: ServerConfig) {
 }
 
 async function enableApiMock() {
-  if (process.env.INNODOC_API_MOCK === 'true' && process.env.INNODOC_APP_ROOT !== undefined) {
-    const { makeServer } = await import('../../tests/mocks/node')
-    const mockServer = makeServer(process.env.INNODOC_APP_ROOT)
-    mockServer.listen({ onUnhandledRequest: 'error' })
-    console.log('Mock API server started...')
-  }
+  const { makeServer } = await import('../../tests/mocks/node')
+  const mockServer = makeServer(config.appRoot)
+  mockServer.listen({ onUnhandledRequest: 'error' })
+  console.log('Mock API server started...')
 }
 
 async function startServer() {
-  // Enable API mock
-  await enableApiMock()
-
   const app = express()
 
-  // Determine user locale from request headers
   app.use(localeMiddleware())
+  if (config.isProduction) await setupServeStatic(app)
+  await setupViteServer(app)
 
-  if (config.isProduction) await setupServeStatic(app, config)
+  // Enable API
+  if (config.enableMockApi) await enableApiMock()
+  else app.use(API_PREFIX, apiRouter)
 
-  await setupViteServer(app, config)
-
-  app.use(API_PREFIX, apiRouter(config))
-  app.use(frontendRouter(config))
+  app.use(frontendRouter)
 
   app.listen({ host: config.host, port: config.port })
   console.log(`Server running at http://${config.host}:${config.port}`)
