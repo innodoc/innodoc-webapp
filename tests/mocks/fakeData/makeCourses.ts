@@ -1,5 +1,6 @@
 import type { LanguageCode } from 'iso-639-1'
 
+import { FRAGMENT_TYPES } from '#constants'
 import type { ApiCourse } from '#types/entities/course'
 
 import makeContent from './makeContent'
@@ -12,10 +13,9 @@ const makeFooterContent = (locales: LanguageCode[], seed: string) =>
 
 const makeCourse = (course: ApiCourse, locales: LanguageCode[]) => ({
   data: course,
-  footerContent: {
-    a: makeFooterContent(locales, 'footer-a'),
-    b: makeFooterContent(locales, 'footer-b'),
-  },
+  footerContent: Object.fromEntries(
+    FRAGMENT_TYPES.map((fragmentType) => [fragmentType, makeFooterContent(locales, fragmentType)])
+  ),
   pages: makePages(course.id, locales),
   sections: makeSections(course.id, locales),
 })

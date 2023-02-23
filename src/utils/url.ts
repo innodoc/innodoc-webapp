@@ -1,7 +1,7 @@
 import ISO6391, { type LanguageCode } from 'iso-639-1'
 import { compile } from 'path-to-regexp'
 
-import routes, { type RoutesDefinition } from '#routes'
+import routes, { type RouteName } from '#routes'
 import type { TranslatedPage } from '#types/entities/page'
 
 /** Split locale from URL, e.g. `/en/about` => `en`, `/about`. */
@@ -35,7 +35,7 @@ const compilers = Object.fromEntries(
 )
 
 /** Generate route URL path from paramers */
-function getUrl<Args extends object>(name: keyof RoutesDefinition, params: Args) {
+function getUrl<Args extends object>(name: RouteName, params: Args) {
   // Convert number values to string
   const paramsAsStrings = Object.fromEntries(
     Object.entries(params).map(([key, val]) => [

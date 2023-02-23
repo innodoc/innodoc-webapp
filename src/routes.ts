@@ -10,7 +10,7 @@ const LOCALE_RE = '[a-z]{2}'
 /** Number regex */
 const NUMBER_RE = '\\d+'
 
-const routes: RoutesDefinition = {
+const routes = {
   // Course
   'api/course': `${API_COURSE_PREFIX}/:courseId(${NUMBER_RE})`,
 
@@ -26,7 +26,6 @@ const routes: RoutesDefinition = {
   'api/course/fragment/content': `${API_COURSE_PREFIX}/:courseId(${NUMBER_RE})/fragment/:locale(${LOCALE_RE})/:fragmentType(${SLUG_RE})`,
 }
 
-/** Route definition */
-export type RoutesDefinition = Record<string, string>
+export type RouteName = keyof typeof routes
 
 export default routes

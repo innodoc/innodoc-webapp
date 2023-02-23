@@ -4,6 +4,8 @@ import type { DbCourse } from '#types/entities/course'
 import type { DbPage } from '#types/entities/page'
 import type { DbSection } from '#types/entities/section'
 
+// TODO: is this used? handle seeding db for e2e tests
+
 export async function seed(knex: Knex) {
   try {
     await knex.transaction(async (trx) => {

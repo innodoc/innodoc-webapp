@@ -2,7 +2,7 @@ import { type RequestHandler, Router } from 'express'
 import { param, validationResult } from 'express-validator'
 import type { LanguageCode } from 'iso-639-1'
 
-import { API_COURSE_PREFIX, type RoutesDefinition } from '#routes'
+import { API_COURSE_PREFIX, type RouteName } from '#routes'
 import { getCourse } from '#server/database/queries/courses'
 import { getFragmentContent } from '#server/database/queries/fragments'
 import { getCoursePages, getPageContent } from '#server/database/queries/pages'
@@ -11,7 +11,7 @@ import { getRoutePath } from '#server/utils'
 import type { FragmentType } from '#types/entities/base'
 import { isFragmentType } from '#utils/content'
 
-const p = (path: keyof RoutesDefinition) => getRoutePath(path, API_COURSE_PREFIX)
+const p = (name: RouteName) => getRoutePath(name, API_COURSE_PREFIX)
 
 const checkErrors: RequestHandler = (req, res, next) => {
   const errors = validationResult(req)

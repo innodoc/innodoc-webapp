@@ -1,4 +1,4 @@
-import routes, { type RoutesDefinition } from '#routes'
+import routes, { type RouteName } from '#routes'
 
 interface ArbitraryObject {
   [key: string]: unknown
@@ -14,7 +14,7 @@ export function isErrnoException(error: unknown): error is NodeJS.ErrnoException
 }
 
 /** Get URL path for route handlers */
-export function getRoutePath(name: keyof RoutesDefinition, prefix?: string) {
+export function getRoutePath(name: RouteName, prefix?: string) {
   const pattern = routes[name]
   if (pattern === undefined) {
     throw new Error(`Unknown route requested: ${name}`)

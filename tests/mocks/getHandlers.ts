@@ -2,6 +2,9 @@ import type { LanguageCode } from 'iso-639-1'
 import { rest } from 'msw'
 import type { ResponseComposition, RestContext, RestRequest } from 'msw'
 
+import routes, { type RouteName } from '#routes'
+import { isFragmentType } from '#utils/content'
+
 import type { Content } from './fakeData/types'
 import getData from './getData'
 
@@ -26,40 +29,46 @@ const getContent = (
 }
 
 function getHandlers(baseUrl: string) {
-  const base = (path: string) => new URL(path, baseUrl).toString()
+  const makePath = (name: RouteName) => {
+    // Remove trailing `/` from baseUrl
+    const baseUrlTrimmed = baseUrl.endsWith('/') ? baseUrl.slice(0, baseUrl.length - 1) : baseUrl
+    return (
+      `${baseUrlTrimmed}${routes[name]}`
+        // remove regexp patterns as msw doesn't seem to support them
+        .replace(/\([^/]+/g, '')
+    )
+  }
 
-  const courses = getData()
-
-  const getCourse = (req: RestRequest) => courses[getIntParam(req, 'courseId')]
+  const getCourse = (req: RestRequest) => getData()[getIntParam(req, 'courseId')]
 
   const handlers = [
-    rest.get(base('/api/course/:courseId'), (req, res, ctx) =>
+    // Course
+    rest.get(makePath('api/course'), (req, res, ctx) =>
       res(ctx.status(200), ctx.json(getCourse(req).data))
     ),
 
-    rest.get(base('/api/course/:courseId/pages'), (req, res, ctx) =>
+    // Page
+    rest.get(makePath('api/course/pages'), (req, res, ctx) =>
       res(ctx.status(200), ctx.json(Object.values(getCourse(req).pages).map((page) => page[0])))
     ),
-
-    rest.get(base('/api/course/:courseId/sections'), (req, res, ctx) =>
-      res(ctx.status(200), ctx.json(Object.values(getCourse(req).sections).map((sec) => sec[0])))
-    ),
-
-    rest.get(base('/api/course/:courseId/fragment/:locale/footer-a'), (req, res, ctx) =>
-      getContent(req, res, ctx, getCourse(req).footerContent.a)
-    ),
-
-    rest.get(base('/api/course/:courseId/fragment/:locale/footer-b'), (req, res, ctx) =>
-      getContent(req, res, ctx, getCourse(req).footerContent.b)
-    ),
-
-    rest.get(base('/api/course/:courseId/page/:locale/:pageId'), (req, res, ctx) =>
+    rest.get(makePath('api/course/page/content'), (req, res, ctx) =>
       getContent(req, res, ctx, getCourse(req).pages[getIntParam(req, 'pageId')][1])
     ),
 
-    rest.get(base('/api/course/:courseId/section/:locale/:sectionId'), (req, res, ctx) =>
+    // Section
+    rest.get(makePath('api/course/sections'), (req, res, ctx) =>
+      res(ctx.status(200), ctx.json(Object.values(getCourse(req).sections).map((sec) => sec[0])))
+    ),
+    rest.get(makePath('api/course/section/content'), (req, res, ctx) =>
       getContent(req, res, ctx, getCourse(req).sections[getIntParam(req, 'sectionId')][1])
     ),
+
+    // Fragment
+    rest.get(makePath('api/course/fragment/content'), (req, res, ctx) => {
+      const fragmentType = getStringParam(req, 'fragmentType')
+      if (!isFragmentType(fragmentType)) throw new Error(`Unknown fragment type: ${fragmentType}`)
+      return getContent(req, res, ctx, getCourse(req).footerContent[fragmentType])
+    }),
   ]
 
   return handlers
