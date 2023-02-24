@@ -2,8 +2,8 @@ import { createSelector } from '@reduxjs/toolkit'
 import type { LanguageCode } from 'iso-639-1'
 import { useMemo } from 'react'
 
+import { selectCourseId, selectRouteInfo } from '#store/slices/appSlice'
 import { useGetCourseQuery } from '#store/slices/entities/courses'
-import { selectCourseId, selectLocale } from '#store/slices/uiSlice'
 import { defaultTranslatableFields } from '#types/entities/base'
 import type { ApiCourse } from '#types/entities/course'
 import { useSelector } from '#ui/hooks/store'
@@ -11,7 +11,7 @@ import { translateEntity } from '#utils/i18n'
 
 /** Return current course */
 function useSelectCurrentCourse() {
-  const locale = useSelector(selectLocale)
+  const { locale } = useSelector(selectRouteInfo)
   const courseId = useSelector(selectCourseId)
 
   const selectCourse = useMemo(

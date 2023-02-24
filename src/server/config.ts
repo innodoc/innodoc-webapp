@@ -1,15 +1,18 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-import { COURSE_SLUG_MODES } from '#constants'
+import {
+  COURSE_SLUG_MODES,
+  DEFAULT_PAGE_PATH_PREFIX,
+  DEFAULT_SECTION_PATH_PREFIX,
+} from '#constants'
+import type { CourseSlugMode } from '#types/common'
 import loadDotEnv from '#utils/loadDotEnv'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const rootDir = path.resolve(__dirname, '..', '..')
 
 loadDotEnv(path.resolve(rootDir))
-
-type CourseSlugMode = (typeof COURSE_SLUG_MODES)[number]
 
 function isCourseSlugMode(mode: string | undefined): mode is CourseSlugMode {
   return mode !== undefined && COURSE_SLUG_MODES.includes(mode as CourseSlugMode)
@@ -18,11 +21,11 @@ function isCourseSlugMode(mode: string | undefined): mode is CourseSlugMode {
 if (process.env.DB_CONNECTION === undefined)
   throw new Error('You need to set the env variable DB_CONNECTION.')
 
-if (process.env.COURSE_SLUG_MODE === undefined)
-  throw new Error('You need to set the env variable COURSE_SLUG_MODE.')
+if (process.env.INNODOC_COURSE_SLUG_MODE === undefined)
+  throw new Error('You need to set the env variable INNODOC_COURSE_SLUG_MODE.')
 
-if (process.env.DEFAULT_COURSE_SLUG === undefined)
-  throw new Error('You need to set the env variable DEFAULT_COURSE_SLUG.')
+if (process.env.INNODOC_DEFAULT_COURSE_SLUG === undefined)
+  throw new Error('You need to set the env variable INNODOC_DEFAULT_COURSE_SLUG.')
 
 if (process.env.INNODOC_APP_ROOT === undefined)
   throw new Error('You need to set the env variable INNODOC_APP_ROOT.')
@@ -36,11 +39,13 @@ const config: ServerConfig = {
   distDir: path.join(rootDir, 'dist'),
   dbConnection: process.env.DB_CONNECTION,
   dbDebug: process.env.DB_DEBUG === 'true',
-  courseSlugMode: isCourseSlugMode(process.env.COURSE_SLUG_MODE)
-    ? process.env.COURSE_SLUG_MODE
+  courseSlugMode: isCourseSlugMode(process.env.INNODOC_COURSE_SLUG_MODE)
+    ? process.env.INNODOC_COURSE_SLUG_MODE
     : 'DISABLE',
-  defaultCourseSlug: process.env.DEFAULT_COURSE_SLUG,
+  defaultCourseSlug: process.env.INNODOC_DEFAULT_COURSE_SLUG,
   enableMockApi: process.env.INNODOC_API_MOCK === 'true',
+  pagePathPrefix: process.env.INNODOC_PAGE_PATH_PREFIX ?? DEFAULT_PAGE_PATH_PREFIX,
+  sectionPathPrefix: process.env.INNODOC_SECTION_PATH_PREFIX ?? DEFAULT_SECTION_PATH_PREFIX,
 }
 
 export interface ServerConfig {
@@ -76,6 +81,12 @@ export interface ServerConfig {
 
   /** Enable mock API */
   enableMockApi: boolean
+
+  /** Page path prefix */
+  pagePathPrefix: string
+
+  /** Section path prefix */
+  sectionPathPrefix: string
 }
 
 export default config

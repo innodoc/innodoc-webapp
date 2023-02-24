@@ -1,11 +1,11 @@
 import express, { type Express } from 'express'
 import localeMiddleware from 'locale'
 
-import { API_PREFIX } from '#routes'
+import { API_PREFIX } from '#constants'
 
 import apiRouter from './api/apiRouter'
 import config from './config'
-import frontendRouter from './frontendRouter/frontendRouter'
+import frontendHandler from './frontendHandler'
 import { isErrnoException } from './utils'
 
 void startServer()
@@ -53,7 +53,10 @@ async function startServer() {
   if (config.enableMockApi) await enableApiMock()
   else app.use(API_PREFIX, apiRouter)
 
-  app.use(frontendRouter)
+  // Serve frontend
+  app.use(frontendHandler)
+
+  // TODO: Add error handler
 
   app.listen({ host: config.host, port: config.port })
   console.log(`Server running at http://${config.host}:${config.port}`)

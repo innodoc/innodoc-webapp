@@ -1,8 +1,13 @@
 import ISO6391, { type LanguageCode } from 'iso-639-1'
-import { compile } from 'path-to-regexp'
 
-import routes, { type RouteName } from '#routes'
+import getRoutes from '#routes/getRoutes'
 import type { TranslatedPage } from '#types/entities/page'
+
+/** Locale info extracted from URL */
+interface ExtractedLocaleInfo {
+  locale: LanguageCode
+  urlWithoutLocale: string
+}
 
 /** Split locale from URL, e.g. `/en/about` => `en`, `/about`. */
 function extractLocale(url: string, defaultLocale?: LanguageCode): ExtractedLocaleInfo {
@@ -21,21 +26,16 @@ function extractLocale(url: string, defaultLocale?: LanguageCode): ExtractedLoca
 }
 
 /** Format URL using locale, hash and base URL */
+// TODO remove
 function formatUrl(to: string, locale?: LanguageCode, hash?: string, base = '/') {
   const href = `${base}${locale ?? ''}${to}`
   return hash ? `${href}#${hash}` : href
 }
 
-/** URL compilers for all routes */
-const compilers = Object.fromEntries(
-  Object.entries(routes).map(([name, pattern]) => [
-    name,
-    compile(pattern, { encode: encodeURIComponent }),
-  ])
-)
-
 /** Generate route URL path from paramers */
-function getUrl<Args extends object>(name: RouteName, params: Args) {
+function getUrl<Args extends object>(name: string, params: Args) {
+  const { generateUrl } = getRoutes()
+
   // Convert number values to string
   const paramsAsStrings = Object.fromEntries(
     Object.entries(params).map(([key, val]) => [
@@ -44,31 +44,23 @@ function getUrl<Args extends object>(name: RouteName, params: Args) {
     ])
   )
 
-  // Params to route url
-  return compilers[name](paramsAsStrings)
+  // TODO: add hostname in domain path mode?
+
+  return generateUrl(name, paramsAsStrings)
 }
 
 /** Generate page URL */
+// TODO remove
 function getPageUrl(pageSlug: TranslatedPage['slug']) {
   return `/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/${pageSlug}`
 }
 
-/** Generate section URL */
-function getSectionUrl(sectionPath: string) {
-  return `/${import.meta.env.INNODOC_SECTION_PATH_PREFIX}/${sectionPath}`
-}
-
 /** Replace generic with custom path prefixes */
+// TODO should not be needed anymore
 function replacePathPrefixes(url: string) {
   return url
     .replace('/page/', `/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/`)
     .replace('/section/', `/${import.meta.env.INNODOC_SECTION_PATH_PREFIX}/`)
 }
 
-/** Locale info extracted from URL */
-interface ExtractedLocaleInfo {
-  locale: LanguageCode
-  urlWithoutLocale: string
-}
-
-export { extractLocale, formatUrl, getUrl, getPageUrl, getSectionUrl, replacePathPrefixes }
+export { extractLocale, formatUrl, getPageUrl, getUrl, replacePathPrefixes }

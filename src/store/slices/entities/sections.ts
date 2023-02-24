@@ -5,14 +5,14 @@ import type { ApiCourse } from '#types/entities/course'
 import type { ApiSection } from '#types/entities/section'
 import { getUrl } from '#utils/url'
 
-import type { CourseNameQueryArg } from './courses'
+import type { CourseIdQueryArg } from './courses'
 
 export const sections = contentApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Fetch course sections */
-    getCourseSections: builder.query<ApiSection[], CourseNameQueryArg>({
+    getCourseSections: builder.query<ApiSection[], CourseIdQueryArg>({
       query: (args) => {
-        return getUrl('api/course/sections', args)
+        return getUrl('api:course:sections', args)
       },
     }),
 
@@ -20,7 +20,7 @@ export const sections = contentApi.injectEndpoints({
     getSectionContent: builder.query<string, SectionContentFetchArgs>({
       query: (args) => ({
         responseHandler: 'text',
-        url: getUrl('api/course/section/content', args),
+        url: getUrl('api:course:section:content', args),
       }),
     }),
   }),

@@ -151,7 +151,7 @@
     "#markdown/*": "./src/markdown/*",
     "#pages/*": "./src/pages/*",
     "#renderer/*": "./src/renderer/*",
-    "#routes": "./src/routes.ts",
+    "#routes/*": "./src/routes/*",
     "#server/*": "./src/server/*",
     "#store/*": "./src/store/*",
     "#test-utils": "./tests/integration/utils.tsx",

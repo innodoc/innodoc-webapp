@@ -11,6 +11,7 @@ const ContentLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLin
   { to, ...other },
   ref
 ) {
+  // TODO: change link syntax to section:foo/bar
   if (to.startsWith('/section/')) {
     const sectionPath = to.replace(/^\/section\//, '')
     return <SectionLink ref={ref} sectionPath={sectionPath} {...other} />

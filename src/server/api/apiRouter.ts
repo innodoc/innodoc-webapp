@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import { COURSE_PREFIX } from '#routes'
+import { COURSE_PREFIX } from '#constants'
 import config from '#server/config'
 
 import courseRouter from './courseRouter'

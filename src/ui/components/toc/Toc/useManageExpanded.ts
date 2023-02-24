@@ -1,11 +1,11 @@
 import { type SyntheticEvent, useCallback, useEffect, useRef, useState, useMemo } from 'react'
 
-import { selectCurrentSectionPath } from '#store/slices/uiSlice'
+import { selectRouteInfo } from '#store/slices/appSlice'
 import { useSelector } from '#ui/hooks/store'
 
 /** Return array of expanded section paths/node IDs (including parents) */
-function getExpandedWithParents(sectionPath: string | null) {
-  if (sectionPath === null) return []
+function getExpandedWithParents(sectionPath?: string) {
+  if (sectionPath === undefined) return []
   const parts = sectionPath.split('/')
   const parents = parts
     .slice(0, parts.length - 1)
@@ -16,7 +16,7 @@ function getExpandedWithParents(sectionPath: string | null) {
 const emptySelected: string[] = []
 
 function useManageExpanded() {
-  const currentSectionPath = useSelector(selectCurrentSectionPath)
+  const { sectionPath: currentSectionPath } = useSelector(selectRouteInfo)
 
   // Only add current keys if section change happened, otherwise it would be impossible
   // to close a current subtree.

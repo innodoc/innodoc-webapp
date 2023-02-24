@@ -2,6 +2,7 @@ import { Button, type ButtonProps, Stack, styled } from '@mui/material'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import useGenerateUrl from '#routes/useGenerateUrl'
 import useSelectLinkedPages from '#store/hooks/useSelectLinkedPages'
 import Icon from '#ui/components/common/Icon'
 import InternalLink from '#ui/components/common/link/InternalLink'
@@ -29,6 +30,7 @@ const StyledNavButton = styled(NavButton)(({ theme }) => ({
 })) as typeof Button
 
 function NavMenu() {
+  const generateUrl = useGenerateUrl()
   const { t } = useTranslation()
   const { pages } = useSelectLinkedPages('nav')
 
@@ -53,7 +55,12 @@ function NavMenu() {
         </StyledNavButton>
       ))}
       {otherPagesNav.map(({ icon, title, to }) => (
-        <StyledNavButton component={InternalLink} key={to} startIcon={icon} to={to}>
+        <StyledNavButton
+          component={InternalLink}
+          key={to}
+          startIcon={icon}
+          to={generateUrl({ routeName: to })}
+        >
           {t(title)}
         </StyledNavButton>
       ))}

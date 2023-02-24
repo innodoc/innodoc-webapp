@@ -9,10 +9,11 @@ import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '#constants'
+import useGenerateUrl from '#routes/useGenerateUrl'
 import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
 import useSelectLinkedPages from '#store/hooks/useSelectLinkedPages'
+import { selectRouteInfo } from '#store/slices/appSlice'
 import { useGetFragmentContentQuery } from '#store/slices/entities/fragments'
-import { selectLocale } from '#store/slices/uiSlice'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
 import MarkdownNode from '#ui/components/content/mdast/MarkdownNode'
@@ -56,11 +57,12 @@ const StyledLink = styled(Link)(({ theme }) => ({
 })) as typeof Link
 
 function Footer() {
+  const generateUrl = useGenerateUrl()
   const { t } = useTranslation()
   const { mode } = useColorScheme()
   const { pages: coursePages } = useSelectLinkedPages('footer')
   const { course } = useSelectCurrentCourse()
-  const locale = useSelector(selectLocale)
+  const { locale } = useSelector(selectRouteInfo)
   const { data: contentA } = useGetFragmentContentQuery(
     {
       courseId: course?.id ?? 0,
@@ -81,7 +83,7 @@ function Footer() {
   if (course === undefined) return null
 
   const internalLinks = otherPagesFooter.map(({ icon, to, title }) => (
-    <StyledLink component={InternalLink} key={to} to={to}>
+    <StyledLink component={InternalLink} key={to} to={generateUrl({ routeName: to })}>
       {icon}
       {t(title)}
     </StyledLink>

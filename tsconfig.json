@@ -38,8 +38,8 @@
       "#renderer/*": [
         "./src/renderer/*"
       ],
-      "#routes": [
-        "./src/routes.ts"
+      "#routes/*": [
+        "./src/routes/*"
       ],
       "#server/*": [
         "./src/server/*"

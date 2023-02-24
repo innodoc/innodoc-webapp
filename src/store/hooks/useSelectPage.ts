@@ -2,16 +2,16 @@ import { createSelector } from '@reduxjs/toolkit'
 import type { LanguageCode } from 'iso-639-1'
 import { useMemo } from 'react'
 
+import { selectCourseId, selectRouteInfo } from '#store/slices/appSlice'
 import { useGetCoursePagesQuery } from '#store/slices/entities/pages'
-import { selectCourseId, selectLocale } from '#store/slices/uiSlice'
 import { defaultTranslatableFields } from '#types/entities/base'
 import type { ApiPage } from '#types/entities/page'
 import { useSelector } from '#ui/hooks/store'
 import { translateEntity } from '#utils/i18n'
 
 /** Return page by slug */
-function useSelectPage(pageSlug: ApiPage['slug'] | null) {
-  const locale = useSelector(selectLocale)
+function useSelectPage(pageSlug: ApiPage['slug'] | undefined) {
+  const { locale } = useSelector(selectRouteInfo)
   const courseId = useSelector(selectCourseId)
 
   const selectPage = useMemo(

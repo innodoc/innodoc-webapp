@@ -7,15 +7,15 @@ import { type ReactElement, type ReactNode } from 'react'
 import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B, EMOTION_STYLE_KEY } from '#constants'
 import fetchContent from '#renderer/fetchContent'
 import makeStore, { type Store } from '#store/makeStore'
-import courses from '#store/slices/entities/courses'
-import fragments from '#store/slices/entities/fragments'
-import pages from '#store/slices/entities/pages'
-import sections from '#store/slices/entities/sections'
 import {
   changeCourseId,
   changeCurrentPageSlug,
   changeCurrentSectionPath,
-} from '#store/slices/uiSlice'
+} from '#store/slices/appSlice'
+import courses from '#store/slices/entities/courses'
+import fragments from '#store/slices/entities/fragments'
+import pages from '#store/slices/entities/pages'
+import sections from '#store/slices/entities/sections'
 import type { ApiPage } from '#types/entities/page'
 import type { ApiSection } from '#types/entities/section'
 import PageShell from '#ui/components/PageShell/PageShell'

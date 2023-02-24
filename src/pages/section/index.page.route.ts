@@ -1,17 +1,18 @@
-import { resolveRoute } from 'vite-plugin-ssr/routing'
-
+import getRoutes from '#routes/getRoutes'
 import type { PageContextServer } from '#types/pageContext'
+
+const { matchUrl } = getRoutes()
 
 // Extract sectionPath from URL
 export default (pageContext: PageContextServer) => {
-  const result = resolveRoute(
-    `/${import.meta.env.INNODOC_SECTION_PATH_PREFIX}/*`,
-    pageContext.urlPathname
-  )
-  return result.match
+  const match = matchUrl('app:section', pageContext.urlPathname)
+  return match
     ? {
         match: true,
-        routeParams: { sectionPath: result.routeParams['*'] },
+        routeParams: {
+          routeName: 'app:section',
+          ...match.params,
+        },
       }
     : false
 }

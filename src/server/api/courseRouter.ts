@@ -2,7 +2,7 @@ import { type RequestHandler, Router } from 'express'
 import { param, validationResult } from 'express-validator'
 import type { LanguageCode } from 'iso-639-1'
 
-import { API_COURSE_PREFIX, type RouteName } from '#routes'
+import { API_COURSE_PREFIX } from '#constants'
 import { getCourse } from '#server/database/queries/courses'
 import { getFragmentContent } from '#server/database/queries/fragments'
 import { getCoursePages, getPageContent } from '#server/database/queries/pages'
@@ -11,7 +11,7 @@ import { getRoutePath } from '#server/utils'
 import type { FragmentType } from '#types/entities/base'
 import { isFragmentType } from '#utils/content'
 
-const p = (name: RouteName) => getRoutePath(name, API_COURSE_PREFIX)
+const p = (name: string) => getRoutePath(name, API_COURSE_PREFIX)
 
 const checkErrors: RequestHandler = (req, res, next) => {
   const errors = validationResult(req)
@@ -20,8 +20,16 @@ const checkErrors: RequestHandler = (req, res, next) => {
 }
 
 const courseRouter = Router()
-  // Get course by course slug
-  .get(p('api/course'), param('courseId').isInt(), checkErrors, (async (req, res) => {
+  // Get course by ID
+  .get(p('api:course'), param('courseId').isInt(), checkErrors, (async (req, res) => {
+    const course = await getCourse({ courseId: parseInt(req.params.courseId) })
+    if (!course) return res.sendStatus(404)
+
+    res.json(course)
+  }) as RequestHandler)
+
+  // Get course by slug
+  .get(p('api:course'), param('courseId').isInt(), checkErrors, (async (req, res) => {
     const course = await getCourse({ courseId: parseInt(req.params.courseId) })
     if (!course) return res.sendStatus(404)
 
@@ -29,14 +37,14 @@ const courseRouter = Router()
   }) as RequestHandler)
 
   // Get course pages
-  .get(p('api/course/pages'), param('courseId').isInt(), checkErrors, (async (req, res) => {
+  .get(p('api:course:pages'), param('courseId').isInt(), checkErrors, (async (req, res) => {
     const pages = await getCoursePages(parseInt(req.params.courseId))
     res.json(pages)
   }) as RequestHandler)
 
   // Get page content
   .get(
-    p('api/course/page/content'),
+    p('api:course:page:content'),
     param('courseId').isInt(),
     param('locale').isLocale(),
     param('pageId').isInt(),
@@ -54,14 +62,14 @@ const courseRouter = Router()
   )
 
   // Get course sections
-  .get(p('api/course/sections'), param('courseId').isInt(), checkErrors, (async (req, res) => {
+  .get(p('api:course:sections'), param('courseId').isInt(), checkErrors, (async (req, res) => {
     const sections = await getCourseSections(parseInt(req.params.courseId))
     res.json(sections)
   }) as RequestHandler)
 
   // Get section content
   .get(
-    p('api/course/section/content'),
+    p('api:course:section:content'),
     param('courseId').isInt(),
     param('locale').isLocale(),
     param('sectionId').isInt(),
@@ -80,7 +88,7 @@ const courseRouter = Router()
 
   // Get fragment content
   .get(
-    p('api/course/fragment/content'),
+    p('api:course:fragment:content'),
     param('locale').isLocale(),
     param('courseId').isInt(),
     param('fragmentType').custom(isFragmentType),

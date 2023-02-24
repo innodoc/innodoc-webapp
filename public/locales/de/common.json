@@ -26,11 +26,11 @@
     "unknownIcon": "Unbekannter Icon-Name aufgetreten"
   },
   "internalPages": {
+    "glossary": {
+      "title": "Stichwortverzeichnis"
+    },
     "home": {
       "title": "Home"
-    },
-    "indexPage": {
-      "title": "Stichwortverzeichnis"
     },
     "login": {
       "email": "E-Mail-Adresse",

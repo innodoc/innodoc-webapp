@@ -6,21 +6,17 @@ import { hydrateRoot, type Root } from 'react-dom/client'
 
 import { EMOTION_STYLE_INSERTION_POINT_NAME, EMOTION_STYLE_KEY } from '#constants'
 import makeStore, { type Store } from '#store/makeStore'
-import {
-  changeCurrentPageSlug,
-  changeCurrentSectionPath,
-  changeUrlWithoutLocale,
-} from '#store/slices/uiSlice'
+import { changeRouteInfo } from '#store/slices/appSlice'
 import type { PageContextClient } from '#types/pageContext'
 import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
 
 const i18nBackendOpts = { loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.json` }
 
-// ReactDom root
+// react-dom root
 let root: Root
 
-// root DOM node
+// root-dom node
 let rootEl: HTMLElement
 
 // Redux store
@@ -58,9 +54,8 @@ async function render({
   isHydration,
   locale,
   Page,
-  pageProps,
   preloadedState,
-  urlPathname,
+  routeParams,
 }: PageContextClient) {
   findRootElement()
 
@@ -75,21 +70,20 @@ async function render({
     // Create store on first hydration
     store = makeStore(preloadedState)
   } else {
-    // Update store on navigation
-    store.dispatch(changeUrlWithoutLocale(urlPathname))
-    store.dispatch(changeCurrentPageSlug(pageProps.pageSlug ?? null))
-    store.dispatch(changeCurrentSectionPath(pageProps.sectionPath ?? null))
+    // Update route on navigation
+    store.dispatch(changeRouteInfo(routeParams))
   }
 
-  // Get i18next instance
   if (i18n === undefined) {
+    // Create i18next instance
     i18n = await getI18n(I18NextHttpBackend, i18nBackendOpts, locale, courseId, store)
+  } else if (i18n.language !== locale) {
+    // Change i18next locale
+    await i18n.changeLanguage(locale)
   }
 
   // Create Emotion cache
-  if (emotionCache === undefined) {
-    emotionCache = createEmotionCache()
-  }
+  if (emotionCache === undefined) emotionCache = createEmotionCache()
 
   const page = (
     <PageShell emotionCache={emotionCache} i18n={i18n} store={store}>

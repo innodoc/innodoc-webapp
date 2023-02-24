@@ -1,7 +1,7 @@
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useRef } from 'react'
 
 import useSelectSection from '#store/hooks/useSelectSection'
-import { selectCurrentSectionPath } from '#store/slices/uiSlice'
+import { selectRouteInfo } from '#store/slices/appSlice'
 import { useSelector } from '#ui/hooks/store'
 import { getSectionNumberFromOrder } from '#utils/content'
 
@@ -14,7 +14,7 @@ interface Titles {
 
 export function CardTitleProvider({ children }: NumberingProviderProps) {
   const titles = useRef<Titles>({})
-  const sectionPath = useSelector(selectCurrentSectionPath)
+  const { sectionPath } = useSelector(selectRouteInfo)
   const { section } = useSelectSection(sectionPath)
   const sectionNumber = section ? getSectionNumberFromOrder(section) : 0
 

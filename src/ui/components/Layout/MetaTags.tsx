@@ -1,15 +1,19 @@
 import { Helmet } from 'react-helmet-async'
 
 import { EMOTION_STYLE_INSERTION_POINT_NAME } from '#constants'
+import useGenerateUrl from '#routes/useGenerateUrl'
 import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
-import { selectLocale, selectUrlWithoutLocale } from '#store/slices/uiSlice'
+import { selectRouteInfo } from '#store/slices/appSlice'
 import { useSelector } from '#ui/hooks/store'
-import { formatUrl } from '#utils/url'
 
 function MetaTags() {
+  const generateUrl = useGenerateUrl()
   const { course } = useSelectCurrentCourse()
-  const currentLocale = useSelector(selectLocale)
-  const urlWithoutLocale = useSelector(selectUrlWithoutLocale)
+  const { locale: currentLocale } = useSelector(selectRouteInfo)
+
+  const languageLinks = (course?.locales ?? []).map((locale) => (
+    <link href={generateUrl({ locale })} hrefLang={locale} key={locale} rel="alternate" />
+  ))
 
   return (
     <Helmet>
@@ -20,19 +24,7 @@ function MetaTags() {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="canonical" href={import.meta.env.INNODOC_APP_ROOT} />
       <link rel="icon" href="" /> {/** TODO add course logo? */}
-      {(course?.locales ?? []).map((locale) => (
-        <link
-          href={formatUrl(
-            urlWithoutLocale || '',
-            locale,
-            undefined,
-            import.meta.env.INNODOC_APP_ROOT
-          )}
-          hrefLang={locale}
-          key={locale}
-          rel="alternate"
-        />
-      ))}
+      {languageLinks}
       <meta name={EMOTION_STYLE_INSERTION_POINT_NAME} content="" />
     </Helmet>
   )

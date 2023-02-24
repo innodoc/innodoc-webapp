@@ -2,9 +2,8 @@ import { Link as MuiLink } from '@mui/material'
 import clsx from 'clsx'
 import { forwardRef } from 'react'
 
-import { selectLocale, selectUrlWithoutLocale } from '#store/slices/uiSlice'
+import { selectUrlWithoutLocale } from '#store/slices/appSlice'
 import { useSelector } from '#ui/hooks/store'
-import { formatUrl } from '#utils/url'
 
 import type { LinkProps } from './types'
 
@@ -16,12 +15,12 @@ const InternalLink = forwardRef<HTMLAnchorElement, LinkProps>(function InternalL
   { children, className, hash, to, ...other },
   ref
 ) {
-  const locale = useSelector(selectLocale)
   const urlWithoutLocale = useSelector(selectUrlWithoutLocale)
   const classNames = clsx(className, urlWithoutLocale === to && 'active')
+  const href = hash ? `${to}#${hash}` : to
 
   return (
-    <MuiLink {...other} className={classNames} href={formatUrl(to, locale, hash)} ref={ref}>
+    <MuiLink {...other} className={classNames} href={href} ref={ref}>
       {children}
     </MuiLink>
   )

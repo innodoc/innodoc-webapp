@@ -3,24 +3,25 @@ import type { ReactNode } from 'react'
 import type { PageLinkLocation } from '#types/common'
 import Icon from '#ui/components/common/Icon'
 
+// TODO: merge builtin pages from into here
 const otherPages = [
   {
     icon: <Icon name="mdi:chart-line" />,
     linked: ['nav'],
     title: 'internalPages.progress.title',
-    to: '/progress',
+    to: 'app:progress',
   },
   {
     icon: <Icon name="mdi:table-of-contents" />,
     linked: ['footer'],
     title: 'internalPages.toc.title',
-    to: '/toc',
+    to: 'app:toc',
   },
   {
     icon: <Icon name="mdi:list-box" />,
     linked: ['footer'],
-    title: 'internalPages.indexPage.title',
-    to: '/index',
+    title: 'internalPages.glossary.title',
+    to: 'app:glossary',
   },
 ] as Page[]
 

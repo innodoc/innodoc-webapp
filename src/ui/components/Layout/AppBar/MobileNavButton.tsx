@@ -1,8 +1,9 @@
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
+import useGenerateUrl from '#routes/useGenerateUrl'
 import useSelectLinkedPages from '#store/hooks/useSelectLinkedPages'
-import { selectUrlWithoutLocale } from '#store/slices/uiSlice'
+import { selectUrlWithoutLocale } from '#store/slices/appSlice'
 import Icon from '#ui/components/common/Icon'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
@@ -13,6 +14,7 @@ import DrawerButton from './common/DrawerButton'
 import otherPages from './otherPages'
 
 function MobileNavButton() {
+  const generateUrl = useGenerateUrl()
   const { t } = useTranslation()
 
   const { pages } = useSelectLinkedPages('nav')
@@ -55,7 +57,11 @@ function MobileNavButton() {
           ))}
           {otherPages.map(({ icon, title, to }) => (
             <ListItem disablePadding key={to} onClick={close}>
-              <ListItemButton component={InternalLink} to={to} selected={urlWithoutLocale === to}>
+              <ListItemButton
+                component={InternalLink}
+                to={generateUrl({ routeName: to })}
+                selected={urlWithoutLocale === to}
+              >
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={t(title)} />
               </ListItemButton>

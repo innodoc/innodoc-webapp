@@ -2,6 +2,7 @@ import { Box, Divider, ListItemIcon, ListItemText, MenuItem } from '@mui/materia
 import { useColorScheme } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 
+import useGenerateUrl from '#routes/useGenerateUrl'
 import Icon from '#ui/components/common/Icon'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import MenuItemCaption from '#ui/components/common/MenuItemCaption'
@@ -10,12 +11,13 @@ import MenuButton from './common/MenuButton'
 import MenuItemsLanguages from './LanguageMenuButton/MenuItemsLanguages'
 
 function UserMenuItems() {
+  const generateUrl = useGenerateUrl()
   const { t } = useTranslation()
   const { mode, setMode } = useColorScheme()
 
   return (
     <>
-      <MenuItem component={InternalLink} to="/login">
+      <MenuItem component={InternalLink} to={generateUrl({ routeName: 'app:user:login' })}>
         <ListItemIcon>
           <Icon name="mdi:login" />
         </ListItemIcon>

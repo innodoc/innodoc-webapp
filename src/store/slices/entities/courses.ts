@@ -4,14 +4,14 @@ import { getUrl } from '#utils/url'
 
 export const courses = contentApi.injectEndpoints({
   endpoints: (builder) => ({
-    /** Fetch course info */
-    getCourse: builder.query<ApiCourse, CourseNameQueryArg>({
-      query: (args) => getUrl('api/course', args),
+    /** Fetch course by ID */
+    getCourse: builder.query<ApiCourse, CourseIdQueryArg>({
+      query: (args) => getUrl('api:course', args),
     }),
   }),
 })
 
-export interface CourseNameQueryArg {
+export interface CourseIdQueryArg {
   courseId: ApiCourse['id']
 }
 

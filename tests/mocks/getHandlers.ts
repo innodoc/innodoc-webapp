@@ -2,11 +2,13 @@ import type { LanguageCode } from 'iso-639-1'
 import { rest } from 'msw'
 import type { ResponseComposition, RestContext, RestRequest } from 'msw'
 
-import routes, { type RouteName } from '#routes'
+import getRoutes from '#routes/getRoutes'
 import { isFragmentType } from '#utils/content'
 
 import type { Content } from './fakeData/types'
 import getData from './getData'
+
+const { routes } = getRoutes()
 
 const getStringParam = (req: RestRequest, name: string) => {
   const val = req.params[name]
@@ -29,7 +31,7 @@ const getContent = (
 }
 
 function getHandlers(baseUrl: string) {
-  const makePath = (name: RouteName) => {
+  const makePath = (name: string) => {
     // Remove trailing `/` from baseUrl
     const baseUrlTrimmed = baseUrl.endsWith('/') ? baseUrl.slice(0, baseUrl.length - 1) : baseUrl
     return (
@@ -43,28 +45,28 @@ function getHandlers(baseUrl: string) {
 
   const handlers = [
     // Course
-    rest.get(makePath('api/course'), (req, res, ctx) =>
+    rest.get(makePath('api:course'), (req, res, ctx) =>
       res(ctx.status(200), ctx.json(getCourse(req).data))
     ),
 
     // Page
-    rest.get(makePath('api/course/pages'), (req, res, ctx) =>
+    rest.get(makePath('api:course:pages'), (req, res, ctx) =>
       res(ctx.status(200), ctx.json(Object.values(getCourse(req).pages).map((page) => page[0])))
     ),
-    rest.get(makePath('api/course/page/content'), (req, res, ctx) =>
+    rest.get(makePath('api:course:page:content'), (req, res, ctx) =>
       getContent(req, res, ctx, getCourse(req).pages[getIntParam(req, 'pageId')][1])
     ),
 
     // Section
-    rest.get(makePath('api/course/sections'), (req, res, ctx) =>
+    rest.get(makePath('api:course:sections'), (req, res, ctx) =>
       res(ctx.status(200), ctx.json(Object.values(getCourse(req).sections).map((sec) => sec[0])))
     ),
-    rest.get(makePath('api/course/section/content'), (req, res, ctx) =>
+    rest.get(makePath('api:course:section:content'), (req, res, ctx) =>
       getContent(req, res, ctx, getCourse(req).sections[getIntParam(req, 'sectionId')][1])
     ),
 
     // Fragment
-    rest.get(makePath('api/course/fragment/content'), (req, res, ctx) => {
+    rest.get(makePath('api:course:fragment:content'), (req, res, ctx) => {
       const fragmentType = getStringParam(req, 'fragmentType')
       if (!isFragmentType(fragmentType)) throw new Error(`Unknown fragment type: ${fragmentType}`)
       return getContent(req, res, ctx, getCourse(req).footerContent[fragmentType])

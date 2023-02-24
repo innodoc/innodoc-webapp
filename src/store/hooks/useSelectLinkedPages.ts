@@ -2,8 +2,8 @@ import { createSelector } from '@reduxjs/toolkit'
 import type { LanguageCode } from 'iso-639-1'
 import { useMemo } from 'react'
 
+import { selectCourseId, selectRouteInfo } from '#store/slices/appSlice'
 import { useGetCoursePagesQuery } from '#store/slices/entities/pages'
-import { selectCourseId, selectLocale } from '#store/slices/uiSlice'
 import type { PageLinkLocation } from '#types/common'
 import { defaultTranslatableFields } from '#types/entities/base'
 import type { ApiPage, TranslatedPage } from '#types/entities/page'
@@ -12,7 +12,7 @@ import { translateEntityArray } from '#utils/i18n'
 
 /** Return pages for link lists */
 function useSelectLinkedPages(linkLocation: PageLinkLocation) {
-  const locale = useSelector(selectLocale)
+  const { locale } = useSelector(selectRouteInfo)
   const courseId = useSelector(selectCourseId)
 
   const selectNavPages = useMemo(() => {

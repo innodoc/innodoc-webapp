@@ -11,7 +11,7 @@ export const fragments = contentApi.injectEndpoints({
     getFragmentContent: builder.query<string, ContentFetchArgs>({
       query: (args) => ({
         responseHandler: 'text',
-        url: getUrl('api/course/fragment/content', args),
+        url: getUrl('api:course:fragment:content', args),
       }),
     }),
   }),
