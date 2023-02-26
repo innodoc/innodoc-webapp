@@ -2,6 +2,11 @@ import { FRAGMENT_TYPES } from '#constants'
 import type { FragmentType } from '#types/entities/base'
 import type { TranslatedSection } from '#types/entities/section'
 
+/** Capitalize string */
+export function capitalize(words: string) {
+  return words.charAt(0).toUpperCase() + words.slice(1)
+}
+
 /** Format section number (e.g. "1.2.1") */
 export function getSectionNumberFromOrder(section: TranslatedSection) {
   return section.order.map((n) => (n + 1).toString()).join('.')

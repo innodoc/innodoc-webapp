@@ -1,20 +1,3 @@
-import getRoutes from '#routes/getRoutes'
-import type { PageContextServer } from '#types/pageContext'
+import makeRouteFunc from '#utils/ssr/makeRouteFunc'
 
-const { matchUrl } = getRoutes()
-
-// TODO Refactor this into function used by page/section
-
-// Extract pageId from URL
-export default (pageContext: PageContextServer) => {
-  const match = matchUrl('app:page', pageContext.urlPathname)
-  return match
-    ? {
-        match: true,
-        routeParams: {
-          routeName: 'app:page',
-          ...match.params,
-        },
-      }
-    : false
-}
+export default makeRouteFunc('app:page')

@@ -1,13 +1,11 @@
 import { SLUG_RE } from '#constants'
-import type { PageContextServer } from '#types/pageContext'
+import type { PageContextServer, PageContextUpdate } from '#types/pageContext'
 import { extractLocale } from '#utils/url'
 
 const slugRegExp = new RegExp(`^${SLUG_RE}$`)
 
 // Extract locale/course slug (SSR/Browser)
-function onBeforeRoute({ requestLocale, host, urlPathname }: PageContextServer): {
-  pageContext: Partial<PageContextServer>
-} {
+function onBeforeRoute({ requestLocale, host, urlPathname }: PageContextServer): PageContextUpdate {
   // Default slug
   let courseSlug = import.meta.env.INNODOC_DEFAULT_COURSE_SLUG
 

@@ -16,6 +16,7 @@ export type CourseSlugMode = (typeof COURSE_SLUG_MODES)[number]
 
 /** Application route info */
 export interface RouteInfo {
+  /** Route name */
   routeName: string
   locale: LanguageCode
   pageSlug?: ApiPage['slug']

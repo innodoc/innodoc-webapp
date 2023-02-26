@@ -18,7 +18,6 @@ import '@fontsource/lato/700-italic.css'
 // KaTeX CSS
 import 'katex/dist/katex.min.css'
 
-// import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '#constants'
 import { EMOTION_STYLE_KEY, passToClientProps } from '#constants'
 import { getCourse } from '#server/database/queries/courses'
 import makeStore from '#store/makeStore'
@@ -26,13 +25,11 @@ import { changeCourseId, changeRouteInfo } from '#store/slices/appSlice'
 import courses from '#store/slices/entities/courses'
 import pages from '#store/slices/entities/pages'
 import sections from '#store/slices/entities/sections'
-import type { PageContextServer } from '#types/pageContext'
+import type { PageContextUpdate, PageContextServer } from '#types/pageContext'
 import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
+import renderToHtml from '#utils/ssr/renderToHtml'
 import { formatUrl, replacePathPrefixes } from '#utils/url'
-
-// import fetchContent from './fetchContent'
-import renderToHtml from './renderToHtml'
 
 function getI18nBackendOpts() {
   const dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -45,7 +42,13 @@ function getI18nBackendOpts() {
 
 const passToClient = passToClientProps
 
-async function render({ courseId, locale, Page, redirectTo, store }: PageContextServer) {
+async function render({
+  courseId,
+  locale,
+  Page,
+  redirectTo,
+  store,
+}: PageContextServer): Promise<PageContextUpdate | ReturnType<typeof escapeInject>> {
   // Honor redirection
   if (redirectTo !== undefined) return { pageContext: { redirectTo } }
 
@@ -99,53 +102,56 @@ async function onBeforeRender({
   locale,
   routeParams,
   urlPathname,
-}: PageContextServer): Promise<{ pageContext: Partial<PageContextServer> }> {
-  // Fetch course ID by slug
-  // TODO add getCourseIdBySlug
-  const courseBySlug = await getCourse({ courseSlug })
-  if (courseBySlug === undefined) throw RenderErrorPage({ pageContext: { is404: true } })
-  const { id: courseId } = courseBySlug
-
+}: PageContextServer): Promise<PageContextUpdate> {
   // Initialize store
   const store = makeStore()
+  let courseId: number | undefined = undefined
 
-  // Seed initial data to store
-  store.dispatch(changeCourseId(courseId))
-  store.dispatch(changeRouteInfo(routeParams))
+  if (courseSlug !== undefined) {
+    // Fetch course ID by slug
+    // TODO add getCourseIdBySlug
+    const courseBySlug = await getCourse({ courseSlug })
+    if (courseBySlug === undefined) throw RenderErrorPage({ pageContext: { is404: true } })
+    courseId = courseBySlug.id
 
-  // Populate store with necessary data
-  await store.dispatch(courses.endpoints.getCourse.initiate({ courseId }))
-  await store.dispatch(pages.endpoints.getCoursePages.initiate({ courseId }))
-  await store.dispatch(sections.endpoints.getCourseSections.initiate({ courseId }))
-  // (store, locale) => fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_A })),
-  // (store, locale) => fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_B })),
+    // Seed initial data to store
+    store.dispatch(changeCourseId(courseId))
+    store.dispatch(changeRouteInfo(routeParams))
 
-  // Retrieve course from store
-  const selectCurrentCourse = courses.endpoints.getCourse.select({ courseId })
-  const { data: course } = selectCurrentCourse(store.getState())
-  if (course === undefined) throw new Error(`No course loaded`)
+    // Populate store with necessary data
+    await store.dispatch(courses.endpoints.getCourse.initiate({ courseId }))
+    await store.dispatch(pages.endpoints.getCoursePages.initiate({ courseId }))
+    await store.dispatch(sections.endpoints.getCourseSections.initiate({ courseId }))
+    // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_A }))
+    // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_B }))
 
-  // Assert we received locales from manifest
-  if (course.locales.length < 1) {
-    throw RenderErrorPage({ pageContext: { errorMsg: 'Course has no locales' } })
-  }
+    // Retrieve course from store
+    const selectCurrentCourse = courses.endpoints.getCourse.select({ courseId })
+    const { data: course } = selectCurrentCourse(store.getState())
+    if (course === undefined) throw new Error(`No course loaded`)
 
-  // TODO: how to handle this correctly?
-  if (urlPathname === '/fake-404-url') locale = 'en'
+    // Assert we received locales from manifest
+    if (course.locales.length < 1) {
+      throw RenderErrorPage({ pageContext: { errorMsg: 'Course has no locales' } })
+    }
 
-  // Check if current locale is valid
-  if (!course.locales.includes(locale)) {
-    // TODO: should redirect to default locale instead
-    throw RenderErrorPage({ pageContext: { is404: true } })
-  }
+    // TODO: how to handle this correctly?
+    if (urlPathname === '/fake-404-url') locale = 'en'
 
-  // Redirect '/' to homeLink
-  // TODO: handle redirect in index.page.tsx
-  if (urlPathname === '/' && course.homeLink !== undefined) {
-    return {
-      pageContext: {
-        redirectTo: formatUrl(replacePathPrefixes(course.homeLink), locale),
-      },
+    // Check if current locale is valid
+    if (!course.locales.includes(locale)) {
+      // TODO: should redirect to default locale instead
+      throw RenderErrorPage({ pageContext: { is404: true } })
+    }
+
+    // Redirect '/' to homeLink
+    // TODO: handle redirect in index.page.tsx
+    if (urlPathname === '/' && course.homeLink !== undefined) {
+      return {
+        pageContext: {
+          redirectTo: formatUrl(replacePathPrefixes(course.homeLink), locale),
+        },
+      }
     }
   }
 
@@ -155,7 +161,9 @@ async function onBeforeRender({
   return {
     pageContext: {
       courseId,
+      locale,
       preloadedState,
+      routeParams,
       store,
     },
   }

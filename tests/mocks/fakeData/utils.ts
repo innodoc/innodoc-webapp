@@ -3,12 +3,11 @@ import type { LanguageCode } from 'iso-639-1'
 import type { CamelCase } from 'type-fest'
 
 import type { DbDefaultTranslatableFields, TranslatableFields } from '#types/entities/base'
+import { capitalize } from '#utils/content'
 
 type Titles = TranslatableFields<CamelCase<DbDefaultTranslatableFields>>
 
 const makeSlug = (words: string) => words.toLowerCase().replaceAll(' ', '-')
-
-export const capitalize = (words: string) => words.charAt(0).toUpperCase() + words.slice(1)
 
 export const range = (number: number) => Array.from(Array(number).keys())
 

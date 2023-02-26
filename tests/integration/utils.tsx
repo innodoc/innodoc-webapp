@@ -5,7 +5,6 @@ import I18NextFsBackend from 'i18next-fs-backend'
 import { type ReactElement, type ReactNode } from 'react'
 
 import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B, EMOTION_STYLE_KEY } from '#constants'
-import fetchContent from '#renderer/fetchContent'
 import makeStore, { type Store } from '#store/makeStore'
 import {
   changeCourseId,
@@ -20,6 +19,7 @@ import type { ApiPage } from '#types/entities/page'
 import type { ApiSection } from '#types/entities/section'
 import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
+import fetchContent from '#utils/ssr/fetchContent'
 
 import getData from '../mocks/getData'
 

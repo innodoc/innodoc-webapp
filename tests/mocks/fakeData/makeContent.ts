@@ -5,9 +5,10 @@ import stringify from 'remark-stringify'
 import { unified } from 'unified'
 
 import { isRoot } from '#ui/components/content/mdast/typeGuards'
+import { capitalize } from '#utils/content'
 
 import type { Content, ContentOptions, NodeMakers } from './types'
-import { capitalize, range, seed } from './utils'
+import { range, seed } from './utils'
 
 const defaultOptions: ContentOptions = {
   nodeCount: 5,
