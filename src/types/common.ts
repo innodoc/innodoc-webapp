@@ -1,6 +1,11 @@
 import type { LanguageCode } from 'iso-639-1'
 
-import type { COURSE_SLUG_MODES, PAGE_LINK_LOCACTIONS, SECTION_TYPES } from '#constants'
+import type {
+  CONTENT_TYPES,
+  COURSE_SLUG_MODES,
+  PAGE_LINK_LOCACTIONS,
+  SECTION_TYPES,
+} from '#constants'
 
 import type { ApiPage } from './entities/page'
 import type { ApiSection } from './entities/section'
@@ -13,6 +18,9 @@ export type SectionType = (typeof SECTION_TYPES)[number]
 
 /** Course slug mode */
 export type CourseSlugMode = (typeof COURSE_SLUG_MODES)[number]
+
+/** Content types */
+export type ContentType = (typeof CONTENT_TYPES)[number]
 
 /** Application route info */
 export interface RouteInfo {

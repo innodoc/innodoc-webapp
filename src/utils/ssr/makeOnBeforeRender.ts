@@ -5,6 +5,7 @@ import { getPageIdBySlug } from '#server/database/queries/pages'
 import { getSectionIdByPath } from '#server/database/queries/sections'
 import pages from '#store/slices/entities/pages'
 import sections from '#store/slices/entities/sections'
+import type { ContentType } from '#types/common'
 import type { PageContextServer, PageContextUpdate } from '#types/pageContext'
 import { capitalize } from '#utils/content'
 
@@ -13,7 +14,7 @@ import { capitalize } from '#utils/content'
  *
  * Reads route parameter, fetches content ID and content.
  */
-function makeOnBeforeRender(contentType: 'page' | 'section') {
+function makeOnBeforeRender(contentType: ContentType) {
   return async (pageContextInput: PageContextServer): Promise<PageContextUpdate> => {
     const stringIdField = contentType === 'page' ? 'pageSlug' : 'sectionPath'
     const getContentId = contentType === 'page' ? getPageIdBySlug : getSectionIdByPath

@@ -33,6 +33,9 @@ export const FRAGMENT_TYPE_FOOTER_B = 'footer-b'
 /** Content fragment types */
 export const FRAGMENT_TYPES = [FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B] as const
 
+/** Content types */
+export const CONTENT_TYPES = ['page', 'section'] as const
+
 /** Section types */
 export const SECTION_TYPES = ['regular', 'test'] as const
 

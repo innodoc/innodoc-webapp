@@ -1,4 +1,5 @@
 import getRoutes from '#routes/getRoutes'
+import type { ContentType } from '#types/common'
 import type { PageContextServer } from '#types/pageContext'
 
 const { matchUrl } = getRoutes()
@@ -8,7 +9,9 @@ const { matchUrl } = getRoutes()
  *
  * Match route and extract parameters.
  */
-function makeRouteFunc(routeName: 'app:page' | 'app:section') {
+function makeRouteFunc(contentType: ContentType) {
+  const routeName = `app:${contentType}`
+
   return (pageContext: PageContextServer) => {
     const match = matchUrl(routeName, pageContext.urlPathname)
     return match

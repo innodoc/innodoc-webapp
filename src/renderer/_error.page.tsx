@@ -1,31 +1,26 @@
-import { Typography } from '@mui/material'
-
-import PageHeader from '#ui/components/common/PageHeader'
+import { Alert, AlertTitle } from '@mui/material'
+import type { ReactNode } from 'react'
 
 function ErrorPage({ errorMsg, is404 }: ErrorPageProps) {
-  let captionText = '500 Internal Server Error'
-  let subtitle = 'Something went wrong.'
+  let captionText = 'Error'
+  let subtitle: ReactNode = 'Something went wrong.'
 
   if (is404) {
     captionText = '404 Page Not Found'
     subtitle = 'This page could not be found.'
   }
-  if (errorMsg !== undefined) {
-    subtitle = errorMsg
-  }
+  if (errorMsg !== undefined) subtitle = errorMsg
 
   return (
-    <>
-      <PageHeader>{captionText}</PageHeader>
-      <Typography variant="subtitle1" gutterBottom component="p">
-        {subtitle}
-      </Typography>
-    </>
+    <Alert variant="outlined" severity="error">
+      <AlertTitle>{captionText}</AlertTitle>
+      {subtitle}
+    </Alert>
   )
 }
 
 interface ErrorPageProps {
-  errorMsg?: string
+  errorMsg?: ReactNode
   is404?: boolean
 }
 
