@@ -9,7 +9,7 @@ import { getCoursePages, getPageContent } from '#server/database/queries/pages'
 import { getCourseSections, getSectionContent } from '#server/database/queries/sections'
 import { getRoutePath } from '#server/utils'
 import type { FragmentType } from '#types/entities/base'
-import { isFragmentType } from '#utils/content'
+import { isFragmentType } from '#types/typeGuards'
 
 const p = (name: string) => getRoutePath(name, API_COURSE_PREFIX)
 

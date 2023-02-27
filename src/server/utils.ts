@@ -1,14 +1,6 @@
 import makeRoutes from '#routes/routes'
 import config from '#server/config'
-
-interface ArbitraryObject {
-  [key: string]: unknown
-}
-
-// TODO remove this or move to cental place?
-function isArbitraryObject(obj: unknown): obj is ArbitraryObject {
-  return typeof obj === 'object' && obj !== null
-}
+import { isArbitraryObject } from '#types/typeGuards'
 
 export function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
   return isArbitraryObject(error) && error instanceof Error && typeof error.code === 'string'

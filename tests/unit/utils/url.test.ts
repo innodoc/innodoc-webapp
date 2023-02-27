@@ -1,5 +1,5 @@
 import type { CourseSlugMode } from '#types/common'
-import { extractLocale, replacePathPrefixes } from '#utils/url'
+import { extractLocale, generateUrlFromSpecifier, replacePathPrefixes } from '#utils/url'
 
 async function importGetUrl(courseSlugMode: CourseSlugMode = 'DISABLE') {
   vi.resetModules()
@@ -28,11 +28,6 @@ test('extractLocale', () => {
     locale: 'fr',
     urlWithoutLocale: '/foo/bar',
   })
-})
-
-test('replacePathPrefixes', () => {
-  expect(replacePathPrefixes('/page/foo')).toBe('/pagetest/foo')
-  expect(replacePathPrefixes('/section/foo/bar')).toBe('/sectiontest/foo/bar')
 })
 
 test('getUrl', async () => {
@@ -102,4 +97,20 @@ test('getUrl (INNODOC_COURSE_SLUG_MODE=URL)', async () => {
   expect(() => {
     getUrl('app:page', { courseSlug: 'Foobar', locale: 'en', pageSlug: 'foo-bar' })
   }).toThrow('Expected "courseSlug" to match')
+})
+
+test('generateUrlFromSpecifier', () => {
+  expect(generateUrlFromSpecifier('app:page|foo-bar', 'de')).toBe('/de/pagetest/foo-bar')
+  expect(generateUrlFromSpecifier('app:section|foo/bar/baz', 'fr')).toBe(
+    '/fr/sectiontest/foo/bar/baz'
+  )
+  expect(generateUrlFromSpecifier('app:toc', 'fr')).toBe('/fr/toc')
+  expect(generateUrlFromSpecifier('app:progress', 'da')).toBe('/da/progress')
+
+  expect(() => {
+    generateUrlFromSpecifier('app:page', 'de')
+  }).toThrow()
+  expect(() => {
+    generateUrlFromSpecifier('api:foo', 'de')
+  }).toThrow(/Unhandled link specifier/)
 })

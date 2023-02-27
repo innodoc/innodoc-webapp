@@ -10,6 +10,11 @@ import type {
 import type { ApiPage } from './entities/page'
 import type { ApiSection } from './entities/section'
 
+/** Arbitrary object */
+export interface ArbitraryObject {
+  [key: string]: unknown
+}
+
 /** Location in the layout where page links can appear */
 export type PageLinkLocation = (typeof PAGE_LINK_LOCACTIONS)[number]
 

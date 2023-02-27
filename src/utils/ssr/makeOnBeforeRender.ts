@@ -7,7 +7,7 @@ import pages from '#store/slices/entities/pages'
 import sections from '#store/slices/entities/sections'
 import type { ContentType } from '#types/common'
 import type { PageContextServer, PageContextUpdate } from '#types/pageContext'
-import { capitalize } from '#utils/content'
+import { capitalize, getStringIdField } from '#utils/content'
 
 /**
  * Factory function for `onBeforeRender` hook for content pages
@@ -16,7 +16,7 @@ import { capitalize } from '#utils/content'
  */
 function makeOnBeforeRender(contentType: ContentType) {
   return async (pageContextInput: PageContextServer): Promise<PageContextUpdate> => {
-    const stringIdField = contentType === 'page' ? 'pageSlug' : 'sectionPath'
+    const stringIdField = getStringIdField(contentType)
     const getContentId = contentType === 'page' ? getPageIdBySlug : getSectionIdByPath
 
     // Call default onBeforeRender

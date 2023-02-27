@@ -3,7 +3,7 @@ import { rest } from 'msw'
 import type { ResponseComposition, RestContext, RestRequest } from 'msw'
 
 import getRoutes from '#routes/getRoutes'
-import { isFragmentType } from '#utils/content'
+import { isFragmentType } from '#types/typeGuards'
 
 import type { Content } from './fakeData/types'
 import getData from './getData'

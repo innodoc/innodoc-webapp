@@ -29,7 +29,6 @@ import type { PageContextUpdate, PageContextServer } from '#types/pageContext'
 import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
 import renderToHtml from '#utils/ssr/renderToHtml'
-import { formatUrl, replacePathPrefixes } from '#utils/url'
 
 function getI18nBackendOpts() {
   const dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -128,7 +127,7 @@ async function onBeforeRender({
     // Retrieve course from store
     const selectCurrentCourse = courses.endpoints.getCourse.select({ courseId })
     const { data: course } = selectCurrentCourse(store.getState())
-    if (course === undefined) throw new Error(`No course loaded`)
+    if (course === undefined) throw new Error('No course loaded')
 
     // Assert we received locales from manifest
     if (course.locales.length < 1) {
@@ -142,16 +141,6 @@ async function onBeforeRender({
     if (!course.locales.includes(locale)) {
       // TODO: should redirect to default locale instead
       throw RenderErrorPage({ pageContext: { is404: true } })
-    }
-
-    // Redirect '/' to homeLink
-    // TODO: handle redirect in index.page.tsx
-    if (urlPathname === '/' && course.homeLink !== undefined) {
-      return {
-        pageContext: {
-          redirectTo: formatUrl(replacePathPrefixes(course.homeLink), locale),
-        },
-      }
     }
   }
 
