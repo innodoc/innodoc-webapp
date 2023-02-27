@@ -1,10 +1,10 @@
 import { Breadcrumbs as MuiBreadcrumbs, Link, styled, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import useSelectBreadcrumbSections from '#store/hooks/useSelectBreadcrumbSections'
 import Icon from '#ui/components/common/Icon'
 import HomeLink from '#ui/components/common/link/HomeLink'
 import SectionLink from '#ui/components/common/link/SectionLink'
+import useSelectBreadcrumbSections from '#ui/hooks/useSelectBreadcrumbSections'
 import { formatSectionTitle } from '#utils/content'
 
 const StyledBreadcrumbs = styled(MuiBreadcrumbs)(({ theme }) => ({

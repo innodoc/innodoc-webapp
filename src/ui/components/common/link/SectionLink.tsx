@@ -2,9 +2,9 @@ import { Children, forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 
 import useGenerateUrl from '#routes/useGenerateUrl'
-import useSelectSection from '#store/hooks/useSelectSection'
 import type { ApiSection, TranslatedSection } from '#types/entities/section'
 import InlineError from '#ui/components/common/error/InlineError'
+import useSelectSection from '#ui/hooks/useSelectSection'
 import { formatSectionTitle } from '#utils/content'
 
 import InternalLink from './InternalLink'

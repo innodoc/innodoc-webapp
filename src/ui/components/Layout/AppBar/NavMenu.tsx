@@ -3,10 +3,10 @@ import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import useGenerateUrl from '#routes/useGenerateUrl'
-import useSelectLinkedPages from '#store/hooks/useSelectLinkedPages'
 import Icon from '#ui/components/common/Icon'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
+import useSelectLinkedPages from '#ui/hooks/useSelectLinkedPages'
 
 import otherPages from './otherPages'
 

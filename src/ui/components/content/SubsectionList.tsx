@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, List, ListItem, ListItemText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import useSelectSectionChildren from '#store/hooks/useSelectSectionChildren'
 import type { TranslatedSection } from '#types/entities/section'
 import Icon from '#ui/components/common/Icon'
 import SectionLink from '#ui/components/common/link/SectionLink'
+import useSelectSectionChildren from '#ui/hooks/useSelectSectionChildren'
 
 function SubsectionList({ sectionId }: SubsectionListProps) {
   const { t } = useTranslation()

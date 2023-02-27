@@ -10,8 +10,6 @@ import { useTranslation } from 'react-i18next'
 
 import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '#constants'
 import useGenerateUrl from '#routes/useGenerateUrl'
-import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
-import useSelectLinkedPages from '#store/hooks/useSelectLinkedPages'
 import { selectRouteInfo } from '#store/slices/appSlice'
 import { useGetFragmentContentQuery } from '#store/slices/entities/fragments'
 import InternalLink from '#ui/components/common/link/InternalLink'
@@ -20,6 +18,8 @@ import MarkdownNode from '#ui/components/content/mdast/MarkdownNode'
 import otherPages from '#ui/components/Layout/AppBar/otherPages'
 import defaultTheme, { baseThemeOpts, makeTheme } from '#ui/components/PageShell/theme'
 import { useSelector } from '#ui/hooks/store'
+import useSelectCurrentCourse from '#ui/hooks/useSelectCurrentCourse'
+import useSelectLinkedPages from '#ui/hooks/useSelectLinkedPages'
 
 const otherPagesFooter = otherPages.filter((page) => page.linked.includes('footer'))
 

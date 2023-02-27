@@ -1,8 +1,6 @@
 import { Trans } from 'react-i18next'
 
 import { Page as ErrorPage } from '#renderer/_error.page'
-import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
-import useSelectSection from '#store/hooks/useSelectSection'
 import { selectRouteInfo } from '#store/slices/appSlice'
 import { useGetSectionContentQuery } from '#store/slices/entities/sections'
 import Breadcrumbs from '#ui/components/Breadcrumbs/Breadcrumbs'
@@ -12,6 +10,8 @@ import PageHeader from '#ui/components/common/PageHeader'
 import MarkdownNode from '#ui/components/content/mdast/MarkdownNode'
 import SubsectionList from '#ui/components/content/SubsectionList'
 import { useSelector } from '#ui/hooks/store'
+import useSelectCurrentCourse from '#ui/hooks/useSelectCurrentCourse'
+import useSelectSection from '#ui/hooks/useSelectSection'
 import { formatSectionTitle } from '#utils/content'
 
 function Page() {

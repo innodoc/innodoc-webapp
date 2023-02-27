@@ -1,7 +1,7 @@
 import { Link, Typography } from '@mui/material'
 
-import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
 import HomeLink from '#ui/components/common/link/HomeLink'
+import useSelectCurrentCourse from '#ui/hooks/useSelectCurrentCourse'
 
 // TODO: save logo in database?
 

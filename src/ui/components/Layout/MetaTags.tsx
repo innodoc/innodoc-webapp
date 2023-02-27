@@ -2,9 +2,9 @@ import { Helmet } from 'react-helmet-async'
 
 import { EMOTION_STYLE_INSERTION_POINT_NAME } from '#constants'
 import useGenerateUrl from '#routes/useGenerateUrl'
-import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
 import { selectRouteInfo } from '#store/slices/appSlice'
 import { useSelector } from '#ui/hooks/store'
+import useSelectCurrentCourse from '#ui/hooks/useSelectCurrentCourse'
 
 function MetaTags() {
   const generateUrl = useGenerateUrl()

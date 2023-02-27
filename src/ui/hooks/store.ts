@@ -1,7 +1,4 @@
 /* eslint-disable @typescript-eslint/no-restricted-imports */
-
-// TODO move to store/hooks
-
 import {
   type TypedUseSelectorHook,
   useDispatch as useDispatchReactRedux,

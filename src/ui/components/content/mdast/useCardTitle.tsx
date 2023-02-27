@@ -1,8 +1,8 @@
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useRef } from 'react'
 
-import useSelectSection from '#store/hooks/useSelectSection'
 import { selectRouteInfo } from '#store/slices/appSlice'
 import { useSelector } from '#ui/hooks/store'
+import useSelectSection from '#ui/hooks/useSelectSection'
 import { getSectionNumberFromOrder } from '#utils/content'
 
 /** Provide consistent auto-incrementing numbering for cards within a document */

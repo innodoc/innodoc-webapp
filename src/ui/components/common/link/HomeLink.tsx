@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import useSelectCurrentCourse from '#store/hooks/useSelectCurrentCourse'
+import useSelectCurrentCourse from '#ui/hooks/useSelectCurrentCourse'
 
 import ContentLink from './ContentLink'
 import type { LinkProps } from './types'

@@ -1,8 +1,8 @@
 import { TreeItem, type TreeItemProps } from '@mui/lab'
 import { styled } from '@mui/material'
 
-import useSelectSectionChildren from '#store/hooks/useSelectSectionChildren'
 import type { TranslatedSection } from '#types/entities/section'
+import useSelectSectionChildren from '#ui/hooks/useSelectSectionChildren'
 
 import TocTreeItemContent from './TocTreeItemContent'
 
