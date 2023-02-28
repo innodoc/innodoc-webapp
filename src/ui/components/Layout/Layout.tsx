@@ -3,7 +3,6 @@ import type { ReactNode } from 'react'
 
 import AppBar from './AppBar/AppBar'
 import Footer from './Footer'
-import MetaTags from './MetaTags'
 
 const MainContainer = styled(Container)(({ theme }) => ({
   paddingBottom: theme.spacing(4),
@@ -19,7 +18,6 @@ function Layout({ children }: LayoutProps) {
         minHeight: '100vh',
       }}
     >
-      <MetaTags />
       <AppBar />
       <MainContainer component="main" data-testid="main-container" maxWidth="lg">
         {children}

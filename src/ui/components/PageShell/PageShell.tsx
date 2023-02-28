@@ -10,6 +10,7 @@ import { Provider as ReduxProvider } from 'react-redux'
 import type { Store } from '#store/makeStore'
 import Layout from '#ui/components/Layout/Layout'
 
+import MetaTags from './MetaTags'
 import theme from './theme'
 
 function PageShell({ children, emotionCache, helmetContext, i18n, store }: PageShellProps) {
@@ -21,6 +22,7 @@ function PageShell({ children, emotionCache, helmetContext, i18n, store }: PageS
             <I18nextProvider i18n={i18n}>
               <CssVarsProvider theme={theme}>
                 <CssBaseline />
+                <MetaTags />
                 <Layout>{children}</Layout>
               </CssVarsProvider>
             </I18nextProvider>
