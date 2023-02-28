@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { LanguageCode } from 'iso-639-1'
 
 import type { RootState } from '#store/makeStore'
 import type { RouteInfo } from '#types/common'
@@ -12,19 +11,15 @@ interface appSliceState {
 
   /** Current route info */
   routeInfo: RouteInfo
-
-  /** Current locale */
-  locale: LanguageCode
-
-  /** Current URL path without locale prefix */
-  urlWithoutLocale: string | null
 }
 
 const initialState: appSliceState = {
   courseId: null,
-  routeInfo: { routeName: 'app:root', locale: 'en' },
-  locale: 'en',
-  urlWithoutLocale: null,
+  routeInfo: {
+    courseSlug: import.meta.env.INNODOC_DEFAULT_COURSE_SLUG,
+    routeName: 'app:index',
+    locale: 'en',
+  },
 }
 
 const appSlice = createSlice({
@@ -38,13 +33,8 @@ const appSlice = createSlice({
     },
 
     /** Change current route name */
-    changeRouteInfo(state, action: PayloadAction<RouteInfo>) {
-      state.routeInfo = action.payload
-    },
-
-    /** Update url info */
-    changeUrlWithoutLocale(state, action: PayloadAction<string>) {
-      state.urlWithoutLocale = action.payload
+    changeRouteInfo(state, action: PayloadAction<Partial<RouteInfo>>) {
+      state.routeInfo = { ...state.routeInfo, ...action.payload }
     },
   },
 })
@@ -58,8 +48,5 @@ export const selectCourseId = (state: RootState) => selectApp(state).courseId
 /** Select current route name */
 export const selectRouteInfo = (state: RootState) => selectApp(state).routeInfo
 
-/** Select url info */
-export const selectUrlWithoutLocale = (state: RootState) => selectApp(state).urlWithoutLocale
-
-export const { changeCourseId, changeRouteInfo, changeUrlWithoutLocale } = appSlice.actions
+export const { changeCourseId, changeRouteInfo } = appSlice.actions
 export default appSlice

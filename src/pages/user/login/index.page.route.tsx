@@ -1,3 +1,3 @@
 import makeRouteFunc from '#utils/ssr/makeRouteFunc'
 
-export default makeRouteFunc('app:section')
+export default makeRouteFunc('app:user:login')

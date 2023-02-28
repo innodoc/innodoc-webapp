@@ -6,7 +6,9 @@ import type {
   PAGE_LINK_LOCACTIONS,
   SECTION_TYPES,
 } from '#constants'
+import type { RouteName } from '#routes/routes'
 
+import type { ApiCourse } from './entities/course'
 import type { ApiPage } from './entities/page'
 import type { ApiSection } from './entities/section'
 
@@ -29,9 +31,21 @@ export type ContentType = (typeof CONTENT_TYPES)[number]
 
 /** Application route info */
 export interface RouteInfo {
+  /** Course slug */
+  courseSlug: ApiCourse['slug']
+
   /** Route name */
-  routeName: string
+  routeName: RouteName
+
+  /** Current locale */
   locale: LanguageCode
+
+  /** Page slug */
   pageSlug?: ApiPage['slug']
+
+  /** Section path */
   sectionPath?: ApiSection['path']
+
+  /** Unchanged URL as received from request handler */
+  urlPristine: string
 }

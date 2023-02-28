@@ -14,6 +14,9 @@ const parseOptions = {
   strict: true,
 }
 
+// TODO fix once this is clean
+export type RouteName = string
+
 interface RouteManager {
   frontendRoutes: Record<string, string>
   apiRoutes: Record<string, string>
@@ -30,51 +33,54 @@ function makeRoutes(
   sectionPathPrefix: string
 ): RouteManager {
   const appRoute = (route: string) => {
-    const localeRoute = `/:locale(${LOCALE_RE})/${route}`
+    const localeRoute = `/:locale(${LOCALE_RE})${route}`
     return courseSlugMode === 'URL' ? `/:courseSlug(${SLUG_RE})/${localeRoute}` : localeRoute
   }
 
-  const apiRoute = (route: string) => `${API_COURSE_PREFIX}/${route}`
+  const apiRoute = (route: string) => `${API_COURSE_PREFIX}${route}`
 
   const frontendRoutes = {
+    // Landing/index page
+    'app:index': appRoute(''),
+
     // Page
-    'app:page': appRoute(`${pagePathPrefix}/:pageSlug(${SLUG_RE})`),
+    'app:page': appRoute(`/${pagePathPrefix}/:pageSlug(${SLUG_RE})`),
 
     // Section
-    'app:section': appRoute(`${sectionPathPrefix}/:sectionPath(${PATH_RE})`),
+    'app:section': appRoute(`/${sectionPathPrefix}/:sectionPath(${PATH_RE})`),
 
     // Progress
-    'app:progress': appRoute('progress'),
+    'app:progress': appRoute('/progress'),
 
     // Table of contents
-    'app:toc': appRoute('toc'),
+    'app:toc': appRoute('/toc'),
 
     // Glossary
-    'app:glossary': appRoute('glossary'),
+    'app:glossary': appRoute('/glossary'),
 
     // User login
-    'app:user:login': appRoute('login'),
+    'app:user:login': appRoute('/login'),
   }
 
   const apiRoutes = {
     // Course
-    'api:course': apiRoute(`:courseId(${NUMBER_RE})`),
+    'api:course': apiRoute(`/:courseId(${NUMBER_RE})`),
 
     // Page
-    'api:course:pages': apiRoute(`:courseId(${NUMBER_RE})/pages`),
+    'api:course:pages': apiRoute(`/:courseId(${NUMBER_RE})/pages`),
     'api:course:page:content': apiRoute(
-      `:courseId(${NUMBER_RE})/page/:locale(${LOCALE_RE})/:pageId(${NUMBER_RE})`
+      `/:courseId(${NUMBER_RE})/page/:locale(${LOCALE_RE})/:pageId(${NUMBER_RE})`
     ),
 
     // Section
-    'api:course:sections': apiRoute(`:courseId(${NUMBER_RE})/sections`),
+    'api:course:sections': apiRoute(`/:courseId(${NUMBER_RE})/sections`),
     'api:course:section:content': apiRoute(
-      `:courseId(${NUMBER_RE})/section/:locale(${LOCALE_RE})/:sectionId(${NUMBER_RE})`
+      `/:courseId(${NUMBER_RE})/section/:locale(${LOCALE_RE})/:sectionId(${NUMBER_RE})`
     ),
 
     // Fragment
     'api:course:fragment:content': apiRoute(
-      `:courseId(${NUMBER_RE})/fragment/:locale(${LOCALE_RE})/:fragmentType(${FRAGMENT_RE})`
+      `/:courseId(${NUMBER_RE})/fragment/:locale(${LOCALE_RE})/:fragmentType(${FRAGMENT_RE})`
     ),
   }
 
@@ -99,10 +105,18 @@ function makeRoutes(
     routes,
 
     /** Generate URL path from route name and parameters */
-    generateUrl: (routeName, params) => generators[routeName](params),
+    generateUrl: (routeName, params) => {
+      const generator = generators[routeName]
+      if (generator === undefined) throw new Error(`Unknown route: ${routeName}`)
+      return generator(params)
+    },
 
     /** Match URL path */
-    matchUrl: (routeName, path) => matchers[routeName](path),
+    matchUrl: (routeName, path) => {
+      const matcher = matchers[routeName]
+      if (matcher === undefined) throw new Error(`Unknown route: ${routeName}`)
+      return matchers[routeName](path)
+    },
   }
 }
 

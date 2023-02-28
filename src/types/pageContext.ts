@@ -20,17 +20,9 @@ export interface PageContextInit extends Pick<PageContextBuiltIn, 'urlOriginal'>
 }
 
 /** Page context (SSR context) */
-export interface PageContextServer
-  extends PageContextInit,
-    Omit<PageContextBuiltIn<ComponentType>, 'routeParams'> {
-  /** Extraced route params */
-  routeParams: RouteInfo
-
-  /** Course slug */
-  courseSlug?: ApiCourse['slug']
-
-  /** Current locale */
-  locale: LanguageCode
+export interface PageContextServer extends PageContextInit, PageContextBuiltIn<ComponentType> {
+  /** Extracted route params */
+  routeInfo: Partial<RouteInfo>
 
   /** Indicate a redirect should happen */
   redirectTo?: string

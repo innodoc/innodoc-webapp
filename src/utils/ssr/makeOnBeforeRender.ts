@@ -20,17 +20,23 @@ function makeOnBeforeRender(contentType: ContentType) {
     const getContentId = contentType === 'page' ? getPageIdBySlug : getSectionIdByPath
 
     // Call default onBeforeRender
-    const { pageContext } = await onBeforeRenderDefault(pageContextInput)
-    const { routeParams, store } = pageContext
-    const stringIdValue = routeParams?.[stringIdField]
+    const { pageContext } = await onBeforeRenderDefault({
+      ...pageContextInput,
+      routeInfo: {
+        ...pageContextInput.routeInfo,
+        ...pageContextInput.routeParams, // Overwrite with info from route function
+      },
+    })
+    const { routeInfo, store } = pageContext
+    const stringIdValue = routeInfo?.[stringIdField]
 
     if (stringIdValue === undefined)
       throw RenderErrorPage({
-        pageContext: { errorMsg: `routeParams.${stringIdField} is undefined` },
+        pageContext: { errorMsg: `routeInfo.${stringIdField} is undefined` },
       })
     if (pageContext.courseId === undefined)
       throw RenderErrorPage({ pageContext: { errorMsg: 'courseId is undefined' } })
-    if (pageContext.locale === undefined)
+    if (pageContext?.routeInfo?.locale === undefined)
       throw RenderErrorPage({ pageContext: { errorMsg: 'locale is undefined' } })
     if (store === undefined)
       throw RenderErrorPage({ pageContext: { errorMsg: 'store is undefined' } })
@@ -43,7 +49,7 @@ function makeOnBeforeRender(contentType: ContentType) {
     }
 
     // Fetch content
-    const fetchArgs = { courseId: pageContext.courseId, locale: pageContext.locale }
+    const fetchArgs = { courseId: pageContext.courseId, locale: pageContext.routeInfo.locale }
     const { error } = await (contentType === 'page'
       ? store.dispatch(pages.endpoints.getPageContent.initiate({ ...fetchArgs, pageId: id }))
       : store.dispatch(

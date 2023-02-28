@@ -21,7 +21,7 @@ import 'katex/dist/katex.min.css'
 import { EMOTION_STYLE_KEY, passToClientProps } from '#constants'
 import { getCourse } from '#server/database/queries/courses'
 import makeStore from '#store/makeStore'
-import { changeCourseId, changeRouteInfo } from '#store/slices/appSlice'
+import { changeCourseId, changeRouteInfo, selectRouteInfo } from '#store/slices/appSlice'
 import courses from '#store/slices/entities/courses'
 import pages from '#store/slices/entities/pages'
 import sections from '#store/slices/entities/sections'
@@ -43,19 +43,26 @@ const passToClient = passToClientProps
 
 async function render({
   courseId,
-  locale,
   Page,
   redirectTo,
+  routeInfo,
   store,
 }: PageContextServer): Promise<PageContextUpdate | ReturnType<typeof escapeInject>> {
-  // Honor redirection
   if (redirectTo !== undefined) return { pageContext: { redirectTo } }
+
+  if (routeInfo.locale === undefined) throw new Error('locale is undefined')
 
   // Initialize emotion cache
   const emotionCache = createCache({ key: EMOTION_STYLE_KEY })
 
   // Initialize i18next
-  const i18n = await getI18n(I18NextFsBackend, getI18nBackendOpts(), locale, courseId, store)
+  const i18n = await getI18n(
+    I18NextFsBackend,
+    getI18nBackendOpts(),
+    routeInfo.locale,
+    courseId,
+    store
+  )
 
   // Initialize helmet context
   const helmetContext = {}
@@ -70,10 +77,10 @@ async function render({
   // Get document head tags
   const { helmet } = helmetContext as FilledContext
 
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { constructStyleTagsFromChunks, extractCriticalToChunks } =
-    createEmotionServer(emotionCache)
-  const emotionStyleTags = constructStyleTagsFromChunks(extractCriticalToChunks(pageHtml))
+  // Create emotion server
+  const emotionServer = createEmotionServer(emotionCache)
+  const chunks = emotionServer.extractCriticalToChunks(pageHtml)
+  const emotionStyleTags = emotionServer.constructStyleTagsFromChunks(chunks)
 
   // Script that reads from localStorage and sets mode on html tag before
   // page is rendered (avoid color mode flicker)
@@ -97,51 +104,46 @@ async function render({
 }
 
 async function onBeforeRender({
-  courseSlug,
-  locale,
-  routeParams,
-  urlPathname,
+  routeInfo,
+  urlOriginal,
 }: PageContextServer): Promise<PageContextUpdate> {
   // Initialize store
   const store = makeStore()
-  let courseId: number | undefined = undefined
 
-  if (courseSlug !== undefined) {
-    // Fetch course ID by slug
-    // TODO add getCourseIdBySlug
-    const courseBySlug = await getCourse({ courseSlug })
-    if (courseBySlug === undefined) throw RenderErrorPage({ pageContext: { is404: true } })
-    courseId = courseBySlug.id
+  // Set current route info
+  store.dispatch(changeRouteInfo(routeInfo))
 
-    // Seed initial data to store
-    store.dispatch(changeCourseId(courseId))
-    store.dispatch(changeRouteInfo(routeParams))
+  // Fetch course ID by slug
+  // TODO add getCourseIdBySlug
+  const { courseSlug } = selectRouteInfo(store.getState())
+  const courseBySlug = await getCourse({ courseSlug })
+  if (courseBySlug === undefined) throw RenderErrorPage({ pageContext: { is404: true } })
+  const courseId = courseBySlug.id
+  store.dispatch(changeCourseId(courseId))
 
-    // Populate store with necessary data
-    await store.dispatch(courses.endpoints.getCourse.initiate({ courseId }))
-    await store.dispatch(pages.endpoints.getCoursePages.initiate({ courseId }))
-    await store.dispatch(sections.endpoints.getCourseSections.initiate({ courseId }))
-    // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_A }))
-    // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_B }))
+  // Populate store with necessary data
+  await store.dispatch(courses.endpoints.getCourse.initiate({ courseId }))
+  await store.dispatch(pages.endpoints.getCoursePages.initiate({ courseId }))
+  await store.dispatch(sections.endpoints.getCourseSections.initiate({ courseId }))
+  // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_A }))
+  // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_B }))
 
-    // Retrieve course from store
-    const selectCurrentCourse = courses.endpoints.getCourse.select({ courseId })
-    const { data: course } = selectCurrentCourse(store.getState())
-    if (course === undefined) throw new Error('No course loaded')
+  // Retrieve course from store
+  const selectCurrentCourse = courses.endpoints.getCourse.select({ courseId })
+  const { data: course } = selectCurrentCourse(store.getState())
+  if (course === undefined) throw new Error('No course loaded')
 
-    // Assert we received locales from manifest
-    if (course.locales.length < 1) {
-      throw RenderErrorPage({ pageContext: { errorMsg: 'Course has no locales' } })
-    }
+  // Assert we received locales from manifest
+  if (course.locales.length < 1)
+    throw RenderErrorPage({ pageContext: { errorMsg: 'Course has no locales' } })
 
-    // TODO: how to handle this correctly?
-    if (urlPathname === '/fake-404-url') locale = 'en'
+  // TODO: how to handle this correctly?
+  if (urlOriginal === '/fake-404-url') routeInfo.locale = 'en'
 
-    // Check if current locale is valid
-    if (!course.locales.includes(locale)) {
-      // TODO: should redirect to default locale instead
-      throw RenderErrorPage({ pageContext: { is404: true } })
-    }
+  // Check if current locale is valid
+  if (routeInfo.locale && !course.locales.includes(routeInfo.locale)) {
+    // TODO: should redirect to default locale instead
+    throw RenderErrorPage({ pageContext: { is404: true } })
   }
 
   // Grab populated state
@@ -150,9 +152,8 @@ async function onBeforeRender({
   return {
     pageContext: {
       courseId,
-      locale,
       preloadedState,
-      routeParams,
+      routeInfo,
       store,
     },
   }

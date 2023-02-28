@@ -1,33 +1,52 @@
-import { SLUG_RE } from '#constants'
+import type { RouteInfo } from '#types/common'
 import type { PageContextServer, PageContextUpdate } from '#types/pageContext'
-import { extractLocale } from '#utils/url'
-
-const slugRegExp = new RegExp(`^${SLUG_RE}$`)
+import { isLanguageCode } from '#types/typeGuards'
+import { isSlug } from '#utils/content'
 
 // Extract locale/course slug (SSR/Browser)
-function onBeforeRoute({ requestLocale, host, urlPathname }: PageContextServer): PageContextUpdate {
-  // Default slug
-  let courseSlug = import.meta.env.INNODOC_DEFAULT_COURSE_SLUG
+function onBeforeRoute({ host, requestLocale, urlOriginal }: PageContextServer): PageContextUpdate {
+  const routeInfo: Partial<RouteInfo> = {
+    locale: requestLocale, // Index route fallbacks to browser locale
+    urlPristine: urlOriginal,
+  }
+
+  const pageContext = { routeInfo, urlOriginal }
+
+  // Extract locale from URL
+  const [, urlLocale, ...urlParts] = urlOriginal.split('/')
+  if (isLanguageCode(urlLocale)) {
+    // Overwrite URL
+    pageContext.urlOriginal = `/${urlParts.join('/')}`
+    routeInfo.locale = urlLocale
+  } else {
+    // Redirect without proper locale-prefixed url
+    // TODO use generateURL??
+    const redirectTo = `/${requestLocale}${urlOriginal}`
+    return {
+      pageContext: { redirectTo: redirectTo.at(-1) === '/' ? redirectTo.slice(0, -1) : redirectTo },
+    }
+  }
 
   // Extract slug from domain
   if (import.meta.env.INNODOC_COURSE_SLUG_MODE === 'SUBDOMAIN' && host !== undefined) {
     const domainParts = host.split('.')
-    if (domainParts.length > 2) courseSlug = domainParts[0]
+    if (domainParts.length > 2 && isSlug(domainParts[0])) {
+      routeInfo.courseSlug = domainParts[0]
+    }
   }
 
   // Extract slug from url path
   else if (import.meta.env.INNODOC_COURSE_SLUG_MODE === 'URL') {
-    const urlParts = urlPathname.split('/')
-    if (urlParts !== undefined && urlParts.length > 0) courseSlug = urlParts[1]
+    const [, urlCourseSlug, ...urlParts] = urlOriginal.split('/')
+    if (urlCourseSlug && isSlug(urlCourseSlug)) {
+      pageContext.urlOriginal = `/${urlParts.join('/')}`
+      routeInfo.courseSlug = urlCourseSlug
+    }
   }
 
-  // Validate slug
-  if (!slugRegExp.exec(courseSlug)) courseSlug = import.meta.env.INNODOC_DEFAULT_COURSE_SLUG
+  const pageContextUpdate = { pageContext }
 
-  // Determine locale from URL, fallback to browser locale
-  const { locale } = extractLocale(urlPathname, requestLocale)
-
-  return { pageContext: { courseSlug, locale } }
+  return pageContextUpdate
 }
 
 export { onBeforeRoute }

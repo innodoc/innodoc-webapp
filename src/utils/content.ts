@@ -1,5 +1,8 @@
+import { SLUG_RE } from '#constants'
 import type { ContentType } from '#types/common'
 import type { TranslatedSection } from '#types/entities/section'
+
+const slugRegExp = new RegExp(`^${SLUG_RE}$`)
 
 /** Capitalize string */
 export function capitalize(words: string) {
@@ -20,4 +23,9 @@ export function getSectionNumberFromOrder(section: TranslatedSection) {
 export function formatSectionTitle(section: TranslatedSection, preferShort = false) {
   const title = preferShort && section.shortTitle !== null ? section.shortTitle : section.title
   return `${getSectionNumberFromOrder(section)} ${title ?? ''}`
+}
+
+/** Check if variable is a slug */
+export function isSlug(t: unknown) {
+  return typeof t === 'string' && slugRegExp.test(t)
 }

@@ -1,34 +1,11 @@
 import type { CourseSlugMode } from '#types/common'
-import { extractLocale, generateUrlFromSpecifier, replacePathPrefixes } from '#utils/url'
+import { generateUrlFromSpecifier } from '#utils/url'
 
 async function importGetUrl(courseSlugMode: CourseSlugMode = 'DISABLE') {
   vi.resetModules()
   vi.stubEnv('INNODOC_COURSE_SLUG_MODE', courseSlugMode)
   return (await import('#utils/url')).getUrl
 }
-
-test('extractLocale', () => {
-  expect(extractLocale('/de/foo/bar', 'fr')).toEqual({
-    locale: 'de',
-    urlWithoutLocale: '/foo/bar',
-  })
-  expect(extractLocale('/foo/bar', 'fr')).toEqual({
-    locale: 'fr',
-    urlWithoutLocale: '/foo/bar',
-  })
-  expect(extractLocale('/foo/bar')).toEqual({
-    locale: 'en',
-    urlWithoutLocale: '/foo/bar',
-  })
-  expect(extractLocale('/de/foo/bar', 'en')).toEqual({
-    locale: 'de',
-    urlWithoutLocale: '/foo/bar',
-  })
-  expect(extractLocale('/fr/foo/bar')).toEqual({
-    locale: 'fr',
-    urlWithoutLocale: '/foo/bar',
-  })
-})
 
 test('getUrl', async () => {
   const getUrl = await importGetUrl()

@@ -52,10 +52,9 @@ function findRootElement() {
 async function render({
   courseId,
   isHydration,
-  locale,
   Page,
   preloadedState,
-  routeParams,
+  routeInfo,
 }: PageContextClient) {
   findRootElement()
 
@@ -71,15 +70,15 @@ async function render({
     store = makeStore(preloadedState)
   } else {
     // Update route on navigation
-    store.dispatch(changeRouteInfo(routeParams))
+    store.dispatch(changeRouteInfo(routeInfo))
   }
 
   if (i18n === undefined) {
     // Create i18next instance
-    i18n = await getI18n(I18NextHttpBackend, i18nBackendOpts, locale, courseId, store)
-  } else if (i18n.language !== locale) {
+    i18n = await getI18n(I18NextHttpBackend, i18nBackendOpts, routeInfo.locale, courseId, store)
+  } else if (i18n.language !== routeInfo.locale) {
     // Change i18next locale
-    await i18n.changeLanguage(locale)
+    await i18n.changeLanguage(routeInfo.locale)
   }
 
   // Create Emotion cache
