@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
+import { DEFAULT_ROUTE_NAME } from '#constants'
 import type { RootState } from '#store/makeStore'
 import type { RouteInfo } from '#types/common'
 import type { ApiCourse } from '#types/entities/course'
@@ -17,7 +18,7 @@ const initialState: appSliceState = {
   courseId: null,
   routeInfo: {
     courseSlug: '',
-    routeName: 'app:index',
+    routeName: DEFAULT_ROUTE_NAME,
     locale: 'en',
   },
 }

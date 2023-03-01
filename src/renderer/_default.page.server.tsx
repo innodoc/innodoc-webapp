@@ -18,7 +18,8 @@ import '@fontsource/lato/700-italic.css'
 // KaTeX CSS
 import 'katex/dist/katex.min.css'
 
-import { EMOTION_STYLE_KEY, passToClientProps } from '#constants'
+import { EMOTION_STYLE_KEY, PASS_TO_CLIENT_PROPS } from '#constants'
+import getRoutes from '#routes/getRoutes'
 import { getCourse } from '#server/database/queries/courses'
 import makeStore from '#store/makeStore'
 import { changeCourseId, changeRouteInfo, selectRouteInfo } from '#store/slices/appSlice'
@@ -30,6 +31,8 @@ import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
 import renderToHtml from '#utils/ssr/renderToHtml'
 
+const { generateUrl } = getRoutes()
+
 function getI18nBackendOpts() {
   const dirname = path.dirname(fileURLToPath(import.meta.url))
   const baseLocalesPath = path.resolve(dirname, '..', '..', 'public', 'locales')
@@ -38,8 +41,6 @@ function getI18nBackendOpts() {
     addPath: path.join(baseLocalesPath, '{{lng}}', '{{ns}}.missing.json'),
   }
 }
-
-const passToClient = passToClientProps
 
 async function render({
   courseId,
@@ -104,6 +105,7 @@ async function render({
 }
 
 async function onBeforeRender({
+  needRedirect,
   routeInfo: routeInfoInput,
   routeParams,
   urlOriginal,
@@ -125,8 +127,23 @@ async function onBeforeRender({
   const courseId = courseBySlug.id
   store.dispatch(changeCourseId(courseId))
 
-  // Populate store with necessary data
+  // Load course first as we might need it for later redirection
   await store.dispatch(courses.endpoints.getCourse.initiate({ courseId }))
+
+  // Redirect to proper URL if info couldn't be extracted
+  if (needRedirect) {
+    const { routeName, ...routeArgs } = routeInfo
+    return {
+      pageContext: {
+        courseId,
+        redirectTo: generateUrl(routeName, routeArgs),
+        routeInfo,
+        store,
+      },
+    }
+  }
+
+  // Populate store with necessary data
   await store.dispatch(pages.endpoints.getCoursePages.initiate({ courseId }))
   await store.dispatch(sections.endpoints.getCourseSections.initiate({ courseId }))
   // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_A }))
@@ -163,4 +180,4 @@ async function onBeforeRender({
   }
 }
 
-export { getI18nBackendOpts, onBeforeRender, passToClient, render }
+export { getI18nBackendOpts, onBeforeRender, PASS_TO_CLIENT_PROPS as passToClient, render }

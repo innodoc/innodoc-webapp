@@ -48,6 +48,9 @@ export const DEFAULT_SECTION_PATH_PREFIX = 'section'
 /** Default page path prefix */
 export const DEFAULT_PAGE_PATH_PREFIX = 'section'
 
+/** Default route name */
+export const DEFAULT_ROUTE_NAME = 'app:index'
+
 /**
  * Content should never be refetched (use highest possible value)
  * https://github.com/reduxjs/redux-toolkit/issues/2535
@@ -73,7 +76,12 @@ export const FRAGMENT_RE = `(?:${FRAGMENT_TYPES.join('|')})`
 export const COURSE_SLUG_MODES = ['SUBDOMAIN', 'URL', 'DISABLE'] as const
 
 /** Props to be passed to client */
-export const passToClientProps = ['courseId', 'preloadedState', 'routeInfo', 'routeParams'] as const
+export const PASS_TO_CLIENT_PROPS = [
+  'courseId',
+  'preloadedState',
+  'routeInfo',
+  'routeParams',
+] as const
 
 /** Emotion style cache key */
 export const EMOTION_STYLE_KEY = 'emotion-style'

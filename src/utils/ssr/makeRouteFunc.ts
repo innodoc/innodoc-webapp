@@ -15,11 +15,8 @@ function makeRouteFunc(routeName: RouteName) {
   return (pageContext: PageContextServer) => {
     if (pageContext.redirectTo) return false
 
-    const { urlPristine } = pageContext
-    if (urlPristine === undefined) throw new Error('pageContext.routeInfo.urlPristine is undefined')
-
     // Routes also need to match pageContext.json files used in client navigation
-    const url = urlPristine.replace(removePageContextJsonRE, '')
+    const url = pageContext.urlOriginal.replace(removePageContextJsonRE, '')
 
     // Match URL against route
     const match = matchUrl(routeName, url)

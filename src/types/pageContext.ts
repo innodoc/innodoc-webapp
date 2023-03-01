@@ -4,7 +4,7 @@ import type { ComponentType } from 'react'
 import type { PageContextBuiltIn } from 'vite-plugin-ssr'
 import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client/router'
 
-import type { passToClientProps } from '#constants'
+import type { PASS_TO_CLIENT_PROPS } from '#constants'
 import type { RootState, Store } from '#store/makeStore'
 
 import type { RouteInfo } from './common'
@@ -36,9 +36,15 @@ export interface PageContextServer extends PageContextInit, PageContextBuiltIn<C
   /** Application redux store */
   store: Store
 
-  /** Untouched URL from request handler */
-  urlPristine: string
+  /** Redirect needed because of parameter parsing? */
+  needRedirect: boolean
 }
+
+/** Page context passed into `onBeforeRoute` */
+export type PageContextOnBeforeRoute = Pick<
+  PageContextServer,
+  'host' | 'requestLocale' | 'urlOriginal'
+>
 
 /** Page context update (SSR context) */
 export interface PageContextUpdate {
@@ -47,4 +53,4 @@ export interface PageContextUpdate {
 
 /** Page context (Browser context) */
 export type PageContextClient = PageContextBuiltInClient<ComponentType> &
-  Pick<PageContextServer, (typeof passToClientProps)[number]>
+  Pick<PageContextServer, (typeof PASS_TO_CLIENT_PROPS)[number]>

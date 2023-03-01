@@ -54,6 +54,12 @@ async function startServer() {
   else app.use(API_PREFIX, apiRouter)
 
   // Serve frontend
+  if (!config.isProduction) {
+    apiRouter.use((req, res, next) => {
+      console.log(`Frontend request: ${req.url}`)
+      next()
+    })
+  }
   app.use(frontendHandler)
 
   // TODO: Add error handler

@@ -20,7 +20,9 @@ const frontendHandler = (async (req, res, next) => {
   // Check error
   if (pageContext.errorWhileRendering) next(pageContext.errorWhileRendering)
   // Follow redirection directive from app
-  else if (pageContext.redirectTo !== undefined) return res.redirect(307, pageContext.redirectTo)
+  else if (pageContext.redirectTo !== undefined) {
+    return res.redirect(307, pageContext.redirectTo)
+  }
   // Check response
   else if (pageContext.httpResponse === null)
     next(new Error(`${req.originalUrl}: renderPage() didn't return httpResponse`))
