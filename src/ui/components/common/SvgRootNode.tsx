@@ -6,13 +6,17 @@ import InlineError from '#ui/components/common/error/InlineError'
 import attributesToProps from '#utils/attributesToProps'
 
 function isElementNode(node: unknown): node is ElementNode {
-  if (node === null || typeof node !== 'object') return false
+  if (node === null || typeof node !== 'object') {
+    return false
+  }
   const elementNode = node as ElementNode
   return elementNode.type === 'element' && Array.isArray(elementNode.children)
 }
 
 function isRootNode(node: unknown): node is RootNode {
-  if (node === null || typeof node !== 'object') return false
+  if (node === null || typeof node !== 'object') {
+    return false
+  }
   const rootNode = node as RootNode
   return (
     rootNode.type === 'root' && Array.isArray(rootNode.children) && rootNode.children.length === 1
@@ -34,9 +38,16 @@ interface SvgElementNodeProps {
 }
 
 function SvgNode({ node }: SvgNodeProps) {
-  if (typeof node === 'string') return <>{node}</>
-  if (isElementNode(node)) return <SvgElementNode node={node} />
-  if (node.value === undefined) return null // TextNode
+  if (typeof node === 'string') {
+    return <>{node}</>
+  }
+  if (isElementNode(node)) {
+    return <SvgElementNode node={node} />
+  }
+  // TextNode
+  if (node.value === undefined) {
+    return null
+  }
 
   return <>{node.value}</>
 }

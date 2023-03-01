@@ -41,7 +41,9 @@ class Importer {
 
   /** Commit transaction and reset import object */
   protected async finish() {
-    if (!this.trx || !this.db) throw new Error("Importer wasn't initialized")
+    if (!this.trx || !this.db) {
+      throw new Error("Importer wasn't initialized")
+    }
 
     const courseId = this.courseId
 
@@ -65,7 +67,9 @@ class Importer {
 
   /** Read course manifest */
   protected async readManifest() {
-    if (!this.importFolder) throw new Error("Importer wasn't initialized")
+    if (!this.importFolder) {
+      throw new Error("Importer wasn't initialized")
+    }
 
     const yamlBuffer = await fs.readFile(path.join(this.importFolder, 'manifest.yml'))
     this.manifest = yamlParse(yamlBuffer.toString()) as Manifest
@@ -73,7 +77,9 @@ class Importer {
 
   /** Create course entity */
   protected async createCourse() {
-    if (!this.trx || !this.manifest) throw new Error("Importer wasn't initialized")
+    if (!this.trx || !this.manifest) {
+      throw new Error("Importer wasn't initialized")
+    }
 
     const courseData = {
       slug: this.courseSlug,
@@ -98,8 +104,9 @@ class Importer {
 
   /** Create all course pages */
   protected async createPages() {
-    if (!this.trx || !this.manifest || !this.importFolder)
+    if (!this.trx || !this.manifest || !this.importFolder) {
       throw new Error("Importer wasn't initialized")
+    }
 
     for (const page of this.manifest.pages) {
       const pageId = await this.createPage(page)
@@ -130,7 +137,9 @@ class Importer {
 
   /** Create page entity */
   protected async createPage(page: ManifestPage) {
-    if (!this.trx) throw new Error("Importer wasn't initialized")
+    if (!this.trx) {
+      throw new Error("Importer wasn't initialized")
+    }
 
     const pageData = {
       slug: page.id,
@@ -145,7 +154,9 @@ class Importer {
 
   /** Create all course sections */
   protected async createSections() {
-    if (!this.importFolder || !this.manifest) throw new Error("Importer wasn't initialized")
+    if (!this.importFolder || !this.manifest) {
+      throw new Error("Importer wasn't initialized")
+    }
 
     // Walk down first tree of first locale
     const startDir = path.join(this.importFolder, this.manifest.languages[0])
@@ -179,8 +190,9 @@ class Importer {
     order: number,
     parentId: DbSection['parent_id']
   ) {
-    if (!this.trx || !this.importFolder || !this.courseId || !this.manifest)
+    if (!this.trx || !this.importFolder || !this.courseId || !this.manifest) {
       throw new Error("Importer wasn't initialized")
+    }
 
     let sectionId = 0
 
@@ -195,7 +207,9 @@ class Importer {
       if (locale === this.manifest.languages[0]) {
         const sectionPathParts = sectionPath.split('/')
         const slug = sectionPathParts.at(-1)
-        if (!slug) throw new Error('slug is empty')
+        if (!slug) {
+          throw new Error('slug is empty')
+        }
 
         const sectionData = {
           slug,
@@ -237,7 +251,9 @@ class Importer {
   protected static convertPandocSyntax(content: string) {
     // Extract meta data
     const matches = content.match(/---\s([\s\S]*?)---[\s\S]{2}([\s\S]+)/)
-    if (!matches) throw new Error('Could not extract YAML frontmatter')
+    if (!matches) {
+      throw new Error('Could not extract YAML frontmatter')
+    }
     const [, yaml, rest] = matches
     const frontmatter = camelcaseKeys(yamlParse(yaml)) as Frontmatter
 

@@ -34,10 +34,14 @@ function useSelectBreadcrumbSections() {
         (result, _sectionPath, _locale: LanguageCode) => _locale,
       ],
       (sections, _sectionPath, _locale) => {
-        if (sections === undefined || _sectionPath === null) return emptyArray
+        if (sections === undefined || _sectionPath === null) {
+          return emptyArray
+        }
 
         const section = sections.find((s) => s.path === _sectionPath)
-        if (section === undefined) return emptyArray
+        if (section === undefined) {
+          return emptyArray
+        }
 
         const parts = section.path.split('/')
         const bcSections = parts.reduce<ApiSection[]>((acc, _, idx) => {

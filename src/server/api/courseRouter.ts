@@ -16,7 +16,9 @@ const p = (name: RouteName) => getRoutePath(name, API_COURSE_PREFIX)
 
 const checkErrors: RequestHandler = (req, res, next) => {
   const errors = validationResult(req)
-  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() })
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
   next()
 }
 
@@ -24,7 +26,9 @@ const courseRouter = Router()
   // Get course by ID
   .get(p('api:course'), param('courseId').isInt(), checkErrors, (async (req, res) => {
     const course = await getCourse({ courseId: parseInt(req.params.courseId) })
-    if (!course) return res.sendStatus(404)
+    if (!course) {
+      return res.sendStatus(404)
+    }
 
     res.json(course)
   }) as RequestHandler)
@@ -32,7 +36,9 @@ const courseRouter = Router()
   // Get course by slug
   .get(p('api:course'), param('courseId').isInt(), checkErrors, (async (req, res) => {
     const course = await getCourse({ courseId: parseInt(req.params.courseId) })
-    if (!course) return res.sendStatus(404)
+    if (!course) {
+      return res.sendStatus(404)
+    }
 
     res.json(course)
   }) as RequestHandler)
@@ -56,7 +62,9 @@ const courseRouter = Router()
         req.params.locale as LanguageCode,
         parseInt(req.params.pageId)
       )
-      if (pageContent === undefined) res.status(404)
+      if (pageContent === undefined) {
+        res.status(404)
+      }
 
       res.type('text/markdown').send(pageContent)
     }) as RequestHandler
@@ -81,7 +89,9 @@ const courseRouter = Router()
         req.params.locale as LanguageCode,
         parseInt(req.params.sectionId)
       )
-      if (sectionContent === undefined) res.status(404)
+      if (sectionContent === undefined) {
+        res.status(404)
+      }
 
       res.type('text/markdown').send(sectionContent)
     }) as RequestHandler

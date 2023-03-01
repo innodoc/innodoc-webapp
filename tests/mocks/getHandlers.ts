@@ -12,7 +12,9 @@ const routeManager = getRouteManager()
 
 const getStringParam = (req: RestRequest, name: string) => {
   const val = req.params[name]
-  if (typeof val !== 'string') throw new Error('Wrong parameter type')
+  if (typeof val !== 'string') {
+    throw new Error('Wrong parameter type')
+  }
   return val
 }
 
@@ -26,7 +28,9 @@ const getContent = (
 ) => {
   const locale = getStringParam(req, 'locale') as LanguageCode
   const text = content[locale]
-  if (text === undefined) return res(ctx.status(404))
+  if (text === undefined) {
+    return res(ctx.status(404))
+  }
   return res(ctx.status(200), ctx.text(text))
 }
 
@@ -68,7 +72,9 @@ function getHandlers(baseUrl: string) {
     // Fragment
     rest.get(makePath('api:course:fragment:content'), (req, res, ctx) => {
       const fragmentType = getStringParam(req, 'fragmentType')
-      if (!isFragmentType(fragmentType)) throw new Error(`Unknown fragment type: ${fragmentType}`)
+      if (!isFragmentType(fragmentType)) {
+        throw new Error(`Unknown fragment type: ${fragmentType}`)
+      }
       return getContent(req, res, ctx, getCourse(req).footerContent[fragmentType])
     }),
   ]

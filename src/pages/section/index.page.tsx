@@ -33,8 +33,12 @@ function SectionPage() {
     { skip: skipContentFetch }
   )
 
-  if (course === undefined) return <ErrorPage is404 />
-  if (sectionPath === undefined) return null
+  if (course === undefined) {
+    return <ErrorPage is404 />
+  }
+  if (sectionPath === undefined) {
+    return null
+  }
   if (isError) {
     return (
       <ErrorPage
@@ -50,8 +54,12 @@ function SectionPage() {
       />
     )
   }
-  if (isLoading || content === undefined) return <LoadingSpinner />
-  if (section === undefined) return <ErrorPage is404 />
+  if (isLoading || content === undefined) {
+    return <LoadingSpinner />
+  }
+  if (section === undefined) {
+    return <ErrorPage is404 />
+  }
 
   return (
     <>

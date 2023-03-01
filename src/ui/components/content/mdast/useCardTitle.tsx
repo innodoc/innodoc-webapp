@@ -29,7 +29,9 @@ export function CardTitleProvider({ children }: NumberingProviderProps) {
   // with z = sequential number for whole subtree
   const formatTitle = useCallback(
     (id: string | undefined, title: string) => {
-      if (id === undefined) return title
+      if (id === undefined) {
+        return title
+      }
       const ids = Object.keys(titles.current)
       if (!ids.includes(id)) {
         const cardTitle = `${title} ${sectionNumber}.${ids.length + 1}`

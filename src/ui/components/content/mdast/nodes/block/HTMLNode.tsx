@@ -7,7 +7,9 @@ function HTMLNode({ node }: HTMLNodeProps) {
   const { t } = useTranslation()
 
   // Ignore comments
-  if (node.value.startsWith('<!--') && node.value.endsWith('-->')) return null
+  if (node.value.startsWith('<!--') && node.value.endsWith('-->')) {
+    return null
+  }
 
   return (
     <BlockError>

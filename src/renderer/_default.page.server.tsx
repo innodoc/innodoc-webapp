@@ -49,9 +49,13 @@ async function render({
   routeInfo,
   store,
 }: PageContextServer): Promise<PageContextUpdate | ReturnType<typeof escapeInject>> {
-  if (redirectTo !== undefined) return { pageContext: { redirectTo } }
+  if (redirectTo !== undefined) {
+    return { pageContext: { redirectTo } }
+  }
 
-  if (routeInfo.locale === undefined) throw new Error('locale is undefined')
+  if (routeInfo.locale === undefined) {
+    throw new Error('locale is undefined')
+  }
 
   // Initialize emotion cache
   const emotionCache = createCache({ key: EMOTION_STYLE_KEY })
@@ -123,7 +127,9 @@ async function onBeforeRender({
   // TODO add getCourseIdBySlug
   const { courseSlug } = selectRouteInfo(store.getState())
   const courseBySlug = await getCourse({ courseSlug })
-  if (courseBySlug === undefined) throw RenderErrorPage({ pageContext: { is404: true } })
+  if (courseBySlug === undefined) {
+    throw RenderErrorPage({ pageContext: { is404: true } })
+  }
   const courseId = courseBySlug.id
   store.dispatch(changeCourseId(courseId))
 
@@ -152,14 +158,19 @@ async function onBeforeRender({
   // Retrieve course from store
   const selectCurrentCourse = courses.endpoints.getCourse.select({ courseId })
   const { data: course } = selectCurrentCourse(store.getState())
-  if (course === undefined) throw new Error('No course loaded')
+  if (course === undefined) {
+    throw new Error('No course loaded')
+  }
 
   // Assert we received locales from manifest
-  if (course.locales.length < 1)
+  if (course.locales.length < 1) {
     throw RenderErrorPage({ pageContext: { errorMsg: 'Course has no locales' } })
+  }
 
   // TODO: how to handle this correctly?
-  if (urlOriginal === '/fake-404-url') routeInfo.locale = 'en'
+  if (urlOriginal === '/fake-404-url') {
+    routeInfo.locale = 'en'
+  }
 
   // Check if current locale is valid
   if (routeInfo.locale && !course.locales.includes(routeInfo.locale)) {

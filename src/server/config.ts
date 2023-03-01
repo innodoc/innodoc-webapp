@@ -18,17 +18,21 @@ function isCourseSlugMode(mode: string | undefined): mode is CourseSlugMode {
   return mode !== undefined && COURSE_SLUG_MODES.includes(mode as CourseSlugMode)
 }
 
-if (process.env.DB_CONNECTION === undefined)
+if (process.env.DB_CONNECTION === undefined) {
   throw new Error('You need to set the env variable DB_CONNECTION.')
+}
 
-if (process.env.INNODOC_COURSE_SLUG_MODE === undefined)
+if (process.env.INNODOC_COURSE_SLUG_MODE === undefined) {
   throw new Error('You need to set the env variable INNODOC_COURSE_SLUG_MODE.')
+}
 
-if (process.env.INNODOC_DEFAULT_COURSE_SLUG === undefined)
+if (process.env.INNODOC_DEFAULT_COURSE_SLUG === undefined) {
   throw new Error('You need to set the env variable INNODOC_DEFAULT_COURSE_SLUG.')
+}
 
-if (process.env.INNODOC_APP_ROOT === undefined)
+if (process.env.INNODOC_APP_ROOT === undefined) {
   throw new Error('You need to set the env variable INNODOC_APP_ROOT.')
+}
 
 const config: ServerConfig = {
   host: process.env.SERVER_HOST || 'localhost',

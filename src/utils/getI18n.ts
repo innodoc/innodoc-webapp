@@ -30,7 +30,9 @@ async function getI18n(
   // Select current course
   const selectCurrentCourse = courses.endpoints.getCourse.select({ courseId })
   const { data: course } = selectCurrentCourse(store.getState())
-  if (course === undefined) throw new Error(`No course loaded`)
+  if (course === undefined) {
+    throw new Error(`No course loaded`)
+  }
 
   // Initialize i18next
   await i18next

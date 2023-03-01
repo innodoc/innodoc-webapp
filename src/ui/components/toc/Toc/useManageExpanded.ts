@@ -5,7 +5,9 @@ import { useSelector } from '#ui/hooks/store'
 
 /** Return array of expanded section paths/node IDs (including parents) */
 function getExpandedWithParents(sectionPath?: string) {
-  if (sectionPath === undefined) return []
+  if (sectionPath === undefined) {
+    return []
+  }
   const parts = sectionPath.split('/')
   const parents = parts
     .slice(0, parts.length - 1)

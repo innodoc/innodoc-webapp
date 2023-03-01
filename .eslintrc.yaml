@@ -109,6 +109,9 @@ plugins:
 root: true
 
 rules:
+  # Enforce all block statements to be wrapped in curly braces
+  curly: error
+
   ########### Filenames
 
   filenames/match-exported: error

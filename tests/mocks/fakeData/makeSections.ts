@@ -37,7 +37,9 @@ const mapSectionDef = (
   locales: LanguageCode[]
 ): Sections => {
   const section = makeSection(idx, parent, parentPath, courseId, locales)
-  if (childrenDef === null) return { [section[0].id]: section }
+  if (childrenDef === null) {
+    return { [section[0].id]: section }
+  }
 
   const childrenDefArr = Array.isArray(childrenDef)
     ? childrenDef

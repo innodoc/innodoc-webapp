@@ -535,7 +535,9 @@ function getPropsKey(key: string) {
 
 /** Transform object of HTML attributes to React props */
 function attributesToProps(attributes: ElementNode['properties']) {
-  if (attributes === undefined) return undefined
+  if (attributes === undefined) {
+    return undefined
+  }
 
   const keys = Object.keys(attributes)
   const props: Record<string, string | number | object> = {}

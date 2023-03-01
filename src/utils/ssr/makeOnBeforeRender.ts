@@ -24,16 +24,20 @@ function makeOnBeforeRender(contentType: ContentType) {
     const { routeInfo, store } = pageContext
     const stringIdValue = routeInfo?.[stringIdField]
 
-    if (stringIdValue === undefined)
+    if (stringIdValue === undefined) {
       throw RenderErrorPage({
         pageContext: { errorMsg: `routeInfo.${stringIdField} is undefined` },
       })
-    if (pageContext.courseId === undefined)
+    }
+    if (pageContext.courseId === undefined) {
       throw RenderErrorPage({ pageContext: { errorMsg: 'courseId is undefined' } })
-    if (pageContext?.routeInfo?.locale === undefined)
+    }
+    if (pageContext?.routeInfo?.locale === undefined) {
       throw RenderErrorPage({ pageContext: { errorMsg: 'locale is undefined' } })
-    if (store === undefined)
+    }
+    if (store === undefined) {
       throw RenderErrorPage({ pageContext: { errorMsg: 'store is undefined' } })
+    }
 
     // Fetch content ID
     const id = await getContentId(pageContext.courseId, stringIdValue)

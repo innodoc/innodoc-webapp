@@ -19,7 +19,9 @@ import useSelectCurrentCourse from '#ui/hooks/useSelectCurrentCourse'
 function Logo() {
   const { course } = useSelectCurrentCourse()
 
-  if (course === undefined) return null
+  if (course === undefined) {
+    return null
+  }
 
   // const content = <StyledSvgLogo />
   const content = (

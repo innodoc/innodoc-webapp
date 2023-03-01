@@ -24,7 +24,9 @@ function useSelectSectionChildren(parentId: ApiSection['parentId']) {
         (result, _parentId, _locale: LanguageCode) => _locale,
       ],
       (sections, _parentId, _locale) => {
-        if (sections === undefined) return emptyArray
+        if (sections === undefined) {
+          return emptyArray
+        }
         const children = sections.filter((s) => s.parentId === _parentId)
         return translateEntityArray(children, defaultTranslatableFields, _locale)
       }

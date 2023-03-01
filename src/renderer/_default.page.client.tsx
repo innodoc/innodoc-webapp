@@ -44,7 +44,9 @@ function createEmotionCache() {
 function findRootElement() {
   if (rootEl === undefined) {
     const elem = document.getElementById('root')
-    if (elem === null) throw new Error('React root element not found!')
+    if (elem === null) {
+      throw new Error('React root element not found!')
+    }
     rootEl = elem
   }
 }
@@ -58,7 +60,9 @@ async function render({
 }: PageContextClient) {
   findRootElement()
 
-  if (routeInfo.locale === undefined) throw new Error('locale undefined')
+  if (routeInfo.locale === undefined) {
+    throw new Error('locale undefined')
+  }
 
   // Enable API mock
   if (import.meta.env.INNODOC_API_MOCK === 'true' && mockWorker === undefined) {
@@ -84,7 +88,9 @@ async function render({
   }
 
   // Create Emotion cache
-  if (emotionCache === undefined) emotionCache = createEmotionCache()
+  if (emotionCache === undefined) {
+    emotionCache = createEmotionCache()
+  }
 
   const page = (
     <PageShell emotionCache={emotionCache} i18n={i18n} store={store}>

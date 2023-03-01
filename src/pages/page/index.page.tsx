@@ -30,8 +30,12 @@ function PagePage() {
     { skip: skipContentFetch }
   )
 
-  if (course === undefined) return <ErrorPage is404 />
-  if (pageSlug === undefined) return null
+  if (course === undefined) {
+    return <ErrorPage is404 />
+  }
+  if (pageSlug === undefined) {
+    return null
+  }
   if (isError) {
     return (
       <ErrorPage
@@ -47,8 +51,12 @@ function PagePage() {
       />
     )
   }
-  if (isLoading || content === undefined) return <LoadingSpinner />
-  if (page === undefined) return <ErrorPage is404 />
+  if (isLoading || content === undefined) {
+    return <LoadingSpinner />
+  }
+  if (page === undefined) {
+    return <ErrorPage is404 />
+  }
 
   return (
     <>

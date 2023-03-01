@@ -9,7 +9,9 @@ function ErrorPage({ errorMsg, is404 }: ErrorPageProps) {
     captionText = '404 Page Not Found'
     subtitle = 'This page could not be found.'
   }
-  if (errorMsg !== undefined) subtitle = errorMsg
+  if (errorMsg !== undefined) {
+    subtitle = errorMsg
+  }
 
   return (
     <Alert variant="outlined" severity="error">

@@ -11,7 +11,9 @@ async function importFromV1() {
   // Import
   const importer = new Importer()
   const courseId = await importer.import(importFolder, courseSlug)
-  if (courseId === null) throw new Error('courseId is null')
+  if (courseId === null) {
+    throw new Error('courseId is null')
+  }
 
   return courseId
 }

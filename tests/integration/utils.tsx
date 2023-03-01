@@ -78,7 +78,9 @@ function render(ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) {
 async function loadPage(pageSlug: ApiPage['slug']) {
   const courses = getData()
   const page = Object.entries(courses[0].pages).find(([, [p]]) => p.slug === pageSlug)
-  if (page === undefined) throw new Error(`Could not find mock page ${pageSlug}`)
+  if (page === undefined) {
+    throw new Error(`Could not find mock page ${pageSlug}`)
+  }
   const pageObj = page[1][0]
   await fetchContent(
     store,
@@ -90,7 +92,9 @@ async function loadPage(pageSlug: ApiPage['slug']) {
 async function loadSection(sectionPath: ApiSection['path']) {
   const courses = getData()
   const section = Object.entries(courses[0].sections).find(([, [s]]) => s.path === sectionPath)
-  if (section === undefined) throw new Error(`Could not find mock section ${sectionPath}`)
+  if (section === undefined) {
+    throw new Error(`Could not find mock section ${sectionPath}`)
+  }
   const sectionObj = section[1][0]
   await fetchContent(
     store,

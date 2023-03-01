@@ -24,7 +24,9 @@ function useSelectLinkedPages(linkLocation: PageLinkLocation) {
         (_result, _locale: LanguageCode) => _locale,
       ],
       (pages, _locale) => {
-        if (pages === undefined) return emptyArray
+        if (pages === undefined) {
+          return emptyArray
+        }
         const linkedPages = pages.filter((p) => (p.linked ?? []).includes(linkLocation))
         return translateEntityArray(linkedPages, defaultTranslatableFields, _locale)
       }

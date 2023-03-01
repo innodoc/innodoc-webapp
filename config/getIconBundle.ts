@@ -37,14 +37,17 @@ function filterBySet(set: string, iconNames: string[]) {
 /** Parse file data from content */
 async function getFileIconData(iconNames: string[]): Promise<Record<string, RootNode>> {
   const contentRoot = process.env.INNODOC_CONTENT_ROOT
-  if (contentRoot === undefined)
+  if (contentRoot === undefined) {
     throw new Error('You need to set the env variable INNODOC_CONTENT_ROOT.')
+  }
 
   return Object.fromEntries(
     await Promise.all(
       iconNames.map(async (iconName): Promise<[string, RootNode]> => {
         const res = await fetch(`${contentRoot}_static/${iconName}`)
-        if (!res.ok) throw new Error(`Failed to fetch SVG icon ${iconName}`)
+        if (!res.ok) {
+          throw new Error(`Failed to fetch SVG icon ${iconName}`)
+        }
         return [`file:${iconName}`, parseSvg(await res.text())]
       })
     )

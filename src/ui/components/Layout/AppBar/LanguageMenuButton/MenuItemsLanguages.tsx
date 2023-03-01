@@ -15,7 +15,9 @@ function MenuItemsLanguages({ closeMenu = () => undefined, inset }: MenuItemsLan
   const { course } = useSelectCurrentCourse()
   const { locale: currentLocale } = useSelector(selectRouteInfo)
 
-  if (course === undefined) return null
+  if (course === undefined) {
+    return null
+  }
 
   const handleClick = () => {
     closeMenu()

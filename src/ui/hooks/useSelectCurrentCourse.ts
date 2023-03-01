@@ -22,7 +22,9 @@ function useSelectCurrentCourse() {
           (_result, _locale: LanguageCode) => _locale,
         ],
         (course, _locale) => {
-          if (course === undefined) return undefined
+          if (course === undefined) {
+            return undefined
+          }
           return translateEntity(course, [...defaultTranslatableFields, 'description'], _locale)
         }
       ),

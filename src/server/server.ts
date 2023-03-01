@@ -46,12 +46,17 @@ async function startServer() {
   const app = express()
 
   app.use(localeMiddleware())
-  if (config.isProduction) await setupServeStatic(app)
+  if (config.isProduction) {
+    await setupServeStatic(app)
+  }
   await setupViteServer(app)
 
   // Enable API
-  if (config.enableMockApi) await enableApiMock()
-  else app.use(API_PREFIX, apiRouter)
+  if (config.enableMockApi) {
+    await enableApiMock()
+  } else {
+    app.use(API_PREFIX, apiRouter)
+  }
 
   // Serve frontend
   if (!config.isProduction) {

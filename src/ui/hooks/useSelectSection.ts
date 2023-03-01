@@ -23,9 +23,13 @@ function useSelectSection(sectionPath: ApiSection['path'] | undefined) {
           (_result, _sectionPath, _locale: LanguageCode) => _locale,
         ],
         (sections, _sectionPath, _locale) => {
-          if (sections === undefined) return undefined
+          if (sections === undefined) {
+            return undefined
+          }
           const section = sections.find((p) => p.path === _sectionPath)
-          if (section === undefined) return undefined
+          if (section === undefined) {
+            return undefined
+          }
           return translateEntity(section, defaultTranslatableFields, _locale)
         }
       ),

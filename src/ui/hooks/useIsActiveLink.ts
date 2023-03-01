@@ -9,7 +9,9 @@ function useIsActiveLink() {
     const routeInfo = { ...currentRouteInfo, ...partialRouteInfo }
 
     for (const key of Object.keys(currentRouteInfo) as Array<keyof RouteInfo>) {
-      if (currentRouteInfo[key] !== routeInfo[key]) return false
+      if (currentRouteInfo[key] !== routeInfo[key]) {
+        return false
+      }
     }
     return true
   }

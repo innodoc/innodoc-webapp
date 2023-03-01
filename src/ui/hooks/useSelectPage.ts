@@ -23,9 +23,13 @@ function useSelectPage(pageSlug: ApiPage['slug'] | undefined) {
           (result, _pageSlug, _locale: LanguageCode) => _locale,
         ],
         (pages, _pageSlug, _locale) => {
-          if (pages === undefined) return undefined
+          if (pages === undefined) {
+            return undefined
+          }
           const page = pages.find((p) => p.slug === _pageSlug)
-          if (page === undefined) return undefined
+          if (page === undefined) {
+            return undefined
+          }
           return translateEntity(page, defaultTranslatableFields, _locale)
         }
       ),

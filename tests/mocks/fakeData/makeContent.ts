@@ -26,7 +26,9 @@ const nodeMakers: NodeMakers = [
   [3, () => makeCode()],
 ]
 const weights = [nodeMakers[0][0]]
-for (let i = 1; i < nodeMakers.length; ++i) weights[i] = nodeMakers[i][0] + weights[i - 1]
+for (let i = 1; i < nodeMakers.length; ++i) {
+  weights[i] = nodeMakers[i][0] + weights[i - 1]
+}
 
 function makeList() {
   const randNum = faker.datatype.number({ min: 2, max: 5 })
@@ -46,14 +48,20 @@ function makeCode() {
 
 function makeNode() {
   const randNum = faker.datatype.float({ min: 0, max: 1 }) * weights[weights.length - 1]
-  for (let i = 0; i < weights.length; ++i) if (randNum <= weights[i]) return nodeMakers[i][1]()
+  for (let i = 0; i < weights.length; ++i) {
+    if (randNum <= weights[i]) {
+      return nodeMakers[i][1]()
+    }
+  }
   throw new Error('Should not happen')
 }
 
 function makeMarkdown(options: Partial<ContentOptions>) {
   const mergedOps = { ...defaultOptions, ...options }
 
-  if (options.seed) seed(options.seed)
+  if (options.seed) {
+    seed(options.seed)
+  }
 
   const nodes = range(mergedOps.nodeCount).map(makeNode)
 
@@ -62,7 +70,9 @@ function makeMarkdown(options: Partial<ContentOptions>) {
   }
 
   const rootNode = root(nodes)
-  if (!isRoot(rootNode)) throw new Error('Type assertion error in Markdown generation')
+  if (!isRoot(rootNode)) {
+    throw new Error('Type assertion error in Markdown generation')
+  }
 
   return processor.stringify(rootNode)
 }
