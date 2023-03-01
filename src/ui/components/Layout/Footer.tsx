@@ -23,6 +23,9 @@ import useSelectLinkedPages from '#ui/hooks/useSelectLinkedPages'
 
 const otherPagesFooter = otherPages.filter((page) => page.linked.includes('footer'))
 
+// TODO: refactor into multiple files, use different list component as icon is
+// mis-aligned
+
 // Override link color on light theme for better readability
 const footerTheme = makeTheme({
   ...baseThemeOpts,

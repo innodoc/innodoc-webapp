@@ -1,7 +1,6 @@
 import type { LanguageCode } from 'iso-639-1'
 
 import getRoutes from '#routes/getRoutes'
-import type { TranslatedPage } from '#types/entities/page'
 import { isContentType } from '#types/typeGuards'
 
 import { getStringIdField } from './content'
@@ -21,12 +20,6 @@ export function getUrl<Args extends object>(name: string, params: Args) {
   // TODO: add hostname in domain path mode?
 
   return generateUrl(name, paramsAsStrings)
-}
-
-/** Generate page URL */
-// TODO remove
-export function getPageUrl(pageSlug: TranslatedPage['slug']) {
-  return `/${import.meta.env.INNODOC_PAGE_PATH_PREFIX}/${pageSlug}`
 }
 
 /** Parse internal link specifier such as `section|foo/bar` */

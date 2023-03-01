@@ -104,9 +104,13 @@ async function render({
 }
 
 async function onBeforeRender({
-  routeInfo,
+  routeInfo: routeInfoInput,
+  routeParams,
   urlOriginal,
 }: PageContextServer): Promise<PageContextUpdate> {
+  // Merge info from route function
+  const routeInfo = { ...routeInfoInput, ...routeParams }
+
   // Initialize store
   const store = makeStore()
 

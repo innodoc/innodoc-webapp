@@ -7,18 +7,18 @@ const { matchUrl } = getRoutes()
 const removePageContextJsonRE = /\/index.pageContext.json$/
 
 /**
- * Factory for route function for content pages
+ * Factory for route function for all pages
  *
  * Match route and extract parameters.
  */
 function makeRouteFunc(routeName: RouteName) {
   return (pageContext: PageContextServer) => {
     if (pageContext.redirectTo) return false
-    const { routeInfo } = pageContext
-    const { urlPristine } = routeInfo
-    if (urlPristine === undefined) throw new Error(`pageContext.routeInfo.urlPristine is undefined`)
 
-    // Routes also need to match th pageContext.json files used in client navigation
+    const { urlPristine } = pageContext
+    if (urlPristine === undefined) throw new Error('pageContext.routeInfo.urlPristine is undefined')
+
+    // Routes also need to match pageContext.json files used in client navigation
     const url = urlPristine.replace(removePageContextJsonRE, '')
 
     // Match URL against route

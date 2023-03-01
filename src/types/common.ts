@@ -45,7 +45,4 @@ export interface RouteInfo {
 
   /** Section path */
   sectionPath?: ApiSection['path']
-
-  /** Unchanged URL as received from request handler */
-  urlPristine: string
 }

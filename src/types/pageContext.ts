@@ -22,7 +22,7 @@ export interface PageContextInit extends Pick<PageContextBuiltIn, 'urlOriginal'>
 /** Page context (SSR context) */
 export interface PageContextServer extends PageContextInit, PageContextBuiltIn<ComponentType> {
   /** Extracted route params */
-  routeInfo: Partial<RouteInfo>
+  routeInfo: RouteInfo
 
   /** Indicate a redirect should happen */
   redirectTo?: string
@@ -35,11 +35,14 @@ export interface PageContextServer extends PageContextInit, PageContextBuiltIn<C
 
   /** Application redux store */
   store: Store
+
+  /** Untouched URL from request handler */
+  urlPristine: string
 }
 
 /** Page context update (SSR context) */
 export interface PageContextUpdate {
-  pageContext: Partial<PageContextServer>
+  pageContext: Partial<Omit<PageContextServer, 'routeInfo'>> & { routeInfo?: Partial<RouteInfo> }
 }
 
 /** Page context (Browser context) */

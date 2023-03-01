@@ -58,6 +58,8 @@ async function render({
 }: PageContextClient) {
   findRootElement()
 
+  if (routeInfo.locale === undefined) throw new Error('locale undefined')
+
   // Enable API mock
   if (import.meta.env.INNODOC_API_MOCK === 'true' && mockWorker === undefined) {
     const makeWorker = (await import('../../tests/mocks/browser')).default

@@ -20,13 +20,7 @@ function makeOnBeforeRender(contentType: ContentType) {
     const getContentId = contentType === 'page' ? getPageIdBySlug : getSectionIdByPath
 
     // Call default onBeforeRender
-    const { pageContext } = await onBeforeRenderDefault({
-      ...pageContextInput,
-      routeInfo: {
-        ...pageContextInput.routeInfo,
-        ...pageContextInput.routeParams, // Overwrite with info from route function
-      },
-    })
+    const { pageContext } = await onBeforeRenderDefault(pageContextInput)
     const { routeInfo, store } = pageContext
     const stringIdValue = routeInfo?.[stringIdField]
 

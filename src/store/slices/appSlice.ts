@@ -16,7 +16,7 @@ interface appSliceState {
 const initialState: appSliceState = {
   courseId: null,
   routeInfo: {
-    courseSlug: import.meta.env.INNODOC_DEFAULT_COURSE_SLUG,
+    courseSlug: '',
     routeName: 'app:index',
     locale: 'en',
   },
@@ -33,8 +33,8 @@ const appSlice = createSlice({
     },
 
     /** Change current route name */
-    changeRouteInfo(state, action: PayloadAction<Partial<RouteInfo>>) {
-      state.routeInfo = { ...state.routeInfo, ...action.payload }
+    changeRouteInfo(state, action: PayloadAction<RouteInfo>) {
+      state.routeInfo = action.payload
     },
   },
 })

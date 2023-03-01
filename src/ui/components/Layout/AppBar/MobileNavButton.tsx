@@ -5,7 +5,7 @@ import useGenerateUrl from '#routes/useGenerateUrl'
 import Icon from '#ui/components/common/Icon'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
-import { useSelector } from '#ui/hooks/store'
+import useIsActiveLink from '#ui/hooks/useIsActiveLink'
 import useSelectLinkedPages from '#ui/hooks/useSelectLinkedPages'
 
 import DrawerButton from './common/DrawerButton'
@@ -13,6 +13,7 @@ import otherPages from './otherPages'
 
 function MobileNavButton() {
   const generateUrl = useGenerateUrl()
+  const isActiveLink = useIsActiveLink()
   const { t } = useTranslation()
 
   const { pages } = useSelectLinkedPages('nav')
@@ -41,8 +42,7 @@ function MobileNavButton() {
               <ListItemButton
                 component={PageLink}
                 page={page}
-                // TODO
-                // selected={urlWithoutLocale === getPageUrl(page.slug)}
+                selected={isActiveLink({ routeName: 'app:page', pageSlug: page.slug })}
               >
                 {page.icon !== undefined ? (
                   <ListItemIcon>
@@ -53,18 +53,21 @@ function MobileNavButton() {
               </ListItemButton>
             </ListItem>
           ))}
-          {otherPages.map(({ icon, title, to }) => (
-            <ListItem disablePadding key={to} onClick={close}>
-              <ListItemButton
-                component={InternalLink}
-                to={generateUrl({ routeName: to })}
-                // selected={urlWithoutLocale === to}
-              >
-                <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText primary={t(title)} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {otherPages.map(({ icon, title, to }) => {
+            const routeInfo = { routeName: to }
+            return (
+              <ListItem disablePadding key={to} onClick={close}>
+                <ListItemButton
+                  component={InternalLink}
+                  to={generateUrl(routeInfo)}
+                  selected={isActiveLink(routeInfo)}
+                >
+                  <ListItemIcon>{icon}</ListItemIcon>
+                  <ListItemText primary={t(title)} />
+                </ListItemButton>
+              </ListItem>
+            )
+          })}
         </List>
       )}
     </DrawerButton>

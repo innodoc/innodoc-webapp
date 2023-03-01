@@ -73,7 +73,7 @@ export const FRAGMENT_RE = `(?:${FRAGMENT_TYPES.join('|')})`
 export const COURSE_SLUG_MODES = ['SUBDOMAIN', 'URL', 'DISABLE'] as const
 
 /** Props to be passed to client */
-export const passToClientProps = ['courseId', 'preloadedState', 'routeInfo'] as const
+export const passToClientProps = ['courseId', 'preloadedState', 'routeInfo', 'routeParams'] as const
 
 /** Emotion style cache key */
 export const EMOTION_STYLE_KEY = 'emotion-style'

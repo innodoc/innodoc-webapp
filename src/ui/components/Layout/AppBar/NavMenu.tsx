@@ -6,6 +6,7 @@ import useGenerateUrl from '#routes/useGenerateUrl'
 import Icon from '#ui/components/common/Icon'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
+import useIsActiveLink from '#ui/hooks/useIsActiveLink'
 import useSelectLinkedPages from '#ui/hooks/useSelectLinkedPages'
 
 import otherPages from './otherPages'
@@ -32,6 +33,7 @@ const StyledNavButton = styled(NavButton)(({ theme }) => ({
 function NavMenu() {
   const generateUrl = useGenerateUrl()
   const { t } = useTranslation()
+  const isActiveLink = useIsActiveLink()
   const { pages } = useSelectLinkedPages('nav')
 
   return (
@@ -46,6 +48,9 @@ function NavMenu() {
     >
       {pages.map((page) => (
         <StyledNavButton
+          className={
+            isActiveLink({ routeName: 'app:page', pageSlug: page.slug }) ? 'active' : undefined
+          }
           component={PageLink}
           key={page.slug}
           page={page}
@@ -54,16 +59,20 @@ function NavMenu() {
           {page.shortTitle || page.title}
         </StyledNavButton>
       ))}
-      {otherPagesNav.map(({ icon, title, to }) => (
-        <StyledNavButton
-          component={InternalLink}
-          key={to}
-          startIcon={icon}
-          to={generateUrl({ routeName: to })}
-        >
-          {t(title)}
-        </StyledNavButton>
-      ))}
+      {otherPagesNav.map(({ icon, title, to }) => {
+        const routeInfo = { routeName: to }
+        return (
+          <StyledNavButton
+            className={isActiveLink(routeInfo) ? 'active' : undefined}
+            component={InternalLink}
+            key={to}
+            startIcon={icon}
+            to={generateUrl(routeInfo)}
+          >
+            {t(title)}
+          </StyledNavButton>
+        )
+      })}
     </Stack>
   )
 }

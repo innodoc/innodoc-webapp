@@ -6,11 +6,16 @@ import { isSlug } from '#utils/content'
 // Extract locale/course slug (SSR/Browser)
 function onBeforeRoute({ host, requestLocale, urlOriginal }: PageContextServer): PageContextUpdate {
   const routeInfo: Partial<RouteInfo> = {
+    courseSlug: import.meta.env.INNODOC_DEFAULT_COURSE_SLUG,
+    routeName: 'app:index',
     locale: requestLocale, // Index route fallbacks to browser locale
-    urlPristine: urlOriginal,
   }
 
-  const pageContext = { routeInfo, urlOriginal }
+  const pageContext = {
+    routeInfo,
+    urlOriginal,
+    urlPristine: urlOriginal, // save for matching URLs in route functions
+  }
 
   // Extract locale from URL
   const [, urlLocale, ...urlParts] = urlOriginal.split('/')
@@ -19,7 +24,7 @@ function onBeforeRoute({ host, requestLocale, urlOriginal }: PageContextServer):
     pageContext.urlOriginal = `/${urlParts.join('/')}`
     routeInfo.locale = urlLocale
   } else {
-    // Redirect without proper locale-prefixed url
+    // Redirect if we don't have proper locale-prefixed url
     // TODO use generateURL??
     const redirectTo = `/${requestLocale}${urlOriginal}`
     return {
