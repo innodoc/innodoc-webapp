@@ -1,10 +1,10 @@
 import { Children, forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 
-import useGenerateUrl from '#routes/useGenerateUrl'
 import type { ApiPage, TranslatedPage } from '#types/entities/page'
 import InlineError from '#ui/components/common/error/InlineError'
 import Icon from '#ui/components/common/Icon'
+import useGenerateUrl from '#ui/hooks/useGenerateUrl'
 import useSelectPage from '#ui/hooks/useSelectPage'
 
 import InternalLink from './InternalLink'
@@ -17,9 +17,10 @@ const PageLinkPage = forwardRef<HTMLAnchorElement, PageLinkPageProps>(function P
 ) {
   const generateUrl = useGenerateUrl()
   const { slug, icon, shortTitle, title } = page
+  const to = generateUrl({ routeName: 'app:page', pageSlug: slug })
 
   return (
-    <InternalLink to={generateUrl({ routeName: 'app:page', pageSlug: slug })} ref={ref} {...other}>
+    <InternalLink to={to} ref={ref} {...other}>
       {Children.count(children) ? (
         children
       ) : (

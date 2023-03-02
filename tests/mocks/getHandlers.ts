@@ -2,13 +2,13 @@ import type { LanguageCode } from 'iso-639-1'
 import { rest } from 'msw'
 import type { ResponseComposition, RestContext, RestRequest } from 'msw'
 
-import getRoutes from '#routes/getRoutes'
+import getRouteManager from '#routes/getRouteManager'
 import { isFragmentType } from '#types/typeGuards'
 
 import type { Content } from './fakeData/types'
 import getData from './getData'
 
-const { routes } = getRoutes()
+const routeManager = getRouteManager()
 
 const getStringParam = (req: RestRequest, name: string) => {
   const val = req.params[name]

@@ -1,8 +1,8 @@
-import getRoutes from '#routes/getRoutes'
+import getRouteManager from '#routes/getRouteManager'
 import type { RouteName } from '#routes/routes'
 import type { PageContextServer } from '#types/pageContext'
 
-const { matchUrl } = getRoutes()
+const routeManager = getRouteManager()
 
 const removePageContextJsonRE = /\/index.pageContext.json$/
 
@@ -13,17 +13,23 @@ const removePageContextJsonRE = /\/index.pageContext.json$/
  */
 function makeRouteFunc(routeName: RouteName) {
   return (pageContext: PageContextServer) => {
-    if (pageContext.redirectTo) return false
+    if (pageContext.redirectTo) {
+      return false
+    }
 
     // Routes also need to match pageContext.json files used in client navigation
     const url = pageContext.urlOriginal.replace(removePageContextJsonRE, '')
 
     // Match URL against route
-    const match = matchUrl(routeName, url)
-    if (!match) return false
+    const match = routeManager.match(routeName, url)
+    if (!match) {
+      return false
+    }
 
     // locale is already handled
-    if ('locale' in match.params) delete match.params.locale
+    if ('locale' in match.params) {
+      delete match.params.locale
+    }
 
     return {
       match: true,

@@ -2,10 +2,10 @@ import { ListItemText, MenuItem } from '@mui/material'
 import type { ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import useGenerateUrl from '#routes/useGenerateUrl'
 import { selectRouteInfo } from '#store/slices/appSlice'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import { useSelector } from '#ui/hooks/store'
+import useGenerateUrl from '#ui/hooks/useGenerateUrl'
 import useSelectCurrentCourse from '#ui/hooks/useSelectCurrentCourse'
 
 function MenuItemsLanguages({ closeMenu = () => undefined, inset }: MenuItemsLanguagesProps) {

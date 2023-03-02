@@ -1,7 +1,7 @@
 import type { LinkReference } from 'mdast'
 import { useContext } from 'react'
 
-import Link from '#ui/components/common/link/Link'
+import GeneralLink from '#ui/components/common/link/GeneralLink'
 import IndexContext from '#ui/components/content/mdast/IndexContext'
 import StaticPhrasingContentNode from '#ui/components/content/mdast/nodes/StaticPhrasingContentNode'
 
@@ -15,9 +15,12 @@ function LinkReferenceNode({ node }: LinkReferenceNodeProps) {
 
   if (definition) {
     return (
-      <Link to={definition.url} title={definition.title === null ? undefined : definition.title}>
+      <GeneralLink
+        to={definition.url}
+        title={definition.title === null ? undefined : definition.title}
+      >
         {content}
-      </Link>
+      </GeneralLink>
     )
   }
 

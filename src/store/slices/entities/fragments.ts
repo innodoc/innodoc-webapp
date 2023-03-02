@@ -1,9 +1,11 @@
 import type { LanguageCode } from 'iso-639-1'
 
+import getRouteManager from '#routes/getRouteManager'
 import contentApi from '#store/slices/contentApi'
 import type { FragmentType } from '#types/entities/base'
 import type { ApiCourse } from '#types/entities/course'
-import { getUrl } from '#utils/url'
+
+const routeManager = getRouteManager()
 
 export const fragments = contentApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,7 +13,7 @@ export const fragments = contentApi.injectEndpoints({
     getFragmentContent: builder.query<string, ContentFetchArgs>({
       query: (args) => ({
         responseHandler: 'text',
-        url: getUrl('api:course:fragment:content', args),
+        url: routeManager.generate('api:course:fragment:content', args),
       }),
     }),
   }),

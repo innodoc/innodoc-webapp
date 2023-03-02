@@ -1,9 +1,9 @@
 import { Children, forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 
-import useGenerateUrl from '#routes/useGenerateUrl'
 import type { ApiSection, TranslatedSection } from '#types/entities/section'
 import InlineError from '#ui/components/common/error/InlineError'
+import useGenerateUrl from '#ui/hooks/useGenerateUrl'
 import useSelectSection from '#ui/hooks/useSelectSection'
 import { formatSectionTitle } from '#utils/content'
 
@@ -15,14 +15,14 @@ const SectionLinkSection = forwardRef<HTMLAnchorElement, SectionLinkSectionProps
   function SectionLinkSection({ children, preferShortTitle = false, section, ...other }, ref) {
     const generateUrl = useGenerateUrl()
 
-    if (section === undefined) return null
+    if (section === undefined) {
+      return null
+    }
+
+    const to = generateUrl({ routeName: 'app:section', sectionPath: section.path })
 
     return (
-      <InternalLink
-        to={generateUrl({ routeName: 'app:section', sectionPath: section.path })}
-        ref={ref}
-        {...other}
-      >
+      <InternalLink to={to} ref={ref} {...other}>
         {Children.count(children) ? children : <>{formatSectionTitle(section, preferShortTitle)}</>}
       </InternalLink>
     )

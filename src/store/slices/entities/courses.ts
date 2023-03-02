@@ -1,12 +1,14 @@
+import getRouteManager from '#routes/getRouteManager'
 import contentApi from '#store/slices/contentApi'
 import type { ApiCourse } from '#types/entities/course'
-import { getUrl } from '#utils/url'
+
+const routeManager = getRouteManager()
 
 export const courses = contentApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Fetch course by ID */
     getCourse: builder.query<ApiCourse, CourseIdQueryArg>({
-      query: (args) => getUrl('api:course', args),
+      query: (args) => routeManager.generate('api:course', args),
     }),
   }),
 })

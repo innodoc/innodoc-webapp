@@ -1,15 +1,14 @@
+import getRouteManager from '#routes/getRouteManager'
 import { selectRouteInfo } from '#store/slices/appSlice'
 import type { RouteInfo } from '#types/common'
 import { useSelector } from '#ui/hooks/store'
 
-import getRoutes from './getRoutes'
-
-const { generateUrl } = getRoutes()
+const routeManager = getRouteManager()
 
 function useGenerateUrl() {
   const { routeName: currentRouteName, ...currentParams } = useSelector(selectRouteInfo)
   return ({ routeName, ...params }: Partial<RouteInfo>) =>
-    generateUrl(routeName ?? currentRouteName, { ...currentParams, ...params })
+    routeManager.generate(routeName ?? currentRouteName, { ...currentParams, ...params })
 }
 
 export default useGenerateUrl

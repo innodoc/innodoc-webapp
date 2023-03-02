@@ -1,6 +1,6 @@
 import type { Link as MdastLink } from 'mdast'
 
-import Link from '#ui/components/common/link/Link'
+import GeneralLink from '#ui/components/common/link/GeneralLink'
 import StaticPhrasingContentNode from '#ui/components/content/mdast/nodes/StaticPhrasingContentNode'
 
 function LinkNode({ node: { children, url, title } }: LinkNodeProps) {
@@ -9,9 +9,9 @@ function LinkNode({ node: { children, url, title } }: LinkNodeProps) {
   ))
 
   return (
-    <Link to={url} title={title === null ? undefined : title}>
+    <GeneralLink to={url} title={title === null ? undefined : title}>
       {content}
-    </Link>
+    </GeneralLink>
   )
 }
 

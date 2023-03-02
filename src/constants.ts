@@ -1,29 +1,3 @@
-/** Built-in pages */
-export const BUILTIN_PAGES_KEYS = ['___INDEX_PAGE___', '___TOC___', '___PROGRESS___'] as const
-export const BUILTIN_PAGES: BuiltinPages = {
-  ___INDEX_PAGE___: {
-    path: 'app:glossary',
-    title: 'internalPages.glossary.title',
-  },
-  ___TOC___: {
-    path: 'app:toc',
-    title: 'internalPages.toc.title',
-  },
-  ___PROGRESS___: {
-    path: 'app:progress',
-    title: 'internalPages.progress.title',
-  },
-}
-
-export type BuiltinPagesKey = (typeof BUILTIN_PAGES_KEYS)[number]
-type BuiltinPages = Record<BuiltinPagesKey, BuiltinPage>
-interface BuiltinPage {
-  /** URL path */
-  path: string
-  /** Page title i18n key */
-  title: string
-}
-
 /** Fragment type for footer A */
 export const FRAGMENT_TYPE_FOOTER_A = 'footer-a'
 

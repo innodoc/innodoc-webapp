@@ -9,19 +9,19 @@ import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '#constants'
-import useGenerateUrl from '#routes/useGenerateUrl'
 import { selectRouteInfo } from '#store/slices/appSlice'
 import { useGetFragmentContentQuery } from '#store/slices/entities/fragments'
+import builtInPages from '#ui/components/common/builtInPages'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
 import MarkdownNode from '#ui/components/content/mdast/MarkdownNode'
-import otherPages from '#ui/components/Layout/AppBar/otherPages'
 import defaultTheme, { baseThemeOpts, makeTheme } from '#ui/components/PageShell/theme'
 import { useSelector } from '#ui/hooks/store'
+import useGenerateUrl from '#ui/hooks/useGenerateUrl'
 import useSelectCurrentCourse from '#ui/hooks/useSelectCurrentCourse'
 import useSelectLinkedPages from '#ui/hooks/useSelectLinkedPages'
 
-const otherPagesFooter = otherPages.filter((page) => page.linked.includes('footer'))
+const builtInPagesNav = builtInPages.filter((page) => page.linked.includes('footer'))
 
 // TODO: refactor into multiple files, use different list component as icon is
 // mis-aligned
@@ -83,10 +83,12 @@ function Footer() {
     { skip: course === undefined }
   )
 
-  if (course === undefined) return null
+  if (course === undefined) {
+    return null
+  }
 
-  const internalLinks = otherPagesFooter.map(({ icon, to, title }) => (
-    <StyledLink component={InternalLink} key={to} to={generateUrl({ routeName: to })}>
+  const internalLinks = builtInPagesNav.map(({ icon, routeName, title }) => (
+    <StyledLink component={InternalLink} key={routeName} to={generateUrl({ routeName })}>
       {icon}
       {t(title)}
     </StyledLink>

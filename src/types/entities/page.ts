@@ -1,5 +1,7 @@
+import type { ReactElement } from 'react'
 import type { CamelCasedProperties } from 'type-fest'
 
+import type { BuiltinPageRouteName } from '#routes/routes'
 import type { PageLinkLocation } from '#types/common'
 import type { IconProps } from '#ui/components/common/Icon'
 
@@ -13,7 +15,7 @@ export interface DbPage extends BaseEntity, DbTranslatableFields {
   /** Course ID */
   course_id: number
 
-  /** Icon string */
+  /** Icon name */
   icon?: IconProps['name']
 
   /** Location in the page layout where a link should appear */
@@ -25,3 +27,18 @@ export type ApiPage = CamelCasedProperties<DbPage>
 
 /** Page object as consumed by components */
 export type TranslatedPage = TranslatedEntity<ApiPage>
+
+/** Built-in page */
+export interface BuiltinPage {
+  /** URL path */
+  routeName: BuiltinPageRouteName
+
+  /** Page title i18n key */
+  title: string
+
+  /** Icon name */
+  icon: ReactElement
+
+  /** Location in the page layout where a link should appear */
+  linked: PageLinkLocation[]
+}

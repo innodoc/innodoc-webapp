@@ -1,15 +1,15 @@
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import useGenerateUrl from '#routes/useGenerateUrl'
+import builtInPages from '#ui/components/common/builtInPages'
 import Icon from '#ui/components/common/Icon'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
+import useGenerateUrl from '#ui/hooks/useGenerateUrl'
 import useIsActiveLink from '#ui/hooks/useIsActiveLink'
 import useSelectLinkedPages from '#ui/hooks/useSelectLinkedPages'
 
 import DrawerButton from './common/DrawerButton'
-import otherPages from './otherPages'
 
 function MobileNavButton() {
   const generateUrl = useGenerateUrl()
@@ -53,21 +53,18 @@ function MobileNavButton() {
               </ListItemButton>
             </ListItem>
           ))}
-          {otherPages.map(({ icon, title, to }) => {
-            const routeInfo = { routeName: to }
-            return (
-              <ListItem disablePadding key={to} onClick={close}>
-                <ListItemButton
-                  component={InternalLink}
-                  to={generateUrl(routeInfo)}
-                  selected={isActiveLink(routeInfo)}
-                >
-                  <ListItemIcon>{icon}</ListItemIcon>
-                  <ListItemText primary={t(title)} />
-                </ListItemButton>
-              </ListItem>
-            )
-          })}
+          {builtInPages.map(({ icon, title, routeName }) => (
+            <ListItem disablePadding key={routeName} onClick={close}>
+              <ListItemButton
+                component={InternalLink}
+                to={generateUrl({ routeName })}
+                selected={isActiveLink({ routeName })}
+              >
+                <ListItemIcon>{icon}</ListItemIcon>
+                <ListItemText primary={t(title)} />
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
       )}
     </DrawerButton>

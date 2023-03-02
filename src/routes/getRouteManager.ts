@@ -1,12 +1,11 @@
-import makeRoutes from './routes'
+import RouteManager from './RouteManager'
 
-/** Return route manager */
-function getRoutes() {
-  return makeRoutes(
+function getRouteManager() {
+  return RouteManager.getInstance(
     import.meta.env.INNODOC_COURSE_SLUG_MODE,
     import.meta.env.INNODOC_PAGE_PATH_PREFIX,
     import.meta.env.INNODOC_SECTION_PATH_PREFIX
   )
 }
 
-export default getRoutes
+export default getRouteManager

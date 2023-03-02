@@ -1,7 +1,9 @@
 import { onBeforeRender as onBeforeRenderDefault } from '#renderer/_default.page.server'
+import getRouteManager from '#routes/getRouteManager'
 import courses from '#store/slices/entities/courses'
 import type { PageContextServer } from '#types/pageContext'
-import { generateUrlFromSpecifier } from '#utils/url'
+
+const routeManager = getRouteManager()
 
 // Redirect / -> homeLink
 async function onBeforeRender(pageContextInput: PageContextServer) {
@@ -18,7 +20,7 @@ async function onBeforeRender(pageContextInput: PageContextServer) {
 
   return {
     pageContext: {
-      redirectTo: generateUrlFromSpecifier(course.homeLink, pageContext.routeInfo.locale),
+      redirectTo: routeManager.generateFromSpecifier(course.homeLink, pageContext.routeInfo.locale),
     },
   }
 }

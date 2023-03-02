@@ -1,24 +1,26 @@
 import type { LanguageCode } from 'iso-639-1'
 
+import getRouteManager from '#routes/getRouteManager'
 import contentApi from '#store/slices/contentApi'
 import type { ApiCourse } from '#types/entities/course'
 import type { ApiPage } from '#types/entities/page'
-import { getUrl } from '#utils/url'
 
 import type { CourseIdQueryArg } from './courses'
+
+const routeManager = getRouteManager()
 
 export const pages = contentApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Fetch course pages */
     getCoursePages: builder.query<ApiPage[], CourseIdQueryArg>({
-      query: (args) => getUrl('api:course:pages', args),
+      query: (args) => routeManager.generate('api:course:pages', args),
     }),
 
     /** Fetch content for a page */
     getPageContent: builder.query<string, PageContentFetchArgs>({
       query: (args) => ({
         responseHandler: 'text',
-        url: getUrl('api:course:page:content', args),
+        url: routeManager.generate('api:course:page:content', args),
       }),
     }),
   }),

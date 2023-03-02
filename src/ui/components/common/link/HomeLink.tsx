@@ -2,15 +2,18 @@ import { forwardRef } from 'react'
 
 import useSelectCurrentCourse from '#ui/hooks/useSelectCurrentCourse'
 
-import ContentLink from './ContentLink'
+import GeneralLink from './GeneralLink'
 import type { LinkProps } from './types'
 
+/** Link to home as specified in course */
 const HomeLink = forwardRef<HTMLAnchorElement, HomeLinkProps>(function HomeLink(props, ref) {
   const { course } = useSelectCurrentCourse()
 
-  if (course === undefined) return null
+  if (course === undefined) {
+    return null
+  }
 
-  return <ContentLink ref={ref} to={course.homeLink} {...props} />
+  return <GeneralLink ref={ref} to={course.homeLink} {...props} />
 })
 
 type HomeLinkProps = Omit<LinkProps, 'to'>

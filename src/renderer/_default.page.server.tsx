@@ -19,7 +19,7 @@ import '@fontsource/lato/700-italic.css'
 import 'katex/dist/katex.min.css'
 
 import { EMOTION_STYLE_KEY, PASS_TO_CLIENT_PROPS } from '#constants'
-import getRoutes from '#routes/getRoutes'
+import getRouteManager from '#routes/getRouteManager'
 import { getCourse } from '#server/database/queries/courses'
 import makeStore from '#store/makeStore'
 import { changeCourseId, changeRouteInfo, selectRouteInfo } from '#store/slices/appSlice'
@@ -31,7 +31,7 @@ import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
 import renderToHtml from '#utils/ssr/renderToHtml'
 
-const { generateUrl } = getRoutes()
+const routeManager = getRouteManager()
 
 function getI18nBackendOpts() {
   const dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -136,7 +136,7 @@ async function onBeforeRender({
     return {
       pageContext: {
         courseId,
-        redirectTo: generateUrl(routeName, routeArgs),
+        redirectTo: routeManager.generate(routeName, routeArgs),
         routeInfo,
         store,
       },

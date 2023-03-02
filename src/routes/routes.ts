@@ -1,128 +1,60 @@
-import { compile, match, type Match } from 'path-to-regexp'
+import type { RouteFuncArgs } from './RouteManager'
 
-import { API_COURSE_PREFIX, FRAGMENT_RE, PATH_RE, SLUG_RE } from '#constants'
-import type { CourseSlugMode } from '#types/common'
+export type RouteName =
+  | keyof typeof routesBuiltinPages
+  | keyof typeof routesContentPages
+  | keyof typeof routesUser
+  | keyof typeof routesApi
 
-/** Locale ISO-639-1 language code */
-const LOCALE_RE = '[a-z]{2}'
+type RouteFunc = (args: RouteFuncArgs) => string
+export type RouteDef = string | RouteFunc
 
-/** Number regex */
-const NUMBER_RE = '\\d+'
+export const routesBuiltinPages = {
+  // Landing/index page
+  'app:index': '',
 
-const parseOptions = {
-  sensitive: true,
-  strict: true,
+  // Progress
+  'app:progress': '/progress',
+
+  // Table of contents
+  'app:toc': '/toc',
+
+  // Glossary
+  'app:glossary': '/glossary',
 }
 
-// TODO fix once this is clean
-export type RouteName = string
+export type BuiltinPageRouteName = keyof typeof routesBuiltinPages
 
-interface RouteManager {
-  frontendRoutes: Record<string, string>
-  apiRoutes: Record<string, string>
-  routes: Record<string, string>
-  generateUrl: (name: string, params: Record<string, string>) => string
-  matchUrl: (name: string, path: string) => Match
+export const routesContentPages = {
+  // Page
+  'app:page': ({ pagePathPrefix, SLUG_RE }: RouteFuncArgs) =>
+    `/${pagePathPrefix}/:pageSlug(${SLUG_RE})`,
+
+  // Section
+  'app:section': ({ sectionPathPrefix, PATH_RE }: RouteFuncArgs) =>
+    `/${sectionPathPrefix}/:sectionPath(${PATH_RE})`,
 }
 
-let cachedRoutes: RouteManager
-
-function makeRoutes(
-  courseSlugMode: CourseSlugMode,
-  pagePathPrefix: string,
-  sectionPathPrefix: string
-): RouteManager {
-  const appRoute = (route: string) => {
-    const localeRoute = `/:locale(${LOCALE_RE})${route}`
-    return courseSlugMode === 'URL' ? `/:courseSlug(${SLUG_RE})/${localeRoute}` : localeRoute
-  }
-
-  const apiRoute = (route: string) => `${API_COURSE_PREFIX}${route}`
-
-  const frontendRoutes = {
-    // Landing/index page
-    'app:index': appRoute(''),
-
-    // Page
-    'app:page': appRoute(`/${pagePathPrefix}/:pageSlug(${SLUG_RE})`),
-
-    // Section
-    'app:section': appRoute(`/${sectionPathPrefix}/:sectionPath(${PATH_RE})`),
-
-    // Progress
-    'app:progress': appRoute('/progress'),
-
-    // Table of contents
-    'app:toc': appRoute('/toc'),
-
-    // Glossary
-    'app:glossary': appRoute('/glossary'),
-
-    // User login
-    'app:user:login': appRoute('/login'),
-  }
-
-  const apiRoutes = {
-    // Course
-    'api:course': apiRoute(`/:courseId(${NUMBER_RE})`),
-
-    // Page
-    'api:course:pages': apiRoute(`/:courseId(${NUMBER_RE})/pages`),
-    'api:course:page:content': apiRoute(
-      `/:courseId(${NUMBER_RE})/page/:locale(${LOCALE_RE})/:pageId(${NUMBER_RE})`
-    ),
-
-    // Section
-    'api:course:sections': apiRoute(`/:courseId(${NUMBER_RE})/sections`),
-    'api:course:section:content': apiRoute(
-      `/:courseId(${NUMBER_RE})/section/:locale(${LOCALE_RE})/:sectionId(${NUMBER_RE})`
-    ),
-
-    // Fragment
-    'api:course:fragment:content': apiRoute(
-      `/:courseId(${NUMBER_RE})/fragment/:locale(${LOCALE_RE})/:fragmentType(${FRAGMENT_RE})`
-    ),
-  }
-
-  const routes = { ...frontendRoutes, ...apiRoutes }
-
-  const generators = Object.fromEntries(
-    Object.entries(routes).map(([name, pattern]) => [name, compile(pattern, parseOptions)])
-  )
-
-  const matchers = Object.fromEntries(
-    Object.entries(routes).map(([name, pattern]) => [name, match(pattern, parseOptions)])
-  )
-
-  return {
-    /** Application frontend routes */
-    frontendRoutes,
-
-    /** Application API routes */
-    apiRoutes,
-
-    /** Application routes */
-    routes,
-
-    /** Generate URL path from route name and parameters */
-    generateUrl: (routeName, params) => {
-      const generator = generators[routeName]
-      if (generator === undefined) throw new Error(`Unknown route: ${routeName}`)
-      return generator(params)
-    },
-
-    /** Match URL path */
-    matchUrl: (routeName, path) => {
-      const matcher = matchers[routeName]
-      if (matcher === undefined) throw new Error(`Unknown route: ${routeName}`)
-      return matchers[routeName](path)
-    },
-  }
+export const routesUser = {
+  // Login
+  'app:user:login': '/login',
 }
 
-function routes(courseSlugMode: CourseSlugMode, pagePathPrefix: string, sectionPathPrefix: string) {
-  if (!cachedRoutes) cachedRoutes = makeRoutes(courseSlugMode, pagePathPrefix, sectionPathPrefix)
-  return cachedRoutes
-}
+export const routesApi = {
+  // Course
+  'api:course': ({ NUMBER_RE }: RouteFuncArgs) => `/:courseId(${NUMBER_RE})`,
 
-export default routes
+  // Page
+  'api:course:pages': ({ NUMBER_RE }: RouteFuncArgs) => `/:courseId(${NUMBER_RE})/pages`,
+  'api:course:page:content': ({ LOCALE_RE, NUMBER_RE }: RouteFuncArgs) =>
+    `/:courseId(${NUMBER_RE})/page/:locale(${LOCALE_RE})/:pageId(${NUMBER_RE})`,
+
+  // Section
+  'api:course:sections': ({ NUMBER_RE }: RouteFuncArgs) => `/:courseId(${NUMBER_RE})/sections`,
+  'api:course:section:content': ({ LOCALE_RE, NUMBER_RE }: RouteFuncArgs) =>
+    `/:courseId(${NUMBER_RE})/section/:locale(${LOCALE_RE})/:sectionId(${NUMBER_RE})`,
+
+  // Fragment
+  'api:course:fragment:content': ({ FRAGMENT_RE, LOCALE_RE, NUMBER_RE }: RouteFuncArgs) =>
+    `/:courseId(${NUMBER_RE})/fragment/:locale(${LOCALE_RE})/:fragmentType(${FRAGMENT_RE})`,
+}

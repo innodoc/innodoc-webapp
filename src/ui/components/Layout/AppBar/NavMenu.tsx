@@ -2,16 +2,15 @@ import { Button, type ButtonProps, Stack, styled } from '@mui/material'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import useGenerateUrl from '#routes/useGenerateUrl'
+import builtInPages from '#ui/components/common/builtInPages'
 import Icon from '#ui/components/common/Icon'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
+import useGenerateUrl from '#ui/hooks/useGenerateUrl'
 import useIsActiveLink from '#ui/hooks/useIsActiveLink'
 import useSelectLinkedPages from '#ui/hooks/useSelectLinkedPages'
 
-import otherPages from './otherPages'
-
-const otherPagesNav = otherPages.filter((page) => page.linked.includes('nav'))
+const builtInPagesNav = builtInPages.filter((page) => page.linked.includes('nav'))
 
 const NavButton = forwardRef<HTMLButtonElement | null, ButtonProps>(function NavButton(props, ref) {
   return <Button color="inherit" ref={ref} size="small" {...props} />
@@ -59,20 +58,17 @@ function NavMenu() {
           {page.shortTitle || page.title}
         </StyledNavButton>
       ))}
-      {otherPagesNav.map(({ icon, title, to }) => {
-        const routeInfo = { routeName: to }
-        return (
-          <StyledNavButton
-            className={isActiveLink(routeInfo) ? 'active' : undefined}
-            component={InternalLink}
-            key={to}
-            startIcon={icon}
-            to={generateUrl(routeInfo)}
-          >
-            {t(title)}
-          </StyledNavButton>
-        )
-      })}
+      {builtInPagesNav.map(({ icon, title, routeName }) => (
+        <StyledNavButton
+          className={isActiveLink({ routeName }) ? 'active' : undefined}
+          component={InternalLink}
+          key={routeName}
+          startIcon={icon}
+          to={generateUrl({ routeName })}
+        >
+          {t(title)}
+        </StyledNavButton>
+      ))}
     </Stack>
   )
 }
