@@ -1,6 +1,6 @@
 import getRouteManager from '#routes/getRouteManager'
-import type { RouteName } from '#routes/routes'
 import type { PageContextServer } from '#types/pageContext'
+import type { RouteName } from '#types/routes'
 
 const routeManager = getRouteManager()
 

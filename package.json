@@ -127,7 +127,7 @@
   "scripts": {
     "build": "NODE_ENV=production vite build",
     "dev": "nodemon --ext ts --watch ./src/server --exec pnpm -- run server",
-    "dev:mock": "INNODOC_API_MOCK=true pnpm run dev",
+    "dev:mock": "INNODOC_API_MOCK=true INNODOC_DEFAULT_COURSE_SLUG=testcourse INNODOC_COURSE_SLUG_MODE=DISABLED pnpm run dev",
     "generate-tsconfig-paths": "ts-node config/generateTsConfigPaths.ts",
     "knex": "ts-node node_modules/knex/bin/cli.js",
     "import-v1": "ts-node src/server/commands/importer/cli.ts",

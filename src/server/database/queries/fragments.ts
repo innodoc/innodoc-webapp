@@ -8,7 +8,7 @@ import type { ResultFromValue } from './types'
 
 /** Get fragment content */
 export async function getFragmentContent(
-  courseId: DbCourse['id'],
+  courseSlug: DbCourse['slug'],
   locale: LanguageCode,
   fragmentType: FragmentType
 ): Promise<string | undefined> {
@@ -19,7 +19,7 @@ export async function getFragmentContent(
     .join('courses as c', 'f.course_id', 'c.id')
     .leftOuterJoin('fragments_content_trans as ct', 'f.id', 'ct.fragment_id')
     .where('f.type', fragmentType)
-    .where('c.id', courseId)
+    .where('c.slug', courseSlug)
     .where('ct.locale', locale)
 
   return result ? result.value : undefined

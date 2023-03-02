@@ -51,13 +51,7 @@ function findRootElement() {
   }
 }
 
-async function render({
-  courseId,
-  isHydration,
-  Page,
-  preloadedState,
-  routeInfo,
-}: PageContextClient) {
+async function render({ isHydration, Page, preloadedState, routeInfo }: PageContextClient) {
   findRootElement()
 
   if (routeInfo.locale === undefined) {
@@ -81,7 +75,13 @@ async function render({
 
   if (i18n === undefined) {
     // Create i18next instance
-    i18n = await getI18n(I18NextHttpBackend, i18nBackendOpts, routeInfo.locale, courseId, store)
+    i18n = await getI18n(
+      I18NextHttpBackend,
+      i18nBackendOpts,
+      routeInfo.locale,
+      routeInfo.courseSlug,
+      store
+    )
   } else if (i18n.language !== routeInfo.locale) {
     // Change i18next locale
     await i18n.changeLanguage(routeInfo.locale)

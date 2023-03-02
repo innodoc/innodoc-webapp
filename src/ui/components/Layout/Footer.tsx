@@ -65,22 +65,22 @@ function Footer() {
   const { mode } = useColorScheme()
   const { pages: coursePages } = useSelectLinkedPages('footer')
   const { course } = useSelectCurrentCourse()
-  const { locale } = useSelector(selectRouteInfo)
+  const { courseSlug, locale } = useSelector(selectRouteInfo)
   const { data: contentA } = useGetFragmentContentQuery(
     {
-      courseId: course?.id ?? 0,
+      courseSlug: courseSlug ?? '',
       locale,
       fragmentType: FRAGMENT_TYPE_FOOTER_A,
     },
-    { skip: course === undefined }
+    { skip: courseSlug === null }
   )
   const { data: contentB } = useGetFragmentContentQuery(
     {
-      courseId: course?.id ?? 0,
+      courseSlug: courseSlug ?? '',
       locale,
       fragmentType: FRAGMENT_TYPE_FOOTER_B,
     },
-    { skip: course === undefined }
+    { skip: courseSlug === null }
   )
 
   if (course === undefined) {

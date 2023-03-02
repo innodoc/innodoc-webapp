@@ -16,9 +16,11 @@ async function getI18n(
   backend: Parameters<i18n['use']>[0],
   backendOpts: Record<string, unknown>,
   currentLocale: LanguageCode | 'cimode',
-  courseId: ApiCourse['id'],
+  courseSlug: ApiCourse['slug'] | null,
   store: Store
 ) {
+  let course: ApiCourse | undefined = undefined
+
   // i18next as a singleton is reused. Just load translations and update store.
   if (i18next.isInitialized) {
     if (i18next.language !== currentLocale) {
@@ -28,10 +30,12 @@ async function getI18n(
   }
 
   // Select current course
-  const selectCurrentCourse = courses.endpoints.getCourse.select({ courseId })
-  const { data: course } = selectCurrentCourse(store.getState())
-  if (course === undefined) {
-    throw new Error(`No course loaded`)
+  if (courseSlug !== null) {
+    const selectCurrentCourse = courses.endpoints.getCourse.select({ courseSlug })
+    const { data } = selectCurrentCourse(store.getState())
+    if (data !== undefined) {
+      course = data
+    }
   }
 
   // Initialize i18next
@@ -51,7 +55,7 @@ async function getI18n(
       ns: NAMESPACE,
       preload: [currentLocale],
       saveMissing: !isBrowser && isDev,
-      supportedLngs: course.locales,
+      supportedLngs: course !== undefined ? course.locales : [],
     })
 
   return i18next

@@ -1,20 +1,24 @@
 import RouteManager from '#routes/RouteManager'
-import type { RouteName } from '#routes/routes'
 import config from '#server/config'
+import type { RouteName } from '#types/routes'
 import { isArbitraryObject } from '#types/typeGuards'
 
 export function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
   return isArbitraryObject(error) && error instanceof Error && typeof error.code === 'string'
 }
 
-/** Get URL path for API route handlers */
-export function getRoutePath(name: RouteName, removePrefix?: string) {
-  const routeManager = RouteManager.getInstance(
+/** Return `RouteManager` instance (Node.js) */
+export function getRouteManager() {
+  return RouteManager.getInstance(
     config.courseSlugMode,
     config.pagePathPrefix,
     config.sectionPathPrefix
   )
-  const apiRoutes = routeManager.getApiRoutes()
+}
+
+/** Get URL path for API route handlers */
+export function getRoutePath(name: RouteName, removePrefix?: string) {
+  const apiRoutes = getRouteManager().getApiRoutes()
 
   const pattern = apiRoutes[name]
   if (pattern === undefined) {

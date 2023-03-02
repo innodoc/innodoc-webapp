@@ -1,7 +1,7 @@
 import { Children, forwardRef } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
-import type { BuiltinPageRouteName } from '#routes/routes'
+import type { BuiltinPageRouteName } from '#types/routes'
 import builtInPages from '#ui/components/common/builtInPages'
 import InlineError from '#ui/components/common/error/InlineError'
 

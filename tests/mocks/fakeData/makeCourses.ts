@@ -27,7 +27,7 @@ const makeCoursesData = (locales: LanguageCode[]): ApiCourse[] => {
     {
       id: courseId,
       slug: 'testcourse',
-      homeLink: '/page/home',
+      homeLink: 'app:page|home',
       locales,
       title: {
         de: 'Kurs für integration tests',

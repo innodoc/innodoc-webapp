@@ -6,11 +6,11 @@ import type {
   PAGE_LINK_LOCACTIONS,
   SECTION_TYPES,
 } from '#constants'
-import type { RouteName } from '#routes/routes'
 
 import type { ApiCourse } from './entities/course'
 import type { ApiPage } from './entities/page'
 import type { ApiSection } from './entities/section'
+import type { RouteName } from './routes'
 
 /** Arbitrary object */
 export interface ArbitraryObject {
@@ -32,7 +32,7 @@ export type ContentType = (typeof CONTENT_TYPES)[number]
 /** Application route info */
 export interface RouteInfo {
   /** Course slug */
-  courseSlug: ApiCourse['slug']
+  courseSlug: ApiCourse['slug'] | null
 
   /** Route name */
   routeName: RouteName

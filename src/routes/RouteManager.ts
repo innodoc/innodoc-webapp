@@ -1,33 +1,23 @@
 import type { LanguageCode } from 'iso-639-1'
 import { compile, match, type MatchFunction, type PathFunction } from 'path-to-regexp'
 
-import { API_COURSE_PREFIX, FRAGMENT_RE, PATH_RE, SLUG_RE } from '#constants'
+import { API_COURSE_PREFIX } from '#constants'
 import type { CourseSlugMode } from '#types/common'
+import type { BuiltinPageRouteName, RouteName } from '#types/routes'
 import { isContentType } from '#types/typeGuards'
 import { getStringIdField } from '#utils/content'
 
-import {
-  type RouteName,
-  routesBuiltinPages,
-  routesContentPages,
-  routesUser,
-  routesApi,
-  type RouteDef,
-  type BuiltinPageRouteName,
-} from './routes'
+import { routesBuiltinPages, routesContentPages, routesUser, routesApi } from './routes'
 
 export interface RouteFuncArgs {
   pagePathPrefix: string
   sectionPathPrefix: string
-  FRAGMENT_RE: string
-  LOCALE_RE: string
-  NUMBER_RE: string
-  PATH_RE: string
-  SLUG_RE: string
 }
 
 type Generators = Record<RouteName, PathFunction>
 type Matchers = Record<RouteName, MatchFunction>
+type RouteFunc = (args: RouteFuncArgs) => string
+type RouteDef = string | RouteFunc
 
 class RouteManager {
   private static instance: RouteManager
@@ -38,10 +28,6 @@ class RouteManager {
     ...routesUser,
     ...routesApi,
   }
-
-  private readonly LOCALE_RE = '[a-z]{2}'
-
-  private readonly NUMBER_RE = '[0-9]+'
 
   private readonly courseSlugMode: CourseSlugMode
 
@@ -62,15 +48,7 @@ class RouteManager {
     sectionPathPrefix: string
   ) {
     this.courseSlugMode = courseSlugMode
-    this.routeFuncArgs = {
-      pagePathPrefix,
-      sectionPathPrefix,
-      FRAGMENT_RE: FRAGMENT_RE,
-      LOCALE_RE: this.LOCALE_RE,
-      NUMBER_RE: this.NUMBER_RE,
-      PATH_RE,
-      SLUG_RE,
-    }
+    this.routeFuncArgs = { pagePathPrefix, sectionPathPrefix }
     const { generators, matchers } = this.buildRoutes()
     this.generators = generators
     this.matchers = matchers
@@ -184,8 +162,8 @@ class RouteManager {
   }
 
   private makeAppPattern(pattern: string) {
-    const localeRoute = `/:locale(${this.LOCALE_RE})${pattern}`
-    return this.courseSlugMode === 'URL' ? `/:courseSlug(${SLUG_RE})/${localeRoute}` : localeRoute
+    const localeRoute = `/:locale${pattern}`
+    return this.courseSlugMode === 'URL' ? `/:courseSlug/${localeRoute}` : localeRoute
   }
 
   private makeApiPattern(pattern: string) {

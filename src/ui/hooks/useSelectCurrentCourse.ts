@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit'
 import type { LanguageCode } from 'iso-639-1'
 import { useMemo } from 'react'
 
-import { selectCourseId, selectRouteInfo } from '#store/slices/appSlice'
+import { selectRouteInfo } from '#store/slices/appSlice'
 import { useGetCourseQuery } from '#store/slices/entities/courses'
 import { defaultTranslatableFields } from '#types/entities/base'
 import type { ApiCourse } from '#types/entities/course'
@@ -11,8 +11,7 @@ import { translateEntity } from '#utils/i18n'
 
 /** Return current course */
 function useSelectCurrentCourse() {
-  const { locale } = useSelector(selectRouteInfo)
-  const courseId = useSelector(selectCourseId)
+  const { courseSlug, locale } = useSelector(selectRouteInfo)
 
   const selectCourse = useMemo(
     () =>
@@ -32,10 +31,10 @@ function useSelectCurrentCourse() {
   )
 
   const result = useGetCourseQuery(
-    { courseId: courseId ?? 0 },
+    { courseSlug: courseSlug ?? '' },
     {
       selectFromResult: (result) => ({ course: selectCourse(result, locale) }),
-      skip: courseId === null,
+      skip: courseSlug === null,
     }
   )
 

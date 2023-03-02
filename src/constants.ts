@@ -35,27 +35,19 @@ export const MAX_KEEP_UNUSED_DATA_FOR_MAX = Math.floor((2 ** 31 - 1) / 1000)
 export const DEFAULT_MIN_SCORE = 90
 
 /** Page/section/course slug regex */
-export const SLUG_RE = '[a-z0\\d]+(?:-[a-z\\d]+)*'
+export const SLUG_RE = '[a-z0-9]+(?:-[a-z0-9]+)*'
 
 /** Page/section/course slug regex (Posix variant for PostgreSQL) */
 export const SLUG_RE_POSIX = SLUG_RE.replace('(?:', '(')
 
-/** Page/section/course slug regex */
-export const PATH_RE = '[a-z\\d]+(?:-[a-z\\d]+)*(?:\\/[a-z\\d]+(?:-[a-z\\d]+)*){0,10}'
-
-/** Fragment type regex */
-export const FRAGMENT_RE = `(?:${FRAGMENT_TYPES.join('|')})`
+/** Section path regex */
+export const PATH_RE = '[a-z0-9]+(?:-[a-z0-9]+)*(?:\\/[a-z0-9]+(?:-[a-z0-9]+)*){0,10}'
 
 /** Extract course slug from subdomain/url */
 export const COURSE_SLUG_MODES = ['SUBDOMAIN', 'URL', 'DISABLE'] as const
 
 /** Props to be passed to client */
-export const PASS_TO_CLIENT_PROPS = [
-  'courseId',
-  'preloadedState',
-  'routeInfo',
-  'routeParams',
-] as const
+export const PASS_TO_CLIENT_PROPS = ['preloadedState', 'routeInfo', 'routeParams'] as const
 
 /** Emotion style cache key */
 export const EMOTION_STYLE_KEY = 'emotion-style'

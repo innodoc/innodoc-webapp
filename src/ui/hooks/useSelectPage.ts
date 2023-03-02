@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit'
 import type { LanguageCode } from 'iso-639-1'
 import { useMemo } from 'react'
 
-import { selectCourseId, selectRouteInfo } from '#store/slices/appSlice'
+import { selectRouteInfo } from '#store/slices/appSlice'
 import { useGetCoursePagesQuery } from '#store/slices/entities/pages'
 import { defaultTranslatableFields } from '#types/entities/base'
 import type { ApiPage } from '#types/entities/page'
@@ -11,8 +11,7 @@ import { translateEntity } from '#utils/i18n'
 
 /** Return page by slug */
 function useSelectPage(pageSlug: ApiPage['slug'] | undefined) {
-  const { locale } = useSelector(selectRouteInfo)
-  const courseId = useSelector(selectCourseId)
+  const { courseSlug, locale } = useSelector(selectRouteInfo)
 
   const selectPage = useMemo(
     () =>
@@ -37,10 +36,10 @@ function useSelectPage(pageSlug: ApiPage['slug'] | undefined) {
   )
 
   const result = useGetCoursePagesQuery(
-    { courseId: courseId ?? 0 },
+    { courseSlug: courseSlug ?? '' },
     {
       selectFromResult: (result) => ({ page: selectPage(result, pageSlug, locale) }),
-      skip: courseId === null,
+      skip: courseSlug === null,
     }
   )
 

@@ -10,7 +10,7 @@ const routeManager = getRouteManager()
 export const fragments = contentApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Fetch content */
-    getFragmentContent: builder.query<string, ContentFetchArgs>({
+    getFragmentContent: builder.query<string, FragmentContentFetchArgs>({
       query: (args) => ({
         responseHandler: 'text',
         url: routeManager.generate('api:course:fragment:content', args),
@@ -19,8 +19,8 @@ export const fragments = contentApi.injectEndpoints({
   }),
 })
 
-interface ContentFetchArgs {
-  courseId: ApiCourse['id']
+interface FragmentContentFetchArgs {
+  courseSlug: ApiCourse['slug']
   locale: LanguageCode
   fragmentType: FragmentType
 }

@@ -5,14 +5,14 @@ import contentApi from '#store/slices/contentApi'
 import type { ApiCourse } from '#types/entities/course'
 import type { ApiPage } from '#types/entities/page'
 
-import type { CourseIdQueryArg } from './courses'
+import type { CourseQueryArg } from './courses'
 
 const routeManager = getRouteManager()
 
 export const pages = contentApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Fetch course pages */
-    getCoursePages: builder.query<ApiPage[], CourseIdQueryArg>({
+    getCoursePages: builder.query<ApiPage[], CourseQueryArg>({
       query: (args) => routeManager.generate('api:course:pages', args),
     }),
 
@@ -27,9 +27,9 @@ export const pages = contentApi.injectEndpoints({
 })
 
 interface PageContentFetchArgs {
-  courseId: ApiCourse['id']
+  courseSlug: ApiCourse['slug']
   locale: LanguageCode
-  pageId: ApiPage['id']
+  pageSlug: ApiPage['slug']
 }
 
 export const { useGetCoursePagesQuery, useGetPageContentQuery } = pages

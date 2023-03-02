@@ -13,9 +13,9 @@ import useSelectPage from '#ui/hooks/useSelectPage'
 
 function PagePage() {
   const { course } = useSelectCurrentCourse()
-  const { locale, pageSlug } = useSelector(selectRouteInfo)
+  const { courseSlug, locale, pageSlug } = useSelector(selectRouteInfo)
   const { page } = useSelectPage(pageSlug)
-  const skipContentFetch = course === undefined || page === undefined
+  const skipContentFetch = course === undefined || courseSlug === null || pageSlug === undefined
 
   const {
     data: content,
@@ -23,9 +23,9 @@ function PagePage() {
     isLoading,
   } = useGetPageContentQuery(
     {
-      courseId: course?.id ?? 0,
+      courseSlug: course?.slug ?? '',
       locale,
-      pageId: page?.id ?? 0,
+      pageSlug: pageSlug ?? '',
     },
     { skip: skipContentFetch }
   )

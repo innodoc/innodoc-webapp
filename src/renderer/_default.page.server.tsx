@@ -20,12 +20,12 @@ import 'katex/dist/katex.min.css'
 
 import { EMOTION_STYLE_KEY, PASS_TO_CLIENT_PROPS } from '#constants'
 import getRouteManager from '#routes/getRouteManager'
-import { getCourseIdBySlug } from '#server/database/queries/courses'
 import makeStore from '#store/makeStore'
-import { changeCourseId, changeRouteInfo, selectRouteInfo } from '#store/slices/appSlice'
+import { changeRouteInfo } from '#store/slices/appSlice'
 import courses from '#store/slices/entities/courses'
 import pages from '#store/slices/entities/pages'
 import sections from '#store/slices/entities/sections'
+import type { ApiCourse } from '#types/entities/course'
 import type {
   PageContextUpdate,
   PageContextOnBeforeRender,
@@ -47,7 +47,6 @@ function getI18nBackendOpts() {
 }
 
 async function render({
-  courseId,
   Page,
   redirectTo,
   routeInfo,
@@ -69,7 +68,7 @@ async function render({
     I18NextFsBackend,
     getI18nBackendOpts(),
     routeInfo.locale,
-    courseId,
+    routeInfo.courseSlug,
     store
   )
 
@@ -118,6 +117,8 @@ async function onBeforeRender({
   routeParams,
   urlOriginal,
 }: PageContextOnBeforeRender): Promise<PageContextUpdate> {
+  let course: ApiCourse | undefined = undefined
+
   // Merge info from route function
   const routeInfo = { ...routeInfoInput, ...routeParams }
 
@@ -127,23 +128,40 @@ async function onBeforeRender({
   // Set current route info
   store.dispatch(changeRouteInfo(routeInfo))
 
-  // Fetch course ID by slug
-  const { courseSlug } = selectRouteInfo(store.getState())
-  const courseId = await getCourseIdBySlug(courseSlug)
-  if (courseId === undefined) {
-    throw RenderErrorPage({ pageContext: { is404: true } })
-  }
-  store.dispatch(changeCourseId(courseId))
+  // Populate store with necessary data
+  if (routeInfo.courseSlug !== null) {
+    const courseParam = { courseSlug: routeInfo.courseSlug }
 
-  // Load course first as we might need it for later redirection
-  await store.dispatch(courses.endpoints.getCourse.initiate({ courseId }))
+    // Load course
+    await store.dispatch(courses.endpoints.getCourse.initiate(courseParam))
+
+    // Select course
+    const selectCurrentCourse = courses.endpoints.getCourse.select(courseParam)
+    const { data } = selectCurrentCourse(store.getState())
+    if (data === undefined) {
+      throw RenderErrorPage({
+        pageContext: { errorMsg: `Course ${routeInfo.courseSlug} not found` },
+      })
+    }
+    course = data
+
+    // Assert we received locales from manifest
+    if (course.locales.length < 1) {
+      throw RenderErrorPage({ pageContext: { errorMsg: 'Course has no locales' } })
+    }
+
+    // Check if current locale is valid
+    if (routeInfo.locale && !course.locales.includes(routeInfo.locale)) {
+      // TODO: should redirect to default locale instead
+      throw RenderErrorPage({ pageContext: { is404: true } })
+    }
+  }
 
   // Redirect to proper URL if info couldn't be extracted
   if (needRedirect) {
     const { routeName, ...routeArgs } = routeInfo
     return {
       pageContext: {
-        courseId,
         redirectTo: routeManager.generate(routeName, routeArgs),
         routeInfo,
         store,
@@ -151,22 +169,16 @@ async function onBeforeRender({
     }
   }
 
-  // Populate store with necessary data
-  await store.dispatch(pages.endpoints.getCoursePages.initiate({ courseId }))
-  await store.dispatch(sections.endpoints.getCourseSections.initiate({ courseId }))
-  // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_A }))
-  // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_B }))
+  if (routeInfo.courseSlug !== null) {
+    const courseParam = { courseSlug: routeInfo.courseSlug }
 
-  // Retrieve course from store
-  const selectCurrentCourse = courses.endpoints.getCourse.select({ courseId })
-  const { data: course } = selectCurrentCourse(store.getState())
-  if (course === undefined) {
-    throw new Error('No course loaded')
-  }
+    // Load pages sections
+    await store.dispatch(pages.endpoints.getCoursePages.initiate(courseParam))
+    await store.dispatch(sections.endpoints.getCourseSections.initiate(courseParam))
 
-  // Assert we received locales from manifest
-  if (course.locales.length < 1) {
-    throw RenderErrorPage({ pageContext: { errorMsg: 'Course has no locales' } })
+    // Load fragment content
+    // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_A }))
+    // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_B }))
   }
 
   // TODO: how to handle this correctly?
@@ -174,18 +186,11 @@ async function onBeforeRender({
     routeInfo.locale = 'en'
   }
 
-  // Check if current locale is valid
-  if (routeInfo.locale && !course.locales.includes(routeInfo.locale)) {
-    // TODO: should redirect to default locale instead
-    throw RenderErrorPage({ pageContext: { is404: true } })
-  }
-
   // Grab populated state
   const preloadedState = store.getState()
 
   return {
     pageContext: {
-      courseId,
       preloadedState,
       routeInfo,
       store,

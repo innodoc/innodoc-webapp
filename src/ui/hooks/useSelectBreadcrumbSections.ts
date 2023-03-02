@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit'
 import type { LanguageCode } from 'iso-639-1'
 import { useMemo } from 'react'
 
-import { selectCourseId, selectRouteInfo } from '#store/slices/appSlice'
+import { selectRouteInfo } from '#store/slices/appSlice'
 import { useGetCourseSectionsQuery } from '#store/slices/entities/sections'
 import { defaultTranslatableFields } from '#types/entities/base'
 import type { ApiSection, TranslatedSection } from '#types/entities/section'
@@ -20,8 +20,7 @@ import { translateEntityArray } from '#utils/i18n'
  * ```
  */
 function useSelectBreadcrumbSections() {
-  const { locale } = useSelector(selectRouteInfo)
-  const courseId = useSelector(selectCourseId)
+  const { courseSlug, locale } = useSelector(selectRouteInfo)
   const { sectionPath } = useSelector(selectRouteInfo)
 
   const selectBreadcrumbSections = useMemo(() => {
@@ -55,12 +54,12 @@ function useSelectBreadcrumbSections() {
   }, [])
 
   const result = useGetCourseSectionsQuery(
-    { courseId: courseId ?? 0 },
+    { courseSlug: courseSlug ?? '' },
     {
       selectFromResult: (result) => ({
         sections: selectBreadcrumbSections(result, sectionPath, locale),
       }),
-      skip: courseId === null,
+      skip: courseSlug === null,
     }
   )
 

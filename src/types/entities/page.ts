@@ -1,8 +1,8 @@
 import type { ReactElement } from 'react'
 import type { CamelCasedProperties } from 'type-fest'
 
-import type { BuiltinPageRouteName } from '#routes/routes'
 import type { PageLinkLocation } from '#types/common'
+import type { BuiltinPageRouteName } from '#types/routes'
 import type { IconProps } from '#ui/components/common/Icon'
 
 import type { BaseEntity, DbTranslatableFields, TranslatedEntity } from './base'

@@ -6,15 +6,15 @@ const routeManager = getRouteManager()
 
 export const courses = contentApi.injectEndpoints({
   endpoints: (builder) => ({
-    /** Fetch course by ID */
-    getCourse: builder.query<ApiCourse, CourseIdQueryArg>({
+    /** Fetch course */
+    getCourse: builder.query<ApiCourse, CourseQueryArg>({
       query: (args) => routeManager.generate('api:course', args),
     }),
   }),
 })
 
-export interface CourseIdQueryArg {
-  courseId: ApiCourse['id']
+export interface CourseQueryArg {
+  courseSlug: ApiCourse['slug']
 }
 
 export const { useGetCourseQuery } = courses

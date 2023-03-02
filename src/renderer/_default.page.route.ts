@@ -25,6 +25,10 @@ function extractLocale(pageContext: PageContextServerRouting) {
   }
 
   // Make sure we have a locale-prefixed URL, so route matching works
+  pageContext.urlOriginal = `/${pageContext.routeInfo.locale}${urlParts.join('/')}`
+  if (pageContext.urlOriginal.endsWith('/')) {
+    pageContext.urlOriginal = pageContext.urlOriginal.slice(0, -1)
+  }
   pageContext.needRedirect = true
 }
 

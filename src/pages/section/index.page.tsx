@@ -16,9 +16,9 @@ import { formatSectionTitle } from '#utils/content'
 
 function SectionPage() {
   const { course } = useSelectCurrentCourse()
-  const { locale, sectionPath } = useSelector(selectRouteInfo)
+  const { courseSlug, locale, sectionPath } = useSelector(selectRouteInfo)
   const { section } = useSelectSection(sectionPath)
-  const skipContentFetch = course === undefined || section === undefined
+  const skipContentFetch = course === undefined || courseSlug === null || sectionPath === undefined
 
   const {
     data: content,
@@ -26,9 +26,9 @@ function SectionPage() {
     isLoading,
   } = useGetSectionContentQuery(
     {
-      courseId: course?.id ?? 0,
+      courseSlug: course?.slug ?? '',
       locale,
-      sectionId: section?.id ?? 0,
+      sectionPath: sectionPath ?? '',
     },
     { skip: skipContentFetch }
   )

@@ -5,7 +5,6 @@ import type { PageContextBuiltIn } from 'vite-plugin-ssr'
 import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client/router'
 
 import type { PASS_TO_CLIENT_PROPS } from '#constants'
-import type { RouteName } from '#routes/routes'
 import type { RootState, Store } from '#store/makeStore'
 
 import type { RouteInfo } from './common'
@@ -27,9 +26,6 @@ export interface PageContextServer extends PageContextInit, PageContextBuiltIn<C
 
   /** Indicate a redirect should happen */
   redirectTo?: string
-
-  /** Course ID */
-  courseId: ApiCourse['id']
 
   /** Preloaded store state to be passed to the client */
   preloadedState: PreloadedState<RootState>
@@ -56,7 +52,7 @@ export type PageContextOnBeforeRender = Pick<
 /** Page context passed into `render` */
 export type PageContextRender = Pick<
   PageContextServer,
-  'courseId' | 'Page' | 'redirectTo' | 'routeInfo' | 'store'
+  'Page' | 'redirectTo' | 'routeInfo' | 'store'
 >
 
 /** Page context update (SSR context) */

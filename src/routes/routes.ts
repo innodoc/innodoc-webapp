@@ -1,14 +1,5 @@
 import type { RouteFuncArgs } from './RouteManager'
 
-export type RouteName =
-  | keyof typeof routesBuiltinPages
-  | keyof typeof routesContentPages
-  | keyof typeof routesUser
-  | keyof typeof routesApi
-
-type RouteFunc = (args: RouteFuncArgs) => string
-export type RouteDef = string | RouteFunc
-
 export const routesBuiltinPages = {
   // Landing/index page
   'app:index': '',
@@ -23,16 +14,13 @@ export const routesBuiltinPages = {
   'app:glossary': '/glossary',
 }
 
-export type BuiltinPageRouteName = keyof typeof routesBuiltinPages
-
 export const routesContentPages = {
   // Page
-  'app:page': ({ pagePathPrefix, SLUG_RE }: RouteFuncArgs) =>
-    `/${pagePathPrefix}/:pageSlug(${SLUG_RE})`,
+  'app:page': ({ pagePathPrefix }: RouteFuncArgs) => `/${pagePathPrefix}/:pageSlug`,
 
   // Section
-  'app:section': ({ sectionPathPrefix, PATH_RE }: RouteFuncArgs) =>
-    `/${sectionPathPrefix}/:sectionPath(${PATH_RE})`,
+  'app:section': ({ sectionPathPrefix }: RouteFuncArgs) =>
+    `/${sectionPathPrefix}/:sectionPath([a-z0-9-/]*)`,
 }
 
 export const routesUser = {
@@ -42,19 +30,16 @@ export const routesUser = {
 
 export const routesApi = {
   // Course
-  'api:course': ({ NUMBER_RE }: RouteFuncArgs) => `/:courseId(${NUMBER_RE})`,
+  'api:course': '/:courseSlug',
 
   // Page
-  'api:course:pages': ({ NUMBER_RE }: RouteFuncArgs) => `/:courseId(${NUMBER_RE})/pages`,
-  'api:course:page:content': ({ LOCALE_RE, NUMBER_RE }: RouteFuncArgs) =>
-    `/:courseId(${NUMBER_RE})/page/:locale(${LOCALE_RE})/:pageId(${NUMBER_RE})`,
+  'api:course:pages': '/:courseSlug/pages',
+  'api:course:page:content': '/:courseSlug/pages/:locale/:pageSlug',
 
   // Section
-  'api:course:sections': ({ NUMBER_RE }: RouteFuncArgs) => `/:courseId(${NUMBER_RE})/sections`,
-  'api:course:section:content': ({ LOCALE_RE, NUMBER_RE }: RouteFuncArgs) =>
-    `/:courseId(${NUMBER_RE})/section/:locale(${LOCALE_RE})/:sectionId(${NUMBER_RE})`,
+  'api:course:sections': '/:courseSlug/sections',
+  'api:course:section:content': '/:courseSlug/sections/:locale/:sectionPath([a-z0-9-/]*)',
 
   // Fragment
-  'api:course:fragment:content': ({ FRAGMENT_RE, LOCALE_RE, NUMBER_RE }: RouteFuncArgs) =>
-    `/:courseId(${NUMBER_RE})/fragment/:locale(${LOCALE_RE})/:fragmentType(${FRAGMENT_RE})`,
+  'api:course:fragment:content': '/:courseSlug/fragments/:locale/:fragmentType',
 }

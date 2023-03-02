@@ -5,14 +5,14 @@ import contentApi from '#store/slices/contentApi'
 import type { ApiCourse } from '#types/entities/course'
 import type { ApiSection } from '#types/entities/section'
 
-import type { CourseIdQueryArg } from './courses'
+import type { CourseQueryArg } from './courses'
 
 const routeManager = getRouteManager()
 
 export const sections = contentApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Fetch course sections */
-    getCourseSections: builder.query<ApiSection[], CourseIdQueryArg>({
+    getCourseSections: builder.query<ApiSection[], CourseQueryArg>({
       query: (args) => {
         return routeManager.generate('api:course:sections', args)
       },
@@ -29,9 +29,9 @@ export const sections = contentApi.injectEndpoints({
 })
 
 interface SectionContentFetchArgs {
-  courseId: ApiCourse['id']
+  courseSlug: ApiCourse['slug']
   locale: LanguageCode
-  sectionId: ApiSection['id']
+  sectionPath: ApiSection['path']
 }
 
 export const { useGetCourseSectionsQuery, useGetSectionContentQuery } = sections

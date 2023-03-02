@@ -9,7 +9,7 @@ const apiRouter = Router()
 
 if (!config.isProduction) {
   apiRouter.use((req, res, next) => {
-    console.log(`API request: ${req.url}`)
+    console.log(`API request: ${req.originalUrl}`)
     next()
   })
 }

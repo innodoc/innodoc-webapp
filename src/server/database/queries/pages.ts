@@ -5,10 +5,10 @@ import getDatabase from '#server/database/getDatabase'
 import type { DbCourse } from '#types/entities/course'
 import type { DbPage, ApiPage } from '#types/entities/page'
 
-import type { ResultFromValue, IdResult } from './types'
+import type { ResultFromValue } from './types'
 
 /** Get course pages */
-export async function getCoursePages(courseId: DbCourse['id']): Promise<ApiPage[]> {
+export async function getCoursePages(courseSlug: DbCourse['slug']): Promise<ApiPage[]> {
   const db = getDatabase()
   const result = await db
     .select<DbPage[]>(
@@ -23,33 +23,17 @@ export async function getCoursePages(courseId: DbCourse['id']): Promise<ApiPage[
     .join('courses as c', 'p.course_id', 'c.id')
     .join('pages_title_trans as t', 'p.id', 't.page_id')
     .leftOuterJoin('pages_short_title_trans as st', 'p.id', 'st.page_id')
-    .where('c.id', courseId)
+    .where('c.slug', courseSlug)
     .groupBy('p.id')
 
   return camelcaseKeys(result)
 }
 
-/** Get page ID by slug */
-export async function getPageIdBySlug(
-  courseId: DbCourse['id'],
-  pageSlug: DbPage['slug']
-): Promise<ApiPage['id'] | undefined> {
-  const db = getDatabase()
-  const result = await db
-    .first<IdResult | undefined>('p.id')
-    .from('pages as p')
-    .join('courses as c', 'p.course_id', 'c.id')
-    .where('p.slug', pageSlug)
-    .where('c.id', courseId)
-
-  return result?.id
-}
-
 /** Get page content */
 export async function getPageContent(
-  courseId: DbCourse['id'],
+  courseSlug: DbCourse['slug'],
   locale: LanguageCode,
-  pageId: DbPage['id']
+  pageSlug: DbPage['slug']
 ): Promise<string | undefined> {
   const db = getDatabase()
   const result = await db
@@ -57,8 +41,8 @@ export async function getPageContent(
     .from('pages as p')
     .join('courses as c', 'p.course_id', 'c.id')
     .leftOuterJoin('pages_content_trans as ct', 'p.id', 'ct.page_id')
-    .where('p.id', pageId)
-    .where('c.id', courseId)
+    .where('p.slug', pageSlug)
+    .where('c.slug', courseSlug)
     .where('ct.locale', locale)
 
   return result ? result.value : undefined

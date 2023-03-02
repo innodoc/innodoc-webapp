@@ -1,5 +1,6 @@
 import RouteManager from './RouteManager'
 
+/** Return `RouteManager` instance (vite) */
 function getRouteManager() {
   return RouteManager.getInstance(
     import.meta.env.INNODOC_COURSE_SLUG_MODE,

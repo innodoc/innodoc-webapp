@@ -5,10 +5,10 @@ import getDatabase from '#server/database/getDatabase'
 import type { DbCourse } from '#types/entities/course'
 import type { ApiSection, DbQuerySection, DbSection } from '#types/entities/section'
 
-import type { ResultFromValue, IdResult } from './types'
+import type { IdResult, ResultFromValue } from './types'
 
 /** Get course sections by course ID */
-export async function getCourseSections(courseId: DbCourse['id']): Promise<ApiSection[]> {
+export async function getCourseSections(courseSlug: DbCourse['slug']): Promise<ApiSection[]> {
   const db = getDatabase()
   const result = (await db
     .withRecursive(
@@ -31,7 +31,7 @@ export async function getCourseSections(courseId: DbCourse['id']): Promise<ApiSe
           .from('sections as s')
           .join('courses as c', 's.course_id', 'c.id')
           .where('s.parent_id', null)
-          .where('c.id', courseId)
+          .where('c.slug', courseSlug)
           .union((qb) => {
             // Add one level of children on each iteration
             void qb
@@ -86,7 +86,10 @@ export async function getCourseSections(courseId: DbCourse['id']): Promise<ApiSe
 }
 
 /** Get section ID by path */
-export async function getSectionIdByPath(courseId: DbCourse['id'], sectionPath: DbSection['path']) {
+export async function getSectionIdByPath(
+  courseSlug: DbCourse['slug'],
+  sectionPath: DbSection['path']
+) {
   const db = getDatabase()
   const pathParts = sectionPath.split('/')
   const rootSlug = pathParts.shift()
@@ -106,7 +109,7 @@ export async function getSectionIdByPath(courseId: DbCourse['id'], sectionPath: 
         .join('courses as c', 's.course_id', 'c.id')
         .where('s.parent_id', null)
         .where('s.slug', rootSlug)
-        .where('c.id', courseId)
+        .where('c.slug', courseSlug)
         .union((qb) => {
           // Find next child on each iteration, consuming next path part
           void qb
@@ -128,7 +131,7 @@ export async function getSectionIdByPath(courseId: DbCourse['id'], sectionPath: 
 
 /** Get section content */
 export async function getSectionContent(
-  courseId: DbCourse['id'],
+  courseSlug: DbCourse['slug'],
   locale: LanguageCode,
   sectionId: DbSection['id']
 ): Promise<string | undefined> {
@@ -139,7 +142,7 @@ export async function getSectionContent(
     .join('courses as c', 's.course_id', 'c.id')
     .leftOuterJoin('sections_content_trans as ct', 's.id', 'ct.section_id')
     .where('s.id', sectionId)
-    .where('c.id', courseId)
+    .where('c.slug', courseSlug)
     .where('ct.locale', locale)
 
   return result ? result.value : undefined
