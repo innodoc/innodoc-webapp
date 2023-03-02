@@ -1,54 +1,56 @@
 import type { NextFunction, Request, Response } from 'express'
 
-import type { PageContextInit } from '#server/frontendRouter/frontendHandler'
-
-async function setupMocks(httpResponse = true, redirectTo?: string) {
+async function setupMocks(httpResponse = true, redirectTo?: string, errorWhileRendering?: unknown) {
   vi.resetModules()
 
   const mockPageContext = {
+    errorWhileRendering,
     httpResponse: httpResponse
       ? {
           body: '<html></html>',
           contentType: 'text/html',
           statusCode: 200,
         }
-      : undefined,
+      : null,
     redirectTo: redirectTo !== undefined ? redirectTo : undefined,
   }
   const renderPageMock = vi.fn().mockResolvedValueOnce(mockPageContext)
-  vi.doUnmock('vite-plugin-ssr')
   vi.doMock('vite-plugin-ssr', () => ({ renderPage: renderPageMock }))
 
-  const frontendHandler = (await import('#server/frontendRouter/frontendHandler')).default as (
-    req: Request,
-    res: Response,
+  const frontendHandler = (await import('#server/frontendHandler')).default as (
+    req: Partial<Request>,
+    res: Partial<Response>,
     next: NextFunction
   ) => Promise<void>
 
   const req = {
-    course: { id: 12 },
-    locale: 'de',
-    urlWithoutLocale: '/foo/bar',
-  } as Request
+    headers: { host: 'www.example.com' },
+    originalUrl: '/en/foo/bar',
+    rawLocale: { language: 'de' },
+  } as Partial<Request>
 
   const res = {
     redirect: vi.fn().mockReturnThis(),
     send: vi.fn().mockReturnThis(),
     status: vi.fn().mockReturnThis(),
     type: vi.fn().mockReturnThis(),
-  } as unknown as Response
+  } as Partial<Response>
 
   return { frontendHandler, next: vi.fn(), renderPageMock, req, res }
 }
+
+afterEach(() => {
+  vi.doUnmock('vite-plugin-ssr')
+})
 
 test('frontendHandler renders page', async () => {
   const { frontendHandler, next, renderPageMock, req, res } = await setupMocks()
   await frontendHandler(req, res, next)
 
-  const pageContextInit = renderPageMock.mock.calls[0][0] as PageContextInit
-  expect(pageContextInit.locale).toBe('de')
-  expect(pageContextInit.urlOriginal).toBe('/foo/bar')
-  expect(pageContextInit.courseId).toBe(12)
+  const pageContextInit = renderPageMock.mock.calls[0][0] as Record<string, unknown>
+  expect(pageContextInit.requestLocale).toBe('de')
+  expect(pageContextInit.urlOriginal).toBe('/en/foo/bar')
+  expect(pageContextInit.host).toBe('www.example.com')
 
   expect(res.status).toHaveBeenCalledWith(200)
   expect(res.type).toHaveBeenCalledWith('text/html')
@@ -77,4 +79,15 @@ test("frontendHandler doesn't receive httpResponse", async () => {
   expect(res.send).not.toHaveBeenCalled()
   expect(res.redirect).not.toHaveBeenCalled()
   expect(next).toHaveBeenCalledWith(expect.any(Error))
+})
+
+test('frontendHandler handles errorWhileRendering', async () => {
+  const { frontendHandler, next, req, res } = await setupMocks(false, undefined, 'render error')
+  await frontendHandler(req, res, next)
+
+  expect(res.status).not.toHaveBeenCalled()
+  expect(res.type).not.toHaveBeenCalled()
+  expect(res.send).not.toHaveBeenCalled()
+  expect(res.redirect).not.toHaveBeenCalled()
+  expect(next).toHaveBeenCalledWith('render error')
 })
