@@ -5,6 +5,7 @@ import type { PageContextBuiltIn } from 'vite-plugin-ssr'
 import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client/router'
 
 import type { PASS_TO_CLIENT_PROPS } from '#constants'
+import type { RouteName } from '#routes/routes'
 import type { RootState, Store } from '#store/makeStore'
 
 import type { RouteInfo } from './common'
@@ -44,6 +45,18 @@ export interface PageContextServer extends PageContextInit, PageContextBuiltIn<C
 export type PageContextOnBeforeRoute = Pick<
   PageContextServer,
   'host' | 'requestLocale' | 'urlOriginal'
+>
+
+/** Page context passed into `onBeforeRender` */
+export type PageContextOnBeforeRender = Pick<
+  PageContextServer,
+  'needRedirect' | 'routeInfo' | 'routeParams' | 'urlOriginal'
+>
+
+/** Page context passed into `render` */
+export type PageContextRender = Pick<
+  PageContextServer,
+  'courseId' | 'Page' | 'redirectTo' | 'routeInfo' | 'store'
 >
 
 /** Page context update (SSR context) */

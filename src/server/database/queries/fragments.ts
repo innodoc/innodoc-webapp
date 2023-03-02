@@ -6,6 +6,7 @@ import type { DbCourse } from '#types/entities/course'
 
 import type { ResultFromValue } from './types'
 
+/** Get fragment content */
 export async function getFragmentContent(
   courseId: DbCourse['id'],
   locale: LanguageCode,

@@ -25,7 +25,7 @@ const checkErrors: RequestHandler = (req, res, next) => {
 const courseRouter = Router()
   // Get course by ID
   .get(p('api:course'), param('courseId').isInt(), checkErrors, (async (req, res) => {
-    const course = await getCourse({ courseId: parseInt(req.params.courseId) })
+    const course = await getCourse(parseInt(req.params.courseId))
     if (!course) {
       return res.sendStatus(404)
     }
@@ -35,7 +35,7 @@ const courseRouter = Router()
 
   // Get course by slug
   .get(p('api:course'), param('courseId').isInt(), checkErrors, (async (req, res) => {
-    const course = await getCourse({ courseId: parseInt(req.params.courseId) })
+    const course = await getCourse(parseInt(req.params.courseId))
     if (!course) {
       return res.sendStatus(404)
     }

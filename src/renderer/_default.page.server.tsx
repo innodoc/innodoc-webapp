@@ -20,13 +20,17 @@ import 'katex/dist/katex.min.css'
 
 import { EMOTION_STYLE_KEY, PASS_TO_CLIENT_PROPS } from '#constants'
 import getRouteManager from '#routes/getRouteManager'
-import { getCourse } from '#server/database/queries/courses'
+import { getCourseIdBySlug } from '#server/database/queries/courses'
 import makeStore from '#store/makeStore'
 import { changeCourseId, changeRouteInfo, selectRouteInfo } from '#store/slices/appSlice'
 import courses from '#store/slices/entities/courses'
 import pages from '#store/slices/entities/pages'
 import sections from '#store/slices/entities/sections'
-import type { PageContextUpdate, PageContextServer } from '#types/pageContext'
+import type {
+  PageContextUpdate,
+  PageContextOnBeforeRender,
+  PageContextRender,
+} from '#types/pageContext'
 import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
 import renderToHtml from '#utils/ssr/renderToHtml'
@@ -48,7 +52,7 @@ async function render({
   redirectTo,
   routeInfo,
   store,
-}: PageContextServer): Promise<PageContextUpdate | ReturnType<typeof escapeInject>> {
+}: PageContextRender): Promise<PageContextUpdate | ReturnType<typeof escapeInject>> {
   if (redirectTo !== undefined) {
     return { pageContext: { redirectTo } }
   }
@@ -113,7 +117,7 @@ async function onBeforeRender({
   routeInfo: routeInfoInput,
   routeParams,
   urlOriginal,
-}: PageContextServer): Promise<PageContextUpdate> {
+}: PageContextOnBeforeRender): Promise<PageContextUpdate> {
   // Merge info from route function
   const routeInfo = { ...routeInfoInput, ...routeParams }
 
@@ -124,13 +128,11 @@ async function onBeforeRender({
   store.dispatch(changeRouteInfo(routeInfo))
 
   // Fetch course ID by slug
-  // TODO add getCourseIdBySlug
   const { courseSlug } = selectRouteInfo(store.getState())
-  const courseBySlug = await getCourse({ courseSlug })
-  if (courseBySlug === undefined) {
+  const courseId = await getCourseIdBySlug(courseSlug)
+  if (courseId === undefined) {
     throw RenderErrorPage({ pageContext: { is404: true } })
   }
-  const courseId = courseBySlug.id
   store.dispatch(changeCourseId(courseId))
 
   // Load course first as we might need it for later redirection

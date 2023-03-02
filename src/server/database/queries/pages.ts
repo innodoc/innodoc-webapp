@@ -7,6 +7,7 @@ import type { DbPage, ApiPage } from '#types/entities/page'
 
 import type { ResultFromValue, IdResult } from './types'
 
+/** Get course pages */
 export async function getCoursePages(courseId: DbCourse['id']): Promise<ApiPage[]> {
   const db = getDatabase()
   const result = await db
@@ -28,6 +29,7 @@ export async function getCoursePages(courseId: DbCourse['id']): Promise<ApiPage[
   return camelcaseKeys(result)
 }
 
+/** Get page ID by slug */
 export async function getPageIdBySlug(
   courseId: DbCourse['id'],
   pageSlug: DbPage['slug']
@@ -43,6 +45,7 @@ export async function getPageIdBySlug(
   return result?.id
 }
 
+/** Get page content */
 export async function getPageContent(
   courseId: DbCourse['id'],
   locale: LanguageCode,

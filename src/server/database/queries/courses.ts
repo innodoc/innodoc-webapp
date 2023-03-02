@@ -3,24 +3,10 @@ import camelcaseKeys from 'camelcase-keys'
 import getDatabase from '#server/database/getDatabase'
 import type { ApiCourse, DbCourse } from '#types/entities/course'
 
-/** Get course by ID or slug */
-export async function getCourse({
-  courseId,
-  courseSlug,
-}: {
-  courseId?: DbCourse['id']
-  courseSlug?: DbCourse['slug']
-}): Promise<ApiCourse | undefined> {
-  let where
+import type { IdResult } from './types'
 
-  if (courseId !== undefined) {
-    where = { 'c.id': courseId }
-  } else if (courseSlug !== undefined) {
-    where = { 'c.slug': courseSlug }
-  } else {
-    throw new Error('getCourse() must receive either courseId or courseSlug')
-  }
-
+/** Get course by ID */
+export async function getCourse(courseId: DbCourse['id']): Promise<ApiCourse | undefined> {
   const db = getDatabase()
   const result = await db
     .first<DbCourse | undefined>(
@@ -38,8 +24,21 @@ export async function getCourse({
     .leftOuterJoin('courses_title_trans as t', 'c.id', 't.course_id')
     .leftOuterJoin('courses_short_title_trans as st', 'c.id', 'st.course_id')
     .leftOuterJoin('courses_description_trans as d', 'c.id', 'd.course_id')
-    .where(where)
+    .where({ 'c.id': courseId })
     .groupBy('c.id')
 
   return result ? camelcaseKeys(result) : undefined
+}
+
+/** Get course ID by slug */
+export async function getCourseIdBySlug(
+  courseSlug: DbCourse['slug']
+): Promise<ApiCourse['id'] | undefined> {
+  const db = getDatabase()
+  const result = await db
+    .first<IdResult | undefined>('c.id')
+    .from('courses as c')
+    .where('c.slug', courseSlug)
+
+  return result?.id
 }
