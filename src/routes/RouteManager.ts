@@ -32,6 +32,13 @@ type Matchers = Record<RouteName, MatchFunction>
 class RouteManager {
   private static instance: RouteManager
 
+  private readonly allRoutes = {
+    ...routesBuiltinPages,
+    ...routesContentPages,
+    ...routesUser,
+    ...routesApi,
+  }
+
   private readonly LOCALE_RE = '[a-z]{2}'
 
   private readonly NUMBER_RE = '[0-9]+'
@@ -67,6 +74,19 @@ class RouteManager {
     const { generators, matchers } = this.buildRoutes()
     this.generators = generators
     this.matchers = matchers
+  }
+
+  /** Get singleton */
+  public static getInstance(
+    courseSlugMode: CourseSlugMode,
+    pagePathPrefix: string,
+    sectionPathPrefix: string
+  ): RouteManager {
+    if (!RouteManager.instance) {
+      RouteManager.instance = new RouteManager(courseSlugMode, pagePathPrefix, sectionPathPrefix)
+    }
+
+    return RouteManager.instance
   }
 
   /** Generate URL path from route name and parameters */
@@ -112,6 +132,13 @@ class RouteManager {
     return this.matchers[routeName](path)
   }
 
+  /** Get all routes */
+  public getAllRoutes() {
+    return Object.fromEntries(this.buildPatterns(this.allRoutes)) as Partial<
+      Record<RouteName, string>
+    >
+  }
+
   /** Get API routes */
   public getApiRoutes() {
     return Object.fromEntries(this.buildPatterns(routesApi)) as Partial<Record<RouteName, string>>
@@ -131,12 +158,7 @@ class RouteManager {
 
   private buildRoutes() {
     // Build full patterns
-    const patterns = this.buildPatterns({
-      ...routesBuiltinPages,
-      ...routesContentPages,
-      ...routesUser,
-      ...routesApi,
-    })
+    const patterns = this.buildPatterns(this.allRoutes)
 
     // Build generators
     const generators = Object.fromEntries(
@@ -168,18 +190,6 @@ class RouteManager {
 
   private makeApiPattern(pattern: string) {
     return `${API_COURSE_PREFIX}${pattern}`
-  }
-
-  public static getInstance(
-    courseSlugMode: CourseSlugMode,
-    pagePathPrefix: string,
-    sectionPathPrefix: string
-  ): RouteManager {
-    if (!RouteManager.instance) {
-      RouteManager.instance = new RouteManager(courseSlugMode, pagePathPrefix, sectionPathPrefix)
-    }
-
-    return RouteManager.instance
   }
 }
 
