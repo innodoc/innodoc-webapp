@@ -3,12 +3,10 @@ import type { LanguageCode } from 'iso-639-1'
 import type { PageContextOnBeforeRender } from '#types/pageContext'
 
 async function setupMocks(opts?: {
-  courseId?: number
   context?: Partial<PageContextOnBeforeRender>
   course?: { locales: LanguageCode[] }
 }) {
   const mergedOpts = {
-    courseId: 161,
     context: {},
     course: { locales: ['en', 'be'] },
     ...opts,
@@ -56,10 +54,6 @@ async function setupMocks(opts?: {
     default: {
       endpoints: { getCourseSections: { initiate: sectionsGetSections } },
     },
-  }))
-
-  vi.doMock('#server/database/queries/courses', () => ({
-    getCourseIdBySlug: vi.fn().mockResolvedValueOnce(mergedOpts.courseId),
   }))
 
   const { onBeforeRender } = await import('#renderer/_default.page.server')
@@ -111,15 +105,13 @@ test('onBeforeRender', async () => {
     locale: 'be',
     pageSlug: 'foo-bar',
   })
-  expect(mocks.changeCourseId).toHaveBeenCalledWith(161)
 
   // Should fetch data
-  expect(mocks.sectionsGetCourse).toHaveBeenCalledWith({ courseId: 161 })
-  expect(mocks.sectionsGetPages).toHaveBeenCalledWith({ courseId: 161 })
-  expect(mocks.sectionsGetSections).toHaveBeenCalledWith({ courseId: 161 })
+  expect(mocks.sectionsGetCourse).toHaveBeenCalledWith({ courseSlug: 'testcourse' })
+  expect(mocks.sectionsGetPages).toHaveBeenCalledWith({ courseSlug: 'testcourse' })
+  expect(mocks.sectionsGetSections).toHaveBeenCalledWith({ courseSlug: 'testcourse' })
 
   // Page context update
-  expect(pageContext.courseId).toBe(161)
   expect(pageContext.preloadedState).toStrictEqual({ mock: 'state' })
   expect(pageContext.routeInfo).toStrictEqual({
     courseSlug: 'testcourse',
@@ -139,7 +131,7 @@ test('onBeforeRender (invalid locale)', async () => {
 
 test('onBeforeRender (invalid course)', async () => {
   const { pageContextServer, onBeforeRender } = await setupMocks({
-    courseId: undefined,
+    course: undefined,
   })
   await expect(onBeforeRender(pageContextServer)).rejects.toThrow(/RenderErrorPage/)
 })
