@@ -3,7 +3,7 @@ import type { LanguageCode } from 'iso-639-1'
 import type { ApiSection } from '#types/entities/section'
 
 import makeContent from './makeContent'
-import type { Section, SectionDef, Sections } from './types'
+import type { Section, SectionDef } from './types'
 import { getDates, getTitlesPath, range, seed } from './utils'
 
 let id = 0
@@ -25,7 +25,7 @@ const makeSection = (
     ...getTitlesPath(locales, parentPath),
     ...getDates(),
   }
-  return [section, makeContent(locales)]
+  return { data: section, content: makeContent(locales) }
 }
 
 const mapSectionDef = (
@@ -35,25 +35,25 @@ const mapSectionDef = (
   parentPath: string[],
   courseId: number,
   locales: LanguageCode[]
-): Sections => {
+): Section[] => {
   const section = makeSection(idx, parent, parentPath, courseId, locales)
   if (childrenDef === null) {
-    return { [section[0].id]: section }
+    return [section]
   }
 
   const childrenDefArr = Array.isArray(childrenDef)
     ? childrenDef
     : range(childrenDef).map(() => null)
 
-  const children = childrenDefArr.reduce<Sections>(
-    (acc, def, idx) => ({
+  const children = childrenDefArr.reduce(
+    (acc, def, idx) => [
       ...acc,
-      ...mapSectionDef(def, idx, section[0], section[0].path.split('/'), courseId, locales),
-    }),
-    {}
+      ...mapSectionDef(def, idx, section.data, section.data.path.split('/'), courseId, locales),
+    ],
+    [] as Section[]
   )
 
-  return { [section[0].id]: section, ...children }
+  return [section, ...children]
 }
 
 const sectionDef: SectionDef[] = [
@@ -67,9 +67,9 @@ const sectionDef: SectionDef[] = [
 ]
 
 const makeSections = (courseId: number, locales: LanguageCode[]) =>
-  sectionDef.reduce<Sections>(
-    (acc, def, idx) => ({ ...acc, ...mapSectionDef(def, idx, null, [], courseId, locales) }),
-    {}
+  sectionDef.reduce(
+    (acc, def, idx) => [...acc, ...mapSectionDef(def, idx, null, [], courseId, locales)],
+    [] as Section[]
   )
 
 export default makeSections

@@ -2,12 +2,14 @@ import type { LanguageCode } from 'iso-639-1'
 import { rest } from 'msw'
 import type { ResponseComposition, RestContext, RestRequest } from 'msw'
 
+import type RouteManager from '#routes/RouteManager'
 import { getRouteManager } from '#server/utils'
 import type { RouteName } from '#types/routes'
 import { isFragmentType } from '#types/typeGuards'
 
 import type { Content } from './fakeData/types'
-import getData from './getData'
+import getCourses from './getCourses'
+import { pathToRegexp } from 'path-to-regexp'
 
 const getStringParam = (req: RestRequest, name: string) => {
   const val = req.params[name]
@@ -17,14 +19,15 @@ const getStringParam = (req: RestRequest, name: string) => {
   return val
 }
 
-const getIntParam = (req: RestRequest, name: string) => parseInt(getStringParam(req, name))
-
 const getContent = (
   req: RestRequest,
   res: ResponseComposition,
   ctx: RestContext,
-  content: Content
+  content: Content | undefined
 ) => {
+  if (content === undefined) {
+    return res(ctx.status(404))
+  }
   const locale = getStringParam(req, 'locale') as LanguageCode
   const text = content[locale]
   if (text === undefined) {
@@ -33,69 +36,60 @@ const getContent = (
   return res(ctx.status(200), ctx.text(text))
 }
 
-function getHandlers(baseUrl: string) {
+function getHandlers(baseUrl: string, routeManager: RouteManager) {
+  const courses = getCourses()
+
   // Remove trailing `/` from baseUrl
   const baseUrlTrimmed = baseUrl.endsWith('/') ? baseUrl.slice(0, baseUrl.length - 1) : baseUrl
 
-  const routeManager = getRouteManager()
   const apiRoutes = routeManager.getApiRoutes()
 
   const makePath = (routeName: RouteName) => {
-    const pattern = apiRoutes[routeName]
+    let pattern = apiRoutes[routeName]
     if (pattern === undefined) {
       throw new Error(`Unknown API route: ${routeName}`)
     }
-    return (
-      `${baseUrlTrimmed}${pattern}`
-        // remove regexp patterns as msw doesn't seem to support them
-        .replace(/\([^/]+/g, '')
-    )
+
+    // Special case: MSW supports wildcard but no regex params
+    pattern = pattern.replace(/:sectionPath\(.+\)/, '*')
+
+    return `${baseUrlTrimmed}${pattern}`
   }
 
-  const getCourse = (req: RestRequest) => getData()[getIntParam(req, 'courseId')]
-
-  const getCourseBySlug = (req: RestRequest) => {
+  const getCourse = (req: RestRequest) => {
     const courseSlug = getStringParam(req, 'courseSlug')
-    const course = Object.values(getData()).find((c) => c.data.slug === courseSlug)
-    if (!course) {
+    const course = courses.find((c) => c.data.slug === courseSlug)
+    if (course === undefined) {
       throw new Error(`Course not found ${courseSlug}`)
     }
     return course
   }
 
-  const handlers = [
+  return [
     // Course
     rest.get(makePath('api:course'), (req, res, ctx) =>
       res(ctx.status(200), ctx.json(getCourse(req).data))
     ),
-    rest.get(makePath('api:course-id:by-slug'), (req, res, ctx) =>
-      res(ctx.status(200), ctx.json(getCourseBySlug(req).data.id))
-    ),
 
     // Page
     rest.get(makePath('api:course:pages'), (req, res, ctx) =>
-      res(ctx.status(200), ctx.json(Object.values(getCourse(req).pages).map((page) => page[0])))
+      res(ctx.status(200), ctx.json(getCourse(req).pages.map((page) => page.data)))
     ),
-    rest.get(makePath('api:course:page:content'), (req, res, ctx) =>
-      getContent(req, res, ctx, getCourse(req).pages[getIntParam(req, 'pageId')][1])
-    ),
-    rest.get(makePath('api:course:page-id:by-slug'), (req, res, ctx) => {
-      const { pages } = getCourse(req)
+    rest.get(makePath('api:course:page:content'), (req, res, ctx) => {
       const pageSlug = getStringParam(req, 'pageSlug')
-      const page = Object.values(pages).find((p) => p[0].slug === pageSlug)
-      if (page === undefined) {
-        throw Error(`Page not found ${pageSlug}`)
-      }
-      return res(ctx.status(200), ctx.json(page[0].id))
+      const page = getCourse(req).pages.find((p) => p.data.slug === pageSlug)
+      return getContent(req, res, ctx, page?.content)
     }),
 
     // Section
     rest.get(makePath('api:course:sections'), (req, res, ctx) =>
-      res(ctx.status(200), ctx.json(Object.values(getCourse(req).sections).map((sec) => sec[0])))
+      res(ctx.status(200), ctx.json(getCourse(req).sections.map((sec) => sec.data)))
     ),
-    rest.get(makePath('api:course:section:content'), (req, res, ctx) =>
-      getContent(req, res, ctx, getCourse(req).sections[getIntParam(req, 'sectionId')][1])
-    ),
+    rest.get(makePath('api:course:section:content'), (req, res, ctx) => {
+      const sectionPath = req.params[0]
+      const section = getCourse(req).sections.find((s) => s.data.path === sectionPath)
+      return getContent(req, res, ctx, section?.content)
+    }),
 
     // Fragment
     rest.get(makePath('api:course:fragment:content'), (req, res, ctx) => {
@@ -106,8 +100,6 @@ function getHandlers(baseUrl: string) {
       return getContent(req, res, ctx, getCourse(req).footerContent[fragmentType])
     }),
   ]
-
-  return handlers
 }
 
 export default getHandlers

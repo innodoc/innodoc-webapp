@@ -11,48 +11,35 @@ import { getDates, seed } from './utils'
 const makeFooterContent = (locales: LanguageCode[], seed: string) =>
   makeContent(locales, { headerDepth: 4, nodeCount: 2, seed })
 
-const makeCourse = (course: ApiCourse, locales: LanguageCode[]) => ({
-  data: course,
-  footerContent: Object.fromEntries(
-    FRAGMENT_TYPES.map((fragmentType) => [fragmentType, makeFooterContent(locales, fragmentType)])
-  ),
-  pages: makePages(course.id, locales),
-  sections: makeSections(course.id, locales),
+const makeCourseData = (courseId: number, locales: LanguageCode[]): ApiCourse => ({
+  id: courseId,
+  slug: 'testcourse',
+  homeLink: 'app:page|home',
+  locales,
+  title: {
+    de: 'Kurs für integration tests',
+    en: 'Course for integration tests',
+  },
+  shortTitle: { de: 'Testkurs', en: 'Test course' },
+  description: {
+    de: 'Dieser Kurs dient dem Testen der Funktionalität.',
+    en: 'This course is for testing functionality.',
+  },
+  ...getDates(),
 })
 
-const makeCoursesData = (locales: LanguageCode[]): ApiCourse[] => {
-  const courseId = 0
+const makeCourse = (courseId: number, locales: LanguageCode[]) => {
   seed(`course-${courseId}`)
-  return [
-    {
-      id: courseId,
-      slug: 'testcourse',
-      homeLink: 'app:page|home',
-      locales,
-      title: {
-        de: 'Kurs für integration tests',
-        en: 'Course for integration tests',
-      },
-      shortTitle: { de: 'Testkurs', en: 'Test course' },
-      description: {
-        de: 'Dieser Kurs dient dem Testen der Funktionalität.',
-        en: 'This course is for testing functionality.',
-      },
-      ...getDates(),
-    },
-  ]
+  return {
+    data: makeCourseData(courseId, locales),
+    footerContent: Object.fromEntries(
+      FRAGMENT_TYPES.map((fragmentType) => [fragmentType, makeFooterContent(locales, fragmentType)])
+    ),
+    pages: makePages(courseId, locales),
+    sections: makeSections(courseId, locales),
+  }
 }
 
-const makeCourses = (locales: LanguageCode[]) => {
-  const courses = makeCoursesData(locales)
-
-  return courses.reduce<Record<number, ReturnType<typeof makeCourse>>>(
-    (acc, course) => ({
-      ...acc,
-      [course.id]: makeCourse(course, locales),
-    }),
-    {}
-  )
-}
+const makeCourses = (locales: LanguageCode[]) => [makeCourse(0, locales)]
 
 export default makeCourses

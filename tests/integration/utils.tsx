@@ -21,7 +21,7 @@ import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
 import fetchContent from '#utils/ssr/fetchContent'
 
-import getData from '../mocks/getData'
+import getCourses from '../mocks/getCourses'
 
 let i18n: I18n
 let store: Store
@@ -76,7 +76,7 @@ function render(ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) {
 }
 
 async function loadPage(pageSlug: ApiPage['slug']) {
-  const courses = getData()
+  const courses = getCourses()
   const page = Object.entries(courses[0].pages).find(([, [p]]) => p.slug === pageSlug)
   if (page === undefined) {
     throw new Error(`Could not find mock page ${pageSlug}`)
@@ -90,7 +90,7 @@ async function loadPage(pageSlug: ApiPage['slug']) {
 }
 
 async function loadSection(sectionPath: ApiSection['path']) {
-  const courses = getData()
+  const courses = getCourses()
   const section = Object.entries(courses[0].sections).find(([, [s]]) => s.path === sectionPath)
   if (section === undefined) {
     throw new Error(`Could not find mock section ${sectionPath}`)

@@ -20,10 +20,14 @@ export type NodeMakers = [
 
 export type Content = Partial<Record<LanguageCode, string>>
 
-export type Page = [ApiPage, Content]
+export interface Page {
+  data: ApiPage
+  content: Content
+}
 
-export type Section = [ApiSection, Content]
-
-export type Sections = Record<number, Section>
+export interface Section {
+  data: ApiSection
+  content: Content
+}
 
 export type SectionDef = number | null | SectionDef[]
