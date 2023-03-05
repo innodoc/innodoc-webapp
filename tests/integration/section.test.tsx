@@ -1,11 +1,11 @@
 import { loadSection, render, screen } from '#test-utils'
 
-import { Page as ContentSection } from '#pages/section/index.page'
+import { Page } from '#pages/section/index.page'
 
-test('<ContentSection />', async () => {
+test('pages/section', async () => {
   await loadSection('tempore-ut-id')
 
-  render(<ContentSection />)
+  render(<Page />)
   expect(screen.getByTestId('main-container')).toBeInTheDocument()
 
   await screen.findByRole('heading', { name: '1 Tempore ut id' })

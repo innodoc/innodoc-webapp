@@ -1,9 +1,9 @@
 import { render, screen, within } from '#test-utils'
 
-import { Page as StaticToc } from '#pages/toc.page'
+import { Page } from '#pages/toc/index.page'
 
 test('<StaticToc />', () => {
-  render(<StaticToc />)
+  render(<Page />)
   const main = screen.getByTestId('main-container')
   expect(within(main).getByRole('heading', { name: 'internalPages.toc.title' })).toBeInTheDocument()
   expect(within(main).getAllByRole('link')).toHaveLength(84)

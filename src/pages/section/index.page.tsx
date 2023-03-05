@@ -14,7 +14,7 @@ import useSelectCurrentCourse from '#ui/hooks/useSelectCurrentCourse'
 import useSelectSection from '#ui/hooks/useSelectSection'
 import { formatSectionTitle } from '#utils/content'
 
-function SectionPage() {
+function Page() {
   const { course } = useSelectCurrentCourse()
   const { courseSlug, locale, sectionPath } = useSelector(selectRouteInfo)
   const { section } = useSelectSection(sectionPath)
@@ -71,4 +71,4 @@ function SectionPage() {
   )
 }
 
-export { SectionPage as Page }
+export { Page }

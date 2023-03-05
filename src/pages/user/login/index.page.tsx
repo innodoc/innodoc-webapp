@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import InternalLink from '#ui/components/common/link/InternalLink'
 import PageHeader from '#ui/components/common/PageHeader'
 
-function LoginPage() {
+function Page() {
   const { t } = useTranslation()
 
   // TODO
@@ -60,4 +60,4 @@ function LoginPage() {
   )
 }
 
-export { LoginPage as Page }
+export { Page }

@@ -4,13 +4,14 @@ import type { i18n as I18n } from 'i18next'
 import I18NextFsBackend from 'i18next-fs-backend'
 import { type ReactElement, type ReactNode } from 'react'
 
-import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B, EMOTION_STYLE_KEY } from '#constants'
-import makeStore, { type Store } from '#store/makeStore'
 import {
-  changeCourseId,
-  changeCurrentPageSlug,
-  changeCurrentSectionPath,
-} from '#store/slices/appSlice'
+  FRAGMENT_TYPE_FOOTER_A,
+  FRAGMENT_TYPE_FOOTER_B,
+  EMOTION_STYLE_KEY,
+  DEFAULT_ROUTE_NAME,
+} from '#constants'
+import makeStore, { type Store } from '#store/makeStore'
+import { changeRouteInfo } from '#store/slices/appSlice'
 import courses from '#store/slices/entities/courses'
 import fragments from '#store/slices/entities/fragments'
 import pages from '#store/slices/entities/pages'
@@ -19,16 +20,13 @@ import type { ApiPage } from '#types/entities/page'
 import type { ApiSection } from '#types/entities/section'
 import PageShell from '#ui/components/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
-import fetchContent from '#utils/ssr/fetchContent'
 
 import getCourses from '../mocks/getCourses'
 
 let i18n: I18n
 let store: Store
 const locale = 'en'
-const courseId = 0
-
-const { initiate: getContent } = fragments.endpoints.getFragmentContent
+const courseSlug = 'testcourse'
 
 beforeEach(async () => {
   // window.match is not implemented in jsdom
@@ -48,19 +46,27 @@ beforeEach(async () => {
   })
 
   store = makeStore()
-  await store.dispatch(courses.endpoints.getCourse.initiate({ courseId }))
-  store.dispatch(changeCourseId(courseId))
-  await store.dispatch(pages.endpoints.getCoursePages.initiate({ courseId }))
-  await store.dispatch(sections.endpoints.getCourseSections.initiate({ courseId }))
-  await fetchContent(
-    store,
-    getContent({ courseId: 0, locale, fragmentType: FRAGMENT_TYPE_FOOTER_A })
+  store.dispatch(changeRouteInfo({ courseSlug, locale, routeName: DEFAULT_ROUTE_NAME }))
+  await store.dispatch(courses.endpoints.getCourse.initiate({ courseSlug }))
+  await store.dispatch(pages.endpoints.getCoursePages.initiate({ courseSlug }))
+  await store.dispatch(sections.endpoints.getCourseSections.initiate({ courseSlug }))
+
+  await store.dispatch(
+    fragments.endpoints.getFragmentContent.initiate({
+      courseSlug,
+      fragmentType: FRAGMENT_TYPE_FOOTER_A,
+      locale,
+    })
   )
-  await fetchContent(
-    store,
-    getContent({ courseId: 0, locale, fragmentType: FRAGMENT_TYPE_FOOTER_B })
+  await store.dispatch(
+    fragments.endpoints.getFragmentContent.initiate({
+      courseSlug,
+      fragmentType: FRAGMENT_TYPE_FOOTER_B,
+      locale,
+    })
   )
-  i18n = await getI18n(I18NextFsBackend, {}, 'cimode', 0, store)
+
+  i18n = await getI18n(I18NextFsBackend, {}, 'cimode', courseSlug, store)
 })
 
 function TestPageShell({ children }: { children: ReactNode }) {
@@ -76,35 +82,35 @@ function render(ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) {
 }
 
 async function loadPage(pageSlug: ApiPage['slug']) {
+  store.dispatch(changeRouteInfo({ courseSlug, locale, routeName: 'app:page', pageSlug }))
+
   const courses = getCourses()
-  const page = Object.entries(courses[0].pages).find(([, [p]]) => p.slug === pageSlug)
+  const page = courses[0].pages.find((p) => p.data.slug === pageSlug)
   if (page === undefined) {
     throw new Error(`Could not find mock page ${pageSlug}`)
   }
-  const pageObj = page[1][0]
-  await fetchContent(
-    store,
-    pages.endpoints.getPageContent.initiate({ courseId, locale, pageId: pageObj.id })
+  const { data: pageObj } = page
+  await store.dispatch(
+    pages.endpoints.getPageContent.initiate({ courseSlug, locale, pageSlug: pageObj.slug })
   )
-  store.dispatch(changeCurrentPageSlug(pageObj.slug))
 }
 
 async function loadSection(sectionPath: ApiSection['path']) {
+  store.dispatch(changeRouteInfo({ courseSlug, locale, routeName: 'app:section', sectionPath }))
+
   const courses = getCourses()
-  const section = Object.entries(courses[0].sections).find(([, [s]]) => s.path === sectionPath)
+  const section = courses[0].sections.find((s) => s.data.path === sectionPath)
   if (section === undefined) {
     throw new Error(`Could not find mock section ${sectionPath}`)
   }
-  const sectionObj = section[1][0]
-  await fetchContent(
-    store,
+  const { data: sectionObj } = section
+  await store.dispatch(
     sections.endpoints.getSectionContent.initiate({
-      courseId,
+      courseSlug,
       locale,
-      sectionId: section[1][0].id,
+      sectionPath: sectionObj.path,
     })
   )
-  store.dispatch(changeCurrentSectionPath(sectionObj.path))
 }
 
 export * from '@testing-library/react'

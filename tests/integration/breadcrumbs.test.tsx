@@ -1,13 +1,13 @@
 import { loadSection, render, screen, within } from '#test-utils'
 
-import { Page as ContentSection } from '#pages/section/index.page'
+import { Page as SectionPage } from '#pages/section/index.page'
 
 test('<Breadcrumbs />', async () => {
   await loadSection(
     'eaque-inventore-non/sapiente-similique-id/maxime-sed-voluptatum/mollitia-neque-vitae'
   )
 
-  render(<ContentSection />)
+  render(<SectionPage />)
   const main = screen.getByRole('main')
   const breadcrumbs = within(main).getByRole('navigation')
 

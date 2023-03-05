@@ -9,14 +9,14 @@ import {
   within,
 } from '#test-utils'
 
-import { Page as ContentSection } from '#pages/section/index.page'
+import { Page } from '#pages/section/index.page'
 
 test('<Toc />', async () => {
   await loadSection(
     'eaque-inventore-non/sapiente-similique-id/maxime-sed-voluptatum/mollitia-neque-vitae'
   )
 
-  render(<ContentSection />)
+  render(<Page />)
 
   // Open Toc in sidebar
   fireEvent.click(screen.getByRole('button', { name: 'internalPages.toc.title' }))

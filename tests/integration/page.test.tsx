@@ -1,11 +1,11 @@
 import { loadPage, render, screen } from '#test-utils'
 
-import { Page as ContentPage } from '#pages/page/index.page'
+import { Page } from '#pages/page/index.page'
 
-test('<ContentPage />', async () => {
+test('pages/page', async () => {
   await loadPage('home')
 
-  render(<ContentPage />)
+  render(<Page />)
   expect(screen.getByTestId('main-container')).toBeInTheDocument()
 
   await screen.findByRole('heading', { name: 'Home page' })

@@ -1,5 +1,5 @@
-function ProgressPage() {
+function Page() {
   return <div>ProgressPage</div>
 }
 
-export { ProgressPage as Page }
+export { Page }
