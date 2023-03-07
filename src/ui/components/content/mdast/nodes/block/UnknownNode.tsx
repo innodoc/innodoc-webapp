@@ -1,14 +1,18 @@
-import { useTranslation } from 'react-i18next'
+import { Trans } from 'react-i18next'
 import type { Node } from 'unist'
 
 import BlockError from '#ui/components/common/error/BlockError'
 
 function UnknownNode({ node }: UnknownNodeProps) {
-  const { t } = useTranslation()
-
   return (
     <BlockError>
-      {t('error.unknownBlockElement')}: <code>{node.type}</code>
+      <Trans
+        i18nKey="error.unknownBlockElement"
+        components={{ 1: <code /> }}
+        values={{ type: node.type }}
+      >
+        {`Unknown block element encountered: <1>{{type}}</1>`}
+      </Trans>
     </BlockError>
   )
 }

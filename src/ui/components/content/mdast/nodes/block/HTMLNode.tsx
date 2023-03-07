@@ -1,11 +1,9 @@
 import type { HTML } from 'mdast'
-import { useTranslation } from 'react-i18next'
+import { Trans } from 'react-i18next'
 
 import BlockError from '#ui/components/common/error/BlockError'
 
 function HTMLNode({ node }: HTMLNodeProps) {
-  const { t } = useTranslation()
-
   // Ignore comments
   if (node.value.startsWith('<!--') && node.value.endsWith('-->')) {
     return null
@@ -13,7 +11,13 @@ function HTMLNode({ node }: HTMLNodeProps) {
 
   return (
     <BlockError>
-      {t('error.unexpectedHtmlNode')}: <code>{node.value}</code>
+      <Trans
+        i18nKey="error.unexpectedHtmlNode"
+        components={{ 1: <code /> }}
+        values={{ value: node.value }}
+      >
+        {`Unexpected HTML node encountered: <1>{{value}}</1>`}
+      </Trans>
     </BlockError>
   )
 }

@@ -1,5 +1,5 @@
 import type { ContainerDirective } from 'mdast-util-directive'
-import { useTranslation } from 'react-i18next'
+import { Trans } from 'react-i18next'
 
 import BlockError from '#ui/components/common/error/BlockError'
 import ExampleCard from '#ui/components/content/cards/ExampleCard'
@@ -9,8 +9,6 @@ import InfoCard from '#ui/components/content/cards/InfoCard'
 import InputHintCard from '#ui/components/content/cards/InputHintCard'
 
 function ContainerDirectiveNode({ node }: ContainerDirectiveNodeProps) {
-  const { t } = useTranslation()
-
   if (node.name === 'example') {
     return <ExampleCard node={node} />
   }
@@ -33,7 +31,13 @@ function ContainerDirectiveNode({ node }: ContainerDirectiveNodeProps) {
 
   return (
     <BlockError>
-      {t('error.unknownContainerDirective')}: <code>{node.name}</code>
+      <Trans
+        i18nKey="error.unknownContainerDirective"
+        components={{ 1: <code /> }}
+        values={{ name: node.name }}
+      >
+        {`Unknown container directive name encountered: <1>{{name}}</1>`}
+      </Trans>
     </BlockError>
   )
 }

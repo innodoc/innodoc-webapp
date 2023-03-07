@@ -19,12 +19,12 @@
     "pageLinkPageSlugProp": "<0>PageLink</0>: Seite <2>{{pageSlug}}</2> nicht gefunden.",
     "sectionLinkSectionPathProp": "<0>SectionLink</0>: Abschnittspfad <2>{{sectionPath}}</2> nicht gefunden.",
     "svgFetchFailed": "SVG-Daten konnten nicht geladen werden.",
-    "unexpectedHtmlNode": "Unerwarteter HTML-Knoten aufgetreten",
-    "unknownBlockElement": "Unbekanntes Block-Element aufgetreten",
+    "unexpectedHtmlNode": "Unerwarteter HTML-Knoten aufgetreten: <1>{{value}}</1>",
+    "unknownBlockElement": "Unbekanntes Block-Element aufgetreten: <1>{{type}}</1>",
     "unknownBuiltinPage": "<0>BuiltinPageLink</0>: Die Seite <2>{{to}}</2> existiert nicht.",
-    "unknownContainerDirective": "Unbekannter Container-Directive-Name aufgetreten",
+    "unknownContainerDirective": "Unbekannter Container-Directive-Name aufgetreten: <1>{{name}}</1>",
     "unknownInlineElement": "Unbekanntes Inline-Element aufgetreten",
-    "unknownIcon": "Unbekannter Icon-Name aufgetreten"
+    "unknownIcon": "Unbekannter Icon-Name aufgetreten: <1>{{name}}</1>"
   },
   "internalPages": {
     "glossary": {

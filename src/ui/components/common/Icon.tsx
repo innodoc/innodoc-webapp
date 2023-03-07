@@ -1,6 +1,6 @@
 import { SvgIcon as MuiSvgIcon, type SxProps, type Theme } from '@mui/material'
 import { type ComponentProps } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans } from 'react-i18next'
 
 import iconBundle from '#build/iconBundle.json'
 
@@ -8,13 +8,13 @@ import InlineError from './error/InlineError'
 import SvgRootNode from './SvgRootNode'
 
 function Icon({ name, ...other }: IconProps) {
-  const { t } = useTranslation()
-
   const icon = iconBundle[name]
   if (icon === undefined) {
     return (
       <InlineError>
-        {t('error.unknownIcon')}: <code>{name}</code>
+        <Trans i18nKey="error.unknownIcon" components={{ 1: <code /> }} values={{ name }}>
+          {`Unknown icon name encountered: <1>{{name}}</1>`}
+        </Trans>
       </InlineError>
     )
   }
