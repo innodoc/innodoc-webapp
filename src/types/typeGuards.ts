@@ -3,7 +3,7 @@ import ISO6391, { type LanguageCode } from 'iso-639-1'
 import { CONTENT_TYPES, FRAGMENT_TYPES } from '#constants'
 import type { FragmentType } from '#types/entities/base'
 
-import type { ArbitraryObject, ContentType } from './common'
+import type { ArbitraryObject, ContentType, RouteInfo } from './common'
 
 const languageCodes = ISO6391.getAllCodes()
 

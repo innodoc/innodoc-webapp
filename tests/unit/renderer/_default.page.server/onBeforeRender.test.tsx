@@ -122,11 +122,12 @@ test('onBeforeRender', async () => {
   expect(pageContext.store).toBe(mocks.store)
 })
 
-test('onBeforeRender (invalid locale)', async () => {
+test('onBeforeRender (redirect to first course locale on unsupported locale)', async () => {
   const { pageContextServer, onBeforeRender } = await setupMocks({
     course: { locales: ['fr', 'da'] },
   })
-  await expect(onBeforeRender(pageContextServer)).rejects.toThrow(/RenderErrorPage/)
+  const { pageContext } = await onBeforeRender(pageContextServer)
+  expect(pageContext.redirectTo).toBe('/fr/pagetest/foo-bar')
 })
 
 test('onBeforeRender (invalid course)', async () => {

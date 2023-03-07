@@ -2,9 +2,9 @@ import type { LanguageCode } from 'iso-639-1'
 import { compile, match, type MatchFunction, type PathFunction } from 'path-to-regexp'
 
 import { API_COURSE_PREFIX } from '#constants'
-import type { CourseSlugMode } from '#types/common'
+import type { CourseSlugMode, RouteInfo } from '#types/common'
 import type { BuiltinPageRouteName, RouteName } from '#types/routes'
-import { isContentType } from '#types/typeGuards'
+import { isArbitraryObject, isContentType } from '#types/typeGuards'
 import { getStringIdField } from '#utils/content'
 
 import { routesBuiltinPages, routesContentPages, routesUser, routesApi } from './routes'
@@ -68,8 +68,14 @@ class RouteManager {
   }
 
   /** Generate URL path from route name and parameters */
-  public generate(routeName: RouteName, params: object) {
-    return this.generators[routeName](params)
+  public generate(routeInfo: RouteInfo): string
+  public generate(routeName: RouteName, params: object): string
+  public generate(nameOrInfo: RouteInfo | RouteName, params?: object) {
+    if (this.isRouteInfo(nameOrInfo)) {
+      const { routeName, ...routeArgs } = nameOrInfo
+      return this.generate(routeName, routeArgs)
+    }
+    return this.generators[nameOrInfo](params)
   }
 
   /** Parse link specifier params */
@@ -122,16 +128,21 @@ class RouteManager {
     return Object.fromEntries(this.buildPatterns(routesApi)) as Partial<Record<RouteName, string>>
   }
 
-  /** TypeGuard for `RouteName` */
+  /** Type guard for `RouteName` */
   public isRouteName(routeName: unknown): routeName is RouteName {
     return (
       typeof routeName === 'string' && Object.keys(this.generators).includes(routeName as RouteName)
     )
   }
 
-  /** TypeGuard for `BuiltinPageRouteName` */
+  /** Type guard for `BuiltinPageRouteName` */
   public isBuiltinPageRouteName(routeName: unknown): routeName is BuiltinPageRouteName {
     return typeof routeName === 'string' && Object.keys(routesBuiltinPages).includes(routeName)
+  }
+
+  /** Type guard for `RouteInfo` */
+  public isRouteInfo(t: unknown): t is RouteInfo {
+    return isArbitraryObject(t) && this.isRouteName(t.routeName)
   }
 
   private buildRoutes() {

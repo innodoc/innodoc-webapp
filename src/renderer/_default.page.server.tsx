@@ -119,62 +119,71 @@ async function onBeforeRender({
 }: PageContextOnBeforeRender): Promise<PageContextUpdate> {
   let course: ApiCourse | undefined = undefined
 
-  // Merge info from route function
-  const routeInfo = { ...routeInfoInput, ...routeParams }
+  const pageContextUpdate = {
+    // Merge info from route function
+    routeInfo: { ...routeInfoInput, ...routeParams },
 
-  // Initialize store
-  const store = makeStore()
+    // Initialize store
+    store: makeStore(),
+  }
 
   // Set current route info
-  store.dispatch(changeRouteInfo(routeInfo))
+  pageContextUpdate.store.dispatch(changeRouteInfo(pageContextUpdate.routeInfo))
 
   // Populate store with necessary data
-  if (routeInfo.courseSlug !== null) {
-    const courseParam = { courseSlug: routeInfo.courseSlug }
+  if (pageContextUpdate.routeInfo.courseSlug !== null) {
+    const courseParam = { courseSlug: pageContextUpdate.routeInfo.courseSlug }
 
     // Load course
-    await store.dispatch(courses.endpoints.getCourse.initiate(courseParam))
+    await pageContextUpdate.store.dispatch(courses.endpoints.getCourse.initiate(courseParam))
 
     // Select course
     const selectCurrentCourse = courses.endpoints.getCourse.select(courseParam)
-    const { data } = selectCurrentCourse(store.getState())
+    const { data } = selectCurrentCourse(pageContextUpdate.store.getState())
     if (data === undefined) {
       throw RenderErrorPage({
-        pageContext: { errorMsg: `Course ${routeInfo.courseSlug} not found` },
+        pageContext: {
+          ...pageContextUpdate,
+          errorMsg: `Course ${pageContextUpdate.routeInfo.courseSlug} not found`,
+        },
       })
     }
     course = data
 
     // Assert we received locales from manifest
     if (course.locales.length < 1) {
-      throw RenderErrorPage({ pageContext: { errorMsg: 'Course has no locales' } })
+      throw RenderErrorPage({
+        pageContext: { ...pageContextUpdate, errorMsg: 'Course has no locales' },
+      })
     }
 
     // Check if current locale is valid
-    if (routeInfo.locale && !course.locales.includes(routeInfo.locale)) {
-      // TODO: should redirect to default locale instead
-      throw RenderErrorPage({ pageContext: { is404: true } })
+    if (
+      pageContextUpdate.routeInfo.locale &&
+      !course.locales.includes(pageContextUpdate.routeInfo.locale)
+    ) {
+      const redirectTo = routeManager.generate({
+        ...pageContextUpdate.routeInfo,
+        locale: course.locales[0],
+      })
+      return { pageContext: { ...pageContextUpdate, redirectTo } }
     }
   }
 
   // Redirect to proper URL if info couldn't be extracted
   if (needRedirect) {
-    const { routeName, ...routeArgs } = routeInfo
-    return {
-      pageContext: {
-        redirectTo: routeManager.generate(routeName, routeArgs),
-        routeInfo,
-        store,
-      },
-    }
+    const redirectTo = routeManager.generate(pageContextUpdate.routeInfo)
+    return { pageContext: { ...pageContextUpdate, redirectTo } }
   }
 
-  if (routeInfo.courseSlug !== null) {
-    const courseParam = { courseSlug: routeInfo.courseSlug }
+  if (pageContextUpdate.routeInfo.courseSlug !== null) {
+    const courseParam = { courseSlug: pageContextUpdate.routeInfo.courseSlug }
 
     // Load pages sections
-    await store.dispatch(pages.endpoints.getCoursePages.initiate(courseParam))
-    await store.dispatch(sections.endpoints.getCourseSections.initiate(courseParam))
+    await pageContextUpdate.store.dispatch(pages.endpoints.getCoursePages.initiate(courseParam))
+    await pageContextUpdate.store.dispatch(
+      sections.endpoints.getCourseSections.initiate(courseParam)
+    )
 
     // Load fragment content
     // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_A }))
@@ -183,17 +192,15 @@ async function onBeforeRender({
 
   // TODO: how to handle this correctly?
   if (urlOriginal === '/fake-404-url') {
-    routeInfo.locale = 'en'
+    pageContextUpdate.routeInfo.locale = 'en'
   }
-
-  // Grab populated state
-  const preloadedState = store.getState()
 
   return {
     pageContext: {
-      preloadedState,
-      routeInfo,
-      store,
+      ...pageContextUpdate,
+
+      // Grab populated state
+      preloadedState: pageContextUpdate.store.getState(),
     },
   }
 }

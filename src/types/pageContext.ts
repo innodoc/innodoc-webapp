@@ -8,7 +8,6 @@ import type { PASS_TO_CLIENT_PROPS } from '#constants'
 import type { RootState, Store } from '#store/makeStore'
 
 import type { RouteInfo } from './common'
-import type { ApiCourse } from './entities/course'
 
 /** Properties passed into `renderPage` (Express handler) */
 export interface PageContextInit extends Pick<PageContextBuiltIn, 'urlOriginal'> {
