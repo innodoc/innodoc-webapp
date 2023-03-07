@@ -1,9 +1,9 @@
-import { Link as MuiLink } from '@mui/material'
 import { forwardRef } from 'react'
 
 import getRouteManager from '#routes/getRouteManager'
 
 import BuiltinPageLink from './BuiltinPageLink'
+import ExternalLink from './ExternalLink'
 import PageLink from './PageLink'
 import SectionLink from './SectionLink'
 import type { LinkProps } from './types'
@@ -17,7 +17,10 @@ const contentPageSpecifierRegEx = /^app:(?:section|page)\|/
  *
  * Supports all types of links, e.g. internal link specifier and external URL.
  */
-const GeneralLink = forwardRef<HTMLAnchorElement, LinkProps>(function Link({ to, ...other }, ref) {
+const GeneralLink = forwardRef<HTMLAnchorElement, LinkProps>(function GeneralLink(
+  { to, ...other },
+  ref
+) {
   // Built-in page
   if (routeManager.isBuiltinPageRouteName(to)) {
     return <BuiltinPageLink to={to} ref={ref} {...other} />
@@ -34,7 +37,7 @@ const GeneralLink = forwardRef<HTMLAnchorElement, LinkProps>(function Link({ to,
   }
 
   // External link
-  return <MuiLink href={to} ref={ref} {...other} />
+  return <ExternalLink href={to} ref={ref} {...other} />
 })
 
 export default GeneralLink
