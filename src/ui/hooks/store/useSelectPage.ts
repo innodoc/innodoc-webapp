@@ -6,8 +6,9 @@ import { selectRouteInfo } from '#store/slices/appSlice'
 import { useGetCoursePagesQuery } from '#store/slices/entities/pages'
 import { defaultTranslatableFields } from '#types/entities/base'
 import type { ApiPage } from '#types/entities/page'
-import { useSelector } from '#ui/hooks/store'
 import { translateEntity } from '#utils/i18n'
+
+import { useSelector } from './store'
 
 /** Return page by slug */
 function useSelectPage(pageSlug: ApiPage['slug'] | undefined) {

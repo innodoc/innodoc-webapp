@@ -7,8 +7,9 @@ import { useGetCoursePagesQuery } from '#store/slices/entities/pages'
 import type { PageLinkLocation } from '#types/common'
 import { defaultTranslatableFields } from '#types/entities/base'
 import type { ApiPage, TranslatedPage } from '#types/entities/page'
-import { useSelector } from '#ui/hooks/store'
 import { translateEntityArray } from '#utils/i18n'
+
+import { useSelector } from './store'
 
 /** Return pages for link lists */
 function useSelectLinkedPages(linkLocation: PageLinkLocation) {

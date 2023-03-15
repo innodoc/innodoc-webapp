@@ -6,8 +6,9 @@ import { selectRouteInfo } from '#store/slices/appSlice'
 import { useGetCourseQuery } from '#store/slices/entities/courses'
 import { defaultTranslatableFields } from '#types/entities/base'
 import type { ApiCourse } from '#types/entities/course'
-import { useSelector } from '#ui/hooks/store'
 import { translateEntity } from '#utils/i18n'
+
+import { useSelector } from './store'
 
 /** Return current course */
 function useSelectCurrentCourse() {

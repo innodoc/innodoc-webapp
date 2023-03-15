@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import type { TranslatedSection } from '#types/entities/section'
 import Icon from '#ui/components/common/Icon'
 import SectionLink from '#ui/components/common/link/SectionLink'
-import useSelectSectionChildren from '#ui/hooks/useSelectSectionChildren'
+import useSelectSectionChildren from '#ui/hooks/store/useSelectSectionChildren'
 
 function SubsectionList({ sectionId }: SubsectionListProps) {
   const { t } = useTranslation()

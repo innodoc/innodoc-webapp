@@ -16,10 +16,10 @@ import InternalLink from '#ui/components/common/link/InternalLink'
 import PageLink from '#ui/components/common/link/PageLink'
 import MarkdownNode from '#ui/components/content/mdast/MarkdownNode'
 import defaultTheme, { baseThemeOpts, makeTheme } from '#ui/components/PageShell/theme'
-import { useSelector } from '#ui/hooks/store'
+import { useSelector } from '#ui/hooks/store/store'
+import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
+import useSelectLinkedPages from '#ui/hooks/store/useSelectLinkedPages'
 import useGenerateUrl from '#ui/hooks/useGenerateUrl'
-import useSelectCurrentCourse from '#ui/hooks/useSelectCurrentCourse'
-import useSelectLinkedPages from '#ui/hooks/useSelectLinkedPages'
 
 const builtInPagesNav = builtInPages.filter((page) => page.linked.includes('footer'))
 

@@ -1,7 +1,7 @@
 import { type SyntheticEvent, useCallback, useEffect, useRef, useState, useMemo } from 'react'
 
 import { selectRouteInfo } from '#store/slices/appSlice'
-import { useSelector } from '#ui/hooks/store'
+import { useSelector } from '#ui/hooks/store/store'
 
 /** Return array of expanded section paths/node IDs (including parents) */
 function getExpandedWithParents(sectionPath?: string) {

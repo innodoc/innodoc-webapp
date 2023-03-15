@@ -1,7 +1,7 @@
 import getRouteManager from '#routes/getRouteManager'
 import { selectRouteInfo } from '#store/slices/appSlice'
 import type { RouteInfo } from '#types/common'
-import { useSelector } from '#ui/hooks/store'
+import { useSelector } from '#ui/hooks/store/store'
 
 const routeManager = getRouteManager()
 

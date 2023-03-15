@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next'
 
 import { selectRouteInfo } from '#store/slices/appSlice'
 import InternalLink from '#ui/components/common/link/InternalLink'
-import { useSelector } from '#ui/hooks/store'
+import { useSelector } from '#ui/hooks/store/store'
+import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
 import useGenerateUrl from '#ui/hooks/useGenerateUrl'
-import useSelectCurrentCourse from '#ui/hooks/useSelectCurrentCourse'
 
 function MenuItemsLanguages({ closeMenu = () => undefined, inset }: MenuItemsLanguagesProps) {
   const generateUrl = useGenerateUrl()

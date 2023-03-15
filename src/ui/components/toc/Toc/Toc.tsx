@@ -2,7 +2,7 @@ import { TreeView } from '@mui/lab'
 import { styled } from '@mui/material'
 
 import Icon from '#ui/components/common/Icon'
-import useSelectSectionChildren from '#ui/hooks/useSelectSectionChildren'
+import useSelectSectionChildren from '#ui/hooks/store/useSelectSectionChildren'
 
 import TocTreeItem from './TocTreeItem'
 import useManageExpanded from './useManageExpanded'

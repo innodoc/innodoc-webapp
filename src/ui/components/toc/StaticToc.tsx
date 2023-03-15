@@ -2,7 +2,7 @@ import { Link, styled } from '@mui/material'
 
 import type { TranslatedSection } from '#types/entities/section'
 import SectionLink from '#ui/components/common/link/SectionLink'
-import useSelectSectionChildren from '#ui/hooks/useSelectSectionChildren'
+import useSelectSectionChildren from '#ui/hooks/store/useSelectSectionChildren'
 
 const StyledUl = styled('ul')(({ theme }) => ({
   listStyleType: 'none',

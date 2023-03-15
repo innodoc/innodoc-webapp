@@ -7,9 +7,9 @@ import Code from '#ui/components/common/Code'
 import LoadingSpinner from '#ui/components/common/LoadingSpinner'
 import PageHeader from '#ui/components/common/PageHeader'
 import MarkdownNode from '#ui/components/content/mdast/MarkdownNode'
-import { useSelector } from '#ui/hooks/store'
-import useSelectCurrentCourse from '#ui/hooks/useSelectCurrentCourse'
-import useSelectPage from '#ui/hooks/useSelectPage'
+import { useSelector } from '#ui/hooks/store/store'
+import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
+import useSelectPage from '#ui/hooks/store/useSelectPage'
 
 function Page() {
   const { course } = useSelectCurrentCourse()

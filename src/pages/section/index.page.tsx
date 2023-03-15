@@ -9,9 +9,9 @@ import LoadingSpinner from '#ui/components/common/LoadingSpinner'
 import PageHeader from '#ui/components/common/PageHeader'
 import MarkdownNode from '#ui/components/content/mdast/MarkdownNode'
 import SubsectionList from '#ui/components/content/SubsectionList'
-import { useSelector } from '#ui/hooks/store'
-import useSelectCurrentCourse from '#ui/hooks/useSelectCurrentCourse'
-import useSelectSection from '#ui/hooks/useSelectSection'
+import { useSelector } from '#ui/hooks/store/store'
+import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
+import useSelectSection from '#ui/hooks/store/useSelectSection'
 import { formatSectionTitle } from '#utils/content'
 
 function Page() {

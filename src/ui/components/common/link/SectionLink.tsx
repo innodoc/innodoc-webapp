@@ -3,8 +3,8 @@ import { Trans } from 'react-i18next'
 
 import type { ApiSection, TranslatedSection } from '#types/entities/section'
 import InlineError from '#ui/components/common/error/InlineError'
+import useSelectSection from '#ui/hooks/store/useSelectSection'
 import useGenerateUrl from '#ui/hooks/useGenerateUrl'
-import useSelectSection from '#ui/hooks/useSelectSection'
 import { formatSectionTitle } from '#utils/content'
 
 import InternalLink from './InternalLink'

@@ -1,7 +1,7 @@
 import { selectRouteInfo } from '#store/slices/appSlice'
 import type { RouteInfo } from '#types/common'
 
-import { useSelector } from './store'
+import { useSelector } from './store/store'
 
 function useIsActiveLink() {
   const currentRouteInfo = useSelector(selectRouteInfo)

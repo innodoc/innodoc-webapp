@@ -6,8 +6,9 @@ import { selectRouteInfo } from '#store/slices/appSlice'
 import { useGetCourseSectionsQuery } from '#store/slices/entities/sections'
 import { defaultTranslatableFields } from '#types/entities/base'
 import type { ApiSection, TranslatedSection } from '#types/entities/section'
-import { useSelector } from '#ui/hooks/store'
 import { translateEntityArray } from '#utils/i18n'
+
+import { useSelector } from './store'
 
 /**
  * Return an array of sections for the Breadcrumb component. E.g.:
