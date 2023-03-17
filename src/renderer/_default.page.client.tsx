@@ -1,14 +1,16 @@
 import createCache, { type EmotionCache } from '@emotion/cache'
 import type { i18n as I18nInstance } from 'i18next'
 import I18NextHttpBackend from 'i18next-http-backend'
-import type { SetupWorkerApi } from 'msw'
+import type { SetupWorker } from 'msw'
+import type { ComponentType } from 'react'
 import { hydrateRoot, type Root } from 'react-dom/client'
 
 import { EMOTION_STYLE_INSERTION_POINT_NAME, EMOTION_STYLE_KEY } from '#constants'
 import makeStore, { type Store } from '#store/makeStore'
-import { changeRouteInfo } from '#store/slices/appSlice'
+import { changeIsHydration, changeRouteTransitionInfo } from '#store/slices/appSlice'
 import type { PageContextClient } from '#types/pageContext'
 import PageShell from '#ui/components/PageShell/PageShell'
+import RouteTransition from '#ui/components/PageShell/RouteTransition'
 import getI18n from '#utils/getI18n'
 
 const i18nBackendOpts = { loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.json` }
@@ -29,7 +31,10 @@ let i18n: I18nInstance
 let emotionCache: EmotionCache
 
 // API mock
-let mockWorker: SetupWorkerApi
+let mockWorker: SetupWorker
+
+// Remember previous Page for route transition
+let PagePrev: ComponentType
 
 function createEmotionCache() {
   const emotionInsertionPoint = document.querySelector<HTMLMetaElement>(
@@ -59,6 +64,7 @@ async function render({ isHydration, Page, preloadedState, routeInfo }: PageCont
   }
 
   // Enable API mock
+  // TODO: check that it doesn't get into production build
   if (import.meta.env.INNODOC_API_MOCK === 'true' && mockWorker === undefined) {
     const makeWorker = (await import('../../tests/mocks/browser')).default
     mockWorker = makeWorker(import.meta.env.INNODOC_APP_ROOT)
@@ -68,9 +74,11 @@ async function render({ isHydration, Page, preloadedState, routeInfo }: PageCont
   if (store === undefined) {
     // Create store on first hydration
     store = makeStore(preloadedState)
+    store.dispatch(changeIsHydration(true))
   } else {
-    // Update route on navigation
-    store.dispatch(changeRouteInfo(routeInfo))
+    // Initiate route transition on navigation
+    store.dispatch(changeRouteTransitionInfo(routeInfo))
+    store.dispatch(changeIsHydration(false))
   }
 
   if (i18n === undefined) {
@@ -82,9 +90,6 @@ async function render({ isHydration, Page, preloadedState, routeInfo }: PageCont
       routeInfo.courseSlug,
       store
     )
-  } else if (i18n.language !== routeInfo.locale) {
-    // Change i18next locale
-    await i18n.changeLanguage(routeInfo.locale)
   }
 
   // Create Emotion cache
@@ -94,18 +99,23 @@ async function render({ isHydration, Page, preloadedState, routeInfo }: PageCont
 
   const page = (
     <PageShell emotionCache={emotionCache} i18n={i18n} store={store}>
-      <Page />
+      <RouteTransition pagePrev={PagePrev}>
+        <Page />
+      </RouteTransition>
     </PageShell>
   )
 
+  // Hydration
   if (isHydration) {
     root = hydrateRoot(rootEl, page)
-  } else {
-    // Client-side user navigation
+  }
+
+  // Client-side user navigation
+  else {
     root.render(page)
   }
 
-  // TODO: scoll to URL hash if present
+  PagePrev = Page
 }
 
 export { render }

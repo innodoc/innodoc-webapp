@@ -2,8 +2,9 @@ import type { Root } from 'mdast'
 import type { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
 
-import { isContainerDirective } from '#ui/components/content/mdast/typeGuards'
+import { isContainerDirective } from './typeGuards'
 
+// TODO fix
 /** Number cards within one section */
 const remarkNumberCards: Plugin<[], Root> = () => {
   return (tree) => {

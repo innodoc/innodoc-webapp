@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import type { PreloadedState, StateFromReducersMapObject } from '@reduxjs/toolkit'
 
+import localeListenerMiddleware from './localeListenerMiddleware'
 import appSlice from './slices/appSlice'
 import contentApi from './slices/contentApi'
 import staticCache from './slices/staticCache'
@@ -15,10 +16,9 @@ function makeStore(preloadedState?: PreloadedState<RootState>) {
   return configureStore({
     devTools: import.meta.env.MODE === 'development',
     middleware(getDefaultMiddleware) {
-      const middleware = getDefaultMiddleware().concat([
-        contentApi.middleware,
-        staticCache.middleware,
-      ])
+      const middleware = getDefaultMiddleware()
+        .concat([contentApi.middleware, staticCache.middleware])
+        .prepend(localeListenerMiddleware.middleware)
       return middleware
     },
     preloadedState,

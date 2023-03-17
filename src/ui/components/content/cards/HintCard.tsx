@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Card from './Card'
 import type { ContentCardProps } from './types'
 
-function HintCard({ node }: ContentCardProps) {
+function HintCard({ children }: ContentCardProps) {
   const { t } = useTranslation()
 
   // TODO id, title
@@ -12,12 +12,13 @@ function HintCard({ node }: ContentCardProps) {
     <Card
       cardType="hint"
       collapsible
-      node={node}
       dense
       elevation={1}
       iconName="mdi:lightbulb-outline"
       title={t('content.hint')}
-    />
+    >
+      {children}
+    </Card>
   )
 }
 

@@ -3,13 +3,11 @@ import { rest } from 'msw'
 import type { ResponseComposition, RestContext, RestRequest } from 'msw'
 
 import type RouteManager from '#routes/RouteManager'
-import { getRouteManager } from '#server/utils'
 import type { RouteName } from '#types/routes'
 import { isFragmentType } from '#types/typeGuards'
 
 import type { Content } from './fakeData/types'
 import getCourses from './getCourses'
-import { pathToRegexp } from 'path-to-regexp'
 
 const getStringParam = (req: RestRequest, name: string) => {
   const val = req.params[name]

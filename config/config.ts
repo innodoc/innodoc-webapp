@@ -15,7 +15,7 @@ import buildData from './buildData'
 const projectDir = path.resolve(__dirname, '..')
 
 /* Use package.json import mapping as source of truth for aliases */
-const alias = Object.fromEntries(
+const aliasPackageJson = Object.fromEntries(
   Object.entries(imports).map(([key, val]) => [
     key.replace('/*', ''),
     path.join(projectDir, val.replace('/*', '')),
@@ -60,7 +60,18 @@ async function config() {
       react(),
       ssr({ prerender: false }),
     ],
-    resolve: { alias },
+    resolve: {
+      alias: {
+        ...aliasPackageJson,
+        // Force index.js. index.dom.js wouldn't work in web worker
+        'decode-named-character-reference': path.join(
+          projectDir,
+          'node_modules',
+          'decode-named-character-reference',
+          'index.js'
+        ),
+      },
+    },
     ssr: {
       noExternal: [
         '@reduxjs/toolkit', // otherwise can't be loaded on prerendering

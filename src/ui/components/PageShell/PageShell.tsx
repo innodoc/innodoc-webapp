@@ -9,6 +9,8 @@ import { Provider as ReduxProvider } from 'react-redux'
 
 import type { Store } from '#store/makeStore'
 import Layout from '#ui/components/Layout/Layout'
+import { MarkdownWorkerProvider } from '#ui/contexts/MarkdownWorkerContext/MarkdownWorkerContext'
+import { RouteTransitionProvider } from '#ui/contexts/RouteTransitionContext'
 
 import MetaTags from './MetaTags'
 import theme from './theme'
@@ -19,13 +21,17 @@ function PageShell({ children, emotionCache, helmetContext, i18n, store }: PageS
       <HelmetProvider context={helmetContext}>
         <CacheProvider value={emotionCache}>
           <ReduxProvider store={store}>
-            <I18nextProvider i18n={i18n}>
-              <CssVarsProvider theme={theme}>
-                <CssBaseline />
-                <MetaTags />
-                <Layout>{children}</Layout>
-              </CssVarsProvider>
-            </I18nextProvider>
+            <MarkdownWorkerProvider>
+              <RouteTransitionProvider>
+                <I18nextProvider i18n={i18n}>
+                  <CssVarsProvider theme={theme}>
+                    <CssBaseline />
+                    <MetaTags />
+                    <Layout>{children}</Layout>
+                  </CssVarsProvider>
+                </I18nextProvider>
+              </RouteTransitionProvider>
+            </MarkdownWorkerProvider>
           </ReduxProvider>
         </CacheProvider>
       </HelmetProvider>

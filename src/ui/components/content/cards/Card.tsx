@@ -49,12 +49,12 @@ interface StyledCardHeaderProps extends CardHeaderProps {
 
 function Card({
   cardType,
+  children,
   collapsible = false,
   dense = false,
   elevation = 3,
   iconName,
   id,
-  node,
   title,
 }: CardProps) {
   const [expanded, setExpanded] = useState<boolean>(false)
@@ -82,10 +82,6 @@ function Card({
   ) : (
     cardHeader
   )
-
-  const children = node.children.map((child, idx) => (
-    <BlockContentNode key={child?.data?.id ?? idx.toString()} node={child} />
-  ))
 
   const cardContent = (
     <CardContent sx={{ py: 0, '&:last-child': { pb: 0 } }}>{children}</CardContent>

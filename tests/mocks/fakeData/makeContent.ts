@@ -4,7 +4,7 @@ import { root, paragraph, text, heading, list, listItem, code } from 'mdast-buil
 import stringify from 'remark-stringify'
 import { unified } from 'unified'
 
-import { isRoot } from '#ui/components/content/mdast/typeGuards'
+import { isRoot } from '#markdown/typeGuards'
 import { capitalize } from '#utils/content'
 
 import type { Content, ContentOptions, NodeMakers } from './types'

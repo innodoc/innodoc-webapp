@@ -14,7 +14,6 @@
   "error": {
     "failedToLoadPage": "Seite konnte nicht geladen werden: <1>{{pageSlug}}</1>",
     "failedToLoadSection": "Abschnitt konnte nicht geladen werden: <1>{{sectionPath}}</1>",
-    "invalidHeaderDepth": "Überschriftentiefe muss zwischen 1 und 6 liegen, ist aber <1>{{depth}}</1>.",
     "invalidSvgRoot": "Ungültiger SVG-Wurzelknoten.",
     "pageLinkPageSlugProp": "<0>PageLink</0>: Seite <2>{{pageSlug}}</2> nicht gefunden.",
     "sectionLinkSectionPathProp": "<0>SectionLink</0>: Abschnittspfad <2>{{sectionPath}}</2> nicht gefunden.",

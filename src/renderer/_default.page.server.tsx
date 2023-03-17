@@ -16,7 +16,7 @@ import '@fontsource/lato/700.css'
 import '@fontsource/lato/700-italic.css'
 
 // KaTeX CSS
-import 'katex/dist/katex.min.css'
+import 'katex/dist/katex.css'
 
 import { EMOTION_STYLE_KEY, PASS_TO_CLIENT_PROPS } from '#constants'
 import getRouteManager from '#routes/getRouteManager'
@@ -32,6 +32,7 @@ import type {
   PageContextRender,
 } from '#types/pageContext'
 import PageShell from '#ui/components/PageShell/PageShell'
+import RouteTransition from '#ui/components/PageShell/RouteTransition'
 import getI18n from '#utils/getI18n'
 import renderToHtml from '#utils/ssr/renderToHtml'
 
@@ -78,7 +79,9 @@ async function render({
   // Render page
   const pageHtml = await renderToHtml(
     <PageShell emotionCache={emotionCache} helmetContext={helmetContext} i18n={i18n} store={store}>
-      <Page />
+      <RouteTransition>
+        <Page />
+      </RouteTransition>
     </PageShell>
   )
 
@@ -186,6 +189,7 @@ async function onBeforeRender({
     )
 
     // Load fragment content
+    // TODO
     // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_A }))
     // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_B }))
   }

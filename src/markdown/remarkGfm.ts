@@ -14,6 +14,7 @@ function addExtension<T>(data: Record<string, unknown>, field: string, extension
   list.push(extension)
 }
 
+/** Selectively choose features from mdast-util-gfm */
 function remarkGfm(this: Processor) {
   const data = this.data()
   addExtension(data, 'micromarkExtensions', gfmStrikethrough())
