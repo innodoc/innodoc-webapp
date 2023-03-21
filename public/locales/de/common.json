@@ -19,6 +19,7 @@
     "sectionLinkSectionPathProp": "<0>SectionLink</0>: Abschnittspfad <2>{{sectionPath}}</2> nicht gefunden.",
     "svgFetchFailed": "SVG-Daten konnten nicht geladen werden.",
     "unexpectedHtmlNode": "Unerwarteter HTML-Knoten aufgetreten: <1>{{value}}</1>",
+    "unhandledLink": "Ungültiger Link: <1>{{to}}</1>",
     "unknownBlockElement": "Unbekanntes Block-Element aufgetreten: <1>{{type}}</1>",
     "unknownBuiltinPage": "<0>BuiltinPageLink</0>: Die Seite <2>{{to}}</2> existiert nicht.",
     "unknownContainerDirective": "Unbekannter Container-Directive-Name aufgetreten: <1>{{name}}</1>",

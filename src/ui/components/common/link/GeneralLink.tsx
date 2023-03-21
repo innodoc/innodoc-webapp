@@ -1,6 +1,8 @@
 import { forwardRef } from 'react'
+import { Trans } from 'react-i18next'
 
 import getRouteManager from '#routes/getRouteManager'
+import InlineError from '#ui/components/common/error/InlineError'
 
 import BuiltinPageLink from './BuiltinPageLink'
 import ExternalLink from './ExternalLink'
@@ -11,6 +13,8 @@ import type { LinkProps } from './types'
 const routeManager = getRouteManager()
 
 const contentPageSpecifierRegEx = /^app:(?:section|page)\|/
+
+const ALLOWED_PROTOCOLS = ['https:', 'http:', 'mailto:']
 
 /**
  * General link
@@ -37,7 +41,23 @@ const GeneralLink = forwardRef<HTMLAnchorElement, LinkProps>(function GeneralLin
   }
 
   // External link
-  return <ExternalLink href={to} ref={ref} {...other} />
+  let url: URL | undefined = undefined
+  try {
+    url = new URL(to)
+  } catch {
+    // pass
+  }
+  if (url !== undefined && ALLOWED_PROTOCOLS.includes(url.protocol)) {
+    return <ExternalLink href={to} ref={ref} {...other} />
+  }
+
+  return (
+    <InlineError>
+      <Trans i18nKey="error.unhandledLink" components={{ 1: <code /> }} values={{ to }}>
+        {`Unhandled link: <1>{{to}}</1>`}
+      </Trans>
+    </InlineError>
+  )
 })
 
 export default GeneralLink
