@@ -10,7 +10,7 @@ import { type UserConfigExport } from 'vitest/config'
 import { imports } from '../package.json'
 import loadDotEnv from '../src/utils/loadDotEnv'
 
-import buildData from './buildData'
+import buildIcons from './buildIcons/buildIcons'
 
 const projectDir = path.resolve(__dirname, '..')
 
@@ -47,7 +47,7 @@ async function config() {
   const testMode = process.env.VITEST_MODE
 
   if (testMode !== 'unit') {
-    await buildData()
+    await buildIcons(projectDir)
   }
 
   const config: UserConfigExport = {

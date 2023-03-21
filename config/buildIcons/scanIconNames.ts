@@ -1,5 +1,3 @@
-// TODO: migrate to database
-
 import path from 'path'
 
 import { AST_NODE_TYPES, ESLintUtils } from '@typescript-eslint/utils'
@@ -17,7 +15,7 @@ const RULE_NAME = 'icon-name'
  * Finds all `<Icon name="..." />` components and extacts `name` attribute from
  * source code tree.
  */
-async function scanIconNames() {
+async function scanIconNames(projectDir: string) {
   // Collect icon names
   const iconNames = new Set<string>()
 
@@ -29,7 +27,7 @@ async function scanIconNames() {
           if (
             node.openingElement.selfClosing &&
             isJSXIdentifier(node.openingElement.name) &&
-            node.openingElement.name.name === 'Icon'
+            node.openingElement.name.name.endsWith('Icon')
           ) {
             // name attribute
             node.openingElement.attributes
@@ -84,7 +82,7 @@ async function scanIconNames() {
   })
 
   // Scan files
-  await eslint.lintFiles([path.resolve(__dirname, '..', 'src', '**', '*.tsx')])
+  await eslint.lintFiles([path.join(projectDir, 'src', '**', '*.tsx')])
 
   return Array.from(iconNames)
 }
