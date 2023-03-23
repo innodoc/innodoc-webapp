@@ -2,7 +2,7 @@ import type { Root } from 'hast'
 import { useCallback, useContext, useEffect, useState, useTransition } from 'react'
 
 import hastToReact from '#markdown/hastToReact'
-import { markdownToHastSync } from '#markdown/markdownToHast'
+import { markdownToHastSync } from '#markdown/markdownToHast/markdownToHast'
 import { selectIsHydration } from '#store/slices/appSlice'
 import MarkdownWorkerContext from '#ui/contexts/MarkdownWorkerContext/MarkdownWorkerContext'
 

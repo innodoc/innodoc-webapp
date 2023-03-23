@@ -8,7 +8,6 @@ const Code = styled('code')(({ theme }) => ({
   borderWidth: '1px',
   color: theme.vars.palette.Code.color,
   fontFamily: theme.typography.code.fontFamily,
-  margin: theme.typography.code.margin,
   padding: theme.typography.code.padding,
 }))
 

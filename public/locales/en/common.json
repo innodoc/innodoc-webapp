@@ -5,10 +5,14 @@
   },
   "content": {
     "example": "Example",
-    "exercise": "Exercise",
+    "exercise": {
+      "title": "Exercise",
+      "verifyInput": "Verify input"
+    },
+    "hint": "Hint",
     "info": "Info",
     "inputHint": "Input help",
-    "hint": "Hint",
+    "solution": "Solution",
     "subsections": "Subsections"
   },
   "error": {
@@ -18,13 +22,13 @@
     "pageLinkPageSlugProp": "<0>PageLink</0>: Page <2>{{pageSlug}}</2> not found.",
     "sectionLinkSectionPathProp": "<0>SectionLink</0>: Section path <2>{{sectionPath}}</2> not found.",
     "svgFetchFailed": "Failed to fetch SVG data.",
-    "unexpectedHtmlNode": "Unexpected HTML node encountered: <1>{{value}}</1>",
+    "unexpectedHtmlNode": "Unexpected HTML node: <1>{{value}}</1>",
     "unhandledLink": "Unhandled link: <1>{{to}}</1>",
-    "unknownBlockElement": "Unknown block element encountered: <1>{{type}}</1>",
+    "unknownBlockElement": "Unknown block element: <1>{{type}}</1>",
     "unknownBuiltinPage": "<0>BuiltinPageLink</0>: Built-in page <2>{{to}}</2> does not exist.",
-    "unknownContainerDirective": "Unknown container directive name encountered: <1>{{name}}</1>",
-    "unknownInlineElement": "Unknown inline element encountered",
-    "unknownIcon": "Unknown icon name encountered: <1>{{name}}</1>"
+    "unknownContainerDirective": "Unknown container directive: <1>{{name}}</1>",
+    "unknownInlineElement": "Unknown inline element",
+    "unknownIcon": "Unknown icon: <1>{{name}}</1>"
   },
   "internalPages": {
     "glossary": {

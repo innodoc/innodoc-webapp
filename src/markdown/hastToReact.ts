@@ -1,7 +1,6 @@
 import type { Root } from 'hast'
 import { createElement, Fragment } from 'react'
 import rehypeReact from 'rehype-react'
-import rehypeSlug from 'rehype-slug'
 import { unified } from 'unified'
 
 import componentsMap from '#ui/components/content/markdown/componentsMap'
@@ -20,7 +19,6 @@ const processor = unified()
     Fragment,
     passNode: true,
   })
-  .use(rehypeSlug)
   .freeze()
 
 function hastToReact(hast: Root) {

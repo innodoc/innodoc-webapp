@@ -8,8 +8,12 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(3),
 }))
 
-function HeadingNode({ children, node: { tagName } }: MarkdownComponentProps<'h1'>) {
-  return <StyledTypography variant={tagName as Variant}>{children}</StyledTypography>
+function HeadingNode({ children, id, node: { tagName } }: MarkdownComponentProps<'h1'>) {
+  return (
+    <StyledTypography id={id} variant={tagName as Variant}>
+      {children}
+    </StyledTypography>
+  )
 }
 
 export default HeadingNode

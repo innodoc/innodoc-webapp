@@ -83,7 +83,7 @@ class Importer {
 
     const courseData = {
       slug: this.courseSlug,
-      home_link: this.manifest.home_link,
+      home_link: Importer.transformLink(this.manifest.home_link),
       locales: this.manifest.languages,
       min_score: this.manifest.min_score,
     }
@@ -259,9 +259,10 @@ class Importer {
 
     // TODO: [Seiten]{data-index-term="Seite"}
     const source = rest
-      .replace(/(:{3,}) ?\{.hint-text\}/g, '$1hint-input')
+      .replace(/(:{3,}) ?\{.hint-text\}/g, '$1input-hint')
+      .replace(/\[([^\]]+)\]\{\.hint-text\}/g, ':::input-hint\n$1\n:::\n')
       .replace(/(:{3,}) ?\{.hint\}/g, '$1hint')
-      .replace(/(:{3,}) ?\{.hint caption="([^"]+)"\}/g, '$1hint[$2]')
+      .replace(/(:{3,}) ?\{.hint caption="(?:Lösung|Solution)"\}/g, '$1solution')
       .replace(/(:{3,}) ?\{\.(example|exercise|figure|info) (#[^}]+)\}/g, '$1$2{$3}')
       .replace(/(:{3,}) ?\{\.(example|exercise|figure|info)\}/g, '$1$2')
       .replace(/:{3,} ?\{\.verify-input-button\}\n(.+)\n:{3,}\n/g, '::verify-button[$1]\n')
@@ -270,6 +271,11 @@ class Importer {
       .replace(/\[\]\{\.question \.(text|checkbox) ([^}]+)\}/g, ':question-$1{$2}')
 
     return { frontmatter, source }
+  }
+
+  /** Transform link to specififer syntax */
+  protected static transformLink(href: string) {
+    return href.replace(/^\/page\//, 'app:page|').replace(/^\/section\//, 'app:section|')
   }
 }
 

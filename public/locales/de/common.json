@@ -5,10 +5,14 @@
   },
   "content": {
     "example": "Beispiel",
-    "exercise": "Aufgabe",
+    "exercise": {
+      "title": "Aufgabe",
+      "verifyInput": "Eingabe überprüfen"
+    },
+    "hint": "Hinweis",
     "info": "Info",
     "inputHint": "Hilfe zur Eingabe",
-    "hint": "Hinweis",
+    "solution": "Lösung",
     "subsections": "Unterabschnitte"
   },
   "error": {
@@ -18,13 +22,13 @@
     "pageLinkPageSlugProp": "<0>PageLink</0>: Seite <2>{{pageSlug}}</2> nicht gefunden.",
     "sectionLinkSectionPathProp": "<0>SectionLink</0>: Abschnittspfad <2>{{sectionPath}}</2> nicht gefunden.",
     "svgFetchFailed": "SVG-Daten konnten nicht geladen werden.",
-    "unexpectedHtmlNode": "Unerwarteter HTML-Knoten aufgetreten: <1>{{value}}</1>",
+    "unexpectedHtmlNode": "Unerwarteter HTML-Knoten: <1>{{value}}</1>",
     "unhandledLink": "Ungültiger Link: <1>{{to}}</1>",
-    "unknownBlockElement": "Unbekanntes Block-Element aufgetreten: <1>{{type}}</1>",
+    "unknownBlockElement": "Unbekanntes Block-Element: <1>{{type}}</1>",
     "unknownBuiltinPage": "<0>BuiltinPageLink</0>: Die Seite <2>{{to}}</2> existiert nicht.",
-    "unknownContainerDirective": "Unbekannter Container-Directive-Name aufgetreten: <1>{{name}}</1>",
-    "unknownInlineElement": "Unbekanntes Inline-Element aufgetreten",
-    "unknownIcon": "Unbekannter Icon-Name aufgetreten: <1>{{name}}</1>"
+    "unknownContainerDirective": "Unbekannte Container-Directive: <1>{{name}}</1>",
+    "unknownInlineElement": "Unbekanntes Inline-Element",
+    "unknownIcon": "Unbekanntes Icon: <1>{{name}}</1>"
   },
   "internalPages": {
     "glossary": {

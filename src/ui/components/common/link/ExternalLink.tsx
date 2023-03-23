@@ -1,5 +1,5 @@
 import { Link, styled } from '@mui/material'
-import { ComponentProps, forwardRef } from 'react'
+import { type ComponentProps, forwardRef } from 'react'
 
 import Icon from '#ui/components/common/Icon'
 

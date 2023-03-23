@@ -1,5 +1,5 @@
 import BlockquoteNode from './components/block/BlockquoteNode'
-import DivNode from './components/block/DivNode'
+import DivNode from './components/block/DivNode/DivNode'
 import HeadingNode from './components/block/HeadingNode'
 import HrNode from './components/block/HrNode'
 import OlNode from './components/block/OlNode'
@@ -8,11 +8,11 @@ import PreNode from './components/block/PreNode'
 import UlNode from './components/block/UlNode'
 import ANode from './components/inline/ANode'
 import CodeNode from './components/inline/CodeNode'
+import SpanNode from './components/inline/SpanNode/SpanNode'
 
 // TODO
 // block:
 // - table
-// - leafDirective
 // - image
 // - definition list?
 // - footnotes?
@@ -38,6 +38,7 @@ const componentsMap = {
   // inline
   a: ANode,
   code: CodeNode,
+  span: SpanNode,
 }
 
 export default componentsMap

@@ -150,8 +150,7 @@ const baseThemeOpts: ThemeOptions = {
     // Custom code variant
     code: {
       fontFamily: fontFamilyMonospace,
-      margin: '0 0.1rem',
-      padding: '0.2rem',
+      padding: '0.1rem 0.2rem',
     },
   },
 }

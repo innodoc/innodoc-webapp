@@ -76,6 +76,8 @@ specifiers:
   eslint-plugin-testing-library: ^5.10.2
   express: ^4.18.2
   express-validator: ^6.15.0
+  hast: ^1.0.0
+  hastscript: ^7.2.0
   i18next: ^22.4.11
   i18next-fs-backend: ^2.1.1
   i18next-http-backend: ^2.1.1
@@ -107,6 +109,7 @@ specifiers:
   rehype-react: ^7.1.2
   rehype-sanitize: ^5.0.1
   rehype-slug: ^5.1.0
+  remark-custom-heading-id: ^1.0.0
   remark-directive: ^2.0.1
   remark-inline-links: ^6.0.1
   remark-math: ^5.1.1
@@ -155,6 +158,7 @@ dependencies:
   dotenv: 16.0.3
   express: 4.18.2
   express-validator: 6.15.0
+  hastscript: 7.2.0
   i18next: 22.4.11
   i18next-fs-backend: 2.1.1
   i18next-http-backend: 2.1.1
@@ -181,6 +185,7 @@ dependencies:
   rehype-react: 7.1.2_@types+react@18.0.28
   rehype-sanitize: 5.0.1
   rehype-slug: 5.1.0
+  remark-custom-heading-id: 1.0.0
   remark-directive: 2.0.1
   remark-inline-links: 6.0.1
   remark-math: 5.1.1
@@ -244,6 +249,7 @@ devDependencies:
   eslint-plugin-react-redux: 4.0.0_rsciuucd6z3pxntazcc6zz6mda
   eslint-plugin-regexp: 1.12.0_eslint@8.35.0
   eslint-plugin-testing-library: 5.10.2_ycpbpc6yetojsgtrx3mwntkhsu
+  hast: 1.0.0
   jsdom: 21.1.0
   mdast-util-directive: 2.2.4
   msw: 1.1.0_typescript@4.9.5
@@ -5170,6 +5176,11 @@ packages:
     resolution: {integrity: sha512-nAxA0v8+vXSBDt3AnRUNjyRIQ0rD+ntpbAp4LnPkumc5M9yUbSMa4XDU9Q6etY4f1Wp4bNgvc1yjiZtsTTrSng==}
     dev: false
 
+  /hast/1.0.0:
+    resolution: {integrity: sha512-vFUqlRV5C+xqP76Wwq2SrM0kipnmpxJm7OfvVXpB35Fp+Fn4MV+ozr+JZr5qFvyR1q/U+Foim2x+3P+x9S1PLA==}
+    deprecated: Renamed to rehype
+    dev: true
+
   /hastscript/7.2.0:
     resolution: {integrity: sha512-TtYPq24IldU8iKoJQqvZOuhi5CyCQRAbvDOX0x1eW6rsHSxa/1i2CCiptNTotGHJ3VoHRGmqiv6/D3q113ikkw==}
     dependencies:
@@ -6017,6 +6028,10 @@ packages:
       '@types/unist': 2.0.6
     dev: false
 
+  /mdast-heading-id/1.0.0:
+    resolution: {integrity: sha512-KM/X3f7Yqr8P4UJI63URPFIn5tjfLREkh30ni8fC+R942md275R/VCJ2XXG7Lonu2f1mNUm5tBRhHPTScR4L1g==}
+    dev: false
+
   /mdast-squeeze-paragraphs/5.2.1:
     resolution: {integrity: sha512-npINYQrt0E5AvSvM7ZxIIyrG/7DX+g8jKWcJMudrcjI+b1eNOKbbu+wTo6cKvy5IzH159IPfpWoRVH7kwEmnug==}
     dependencies:
@@ -6253,6 +6268,12 @@ packages:
       micromark-util-character: 1.1.0
       micromark-util-symbol: 1.0.1
       micromark-util-types: 1.0.2
+
+  /micromark-heading-id/1.0.0:
+    resolution: {integrity: sha512-EUtGl5IIH65v/XELXFkyzZZ8jnIdTRCSvGKgqcB2qLjCZiVLVvKrsue/s6n+97BME072nG8no4M6nPR9pv4FMg==}
+    dependencies:
+      micromark-util-symbol: 1.0.1
+    dev: false
 
   /micromark-util-character/1.1.0:
     resolution: {integrity: sha512-agJ5B3unGNJ9rJvADMJ5ZiYjBRyDpzKAOk01Kpi1TKhlT1APx3XZk6eN7RtSz1erbWHC2L8T3xLZ81wdtGRZzg==}
@@ -7351,6 +7372,14 @@ packages:
       hast-util-heading-rank: 2.1.1
       hast-util-to-string: 2.0.0
       unified: 10.1.2
+      unist-util-visit: 4.1.2
+    dev: false
+
+  /remark-custom-heading-id/1.0.0:
+    resolution: {integrity: sha512-t1GPQ6WihSTkwBnJV8h4SSMvQ4YGN718pBzTOy3+DpgiLUIU5H8diDU86gCd0kl+fMG1P2wsL61kzgTok0gZjA==}
+    dependencies:
+      mdast-heading-id: 1.0.0
+      micromark-heading-id: 1.0.0
       unist-util-visit: 4.1.2
     dev: false
 

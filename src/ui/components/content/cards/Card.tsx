@@ -1,16 +1,16 @@
 import {
   Card as MuiCard,
   CardActionArea,
+  CardActions,
   CardContent,
   CardHeader,
   Collapse,
   styled,
 } from '@mui/material'
 import type { CardHeaderProps } from '@mui/material'
-import { type ComponentProps, useState } from 'react'
+import { type ComponentProps, useState, type ReactNode } from 'react'
 
 import Icon, { type IconProps } from '#ui/components/common/Icon'
-import BlockContentNode from '#ui/components/content/mdast/nodes/BlockContentNode'
 
 import type { CardType, ContentCardProps } from './types'
 
@@ -48,6 +48,7 @@ interface StyledCardHeaderProps extends CardHeaderProps {
 }
 
 function Card({
+  actions,
   cardType,
   children,
   collapsible = false,
@@ -106,6 +107,7 @@ function Card({
     >
       {wrappedCardHeader}
       {wrappedCardContent}
+      {actions ? <CardActions disableSpacing>{actions}</CardActions> : null}
     </MuiCard>
   )
 }
@@ -113,6 +115,7 @@ function Card({
 interface CardProps
   extends ContentCardProps,
     Pick<ComponentProps<typeof MuiCard>, 'elevation' | 'sx'> {
+  actions?: ReactNode
   cardType: CardType
   collapsible?: boolean
   dense?: boolean

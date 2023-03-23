@@ -1,8 +1,7 @@
-import { Box, Container, Grid, Link, Stack, Typography } from '@mui/material'
+import { Box, Container, Grid, Link, Stack, styled, Typography } from '@mui/material'
 import getTextDecoration from '@mui/material/Link/getTextDecoration'
 import {
   Experimental_CssVarsProvider as CssVarsProvider,
-  styled,
   useColorScheme,
 } from '@mui/material/styles'
 import { memo } from 'react'
