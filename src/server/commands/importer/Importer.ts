@@ -259,16 +259,23 @@ class Importer {
 
     // TODO: [Seiten]{data-index-term="Seite"}
     const source = rest
+
+      // cards
       .replace(/(:{3,}) ?\{.hint-text\}/g, '$1input-hint')
       .replace(/\[([^\]]+)\]\{\.hint-text\}/g, ':::input-hint\n$1\n:::\n')
       .replace(/(:{3,}) ?\{.hint\}/g, '$1hint')
       .replace(/(:{3,}) ?\{.hint caption="(?:Lösung|Solution)"\}/g, '$1solution')
       .replace(/(:{3,}) ?\{\.(example|exercise|figure|info) (#[^}]+)\}/g, '$1$2{$3}')
       .replace(/(:{3,}) ?\{\.(example|exercise|figure|info)\}/g, '$1$2')
+
+      // exercises
       .replace(/:{3,} ?\{\.verify-input-button\}\n(.+)\n:{3,}\n/g, '::verify-button[$1]\n')
-      .replace(/(:{3,}) ?\{\.row\}/g, '$1row')
-      .replace(/(:{3,}) ?\{\.col ([^}]+)\}/g, '$1col{$2}')
       .replace(/\[\]\{\.question \.(text|checkbox) ([^}]+)\}/g, ':question-$1{$2}')
+
+      // grids
+      .replace(/(:{3,}) ?\{\.row\}/g, '$1grid')
+      .replace(/(:{3,}) ?\{\.col ([^}]+)\}/g, '$1grid-item{$2}')
+      .replace(/span="(\d+)"/g, 'xs="$1"')
 
     return { frontmatter, source }
   }

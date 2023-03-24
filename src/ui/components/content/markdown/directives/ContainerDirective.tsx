@@ -7,14 +7,21 @@ import HintCard from '#ui/components/content/cards/HintCard'
 import InfoCard from '#ui/components/content/cards/InfoCard'
 import InputHintCard from '#ui/components/content/cards/InputHintCard'
 import SolutionCard from '#ui/components/content/cards/SolutionCard'
+import Grid from '#ui/components/content/grid/Grid'
+import GridItem from '#ui/components/content/grid/GridItem'
 
 const componentMap = {
+  // cards
   example: ExampleCard,
   exercise: ExerciseCard,
   hint: HintCard,
   info: InfoCard,
   'input-hint': InputHintCard,
   solution: SolutionCard,
+
+  // grid
+  grid: Grid,
+  'grid-item': GridItem,
 }
 
 type ContainerDirectiveName = keyof typeof componentMap
@@ -29,7 +36,7 @@ function ContainerDirective({ children, node }: ContainerDirectiveProps) {
   const name = node.properties?.name
   if (isContainerDirectiveName(name)) {
     const Component = componentMap[name]
-    return <Component>{children}</Component>
+    return <Component nodeProps={node.properties ?? {}}>{children}</Component>
   }
   return null
 }

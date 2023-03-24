@@ -10,6 +10,7 @@ import remarkRehype from 'remark-rehype'
 import remarkSqueezeParagraphs from 'remark-squeeze-paragraphs'
 import { unified } from 'unified'
 
+import { GRID_PROPERTIES } from '#ui/components/content/grid/types'
 import { QUESTION_PROPERTIES } from '#ui/components/exercises/questions/types'
 
 import remarkCustomDirectives from './remarkCustomDirectives'
@@ -38,8 +39,11 @@ const processor = unified()
     clobber: undefined,
     attributes: {
       ...defaultSchema.attributes,
-      // Allow classes that rehype-katex uses
-      div: [...(defaultSchema.attributes?.div || []), ['className', 'math', 'math-display']],
+      div: [
+        ...(defaultSchema.attributes?.div || []),
+        ['className', 'math', 'math-display'], // rehype-katex
+        ...GRID_PROPERTIES,
+      ],
       span: [
         ...(defaultSchema.attributes?.span || []),
         ['className', 'math', 'math-inline'],
