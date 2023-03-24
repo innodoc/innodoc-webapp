@@ -1,6 +1,5 @@
+import TextDirective from '#ui/components/content/markdown/directives/TextDirective'
 import type { MarkdownComponentProps } from '#ui/components/content/markdown/types'
-
-import TextDirective from './TextDirective'
 
 function SpanNode({ children, node, ...other }: MarkdownComponentProps<'span'>) {
   if (node.properties?.type === 'textDirective') {

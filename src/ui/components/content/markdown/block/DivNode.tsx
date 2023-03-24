@@ -1,7 +1,6 @@
+import ContainerDirective from '#ui/components/content/markdown/directives/ContainerDirective'
+import LeafDirective from '#ui/components/content/markdown/directives/LeafDirective'
 import type { MarkdownComponentProps } from '#ui/components/content/markdown/types'
-
-import ContainerDirective from './ContainerDirective'
-import LeafDirective from './LeafDirective'
 
 function DivNode({ children, node }: MarkdownComponentProps<'div'>) {
   if (node.properties?.type === 'containerDirective') {
