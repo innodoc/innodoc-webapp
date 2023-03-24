@@ -272,11 +272,6 @@ class Importer {
       .replace(/:{3,} ?\{\.verify-input-button\}\n(.+)\n:{3,}\n/g, '::verify-button[$1]\n')
       .replace(/\[\]\{\.question \.(text|checkbox) ([^}]+)\}/g, ':question-$1{$2}')
 
-      // grids
-      .replace(/(:{3,}) ?\{\.row\}/g, '$1grid')
-      .replace(/(:{3,}) ?\{\.col ([^}]+)\}/g, '$1grid-item{$2}')
-      .replace(/span="(\d+)"/g, 'xs="$1"')
-
     return { frontmatter, source }
   }
 

@@ -2,11 +2,11 @@ import MuiGrid from '@mui/material/Unstable_Grid2'
 import camelcaseKeys from 'camelcase-keys'
 import type { ComponentProps, ReactNode } from 'react'
 
-import { GRID_PROPERTIES } from './types'
+import { GRID_ITEM_PROPERTIES } from './types'
 
 function nodeToGridProps(nodeProps: GridItemProps['nodeProps']) {
   return camelcaseKeys(
-    GRID_PROPERTIES.reduce((acc, prop) => {
+    GRID_ITEM_PROPERTIES.reduce((acc, prop) => {
       const propVal = nodeProps[prop]
       if (propVal) {
         return {
@@ -25,7 +25,7 @@ function GridItem({ children, nodeProps }: GridItemProps) {
 
 interface GridItemProps {
   children: ReactNode
-  nodeProps: Partial<Record<(typeof GRID_PROPERTIES)[number], string>>
+  nodeProps: Partial<Record<(typeof GRID_ITEM_PROPERTIES)[number], string>>
 }
 
 export default GridItem

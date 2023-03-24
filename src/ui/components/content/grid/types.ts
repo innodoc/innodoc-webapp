@@ -1,4 +1,4 @@
-export const GRID_PROPERTIES = [
+export const GRID_ITEM_PROPERTIES = [
   'xs',
   'sm',
   'md',

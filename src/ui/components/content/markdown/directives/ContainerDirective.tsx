@@ -9,6 +9,8 @@ import InputHintCard from '#ui/components/content/cards/InputHintCard'
 import SolutionCard from '#ui/components/content/cards/SolutionCard'
 import Grid from '#ui/components/content/grid/Grid'
 import GridItem from '#ui/components/content/grid/GridItem'
+import TabItem from '#ui/components/content/tabs/TabItem'
+import Tabs from '#ui/components/content/tabs/Tabs'
 
 const componentMap = {
   // cards
@@ -22,6 +24,10 @@ const componentMap = {
   // grid
   grid: Grid,
   'grid-item': GridItem,
+
+  // tabs
+  tabs: Tabs,
+  'tab-item': TabItem,
 }
 
 type ContainerDirectiveName = keyof typeof componentMap
