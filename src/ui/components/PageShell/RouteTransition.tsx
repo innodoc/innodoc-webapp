@@ -56,12 +56,13 @@ function RouteTransition({ children, pagePrev: PagePrev }: RouteTransitionProps)
 
   // Fade-in only when browser rendered pixels
   // https://www.webperf.tips/tip/measuring-paint-time/
-  const rafCallback = useCallback(() => {
-    setAnim('fadeIn')
-    dispatch(changeRouteTransitionInfo(null))
-  }, [dispatch])
   useEffect(() => {
     const chan = chanRef.current
+
+    const rafCallback = () => {
+      setAnim('fadeIn')
+      dispatch(changeRouteTransitionInfo(null))
+    }
 
     if (
       pageReady &&
@@ -80,33 +81,33 @@ function RouteTransition({ children, pagePrev: PagePrev }: RouteTransitionProps)
         cancelAnimationFrame(rafRef.current)
       }
     }
-  }, [dispatch, isHydration, pageReady, rafCallback])
+  }, [dispatch, isHydration, pageReady])
 
   // Do actual route change when fadeOut anim ended
-  const animationListener = useCallback(
-    (event: AnimationEvent) => {
-      if (event.animationName === 'fadeOut' && routeTransitionInfo !== null) {
-        // Needed so that `pageReady` triggers above effect even if no other
-        // tokens are used
-        removeToken('route-anim')
-
-        dispatch(changeRouteInfo(routeTransitionInfo))
-        // TODO: prevent vite-plugin-ssr to scroll to top
-        // TODO: scoll to URL hash if present
-      }
-    },
-    [dispatch, removeToken, routeTransitionInfo]
-  )
   useEffect(() => {
-    let currentWrapperEl: HTMLDivElement
     if (wrapperEl.current) {
-      currentWrapperEl = wrapperEl.current
-      currentWrapperEl.addEventListener('animationend', animationListener)
+      const currentWrapperEl = wrapperEl.current
+
+      const listener = (event: AnimationEvent) => {
+        if (event.animationName === 'fadeOut' && routeTransitionInfo !== null) {
+          // Needed so that `pageReady` triggers fade in even if no other
+          // tokens are used
+          removeToken('route-anim')
+
+          // Do actual route transition
+          dispatch(changeRouteInfo(routeTransitionInfo))
+
+          // TODO: prevent vite-plugin-ssr to scroll to top
+          // TODO: scoll to URL hash if present
+        }
+      }
+
+      currentWrapperEl.addEventListener('animationend', listener)
+      return () => {
+        currentWrapperEl.removeEventListener('animationend', listener)
+      }
     }
-    return () => {
-      currentWrapperEl.removeEventListener('animationend', animationListener)
-    }
-  }, [animationListener])
+  }, [dispatch, removeToken, routeTransitionInfo])
 
   // Start fade out anim on page navigation
   useEffect(() => {
