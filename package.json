@@ -118,6 +118,7 @@
     "eslint-plugin-regexp": "^1.12.0",
     "eslint-plugin-testing-library": "^5.10.2",
     "hast": "^1.0.0",
+    "hast-util-sanitize": "^4.1.0",
     "jsdom": "^21.1.0",
     "mdast-util-directive": "^2.2.4",
     "msw": "^1.1.0",

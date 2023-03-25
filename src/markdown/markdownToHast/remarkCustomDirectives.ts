@@ -9,6 +9,15 @@ import { isContainerDirective, isLeafDirective, isTextDirective } from '#markdow
 const remarkCustomDirectives: Plugin<[], Root> = () => {
   return (tree) => {
     visit(tree, (node) => {
+      // Support directiveLabel property
+      if (node.type === 'paragraph') {
+        if (node?.data?.directiveLabel === true) {
+          node.data = node.data ?? {}
+          node.data.hProperties = { directiveLabel: 'true' }
+        }
+      }
+
+      // Support different directive types as span/div
       if (isContainerDirective(node) || isLeafDirective(node) || isTextDirective(node)) {
         const tagName = node.type === 'textDirective' ? 'span' : 'div'
         const hast = h(tagName, {

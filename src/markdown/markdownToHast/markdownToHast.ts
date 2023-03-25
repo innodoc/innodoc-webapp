@@ -1,5 +1,5 @@
 import rehypeKatex from 'rehype-katex'
-import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
+import rehypeSanitize from 'rehype-sanitize'
 import rehypeSlug from 'rehype-slug'
 import remarkDirective from 'remark-directive'
 import remarkHeadingId from 'remark-heading-id'
@@ -10,13 +10,11 @@ import remarkRehype from 'remark-rehype'
 import remarkSqueezeParagraphs from 'remark-squeeze-paragraphs'
 import { unified } from 'unified'
 
-import { GRID_ITEM_PROPERTIES } from '#ui/components/content/grid/types'
-import { ALL_TABS_PROPERTIES } from '#ui/components/content/tabs/types'
-import { QUESTION_PROPERTIES } from '#ui/components/exercises/questions/types'
-
+import rehypeCaption from './rehypeCaption'
 import remarkCustomDirectives from './remarkCustomDirectives'
 import remarkGfm from './remarkGfm'
 import remarkNumberCards from './remarkNumberCards'
+import sanitizeSchema from './sanitizeSchema'
 
 /**
  * Unified processor (parse/run phase)
@@ -35,24 +33,8 @@ const processor = unified()
   .use(remarkMath)
   .use(remarkRehype)
   .use(rehypeSlug)
-  .use(rehypeSanitize, {
-    ...defaultSchema,
-    clobber: undefined,
-    attributes: {
-      ...defaultSchema.attributes,
-      div: [
-        ...(defaultSchema.attributes?.div || []),
-        ['className', 'math', 'math-display'], // rehype-katex
-        ...GRID_ITEM_PROPERTIES,
-        ...ALL_TABS_PROPERTIES,
-      ],
-      span: [
-        ...(defaultSchema.attributes?.span || []),
-        ['className', 'math', 'math-inline'],
-        ...QUESTION_PROPERTIES,
-      ],
-    },
-  })
+  .use(rehypeCaption)
+  .use(rehypeSanitize, sanitizeSchema)
   .use(rehypeKatex, { output: 'html' })
   .freeze()
 

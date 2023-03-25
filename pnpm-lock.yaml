@@ -77,6 +77,7 @@ specifiers:
   express: ^4.18.2
   express-validator: ^6.15.0
   hast: ^1.0.0
+  hast-util-sanitize: ^4.1.0
   hastscript: ^7.2.0
   i18next: ^22.4.11
   i18next-fs-backend: ^2.1.1
@@ -250,6 +251,7 @@ devDependencies:
   eslint-plugin-regexp: 1.12.0_eslint@8.35.0
   eslint-plugin-testing-library: 5.10.2_ycpbpc6yetojsgtrx3mwntkhsu
   hast: 1.0.0
+  hast-util-sanitize: 4.1.0
   jsdom: 21.1.0
   mdast-util-directive: 2.2.4
   msw: 1.1.0_typescript@4.9.5
@@ -2740,7 +2742,6 @@ packages:
     resolution: {integrity: sha512-wLEm0QvaoawEDoTRwzTXp4b4jpwiJDvR5KMnFnVodm3scufTlBOWRD6N1OBf9TZMhjlNsSfcO5V+7AF4+Vy+9g==}
     dependencies:
       '@types/unist': 2.0.6
-    dev: false
 
   /@types/hoist-non-react-statics/3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
@@ -5155,7 +5156,6 @@ packages:
     resolution: {integrity: sha512-Hd9tU0ltknMGRDv+d6Ro/4XKzBqQnP/EZrpiTbpFYfXv/uOhWeKc+2uajcbEvAEH98VZd7eII2PiXm13RihnLw==}
     dependencies:
       '@types/hast': 2.3.4
-    dev: false
 
   /hast-util-to-string/2.0.0:
     resolution: {integrity: sha512-02AQ3vLhuH3FisaMM+i/9sm4OXGSq1UhOOCpTLLQtHdL3tZt7qil69r8M8iDkZYyC0HCFylcYoP+8IO7ddta1A==}
