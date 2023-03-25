@@ -1,8 +1,8 @@
 import rehypeKatex from 'rehype-katex'
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
 import rehypeSlug from 'rehype-slug'
-import { remarkHeadingId } from 'remark-custom-heading-id'
 import remarkDirective from 'remark-directive'
+import remarkHeadingId from 'remark-heading-id'
 import remarkInlineLinks from 'remark-inline-links'
 import remarkMath from 'remark-math'
 import remarkParse from 'remark-parse'
@@ -27,8 +27,8 @@ const processor = unified()
   .use(remarkParse)
   .use(remarkSqueezeParagraphs)
   .use(remarkDirective)
-  .use(remarkCustomDirectives)
   .use(remarkHeadingId)
+  .use(remarkCustomDirectives)
   .use(remarkInlineLinks)
   .use(remarkGfm)
   .use(remarkNumberCards)

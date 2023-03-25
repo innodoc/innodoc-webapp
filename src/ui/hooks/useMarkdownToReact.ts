@@ -1,9 +1,9 @@
-import type { Root } from 'hast'
 import { useCallback, useContext, useEffect, useState, useTransition } from 'react'
 
 import hastToReact from '#markdown/hastToReact'
 import { markdownToHastSync } from '#markdown/markdownToHast/markdownToHast'
 import { selectIsHydration } from '#store/slices/appSlice'
+import { isResult } from '#types/typeGuards'
 import MarkdownWorkerContext from '#ui/contexts/MarkdownWorkerContext/MarkdownWorkerContext'
 
 import { useSelector } from './store/store'
@@ -23,11 +23,19 @@ function useMarkdownToReact(markdownCode: string) {
     return null
   })
 
-  const workerListener = useCallback((event: MessageEvent) => {
-    startTransition(() => {
-      setContent(hastToReact(event.data as Root))
-      setNumJobs((oldNum) => oldNum - 1)
-    })
+  const workerListener = useCallback(({ data }: MessageEvent) => {
+    if (isResult(data)) {
+      if (data.error !== undefined) {
+        console.error('Error', data.error)
+      }
+
+      startTransition(() => {
+        if (data.root !== undefined) {
+          setContent(hastToReact(data.root))
+        }
+        setNumJobs((oldNum) => oldNum - 1)
+      })
+    }
   }, [])
 
   // Receive hast from worker

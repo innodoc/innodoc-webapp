@@ -1,3 +1,4 @@
+import type { Root } from 'hast'
 import type { LanguageCode } from 'iso-639-1'
 
 import type {
@@ -28,6 +29,15 @@ export type CourseSlugMode = (typeof COURSE_SLUG_MODES)[number]
 
 /** Content types */
 export type ContentType = (typeof CONTENT_TYPES)[number]
+
+/** Web worker result message */
+export interface Result {
+  /** hast document */
+  root?: Root
+
+  /** Processing error */
+  error?: Error
+}
 
 /** Application route info */
 export interface RouteInfo {
