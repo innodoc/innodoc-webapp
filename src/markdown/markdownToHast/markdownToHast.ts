@@ -11,6 +11,7 @@ import remarkSqueezeParagraphs from 'remark-squeeze-paragraphs'
 import { unified } from 'unified'
 
 import rehypeCaption from './rehypeCaption'
+import rehypeTabs from './rehypeTabs'
 import remarkCustomDirectives from './remarkCustomDirectives'
 import remarkGfm from './remarkGfm'
 import remarkNumberCards from './remarkNumberCards'
@@ -34,6 +35,7 @@ const processor = unified()
   .use(remarkRehype)
   .use(rehypeSlug)
   .use(rehypeCaption)
+  .use(rehypeTabs)
   .use(rehypeSanitize, sanitizeSchema)
   .use(rehypeKatex, { output: 'html' })
   .freeze()

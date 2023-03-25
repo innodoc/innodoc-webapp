@@ -6,7 +6,7 @@ import type { TABS_PROPERTIES } from './types'
 
 function Tabs({ children, nodeProps: { labels: labelsString } }: TabsProps) {
   const labels = (labelsString ?? '').split(',')
-  const [value, setValue] = useState('1')
+  const [value, setValue] = useState('0')
 
   if (labels.length < 1) {
     return null
@@ -16,7 +16,7 @@ function Tabs({ children, nodeProps: { labels: labelsString } }: TabsProps) {
     setValue(newValue)
   }
 
-  const tabs = labels.map((label, idx) => <Tab label={label} key={label} value={`${idx + 1}`} />)
+  const tabs = labels.map((label, idx) => <Tab label={label} key={label} value={idx.toString()} />)
 
   return (
     <Box sx={{ my: 2, typography: 'body1', width: '100%' }}>
