@@ -4,7 +4,9 @@ import { type ReactNode } from 'react'
 
 import type { TAB_ITEM_PROPERTIES } from './types'
 
-const StyleTabPanel = styled(TabPanel)({ padding: 0 })
+const StyleTabPanel = styled(TabPanel)(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+}))
 
 function TabItem({ children, nodeProps }: TabItemProps) {
   return <StyleTabPanel value={nodeProps.index ?? '0'}>{children}</StyleTabPanel>

@@ -12,7 +12,7 @@ test('<Breadcrumbs />', async () => {
   const breadcrumbs = within(main).getByRole('navigation')
 
   const homeLink = within(breadcrumbs).getByRole('link', {
-    name: 'internalPages.home.title',
+    name: 'builtinPages.home.title',
   })
   expect(homeLink).toHaveAttribute('href', '/en/pagetest/home')
 

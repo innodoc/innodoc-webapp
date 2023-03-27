@@ -1,4 +1,4 @@
-import { Link, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 
 import HomeLink from '#ui/components/common/link/HomeLink'
 import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
@@ -31,9 +31,9 @@ function Logo() {
   )
 
   return (
-    <Link component={HomeLink} sx={{ display: 'inline-flex', mr: 2 }} title={course.title ?? ''}>
+    <HomeLink sx={{ display: 'inline-flex', mr: 2 }} title={course.title ?? ''}>
       {content}
-    </Link>
+    </HomeLink>
   )
 }
 

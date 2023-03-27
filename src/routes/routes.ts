@@ -4,6 +4,9 @@ export const routesBuiltinPages = {
   // Landing/index page
   'app:index': '',
 
+  // Home page (dynamic, depends on course)
+  'app:home': null,
+
   // Progress
   'app:progress': '/progress',
 
@@ -26,6 +29,12 @@ export const routesContentPages = {
 export const routesUser = {
   // Login
   'app:user:login': '/login',
+
+  // Login
+  'app:user:forgot-password': '/forgot-password',
+
+  // Login
+  'app:user:sign-up': '/sign-up',
 }
 
 export const routesApi = {

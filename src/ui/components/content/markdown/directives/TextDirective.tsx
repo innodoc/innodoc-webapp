@@ -1,8 +1,8 @@
 import type { Element as HastElement } from 'hast'
 import type { ReactNode } from 'react'
 
-import QuestionCheckbox from '#ui/components/exercises/questions/QuestionCheckbox'
-import QuestionText from '#ui/components/exercises/questions/QuestionText'
+import QuestionCheckbox from '#ui/components/content/exercises/questions/QuestionCheckbox'
+import QuestionText from '#ui/components/content/exercises/questions/QuestionText'
 
 const componentMap = {
   'question-checkbox': QuestionCheckbox,

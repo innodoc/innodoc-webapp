@@ -2,45 +2,18 @@ import { Children, forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 
 import type { ApiPage, TranslatedPage } from '#types/entities/page'
+import Code from '#ui/components/common/Code'
 import InlineError from '#ui/components/common/error/InlineError'
 import Icon from '#ui/components/common/Icon'
 import useSelectPage from '#ui/hooks/store/useSelectPage'
-import useGenerateUrl from '#ui/hooks/useGenerateUrl'
+import useRouteManager from '#ui/hooks/useRouteManager'
 
-import InternalLink from './InternalLink'
+import BaseLink from './BaseLink'
 import type { LinkProps } from './types'
 
-/** PageLinkPage takes `page` */
-const PageLinkPage = forwardRef<HTMLAnchorElement, PageLinkPageProps>(function PageLinkPage(
-  { children, page, preferShortTitle = false, ...other },
-  ref
-) {
-  const generateUrl = useGenerateUrl()
-  const { slug, icon, shortTitle, title } = page
-  const to = generateUrl({ routeName: 'app:page', pageSlug: slug })
-
-  return (
-    <InternalLink to={to} ref={ref} {...other}>
-      {Children.count(children) ? (
-        children
-      ) : (
-        <>
-          {icon !== undefined ? <Icon name={icon} /> : null}
-          {(preferShortTitle && shortTitle !== undefined ? shortTitle : title) || null}
-        </>
-      )}
-    </InternalLink>
-  )
-})
-
-interface PageLinkPageProps extends Omit<PageLinkProps, 'page' | 'pageSlug'> {
-  page: TranslatedPage
-}
-
-/** PageLinkPageSlug takes `pageSlug` */
-const PageLinkPageSlug = forwardRef<HTMLAnchorElement, PageLinkPageSlugProps>(
-  function PageLinkPageSlug({ pageSlug: pageSlugFull, ...other }, ref) {
-    const [pageSlug, hash] = pageSlugFull.split('#')
+/** Link to a page using `pageSlug` */
+const PageLinkFromSlug = forwardRef<HTMLAnchorElement, PageLinkFromSlugProps>(
+  function PageLinkFromSlug({ pageSlug, ...other }, ref) {
     const { page } = useSelectPage(pageSlug)
 
     if (page === undefined) {
@@ -48,47 +21,50 @@ const PageLinkPageSlug = forwardRef<HTMLAnchorElement, PageLinkPageSlugProps>(
         <InlineError>
           <Trans
             i18nKey="error.pageLinkPageSlugProp"
-            components={{ 0: <code />, 2: <code /> }}
+            components={{ 0: <Code />, 2: <Code /> }}
             values={{ pageSlug }}
           >
-            {`<0>PageLink</0>: Page <2>{{pageSlug}}</2> not found.`}
+            {`<0>PageLink</0>: <2>{{pageSlug}}</2> not found`}
           </Trans>
         </InlineError>
       )
     }
 
-    return <PageLinkPage hash={hash} ref={ref} page={page} {...other} />
+    return <PageLink ref={ref} page={page} {...other} />
   }
 )
 
-interface PageLinkPageSlugProps extends Omit<PageLinkProps, 'page' | 'pageSlug'> {
+interface PageLinkFromSlugProps extends Omit<PageLinkProps, 'page'> {
   pageSlug: ApiPage['slug']
 }
 
-/** PageLink takes either `page` or `pageSlug` */
+/** Link to a page */
 const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
-  { page, pageSlug, ...other },
+  { children, page, preferShortTitle = false, showIcon = true, ...other },
   ref
 ) {
-  if (page !== undefined && pageSlug !== undefined) {
-    throw new Error('Use either page or pageSlug prop, not both.')
-  }
+  const { generateUrl } = useRouteManager()
+  const { slug, icon, shortTitle, title } = page
 
-  if (page !== undefined) {
-    return <PageLinkPage ref={ref} page={page} {...other} />
-  }
-
-  if (pageSlug !== undefined) {
-    return <PageLinkPageSlug ref={ref} pageSlug={pageSlug} {...other} />
-  }
-
-  throw new Error('Use either page or pageSlug prop.')
+  return (
+    <BaseLink to={generateUrl({ routeName: 'app:page', pageSlug: slug })} ref={ref} {...other}>
+      {Children.count(children) ? (
+        children
+      ) : (
+        <>
+          {showIcon && icon !== undefined ? <Icon name={icon} /> : null}
+          {(preferShortTitle && shortTitle !== undefined ? shortTitle : title) || null}
+        </>
+      )}
+    </BaseLink>
+  )
 })
 
 interface PageLinkProps extends Omit<LinkProps, 'to'> {
+  page: TranslatedPage
   preferShortTitle?: boolean
-  page?: TranslatedPage
-  pageSlug?: ApiPage['slug']
+  showIcon?: boolean
 }
 
+export { PageLinkFromSlug }
 export default PageLink

@@ -11,16 +11,15 @@ import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '#constants'
 import { selectRouteInfo } from '#store/slices/appSlice'
 import { useGetFragmentContentQuery } from '#store/slices/entities/fragments'
 import builtInPages from '#ui/components/common/builtInPages'
-import InternalLink from '#ui/components/common/link/InternalLink'
+import AppLink from '#ui/components/common/link/AppLink'
 import PageLink from '#ui/components/common/link/PageLink'
 import MarkdownNode from '#ui/components/content/markdown/MarkdownNode'
 import defaultTheme, { baseThemeOpts, makeTheme } from '#ui/components/PageShell/theme'
 import { useSelector } from '#ui/hooks/store/store'
 import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
 import useSelectLinkedPages from '#ui/hooks/store/useSelectLinkedPages'
-import useGenerateUrl from '#ui/hooks/useGenerateUrl'
 
-const builtInPagesNav = builtInPages.filter((page) => page.linked.includes('footer'))
+const builtInPagesNav = builtInPages.filter((page) => page.linked?.includes('footer'))
 
 // TODO: refactor into multiple files, use different list component as icon is
 // mis-aligned
@@ -59,7 +58,6 @@ const StyledLink = styled(Link)(({ theme }) => ({
 })) as typeof Link
 
 function Footer() {
-  const generateUrl = useGenerateUrl()
   const { t } = useTranslation()
   const { mode } = useColorScheme()
   const { pages: coursePages } = useSelectLinkedPages('footer')
@@ -87,7 +85,7 @@ function Footer() {
   }
 
   const internalLinks = builtInPagesNav.map(({ icon, routeName, title }) => (
-    <StyledLink component={InternalLink} key={routeName} to={generateUrl({ routeName })}>
+    <StyledLink component={AppLink} key={routeName} routeInfo={{ routeName }}>
       {icon}
       {t(title)}
     </StyledLink>

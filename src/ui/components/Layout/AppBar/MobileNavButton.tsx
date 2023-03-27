@@ -3,17 +3,17 @@ import { useTranslation } from 'react-i18next'
 
 import builtInPages from '#ui/components/common/builtInPages'
 import Icon from '#ui/components/common/Icon'
-import InternalLink from '#ui/components/common/link/InternalLink'
+import AppLink from '#ui/components/common/link/AppLink'
 import PageLink from '#ui/components/common/link/PageLink'
 import useSelectLinkedPages from '#ui/hooks/store/useSelectLinkedPages'
-import useGenerateUrl from '#ui/hooks/useGenerateUrl'
-import useIsActiveLink from '#ui/hooks/useIsActiveLink'
+import useRouteManager from '#ui/hooks/useRouteManager'
 
 import DrawerButton from './common/DrawerButton'
 
+const builtInPagesNav = builtInPages.filter((page) => page.linked?.includes('nav'))
+
 function MobileNavButton() {
-  const generateUrl = useGenerateUrl()
-  const isActiveLink = useIsActiveLink()
+  const { isActiveRoute } = useRouteManager()
   const { t } = useTranslation()
 
   const { pages } = useSelectLinkedPages('nav')
@@ -42,7 +42,7 @@ function MobileNavButton() {
               <ListItemButton
                 component={PageLink}
                 page={page}
-                selected={isActiveLink({ routeName: 'app:page', pageSlug: page.slug })}
+                selected={isActiveRoute({ routeName: 'app:page', pageSlug: page.slug })}
               >
                 {page.icon !== undefined ? (
                   <ListItemIcon>
@@ -53,12 +53,12 @@ function MobileNavButton() {
               </ListItemButton>
             </ListItem>
           ))}
-          {builtInPages.map(({ icon, title, routeName }) => (
+          {builtInPagesNav.map(({ icon, title, routeName }) => (
             <ListItem disablePadding key={routeName} onClick={close}>
               <ListItemButton
-                component={InternalLink}
-                to={generateUrl({ routeName })}
-                selected={isActiveLink({ routeName })}
+                component={AppLink}
+                routeInfo={{ routeName }}
+                selected={isActiveRoute({ routeName })}
               >
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={t(title)} />

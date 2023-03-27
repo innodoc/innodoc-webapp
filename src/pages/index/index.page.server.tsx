@@ -1,4 +1,4 @@
-import { RenderErrorPage } from 'vite-plugin-ssr'
+import { RenderErrorPage } from 'vite-plugin-ssr/server'
 
 import { DEFAULT_ROUTE_NAME } from '#constants'
 import { onBeforeRender as onBeforeRenderDefault } from '#renderer/_default.page.server'
@@ -26,9 +26,9 @@ async function onBeforeRender(pageContextInput: PageContextServer) {
   }
 
   if (pageContext.routeInfo.courseSlug) {
-    const selectCurrentCourse = courses.endpoints.getCourse.select({
-      courseSlug: pageContext.routeInfo.courseSlug,
-    })
+    const { courseSlug } = pageContext.routeInfo
+
+    const selectCurrentCourse = courses.endpoints.getCourse.select({ courseSlug })
     const { data } = selectCurrentCourse(pageContext.store.getState())
     if (data === undefined) {
       throw new Error('No course loaded')
@@ -42,14 +42,13 @@ async function onBeforeRender(pageContextInput: PageContextServer) {
       })
     }
 
-    return {
-      pageContext: {
-        redirectTo: routeManager.generateFromSpecifier(
-          course.homeLink,
-          pageContext.routeInfo.locale
-        ),
-      },
-    }
+    const redirectTo = routeManager.generate({
+      courseSlug,
+      locale: pageContext.routeInfo.locale,
+      ...routeManager.parseLinkSpecifier(course.homeLink),
+    })
+
+    return { pageContext: { redirectTo } }
   }
 
   throw RenderErrorPage({

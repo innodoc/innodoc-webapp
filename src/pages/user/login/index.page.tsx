@@ -1,7 +1,7 @@
-import { Box, Button, Checkbox, FormControlLabel, Grid, Link, TextField } from '@mui/material'
+import { Box, Button, Checkbox, FormControlLabel, Grid, TextField } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import InternalLink from '#ui/components/common/link/InternalLink'
+import AppLink from '#ui/components/common/link/AppLink'
 import PageHeader from '#ui/components/common/PageHeader'
 
 function Page() {
@@ -12,7 +12,7 @@ function Page() {
 
   return (
     <>
-      <PageHeader iconName="mdi:login">{t('internalPages.login.title')}</PageHeader>
+      <PageHeader iconName="mdi:login">{t('builtinPages.login.title')}</PageHeader>
       <Box sx={{ mx: 'auto', width: { xs: 1, sm: '24rem' } }}>
         <Box component="form" noValidate onSubmit={onSubmit}>
           <TextField
@@ -20,7 +20,7 @@ function Page() {
             autoFocus
             fullWidth
             id="login-email"
-            label={t('internalPages.login.email')}
+            label={t('builtinPages.login.email')}
             margin="normal"
             name="login-email"
             required
@@ -29,7 +29,7 @@ function Page() {
             autoComplete="current-password"
             fullWidth
             id="login-password"
-            label={t('internalPages.login.password')}
+            label={t('builtinPages.login.password')}
             margin="normal"
             name="login-password"
             required
@@ -37,21 +37,21 @@ function Page() {
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label={t('internalPages.login.rememberMe')}
+            label={t('builtinPages.login.rememberMe')}
           />
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-            {t('internalPages.login.signIn')}
+            {t('builtinPages.login.signIn')}
           </Button>
           <Grid container>
             <Grid item sm xs={12}>
-              <Link component={InternalLink} to="/forgot-password" variant="body2">
-                {t('internalPages.login.forgotPassword')}
-              </Link>
+              <AppLink routeInfo={{ routeName: 'app:user:forgot-password' }} variant="body2">
+                {t('builtinPages.login.forgotPassword')}
+              </AppLink>
             </Grid>
             <Grid item sm="auto" xs={12}>
-              <Link component={InternalLink} to="/sign-up" variant="body2">
-                {t('internalPages.login.signUpLink')}
-              </Link>
+              <AppLink routeInfo={{ routeName: 'app:user:sign-up' }} variant="body2">
+                {t('builtinPages.login.signUpLink')}
+              </AppLink>
             </Grid>
           </Grid>
         </Box>

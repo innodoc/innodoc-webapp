@@ -1,5 +1,5 @@
 import { type TreeItemContentProps, useTreeItem } from '@mui/lab'
-import { Box, IconButton, Link, styled, Typography } from '@mui/material'
+import { Box, IconButton, styled, Typography } from '@mui/material'
 import clsx from 'clsx'
 import { forwardRef, type SyntheticEvent, type ForwardedRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,14 +8,14 @@ import type { TranslatedSection } from '#types/entities/section'
 import SectionLink from '#ui/components/common/link/SectionLink'
 import { formatSectionTitle } from '#utils/content'
 
-const StyledLink = styled(Link)(({ theme }) => ({
+const StyledLink = styled(SectionLink)(({ theme }) => ({
   color: theme.vars.palette.text.primary,
   textDecoration: 'none',
   '&:focus': {
     outline: 'none',
     backgroundColor: theme.vars.palette.action.focus,
   },
-})) as typeof Link
+}))
 
 const TocTreeItemContent = forwardRef(function TocTreeItemContent(
   {
@@ -57,7 +57,6 @@ const TocTreeItemContent = forwardRef(function TocTreeItemContent(
         [classes.focused]: focused,
         [classes.disabled]: disabled,
       })}
-      component={SectionLink}
       ref={ref as ForwardedRef<HTMLAnchorElement>}
       section={section}
     >

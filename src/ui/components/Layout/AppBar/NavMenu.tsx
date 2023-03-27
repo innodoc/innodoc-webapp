@@ -4,13 +4,12 @@ import { useTranslation } from 'react-i18next'
 
 import builtInPages from '#ui/components/common/builtInPages'
 import Icon from '#ui/components/common/Icon'
-import InternalLink from '#ui/components/common/link/InternalLink'
+import AppLink from '#ui/components/common/link/AppLink'
 import PageLink from '#ui/components/common/link/PageLink'
 import useSelectLinkedPages from '#ui/hooks/store/useSelectLinkedPages'
-import useGenerateUrl from '#ui/hooks/useGenerateUrl'
-import useIsActiveLink from '#ui/hooks/useIsActiveLink'
+import useRouteManager from '#ui/hooks/useRouteManager'
 
-const builtInPagesNav = builtInPages.filter((page) => page.linked.includes('nav'))
+const builtInPagesNav = builtInPages.filter((page) => page.linked?.includes('nav'))
 
 const NavButton = forwardRef<HTMLButtonElement | null, ButtonProps>(function NavButton(props, ref) {
   return <Button color="inherit" ref={ref} size="small" {...props} />
@@ -30,9 +29,8 @@ const StyledNavButton = styled(NavButton)(({ theme }) => ({
 })) as typeof Button
 
 function NavMenu() {
-  const generateUrl = useGenerateUrl()
+  const { isActiveRoute } = useRouteManager()
   const { t } = useTranslation()
-  const isActiveLink = useIsActiveLink()
   const { pages } = useSelectLinkedPages('nav')
 
   return (
@@ -48,7 +46,7 @@ function NavMenu() {
       {pages.map((page) => (
         <StyledNavButton
           className={
-            isActiveLink({ routeName: 'app:page', pageSlug: page.slug }) ? 'active' : undefined
+            isActiveRoute({ routeName: 'app:page', pageSlug: page.slug }) ? 'active' : undefined
           }
           component={PageLink}
           key={page.slug}
@@ -60,11 +58,11 @@ function NavMenu() {
       ))}
       {builtInPagesNav.map(({ icon, title, routeName }) => (
         <StyledNavButton
-          className={isActiveLink({ routeName }) ? 'active' : undefined}
-          component={InternalLink}
+          className={isActiveRoute({ routeName }) ? 'active' : undefined}
+          component={AppLink}
           key={routeName}
           startIcon={icon}
-          to={generateUrl({ routeName })}
+          routeInfo={{ routeName }}
         >
           {t(title)}
         </StyledNavButton>

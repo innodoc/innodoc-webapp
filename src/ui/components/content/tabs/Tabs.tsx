@@ -1,8 +1,20 @@
 import { TabContext, TabList } from '@mui/lab'
-import { Box, Tab } from '@mui/material'
+import { Paper, styled, Tab } from '@mui/material'
 import { type ReactNode, useState, type SyntheticEvent } from 'react'
 
 import type { TABS_PROPERTIES } from './types'
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  margin: theme.spacing(2, 0),
+  paddingBottom: '0.015px',
+  width: '100%',
+}))
+
+const StyledTabList = styled(TabList)(({ theme }) => ({
+  borderBottomColor: theme.vars.palette.divider,
+  borderBottomStyle: 'solid',
+  borderBottomWidth: '1px',
+}))
 
 function Tabs({ children, nodeProps: { labels: labelsString } }: TabsProps) {
   const labels = (labelsString ?? '').split(',')
@@ -19,14 +31,12 @@ function Tabs({ children, nodeProps: { labels: labelsString } }: TabsProps) {
   const tabs = labels.map((label, idx) => <Tab label={label} key={label} value={idx.toString()} />)
 
   return (
-    <Box sx={{ my: 2, typography: 'body1', width: '100%' }}>
+    <StyledPaper>
       <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange}>{tabs}</TabList>
-        </Box>
+        <StyledTabList onChange={handleChange}>{tabs}</StyledTabList>
         {children}
       </TabContext>
-    </Box>
+    </StyledPaper>
   )
 }
 

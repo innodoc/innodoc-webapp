@@ -19,7 +19,7 @@ test('<Toc />', async () => {
   render(<Page />)
 
   // Open Toc in sidebar
-  fireEvent.click(screen.getByRole('button', { name: 'internalPages.toc.title' }))
+  fireEvent.click(screen.getByRole('button', { name: 'builtinPages.toc.title' }))
   const toc = await screen.findByTestId('sidebar-toc')
 
   // Count section links

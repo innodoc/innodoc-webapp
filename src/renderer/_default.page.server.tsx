@@ -7,7 +7,7 @@ import { getInitColorSchemeScript } from '@mui/material/styles'
 import I18NextFsBackend from 'i18next-fs-backend'
 import { renderToStaticMarkup } from 'react-dom/server'
 import type { FilledContext } from 'react-helmet-async'
-import { escapeInject, dangerouslySkipEscape, RenderErrorPage } from 'vite-plugin-ssr'
+import { escapeInject, dangerouslySkipEscape, RenderErrorPage } from 'vite-plugin-ssr/server'
 
 // Material UI font
 import '@fontsource/lato/400.css'

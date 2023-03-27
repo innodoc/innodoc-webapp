@@ -1,9 +1,8 @@
-import type { LanguageCode } from 'iso-639-1'
 import { compile, match, type MatchFunction, type PathFunction } from 'path-to-regexp'
 
 import { API_COURSE_PREFIX } from '#constants'
 import type { CourseSlugMode, RouteInfo } from '#types/common'
-import type { BuiltinPageRouteName, RouteName } from '#types/routes'
+import type { ApiRouteName, AppRouteName, RouteName } from '#types/routes'
 import { isArbitraryObject, isContentType } from '#types/typeGuards'
 import { getStringIdField } from '#utils/content'
 
@@ -23,11 +22,18 @@ class RouteManager {
   private static instance: RouteManager
 
   private readonly allRoutes = {
-    ...routesBuiltinPages,
+    // exclude `app:home` as it's dynamic
+    ...Object.fromEntries(Object.entries(routesBuiltinPages).filter(([key]) => key !== 'app:home')),
     ...routesContentPages,
     ...routesUser,
     ...routesApi,
   }
+
+  private readonly appRouteNames = [
+    ...Object.keys(routesBuiltinPages),
+    ...Object.keys(routesContentPages),
+    ...Object.keys(routesUser),
+  ]
 
   private readonly courseSlugMode: CourseSlugMode
 
@@ -79,12 +85,10 @@ class RouteManager {
   }
 
   /** Parse link specifier params */
-  public generateParamsFromSpecifier(
-    specifier: string,
-    locale?: LanguageCode
-  ): [RouteName, Record<string, string>] {
+  public parseLinkSpecifier(specifier: string): Omit<RouteInfo, 'courseSlug' | 'locale'> {
     const [routeName, arg] = specifier.split('|')
-    if (!this.isRouteName(routeName)) {
+
+    if (!this.isAppRouteName(routeName)) {
       throw new Error(`Unknown route name: ${routeName}`)
     }
 
@@ -94,25 +98,15 @@ class RouteManager {
     }
 
     const params: Record<string, string> = {}
-    if (locale) {
-      params.locale = locale
-    }
-
     if (isContentType(routeNameSecond)) {
       params[getStringIdField(routeNameSecond)] = arg
     }
 
-    return [routeName, params]
-  }
-
-  /** Parse link specifier such as `section|foo/bar` */
-  public generateFromSpecifier(specifier: string, locale: LanguageCode) {
-    const [routeName, params] = this.generateParamsFromSpecifier(specifier, locale)
-    return this.generate(routeName, params)
+    return { routeName, ...params }
   }
 
   /** Match URL path */
-  public match(routeName: RouteName, path: string) {
+  public match(routeName: AppRouteName, path: string) {
     return this.matchers[routeName](path)
   }
 
@@ -125,7 +119,9 @@ class RouteManager {
 
   /** Get API routes */
   public getApiRoutes() {
-    return Object.fromEntries(this.buildPatterns(routesApi)) as Partial<Record<RouteName, string>>
+    return Object.fromEntries(this.buildPatterns(routesApi)) as Partial<
+      Record<ApiRouteName, string>
+    >
   }
 
   /** Type guard for `RouteName` */
@@ -135,9 +131,9 @@ class RouteManager {
     )
   }
 
-  /** Type guard for `BuiltinPageRouteName` */
-  public isBuiltinPageRouteName(routeName: unknown): routeName is BuiltinPageRouteName {
-    return typeof routeName === 'string' && Object.keys(routesBuiltinPages).includes(routeName)
+  /** Type guard for `AppRouteName` */
+  public isAppRouteName(routeName: unknown): routeName is AppRouteName {
+    return typeof routeName === 'string' && this.appRouteNames.includes(routeName)
   }
 
   /** Type guard for `RouteInfo` */

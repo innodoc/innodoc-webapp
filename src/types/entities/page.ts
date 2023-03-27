@@ -2,7 +2,7 @@ import type { ReactElement } from 'react'
 import type { CamelCasedProperties } from 'type-fest'
 
 import type { PageLinkLocation } from '#types/common'
-import type { BuiltinPageRouteName } from '#types/routes'
+import type { BuiltinRouteName } from '#types/routes'
 import type { IconProps } from '#ui/components/common/Icon'
 
 import type { BaseEntity, DbTranslatableFields, TranslatedEntity } from './base'
@@ -31,7 +31,7 @@ export type TranslatedPage = TranslatedEntity<ApiPage>
 /** Built-in page */
 export interface BuiltinPage {
   /** URL path */
-  routeName: BuiltinPageRouteName
+  routeName: BuiltinRouteName
 
   /** Page title i18n key */
   title: string
@@ -40,5 +40,5 @@ export interface BuiltinPage {
   icon: ReactElement
 
   /** Location in the page layout where a link should appear */
-  linked: PageLinkLocation[]
+  linked?: PageLinkLocation[]
 }

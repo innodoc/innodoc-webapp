@@ -11,7 +11,7 @@ import type {
 import type { ApiCourse } from './entities/course'
 import type { ApiPage } from './entities/page'
 import type { ApiSection } from './entities/section'
-import type { RouteName } from './routes'
+import type { AppRouteName } from './routes'
 
 /** Arbitrary object */
 export interface ArbitraryObject {
@@ -45,7 +45,7 @@ export interface RouteInfo {
   courseSlug: ApiCourse['slug'] | null
 
   /** Route name */
-  routeName: RouteName
+  routeName: AppRouteName
 
   /** Current locale */
   locale: LanguageCode

@@ -4,10 +4,10 @@ import { EMOTION_STYLE_INSERTION_POINT_NAME } from '#constants'
 import { selectRouteInfo } from '#store/slices/appSlice'
 import { useSelector } from '#ui/hooks/store/store'
 import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
-import useGenerateUrl from '#ui/hooks/useGenerateUrl'
+import useRouteManager from '#ui/hooks/useRouteManager'
 
 function MetaTags() {
-  const generateUrl = useGenerateUrl()
+  const { generateUrl } = useRouteManager()
   const { course } = useSelectCurrentCourse()
   const { locale: currentLocale } = useSelector(selectRouteInfo)
 

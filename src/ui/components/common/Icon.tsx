@@ -4,6 +4,7 @@ import { Trans } from 'react-i18next'
 
 import iconBundle from '#build/iconBundle.json'
 
+import Code from './Code'
 import InlineError from './error/InlineError'
 import SvgRootNode from './SvgRootNode'
 
@@ -12,7 +13,7 @@ function Icon({ name, ...other }: IconProps) {
   if (icon === undefined) {
     return (
       <InlineError>
-        <Trans i18nKey="error.unknownIcon" components={{ 1: <code /> }} values={{ name }}>
+        <Trans i18nKey="error.unknownIcon" components={{ 1: <Code /> }} values={{ name }}>
           {`Unknown icon name encountered: <1>{{name}}</1>`}
         </Trans>
       </InlineError>

@@ -272,6 +272,9 @@ class Importer {
       .replace(/:{3,} ?\{\.verify-input-button\}\n(.+)\n:{3,}\n/g, '::verify-button[$1]\n')
       .replace(/\[\]\{\.question \.(text|checkbox) ([^}]+)\}/g, ':question-$1{$2}')
 
+      // links
+      .replace(/\[([^\]]*)\]\(\/(section|page)\/([^)]+)\)/g, '[$1](app://$2|$3)')
+
     return { frontmatter, source }
   }
 

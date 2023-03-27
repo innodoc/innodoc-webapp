@@ -3,13 +3,11 @@ import type { ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { selectRouteInfo } from '#store/slices/appSlice'
-import InternalLink from '#ui/components/common/link/InternalLink'
+import AppLink from '#ui/components/common/link/AppLink'
 import { useSelector } from '#ui/hooks/store/store'
 import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
-import useGenerateUrl from '#ui/hooks/useGenerateUrl'
 
 function MenuItemsLanguages({ closeMenu = () => undefined, inset }: MenuItemsLanguagesProps) {
-  const generateUrl = useGenerateUrl()
   const { t } = useTranslation()
 
   const { course } = useSelectCurrentCourse()
@@ -28,12 +26,12 @@ function MenuItemsLanguages({ closeMenu = () => undefined, inset }: MenuItemsLan
       {course.locales.map((locale) => {
         return (
           <MenuItem
-            component={InternalLink}
+            component={AppLink}
             keep-scroll-position="true"
             key={locale}
             onClick={handleClick}
+            routeInfo={{ locale }}
             selected={locale === currentLocale}
-            to={generateUrl({ locale })}
           >
             <ListItemText inset={inset}>{t(`languages.${locale}`)}</ListItemText>
           </MenuItem>

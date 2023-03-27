@@ -5,7 +5,7 @@ import { Page } from '#pages/toc/index.page'
 test('<StaticToc />', () => {
   render(<Page />)
   const main = screen.getByTestId('main-container')
-  expect(within(main).getByRole('heading', { name: 'internalPages.toc.title' })).toBeInTheDocument()
+  expect(within(main).getByRole('heading', { name: 'builtinPages.toc.title' })).toBeInTheDocument()
   expect(within(main).getAllByRole('link')).toHaveLength(84)
   expect(screen.getByRole('link', { name: '1 Tempore ut id' })).toHaveAttribute(
     'href',

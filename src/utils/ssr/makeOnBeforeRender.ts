@@ -1,4 +1,4 @@
-import { RenderErrorPage } from 'vite-plugin-ssr'
+import { RenderErrorPage } from 'vite-plugin-ssr/server'
 
 import { onBeforeRender as onBeforeRenderDefault } from '#renderer/_default.page.server'
 import pages from '#store/slices/entities/pages'

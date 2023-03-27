@@ -6,6 +6,6 @@ export interface LinkProps extends Omit<ComponentProps<typeof Link>, 'href'> {
   /** Optional hash */
   hash?: string
 
-  /** Target path */
+  /** Target (`href` or link specifier) */
   to: string
 }

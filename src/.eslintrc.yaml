@@ -14,15 +14,3 @@ overrides:
     rules:
       filenames/match-exported: off
       filenames/match-regex: off
-
-  # <ContentFragment /> as "recursive document renderer" needs import cycles
-  - files:
-      - ui/components/content/ContentFragment/**
-    rules:
-      import/no-cycle: off
-
-  # AST content doesn't supply IDs for use as keys
-  - files:
-      - ui/components/content/ContentFragment/ast/**
-    rules:
-      react/no-array-index-key: off

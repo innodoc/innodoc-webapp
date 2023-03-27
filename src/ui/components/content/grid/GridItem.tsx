@@ -1,8 +1,14 @@
+import { styled } from '@mui/material'
 import MuiGrid from '@mui/material/Unstable_Grid2'
 import camelcaseKeys from 'camelcase-keys'
 import type { ComponentProps, ReactNode } from 'react'
 
 import { GRID_ITEM_PROPERTIES } from './types'
+
+const StyledGrid = styled(MuiGrid)({
+  '& > :first-of-type': { marginTop: 0 },
+  '& > :last-of-type': { marginBottom: 0 },
+})
 
 function nodeToGridProps(nodeProps: GridItemProps['nodeProps']) {
   return camelcaseKeys(
@@ -20,7 +26,7 @@ function nodeToGridProps(nodeProps: GridItemProps['nodeProps']) {
 }
 
 function GridItem({ children, nodeProps }: GridItemProps) {
-  return <MuiGrid {...nodeToGridProps(nodeProps)}>{children}</MuiGrid>
+  return <StyledGrid {...nodeToGridProps(nodeProps)}>{children}</StyledGrid>
 }
 
 interface GridItemProps {

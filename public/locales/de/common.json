@@ -1,36 +1,5 @@
 {
-  "common": {
-    "close": "Schließen",
-    "error": "Fehler"
-  },
-  "content": {
-    "example": "Beispiel",
-    "exercise": {
-      "title": "Aufgabe",
-      "verifyInput": "Eingabe überprüfen"
-    },
-    "hint": "Hinweis",
-    "info": "Info",
-    "inputHint": "Hilfe zur Eingabe",
-    "solution": "Lösung",
-    "subsections": "Unterabschnitte"
-  },
-  "error": {
-    "failedToLoadPage": "Seite konnte nicht geladen werden: <1>{{pageSlug}}</1>",
-    "failedToLoadSection": "Abschnitt konnte nicht geladen werden: <1>{{sectionPath}}</1>",
-    "invalidSvgRoot": "Ungültiger SVG-Wurzelknoten.",
-    "pageLinkPageSlugProp": "<0>PageLink</0>: Seite <2>{{pageSlug}}</2> nicht gefunden.",
-    "sectionLinkSectionPathProp": "<0>SectionLink</0>: Abschnittspfad <2>{{sectionPath}}</2> nicht gefunden.",
-    "svgFetchFailed": "SVG-Daten konnten nicht geladen werden.",
-    "unexpectedHtmlNode": "Unerwarteter HTML-Knoten: <1>{{value}}</1>",
-    "unhandledLink": "Ungültiger Link: <1>{{to}}</1>",
-    "unknownBlockElement": "Unbekanntes Block-Element: <1>{{type}}</1>",
-    "unknownBuiltinPage": "<0>BuiltinPageLink</0>: Die Seite <2>{{to}}</2> existiert nicht.",
-    "unknownContainerDirective": "Unbekannte Container-Directive: <1>{{name}}</1>",
-    "unknownInlineElement": "Unbekanntes Inline-Element",
-    "unknownIcon": "Unbekanntes Icon: <1>{{name}}</1>"
-  },
-  "internalPages": {
+  "builtinPages": {
     "glossary": {
       "title": "Stichwortverzeichnis"
     },
@@ -52,6 +21,36 @@
     "toc": {
       "title": "Inhaltsverzeichnis"
     }
+  },
+  "common": {
+    "close": "Schließen",
+    "error": "Fehler"
+  },
+  "content": {
+    "example": "Beispiel",
+    "exercise": {
+      "title": "Aufgabe",
+      "verifyInput": "Eingabe überprüfen"
+    },
+    "hint": "Hinweis",
+    "info": "Info",
+    "inputHint": "Hilfe zur Eingabe",
+    "solution": "Lösung",
+    "subsections": "Unterabschnitte"
+  },
+  "error": {
+    "failedToLoadPage": "Seite konnte nicht geladen werden: <1>{{pageSlug}}</1>",
+    "failedToLoadSection": "Abschnitt konnte nicht geladen werden: <1>{{sectionPath}}</1>",
+    "invalidSvgRoot": "Ungültiger SVG-Wurzelknoten",
+    "pageLinkPageSlugProp": "<0>PageLink</0>: <2>{{pageSlug}}</2> nicht gefunden",
+    "sectionLinkSectionPathProp": "<0>SectionLink</0>: <2>{{sectionPath}}</2> nicht gefunden",
+    "specLinkToProp": "<0>Link</0>: <2>{{to}}</2> ist ungültig",
+    "svgFetchFailed": "SVG-Daten konnten nicht geladen werden",
+    "unexpectedHtmlNode": "Unerwarteter HTML-Knoten: <1>{{value}}</1>",
+    "unknownBlockElement": "Unbekanntes Block-Element: <1>{{type}}</1>",
+    "unknownContainerDirective": "Unbekannte Container-Directive: <1>{{name}}</1>",
+    "unknownInlineElement": "Unbekanntes Inline-Element",
+    "unknownIcon": "Unbekanntes Icon: <1>{{name}}</1>"
   },
   "languages": {
     "de": "Deutsch",

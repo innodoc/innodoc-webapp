@@ -1,4 +1,4 @@
-import { Link, styled } from '@mui/material'
+import { styled } from '@mui/material'
 
 import type { TranslatedSection } from '#types/entities/section'
 import SectionLink from '#ui/components/common/link/SectionLink'
@@ -30,7 +30,7 @@ function SectionItem({ section }: SectionProps) {
 
   return (
     <li>
-      <Link component={SectionLink} section={section} />
+      <SectionLink section={section} />
       {children}
     </li>
   )

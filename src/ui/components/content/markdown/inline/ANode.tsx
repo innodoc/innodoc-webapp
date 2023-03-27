@@ -1,4 +1,4 @@
-import GeneralLink from '#ui/components/common/link/GeneralLink'
+import ContentLink from '#ui/components/content/ContentLink'
 import type { MarkdownComponentProps } from '#ui/components/content/markdown/types'
 
 function ANode({ href, children, title }: MarkdownComponentProps<'a'>) {
@@ -6,10 +6,12 @@ function ANode({ href, children, title }: MarkdownComponentProps<'a'>) {
     return <>{children}</>
   }
 
+  const [to, hash] = href.split('#')
+
   return (
-    <GeneralLink to={href} title={title}>
+    <ContentLink hash={hash} to={to} title={title}>
       {children}
-    </GeneralLink>
+    </ContentLink>
   )
 }
 

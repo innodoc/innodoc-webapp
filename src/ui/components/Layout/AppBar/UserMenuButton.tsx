@@ -3,21 +3,19 @@ import { useColorScheme } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 
 import Icon from '#ui/components/common/Icon'
-import InternalLink from '#ui/components/common/link/InternalLink'
+import AppLink from '#ui/components/common/link/AppLink'
 import MenuItemCaption from '#ui/components/common/MenuItemCaption'
-import useGenerateUrl from '#ui/hooks/useGenerateUrl'
 
 import MenuButton from './common/MenuButton'
 import MenuItemsLanguages from './LanguageMenuButton/MenuItemsLanguages'
 
 function UserMenuItems() {
-  const generateUrl = useGenerateUrl()
   const { t } = useTranslation()
   const { mode, setMode } = useColorScheme()
 
   return (
     <>
-      <MenuItem component={InternalLink} to={generateUrl({ routeName: 'app:user:login' })}>
+      <MenuItem component={AppLink} routeInfo={{ routeName: 'app:user:login' }}>
         <ListItemIcon>
           <Icon name="mdi:login" />
         </ListItemIcon>

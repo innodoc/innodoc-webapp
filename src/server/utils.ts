@@ -1,6 +1,6 @@
 import RouteManager from '#routes/RouteManager'
 import config from '#server/config'
-import type { RouteName } from '#types/routes'
+import type { ApiRouteName } from '#types/routes'
 import { isArbitraryObject } from '#types/typeGuards'
 
 export function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
@@ -17,7 +17,7 @@ export function getRouteManager() {
 }
 
 /** Get URL path for API route handlers */
-export function getRoutePath(name: RouteName, removePrefix?: string) {
+export function getRoutePath(name: ApiRouteName, removePrefix?: string) {
   const apiRoutes = getRouteManager().getApiRoutes()
 
   const pattern = apiRoutes[name]

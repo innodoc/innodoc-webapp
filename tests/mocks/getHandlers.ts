@@ -3,7 +3,7 @@ import { rest } from 'msw'
 import type { ResponseComposition, RestContext, RestRequest } from 'msw'
 
 import type RouteManager from '#routes/RouteManager'
-import type { RouteName } from '#types/routes'
+import type { ApiRouteName } from '#types/routes'
 import { isFragmentType } from '#types/typeGuards'
 
 import type { Content } from './fakeData/types'
@@ -42,7 +42,7 @@ function getHandlers(baseUrl: string, routeManager: RouteManager) {
 
   const apiRoutes = routeManager.getApiRoutes()
 
-  const makePath = (routeName: RouteName) => {
+  const makePath = (routeName: ApiRouteName) => {
     let pattern = apiRoutes[routeName]
     if (pattern === undefined) {
       throw new Error(`Unknown API route: ${routeName}`)

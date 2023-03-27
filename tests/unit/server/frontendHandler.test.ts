@@ -15,7 +15,7 @@ async function setupMocks(httpResponse = true, redirectTo?: string, errorWhileRe
     redirectTo: redirectTo !== undefined ? redirectTo : undefined,
   }
   const renderPageMock = vi.fn().mockResolvedValueOnce(mockPageContext)
-  vi.doMock('vite-plugin-ssr', () => ({ renderPage: renderPageMock }))
+  vi.doMock('vite-plugin-ssr/server', () => ({ renderPage: renderPageMock }))
 
   const frontendHandler = (await import('#server/frontendHandler')).default as (
     req: Partial<Request>,
@@ -40,7 +40,7 @@ async function setupMocks(httpResponse = true, redirectTo?: string, errorWhileRe
 }
 
 afterEach(() => {
-  vi.doUnmock('vite-plugin-ssr')
+  vi.doUnmock('vite-plugin-ssr/server')
 })
 
 test('frontendHandler renders page', async () => {

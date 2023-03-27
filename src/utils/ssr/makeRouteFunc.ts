@@ -1,6 +1,6 @@
 import getRouteManager from '#routes/getRouteManager'
 import type { PageContextServer } from '#types/pageContext'
-import type { RouteName } from '#types/routes'
+import type { AppRouteName } from '#types/routes'
 
 const routeManager = getRouteManager()
 
@@ -11,14 +11,14 @@ const removePageContextJsonRE = /\/index.pageContext.json$/
  *
  * Match route and extract parameters.
  */
-function makeRouteFunc(routeName: RouteName) {
+function makeRouteFunc(routeName: AppRouteName) {
   return (pageContext: PageContextServer) => {
     if (pageContext.redirectTo) {
       return false
     }
 
     // Routes also need to match pageContext.json files used in client navigation
-    const url = pageContext.urlOriginal.replace(removePageContextJsonRE, '')
+    const url = pageContext.urlPathname.replace(removePageContextJsonRE, '')
 
     // Match URL against route
     const match = routeManager.match(routeName, url)
