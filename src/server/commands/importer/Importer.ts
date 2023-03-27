@@ -273,7 +273,7 @@ class Importer {
       .replace(/\[\]\{\.question \.(text|checkbox) ([^}]+)\}/g, ':question-$1{$2}')
 
       // links
-      .replace(/\[([^\]]*)\]\(\/(section|page)\/([^)]+)\)/g, '[$1](app://$2|$3)')
+      .replace(/\[([^\]]*)\]\(\/(section|page)\/([^)]+)\)/g, '[$1](app:$2|$3)')
 
     return { frontmatter, source }
   }

@@ -15,6 +15,7 @@ import rehypeTabs from './rehypeTabs'
 import remarkCustomDirectives from './remarkCustomDirectives'
 import remarkGfm from './remarkGfm'
 import remarkNumberCards from './remarkNumberCards'
+import remarkRewriteAppLinks from './remarkRewriteAppLinks'
 import sanitizeSchema from './sanitizeSchema'
 
 /**
@@ -30,6 +31,7 @@ const processor = unified()
   .use(remarkCustomDirectives)
   .use(remarkInlineLinks)
   .use(remarkGfm)
+  .use(remarkRewriteAppLinks)
   .use(remarkNumberCards)
   .use(remarkMath)
   .use(remarkRehype)
