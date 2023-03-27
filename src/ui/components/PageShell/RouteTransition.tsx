@@ -6,7 +6,6 @@ import {
   useEffect,
   useRef,
   useState,
-  useCallback,
 } from 'react'
 
 import {
@@ -42,6 +41,16 @@ const FadeBox = styled(Box, {
   overflowX: 'hidden',
 }))
 
+function scrollToHash() {
+  const { hash } = document.location
+  if (hash && hash.length > 1) {
+    const element = document.getElementById(hash.slice(1))
+    if (element) {
+      element.scrollIntoView({ block: 'start', inline: 'start' })
+    }
+  }
+}
+
 function RouteTransition({ children, pagePrev: PagePrev }: RouteTransitionProps) {
   const dispatch = useDispatch()
   const routeTransitionInfo = useSelector(selectRouteTransitionInfo)
@@ -62,6 +71,7 @@ function RouteTransition({ children, pagePrev: PagePrev }: RouteTransitionProps)
     const rafCallback = () => {
       setAnim('fadeIn')
       dispatch(changeRouteTransitionInfo(null))
+      scrollToHash()
     }
 
     if (
@@ -96,9 +106,6 @@ function RouteTransition({ children, pagePrev: PagePrev }: RouteTransitionProps)
 
           // Do actual route transition
           dispatch(changeRouteInfo(routeTransitionInfo))
-
-          // TODO: prevent vite-plugin-ssr to scroll to top
-          // TODO: scoll to URL hash if present
         }
       }
 

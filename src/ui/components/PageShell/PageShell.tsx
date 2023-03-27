@@ -1,5 +1,5 @@
 import { CacheProvider, type EmotionCache } from '@emotion/react'
-import { CssBaseline } from '@mui/material'
+import { CssBaseline, GlobalStyles } from '@mui/material'
 import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles'
 import type { i18n as I18n } from 'i18next'
 import { StrictMode } from 'react'
@@ -15,11 +15,16 @@ import { RouteTransitionProvider } from '#ui/contexts/RouteTransitionContext'
 import MetaTags from './MetaTags'
 import theme from './theme'
 
+const globalStyles = {
+  html: { scrollBehavior: 'smooth' },
+} as const
+
 function PageShell({ children, emotionCache, helmetContext, i18n, store }: PageShellProps) {
   return (
     <StrictMode>
       <HelmetProvider context={helmetContext}>
         <CacheProvider value={emotionCache}>
+          <GlobalStyles styles={globalStyles} />
           <ReduxProvider store={store}>
             <MarkdownWorkerProvider>
               <RouteTransitionProvider>
