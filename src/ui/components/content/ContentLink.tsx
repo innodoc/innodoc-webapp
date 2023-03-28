@@ -1,12 +1,12 @@
 import { styled } from '@mui/material'
-import { forwardRef } from 'react'
+import { Children, forwardRef } from 'react'
 
 import Icon from '#ui/components/common/Icon'
 import BaseLink from '#ui/components/common/link/BaseLink'
 import SpecLink from '#ui/components/common/link/SpecLink'
 import type { LinkProps } from '#ui/components/common/link/types'
 
-const StyledIcon = styled(Icon)({ fontSize: '1rem' })
+const StyledIcon = styled(Icon)({ fontSize: '1em' })
 
 /**
  * Content link
@@ -28,9 +28,19 @@ const ContentLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLin
 
   // App route
   if (to.startsWith('app://')) {
+    const linkSpecifier = `app:${decodeURIComponent(to.slice(6))}`
+    let specChildren = children
+    const childrenArr = Children.toArray(children)
+
+    // <app:...> style links: They have the URL itself as content. We remove
+    // the content, so it gets replaced with the title.
+    if (childrenArr.length === 1 && childrenArr[0] === linkSpecifier) {
+      specChildren = null
+    }
+
     return (
-      <SpecLink hash={hash} to={`app:${decodeURIComponent(to.slice(6))}`} ref={ref} {...other}>
-        {children}
+      <SpecLink hash={hash} to={linkSpecifier} ref={ref} {...other}>
+        {specChildren}
       </SpecLink>
     )
   }
