@@ -5,7 +5,9 @@ import { type ReactNode } from 'react'
 import type { TAB_ITEM_PROPERTIES } from './types'
 
 const StyleTabPanel = styled(TabPanel)(({ theme }) => ({
-  padding: theme.spacing(0, 2),
+  padding: theme.spacing(2),
+  '& > :first-child': { marginTop: 0 },
+  '& > :last-child': { marginBottom: 0 },
 }))
 
 function TabItem({ children, nodeProps }: TabItemProps) {

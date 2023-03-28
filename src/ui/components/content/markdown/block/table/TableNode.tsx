@@ -4,7 +4,7 @@ import type { MarkdownComponentProps } from '#ui/components/content/markdown/typ
 
 function TableNode({ children }: MarkdownComponentProps<'table'>) {
   return (
-    <TableContainer sx={{ my: 2 }}>
+    <TableContainer>
       <Table size="small">{children}</Table>
     </TableContainer>
   )

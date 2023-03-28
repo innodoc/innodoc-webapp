@@ -6,8 +6,8 @@ import type { ComponentProps, ReactNode } from 'react'
 import { GRID_ITEM_PROPERTIES } from './types'
 
 const StyledGrid = styled(MuiGrid)({
-  '& > :first-of-type': { marginTop: 0 },
-  '& > :last-of-type': { marginBottom: 0 },
+  '& > :first-child': { marginTop: 0 },
+  '& > :last-child': { marginBottom: 0 },
 })
 
 function nodeToGridProps(nodeProps: GridItemProps['nodeProps']) {
