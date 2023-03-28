@@ -1,6 +1,6 @@
 import { TabContext, TabList } from '@mui/lab'
 import { Paper, styled, Tab } from '@mui/material'
-import { type ReactNode, useState, type SyntheticEvent } from 'react'
+import { type ReactNode, useState, type SyntheticEvent, useRef, useEffect } from 'react'
 
 import type { TABS_PROPERTIES } from './types'
 
@@ -16,9 +16,45 @@ const StyledTabList = styled(TabList)(({ theme }) => ({
   borderBottomWidth: '1px',
 }))
 
+const StyledDiv = styled('div')(({ theme }) => ({
+  overflow: 'hidden',
+  transition: theme.transitions.create('height'),
+}))
+
 function Tabs({ children, nodeProps: { labels: labelsString } }: TabsProps) {
   const labels = (labelsString ?? '').split(',')
   const [value, setValue] = useState('0')
+
+  const panelWrapper = useRef<HTMLDivElement>(null)
+  const [heights, setHeights] = useState<(number | null)[]>(labels.map(() => null))
+  const panelIdx = parseInt(value)
+  const height = heights[panelIdx]
+
+  useEffect(() => {
+    if (panelWrapper.current) {
+      const children = Array.from(panelWrapper.current.children)
+      const observer = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const idx = children.indexOf(entry.target)
+          if (idx >= 0 && idx < labels.length) {
+            setHeights((prevHeights) => {
+              const newHeights = [...prevHeights]
+              newHeights[idx] = entry.borderBoxSize[0].blockSize
+              return newHeights
+            })
+          }
+        }
+      })
+
+      for (const panel of panelWrapper.current.children) {
+        observer.observe(panel)
+      }
+
+      return () => {
+        observer.disconnect()
+      }
+    }
+  }, [labels.length])
 
   if (labels.length < 1) {
     return null
@@ -34,7 +70,9 @@ function Tabs({ children, nodeProps: { labels: labelsString } }: TabsProps) {
     <StyledPaper>
       <TabContext value={value}>
         <StyledTabList onChange={handleChange}>{tabs}</StyledTabList>
-        {children}
+        <StyledDiv ref={panelWrapper} style={{ height: height === null ? 'auto' : `${height}px` }}>
+          {children}
+        </StyledDiv>
       </TabContext>
     </StyledPaper>
   )
