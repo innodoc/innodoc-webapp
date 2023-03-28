@@ -10,7 +10,11 @@ function DivNode({ children, id, node }: MarkdownComponentProps<'div'>) {
       </ContainerDirective>
     )
   } else if (node.properties?.type === 'leafDirective') {
-    return <LeafDirective node={node}>{children}</LeafDirective>
+    return (
+      <LeafDirective id={id} node={node}>
+        {children}
+      </LeafDirective>
+    )
   }
 
   return <div>{children}</div>

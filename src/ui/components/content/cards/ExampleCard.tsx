@@ -5,15 +5,15 @@ import { useTranslation } from 'react-i18next'
 import Card from './Card'
 import type { ContentCardProps } from './types'
 
-function ExampleCard({ children }: ContentCardProps) {
+function ExampleCard({ children, id }: ContentCardProps) {
   const { t } = useTranslation()
   // const title = useCardTitle(node.data?.id, t('content.example'))
   const title = t('content.example')
 
-  // TODO id, title
+  // TODO title
 
   return (
-    <Card cardType="example" iconName="mdi:eye-outline" title={title}>
+    <Card cardType="example" iconName="mdi:eye-outline" id={id} title={title}>
       {children}
     </Card>
   )

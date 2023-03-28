@@ -10,4 +10,5 @@ export function isCardType(cardType: unknown): cardType is CardType {
 
 export interface ContentCardProps {
   children: ReactNode
+  id?: string
 }

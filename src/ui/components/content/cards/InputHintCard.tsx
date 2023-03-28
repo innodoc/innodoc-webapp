@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next'
 import Card from './Card'
 import type { ContentCardProps } from './types'
 
-function InputHintCard({ children }: ContentCardProps) {
+function InputHintCard({ children, id }: ContentCardProps) {
   const { t } = useTranslation()
 
-  // TODO id, title
+  // TODO title
 
   return (
     <Card
@@ -14,6 +14,7 @@ function InputHintCard({ children }: ContentCardProps) {
       dense
       elevation={1}
       iconName="mdi:keyboard-outline"
+      id={id}
       title={t('content.inputHint')}
     >
       {children}

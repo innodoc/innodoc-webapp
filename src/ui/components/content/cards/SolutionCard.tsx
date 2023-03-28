@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next'
 import Card from './Card'
 import type { ContentCardProps } from './types'
 
-function SolutionCard({ children }: ContentCardProps) {
+function SolutionCard({ children, id }: ContentCardProps) {
   const { t } = useTranslation()
 
-  // TODO id, title
+  // TODO title
 
   return (
     <Card
@@ -15,6 +15,7 @@ function SolutionCard({ children }: ContentCardProps) {
       dense
       elevation={1}
       iconName="mdi:lightbulb-outline"
+      id={id}
       title={t('content.solution')}
     >
       {children}

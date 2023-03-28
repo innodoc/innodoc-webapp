@@ -5,7 +5,7 @@ const StyledCheckbox = styled(Checkbox)({
   verticalAlign: 'baseline',
 })
 
-function QuestionCheckbox({ children, ...other }: QuestionTextProps) {
+function QuestionCheckbox({ children, id, ...other }: QuestionTextProps) {
   const [value, setValue] = useState<boolean | undefined>()
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -15,14 +15,17 @@ function QuestionCheckbox({ children, ...other }: QuestionTextProps) {
   return (
     <StyledCheckbox
       checked={value === true}
+      id={id}
       indeterminate={value === undefined}
       onChange={handleChange}
+      {...other}
     />
   )
 }
 
 interface QuestionTextProps {
   children: ReactNode
+  id?: string
 }
 
 export default QuestionCheckbox

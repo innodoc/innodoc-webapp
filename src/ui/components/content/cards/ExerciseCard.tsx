@@ -8,12 +8,12 @@ import ExerciseContext from '#ui/contexts/ExerciseContext'
 import Card from './Card'
 import type { ContentCardProps } from './types'
 
-function ExerciseCard({ children }: ContentCardProps) {
+function ExerciseCard({ children, id }: ContentCardProps) {
   const { t } = useTranslation()
   // const title = useCardTitle(node.data?.id, t('content.exercise.title'))
   const title = t('content.exercise.title')
 
-  // TODO id, title
+  // TODO title
 
   const handleClick = () => {
     console.log('CHECK')
@@ -38,6 +38,7 @@ function ExerciseCard({ children }: ContentCardProps) {
         actions={action}
         cardType="exercise"
         iconName="mdi:application-edit-outline"
+        id={id}
         title={title}
       >
         {children}

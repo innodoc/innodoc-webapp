@@ -17,17 +17,22 @@ function isTextDirectiveName(name: unknown): name is TextDirectiveName {
   return typeof name === 'string' && textDirectiveName.includes(name as TextDirectiveName)
 }
 
-function TextDirective({ children, node }: TextDirectiveProps) {
+function TextDirective({ children, id, node }: TextDirectiveProps) {
   const name = node.properties?.name
   if (isTextDirectiveName(name)) {
     const Component = componentMap[name]
-    return <Component {...node.properties}>{children}</Component>
+    return (
+      <Component id={id} {...node.properties}>
+        {children}
+      </Component>
+    )
   }
   return null
 }
 
 interface TextDirectiveProps {
   children: ReactNode
+  id?: string
   node: HastElement
 }
 
