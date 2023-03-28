@@ -22,16 +22,17 @@ function useMarkdownToReact(markdownCode: string) {
     }
     return null
   })
+  const [error, setError] = useState<Error | null>(null)
 
   const workerListener = useCallback(({ data }: MessageEvent) => {
     if (isResult(data)) {
-      if (data.error !== undefined) {
-        console.error('Error', data.error)
-      }
-
       startTransition(() => {
-        if (data.root !== undefined) {
+        if (data.error !== undefined) {
+          setError(data.error)
+          setContent(null)
+        } else if (data.root !== undefined) {
           setContent(hastToReact(data.root))
+          setError(null)
         }
         setNumJobs((oldNum) => oldNum - 1)
       })
@@ -57,7 +58,7 @@ function useMarkdownToReact(markdownCode: string) {
     }
   }, [isHydration, markdownCode, worker])
 
-  return { content, isPending: numJobs > 0 || isTransitionPending }
+  return { content, error, isPending: numJobs > 0 || isTransitionPending }
 }
 
 export default useMarkdownToReact

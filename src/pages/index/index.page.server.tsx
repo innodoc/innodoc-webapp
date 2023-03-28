@@ -1,4 +1,4 @@
-import { RenderErrorPage } from 'vite-plugin-ssr/server'
+import { RenderErrorPage } from 'vite-plugin-ssr/RenderErrorPage'
 
 import { DEFAULT_ROUTE_NAME } from '#constants'
 import { onBeforeRender as onBeforeRenderDefault } from '#renderer/_default.page.server'
