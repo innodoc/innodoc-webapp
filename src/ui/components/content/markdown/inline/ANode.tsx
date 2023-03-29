@@ -1,5 +1,5 @@
-import ContentLink from '#ui/components/content/ContentLink'
 import type { MarkdownComponentProps } from '#ui/components/content/markdown/types'
+import ContentLink from '#ui/components/content/misc/ContentLink'
 
 function ANode({ href, children, title }: MarkdownComponentProps<'a'>) {
   if (!href) {

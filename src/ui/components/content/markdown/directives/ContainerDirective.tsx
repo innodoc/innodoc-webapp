@@ -9,7 +9,7 @@ import InputHintCard from '#ui/components/content/cards/InputHintCard'
 import SolutionCard from '#ui/components/content/cards/SolutionCard'
 import Grid from '#ui/components/content/grid/Grid'
 import GridItem from '#ui/components/content/grid/GridItem'
-import TableContainer from '#ui/components/content/TableContainer'
+import TableContainer from '#ui/components/content/misc/TableContainer'
 import TabItem from '#ui/components/content/tabs/TabItem'
 import Tabs from '#ui/components/content/tabs/Tabs'
 

@@ -1,7 +1,13 @@
 import type { Element as HastElement } from 'hast'
 import type { ReactNode } from 'react'
 
-const componentMap = {}
+import Video from '#ui/components/content/video/Video'
+import YouTubeVideo from '#ui/components/content/video/YouTubeVideo'
+
+const componentMap = {
+  video: Video,
+  youtube: YouTubeVideo,
+}
 
 type ContainerDirectiveName = keyof typeof componentMap
 
@@ -15,7 +21,11 @@ function LeafDirective({ children, id, node }: LeafDirectiveProps) {
   const name = node.properties?.name
   if (isContainerDirectiveName(name)) {
     const Component = componentMap[name]
-    return <Component id={id}>{children}</Component>
+    return (
+      <Component id={id} nodeProps={node.properties ?? {}}>
+        {children}
+      </Component>
+    )
   }
   return null
 }

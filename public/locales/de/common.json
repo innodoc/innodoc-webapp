@@ -35,6 +35,7 @@
     "hint": "Hinweis",
     "info": "Info",
     "inputHint": "Hilfe zur Eingabe",
+    "noHtml5Video": "Dein Browser unterstützt kein HTML5-Video.",
     "solution": "Lösung",
     "subsections": "Unterabschnitte"
   },

@@ -2,7 +2,9 @@ import { TabContext, TabList } from '@mui/lab'
 import { Paper, styled, Tab } from '@mui/material'
 import { type ReactNode, useState, type SyntheticEvent, useRef, useEffect } from 'react'
 
-import type { TABS_PROPERTIES } from './types'
+import type { NodeProps } from '#ui/components/content/types'
+
+const TABS_PROPERTIES = ['labels'] as const
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   margin: theme.spacing(2, 0),
@@ -80,7 +82,8 @@ function Tabs({ children, nodeProps: { labels: labelsString } }: TabsProps) {
 
 interface TabsProps {
   children: ReactNode
-  nodeProps: Partial<Record<(typeof TABS_PROPERTIES)[number], string>>
+  nodeProps: NodeProps<typeof TABS_PROPERTIES>
 }
 
+export { TABS_PROPERTIES }
 export default Tabs

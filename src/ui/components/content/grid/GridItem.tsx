@@ -3,7 +3,20 @@ import MuiGrid from '@mui/material/Unstable_Grid2'
 import camelcaseKeys from 'camelcase-keys'
 import type { ComponentProps, ReactNode } from 'react'
 
-import { GRID_ITEM_PROPERTIES } from './types'
+import type { NodeProps } from '#ui/components/content/types'
+
+const GRID_ITEM_PROPERTIES = [
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  'xs-offset',
+  'sm-offset',
+  'md-offset',
+  'lg-offset',
+  'xl-offset',
+] as const
 
 const StyledGrid = styled(MuiGrid)({
   '& > :first-child': { marginTop: 0 },
@@ -31,7 +44,8 @@ function GridItem({ children, nodeProps }: GridItemProps) {
 
 interface GridItemProps {
   children: ReactNode
-  nodeProps: Partial<Record<(typeof GRID_ITEM_PROPERTIES)[number], string>>
+  nodeProps: NodeProps<typeof GRID_ITEM_PROPERTIES>
 }
 
+export { GRID_ITEM_PROPERTIES }
 export default GridItem
