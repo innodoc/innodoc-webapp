@@ -1,5 +1,4 @@
 import { Box, Container, Grid, Link, Stack, styled, Typography } from '@mui/material'
-import getTextDecoration from '@mui/material/Link/getTextDecoration'
 import {
   Experimental_CssVarsProvider as CssVarsProvider,
   useColorScheme,
@@ -31,13 +30,7 @@ const footerTheme = makeTheme({
     ...baseThemeOpts.components,
     MuiLink: {
       styleOverrides: {
-        root: ({ theme, ownerState }) => ({
-          color: theme.vars.palette.primary.light,
-          textDecorationColor: getTextDecoration({
-            theme,
-            ownerState: { ...ownerState, color: 'primary.light' },
-          }),
-        }),
+        root: ({ theme }) => ({ color: theme.vars.palette.primary.light }),
       },
     },
   },
