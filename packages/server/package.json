@@ -31,7 +31,7 @@
     "express-session": "^1.17.1",
     "http-terminator": "^2.0.3",
     "i18next-http-middleware": "^3.1.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "log4js": "^6.3.0",
     "mongoose": "^5.11.15",
     "next": "^9.5.3",
