@@ -74,11 +74,9 @@ test("frontendHandler doesn't receive httpResponse", async () => {
   const { frontendHandler, next, req, res } = await setupMocks(false)
   await frontendHandler(req, res, next)
 
-  expect(res.status).not.toHaveBeenCalled()
-  expect(res.type).not.toHaveBeenCalled()
-  expect(res.send).not.toHaveBeenCalled()
+  expect(res.status).toHaveBeenCalledWith(404)
   expect(res.redirect).not.toHaveBeenCalled()
-  expect(next).toHaveBeenCalledWith(expect.any(Error))
+  expect(next).not.toHaveBeenCalled()
 })
 
 test('frontendHandler handles errorWhileRendering', async () => {

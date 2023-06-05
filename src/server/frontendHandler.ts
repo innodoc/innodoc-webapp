@@ -27,7 +27,7 @@ const frontendHandler = (async (req, res, next) => {
   }
   // Check response
   else if (pageContext.httpResponse === null) {
-    next(new Error(`${req.originalUrl}: renderPage() didn't return httpResponse`))
+    res.status(404).send('404 Not found')
   }
   // Send result
   else {
