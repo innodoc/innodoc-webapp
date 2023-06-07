@@ -1,8 +1,7 @@
 import { TabContext, TabList } from '@mui/lab'
 import { Paper, styled, Tab } from '@mui/material'
+import type { Properties } from 'hast'
 import { type ReactNode, useState, type SyntheticEvent, useRef, useEffect } from 'react'
-
-import type { NodeProps } from '#ui/components/content/types'
 
 const TABS_PROPERTIES = ['labels'] as const
 
@@ -23,8 +22,9 @@ const StyledDiv = styled('div')(({ theme }) => ({
   transition: theme.transitions.create('height'),
 }))
 
-function Tabs({ children, nodeProps: { labels: labelsString } }: TabsProps) {
-  const labels = (labelsString ?? '').split(',')
+function Tabs({ children, nodeProps: { labels: labelsProp } }: TabsProps) {
+  const labels =
+    Array.isArray(labelsProp) && labelsProp.every((l) => typeof l === 'string') ? labelsProp : []
   const [value, setValue] = useState('0')
 
   const panelWrapper = useRef<HTMLDivElement>(null)
@@ -82,7 +82,7 @@ function Tabs({ children, nodeProps: { labels: labelsString } }: TabsProps) {
 
 interface TabsProps {
   children: ReactNode
-  nodeProps: NodeProps<typeof TABS_PROPERTIES>
+  nodeProps: Properties
 }
 
 export { TABS_PROPERTIES }

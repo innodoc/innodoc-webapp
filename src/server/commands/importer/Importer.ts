@@ -252,6 +252,7 @@ class Importer {
     // Extract meta data
     const matches = content.match(/---\s([\s\S]*?)---[\s\S]{2}([\s\S]+)/)
     if (!matches) {
+      console.log(content)
       throw new Error('Could not extract YAML frontmatter')
     }
     const [, yaml, rest] = matches

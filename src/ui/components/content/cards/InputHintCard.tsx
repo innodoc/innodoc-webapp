@@ -1,7 +1,16 @@
+import { Alert, AlertTitle, styled } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import Card from './Card'
+import Icon from '#ui/components/common/Icon'
+
 import type { ContentCardProps } from './types'
+
+const StyledAlert = styled(Alert)({
+  paddingBottom: 0,
+  '& > :last-child, & > .MuiAlert-icon': {
+    paddingBottom: 0,
+  },
+})
 
 function InputHintCard({ children, id }: ContentCardProps) {
   const { t } = useTranslation()
@@ -9,16 +18,15 @@ function InputHintCard({ children, id }: ContentCardProps) {
   // TODO title
 
   return (
-    <Card
-      cardType="inputHint"
-      dense
-      elevation={1}
-      iconName="mdi:keyboard-outline"
+    <StyledAlert
+      icon={<Icon name="mdi:keyboard-outline" />}
       id={id}
-      title={t('content.inputHint')}
+      severity="info"
+      variant="outlined"
     >
+      <AlertTitle>{t('content.inputHint')}</AlertTitle>
       {children}
-    </Card>
+    </StyledAlert>
   )
 }
 

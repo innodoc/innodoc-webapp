@@ -4,15 +4,7 @@ import { gfmStrikethrough } from 'micromark-extension-gfm-strikethrough'
 import { gfmTable } from 'micromark-extension-gfm-table'
 import type { Processor } from 'unified'
 
-function addExtension<T>(data: Record<string, unknown>, field: string, extension: T) {
-  let list: T[]
-  if (Array.isArray(data[field])) {
-    list = data[field] as T[]
-  } else {
-    data[field] = list = []
-  }
-  list.push(extension)
-}
+import { addExtension } from './utils'
 
 /** Selectively choose features from mdast-util-gfm */
 function remarkGfm(this: Processor) {

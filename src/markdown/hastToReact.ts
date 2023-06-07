@@ -1,5 +1,5 @@
 import type { Root } from 'hast'
-import { createElement, Fragment } from 'react'
+import { createElement } from 'react'
 import rehypeReact from 'rehype-react'
 import { unified } from 'unified'
 
@@ -14,9 +14,6 @@ const processor = unified()
   .use(rehypeReact, {
     components: componentsMap,
     createElement,
-    // TODO: should wrap root with Fragment, but doesn't work when components.div is specified
-    // https://github.com/rehypejs/rehype-react/issues/36
-    Fragment,
     passNode: true,
   })
   .freeze()
