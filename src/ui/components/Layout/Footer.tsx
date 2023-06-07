@@ -1,8 +1,4 @@
 import { Box, Container, Grid, Link, Stack, styled, Typography } from '@mui/material'
-import {
-  Experimental_CssVarsProvider as CssVarsProvider,
-  useColorScheme,
-} from '@mui/material/styles'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -13,37 +9,13 @@ import builtInPages from '#ui/components/common/builtInPages'
 import AppLink from '#ui/components/common/link/AppLink'
 import PageLink from '#ui/components/common/link/PageLink'
 import MarkdownNode from '#ui/components/content/markdown/MarkdownNode'
-import defaultTheme, { baseThemeOpts, makeTheme } from '#ui/components/PageShell/theme'
 import { useSelector } from '#ui/hooks/store/store'
 import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
 import useSelectLinkedPages from '#ui/hooks/store/useSelectLinkedPages'
 
 const builtInPagesNav = builtInPages.filter((page) => page.linked?.includes('footer'))
 
-// TODO: refactor into multiple files, use different list component as icon is
-// mis-aligned
-
-// Override link color on light theme for better readability
-const footerTheme = makeTheme({
-  ...baseThemeOpts,
-  components: {
-    ...baseThemeOpts.components,
-    MuiLink: {
-      styleOverrides: {
-        root: ({ theme }) => ({ color: theme.vars.palette.primary.light }),
-      },
-    },
-  },
-})
-
-const StyledGrid = styled(Grid)(({ theme }) => ({
-  '& > :first-of-type': {
-    marginTop: 0,
-    marginBottom: theme.spacing(3),
-  },
-}))
-
-const StyledLink = styled(Link)(({ theme }) => ({
+const FooterLink = styled(Link)(({ theme }) => ({
   alignItems: 'center',
   display: 'flex',
   lineHeight: theme.spacing(2.5),
@@ -52,7 +24,6 @@ const StyledLink = styled(Link)(({ theme }) => ({
 
 function Footer() {
   const { t } = useTranslation()
-  const { mode } = useColorScheme()
   const { pages: coursePages } = useSelectLinkedPages('footer')
   const { course } = useSelectCurrentCourse()
   const { courseSlug, locale } = useSelector(selectRouteInfo)
@@ -77,48 +48,46 @@ function Footer() {
     return null
   }
 
-  const internalLinks = builtInPagesNav.map(({ icon, routeName, title }) => (
-    <StyledLink component={AppLink} key={routeName} routeInfo={{ routeName }}>
-      {icon}
-      {t(title)}
-    </StyledLink>
-  ))
-
-  const courseLinks = coursePages.map((page) => (
-    <StyledLink component={PageLink} key={`page-${page.id}`} page={page} />
-  ))
-
-  const contentFooterA = contentA !== undefined ? <MarkdownNode content={contentA} /> : null
-  const contentFooterB = contentB !== undefined ? <MarkdownNode content={contentB} /> : null
+  const linkList = [
+    ...builtInPagesNav.map(({ icon, routeName, title }) => (
+      <FooterLink component={AppLink} key={routeName} routeInfo={{ routeName }}>
+        {icon}
+        {t(title)}
+      </FooterLink>
+    )),
+    ...coursePages.map((page) => (
+      <FooterLink component={PageLink} key={`page-${page.id}`} page={page} />
+    )),
+  ]
 
   return (
-    <CssVarsProvider theme={mode === 'light' ? footerTheme : defaultTheme}>
-      <Box
-        component="footer"
-        sx={(theme) => ({
-          color: theme.vars.palette.common.white,
-          py: 5,
-          mt: 'auto',
-          backgroundColor: theme.vars.palette.Footer.bg,
-          boxShadow: theme.vars.shadowFooter,
-        })}
-      >
-        <Container maxWidth="lg">
-          <Grid container spacing={4}>
-            <StyledGrid item xs={12} md={3}>
-              <Typography variant="h4">{course.title}</Typography>
-              <Stack spacing={1}>{[...internalLinks, ...courseLinks]}</Stack>
-            </StyledGrid>
-            <StyledGrid item xs={12} md={6}>
-              {contentFooterA}
-            </StyledGrid>
-            <StyledGrid item xs={12} md={3}>
-              {contentFooterB}
-            </StyledGrid>
+    <Box
+      component="footer"
+      sx={(theme) => ({
+        color: theme.vars.palette.common.white,
+        py: 5,
+        mt: 'auto',
+        backgroundColor: theme.vars.palette.Footer.bg,
+        boxShadow: theme.vars.shadowFooter,
+      })}
+    >
+      <Container maxWidth="lg">
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={3}>
+            <Typography variant="h4" sx={{ mb: 3 }}>
+              {course.title}
+            </Typography>
+            <Stack spacing={1}>{linkList}</Stack>
           </Grid>
-        </Container>
-      </Box>
-    </CssVarsProvider>
+          <Grid item xs={12} md={6}>
+            {contentA !== undefined ? <MarkdownNode content={contentA} /> : null}
+          </Grid>
+          <Grid item xs={12} md={3}>
+            {contentB !== undefined ? <MarkdownNode content={contentB} /> : null}
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
   )
 }
 
