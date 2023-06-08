@@ -1,8 +1,8 @@
 import type { PreloadedState } from '@reduxjs/toolkit'
 import type { LanguageCode } from 'iso-639-1'
 import type { ComponentType } from 'react'
-import type { PageContextBuiltIn } from 'vite-plugin-ssr'
-import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client/router'
+import type { PageContextBuiltIn } from 'vite-plugin-ssr/types'
+import type { PageContextBuiltInClientWithClientRouting } from 'vite-plugin-ssr/types'
 
 import type { PASS_TO_CLIENT_PROPS } from '#constants'
 import type { RootState, Store } from '#store/makeStore'
@@ -60,5 +60,5 @@ export interface PageContextUpdate {
 }
 
 /** Page context (Browser context) */
-export type PageContextClient = PageContextBuiltInClient<ComponentType> &
+export type PageContextClient = PageContextBuiltInClientWithClientRouting<ComponentType> &
   Pick<PageContextServer, (typeof PASS_TO_CLIENT_PROPS)[number]>
