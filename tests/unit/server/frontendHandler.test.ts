@@ -1,4 +1,7 @@
 import type { NextFunction, Request, Response } from 'express'
+import type { Mock } from 'vitest'
+
+import type { PageContextInit, PageContextServer } from '#types/pageContext'
 
 async function setupMocks(httpResponse = true, redirectTo?: string, errorWhileRendering?: unknown) {
   vi.resetModules()
@@ -14,7 +17,10 @@ async function setupMocks(httpResponse = true, redirectTo?: string, errorWhileRe
       : null,
     redirectTo: redirectTo !== undefined ? redirectTo : undefined,
   }
-  const renderPageMock = vi.fn().mockResolvedValueOnce(mockPageContext)
+  const renderPageMock = vi.fn().mockResolvedValueOnce(mockPageContext) as Mock<
+    [PageContextInit],
+    PageContextServer
+  >
   vi.doMock('vite-plugin-ssr/server', () => ({ renderPage: renderPageMock }))
 
   const frontendHandler = (await import('#server/frontendHandler')).default as (
@@ -47,7 +53,7 @@ test('frontendHandler renders page', async () => {
   const { frontendHandler, next, renderPageMock, req, res } = await setupMocks()
   await frontendHandler(req, res, next)
 
-  const pageContextInit = renderPageMock.mock.calls[0][0] as Record<string, unknown>
+  const pageContextInit = renderPageMock.mock.calls[0][0]
   expect(pageContextInit.requestLocale).toBe('de')
   expect(pageContextInit.urlOriginal).toBe('/en/foo/bar')
   expect(pageContextInit.host).toBe('www.example.com')
