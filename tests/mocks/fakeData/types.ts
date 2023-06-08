@@ -1,8 +1,11 @@
+import type { Faker } from '@faker-js/faker'
 import type { LanguageCode } from 'iso-639-1'
 import type { Node } from 'unist'
 
 import type { ApiPage } from '#types/entities/page'
 import type { ApiSection } from '#types/entities/section'
+
+export type Fakers = Partial<Record<LanguageCode, Faker>>
 
 export interface BaseOptions {
   seed?: number | string

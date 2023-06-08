@@ -9,6 +9,6 @@ test('pages/section', async () => {
   expect(screen.getByTestId('main-container')).toBeInTheDocument()
 
   await screen.findByRole('heading', { name: '1 Tempore ut id' })
-  await screen.findByText(/Nesciunt possimus dolores molestias/)
-  await screen.findByText(/Vero impedit quas fugiat facilis/)
+  await screen.findByText(/Rerum repudiandae soluta quod corporis fugiat/)
+  await screen.findByText(/Earum magni minima aperiam totam sint quibusdam ipsum totam/)
 })

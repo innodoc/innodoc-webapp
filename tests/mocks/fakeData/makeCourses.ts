@@ -1,21 +1,20 @@
-import type { LanguageCode } from 'iso-639-1'
-
 import { FRAGMENT_TYPES } from '#constants'
 import type { ApiCourse } from '#types/entities/course'
 
 import makeContent from './makeContent'
 import makePages from './makePages'
 import makeSections from './makeSections'
-import { getDates, seed } from './utils'
+import type { Fakers } from './types'
+import { getDates, getLocales, seed } from './utils'
 
-const makeFooterContent = (locales: LanguageCode[], seed: string) =>
-  makeContent(locales, { headerDepth: 4, nodeCount: 2, seed })
+const makeFooterContent = (fakers: Fakers, seed: string) =>
+  makeContent(fakers, { headerDepth: 4, nodeCount: 2, seed })
 
-const makeCourseData = (courseId: number, locales: LanguageCode[]): ApiCourse => ({
+const makeCourseData = (courseId: number, fakers: Fakers): ApiCourse => ({
   id: courseId,
   slug: 'testcourse',
   homeLink: 'app:page|home',
-  locales,
+  locales: getLocales(fakers),
   title: {
     de: 'Kurs für integration tests',
     en: 'Course for integration tests',
@@ -25,21 +24,21 @@ const makeCourseData = (courseId: number, locales: LanguageCode[]): ApiCourse =>
     de: 'Dieser Kurs dient dem Testen der Funktionalität.',
     en: 'This course is for testing functionality.',
   },
-  ...getDates(),
+  ...getDates(fakers),
 })
 
-const makeCourse = (courseId: number, locales: LanguageCode[]) => {
-  seed(`course-${courseId}`)
+const makeCourse = (courseId: number, fakers: Fakers) => {
+  seed(`course-${courseId}`, Object.values(fakers)[0])
   return {
-    data: makeCourseData(courseId, locales),
+    data: makeCourseData(courseId, fakers),
     footerContent: Object.fromEntries(
-      FRAGMENT_TYPES.map((fragmentType) => [fragmentType, makeFooterContent(locales, fragmentType)])
+      FRAGMENT_TYPES.map((fragmentType) => [fragmentType, makeFooterContent(fakers, fragmentType)])
     ),
-    pages: makePages(courseId, locales),
-    sections: makeSections(courseId, locales),
+    pages: makePages(courseId, fakers),
+    sections: makeSections(courseId, fakers),
   }
 }
 
-const makeCourses = (locales: LanguageCode[]) => [makeCourse(0, locales)]
+const makeCourses = (fakers: Fakers) => [makeCourse(0, fakers)]
 
 export default makeCourses

@@ -1,25 +1,23 @@
-import type { LanguageCode } from 'iso-639-1'
-
 import makeContent from './makeContent'
-import type { Page } from './types'
+import type { Fakers, Page } from './types'
 import { getDates, getTitlesSlug, range, seed } from './utils'
 
-const makePage = (id: number, courseId: number, locales: LanguageCode[]): Page => {
-  seed(`page-${courseId}-${id}`)
+const makePage = (id: number, courseId: number, fakers: Fakers): Page => {
+  seed(`page-${courseId}-${id}`, Object.values(fakers)[0])
   return {
     data: {
       id,
       courseId,
       linked: ['footer'],
-      ...getTitlesSlug(locales),
-      ...getDates(),
+      ...getTitlesSlug(fakers),
+      ...getDates(fakers),
     },
-    content: makeContent(locales),
+    content: makeContent(fakers),
   }
 }
 
-const makePages = (courseId: number, locales: LanguageCode[]) => {
-  const pages = range(6).map((i) => makePage(i, courseId, locales))
+const makePages = (courseId: number, fakers: Fakers) => {
+  const pages = range(6).map((i) => makePage(i, courseId, fakers))
 
   pages[0].data = {
     ...pages[0].data,

@@ -1,9 +1,7 @@
-import type { LanguageCode } from 'iso-639-1'
-
 import type { ApiSection } from '#types/entities/section'
 
 import makeContent from './makeContent'
-import type { Section, SectionDef } from './types'
+import type { Fakers, Section, SectionDef } from './types'
 import { getDates, getTitlesPath, range, seed } from './utils'
 
 let id = 0
@@ -13,19 +11,19 @@ const makeSection = (
   parent: ApiSection | null,
   parentPath: string[],
   courseId: number,
-  locales: LanguageCode[]
+  fakers: Fakers
 ): Section => {
-  seed(`section-${courseId}-${id}`)
+  seed(`section-${courseId}-${id}`, Object.values(fakers)[0])
   const section: ApiSection = {
     id: id++,
     courseId,
     parentId: parent?.id ?? null,
     type: 'regular',
     order: [...(parent?.order ?? []), idx],
-    ...getTitlesPath(locales, parentPath),
-    ...getDates(),
+    ...getTitlesPath(fakers, parentPath),
+    ...getDates(fakers),
   }
-  return { data: section, content: makeContent(locales) }
+  return { data: section, content: makeContent(fakers) }
 }
 
 const mapSectionDef = (
@@ -34,9 +32,9 @@ const mapSectionDef = (
   parent: ApiSection | null,
   parentPath: string[],
   courseId: number,
-  locales: LanguageCode[]
+  fakers: Fakers
 ): Section[] => {
-  const section = makeSection(idx, parent, parentPath, courseId, locales)
+  const section = makeSection(idx, parent, parentPath, courseId, fakers)
   if (childrenDef === null) {
     return [section]
   }
@@ -48,7 +46,7 @@ const mapSectionDef = (
   const children = childrenDefArr.reduce(
     (acc, def, idx) => [
       ...acc,
-      ...mapSectionDef(def, idx, section.data, section.data.path.split('/'), courseId, locales),
+      ...mapSectionDef(def, idx, section.data, section.data.path.split('/'), courseId, fakers),
     ],
     [] as Section[]
   )
@@ -66,9 +64,9 @@ const sectionDef: SectionDef[] = [
   null,
 ]
 
-const makeSections = (courseId: number, locales: LanguageCode[]) =>
+const makeSections = (courseId: number, fakers: Fakers) =>
   sectionDef.reduce(
-    (acc, def, idx) => [...acc, ...mapSectionDef(def, idx, null, [], courseId, locales)],
+    (acc, def, idx) => [...acc, ...mapSectionDef(def, idx, null, [], courseId, fakers)],
     [] as Section[]
   )
 
