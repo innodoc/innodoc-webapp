@@ -8,7 +8,7 @@ import { useGetFragmentContentQuery } from '#store/slices/entities/fragments'
 import builtInPages from '#ui/components/common/builtInPages'
 import AppLink from '#ui/components/common/link/AppLink'
 import PageLink from '#ui/components/common/link/PageLink'
-import MarkdownNode from '#ui/components/content/markdown/MarkdownNode'
+import HastNode from '#ui/components/content/markdown/HastNode'
 import { useSelector } from '#ui/hooks/store/store'
 import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
 import useSelectLinkedPages from '#ui/hooks/store/useSelectLinkedPages'
@@ -27,7 +27,7 @@ function Footer() {
   const { pages: coursePages } = useSelectLinkedPages('footer')
   const { course } = useSelectCurrentCourse()
   const { courseSlug, locale } = useSelector(selectRouteInfo)
-  const { data: contentA } = useGetFragmentContentQuery(
+  const { data: dataA } = useGetFragmentContentQuery(
     {
       courseSlug: courseSlug ?? '',
       locale,
@@ -35,7 +35,7 @@ function Footer() {
     },
     { skip: courseSlug === null }
   )
-  const { data: contentB } = useGetFragmentContentQuery(
+  const { data: dataB } = useGetFragmentContentQuery(
     {
       courseSlug: courseSlug ?? '',
       locale,
@@ -49,14 +49,14 @@ function Footer() {
   }
 
   const linkList = [
+    ...coursePages.map((page) => (
+      <FooterLink component={PageLink} key={`page-${page.id}`} page={page} />
+    )),
     ...builtInPagesNav.map(({ icon, routeName, title }) => (
       <FooterLink component={AppLink} key={routeName} routeInfo={{ routeName }}>
         {icon}
         {t(title)}
       </FooterLink>
-    )),
-    ...coursePages.map((page) => (
-      <FooterLink component={PageLink} key={`page-${page.id}`} page={page} />
     )),
   ]
 
@@ -80,10 +80,10 @@ function Footer() {
             <Stack spacing={1}>{linkList}</Stack>
           </Grid>
           <Grid item xs={12} md={6}>
-            {contentA !== undefined ? <MarkdownNode content={contentA} /> : null}
+            <HastNode hash={dataA?.hash} />
           </Grid>
           <Grid item xs={12} md={3}>
-            {contentB !== undefined ? <MarkdownNode content={contentB} /> : null}
+            <HastNode hash={dataB?.hash} />
           </Grid>
         </Grid>
       </Container>

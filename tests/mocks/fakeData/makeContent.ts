@@ -3,7 +3,7 @@ import { root, paragraph, text, heading, list, listItem, code } from 'mdast-buil
 import stringify from 'remark-stringify'
 import { unified } from 'unified'
 
-import { isRoot } from '#markdown/typeGuards'
+import { isMdastRoot } from '#markdown/typeGuards'
 import { capitalize } from '#utils/content'
 
 import type { Content, ContentOptions, Fakers, NodeMakers } from './types'
@@ -78,7 +78,7 @@ function makeMarkdown(faker: Faker, options: Partial<ContentOptions>) {
   }
 
   const rootNode = root(nodes)
-  if (!isRoot(rootNode)) {
+  if (!isMdastRoot(rootNode)) {
     throw new Error('Type assertion error in Markdown generation')
   }
 

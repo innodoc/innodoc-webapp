@@ -6,7 +6,7 @@ import { useGetPageContentQuery } from '#store/slices/entities/pages'
 import Code from '#ui/components/common/Code'
 import LoadingSpinner from '#ui/components/common/LoadingSpinner'
 import PageHeader from '#ui/components/common/PageHeader'
-import MarkdownNode from '#ui/components/content/markdown/MarkdownNode'
+import HastNode from '#ui/components/content/markdown/HastNode'
 import { useSelector } from '#ui/hooks/store/store'
 import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
 import useSelectPage from '#ui/hooks/store/useSelectPage'
@@ -17,11 +17,7 @@ function Page() {
   const { page } = useSelectPage(pageSlug)
   const skipContentFetch = course === undefined || courseSlug === null || pageSlug === undefined
 
-  const {
-    data: content,
-    isError,
-    isLoading,
-  } = useGetPageContentQuery(
+  const { data, isError, isLoading } = useGetPageContentQuery(
     {
       courseSlug: course?.slug ?? '',
       locale,
@@ -33,9 +29,11 @@ function Page() {
   if (course === undefined) {
     return <ErrorPage is404 />
   }
+
   if (pageSlug === undefined) {
     return null
   }
+
   if (isError) {
     return (
       <ErrorPage
@@ -51,9 +49,11 @@ function Page() {
       />
     )
   }
-  if (isLoading || content === undefined) {
+
+  if (isLoading) {
     return <LoadingSpinner />
   }
+
   if (page === undefined) {
     return <ErrorPage is404 />
   }
@@ -61,7 +61,7 @@ function Page() {
   return (
     <>
       <PageHeader iconName={page.icon}>{page.title}</PageHeader>
-      <MarkdownNode content={content} />
+      <HastNode hash={data?.hash} />
     </>
   )
 }

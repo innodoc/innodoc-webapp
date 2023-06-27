@@ -1,4 +1,3 @@
-import type { Root } from 'hast'
 import type { LanguageCode } from 'iso-639-1'
 
 import type {
@@ -7,6 +6,7 @@ import type {
   PAGE_LINK_LOCACTIONS,
   SECTION_TYPES,
 } from '#constants'
+import type { HastRoot } from '#markdown/markdownToHast/markdownToHast'
 
 import type { ApiCourse } from './entities/course'
 import type { ApiPage } from './entities/page'
@@ -30,15 +30,6 @@ export type CourseSlugMode = (typeof COURSE_SLUG_MODES)[number]
 /** Content types */
 export type ContentType = (typeof CONTENT_TYPES)[number]
 
-/** Web worker result message */
-export interface Result {
-  /** hast document */
-  root?: Root
-
-  /** Processing error */
-  error?: Error
-}
-
 /** Application route info */
 export interface RouteInfo {
   /** Course slug */
@@ -55,4 +46,19 @@ export interface RouteInfo {
 
   /** Section path */
   sectionPath?: ApiSection['path']
+}
+
+export interface WithContentHash {
+  /** CRC32 hash of content */
+  hash: string
+}
+
+export interface ContentWithHash extends WithContentHash {
+  /** Markdown string */
+  content: string
+}
+
+export interface HastRootWithHash extends WithContentHash {
+  /** hast Root */
+  root: HastRoot
 }

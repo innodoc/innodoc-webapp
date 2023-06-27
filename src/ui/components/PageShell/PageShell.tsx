@@ -9,8 +9,6 @@ import { Provider as ReduxProvider } from 'react-redux'
 
 import type { Store } from '#store/makeStore'
 import Layout from '#ui/components/Layout/Layout'
-import { MarkdownWorkerProvider } from '#ui/contexts/MarkdownWorkerContext/MarkdownWorkerContext'
-import { RouteTransitionProvider } from '#ui/contexts/RouteTransitionContext'
 
 import MetaTags from './MetaTags'
 import theme from './theme'
@@ -26,17 +24,13 @@ function PageShell({ children, emotionCache, helmetContext, i18n, store }: PageS
         <CacheProvider value={emotionCache}>
           <GlobalStyles styles={globalStyles} />
           <ReduxProvider store={store}>
-            <MarkdownWorkerProvider>
-              <RouteTransitionProvider>
-                <I18nextProvider i18n={i18n}>
-                  <CssVarsProvider theme={theme}>
-                    <CssBaseline />
-                    <MetaTags />
-                    <Layout>{children}</Layout>
-                  </CssVarsProvider>
-                </I18nextProvider>
-              </RouteTransitionProvider>
-            </MarkdownWorkerProvider>
+            <I18nextProvider i18n={i18n}>
+              <CssVarsProvider theme={theme}>
+                <CssBaseline />
+                <MetaTags />
+                <Layout>{children}</Layout>
+              </CssVarsProvider>
+            </I18nextProvider>
           </ReduxProvider>
         </CacheProvider>
       </HelmetProvider>
@@ -46,8 +40,8 @@ function PageShell({ children, emotionCache, helmetContext, i18n, store }: PageS
 
 interface PageShellProps {
   children: React.ReactNode
-  helmetContext?: Record<string, never>
   emotionCache: EmotionCache
+  helmetContext?: Record<string, never>
   i18n: I18n
   store: Store
 }

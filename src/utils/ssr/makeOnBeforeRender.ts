@@ -1,16 +1,18 @@
 import { RenderErrorPage } from 'vite-plugin-ssr/RenderErrorPage'
 
+import markdownToHast from '#markdown/markdownToHast/markdownToHast'
 import { onBeforeRender as onBeforeRenderDefault } from '#renderer/_default.page.server'
-import pages from '#store/slices/entities/pages'
-import sections from '#store/slices/entities/sections'
+import { addHastRoot } from '#store/slices/hastSlice'
 import type { ContentType } from '#types/common'
 import type { PageContextServer, PageContextUpdate } from '#types/pageContext'
 import { getStringIdField } from '#utils/content'
+import fetchContent from '#utils/fetchContent'
 
 /**
  * Factory function for `onBeforeRender` hook for content pages
  *
- * Reads route parameter, fetches content ID and content.
+ * Prepare state for one-pass rendering on server. Read route parameter,
+ * fetch content and transform Markdown->hast.
  */
 function makeOnBeforeRender(contentType: ContentType) {
   return async (pageContextInput: PageContextServer): Promise<PageContextUpdate> => {
@@ -37,24 +39,24 @@ function makeOnBeforeRender(contentType: ContentType) {
     }
 
     // Fetch content
-    const fetchArgs = {
-      courseSlug: pageContext.routeInfo.courseSlug,
-      locale: pageContext.routeInfo.locale,
-    }
-    const { error } = await (contentType === 'page'
-      ? store.dispatch(
-          pages.endpoints.getPageContent.initiate({ ...fetchArgs, pageSlug: stringIdValue })
-        )
-      : store.dispatch(
-          sections.endpoints.getSectionContent.initiate({
-            ...fetchArgs,
-            sectionPath: stringIdValue,
-          })
-        ))
-    if (error) {
+    const { data, error } = await fetchContent(
+      contentType,
+      pageContext.routeInfo.courseSlug,
+      pageContext.routeInfo.locale,
+      stringIdValue,
+      store.dispatch
+    )
+
+    // Fetch error?
+    if (error || data === undefined) {
       const errorMsg = `Failed to fetch content for ${contentType} ${stringIdValue}`
       throw RenderErrorPage({ pageContext: { errorMsg } })
     }
+
+    // Transform Markdown->hast
+    const { content, hash } = data
+    const root = await markdownToHast(content)
+    store.dispatch(addHastRoot({ hash, root }))
 
     // Overwrite context with current preloaded state
     return {

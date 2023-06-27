@@ -1,7 +1,8 @@
 import type { LanguageCode } from 'iso-639-1'
 
 import getRouteManager from '#routes/getRouteManager'
-import contentApi from '#store/slices/contentApi'
+import contentApi, { hashContentResponse } from '#store/slices/contentApi'
+import type { ContentWithHash } from '#types/common'
 import type { ApiCourse } from '#types/entities/course'
 import type { ApiPage } from '#types/entities/page'
 
@@ -17,11 +18,12 @@ export const pages = contentApi.injectEndpoints({
     }),
 
     /** Fetch content for a page */
-    getPageContent: builder.query<string, PageContentFetchArgs>({
+    getPageContent: builder.query<ContentWithHash, PageContentFetchArgs>({
       query: (args) => ({
         responseHandler: 'text',
         url: routeManager.generate('api:course:page:content', args),
       }),
+      transformResponse: hashContentResponse,
     }),
   }),
 })

@@ -7,7 +7,7 @@ import Breadcrumbs from '#ui/components/Breadcrumbs/Breadcrumbs'
 import Code from '#ui/components/common/Code'
 import LoadingSpinner from '#ui/components/common/LoadingSpinner'
 import PageHeader from '#ui/components/common/PageHeader'
-import MarkdownNode from '#ui/components/content/markdown/MarkdownNode'
+import HastNode from '#ui/components/content/markdown/HastNode'
 import SubsectionList from '#ui/components/content/SubsectionList'
 import { useSelector } from '#ui/hooks/store/store'
 import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
@@ -20,11 +20,7 @@ function Page() {
   const { section } = useSelectSection(sectionPath)
   const skipContentFetch = course === undefined || courseSlug === null || sectionPath === undefined
 
-  const {
-    data: content,
-    isError,
-    isLoading,
-  } = useGetSectionContentQuery(
+  const { data, isError, isLoading } = useGetSectionContentQuery(
     {
       courseSlug: course?.slug ?? '',
       locale,
@@ -36,9 +32,11 @@ function Page() {
   if (course === undefined) {
     return <ErrorPage is404 />
   }
+
   if (sectionPath === undefined) {
     return null
   }
+
   if (isError) {
     return (
       <ErrorPage
@@ -54,9 +52,11 @@ function Page() {
       />
     )
   }
-  if (isLoading || content === undefined) {
+
+  if (isLoading) {
     return <LoadingSpinner />
   }
+
   if (section === undefined) {
     return <ErrorPage is404 />
   }
@@ -66,7 +66,7 @@ function Page() {
       <Breadcrumbs />
       <PageHeader>{formatSectionTitle(section)}</PageHeader>
       <SubsectionList sectionId={section.id} />
-      <MarkdownNode content={content} />
+      <HastNode hash={data?.hash} />
     </>
   )
 }

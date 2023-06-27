@@ -36,8 +36,6 @@ const flowDivComponentMap = {
 export type MdxJsxFlowDivElementName = keyof typeof flowDivComponentMap
 
 function DivNode({ children, id, node }: MarkdownComponentProps<'div'>) {
-  // console.log('DivNode', node.properties?.type, node.properties?.name)
-
   // Document root, avoid wrapping in <div>
   // https://github.com/rehypejs/rehype-react/issues/36
   if (isRootDivElement(node)) {

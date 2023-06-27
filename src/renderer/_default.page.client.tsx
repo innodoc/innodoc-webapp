@@ -7,7 +7,7 @@ import { hydrateRoot, type Root } from 'react-dom/client'
 
 import { EMOTION_STYLE_INSERTION_POINT_NAME, EMOTION_STYLE_KEY } from '#constants'
 import makeStore, { type Store } from '#store/makeStore'
-import { changeIsHydration, changeRouteTransitionInfo } from '#store/slices/appSlice'
+import { changeRouteTransitionInfo } from '#store/slices/appSlice'
 import type { PageContextClient } from '#types/pageContext'
 import PageShell from '#ui/components/PageShell/PageShell'
 import RouteTransition from '#ui/components/PageShell/RouteTransition'
@@ -74,11 +74,9 @@ async function render({ isHydration, Page, preloadedState, routeInfo }: PageCont
   if (store === undefined) {
     // Create store on first hydration
     store = makeStore(preloadedState)
-    store.dispatch(changeIsHydration(true))
   } else {
     // Initiate route transition on navigation
     store.dispatch(changeRouteTransitionInfo(routeInfo))
-    store.dispatch(changeIsHydration(false))
   }
 
   if (i18n === undefined) {
@@ -99,7 +97,7 @@ async function render({ isHydration, Page, preloadedState, routeInfo }: PageCont
 
   const page = (
     <PageShell emotionCache={emotionCache} i18n={i18n} store={store}>
-      <RouteTransition pagePrev={PagePrev}>
+      <RouteTransition pagePrev={PagePrev ?? Page}>
         <Page />
       </RouteTransition>
     </PageShell>
