@@ -25,14 +25,14 @@ async function setupServeStatic(app: Express) {
   }
 }
 
-async function setupViteServer(app: Express) {
+async function setupViteDevServer(app: Express) {
   const vite = await import('vite')
 
-  const viteServer = await vite.createServer({
+  const viteDevMiddleware = await vite.createServer({
     root: config.rootDir,
     server: { middlewareMode: true },
   })
-  app.use(viteServer.middlewares)
+  app.use(viteDevMiddleware.middlewares)
 }
 
 async function enableApiMock() {
@@ -48,8 +48,9 @@ async function startServer() {
   app.use(localeMiddleware())
   if (config.isProduction) {
     await setupServeStatic(app)
+  } else {
+    await setupViteDevServer(app)
   }
-  await setupViteServer(app)
 
   // Enable API
   if (config.enableMockApi) {
