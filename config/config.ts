@@ -63,7 +63,9 @@ async function config() {
     resolve: {
       alias: {
         ...aliasPackageJson,
-        // Force index.js. index.dom.js wouldn't work in web worker
+        // Micromark depends on decode-named-character-reference, force the
+        // non-dom version as it's used in web worker.
+        // https://github.com/vitejs/vite/issues/7439#issuecomment-1372732658
         'decode-named-character-reference': path.join(
           projectDir,
           'node_modules',
