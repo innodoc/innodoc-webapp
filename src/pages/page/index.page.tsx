@@ -1,12 +1,7 @@
-import { Trans } from 'react-i18next'
-
-import { Page as ErrorPage } from '#renderer/_error.page'
 import { selectRouteInfo } from '#store/slices/appSlice'
 import { useGetPageContentQuery } from '#store/slices/entities/pages'
-import Code from '#ui/components/common/Code'
-import LoadingSpinner from '#ui/components/common/LoadingSpinner'
 import PageHeader from '#ui/components/common/PageHeader'
-import HastNode from '#ui/components/content/markdown/HastNode'
+import ContentPage from '#ui/components/PageShell/ContentPage'
 import { useSelector } from '#ui/hooks/store/store'
 import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
 import useSelectPage from '#ui/hooks/store/useSelectPage'
@@ -15,7 +10,6 @@ function Page() {
   const { course } = useSelectCurrentCourse()
   const { courseSlug, locale, pageSlug } = useSelector(selectRouteInfo)
   const { page } = useSelectPage(pageSlug)
-  const skipContentFetch = course === undefined || courseSlug === null || pageSlug === undefined
 
   const { data, isError, isLoading } = useGetPageContentQuery(
     {
@@ -23,46 +17,21 @@ function Page() {
       locale,
       pageSlug: pageSlug ?? '',
     },
-    { skip: skipContentFetch }
+    { skip: course === undefined || courseSlug === null || pageSlug === undefined }
   )
 
-  if (course === undefined) {
-    return <ErrorPage is404 />
-  }
-
-  if (pageSlug === undefined) {
-    return null
-  }
-
-  if (isError) {
-    return (
-      <ErrorPage
-        errorMsg={
-          <Trans
-            components={{ 1: <Code /> }}
-            i18nKey="error.failedToLoadPage"
-            values={{ pageSlug }}
-          >
-            {`Failed to load page: <1>{{ pageSlug }}</1>`}
-          </Trans>
-        }
-      />
-    )
-  }
-
-  if (isLoading) {
-    return <LoadingSpinner />
-  }
-
-  if (page === undefined) {
-    return <ErrorPage is404 />
-  }
-
   return (
-    <>
-      <PageHeader iconName={page.icon}>{page.title}</PageHeader>
-      <HastNode hash={data?.hash} />
-    </>
+    <ContentPage
+      contentHash={data?.hash}
+      contentObj={page}
+      contentType="page"
+      course={course}
+      isError={isError}
+      isLoading={isLoading}
+      stringIdValue={pageSlug}
+    >
+      {page !== undefined ? <PageHeader iconName={page.icon}>{page.title}</PageHeader> : null}
+    </ContentPage>
   )
 }
 

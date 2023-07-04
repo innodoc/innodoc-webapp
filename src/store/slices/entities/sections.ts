@@ -14,9 +14,7 @@ export const sections = contentApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Fetch course sections */
     getCourseSections: builder.query<ApiSection[], CourseQueryArg>({
-      query: (args) => {
-        return routeManager.generate('api:course:sections', args)
-      },
+      query: (args) => routeManager.generate('api:course:sections', args),
     }),
 
     /** Fetch content for a section */
