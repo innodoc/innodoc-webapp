@@ -1,4 +1,4 @@
-import { type SyntheticEvent, useCallback, useEffect, useRef, useState, useMemo } from 'react'
+import { type SyntheticEvent, useEffect, useRef, useState } from 'react'
 
 import { selectRouteInfo } from '#store/slices/appSlice'
 import { useSelector } from '#ui/hooks/store/store'
@@ -25,10 +25,7 @@ function useManageExpanded() {
   const prevSectionPath = useRef<string | null>(null)
 
   // Expand current and parents
-  const expandedWithParents = useMemo(
-    () => getExpandedWithParents(currentSectionPath),
-    [currentSectionPath]
-  )
+  const expandedWithParents = getExpandedWithParents(currentSectionPath)
 
   const [expanded, setExpanded] = useState<string[]>(expandedWithParents)
 
@@ -47,9 +44,9 @@ function useManageExpanded() {
   }, [currentSectionPath, expanded, expandedWithParents, setExpanded])
 
   // Called when tree item expand button is clicked
-  const onNodeToggle = useCallback((ev: SyntheticEvent, nodeIds: string[]) => {
+  const onNodeToggle = (ev: SyntheticEvent, nodeIds: string[]) => {
     setExpanded([...nodeIds])
-  }, [])
+  }
 
   // Currently selected nodes
   const selected = currentSectionPath !== undefined ? [currentSectionPath] : emptySelected

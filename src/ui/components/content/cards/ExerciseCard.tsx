@@ -1,5 +1,4 @@
 import { Button } from '@mui/material'
-import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Icon from '#ui/components/common/Icon'
@@ -30,10 +29,8 @@ function ExerciseCard({ children, id }: ContentCardProps) {
     </Button>
   )
 
-  const contextValue = useMemo(() => ({}), [])
-
   return (
-    <ExerciseContext.Provider value={contextValue}>
+    <ExerciseContext.Provider value={{}}>
       <Card
         actions={action}
         cardType="exercise"

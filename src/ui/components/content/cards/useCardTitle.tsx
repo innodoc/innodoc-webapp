@@ -1,4 +1,4 @@
-import { createContext, type ReactNode, useCallback, useContext, useEffect, useRef } from 'react'
+import { createContext, type ReactNode, useContext, useEffect, useRef } from 'react'
 
 import { selectRouteInfo } from '#store/slices/appSlice'
 import { useSelector } from '#ui/hooks/store/store'
@@ -27,21 +27,18 @@ export function CardTitleProvider({ children }: NumberingProviderProps) {
   // with x = 1st level section number
   // with y = 2nd level section number
   // with z = sequential number for whole subtree
-  const formatTitle = useCallback(
-    (id: string | undefined, title: string) => {
-      if (id === undefined) {
-        return title
-      }
-      const ids = Object.keys(titles.current)
-      if (!ids.includes(id)) {
-        const cardTitle = `${title} ${sectionNumber}.${ids.length + 1}`
-        titles.current[id] = cardTitle
-      }
+  const formatTitle = (id: string | undefined, title: string) => {
+    if (id === undefined) {
+      return title
+    }
+    const ids = Object.keys(titles.current)
+    if (!ids.includes(id)) {
+      const cardTitle = `${title} ${sectionNumber}.${ids.length + 1}`
+      titles.current[id] = cardTitle
+    }
 
-      return titles.current[id]
-    },
-    [sectionNumber]
-  )
+    return titles.current[id]
+  }
 
   return <CardTitleContext.Provider value={formatTitle}>{children}</CardTitleContext.Provider>
 }

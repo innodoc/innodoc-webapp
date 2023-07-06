@@ -1,5 +1,4 @@
 import { AppBar as MuiAppBar, Box, Container, Toolbar } from '@mui/material'
-import { memo } from 'react'
 
 import LanguageMenuButton from './LanguageMenuButton/LanguageMenuButton'
 import Logo from './Logo'
@@ -38,4 +37,4 @@ function AppBar() {
   )
 }
 
-export default memo(AppBar)
+export default AppBar
