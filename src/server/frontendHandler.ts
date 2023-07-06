@@ -21,18 +21,21 @@ const frontendHandler = (async (req, res, next) => {
   if (pageContext.errorWhileRendering) {
     next(pageContext.errorWhileRendering)
   }
+
   // Follow redirection directive from app
   else if (pageContext.redirectTo !== undefined) {
-    return res.redirect(307, pageContext.redirectTo)
+    res.redirect(307, pageContext.redirectTo)
   }
-  // Check response
-  else if (pageContext.httpResponse === null) {
-    res.status(404).send('404 Not found')
-  }
+
   // Send result
-  else {
+  else if (pageContext.httpResponse !== null) {
     const { body, statusCode, contentType } = pageContext.httpResponse
     res.status(statusCode).type(contentType).send(body)
+  }
+
+  // Otherwise send 404
+  else {
+    res.status(404).send('404 Not found')
   }
 }) as RequestHandler // workaround until https://github.com/DefinitelyTyped/DefinitelyTyped/issues/50871 is resolved
 
