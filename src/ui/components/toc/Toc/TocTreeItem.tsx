@@ -12,21 +12,21 @@ const StyledTreeItem = styled(TreeItem)(({ theme }) => ({
   },
 }))
 
+const CustomTreeItem = (props: CustomTreeItemProps) => (
+  <StyledTreeItem ContentComponent={TocTreeItemContent} {...props} />
+)
+
+type CustomTreeItemProps = TreeItemProps & { ContentProps: { section: TranslatedSection } }
+
 function TocTreeItem({ section, nodeId }: TocTreeItemProps) {
   const { sections } = useSelectSectionChildren(section.id)
 
   const children = sections.map((s) => <TocTreeItem key={s.id} nodeId={s.path} section={s} />)
 
   return (
-    <StyledTreeItem
-      ContentComponent={TocTreeItemContent}
-      // Currently there's no way to augment: https://github.com/mui/material-ui/issues/28668
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-      ContentProps={{ section } as any}
-      nodeId={nodeId}
-    >
+    <CustomTreeItem ContentProps={{ section }} nodeId={nodeId}>
       {children}
-    </StyledTreeItem>
+    </CustomTreeItem>
   )
 }
 

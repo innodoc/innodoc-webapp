@@ -52,7 +52,7 @@ function useManageExpanded() {
   }, [])
 
   // Currently selected nodes
-  const selected = currentSectionPath !== null ? [currentSectionPath] : emptySelected
+  const selected = currentSectionPath !== undefined ? [currentSectionPath] : emptySelected
 
   return { expanded, onNodeToggle, selected }
 }
