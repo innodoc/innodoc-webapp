@@ -4,7 +4,7 @@ import { gfmStrikethrough } from 'micromark-extension-gfm-strikethrough'
 import { gfmTable } from 'micromark-extension-gfm-table'
 import type { Processor } from 'unified'
 
-import { addExtension } from './utils'
+import addExtension from './addExtension'
 
 /** Selectively choose features from mdast-util-gfm */
 function remarkGfm(this: Processor) {

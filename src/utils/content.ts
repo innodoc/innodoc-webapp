@@ -1,5 +1,5 @@
 import { SLUG_RE } from '#constants'
-import type { ContentType } from '#types/common'
+import type { ContentType, ParserError } from '#types/common'
 import type { TranslatedSection } from '#types/entities/section'
 
 const slugRegExp = new RegExp(`^${SLUG_RE}$`)
@@ -28,4 +28,15 @@ export function formatSectionTitle(section: TranslatedSection, preferShort = fal
 /** Check if variable is a slug */
 export function isSlug(t: unknown) {
   return typeof t === 'string' && slugRegExp.test(t)
+}
+
+/** Serialize Markdown parser error */
+export function serializeParserError(error: ParserError) {
+  return {
+    column: error.column,
+    line: error.line,
+    reason: error.reason,
+    ruleId: error.ruleId,
+    source: error.source,
+  }
 }

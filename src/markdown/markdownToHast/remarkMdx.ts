@@ -3,7 +3,7 @@ import { mdxJsx } from 'micromark-extension-mdx-jsx'
 import { mdxMd } from 'micromark-extension-mdx-md'
 import type { Processor } from 'unified'
 
-import { addExtension } from './utils'
+import addExtension from './addExtension'
 
 /** Selectively choose features from MDX */
 function remarkMdx(this: Processor) {

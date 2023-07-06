@@ -2,10 +2,11 @@ import { RenderErrorPage } from 'vite-plugin-ssr/RenderErrorPage'
 
 import markdownToHast from '#markdown/markdownToHast/markdownToHast'
 import { onBeforeRender as onBeforeRenderDefault } from '#renderer/_default.page.server'
-import { addHastRoot } from '#store/slices/hastSlice'
+import { addHastResult } from '#store/slices/hastSlice'
 import type { ContentType } from '#types/common'
 import type { PageContextServer, PageContextUpdate } from '#types/pageContext'
-import { getStringIdField } from '#utils/content'
+import { isParserError } from '#types/typeGuards'
+import { getStringIdField, serializeParserError } from '#utils/content'
 import fetchContent from '#utils/fetchContent'
 
 /**
@@ -55,8 +56,17 @@ function makeOnBeforeRender(contentType: ContentType) {
 
     // Transform Markdown->hast
     const { content, hash } = data
-    const root = await markdownToHast(content)
-    store.dispatch(addHastRoot({ hash, root }))
+    try {
+      const root = await markdownToHast(content)
+      store.dispatch(addHastResult({ hash, root }))
+    } catch (error) {
+      if (isParserError(error)) {
+        store.dispatch(addHastResult({ hash, error: serializeParserError(error) }))
+      } else {
+        console.error('Received unhandled error from Markdown parser!')
+        throw error
+      }
+    }
 
     // Overwrite context with current preloaded state
     return {

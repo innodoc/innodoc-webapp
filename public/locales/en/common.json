@@ -43,16 +43,15 @@
     "failedToLoadPage": "Failed to load page: <1>{{pageSlug}}</1>",
     "failedToLoadSection": "Failed to load section: <1>{{sectionPath}}</1>",
     "invalidSvgRoot": "Invalid SVG root node",
-    "markdownRenderingError": "Markdown rendering error",
+    "markdownParsingError": {
+      "message": "There was an error in the Markdown code on line <1>{{line}}</1>, column <3>{{column}}</3>.",
+      "title": "Failed to parse Markdown"
+    },
     "pageLinkPageSlugProp": "<0>PageLink</0>: <2>{{pageSlug}}</2> not found",
     "retry": "Retry render",
     "sectionLinkSectionPathProp": "<0>SectionLink</0>: <2>{{sectionPath}}</2> not found",
     "specLinkToProp": "<0>Link</0>: <2>{{to}}</2> is invalid",
     "svgFetchFailed": "Failed to fetch SVG data",
-    "unexpectedHtmlNode": "Unexpected HTML node: <1>{{value}}</1>",
-    "unknownBlockElement": "Unknown block element: <1>{{type}}</1>",
-    "unknownContainerDirective": "Unknown container directive: <1>{{name}}</1>",
-    "unknownInlineElement": "Unknown inline element",
     "unknownIcon": "Unknown icon: <1>{{name}}</1>"
   },
   "languages": {

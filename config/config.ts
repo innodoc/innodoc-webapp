@@ -22,6 +22,21 @@ const aliasPackageJson = Object.fromEntries(
   ])
 )
 
+/* HACK
+ *
+ * Those packages have a browser-variant which depend on DOM API which isn't
+ * available in web workers. Vite currently doesn't support the export condition
+ * `worker`.
+ *
+ * https://github.com/vitejs/vite/issues/7439#issuecomment-1372732658
+ */
+const aliasWebworker = Object.fromEntries(
+  ['hast-util-from-html-isomorphic', 'decode-named-character-reference'].map((name) => [
+    name,
+    require.resolve(name),
+  ])
+)
+
 /* Configure tests */
 function testConfig(testMode: string) {
   const config: VitestInlineConfig = {
@@ -61,18 +76,7 @@ async function config() {
       ssr({ prerender: false }),
     ],
     resolve: {
-      alias: {
-        ...aliasPackageJson,
-        // Micromark depends on decode-named-character-reference, force the
-        // non-dom version as it's used in web worker.
-        // https://github.com/vitejs/vite/issues/7439#issuecomment-1372732658
-        'decode-named-character-reference': path.join(
-          projectDir,
-          'node_modules',
-          'decode-named-character-reference',
-          'index.js'
-        ),
-      },
+      alias: { ...aliasPackageJson, ...aliasWebworker },
     },
     ssr: {
       noExternal: [

@@ -3,7 +3,9 @@ import { h } from 'hastscript'
 import type { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
 
-import { isElement } from '#markdown/typeGuards'
+import { isElement } from '#markdown/hastToReact/typeGuards'
+
+// TODO how to do captions with MDX?
 
 /** Support captions */
 const rehypeCaption: Plugin<[], Root> = () => {

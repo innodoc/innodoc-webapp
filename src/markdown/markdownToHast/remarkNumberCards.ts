@@ -2,19 +2,18 @@ import type { Root } from 'mdast'
 import type { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
 
-import { isContainerDirective } from '#markdown/typeGuards'
+// TODO
 
-// TODO fix
 /** Number cards within one section */
 const remarkNumberCards: Plugin<[], Root> = () => {
   return (tree) => {
-    let ordinal = 0
+    // let ordinal = 0
 
     visit(tree, (node) => {
-      if (isContainerDirective(node)) {
-        node.data = 'data' in node ? { ...node.data, ordinal } : { ordinal }
-      }
-      ordinal += 1
+      // if (isContainerDirective(node)) {
+      //   node.data = 'data' in node ? { ...node.data, ordinal } : { ordinal }
+      // }
+      // ordinal += 1
     })
   }
 }

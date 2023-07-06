@@ -247,6 +247,7 @@ class Importer {
     return { frontmatter, source }
   }
 
+  // TODO convert to MDX
   /** Convert Pandoc syntax to remark-compatible generic directives */
   protected static convertPandocSyntax(content: string) {
     // Extract meta data

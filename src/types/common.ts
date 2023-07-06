@@ -1,3 +1,4 @@
+import type { Root } from 'hast'
 import type { LanguageCode } from 'iso-639-1'
 
 import type {
@@ -6,7 +7,6 @@ import type {
   PAGE_LINK_LOCACTIONS,
   SECTION_TYPES,
 } from '#constants'
-import type { HastRoot } from '#markdown/markdownToHast/markdownToHast'
 
 import type { ApiCourse } from './entities/course'
 import type { ApiPage } from './entities/page'
@@ -53,12 +53,27 @@ export interface WithContentHash {
   hash: string
 }
 
+/** Markdown content with hash */
 export interface ContentWithHash extends WithContentHash {
   /** Markdown string */
   content: string
 }
 
-export interface HastRootWithHash extends WithContentHash {
+/** Markdown parser result */
+export interface HastResult {
   /** hast Root */
-  root: HastRoot
+  root?: Root
+  error?: ParserError
+}
+
+/** Markdown parser result with hash */
+export interface HastResultWithHash extends HastResult, WithContentHash {}
+
+/** Markdown parser error */
+export interface ParserError {
+  column: number
+  line: number
+  reason: string
+  ruleId: string
+  source: string
 }

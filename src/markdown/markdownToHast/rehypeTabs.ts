@@ -2,7 +2,7 @@ import type { Root } from 'hast'
 import type { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
 
-import { isMdxJsxFlowDivElement } from '#markdown/typeGuards'
+import { isMdxJsxFlowElementHast } from './typeGuards'
 
 /** Support tabs */
 const rehypeTabs: Plugin<[], Root> = () => {
@@ -10,14 +10,14 @@ const rehypeTabs: Plugin<[], Root> = () => {
     let tabIndex = 0
 
     visit(tree, (node) => {
-      if (isMdxJsxFlowDivElement(node)) {
+      if (isMdxJsxFlowElementHast(node)) {
         // Add tab labels to tabs
         if (node.properties.name === 'Tabs') {
           tabIndex = 0
           node.properties.labels = []
           for (const child of node.children) {
             if (
-              isMdxJsxFlowDivElement(child) &&
+              isMdxJsxFlowElementHast(child) &&
               child.properties.name === 'TabItem' &&
               typeof child.properties.label === 'string'
             ) {

@@ -1,14 +1,11 @@
-import { type PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit'
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import type { HastRoot } from '#markdown/markdownToHast/markdownToHast'
 import type { RootState } from '#store/makeStore'
-import type { HastRootWithHash } from '#types/common'
-
-type ContentCache = Record<string, HastRoot>
+import type { HastResult, HastResultWithHash } from '#types/common'
 
 interface hastSliceState {
   /** Current content hast */
-  content: ContentCache
+  content: Record<string, HastResult>
 
   /** Processing Markdown */
   isProcessing: boolean
@@ -24,10 +21,9 @@ const hastSlice = createSlice({
   initialState,
 
   reducers: {
-    /** Add hast root */
-    addHastRoot(state, action: PayloadAction<HastRootWithHash>) {
-      const { hash, root } = action.payload
-      state.content[hash] = root
+    /** Add hast result */
+    addHastResult(state, { payload: { hash, ...result } }: PayloadAction<HastResultWithHash>) {
+      state.content[hash] = result
     },
 
     /** Change processing state */
@@ -40,14 +36,12 @@ const hastSlice = createSlice({
 /** Select hast slice */
 export const selectHast = (state: RootState) => state[hastSlice.name]
 
-/** Select hast root */
-export const makeSelectHastRootByHash = () =>
-  createSelector([selectHast, (state, hash?: string) => hash], (hastSlice, hash) =>
-    hash !== undefined ? hastSlice.content[hash] : undefined
-  )
+/** Select hast result */
+export const selectHastResultByHash = (state: RootState, hash: string) =>
+  selectHast(state).content[hash]
 
 /** Select processing state */
 export const selectIsProcessing = (state: RootState) => selectHast(state).isProcessing
 
-export const { addHastRoot, changeIsProcessing } = hastSlice.actions
+export const { addHastResult, changeIsProcessing } = hastSlice.actions
 export default hastSlice

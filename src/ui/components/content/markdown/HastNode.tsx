@@ -1,22 +1,27 @@
-import { useMemo } from 'react'
-
-import hastToReact from '#markdown/hastToReact'
-import type { HastRoot } from '#markdown/markdownToHast/markdownToHast'
+import hastToReact from '#markdown/hastToReact/hastToReact'
 import type { RootState } from '#store/makeStore'
-import { makeSelectHastRootByHash } from '#store/slices/hastSlice'
+import { selectHastResultByHash } from '#store/slices/hastSlice'
 import { useSelector } from '#ui/hooks/store/store'
 
-const emptyRoot: HastRoot = {
-  children: [],
-  type: 'root',
-}
+import MarkdownParserError from './MarkdownParserError'
 
 function HastNode({ hash }: HastNodeProps) {
-  const selectHastRootByHash = useMemo(makeSelectHastRootByHash, [])
-  const hastRootSelector = (state: RootState) => selectHastRootByHash(state, hash)
-  const hast = useSelector(hastRootSelector)
+  const hastResultSelector = (state: RootState) => selectHastResultByHash(state, hash ?? '')
+  const hastResult = useSelector(hastResultSelector)
 
-  return hastToReact(hast ?? emptyRoot)
+  if (hastResult === undefined) {
+    return null
+  }
+
+  if (hastResult.error !== undefined) {
+    return <MarkdownParserError error={hastResult.error} />
+  }
+
+  if (hastResult.root !== undefined) {
+    return hastToReact(hastResult.root)
+  }
+
+  return null
 }
 
 interface HastNodeProps {

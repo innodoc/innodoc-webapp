@@ -1,4 +1,4 @@
-import { isMdxJsxFlowDivElement, isRootDivElement } from '#markdown/typeGuards'
+import { isMdxJsxFlowDivElement, isRootDivElement } from '#markdown/hastToReact/typeGuards'
 import ExampleCard from '#ui/components/content/cards/ExampleCard'
 import ExerciseCard from '#ui/components/content/cards/ExerciseCard'
 import HintCard from '#ui/components/content/cards/HintCard'
@@ -54,20 +54,6 @@ function DivNode({ children, id, node }: MarkdownComponentProps<'div'>) {
       </Component>
     )
   }
-
-  // if (node.properties?.type === 'containerDirective') {
-  //   return (
-  //     <ContainerDirective id={id} node={node}>
-  //       {children}
-  //     </ContainerDirective>
-  //   )
-  // } else if (node.properties?.type === 'leafDirective') {
-  //   return (
-  //     <LeafDirective id={id} node={node}>
-  //       {children}
-  //     </LeafDirective>
-  //   )
-  // }
 
   return <div>{children}</div>
 }

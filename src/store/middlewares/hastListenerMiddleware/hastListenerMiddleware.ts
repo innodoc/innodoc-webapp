@@ -1,12 +1,11 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
 import type { AnyAction, PayloadAction } from '@reduxjs/toolkit'
 
-import type { RootState } from '#store/makeStore'
 import type { AppListenerEffectAPI, AppStartListening } from '#store/middlewares/types'
 import { changeRouteTransitionInfo } from '#store/slices/appSlice'
-import { addHastRoot, changeIsProcessing, selectHast } from '#store/slices/hastSlice'
-import type { ContentWithHash, WithContentHash, RouteInfo } from '#types/common'
-import { isHastRootWithHash, isWithContentHash } from '#types/typeGuards'
+import { addHastResult, changeIsProcessing, selectHastResultByHash } from '#store/slices/hastSlice'
+import type { ContentWithHash, RouteInfo } from '#types/common'
+import { isHastResultWithHash } from '#types/typeGuards'
 import fetchContent from '#utils/fetchContent'
 
 interface PageRouteInfo extends RouteInfo {
@@ -17,21 +16,11 @@ interface SectionRouteInfo extends RouteInfo {
   routeName: 'app:section'
 }
 
-interface WorkerErrorResponse extends WithContentHash {
-  /** Error message */
-  error: string
-}
-
 const hastListenerMiddleware = createListenerMiddleware()
 
 // Client-only, on server this happens in onBeforeRender hook
 if (!import.meta.env.SSR) {
   const startListening = hastListenerMiddleware.startListening as AppStartListening
-  const selectHastRootByHash = (state: RootState, hash: string) => selectHast(state).content[hash]
-
-  function isWorkerErrorResponse(obj: unknown): obj is WorkerErrorResponse {
-    return isWithContentHash(obj) && typeof (obj as WorkerErrorResponse).error === 'string'
-  }
 
   // Markdown->hast worker
   const worker = new Worker(new URL('./markdownToHastWorker.ts', import.meta.url), {
@@ -42,24 +31,22 @@ if (!import.meta.env.SSR) {
   // Process Markdown->hast in web worker
   async function processMarkdown(content: ContentWithHash, listenerApi: AppListenerEffectAPI) {
     // Cache miss?
-    if (selectHastRootByHash(listenerApi.getState(), content.hash) === undefined) {
+    if (selectHastResultByHash(listenerApi.getState(), content.hash) === undefined) {
       listenerApi.dispatch(changeIsProcessing(true))
 
       // Process Markdown->hast in web worker
-      function workerListener({ data: response }: MessageEvent) {
-        if (isHastRootWithHash(response) && response.hash === content.hash) {
-          listenerApi.dispatch(addHastRoot(response))
-        } else if (isWorkerErrorResponse(response) && response.hash === content.hash) {
-          // TODO handle error
-          console.error(new Error(response.error))
+      function workerListener({ data: result }: MessageEvent) {
+        if (isHastResultWithHash(result) && result.hash === content.hash) {
+          listenerApi.dispatch(addHastResult(result))
         }
       }
 
+      // Send job to worker
       try {
         worker.addEventListener('message', workerListener)
         worker.postMessage(content)
         await listenerApi.take(
-          (action) => addHastRoot.match(action) && action.payload.hash === content.hash
+          (action) => addHastResult.match(action) && action.payload.hash === content.hash
         )
       } finally {
         worker.removeEventListener('message', workerListener)

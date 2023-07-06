@@ -1,14 +1,15 @@
 import ISO6391, { type LanguageCode } from 'iso-639-1'
 
 import { CONTENT_TYPES, FRAGMENT_TYPES } from '#constants'
-import { isRootDivElement } from '#markdown/typeGuards'
+import { isRootDivElement } from '#markdown/hastToReact/typeGuards'
 import type { FragmentType } from '#types/entities/base'
 
 import type {
   ArbitraryObject,
   ContentType,
   ContentWithHash,
-  HastRootWithHash,
+  HastResultWithHash,
+  ParserError,
   WithContentHash,
 } from './common'
 
@@ -20,11 +21,14 @@ export function isArbitraryObject(obj: unknown): obj is ArbitraryObject {
 }
 
 /** Type guard for error object */
-export function isError(obj: unknown): obj is Error {
+export function isParserError(obj: unknown): obj is ParserError {
   return (
     isArbitraryObject(obj) &&
-    toString.call(obj).slice(8, -1) === 'Error' &&
-    typeof obj.message === 'string'
+    typeof obj.reason === 'string' &&
+    typeof obj.line === 'number' &&
+    typeof obj.column === 'number' &&
+    typeof obj.source === 'string' &&
+    typeof obj.ruleId === 'string'
   )
 }
 
@@ -53,7 +57,8 @@ export function isContentWithHash(obj: unknown): obj is ContentWithHash {
   return isWithContentHash(obj) && typeof (obj as ContentWithHash).content === 'string'
 }
 
-/** Type guard for `HastRootWithHash` */
-export function isHastRootWithHash(obj: unknown): obj is HastRootWithHash {
-  return isWithContentHash(obj) && isRootDivElement((obj as HastRootWithHash).root)
+/** Type guard for `HastResultWithHash` */
+export function isHastResultWithHash(obj: unknown): obj is HastResultWithHash {
+  const result = obj as HastResultWithHash
+  return isWithContentHash(obj) && (isRootDivElement(result.root) || isParserError(result.error))
 }
