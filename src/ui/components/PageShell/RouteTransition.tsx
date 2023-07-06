@@ -21,6 +21,24 @@ interface TransitionChildProps {
   children: ReactNode
 }
 
+/** Scroll to hash */
+function scrollToHash() {
+  let { hash } = window.location
+  hash = hash && hash.substring(1)
+  if (!hash) {
+    return
+  }
+
+  const el: HTMLElement | null = document.getElementById(hash)
+  if (!el) {
+    return
+  }
+
+  // If we call scrollIntoView() in here without a setTimeout it won't
+  // scroll properly.
+  window.setTimeout(() => el.scrollIntoView(), 0)
+}
+
 function RouteTransition({ children, pagePrev: PagePrev = () => null }: RouteTransitionProps) {
   const dispatch = useDispatch()
   const routeTransitionInfo = useSelector(selectRouteTransitionInfo)
@@ -44,16 +62,16 @@ function RouteTransition({ children, pagePrev: PagePrev = () => null }: RouteTra
     }
   }, [children, dispatch, fadeIn, isExited, isProcessing, routeTransitionInfo])
 
+  const onEntering = () => {
+    setIsExited(false)
+    scrollToHash()
+  }
+
   // Render old page on fade-out
   const content = fadeIn ? children : <PagePrev />
 
   return (
-    <Fade
-      appear={false}
-      in={fadeIn}
-      onEntered={() => setIsExited(false)}
-      onExited={() => setIsExited(true)}
-    >
+    <Fade appear={false} in={fadeIn} onEntering={onEntering} onExited={() => setIsExited(true)}>
       <TransitionChild>{content}</TransitionChild>
     </Fade>
   )
