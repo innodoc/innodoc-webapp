@@ -14,9 +14,9 @@ import Icon, { type IconProps } from '#ui/components/common/Icon'
 
 import type { CardType, ContentCardProps } from './types'
 
-const ExpandIcon = styled(({ expand, ...other }: ExpandIconProps) => {
-  return <Icon name="mdi:chevron-down" {...other} />
-})(({ theme, expand }) => ({
+const ExpandIcon = styled(Icon, {
+  shouldForwardProp: (prop) => prop !== 'expand',
+})<ExpandIconProps>(({ theme, expand }) => ({
   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
   marginLeft: 'auto',
   transition: theme.transitions.create('transform', {
@@ -28,11 +28,9 @@ interface ExpandIconProps extends Omit<IconProps, 'name'> {
   expand: boolean
 }
 
-const StyledCardHeader = styled(
-  ({ cardType, collapsible, dense, ...other }: StyledCardHeaderProps) => {
-    return <CardHeader {...other} />
-  }
-)(({ cardType, collapsible, dense, theme }) => ({
+const StyledCardHeader = styled(CardHeader, {
+  shouldForwardProp: (prop) => !['cardType', 'collapsible', 'dense'].includes(prop.toString()),
+})<StyledCardHeaderProps>(({ cardType, collapsible, dense, theme }) => ({
   backgroundColor: theme.vars.palette.Card[cardType].header,
   color: theme.vars.palette.Card[cardType].color,
   cursor: collapsible ? 'pointer' : 'inherit',
@@ -64,7 +62,9 @@ function Card({
     setExpanded((prev) => !prev)
   }
 
-  const action = collapsible ? <ExpandIcon aria-expanded={expanded} expand={expanded} /> : undefined
+  const action = collapsible ? (
+    <ExpandIcon aria-expanded={expanded} name="mdi:chevron-down" expand={expanded} />
+  ) : undefined
 
   const cardHeader = (
     <StyledCardHeader
