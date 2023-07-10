@@ -187,6 +187,10 @@
       "react-dom": "^18.2.0",
       "react-redux": "^8.0.7",
       "redux": "^4.2.1"
+    },
+    "patchedDependencies": {
+      "hast-util-from-html-isomorphic@1.0.0": "patches/hast-util-from-html-isomorphic@1.0.0.patch",
+      "decode-named-character-reference@1.0.2": "patches/decode-named-character-reference@1.0.2.patch"
     }
   },
   "msw": {

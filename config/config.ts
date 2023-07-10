@@ -15,25 +15,10 @@ import buildIcons from './buildIcons/buildIcons'
 const projectDir = path.resolve(__dirname, '..')
 
 /* Use package.json import mapping as source of truth for aliases */
-const aliasPackageJson = Object.fromEntries(
+const alias = Object.fromEntries(
   Object.entries(imports).map(([key, val]) => [
     key.replace('/*', ''),
     path.join(projectDir, val.replace('/*', '')),
-  ])
-)
-
-/* HACK
- *
- * Those packages have a browser-variant which depend on DOM API which isn't
- * available in web workers. Vite currently doesn't support the export condition
- * `worker`.
- *
- * https://github.com/vitejs/vite/issues/7439#issuecomment-1372732658
- */
-const aliasWebworker = Object.fromEntries(
-  ['hast-util-from-html-isomorphic', 'decode-named-character-reference'].map((name) => [
-    name,
-    require.resolve(name),
   ])
 )
 
@@ -75,9 +60,7 @@ async function config() {
       react(),
       ssr({ prerender: false }),
     ],
-    resolve: {
-      alias: { ...aliasPackageJson, ...aliasWebworker },
-    },
+    resolve: { alias },
     ssr: {
       noExternal: [
         '@reduxjs/toolkit', // otherwise can't be loaded on prerendering
