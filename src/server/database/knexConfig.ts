@@ -1,7 +1,4 @@
 import path from 'path'
-import { fileURLToPath } from 'url'
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 import type { Knex } from 'knex'
 
@@ -14,7 +11,7 @@ const knexConfig: Knex.Config = {
   debug: config.dbDebug,
   pool: { min: 0, max: 7 },
   migrations: {
-    directory: path.resolve(__dirname, 'migrations'),
+    directory: path.join(config.rootDir, 'src', 'server', 'database', 'migrations'),
     tableName: 'migrations',
   },
 }

@@ -16,11 +16,11 @@ function SpanNode({ children, id, node, ...other }: MarkdownComponentProps<'span
       return null
     }
 
-    return (
-      <Component id={id} nodeProps={node.properties}>
-        {children}
-      </Component>
-    )
+    // return (
+    //   <Component id={id} nodeProps={node.properties}>
+    //     {children}
+    //   </Component>
+    // )
   }
 
   // Pass props for KaTeX nodes

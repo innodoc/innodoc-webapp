@@ -1,11 +1,13 @@
-import { grey } from '@mui/material/colors'
 import {
-  type CssVarsThemeOptions,
-  experimental_extendTheme as extendTheme,
   type ThemeOptions,
+  experimental_extendTheme as extendTheme,
   responsiveFontSizes,
-} from '@mui/material/styles'
-import type { DefaultColorScheme } from '@mui/material/styles/experimental_extendTheme'
+} from '@mui/material'
+// import { grey } from '@mui/material/colors' // FIXME get's imported as CJS in prod
+import type {
+  CssVarsThemeOptions,
+  DefaultColorScheme,
+} from '@mui/material/styles/experimental_extendTheme'
 
 // Augment theme type
 import type {} from '@mui/material/themeCssVarsAugmentation'
@@ -77,7 +79,8 @@ const cssVarsOpts = {
     light: {
       palette: {
         background: {
-          default: grey[200],
+          // default: grey[200],
+          default: '#eee',
         },
         Card: CARD_TYPES.reduce(
           (acc, cardType) => ({ ...acc, [cardType]: getCardColors('light', cardType) }),
@@ -155,11 +158,6 @@ const baseThemeOpts: ThemeOptions = {
   },
 }
 
-function makeTheme(themeOpts: ThemeOptions = baseThemeOpts) {
-  return responsiveFontSizes(extendTheme(cssVarsOpts, themeOpts))
-}
+const theme = responsiveFontSizes(extendTheme(cssVarsOpts, baseThemeOpts))
 
-const theme = makeTheme()
-
-export { baseThemeOpts, makeTheme }
 export default theme

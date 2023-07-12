@@ -1,6 +1,9 @@
 import { CacheProvider, type EmotionCache } from '@emotion/react'
-import { CssBaseline, GlobalStyles } from '@mui/material'
-import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles'
+import {
+  CssBaseline,
+  Experimental_CssVarsProvider as CssVarsProvider,
+  GlobalStyles,
+} from '@mui/material'
 import type { i18n as I18n } from 'i18next'
 import { StrictMode } from 'react'
 import { HelmetProvider } from 'react-helmet-async'

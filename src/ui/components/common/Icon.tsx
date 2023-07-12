@@ -2,7 +2,7 @@ import { SvgIcon as MuiSvgIcon, type SxProps, type Theme } from '@mui/material'
 import { type ComponentProps } from 'react'
 import { Trans } from 'react-i18next'
 
-import iconBundle from '#build/iconBundle.json'
+import iconBundle from '#icon-bundle' assert { type: 'json' }
 
 import Code from './Code'
 import InlineError from './error/InlineError'

@@ -64,11 +64,12 @@ async function render({ isHydration, Page, preloadedState, routeInfo }: PageCont
   }
 
   // Enable API mock
-  // TODO: check that it doesn't get into production build
-  if (import.meta.env.INNODOC_API_MOCK === 'true' && mockWorker === undefined) {
-    const makeWorker = (await import('../../tests/mocks/browser')).default
-    mockWorker = makeWorker(import.meta.env.INNODOC_APP_ROOT)
-    await mockWorker.start({ onUnhandledRequest: 'bypass' })
+  if (import.meta.env.DEV) {
+    if (import.meta.env.INNODOC_API_MOCK === 'true' && mockWorker === undefined) {
+      const makeWorker = (await import('../../tests/mocks/browser')).default
+      mockWorker = makeWorker(import.meta.env.INNODOC_APP_ROOT)
+      await mockWorker.start({ onUnhandledRequest: 'bypass' })
+    }
   }
 
   if (store === undefined) {

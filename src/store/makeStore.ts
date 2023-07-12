@@ -25,7 +25,7 @@ function middleware(getDefaultMiddleware: CurriedGetDefaultMiddleware<RootState>
 /** Store factory */
 function makeStore(preloadedState?: PreloadedState<RootState>) {
   return configureStore({
-    devTools: import.meta.env.MODE === 'development',
+    devTools: import.meta.env.DEV,
     middleware,
     preloadedState,
     reducer,

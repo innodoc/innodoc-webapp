@@ -1,5 +1,4 @@
-import { Box, IconButton, Tooltip } from '@mui/material'
-import { useColorScheme } from '@mui/material/styles'
+import { Box, IconButton, Tooltip, useColorScheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import Icon from '#ui/components/common/Icon'

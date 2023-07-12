@@ -8,8 +8,6 @@ import config from './config'
 import frontendHandler from './frontendHandler'
 import { isErrnoException } from './utils'
 
-void startServer()
-
 async function setupServeStatic(app: Express) {
   const sirv = (await import('sirv')).default
 
@@ -35,27 +33,21 @@ async function setupViteDevServer(app: Express) {
   app.use(viteDevMiddleware.middlewares)
 }
 
-async function enableApiMock() {
-  const { makeServer } = await import('../../tests/mocks/node')
-  const mockServer = makeServer(config.appRoot)
-  mockServer.listen({ onUnhandledRequest: 'error' })
-  console.log('Mock API server started...')
-}
-
-async function startServer() {
+async function createServer() {
   const app = express()
 
   app.use(localeMiddleware())
+
   if (config.isProduction) {
+    // Serve static assets in production
     await setupServeStatic(app)
   } else {
+    // Spin up Vite dev server
     await setupViteDevServer(app)
   }
 
   // Enable API
-  if (config.enableMockApi) {
-    await enableApiMock()
-  } else {
+  if (!config.enableMockApi) {
     app.use(API_PREFIX, apiRouter)
   }
 
@@ -66,10 +58,14 @@ async function startServer() {
       next()
     })
   }
+
   app.use(frontendHandler)
 
   // TODO: Add error handler
 
   app.listen({ host: config.host, port: config.port })
-  console.log(`Server running at http://${config.host}:${config.port}`)
+
+  return app
 }
+
+export default createServer

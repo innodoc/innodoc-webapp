@@ -1,4 +1,6 @@
 import i18next, { type i18n } from 'i18next'
+import type { FsBackendOptions } from 'i18next-fs-backend'
+import type { HttpBackendOptions } from 'i18next-http-backend'
 import type { LanguageCode } from 'iso-639-1'
 import { initReactI18next } from 'react-i18next'
 
@@ -6,15 +8,16 @@ import type { Store } from '#store/makeStore'
 import courses from '#store/slices/entities/courses'
 import type { ApiCourse } from '#types/entities/course'
 
-const isDev = import.meta.env.MODE === 'development'
 const isBrowser = typeof window !== 'undefined'
 
 const NAMESPACE = 'common'
 
+type I18nBackend = Parameters<i18n['use']>[0]
+
 /** i18next instance singleton factory */
 async function getI18n(
-  backend: Parameters<i18n['use']>[0],
-  backendOpts: Record<string, unknown>,
+  backend: I18nBackend,
+  backendOpts: FsBackendOptions | HttpBackendOptions,
   currentLocale: LanguageCode | 'cimode',
   courseSlug: ApiCourse['slug'] | null,
   store: Store
@@ -54,7 +57,7 @@ async function getI18n(
       load: 'languageOnly', // look-up using two-letter language only
       ns: NAMESPACE,
       preload: [currentLocale],
-      saveMissing: !isBrowser && isDev,
+      saveMissing: !isBrowser && import.meta.env.DEV,
       supportedLngs: course !== undefined ? course.locales : [],
     })
 

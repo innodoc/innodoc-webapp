@@ -3,8 +3,8 @@ import { fileURLToPath } from 'url'
 
 import createCache from '@emotion/cache'
 import createEmotionServer from '@emotion/server/create-instance'
-import { getInitColorSchemeScript } from '@mui/material/styles'
-import I18NextFsBackend from 'i18next-fs-backend'
+import { getInitColorSchemeScript } from '@mui/material'
+import I18NextFsBackend, { type FsBackendOptions } from 'i18next-fs-backend'
 import { renderToStaticMarkup } from 'react-dom/server'
 import type { FilledContext } from 'react-helmet-async'
 import { RenderErrorPage } from 'vite-plugin-ssr/RenderErrorPage'
@@ -39,12 +39,18 @@ import renderToHtml from '#utils/ssr/renderToHtml'
 
 const routeManager = getRouteManager()
 
-function getI18nBackendOpts() {
+function getI18nBackendOpts(): FsBackendOptions {
   const dirname = path.dirname(fileURLToPath(import.meta.url))
-  const baseLocalesPath = path.resolve(dirname, '..', '..', 'public', 'locales')
-  return {
-    loadPath: path.join(baseLocalesPath, '{{lng}}', '{{ns}}.json'),
-    addPath: path.join(baseLocalesPath, '{{lng}}', '{{ns}}.missing.json'),
+
+  if (import.meta.env.PROD) {
+    return { loadPath: path.resolve(dirname, '..', 'locales', '{{lng}}', '{{ns}}.json') }
+  } else {
+    const rootDir = path.resolve(dirname, '..', '..')
+    const baseLocalesPath = path.join(rootDir, 'public', 'locales')
+    return {
+      loadPath: path.join(baseLocalesPath, '{{lng}}', '{{ns}}.json'),
+      addPath: path.join(baseLocalesPath, '{{lng}}', '{{ns}}.missing.json'),
+    }
   }
 }
 

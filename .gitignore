@@ -8,7 +8,6 @@ dist
 **/public/locales/*/*.missing.json
 *.local
 .env
-/build
 /vite.config.ts.timestamp-*.mjs
 /stats.html
 /test-results/

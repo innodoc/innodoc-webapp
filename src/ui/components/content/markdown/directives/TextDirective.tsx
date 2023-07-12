@@ -22,12 +22,12 @@ function isTextDirectiveName(name: unknown): name is TextDirectiveName {
 function TextDirective({ children, id, node }: TextDirectiveProps) {
   const name = node.properties?.name
   if (isTextDirectiveName(name)) {
-    const Component = componentMap[name]
-    return (
-      <Component id={id} {...node.properties}>
-        {children}
-      </Component>
-    )
+    // const Component = componentMap[name]
+    // return (
+    //   <Component id={id} {...node.properties}>
+    //     {children}
+    //   </Component>
+    // )
   }
   return null
 }

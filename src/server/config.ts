@@ -9,8 +9,10 @@ import {
 import type { CourseSlugMode } from '#types/common'
 import loadDotEnv from '#utils/loadDotEnv'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const rootDir = path.resolve(__dirname, '..', '..')
+let rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+if (process.env.NODE_ENV !== 'production') {
+  rootDir = path.resolve(rootDir, '..')
+}
 
 loadDotEnv(path.resolve(rootDir))
 
@@ -40,7 +42,7 @@ const config: ServerConfig = {
   appRoot: process.env.INNODOC_APP_ROOT,
   isProduction: process.env.NODE_ENV === 'production',
   rootDir,
-  distDir: path.join(rootDir, 'dist'),
+  distDir: path.join(rootDir, 'dist', 'client'),
   dbConnection: process.env.DB_CONNECTION,
   dbDebug: process.env.DB_DEBUG === 'true',
   courseSlugMode: isCourseSlugMode(process.env.INNODOC_COURSE_SLUG_MODE)
