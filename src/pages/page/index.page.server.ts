@@ -1,3 +1,3 @@
-import makeOnBeforeRender from '#utils/ssr/makeOnBeforeRender'
+import makeOnBeforeRender from '#renderer/server/makeOnBeforeRenderContent'
 
 export const onBeforeRender = makeOnBeforeRender('page')

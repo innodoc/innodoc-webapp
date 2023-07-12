@@ -26,4 +26,4 @@ interface ErrorPageProps {
   is404?: boolean
 }
 
-export { ErrorPage as Page }
+export default ErrorPage

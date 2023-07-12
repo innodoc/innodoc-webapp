@@ -1,7 +1,7 @@
 import { selectRouteInfo } from '#store/slices/appSlice'
 import { useGetPageContentQuery } from '#store/slices/entities/pages'
+import ContentPage from '#ui/components/app/ContentPage'
 import PageHeader from '#ui/components/common/PageHeader'
-import ContentPage from '#ui/components/PageShell/ContentPage'
 import { useSelector } from '#ui/hooks/store/store'
 import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
 import useSelectPage from '#ui/hooks/store/useSelectPage'

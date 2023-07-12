@@ -15,7 +15,7 @@ import fetchContent from '#utils/fetchContent'
  * Prepare state for one-pass rendering on server. Read route parameter,
  * fetch content and transform Markdown->hast.
  */
-function makeOnBeforeRender(contentType: ContentType) {
+function makeOnBeforeRenderContent(contentType: ContentType) {
   return async (pageContextInput: PageContextServer): Promise<PageContextUpdate> => {
     const stringIdField = getStringIdField(contentType)
 
@@ -78,4 +78,4 @@ function makeOnBeforeRender(contentType: ContentType) {
   }
 }
 
-export default makeOnBeforeRender
+export default makeOnBeforeRenderContent

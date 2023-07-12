@@ -18,7 +18,7 @@ import pages from '#store/slices/entities/pages'
 import sections from '#store/slices/entities/sections'
 import type { ApiPage } from '#types/entities/page'
 import type { ApiSection } from '#types/entities/section'
-import PageShell from '#ui/components/PageShell/PageShell'
+import PageShell from '#ui/components/app/PageShell/PageShell'
 import getI18n from '#utils/getI18n'
 
 import getCourses from '../mocks/getCourses'
