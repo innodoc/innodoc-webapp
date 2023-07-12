@@ -3,7 +3,6 @@ import {
   experimental_extendTheme as extendTheme,
   responsiveFontSizes,
 } from '@mui/material'
-// import { grey } from '@mui/material/colors' // FIXME get's imported as CJS in prod
 import type {
   CssVarsThemeOptions,
   DefaultColorScheme,
@@ -79,8 +78,7 @@ const cssVarsOpts = {
     light: {
       palette: {
         background: {
-          // default: grey[200],
-          default: '#eee',
+          default: '#eee', // grey[200]
         },
         Card: CARD_TYPES.reduce(
           (acc, cardType) => ({ ...acc, [cardType]: getCardColors('light', cardType) }),
