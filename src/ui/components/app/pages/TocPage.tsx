@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import PageHeader from '#ui/components/common/PageHeader'
 import StaticToc from '#ui/components/toc/StaticToc'
 
-function Page() {
+function TocPage() {
   const { t } = useTranslation()
   return (
     <>
@@ -13,4 +13,4 @@ function Page() {
   )
 }
 
-export { Page }
+export default TocPage

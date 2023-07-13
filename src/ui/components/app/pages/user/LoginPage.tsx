@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import AppLink from '#ui/components/common/link/AppLink'
 import PageHeader from '#ui/components/common/PageHeader'
 
-function Page() {
+function LoginPage() {
   const { t } = useTranslation()
 
   // TODO
@@ -60,4 +60,4 @@ function Page() {
   )
 }
 
-export { Page }
+export default LoginPage

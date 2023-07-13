@@ -6,7 +6,7 @@ import { useSelector } from '#ui/hooks/store/store'
 import useSelectCurrentCourse from '#ui/hooks/store/useSelectCurrentCourse'
 import useSelectPage from '#ui/hooks/store/useSelectPage'
 
-function Page() {
+function PagePage() {
   const { course } = useSelectCurrentCourse()
   const { courseSlug, locale, pageSlug } = useSelector(selectRouteInfo)
   const { page } = useSelectPage(pageSlug)
@@ -35,4 +35,4 @@ function Page() {
   )
 }
 
-export { Page }
+export default PagePage
