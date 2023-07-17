@@ -10,13 +10,11 @@ import componentsMap from '#ui/components/content/markdown/componentsMap'
  *
  * Transform hast to JSX elements.
  */
-const processor = unified()
-  .use(rehypeReact, {
-    components: componentsMap,
-    createElement,
-    passNode: true,
-  })
-  .freeze()
+const processor = unified().use(rehypeReact, {
+  components: componentsMap,
+  createElement,
+  passNode: true,
+})
 
 function hastToReact(hast: Root) {
   return processor.stringify(hast)

@@ -8,8 +8,12 @@ import addExtension from './addExtension'
 /** Selectively choose features from MDX */
 function remarkMdx(this: Processor) {
   const data = this.data()
+  // Turn some CommonMark features off that conflict with MDX
+  // (HTML, `codeIndented`, autolinks)
   addExtension(data, 'micromarkExtensions', mdxMd)
+  // micromark JSX support
   addExtension(data, 'micromarkExtensions', mdxJsx())
+  // mdast JSX extension
   addExtension(data, 'fromMarkdownExtensions', mdxJsxFromMarkdown())
 }
 

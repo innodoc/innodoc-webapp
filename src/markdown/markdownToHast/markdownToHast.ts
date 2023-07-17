@@ -6,7 +6,6 @@ import remarkInlineLinks from 'remark-inline-links'
 import remarkMath from 'remark-math'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
-import remarkSqueezeParagraphs from 'remark-squeeze-paragraphs'
 import { unified } from 'unified'
 
 // import rehypeCaption from './rehypeCaption'
@@ -25,7 +24,6 @@ import remarkRewriteAppLinks from './remarkRewriteAppLinks'
  */
 const processor = unified()
   .use(remarkParse)
-  .use(remarkSqueezeParagraphs)
   .use(remarkMdx)
   .use(remarkHeadingId)
   .use(remarkInlineLinks)
@@ -39,7 +37,6 @@ const processor = unified()
   // .use(rehypeTabs)
   // .use(rehypeSanitize, sanitizeSchema)
   .use(rehypeKatex, { output: 'html' })
-  .freeze()
 
 /** Transform Markdown code to hast. */
 async function markdownToHast(markdownCode: string) {
