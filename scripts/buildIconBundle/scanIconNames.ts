@@ -1,12 +1,14 @@
 import path from 'path'
 
-import { AST_NODE_TYPES, ESLintUtils } from '@typescript-eslint/utils'
-import { isNodeOfType } from '@typescript-eslint/utils/dist/ast-utils'
+// FIXME Somehow TS complains about not finding '@typescript-eslint/utils'
+import { ASTUtils, AST_NODE_TYPES, ESLintUtils } from '@typescript-eslint/utils'
 import { ESLint, type Rule } from 'eslint'
 
-const isJSXIdentifier = isNodeOfType(AST_NODE_TYPES.JSXIdentifier)
-const isJSXAttribute = isNodeOfType(AST_NODE_TYPES.JSXAttribute)
-const isLiteral = isNodeOfType(AST_NODE_TYPES.Literal)
+const isJSXIdentifier = ASTUtils.isNodeOfType(AST_NODE_TYPES.JSXIdentifier)
+const isJSXAttribute = ASTUtils.isNodeOfType<AST_NODE_TYPES.JSXAttribute>(
+  AST_NODE_TYPES.JSXAttribute
+)
+const isLiteral = ASTUtils.isNodeOfType(AST_NODE_TYPES.Literal)
 
 const PLUGIN_NAME = 'eslint-scan-icon-names'
 const RULE_NAME = 'icon-name'
