@@ -1,4 +1,7 @@
-import { isMdxJsxFlowDivElement, isRootDivElement } from '#markdown/hastToReact/typeGuards'
+import {
+  isHastMdxJsxFlowDivElement,
+  isHastRootDivElement,
+} from '#types/markdown/typeGuardsCustomHast'
 import ExampleCard from '#ui/components/content/cards/ExampleCard'
 import ExerciseCard from '#ui/components/content/cards/ExerciseCard'
 import HintCard from '#ui/components/content/cards/HintCard'
@@ -33,16 +36,16 @@ const flowDivComponentMap = {
   TabItem,
 }
 
-export type MdxJsxFlowDivElementName = keyof typeof flowDivComponentMap
+export type HastMdxJsxFlowDivElementName = keyof typeof flowDivComponentMap
 
 function DivNode({ children, id, node }: MarkdownComponentProps<'div'>) {
   // Document root, avoid wrapping in <div>
   // https://github.com/rehypejs/rehype-react/issues/36
-  if (isRootDivElement(node)) {
+  if (isHastRootDivElement(node)) {
     return <>{children}</>
   }
 
-  if (isMdxJsxFlowDivElement(node)) {
+  if (isHastMdxJsxFlowDivElement(node)) {
     const Component = flowDivComponentMap[node.properties.name]
     if (!Component) {
       return null

@@ -3,7 +3,7 @@ import { root, paragraph, text, heading, list, listItem, code } from 'mdast-buil
 import stringify from 'remark-stringify'
 import { unified } from 'unified'
 
-import { isMdastRoot } from '#markdown/markdownToHast/typeGuards'
+import { isMdastRoot } from '#types/markdown/typeGuardsMdast'
 import { capitalize } from '#utils/content'
 
 import type { Content, ContentOptions, Fakers, NodeMakers } from './types'

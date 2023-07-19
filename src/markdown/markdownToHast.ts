@@ -1,5 +1,5 @@
 import rehypeKatex from 'rehype-katex'
-// import rehypeSanitize from 'rehype-sanitize'
+import rehypeSanitize from 'rehype-sanitize'
 import rehypeSlug from 'rehype-slug'
 import remarkHeadingId from 'remark-heading-id'
 import remarkInlineLinks from 'remark-inline-links'
@@ -8,14 +8,12 @@ import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import { unified } from 'unified'
 
-// import rehypeCaption from './rehypeCaption'
-// import rehypeTabs from './rehypeTabs'
-import handlers from './handlers'
-import remarkGfm from './remarkGfm'
-import remarkMdx from './remarkMdx'
-// import remarkNumberCards from './remarkNumberCards'
-import remarkRewriteAppLinks from './remarkRewriteAppLinks'
-// import sanitizeSchema from './sanitizeSchema'
+import rehypeInnodoc from './plugins/rehypeInnodoc/rehypeInnodoc'
+import remarkGfm from './plugins/remark/remarkGfm'
+import remarkInnodoc from './plugins/remark/remarkInnodoc/remarkInnodoc'
+import remarkMdx from './plugins/remark/remarkMdx'
+import remarkRehypeHandlers from './plugins/remark/remarkRehypeHandlers'
+import sanitizationConfig from './sanitizationConfig'
 
 /**
  * Unified processor (parse/run phase)
@@ -28,14 +26,12 @@ const processor = unified()
   .use(remarkHeadingId)
   .use(remarkInlineLinks)
   .use(remarkGfm)
-  .use(remarkRewriteAppLinks)
-  // .use(remarkNumberCards)
+  .use(remarkInnodoc)
   .use(remarkMath)
-  .use(remarkRehype, { handlers })
+  .use(remarkRehype, { handlers: remarkRehypeHandlers })
   .use(rehypeSlug)
-  // .use(rehypeCaption)
-  // .use(rehypeTabs)
-  // .use(rehypeSanitize, sanitizeSchema)
+  .use(rehypeInnodoc)
+  .use(rehypeSanitize, sanitizationConfig)
   .use(rehypeKatex, { output: 'html' })
 
 /** Transform Markdown code to hast. */

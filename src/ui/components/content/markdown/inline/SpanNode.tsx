@@ -1,4 +1,4 @@
-import { isMdxJsxTextSpanElement } from '#markdown/hastToReact/typeGuards'
+import { isHastMdxJsxTextSpanElement } from '#types/markdown/typeGuardsCustomHast'
 import TextQuestion from '#ui/components/content/exercises/questions/TextQuestion'
 import type { MarkdownComponentProps } from '#ui/components/content/markdown/types'
 
@@ -7,10 +7,10 @@ const flowSpanComponentMap = {
   TextQuestion,
 }
 
-export type MdxJsxTextSpanElementName = keyof typeof flowSpanComponentMap
+export type HastMdxJsxTextSpanElementName = keyof typeof flowSpanComponentMap
 
 function SpanNode({ children, id, node, ...other }: MarkdownComponentProps<'span'>) {
-  if (isMdxJsxTextSpanElement(node)) {
+  if (isHastMdxJsxTextSpanElement(node)) {
     const Component = flowSpanComponentMap[node.properties.name]
     if (!Component) {
       return null

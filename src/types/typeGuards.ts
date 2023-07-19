@@ -1,8 +1,6 @@
 import ISO6391, { type LanguageCode } from 'iso-639-1'
 
 import { CONTENT_TYPES, FRAGMENT_TYPES } from '#constants'
-import { isRootDivElement } from '#markdown/hastToReact/typeGuards'
-import type { FragmentType } from '#types/entities/base'
 
 import type {
   ArbitraryObject,
@@ -12,6 +10,8 @@ import type {
   ParserError,
   WithContentHash,
 } from './common'
+import type { FragmentType } from './entities/base'
+import { isHastRootDivElement } from './markdown/typeGuardsCustomHast'
 
 const languageCodes = ISO6391.getAllCodes()
 
@@ -60,5 +60,7 @@ export function isContentWithHash(obj: unknown): obj is ContentWithHash {
 /** Type guard for `HastResultWithHash` */
 export function isHastResultWithHash(obj: unknown): obj is HastResultWithHash {
   const result = obj as HastResultWithHash
-  return isWithContentHash(obj) && (isRootDivElement(result.root) || isParserError(result.error))
+  return (
+    isWithContentHash(obj) && (isHastRootDivElement(result.root) || isParserError(result.error))
+  )
 }

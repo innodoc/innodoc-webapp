@@ -12,6 +12,7 @@ const checkPackages = [
 
   // markdown stuff (this lead to inconsistent versions)
   '@types/mdast',
+  '@types/unist',
   'mdast-util-from-markdown',
   'mdast-util-to-string',
   'micromark',

@@ -8,13 +8,13 @@ import { TABS_PROPERTIES } from '#ui/components/content/tabs/Tabs'
 import { VIDEO_PROPERTIES } from '#ui/components/content/video/Video'
 import { YOUTUBE_VIDEO_PROPERTIES } from '#ui/components/content/video/YouTubeVideo'
 
-const sanitizeSchema: Schema = {
+const sanitizationConfig: Schema = {
   ...defaultSchema,
   attributes: {
     ...defaultSchema.attributes,
 
     div: [
-      ...(defaultSchema.attributes?.div || []),
+      ...(defaultSchema.attributes?.div ?? []),
       ['className', 'math', 'math-display'], // rehype-katex
       ...GRID_ITEM_PROPERTIES,
       ...TABS_PROPERTIES,
@@ -24,7 +24,7 @@ const sanitizeSchema: Schema = {
     ],
 
     span: [
-      ...(defaultSchema.attributes?.span || []),
+      ...(defaultSchema.attributes?.span ?? []),
       ['className', 'math', 'math-inline'],
       ...QUESTION_PROPERTIES,
     ],
@@ -32,8 +32,8 @@ const sanitizeSchema: Schema = {
   clobber: undefined,
   protocols: {
     ...defaultSchema.protocols,
-    href: [...(defaultSchema.protocols?.href || []), 'app'],
+    href: [...(defaultSchema.protocols?.href ?? []), 'app'],
   },
 }
 
-export default sanitizeSchema
+export default sanitizationConfig

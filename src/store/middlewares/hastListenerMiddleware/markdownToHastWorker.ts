@@ -1,4 +1,4 @@
-import markdownToHast from '#markdown/markdownToHast/markdownToHast'
+import markdownToHast from '#markdown/markdownToHast'
 import { isParserError, isContentWithHash } from '#types/typeGuards'
 import { serializeParserError } from '#utils/content'
 

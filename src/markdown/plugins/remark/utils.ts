@@ -1,4 +1,4 @@
-function addExtension<T>(data: Record<string, unknown>, field: string, extension: T) {
+export function addExtension<T>(data: Record<string, unknown>, field: string, extension: T) {
   let list: T[]
   if (Array.isArray(data[field])) {
     list = data[field] as T[]
@@ -7,5 +7,3 @@ function addExtension<T>(data: Record<string, unknown>, field: string, extension
   }
   list.push(extension)
 }
-
-export default addExtension

@@ -1,6 +1,6 @@
 import { RenderErrorPage } from 'vite-plugin-ssr/RenderErrorPage'
 
-import markdownToHast from '#markdown/markdownToHast/markdownToHast'
+import markdownToHast from '#markdown/markdownToHast'
 import { onBeforeRender as onBeforeRenderDefault } from '#renderer/_default.page.server'
 import { addHastResult } from '#store/slices/hastSlice'
 import type { ContentType } from '#types/common'

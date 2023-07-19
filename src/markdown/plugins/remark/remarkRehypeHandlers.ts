@@ -1,18 +1,22 @@
 import type { MdxJsxAttribute } from 'mdast-util-mdx-jsx'
 import type { Handlers } from 'mdast-util-to-hast'
-import type { MdastNodes } from 'mdast-util-to-hast/lib'
 
-import { isMdxJsxAttribute, isMdxJsxFlowElement, isMdxJsxTextElement } from './typeGuards'
+import {
+  isMdxJsxAttribute,
+  isMdxJsxFlowElement,
+  isMdxJsxTextElement,
+} from '#types/markdown/typeGuardsMdast'
 
-const handlers: Handlers = {
+const remarkRehypeHandlers: Handlers = {
   // Annotate root element, so we can render as `React.Fragment`
-  root: (state, node: MdastNodes) => ({
+  root: (state, node) => ({
     type: 'element',
     tagName: 'div',
     properties: { root: 'true' },
     children: state.all(node),
   }),
 
+  // Turn MdxJsxFlowElement to `div`
   mdxJsxFlowElement: (state, node) => {
     if (isMdxJsxFlowElement(node) && node.name !== null) {
       const attributes = node.attributes.filter((attr): attr is MdxJsxAttribute =>
@@ -38,6 +42,7 @@ const handlers: Handlers = {
     }
   },
 
+  // Turn MdxJsxTextElement to `span`
   mdxJsxTextElement: (state, node) => {
     if (isMdxJsxTextElement(node) && node.name !== null) {
       const attributes = node.attributes.filter((attr): attr is MdxJsxAttribute =>
@@ -64,4 +69,4 @@ const handlers: Handlers = {
   },
 }
 
-export default handlers
+export default remarkRehypeHandlers

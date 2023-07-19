@@ -1,4 +1,4 @@
-import hastToReact from '#markdown/hastToReact/hastToReact'
+import hastToReact from '#markdown/hastToReact'
 import type { RootState } from '#store/makeStore'
 import { selectHastResultByHash } from '#store/slices/hastSlice'
 import { useSelector } from '#ui/hooks/store/store'
