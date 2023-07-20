@@ -1,0 +1,18 @@
+{
+  "extends": "@innodoc/ts-config/base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["dom", "dom.iterable", "ESNext"],
+    "noEmit": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "target": "ESNext",
+    "types": ["vite/client", "vitest/globals"],
+    "useDefineForClassFields": true
+  },
+  "include": ["src", "vite.config.ts"],
+  "exclude": ["public"]
+}

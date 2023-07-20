@@ -1,0 +1,16 @@
+{
+  "name": "@innodoc/constants",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/constants.ts",
+  "sideEffects": false,
+  "scripts": {
+    "lint:eslint": "eslint .",
+    "lint:type-check": "tsc --noEmit -p ."
+  },
+  "devDependencies": {
+    "@innodoc/eslint-config": "workspace:^",
+    "@innodoc/ts-config": "workspace:^"
+  }
+}

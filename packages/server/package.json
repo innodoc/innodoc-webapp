@@ -1,0 +1,50 @@
+{
+  "name": "@innodoc/server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./config": "./src/config.ts",
+    "./database": "./src/database/getDatabase.ts",
+    "./types": "./src/types.ts"
+  },
+  "imports": {
+    "#config": "./src/config.ts",
+    "#database": "./src/database/getDatabase.ts",
+    "#database/queries": "./src/database/queries.ts",
+    "#utils": "./src/utils.ts",
+    "#types": "./src/types.ts"
+  },
+  "scripts": {
+    "dev": "ts-node ./src/startServer.ts",
+    "lint:eslint": "eslint .",
+    "lint:type-check": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@innodoc/constants": "workspace:^",
+    "@innodoc/routes": "workspace:^",
+    "@innodoc/types": "workspace:^",
+    "@innodoc/utils": "workspace:^",
+    "camelcase-keys": "^8.0.2",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "iso-639-1": "^2.1.15",
+    "knex": "^2.5.1",
+    "locale": "^0.1.0",
+    "pg": "^8.11.1",
+    "pg-protocol": "^1.6.0",
+    "sirv": "^2.0.3",
+    "vite": "^4.4.3",
+    "vite-plugin-ssr": "^0.4.133"
+  },
+  "devDependencies": {
+    "@innodoc/eslint-config": "workspace:^",
+    "@innodoc/store": "workspace:^",
+    "@innodoc/ts-config": "workspace:^",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@types/express": "^4.17.17",
+    "@types/express-serve-static-core": "^4.17.35",
+    "@types/locale": "^0.1.1",
+    "@types/react": "^18.2.14"
+  }
+}

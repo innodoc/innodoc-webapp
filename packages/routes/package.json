@@ -1,0 +1,27 @@
+{
+  "name": "@innodoc/routes",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./vite/getRouteManager": "./src/getRouteManagerVite.ts",
+    "./node/getRouteManager": "./src/getRouteManagerNode.ts",
+    "./types": "./src/types.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint:eslint": "eslint .",
+    "lint:type-check": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@innodoc/constants": "workspace:^",
+    "@innodoc/utils": "workspace:^",
+    "path-to-regexp": "^6.2.1"
+  },
+  "devDependencies": {
+    "@innodoc/eslint-config": "workspace:^",
+    "@innodoc/types": "workspace:^",
+    "@types/innodoc-global-types": "workspace:^",
+    "iso-639-1": "^2.1.15"
+  }
+}

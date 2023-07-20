@@ -1,0 +1,54 @@
+{
+  "name": "@innodoc/store",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/makeStore.ts",
+    "./slices/app": "./src/slices/app/appSlice.ts",
+    "./slices/content": "./src/slices/content/contentApi.ts",
+    "./slices/content/courses": "./src/slices/content/entities/courses.ts",
+    "./slices/content/fragments": "./src/slices/content/entities/fragments.ts",
+    "./slices/content/pages": "./src/slices/content/entities/pages.ts",
+    "./slices/content/sections": "./src/slices/content/entities/sections.ts",
+    "./slices/hast": "./src/slices/hast/hastSlice.ts",
+    "./types": "./src/types.ts",
+    "./utils": "./src/utils.ts"
+  },
+  "imports": {
+    "#slices/app": "./src/slices/app/appSlice.ts",
+    "#slices/content": "./src/slices/content/contentApi.ts",
+    "#slices/content/courses": "./src/slices/content/entities/courses.ts",
+    "#slices/content/fragments": "./src/slices/content/entities/fragments.ts",
+    "#slices/content/pages": "./src/slices/content/entities/pages.ts",
+    "#slices/content/sections": "./src/slices/content/entities/sections.ts",
+    "#slices/hast": "./src/slices/hast/hastSlice.ts",
+    "#types": "./src/types.ts",
+    "#utils": "./src/utils.ts"
+  },
+  "scripts": {
+    "lint:eslint": "eslint .",
+    "lint:type-check": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@innodoc/constants": "workspace:^",
+    "@innodoc/markdown": "workspace:^",
+    "@innodoc/routes": "workspace:^",
+    "@innodoc/types": "workspace:^",
+    "@innodoc/utils": "workspace:^",
+    "@reduxjs/toolkit": "^1.9.5",
+    "crc": "^4.3.2",
+    "i18next": "^23.2.11",
+    "react-redux": "^8.1.1",
+    "svg-parser": "^2.0.4"
+  },
+  "devDependencies": {
+    "@innodoc/eslint-config": "workspace:^",
+    "@innodoc/ts-config": "workspace:^",
+    "@types/innodoc-global-types": "workspace:^",
+    "@types/react-redux": "^7.1.25",
+    "@types/svg-parser": "^2.0.3",
+    "iso-639-1": "^2.1.15"
+  }
+}

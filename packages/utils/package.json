@@ -1,0 +1,26 @@
+{
+  "name": "@innodoc/utils",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./attributes-to-props": "./src/attributesToProps.ts",
+    "./content": "./src/content.ts",
+    "./dot-env": "./src/loadDotEnv.ts"
+  },
+  "scripts": {
+    "lint:eslint": "eslint .",
+    "lint:type-check": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@innodoc/constants": "workspace:^",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@innodoc/eslint-config": "workspace:^",
+    "@innodoc/ts-config": "workspace:^",
+    "@innodoc/types": "workspace:^",
+    "@types/svg-parser": "^2.0.3"
+  }
+}

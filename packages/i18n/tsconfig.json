@@ -1,0 +1,5 @@
+{
+  "extends": "@innodoc/ts-config/base.json",
+  "include": ["src"],
+  "exclude": []
+}
