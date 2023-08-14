@@ -7,6 +7,7 @@ import eslintPluginImport from 'eslint-plugin-import'
 import eslintPluginPrettier from 'eslint-plugin-prettier'
 import eslintPluginPromise from 'eslint-plugin-promise'
 import eslintPluginRegexp from 'eslint-plugin-regexp'
+import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort'
 import globals from 'globals'
 
 const eslintRules = {
@@ -33,24 +34,26 @@ const importRules = {
   'import/default': 'off',
   'import/no-named-as-default-member': 'off',
 
-  // Custom import order
-  'import/order': [
+  // Import order setup
+  'import/first': 'error',
+  'import/newline-after-import': 'error',
+  'import/no-duplicates': 'error',
+  'simple-import-sort/imports': [
     'error',
     {
-      alphabetize: {
-        order: 'asc',
-        caseInsensitive: true,
-      },
-      groups: ['builtin', 'external', 'internal', 'unknown', 'parent', 'sibling', 'index'],
-      'newlines-between': 'always',
-      pathGroups: [
-        {
-          pattern: '#test-utils',
-          group: 'external',
-        },
+      // custom groups with type imports last in each group
+      // https://github.com/lydell/eslint-plugin-simple-import-sort#custom-grouping
+      groups: [
+        ['^\\u0000'], // side-effects
+        ['^node:', '^node:.*\\u0000$'], // node modules
+        ['^@?\\w', '^@?\\w.*\\u0000$'], // 3rd party imports
+        ['^@innodoc\\/', '^@innodoc\\/.*\\u0000$'], // monorepo packages
+        ['(?<!\\u0000)$', '(?<=\\u0000)$'], // absolute imports
+        ['^\\.', '^\\..*\\u0000$'], // relative imports
       ],
     },
   ],
+  'simple-import-sort/exports': 'error',
 
   // Turn on errors for missing imports
   'import/no-unresolved': 'error',
@@ -86,9 +89,10 @@ const config = [
       deprecation: eslintPluginDeprecation,
       filenames: eslintPluginFilenames,
       import: eslintPluginImport,
-      regexp: eslintPluginRegexp,
-      promise: eslintPluginPromise,
       prettier: eslintPluginPrettier,
+      promise: eslintPluginPromise,
+      regexp: eslintPluginRegexp,
+      'simple-import-sort': eslintPluginSimpleImportSort,
     },
     languageOptions: {
       globals: {
@@ -103,7 +107,6 @@ const config = [
       },
     },
     settings: {
-      'import/internal-regex': '^@innodoc\\/', // Mark workspaces as internal for proper import sorting
       'import/extensions': ['.ts'],
       'import/parsers': {
         '@typescript-eslint/parser': ['.ts'],
