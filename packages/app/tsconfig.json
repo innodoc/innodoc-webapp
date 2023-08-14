@@ -1,5 +1,5 @@
 {
-  "extends": "@innodoc/ts-config/base.json",
+  "extends": "@innodoc/ts-config",
   "compilerOptions": {
     "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "ESNext"],
@@ -13,6 +13,6 @@
     "types": ["vite/client", "vitest/globals"],
     "useDefineForClassFields": true
   },
-  "include": ["src", "vite.config.ts"],
+  "include": ["eslint.config.js", "vite.config.ts", "src"],
   "exclude": ["public"]
 }

@@ -1,5 +1,4 @@
 {
-  "extends": "@innodoc/ts-config/base.json",
-  "include": ["src"],
-  "exclude": []
+  "extends": "@innodoc/ts-config",
+  "include": ["eslint.config.js", "knexfile.ts", "src"]
 }

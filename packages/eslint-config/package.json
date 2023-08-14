@@ -2,9 +2,10 @@
   "name": "@innodoc/eslint-config",
   "version": "0.0.0",
   "private": true,
-  "type": "commonjs",
-  "exports": "./base.js",
+  "type": "module",
+  "exports": "./eslint.config.js",
   "devDependencies": {
+    "@eslint/js": "^8.45.0",
     "@types/eslint": "^8.44.0",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
@@ -16,6 +17,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-regexp": "^1.15.0",
+    "globals": "^13.20.0",
     "prettier": "^3.0.0"
   }
 }
