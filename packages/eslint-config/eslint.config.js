@@ -1,6 +1,7 @@
 import js from '@eslint/js'
 import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin'
 import typescriptParser from '@typescript-eslint/parser'
+import eslintPluginDeprecation from 'eslint-plugin-deprecation'
 import eslintPluginFilenames from 'eslint-plugin-filenames'
 import eslintPluginImport from 'eslint-plugin-import'
 import eslintPluginPrettier from 'eslint-plugin-prettier'
@@ -82,6 +83,7 @@ const config = [
     files: ['eslint.config.js', '**/*.ts', '**/*.tsx'],
     plugins: {
       '@typescript-eslint': typescriptEslintPlugin,
+      deprecation: eslintPluginDeprecation,
       filenames: eslintPluginFilenames,
       import: eslintPluginImport,
       regexp: eslintPluginRegexp,
@@ -116,6 +118,7 @@ const config = [
     ignores: ['**/.cache', '**/coverage', '**/dist', '**/node_modules'],
     rules: {
       // Plugin configs
+      ...eslintPluginDeprecation.configs.recommended.rules,
       ...typescriptEslintPlugin.configs['strict-type-checked'].rules,
       ...typescriptEslintPlugin.configs['stylistic-type-checked'].rules,
       ...eslintPluginImport.configs.typescript.rules,
