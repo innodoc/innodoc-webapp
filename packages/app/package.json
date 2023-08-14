@@ -8,6 +8,11 @@
     "#renderer/server/make-on-before-render-content": "./src/renderer/server/makeOnBeforeRenderContent.ts",
     "#renderer/route/make-route-fun": "./src/renderer/route/makeRouteFunc.ts"
   },
+  "scripts": {
+    "build": "vite build --mode production",
+    "lint:eslint": "eslint .",
+    "lint:type-check": "tsc --noEmit -p ."
+  },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.1",

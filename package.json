@@ -4,7 +4,7 @@
   "scripts": {
     "build": "pnpm run build:clean && pnpm run build:icon-bundle && pnpm run build:client && pnpm run build:server",
     "build:clean": "rimraf dist",
-    "build:client": "vite build --mode production",
+    "build:client": "pnpm run --filter @innodoc/app build",
     "build:icon-bundle": "pnpm run --filter @innodoc/commands build-icon-bundle",
     "dev": "nodemon --ext ts --watch packages/server --exec pnpm -- run server:dev",
     "dev:mock": "INNODOC_API_MOCK=true INNODOC_DEFAULT_COURSE_SLUG=testcourse INNODOC_COURSE_SLUG_MODE=DISABLED nodemon --ext ts --watch ./src/server --exec ts-node ./src/server/startMockServer.ts",
