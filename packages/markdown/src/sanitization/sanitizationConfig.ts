@@ -1,5 +1,5 @@
-import type { Schema } from 'hast-util-sanitize'
 import { defaultSchema } from 'rehype-sanitize'
+import type { Schema } from 'hast-util-sanitize'
 
 import {
   GRID_ITEM_PROPERTIES,

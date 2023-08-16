@@ -21,9 +21,15 @@ function DrawerButton({
 }: DrawerButtonProps) {
   const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
-  const onClick = () => setMenuOpen((prev) => !prev)
-  const open = () => setMenuOpen(true)
-  const close = () => setMenuOpen(false)
+  const onClick = () => {
+    setMenuOpen((prev) => !prev)
+  }
+  const open = () => {
+    setMenuOpen(true)
+  }
+  const close = () => {
+    setMenuOpen(false)
+  }
 
   return (
     <Box sx={{ flexGrow: 0, ...boxProps.sx }} {...boxProps}>

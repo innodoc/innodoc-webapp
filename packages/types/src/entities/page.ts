@@ -1,6 +1,5 @@
-import type { CamelCasedProperties } from 'type-fest'
-
 import type iconBundle from '@innodoc/commands/icon-bundle'
+import type { CamelCasedProperties } from 'type-fest'
 
 import type { PageLinkLocation } from '#common'
 

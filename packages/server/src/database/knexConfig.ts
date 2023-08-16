@@ -1,5 +1,4 @@
 import path from 'path'
-
 import type { Knex } from 'knex'
 
 import config from '#config'

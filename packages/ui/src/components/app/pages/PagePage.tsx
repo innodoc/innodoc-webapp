@@ -3,7 +3,7 @@ import { useGetPageContentQuery } from '@innodoc/store/slices/content/pages'
 
 import { PageHeader } from '#components/common'
 import { ContentPage } from '#components/pages'
-import { useSelectCurrentCourse, useSelectPage, useSelector } from '#hooks/store'
+import { useSelectCurrentCourse, useSelector, useSelectPage } from '#hooks/store'
 
 function PagePage() {
   const { course } = useSelectCurrentCourse()

@@ -1,6 +1,7 @@
-import { SLUG_RE } from '@innodoc/constants'
 import type { ContentType, ParserError } from '@innodoc/types/common'
 import type { TranslatedSection } from '@innodoc/types/entities'
+
+import { SLUG_RE } from '@innodoc/constants'
 
 const slugRegExp = new RegExp(`^${SLUG_RE}$`)
 

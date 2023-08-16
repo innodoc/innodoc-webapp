@@ -1,5 +1,4 @@
 import { makeServer } from '../../tests/mocks/node'
-
 import config from './config'
 import createServer from './createServer'
 
@@ -17,4 +16,4 @@ function startApiMockServer() {
     })
 }
 
-void startApiMockServer()
+startApiMockServer()

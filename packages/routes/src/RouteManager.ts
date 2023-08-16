@@ -1,12 +1,12 @@
 import { compile, match, type MatchFunction, type PathFunction } from 'path-to-regexp'
+import type { CourseSlugMode } from '@innodoc/types/common'
 
 import { API_COURSE_PREFIX } from '@innodoc/constants'
-import type { CourseSlugMode } from '@innodoc/types/common'
-import { isArbitraryObject, isContentType } from '@innodoc/types/type-guards'
 import { getStringIdField } from '@innodoc/utils/content'
+import { isArbitraryObject, isContentType } from '@innodoc/utils/type-guards'
 
-import { routesBuiltinPages, routesContentPages, routesUser, routesApi } from './routes'
-import type { ApiRouteName, AppRouteName, RouteName, RouteInfo } from './types'
+import { routesApi, routesBuiltinPages, routesContentPages, routesUser } from './routes'
+import type { ApiRouteName, AppRouteName, RouteInfo, RouteName } from './types'
 
 export interface RouteFuncArgs {
   pagePathPrefix: string

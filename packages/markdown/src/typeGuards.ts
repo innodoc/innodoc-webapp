@@ -1,9 +1,9 @@
 import {
-  isHastRootDivElement,
   isHastMdxJsxFlowDivElement,
-  isHastMdxJsxTextSpanElement,
-  isHastMdxJsxFlowDivElementTabs,
   isHastMdxJsxFlowDivElementTabItem,
+  isHastMdxJsxFlowDivElementTabs,
+  isHastMdxJsxTextSpanElement,
+  isHastRootDivElement,
 } from './typeGuards/typeGuardsCustomHast'
 import {
   isMdastLink,
@@ -13,11 +13,11 @@ import {
 } from './typeGuards/typeGuardsMdast'
 
 export {
-  isHastRootDivElement,
   isHastMdxJsxFlowDivElement,
-  isHastMdxJsxTextSpanElement,
-  isHastMdxJsxFlowDivElementTabs,
   isHastMdxJsxFlowDivElementTabItem,
+  isHastMdxJsxFlowDivElementTabs,
+  isHastMdxJsxTextSpanElement,
+  isHastRootDivElement,
   isMdastLink,
   isMdxJsxAttribute,
   isMdxJsxFlowElement,

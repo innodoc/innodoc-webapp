@@ -7,7 +7,7 @@ import { useGetFragmentContentQuery } from '@innodoc/store/slices/content/fragme
 
 import { AppLink, builtInPages, PageLink } from '#components/common'
 import { HastNode } from '#components/content/hast'
-import { useSelector, useSelectCurrentCourse, useSelectLinkedPages } from '#hooks/store'
+import { useSelectCurrentCourse, useSelectLinkedPages, useSelector } from '#hooks/store'
 
 const builtInPagesNav = builtInPages.filter((page) => page.linked?.includes('footer'))
 

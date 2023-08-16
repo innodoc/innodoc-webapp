@@ -4,7 +4,7 @@ import { EMOTION_STYLE_INSERTION_POINT_NAME } from '@innodoc/constants'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 
 import useRouteManager from '#hooks/routes'
-import { useSelector, useSelectCurrentCourse } from '#hooks/store'
+import { useSelectCurrentCourse, useSelector } from '#hooks/store'
 
 function MetaTags() {
   const { generateUrl } = useRouteManager()

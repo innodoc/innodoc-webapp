@@ -1,6 +1,5 @@
-import type { LanguageCode } from 'iso-639-1'
-
 import type { ApiCourse, ApiPage, ApiSection } from '@innodoc/types/entities'
+import type { LanguageCode } from 'iso-639-1'
 
 import type { routesApi, routesBuiltinPages, routesContentPages, routesUser } from './routes'
 

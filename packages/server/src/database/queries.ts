@@ -5,10 +5,10 @@ import { getCourseSections, getSectionContent, getSectionIdByPath } from './quer
 
 export {
   getCourse,
-  getFragmentContent,
   getCoursePages,
-  getPageContent,
   getCourseSections,
+  getFragmentContent,
+  getPageContent,
   getSectionContent,
   getSectionIdByPath,
 }

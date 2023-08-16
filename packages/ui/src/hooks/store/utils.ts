@@ -1,7 +1,6 @@
+import type { BaseEntity, TranslatableFields, TranslatedEntity } from '@innodoc/types/entities'
 import type { LanguageCode } from 'iso-639-1'
 import type { CamelCasedProperties } from 'type-fest'
-
-import type { BaseEntity, TranslatableFields, TranslatedEntity } from '@innodoc/types/entities'
 
 type TranslatableBaseEntity<F extends string> = CamelCasedProperties<BaseEntity> &
   TranslatableFields<F>

@@ -1,13 +1,11 @@
+import camelcaseKeys from 'camelcase-keys'
 import fs from 'fs/promises'
 import path from 'path'
-
-import camelcaseKeys from 'camelcase-keys'
-import type { Knex } from 'knex'
 import { parse as yamlParse } from 'yaml'
+import type { DbCourse, DbSection } from '@innodoc/types/entities'
+import type { Knex } from 'knex'
 
 import getDatabase from '@innodoc/server/database'
-import type { DbCourse } from '@innodoc/types/entities'
-import type { DbSection } from '@innodoc/types/entities'
 
 import type { InsertResult, Manifest, ManifestPage } from './types'
 

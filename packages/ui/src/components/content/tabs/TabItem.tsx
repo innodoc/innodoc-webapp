@@ -1,7 +1,6 @@
 import { TabPanel } from '@mui/lab'
 import { styled } from '@mui/material'
 import { type ReactNode } from 'react'
-
 import type { TAB_ITEM_PROPERTIES } from '@innodoc/markdown/properties'
 
 import type { NodeProps } from '#components/content/types'

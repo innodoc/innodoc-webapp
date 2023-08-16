@@ -1,16 +1,15 @@
 import {
-  type ThemeOptions,
   experimental_extendTheme as extendTheme,
   responsiveFontSizes,
+  type ThemeOptions,
 } from '@mui/material'
+import type {} from '@mui/lab/themeAugmentation'
 import type {
   CssVarsThemeOptions,
   DefaultColorScheme,
 } from '@mui/material/styles/experimental_extendTheme'
-
 // Augment theme type
 import type {} from '@mui/material/themeCssVarsAugmentation'
-import type {} from '@mui/lab/themeAugmentation'
 
 import { CARD_TYPES, type CardType } from '#components/content/cards'
 import type { PaletteCard } from '#types'

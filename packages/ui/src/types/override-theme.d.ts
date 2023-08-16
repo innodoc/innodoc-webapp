@@ -1,4 +1,5 @@
 import '@mui/material/styles/experimental_extendTheme'
+
 import type { CSSProperties } from 'react'
 
 import type { CardType } from '#components/content/card/types'

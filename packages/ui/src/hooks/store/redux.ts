@@ -4,8 +4,7 @@ import {
   useDispatch as useDispatchReactRedux,
   useSelector as useSelectorReactRedux,
 } from 'react-redux'
-
-import type { RootState, AppDispatch } from '@innodoc/store/types'
+import type { AppDispatch, RootState } from '@innodoc/store/types'
 
 export const useDispatch: () => AppDispatch = useDispatchReactRedux
 export const useSelector: TypedUseSelectorHook<RootState> = useSelectorReactRedux

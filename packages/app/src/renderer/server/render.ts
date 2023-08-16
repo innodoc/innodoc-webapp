@@ -1,7 +1,7 @@
+import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr/server'
+import type { PageContextRender, PageContextUpdate } from '@innodoc/server/types'
 import type { FilledContext } from 'react-helmet-async'
-import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr/server'
 
-import type { PageContextUpdate, PageContextRender } from '@innodoc/server/types'
 import renderPage from '@innodoc/ui'
 
 import renderToHtml from './renderToHtml'
@@ -34,14 +34,14 @@ async function render({
   const { helmet } = helmetContext as FilledContext
 
   return escapeInject`<!DOCTYPE html>
-    <html ${dangerouslySkipEscape(helmet?.htmlAttributes?.toString() ?? '')}>
+    <html ${dangerouslySkipEscape(helmet.htmlAttributes.toString() ?? '')}>
       <head>
-        ${dangerouslySkipEscape(helmet?.title?.toString() ?? '')}
-        ${dangerouslySkipEscape(helmet?.meta?.toString() ?? '')}
-        ${dangerouslySkipEscape(helmet?.link?.toString() ?? '')}
+        ${dangerouslySkipEscape(helmet.title.toString() ?? '')}
+        ${dangerouslySkipEscape(helmet.meta.toString() ?? '')}
+        ${dangerouslySkipEscape(helmet.link.toString() ?? '')}
         ${dangerouslySkipEscape(emotionStyleTags(emotionCache, pageHtml))}
       </head>
-      <body ${dangerouslySkipEscape(helmet?.bodyAttributes?.toString() ?? '')}>
+      <body ${dangerouslySkipEscape(helmet.bodyAttributes.toString() ?? '')}>
         ${dangerouslySkipEscape(initColorSchemeScript())}
         <div id="root">${dangerouslySkipEscape(pageHtml)}</div>
       </body>

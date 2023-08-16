@@ -1,8 +1,8 @@
+import type { ApiRouteName } from '@innodoc/routes/types'
 import type { NextFunction } from 'express'
 
 import getRouteManager from '@innodoc/routes/node/getRouteManager'
-import type { ApiRouteName } from '@innodoc/routes/types'
-import { isArbitraryObject } from '@innodoc/types/type-guards'
+import { isArbitraryObject } from '@innodoc/utils/type-guards'
 
 import config from './config'
 

@@ -1,7 +1,6 @@
-import type { ReactElement } from 'react'
-
 import type { BuiltinRouteName } from '@innodoc/routes/types'
 import type { PageLinkLocation } from '@innodoc/types/common'
+import type { ReactElement } from 'react'
 
 import Icon from './Icon'
 

@@ -1,7 +1,7 @@
-import type { Root } from 'hast'
 import { createElement } from 'react'
 import rehypeReact from 'rehype-react'
 import { unified } from 'unified'
+import type { Root } from 'hast'
 
 import componentsMap from './componentsMap'
 

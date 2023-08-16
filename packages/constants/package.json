@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "exports": "./src/constants.ts",
   "sideEffects": false,
+  "exports": "./src/constants.ts",
   "scripts": {
     "lint:eslint": "eslint .",
     "lint:type-check": "tsc --noEmit -p ."

@@ -1,7 +1,6 @@
 import { TabContext, TabList } from '@mui/lab'
 import { Paper, styled, Tab } from '@mui/material'
-import { type ReactNode, useState, type SyntheticEvent, useRef, useEffect } from 'react'
-
+import { type ReactNode, type SyntheticEvent, useEffect, useRef, useState } from 'react'
 import type { TABS_PROPERTIES } from '@innodoc/markdown/properties'
 
 import type { NodeProps } from '#components/content/types'

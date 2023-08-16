@@ -1,6 +1,5 @@
 import { Children, forwardRef, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import type { RouteInfo } from '@innodoc/routes/types'
 
 import { builtInPages, PageLinkFromSlug, SectionLinkFromPath } from '#components/common'

@@ -1,7 +1,6 @@
 import camelcaseKeys from 'camelcase-keys'
-import type { LanguageCode } from 'iso-639-1'
-
 import type { ApiPage, DbCourse, DbPage } from '@innodoc/types/entities'
+import type { LanguageCode } from 'iso-639-1'
 
 import getDatabase from '#database'
 

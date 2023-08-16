@@ -1,11 +1,10 @@
-import type { Root } from 'hast'
-
 import type {
   CONTENT_TYPES,
   COURSE_SLUG_MODES,
   PAGE_LINK_LOCACTIONS,
   SECTION_TYPES,
 } from '@innodoc/constants'
+import type { Root } from 'hast'
 
 /** Arbitrary object */
 export type ArbitraryObject = Record<string, unknown>

@@ -7,8 +7,8 @@ import {
   Collapse,
   styled,
 } from '@mui/material'
+import { type ComponentProps, type ReactNode, useState } from 'react'
 import type { CardHeaderProps } from '@mui/material'
-import { type ComponentProps, useState, type ReactNode } from 'react'
 
 import { Icon, type IconProps } from '#components/common'
 

@@ -1,6 +1,7 @@
-import { DEFAULT_ROUTE_NAME } from '@innodoc/constants'
 import type { RouteInfo } from '@innodoc/routes/types'
 import type { PageContextOnBeforeRoute, PageContextUpdate } from '@innodoc/server/types'
+
+import { DEFAULT_ROUTE_NAME } from '@innodoc/constants'
 
 import { extractCourseSlugFromDomain, extractCourseSlugFromUrl, extractLocale } from './utils'
 

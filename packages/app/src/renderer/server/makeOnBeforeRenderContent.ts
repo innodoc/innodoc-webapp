@@ -1,12 +1,12 @@
 import { RenderErrorPage } from 'vite-plugin-ssr/RenderErrorPage'
+import type { PageContextServer, PageContextUpdate } from '@innodoc/server/types'
+import type { ContentType } from '@innodoc/types/common'
 
 import markdownToHast from '@innodoc/markdown'
-import type { PageContextServer, PageContextUpdate } from '@innodoc/server/types'
 import { addHastResult } from '@innodoc/store/slices/hast'
 import { fetchContent } from '@innodoc/store/utils'
-import type { ContentType } from '@innodoc/types/common'
-import { isParserError } from '@innodoc/types/type-guards'
 import { getStringIdField, serializeParserError } from '@innodoc/utils/content'
+import { isParserError } from '@innodoc/utils/type-guards'
 
 import { onBeforeRender as onBeforeRenderDefault } from '#renderer/server'
 
@@ -33,7 +33,7 @@ function makeOnBeforeRenderContent(contentType: ContentType) {
     if (!pageContext.routeInfo?.courseSlug) {
       throw RenderErrorPage({ pageContext: { errorMsg: 'courseSlug is undefined' } })
     }
-    if (pageContext?.routeInfo?.locale === undefined) {
+    if (pageContext.routeInfo.locale === undefined) {
       throw RenderErrorPage({ pageContext: { errorMsg: 'locale is undefined' } })
     }
     if (store === undefined) {

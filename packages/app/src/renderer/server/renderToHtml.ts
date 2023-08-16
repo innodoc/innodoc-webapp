@@ -1,7 +1,6 @@
-import { Writable } from 'stream'
-
-import type { ReactNode } from 'react'
 import { renderToPipeableStream } from 'react-dom/server'
+import { Writable } from 'stream'
+import type { ReactNode } from 'react'
 
 class HtmlWritable extends Writable {
   chunks: Uint8Array[] = []

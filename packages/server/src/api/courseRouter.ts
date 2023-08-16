@@ -1,18 +1,18 @@
 import { type RequestHandler, Router } from 'express'
 import { param, validationResult } from 'express-validator'
+import type { ApiRouteName } from '@innodoc/routes/types'
+import type { FragmentType } from '@innodoc/types/entities'
 import type { LanguageCode } from 'iso-639-1'
 
 import { API_COURSE_PREFIX } from '@innodoc/constants'
-import type { ApiRouteName } from '@innodoc/routes/types'
-import type { FragmentType } from '@innodoc/types/entities'
-import { isFragmentType, isLanguageCode } from '@innodoc/types/type-guards'
+import { isFragmentType, isLanguageCode } from '@innodoc/utils/type-guards'
 
 import {
   getCourse,
   getCoursePages,
+  getCourseSections,
   getFragmentContent,
   getPageContent,
-  getCourseSections,
   getSectionContent,
   getSectionIdByPath,
 } from '#database/queries'

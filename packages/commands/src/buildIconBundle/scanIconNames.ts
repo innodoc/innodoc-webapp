@@ -1,8 +1,7 @@
-import path from 'path'
-
 // FIXME Somehow TS complains about not finding '@typescript-eslint/utils'
-import { ASTUtils, AST_NODE_TYPES, ESLintUtils } from '@typescript-eslint/utils'
+import { AST_NODE_TYPES, ASTUtils, ESLintUtils } from '@typescript-eslint/utils'
 import { ESLint, type Rule } from 'eslint'
+import path from 'path'
 
 const isJSXIdentifier = ASTUtils.isNodeOfType(AST_NODE_TYPES.JSXIdentifier)
 const isJSXAttribute = ASTUtils.isNodeOfType<AST_NODE_TYPES.JSXAttribute>(

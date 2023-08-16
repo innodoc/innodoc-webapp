@@ -1,11 +1,11 @@
 import { Box, styled } from '@mui/material'
 import { Children, type ReactNode } from 'react'
-
 import type { YOUTUBE_VIDEO_PROPERTIES } from '@innodoc/markdown/properties'
+
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 
-import type { NodeProps } from '#components/content/types'
 import { useSelector } from '#hooks/store'
+import type { NodeProps } from '#components/content/types'
 
 const Wrapper = styled(Box)(({ theme }) => ({
   margin: theme.spacing(2, 0),

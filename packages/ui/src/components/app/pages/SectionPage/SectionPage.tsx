@@ -4,7 +4,7 @@ import { formatSectionTitle } from '@innodoc/utils/content'
 
 import { PageHeader } from '#components/common'
 import { ContentPage } from '#components/pages'
-import { useSelector, useSelectCurrentCourse, useSelectSection } from '#hooks/store'
+import { useSelectCurrentCourse, useSelector, useSelectSection } from '#hooks/store'
 
 import Breadcrumbs from './Breadcrumbs'
 import SubsectionList from './SubsectionList'

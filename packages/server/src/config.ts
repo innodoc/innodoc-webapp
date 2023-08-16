@@ -1,13 +1,13 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
+import type { CourseSlugMode } from '@innodoc/types/common'
+import type ServerConfig from '@innodoc/types/server-config'
 
 import {
   COURSE_SLUG_MODES,
   DEFAULT_PAGE_PATH_PREFIX,
   DEFAULT_SECTION_PATH_PREFIX,
 } from '@innodoc/constants'
-import type { CourseSlugMode } from '@innodoc/types/common'
-import type ServerConfig from '@innodoc/types/server-config'
 import dotEnv from '@innodoc/utils/dot-env'
 
 let rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')

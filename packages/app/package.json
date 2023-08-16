@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "imports": {
+    "#renderer/route/make-route-fun": "./src/renderer/route/makeRouteFunc.ts",
     "#renderer/server": "./src/renderer/_default.page.server.ts",
-    "#renderer/server/make-on-before-render-content": "./src/renderer/server/makeOnBeforeRenderContent.ts",
-    "#renderer/route/make-route-fun": "./src/renderer/route/makeRouteFunc.ts"
+    "#renderer/server/make-on-before-render-content": "./src/renderer/server/makeOnBeforeRenderContent.ts"
   },
   "scripts": {
     "build": "vite build --mode production",
@@ -14,36 +14,36 @@
     "lint:type-check": "tsc --noEmit -p ."
   },
   "dependencies": {
-    "@emotion/cache": "^11.11.0",
-    "@emotion/react": "^11.11.1",
-    "@emotion/server": "^11.11.0",
-    "@fontsource/lato": "^5.0.5",
+    "@emotion/cache": "11.11.0",
+    "@emotion/react": "11.11.1",
+    "@emotion/server": "11.11.0",
+    "@fontsource/lato": "5.0.5",
     "@innodoc/constants": "workspace:^",
     "@innodoc/i18n": "workspace:^",
     "@innodoc/markdown": "workspace:^",
     "@innodoc/routes": "workspace:^",
     "@innodoc/store": "workspace:^",
-    "@innodoc/types": "workspace:^",
     "@innodoc/ui": "workspace:^",
     "@innodoc/utils": "workspace:^",
-    "@mui/material": "^5.14.0",
-    "@vitejs/plugin-react-swc": "^3.3.2",
-    "i18next": "^23.2.11",
-    "i18next-fs-backend": "^2.1.5",
-    "i18next-http-backend": "^2.2.1",
-    "katex": "^0.16.8",
-    "react-dom": "^18.2.0",
-    "react-helmet-async": "^1.3.0",
-    "vite": "^4.4.3",
-    "vite-plugin-ssr": "^0.4.133"
+    "@mui/material": "5.14.0",
+    "@vitejs/plugin-react-swc": "3.3.2",
+    "i18next": "23.2.11",
+    "i18next-fs-backend": "2.1.5",
+    "i18next-http-backend": "2.2.1",
+    "katex": "0.16.8",
+    "react-dom": "18.2.0",
+    "react-helmet-async": "1.3.0",
+    "vite": "4.4.3",
+    "vite-plugin-ssr": "0.4.133"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:^",
     "@innodoc/server": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
-    "@reduxjs/toolkit": "^1.9.5",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.7",
-    "rollup-plugin-visualizer": "^5.9.2"
+    "@innodoc/types": "workspace:^",
+    "@reduxjs/toolkit": "1.9.5",
+    "@types/react": "18.2.14",
+    "@types/react-dom": "18.2.7",
+    "rollup-plugin-visualizer": "5.9.2"
   }
 }

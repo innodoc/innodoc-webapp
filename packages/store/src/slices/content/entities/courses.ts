@@ -1,5 +1,6 @@
-import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 import type { ApiCourse } from '@innodoc/types/entities'
+
+import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 
 import contentApi from '#slices/content'
 

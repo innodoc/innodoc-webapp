@@ -1,6 +1,6 @@
 import type { Knex } from 'knex'
 
-import { SLUG_RE_POSIX, PAGE_LINK_LOCACTIONS } from '@innodoc/constants'
+import { PAGE_LINK_LOCACTIONS, SLUG_RE_POSIX } from '@innodoc/constants'
 
 export async function up(knex: Knex) {
   // Page link location enum type

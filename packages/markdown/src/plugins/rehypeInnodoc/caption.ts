@@ -6,7 +6,7 @@ import type { Element } from 'hast'
 
 /** Support captions */
 function caption(el: Element) {
-  if (el?.properties?.name === 'table' && el.properties.type === 'containerDirective') {
+  if (el.properties?.name === 'table' && el.properties.type === 'containerDirective') {
     // const [pChild, tableChild] = el.children
     // if (
     //   isElement(pChild) &&

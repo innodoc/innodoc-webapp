@@ -1,7 +1,7 @@
 import type { Link } from 'mdast'
 import type { MdxJsxAttribute, MdxJsxFlowElement, MdxJsxTextElement } from 'mdast-util-mdx-jsx'
 
-import { isArbitraryObject } from '@innodoc/types/type-guards'
+import { isArbitraryObject } from '@innodoc/utils/type-guards'
 
 export function isMdastLink(node: unknown): node is Link {
   return isArbitraryObject(node) && node.type === 'link'

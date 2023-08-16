@@ -1,7 +1,7 @@
-import type { Element } from 'hast'
 import { isElement } from 'hast-util-is-element'
-import type { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
+import type { Element } from 'hast'
+import type { Plugin } from 'unified'
 
 import caption from './caption'
 import tabs from './tabs'

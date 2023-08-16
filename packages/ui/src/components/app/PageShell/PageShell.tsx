@@ -4,13 +4,12 @@ import {
   Experimental_CssVarsProvider as CssVarsProvider,
   GlobalStyles,
 } from '@mui/material'
-import type { i18n as I18n } from 'i18next'
 import { StrictMode } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
 import { I18nextProvider } from 'react-i18next'
 import { Provider as ReduxProvider } from 'react-redux'
-
 import type { Store } from '@innodoc/store/types'
+import type { i18n as I18n } from 'i18next'
 
 import Layout from './Layout/Layout'
 import MetaTags from './MetaTags'

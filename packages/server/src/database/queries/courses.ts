@@ -1,5 +1,4 @@
 import camelcaseKeys from 'camelcase-keys'
-
 import type { ApiCourse, DbCourse } from '@innodoc/types/entities'
 
 import getDatabase from '#database'

@@ -1,7 +1,7 @@
-import type { IconifyJSON } from '@iconify/types'
 import { getIcons } from '@iconify/utils/lib/icon-set/get-icons'
-// import { parse as parseSvg, type RootNode } from 'svg-parser'
+import type { IconifyJSON } from '@iconify/types'
 
+// import { parse as parseSvg, type RootNode } from 'svg-parser'
 import parseSvg from './parseSvg'
 import scanIconNames from './scanIconNames'
 
@@ -22,10 +22,10 @@ function filterBySet(set: string, iconNames: string[]) {
   return (
     iconNames
       // Filter for and strip 'mdi:...'
-      .reduce(
+      .reduce<string[]>(
         (acc, icon) =>
           icon.startsWith(`${set}:`) ? [...acc, icon.substring(set.length + 1)] : acc,
-        [] as string[]
+        []
       )
       // Unique
       .filter((val, idx, self) => self.indexOf(val) === idx)

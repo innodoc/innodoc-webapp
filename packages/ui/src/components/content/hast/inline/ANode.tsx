@@ -1,5 +1,5 @@
-import type { HastComponentProps } from '#components/content/hast'
 import { ContentLink } from '#components/content/misc'
+import type { HastComponentProps } from '#components/content/hast'
 
 function ANode({ href, children, title }: HastComponentProps<'a'>) {
   if (!href) {

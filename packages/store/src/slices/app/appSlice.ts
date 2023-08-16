@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
+import type { RouteInfo } from '@innodoc/routes/types'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { DEFAULT_ROUTE_NAME } from '@innodoc/constants'
-import type { RouteInfo } from '@innodoc/routes/types'
 
 import { selectRouteInfo, selectRouteTransitionInfo } from './selectors'
 

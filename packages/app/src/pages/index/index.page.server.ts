@@ -1,10 +1,10 @@
 import { RenderErrorPage } from 'vite-plugin-ssr/RenderErrorPage'
+import type { PageContextServer } from '@innodoc/server/types'
+import type { ApiCourse } from '@innodoc/types/entities'
 
 import { DEFAULT_ROUTE_NAME } from '@innodoc/constants'
 import getRouteManager from '@innodoc/routes/vite/getRouteManager'
-import type { PageContextServer } from '@innodoc/server/types'
 import courses from '@innodoc/store/slices/content/courses'
-import type { ApiCourse } from '@innodoc/types/entities'
 
 import { onBeforeRender as onBeforeRenderDefault } from '#renderer/server'
 

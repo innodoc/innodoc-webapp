@@ -1,11 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit'
-import type { LanguageCode } from 'iso-639-1'
 import { useMemo } from 'react'
+import type { ApiCourse } from '@innodoc/types/entities'
+import type { LanguageCode } from 'iso-639-1'
 
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCourseQuery } from '@innodoc/store/slices/content/courses'
 import { defaultTranslatableFields } from '@innodoc/types/entities'
-import type { ApiCourse } from '@innodoc/types/entities'
 
 import { useSelector } from './store'
 import { translateEntity } from './utils'

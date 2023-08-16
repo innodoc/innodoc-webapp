@@ -1,5 +1,4 @@
-import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
-
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import type { HastResult, HastResultWithHash } from '@innodoc/types/common'
 
 import { selectHast, selectHastResultByHash, selectIsProcessing } from './selectors'

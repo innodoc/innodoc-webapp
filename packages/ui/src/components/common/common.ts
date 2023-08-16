@@ -11,10 +11,10 @@ import HomeLink from './link/HomeLink'
 import PageLink, { PageLinkFromSlug } from './link/PageLink'
 import SectionLink, { SectionLinkFromPath } from './link/SectionLink'
 import SpecLink from './link/SpecLink'
-import type { LinkProps } from './link/types'
 import MenuButton from './MenuButton'
 import MenuItemCaption from './MenuItemCaption'
 import PageHeader from './PageHeader'
+import type { LinkProps } from './link/types'
 
 export type { IconProps, LinkProps }
 export {

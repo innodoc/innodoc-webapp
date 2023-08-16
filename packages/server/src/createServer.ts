@@ -1,7 +1,6 @@
-import path from 'path'
-
 import express, { type Express } from 'express'
 import localeMiddleware from 'locale'
+import path from 'path'
 
 import { API_PREFIX } from '@innodoc/constants'
 

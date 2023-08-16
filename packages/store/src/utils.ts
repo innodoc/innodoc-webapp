@@ -1,6 +1,5 @@
-import type { LanguageCode } from 'iso-639-1'
-
 import type { ContentType } from '@innodoc/types/common'
+import type { LanguageCode } from 'iso-639-1'
 
 import pages from '#slices/content/pages'
 import sections from '#slices/content/sections'

@@ -1,5 +1,4 @@
-import { Box, Divider, ListItemIcon, ListItemText, MenuItem } from '@mui/material'
-import { useColorScheme } from '@mui/material'
+import { Box, Divider, ListItemIcon, ListItemText, MenuItem, useColorScheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import { AppLink, Icon, MenuButton, MenuItemCaption } from '#components/common'
@@ -24,10 +23,20 @@ function UserMenuItems() {
         <MenuItemsLanguages inset />
         <Divider />
         <MenuItemCaption iconName="mdi:theme-light-dark" text={t('nav.paletteMode.title')} />
-        <MenuItem onClick={() => setMode('light')} selected={mode === 'light'}>
+        <MenuItem
+          onClick={() => {
+            setMode('light')
+          }}
+          selected={mode === 'light'}
+        >
           <ListItemText inset primary={t('nav.paletteMode.light')} />
         </MenuItem>
-        <MenuItem onClick={() => setMode('dark')} selected={mode === 'dark'}>
+        <MenuItem
+          onClick={() => {
+            setMode('dark')
+          }}
+          selected={mode === 'dark'}
+        >
           <ListItemText inset primary={t('nav.paletteMode.dark')} />
         </MenuItem>
       </Box>

@@ -12,18 +12,18 @@
   },
   "dependencies": {
     "@innodoc/store": "workspace:^",
-    "i18next": "^23.2.11",
-    "i18next-http-backend": "^2.2.1",
-    "react-i18next": "^13.0.2"
+    "i18next": "23.2.11",
+    "i18next-http-backend": "2.2.1",
+    "react-i18next": "13.0.2"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
     "@innodoc/types": "workspace:^",
-    "@types/i18next-fs-backend": "^1.1.2",
+    "@types/i18next-fs-backend": "1.1.2",
     "@types/innodoc-global-types": "workspace:^",
-    "@types/svg-parser": "^2.0.3",
-    "iso-639-1": "^2.1.15",
-    "type-fest": "^3.13.0"
+    "@types/svg-parser": "2.0.3",
+    "iso-639-1": "2.1.15",
+    "type-fest": "3.13.0"
   }
 }

@@ -1,15 +1,15 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
+import type { RouteInfo } from '@innodoc/routes/types'
+import type { ContentWithHash, HastResultWithHash } from '@innodoc/types/common'
 import type { AnyAction, PayloadAction } from '@reduxjs/toolkit'
 
 import { isHastRootDivElement } from '@innodoc/markdown/type-guards'
-import type { RouteInfo } from '@innodoc/routes/types'
-import type { ContentWithHash, HastResultWithHash } from '@innodoc/types/common'
-import { isParserError, isWithContentHash } from '@innodoc/types/type-guards'
+import { isParserError, isWithContentHash } from '@innodoc/utils/type-guards'
 
 import { changeRouteTransitionInfo } from '#slices/app'
 import { addHastResult, changeIsProcessing, selectHastResultByHash } from '#slices/hast'
-import type { AppListenerEffectAPI, AppStartListening } from '#types'
 import { fetchContent } from '#utils'
+import type { AppListenerEffectAPI, AppStartListening } from '#types'
 
 interface PageRouteInfo extends RouteInfo {
   routeName: 'app:page'

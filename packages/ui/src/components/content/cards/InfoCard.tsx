@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
 // import useCardTitle from './useCardTitle'
-
 import Card from './Card'
 import type { ContentCardProps } from './types'
 

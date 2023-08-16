@@ -1,7 +1,7 @@
+import type { HastMdxJsxFlowDivElement } from '@innodoc/markdown/types'
 import type { ComponentType, ReactNode } from 'react'
 
 import { isHastMdxJsxFlowDivElement, isHastRootDivElement } from '@innodoc/markdown/type-guards'
-import type { HastMdxJsxFlowDivElement } from '@innodoc/markdown/types'
 
 import {
   ExampleCard,
@@ -11,10 +11,10 @@ import {
   InputHintCard,
   SolutionCard,
 } from '#components/content/cards'
-// import { Grid, GridItem } from '#components/content/grid'
-import type { HastComponentProps } from '#components/content/hast'
 // import { TableContainer } from '#components/content/misc'
 import { TabItem, Tabs } from '#components/content/tabs'
+// import { Grid, GridItem } from '#components/content/grid'
+import type { HastComponentProps } from '#components/content/hast'
 
 interface DivComponentProps {
   children: ReactNode

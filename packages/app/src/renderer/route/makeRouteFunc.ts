@@ -1,6 +1,7 @@
 import type { AppRouteName } from '@innodoc/routes/types'
-import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 import type { PageContextServer } from '@innodoc/server/types'
+
+import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 
 const routeManager = getRouteManager()
 

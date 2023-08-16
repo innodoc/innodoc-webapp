@@ -1,12 +1,12 @@
 import i18next, { type i18n } from 'i18next'
+import { initReactI18next } from 'react-i18next'
+import type { Store } from '@innodoc/store/types'
+import type { ApiCourse } from '@innodoc/types/entities'
 import type { i18nextFsBackend } from 'i18next-fs-backend'
 import type { HttpBackendOptions } from 'i18next-http-backend'
 import type { LanguageCode } from 'iso-639-1'
-import { initReactI18next } from 'react-i18next'
 
 import courses from '@innodoc/store/slices/content/courses'
-import type { Store } from '@innodoc/store/types'
-import type { ApiCourse } from '@innodoc/types/entities'
 
 const isBrowser = typeof window !== 'undefined'
 

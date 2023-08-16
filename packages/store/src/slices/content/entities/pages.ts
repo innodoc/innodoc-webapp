@@ -1,8 +1,8 @@
+import type { ContentWithHash } from '@innodoc/types/common'
+import type { ApiCourse, ApiPage } from '@innodoc/types/entities'
 import type { LanguageCode } from 'iso-639-1'
 
 import getRouteManager from '@innodoc/routes/vite/getRouteManager'
-import type { ContentWithHash } from '@innodoc/types/common'
-import type { ApiCourse, ApiPage } from '@innodoc/types/entities'
 
 import contentApi, { hashContentResponse } from '#slices/content'
 

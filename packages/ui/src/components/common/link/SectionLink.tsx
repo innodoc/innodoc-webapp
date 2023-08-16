@@ -1,7 +1,7 @@
 import { Children, forwardRef } from 'react'
 import { Trans } from 'react-i18next'
-
 import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
+
 import { formatSectionTitle } from '@innodoc/utils/content'
 
 import { Code, InlineError } from '#components/common'

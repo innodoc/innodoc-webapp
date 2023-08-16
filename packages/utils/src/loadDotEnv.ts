@@ -1,6 +1,5 @@
-import path from 'path'
-
 import dotenv from 'dotenv'
+import path from 'path'
 
 function loadDotEnv(baseDir: string) {
   const dotEnvFilepath = path.resolve(baseDir, process.env.VITEST_MODE ? '.env.test' : '.env')

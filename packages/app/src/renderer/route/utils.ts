@@ -1,6 +1,7 @@
 import type { PageContextServer } from '@innodoc/server/types'
-import { isLanguageCode } from '@innodoc/types/type-guards'
+
 import { isSlug } from '@innodoc/utils/content'
+import { isLanguageCode } from '@innodoc/utils/type-guards'
 
 type PageContextServerRouting = Pick<
   PageContextServer,

@@ -7,8 +7,7 @@
   "exports": {
     "./common": "./src/common.ts",
     "./entities": "./src/entities.ts",
-    "./server-config": "./src/ServerConfig.ts",
-    "./type-guards": "./src/typeGuards.ts"
+    "./server-config": "./src/ServerConfig.ts"
   },
   "imports": {
     "#common": "./src/common.ts"
@@ -19,17 +18,17 @@
   },
   "dependencies": {
     "@innodoc/constants": "workspace:^",
-    "camelcase": "^7.0.1"
+    "camelcase": "7.0.1"
   },
   "devDependencies": {
     "@innodoc/commands": "workspace:^",
     "@innodoc/eslint-config": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
-    "@reduxjs/toolkit": "^1.9.5",
-    "@types/hast": "^2.3.4",
-    "@types/svg-parser": "^2.0.3",
-    "iso-639-1": "^2.1.15",
-    "react": "^18.2.0",
-    "type-fest": "^3.13.0"
+    "@reduxjs/toolkit": "1.9.5",
+    "@types/hast": "2.3.4",
+    "@types/svg-parser": "2.0.3",
+    "iso-639-1": "2.1.15",
+    "react": "18.2.0",
+    "type-fest": "3.13.0"
   }
 }

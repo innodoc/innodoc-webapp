@@ -1,6 +1,5 @@
-import type { LanguageCode } from 'iso-639-1'
-
 import type { DbCourse, FragmentType } from '@innodoc/types/entities'
+import type { LanguageCode } from 'iso-639-1'
 
 import getDatabase from '#database'
 

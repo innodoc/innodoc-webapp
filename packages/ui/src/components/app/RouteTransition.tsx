@@ -1,6 +1,6 @@
 import { Fade } from '@mui/material'
 import { forwardRef, useEffect, useState } from 'react'
-import type { ComponentType, ReactElement, ForwardedRef, ReactNode } from 'react'
+import type { ComponentType, ForwardedRef, ReactElement, ReactNode } from 'react'
 
 import { changeRouteInfo, selectRouteTransitionInfo } from '@innodoc/store/slices/app'
 import { selectIsProcessing } from '@innodoc/store/slices/hast'
@@ -25,7 +25,7 @@ interface TransitionChildProps {
 /** Scroll to hash */
 function scrollToHash() {
   let { hash } = window.location
-  hash = hash?.substring(1)
+  hash = hash.substring(1)
   if (!hash) {
     return
   }
@@ -37,7 +37,9 @@ function scrollToHash() {
 
   // If we call scrollIntoView() in here without a setTimeout it won't
   // scroll properly.
-  window.setTimeout(() => el.scrollIntoView(), 0)
+  window.setTimeout(() => {
+    el.scrollIntoView()
+  }, 0)
 }
 
 function RouteTransition({ children, pagePrev: PagePrev = () => null }: RouteTransitionProps) {
@@ -72,7 +74,14 @@ function RouteTransition({ children, pagePrev: PagePrev = () => null }: RouteTra
   const content = fadeIn ? children : <PagePrev />
 
   return (
-    <Fade appear={false} in={fadeIn} onEntering={onEntering} onExited={() => setIsExited(true)}>
+    <Fade
+      appear={false}
+      in={fadeIn}
+      onEntering={onEntering}
+      onExited={() => {
+        setIsExited(true)
+      }}
+    >
       <TransitionChild>{content}</TransitionChild>
     </Fade>
   )
