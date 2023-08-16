@@ -9,5 +9,11 @@
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "json.schemas": [
+    {
+      "fileMatch": ["/.syncpackrc"],
+      "url": "https://unpkg.com/syncpack@11.2.1/dist/schema.json"
+    }
+  ]
 }

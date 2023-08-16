@@ -1,0 +1,97 @@
+{
+  "sortAz": [
+    "contributors",
+    "dependencies",
+    "devDependencies",
+    "imports",
+    "keywords",
+    "peerDependencies",
+    "resolutions",
+    "scripts"
+  ],
+  "sortFirst": [
+    "name",
+    "version",
+    "private",
+    "type",
+    "sideEffects",
+    "exports",
+    "imports",
+    "scripts",
+    "dependencies",
+    "devDependencies",
+    "peerDependencies",
+    "resolutions",
+    "engines",
+    "pnpm"
+  ],
+  "semverGroups": [
+    {
+      "packages": [
+        "**"
+      ],
+      "dependencies": [
+        "@innodoc/*",
+        "@types/innodoc-global-types"
+      ],
+      "isIgnored": true
+    }
+  ],
+  "versionGroups": [
+    {
+      "label": "Internal dev packages are pinned to workspace:^",
+      "packages": [
+        "**"
+      ],
+      "dependencies": [
+        "@innodoc/commands",
+        "@innodoc/eslint-config",
+        "@innodoc/ts-config",
+        "@innodoc/types",
+        "@types/innodoc-global-types"
+      ],
+      "dependencyTypes": [
+        "dev"
+      ],
+      "pinVersion": "workspace:^"
+    },
+    {
+      "label": "Internal prod packages are pinned to workspace:^",
+      "packages": [
+        "**"
+      ],
+      "dependencies": [
+        "@innodoc/constants",
+        "@innodoc/i18n",
+        "@innodoc/markdown",
+        "@innodoc/routes",
+        "@innodoc/server",
+        "@innodoc/store",
+        "@innodoc/ui",
+        "@innodoc/utils"
+      ],
+      "dependencyTypes": [
+        "prod",
+        "dev"
+      ],
+      "pinVersion": "workspace:^"
+    },
+    {
+      "label": "Types and internal dev packages are banned from dependencies (only allowed in devDependencies)",
+      "packages": [
+        "**"
+      ],
+      "dependencies": [
+        "@innodoc/commands",
+        "@innodoc/eslint-config",
+        "@innodoc/ts-config",
+        "@types/*",
+        "*/types"
+      ],
+      "dependencyTypes": [
+        "prod"
+      ],
+      "isBanned": true
+    }
+  ]
+}

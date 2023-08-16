@@ -12,8 +12,9 @@
     "knip": "knip",
     "import-v1": "pnpm run --filter @innodoc/commands import",
     "lint:eslint": "pnpm run --parallel --filter @innodoc/* --filter @types/innodoc-global-types lint:eslint",
+    "lint:syncpack": "pnpm syncpack lint",
     "lint:type-check": "pnpm run --parallel --filter @innodoc/* --filter @types/innodoc-global-types lint:type-check",
-    "lint": "pnpm run lint:eslint && pnpm run type-check",
+    "lint": "pnpm run lint:eslint && pnpm run type-check && pnpm run lint:syncpack",
     "prepush": "pnpm run lint && pnpm run test",
     "prod": "pnpm run build && pnpm run server:prod",
     "routes": "pnpm run --filter @innodoc/commands routes",
@@ -54,6 +55,7 @@
     "msw": "^1.2.2",
     "nodemon": "^3.0.1",
     "rimraf": "^5.0.1",
+    "syncpack": "^11.2.1",
     "ts-node": "^10.9.1",
     "vitest": "^0.33.0"
   },
