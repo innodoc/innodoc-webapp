@@ -1,4 +1,3 @@
-import type iconBundle from '@innodoc/commands/icon-bundle'
 import type { CamelCasedProperties } from 'type-fest'
 
 import type { PageLinkLocation } from '#common'
@@ -14,7 +13,7 @@ export interface DbPage extends BaseEntity, DbTranslatableFields {
   course_id: number
 
   /** Icon name */
-  icon?: keyof typeof iconBundle
+  icon?: string
 
   /** Location in the page layout where a link should appear */
   linked?: PageLinkLocation[]

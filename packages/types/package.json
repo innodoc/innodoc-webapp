@@ -21,7 +21,6 @@
     "camelcase": "7.0.1"
   },
   "devDependencies": {
-    "@innodoc/commands": "workspace:^",
     "@innodoc/eslint-config": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
     "@reduxjs/toolkit": "1.9.5",
