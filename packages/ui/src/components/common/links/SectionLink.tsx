@@ -4,9 +4,10 @@ import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
 
 import { formatSectionTitle } from '@innodoc/utils/content'
 
-import { Code, InlineError } from '#components/common'
+import { InlineError } from '#components/common/errors'
+import { Code } from '#components/common/misc'
 import useRouteManager from '#hooks/routes'
-import { useSelectSection } from '#hooks/store'
+import { useSelectSection } from '#hooks/select'
 
 import BaseLink from './BaseLink'
 import type { LinkProps } from './types'

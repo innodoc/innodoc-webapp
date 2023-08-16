@@ -2,9 +2,10 @@ import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetSectionContentQuery } from '@innodoc/store/slices/content/sections'
 import { formatSectionTitle } from '@innodoc/utils/content'
 
-import { PageHeader } from '#components/common'
-import { ContentPage } from '#components/pages'
-import { useSelectCurrentCourse, useSelector, useSelectSection } from '#hooks/store'
+import { PageHeader } from '#components/common/misc'
+import ContentPage from '#components/pages/content'
+import { useSelector } from '#hooks/redux'
+import { useSelectCurrentCourse, useSelectSection } from '#hooks/select'
 
 import Breadcrumbs from './Breadcrumbs'
 import SubsectionList from './SubsectionList'

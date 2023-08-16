@@ -2,7 +2,7 @@ import { type SyntheticEvent, useEffect, useRef, useState } from 'react'
 
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 
-import { useSelector } from '#hooks/store'
+import { useSelector } from '#hooks/redux'
 
 /** Return array of expanded section paths/node IDs (including parents) */
 function getExpandedWithParents(sectionPath?: string) {

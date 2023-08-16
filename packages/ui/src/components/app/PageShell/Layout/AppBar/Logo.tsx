@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material'
 
-import { HomeLink } from '#components/common'
-import { useSelectCurrentCourse } from '#hooks/store'
+import { HomeLink } from '#components/common/links'
+import { useSelectCurrentCourse } from '#hooks/select'
 
 // TODO: save logo in database?
 

@@ -7,7 +7,7 @@ import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCourseQuery } from '@innodoc/store/slices/content/courses'
 import { defaultTranslatableFields } from '@innodoc/types/entities'
 
-import { useSelector } from './store'
+import { useSelector } from './redux'
 import { translateEntity } from './utils'
 
 /** Return current course */

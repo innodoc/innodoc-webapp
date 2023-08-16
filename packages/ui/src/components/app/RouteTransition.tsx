@@ -5,7 +5,7 @@ import type { ComponentType, ForwardedRef, ReactElement, ReactNode } from 'react
 import { changeRouteInfo, selectRouteTransitionInfo } from '@innodoc/store/slices/app'
 import { selectIsProcessing } from '@innodoc/store/slices/hast'
 
-import { useDispatch, useSelector } from '#hooks/store'
+import { useDispatch, useSelector } from '#hooks/redux'
 
 const TransitionChild = forwardRef(function TransitionChild(
   { children, ...props }: TransitionChildProps,

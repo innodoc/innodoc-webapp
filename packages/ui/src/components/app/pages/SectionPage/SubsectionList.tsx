@@ -2,8 +2,9 @@ import { Card, CardContent, CardHeader, List, ListItem, ListItemText } from '@mu
 import { useTranslation } from 'react-i18next'
 import type { TranslatedSection } from '@innodoc/types/entities'
 
-import { Icon, SectionLink } from '#components/common'
-import { useSelectSectionChildren } from '#hooks/store'
+import { SectionLink } from '#components/common/links'
+import { Icon } from '#components/common/misc'
+import { useSelectSectionChildren } from '#hooks/select'
 
 function SubsectionList({ sectionId }: SubsectionListProps) {
   const { t } = useTranslation()

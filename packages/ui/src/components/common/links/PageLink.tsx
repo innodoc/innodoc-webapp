@@ -2,9 +2,10 @@ import { Children, forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 import type { ApiPage, TranslatedPage } from '@innodoc/types/entities'
 
-import { Code, Icon, InlineError } from '#components/common'
+import { InlineError } from '#components/common/errors'
+import { Code, Icon } from '#components/common/misc'
 import useRouteManager from '#hooks/routes'
-import { useSelectPage } from '#hooks/store'
+import { useSelectPage } from '#hooks/select'
 
 import BaseLink from './BaseLink'
 import type { LinkProps } from './types'

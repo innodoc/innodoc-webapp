@@ -9,7 +9,8 @@ import {
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import { DrawerButton, Icon } from '#components/common'
+import { DrawerButton } from '#components/common/buttons'
+import { Icon } from '#components/common/misc'
 import { Toc } from '#components/toc'
 
 function TocButton() {

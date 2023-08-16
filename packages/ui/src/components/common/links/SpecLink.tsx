@@ -2,11 +2,12 @@ import { forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 import type { RouteInfo } from '@innodoc/routes/types'
 
-import { Code, InlineError } from '#components/common'
+import { InlineError } from '#components/common/errors'
+import { Code } from '#components/common/misc'
 import useRouteManager from '#hooks/routes'
-import type { LinkProps } from '#components/common'
 
 import AppLink from './AppLink'
+import type { LinkProps } from './types'
 
 /** Link from specifier */
 const SpecLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLink(

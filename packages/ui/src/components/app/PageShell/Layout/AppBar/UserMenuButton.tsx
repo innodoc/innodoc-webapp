@@ -1,7 +1,9 @@
 import { Box, Divider, ListItemIcon, ListItemText, MenuItem, useColorScheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import { AppLink, Icon, MenuButton, MenuItemCaption } from '#components/common'
+import { MenuButton } from '#components/common/buttons'
+import { AppLink } from '#components/common/links'
+import { Icon, MenuItemCaption } from '#components/common/misc'
 
 import MenuItemsLanguages from './LanguageMenuButton/MenuItemsLanguages'
 

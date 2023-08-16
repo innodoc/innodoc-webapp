@@ -2,7 +2,7 @@ import type { RootState } from '@innodoc/store/types'
 
 import { selectHastResultByHash } from '@innodoc/store/slices/hast'
 
-import { useSelector } from '#hooks/store'
+import { useSelector } from '#hooks/redux'
 
 import hastToReact from './hastToReact'
 import MarkdownParserError from './MarkdownParserError'

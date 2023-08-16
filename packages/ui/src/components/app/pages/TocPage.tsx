@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { PageHeader } from '#components/common'
+import { PageHeader } from '#components/common/misc'
 import { StaticToc } from '#components/toc'
 
 function TocPage() {

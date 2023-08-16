@@ -2,11 +2,13 @@ import { Children, forwardRef, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { RouteInfo } from '@innodoc/routes/types'
 
-import { builtInPages, PageLinkFromSlug, SectionLinkFromPath } from '#components/common'
+import builtInPages from '#components/common/built-in-pages'
 import useRouteManager from '#hooks/routes'
 
 import BaseLink from './BaseLink'
 import HomeLink from './HomeLink'
+import { PageLinkFromSlug } from './PageLink'
+import { SectionLinkFromPath } from './SectionLink'
 import type { LinkProps } from './types'
 
 /** App-internal link */

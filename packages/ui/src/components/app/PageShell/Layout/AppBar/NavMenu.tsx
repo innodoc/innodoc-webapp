@@ -2,9 +2,11 @@ import { Button, type ButtonProps, Stack, styled } from '@mui/material'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { AppLink, builtInPages, Icon, PageLink } from '#components/common'
+import builtInPages from '#components/common/built-in-pages'
+import { AppLink, PageLink } from '#components/common/links'
+import { Icon } from '#components/common/misc'
 import useRouteManager from '#hooks/routes'
-import { useSelectLinkedPages } from '#hooks/store'
+import { useSelectLinkedPages } from '#hooks/select'
 
 const builtInPagesNav = builtInPages.filter((page) => page.linked?.includes('nav'))
 

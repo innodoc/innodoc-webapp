@@ -17,7 +17,8 @@ const restrictedImportsRules = {
         {
           name: 'react-redux',
           importNames: ['useSelector', 'useDispatch'],
-          message: 'Use typed hooks `useDispatch` and `useSelector` from `@innodoc/store` instead.',
+          message:
+            'Use typed hooks `useDispatch` and `useSelector` from `@innodoc/store/redux` instead.',
         },
         // Warn when using hooks from react-redux directly
         {

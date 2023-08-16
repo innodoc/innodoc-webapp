@@ -5,7 +5,7 @@ import type { ReactNode } from 'react'
 
 import { getStringIdField } from '@innodoc/utils/content'
 
-import { Code } from '#components/common'
+import { Code } from '#components/common/misc'
 import { HastNode } from '#components/content/hast'
 
 import ErrorPage from './ErrorPage'

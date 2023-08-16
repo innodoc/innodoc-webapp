@@ -7,7 +7,7 @@ import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCoursePagesQuery } from '@innodoc/store/slices/content/pages'
 import { defaultTranslatableFields } from '@innodoc/types/entities'
 
-import { useSelector } from './store'
+import { useSelector } from './redux'
 import { translateEntity } from './utils'
 
 /** Return page by slug */

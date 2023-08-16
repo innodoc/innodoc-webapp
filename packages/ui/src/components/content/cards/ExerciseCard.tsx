@@ -1,7 +1,7 @@
 import { Button } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import { Icon } from '#components/common'
+import { Icon } from '#components/common/misc'
 import { ExerciseContext } from '#contexts'
 
 import Card from './Card'

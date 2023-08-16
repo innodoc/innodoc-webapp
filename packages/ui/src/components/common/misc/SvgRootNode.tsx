@@ -6,7 +6,7 @@ import type { ElementNode, RootNode } from 'svg-parser'
 
 import attributesToProps from '@innodoc/utils/attributes-to-props'
 
-import { InlineError } from '#components/common'
+import { InlineError } from '#components/common/errors'
 
 function isElementNode(node: unknown): node is ElementNode {
   if (node === null || typeof node !== 'object') {

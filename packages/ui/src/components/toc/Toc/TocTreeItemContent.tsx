@@ -7,7 +7,7 @@ import type { TranslatedSection } from '@innodoc/types/entities'
 
 import { formatSectionTitle } from '@innodoc/utils/content'
 
-import { SectionLink } from '#components/common'
+import { SectionLink } from '#components/common/links'
 
 const StyledLink = styled(SectionLink)(({ theme }) => ({
   color: theme.vars.palette.text.primary,

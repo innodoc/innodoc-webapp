@@ -5,9 +5,11 @@ import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '@innodoc/constan
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetFragmentContentQuery } from '@innodoc/store/slices/content/fragments'
 
-import { AppLink, builtInPages, PageLink } from '#components/common'
+import builtInPages from '#components/common/built-in-pages'
+import { AppLink, PageLink } from '#components/common/links'
 import { HastNode } from '#components/content/hast'
-import { useSelectCurrentCourse, useSelectLinkedPages, useSelector } from '#hooks/store'
+import { useSelector } from '#hooks/redux'
+import { useSelectCurrentCourse, useSelectLinkedPages } from '#hooks/select'
 
 const builtInPagesNav = builtInPages.filter((page) => page.linked?.includes('footer'))
 

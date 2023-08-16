@@ -2,7 +2,7 @@ import type { BuiltinRouteName } from '@innodoc/routes/types'
 import type { PageLinkLocation } from '@innodoc/types/common'
 import type { ReactElement } from 'react'
 
-import Icon from './Icon'
+import { Icon } from '#components/common/misc'
 
 /** Built-in page */
 interface BuiltinPage {

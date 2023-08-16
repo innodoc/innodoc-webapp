@@ -3,7 +3,8 @@ import { createContext, type ReactNode, useContext, useEffect, useRef } from 're
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { getSectionNumberFromOrder } from '@innodoc/utils/content'
 
-import { useSelector, useSelectSection } from '#hooks/store'
+import { useSelector } from '#hooks/redux'
+import { useSelectSection } from '#hooks/select'
 
 /** Provide consistent auto-incrementing numbering for cards within a document */
 const CardTitleContext = createContext((id: string | undefined, title: string) => title)

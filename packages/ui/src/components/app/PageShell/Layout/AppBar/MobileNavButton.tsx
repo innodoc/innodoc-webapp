@@ -1,9 +1,12 @@
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import { AppLink, builtInPages, DrawerButton, Icon, PageLink } from '#components/common'
+import builtInPages from '#components/common/built-in-pages'
+import { DrawerButton } from '#components/common/buttons'
+import { AppLink, PageLink } from '#components/common/links'
+import { Icon } from '#components/common/misc'
 import useRouteManager from '#hooks/routes'
-import { useSelectLinkedPages } from '#hooks/store'
+import { useSelectLinkedPages } from '#hooks/select'
 
 const builtInPagesNav = builtInPages.filter((page) => page.linked?.includes('nav'))
 

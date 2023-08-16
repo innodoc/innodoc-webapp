@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { MenuButton } from '#components/common'
+import { MenuButton } from '#components/common/buttons'
 
 import MenuItemsLanguages from './MenuItemsLanguages'
 

@@ -4,7 +4,7 @@ import type { YOUTUBE_VIDEO_PROPERTIES } from '@innodoc/markdown/properties'
 
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 
-import { useSelector } from '#hooks/store'
+import { useSelector } from '#hooks/redux'
 import type { NodeProps } from '#components/content/types'
 
 const Wrapper = styled(Box)(({ theme }) => ({

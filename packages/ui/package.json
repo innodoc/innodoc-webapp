@@ -9,7 +9,11 @@
     "./pages": "./src/components/app/pages.ts"
   },
   "imports": {
-    "#components/common": "./src/components/common/common.ts",
+    "#components/common/built-in-pages": "./src/components/common/builtInPages.tsx",
+    "#components/common/buttons": "./src/components/common/buttons/buttons.ts",
+    "#components/common/errors": "./src/components/common/errors/errors.ts",
+    "#components/common/links": "./src/components/common/links/links.ts",
+    "#components/common/misc": "./src/components/common/misc/misc.ts",
     "#components/content/cards": "./src/components/content/cards/cards.ts",
     "#components/content/exercises": "./src/components/content/exercises/exercises.ts",
     "#components/content/grid": "./src/components/content/grid/grid.ts",
@@ -18,10 +22,12 @@
     "#components/content/tabs": "./src/components/content/tabs/tabs.ts",
     "#components/content/types": "./src/components/content/types.ts",
     "#components/pages": "./src/components/app/pages.ts",
+    "#components/pages/content": "./src/components/app/pages/ContentPage.tsx",
     "#components/toc": "./src/components/toc/toc.ts",
     "#contexts": "./src/contexts/contexts.ts",
+    "#hooks/redux": "./src/hooks/store/redux.ts",
     "#hooks/routes": "./src/hooks/useRouteManager.ts",
-    "#hooks/store": "./src/hooks/store/store.ts",
+    "#hooks/select": "./src/hooks/store/select.ts",
     "#types": "./src/types/types.ts"
   },
   "scripts": {

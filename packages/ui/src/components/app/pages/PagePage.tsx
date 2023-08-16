@@ -1,9 +1,11 @@
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetPageContentQuery } from '@innodoc/store/slices/content/pages'
 
-import { PageHeader } from '#components/common'
-import { ContentPage } from '#components/pages'
-import { useSelectCurrentCourse, useSelector, useSelectPage } from '#hooks/store'
+import { PageHeader } from '#components/common/misc'
+import { useSelector } from '#hooks/redux'
+import { useSelectCurrentCourse, useSelectPage } from '#hooks/select'
+
+import ContentPage from './ContentPage'
 
 function PagePage() {
   const { course } = useSelectCurrentCourse()

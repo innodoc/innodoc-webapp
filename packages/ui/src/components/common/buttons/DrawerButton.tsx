@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import { type ReactNode, useState } from 'react'
 
-import Icon, { type IconProps } from './Icon'
+import { Icon, type IconProps } from '#components/common/misc'
 
 function DrawerButton({
   anchor,

@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import { useSelectCurrentCourse } from '#hooks/store'
+import { useSelectCurrentCourse } from '#hooks/select'
 
 import SpecLink from './SpecLink'
 import type { LinkProps } from './types'

@@ -10,7 +10,7 @@ import {
 import { type ComponentProps, type ReactNode, useState } from 'react'
 import type { CardHeaderProps } from '@mui/material'
 
-import { Icon, type IconProps } from '#components/common'
+import { Icon, type IconProps } from '#components/common/misc'
 
 import type { CardType, ContentCardProps } from './types'
 

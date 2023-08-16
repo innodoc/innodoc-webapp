@@ -3,8 +3,9 @@ import { Helmet } from 'react-helmet-async'
 import { EMOTION_STYLE_INSERTION_POINT_NAME } from '@innodoc/constants'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 
+import { useSelector } from '#hooks/redux'
 import useRouteManager from '#hooks/routes'
-import { useSelectCurrentCourse, useSelector } from '#hooks/store'
+import { useSelectCurrentCourse } from '#hooks/select'
 
 function MetaTags() {
   const { generateUrl } = useRouteManager()

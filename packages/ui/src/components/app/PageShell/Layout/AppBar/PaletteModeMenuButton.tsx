@@ -1,7 +1,7 @@
 import { Box, IconButton, Tooltip, useColorScheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import { Icon } from '#components/common'
+import { Icon } from '#components/common/misc'
 
 function PaletteModeMenuButton() {
   const { t } = useTranslation()

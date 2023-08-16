@@ -1,8 +1,8 @@
 import { styled } from '@mui/material'
 import type { TranslatedSection } from '@innodoc/types/entities'
 
-import { SectionLink } from '#components/common'
-import { useSelectSectionChildren } from '#hooks/store'
+import { SectionLink } from '#components/common/links'
+import { useSelectSectionChildren } from '#hooks/select'
 
 const StyledUl = styled('ul')(({ theme }) => ({
   listStyleType: 'none',

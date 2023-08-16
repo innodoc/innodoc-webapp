@@ -1,4 +1,4 @@
-import { ContentLink } from '#components/content/misc'
+import { ContentLink } from '#components/common/links'
 import type { HastComponentProps } from '#components/content/hast'
 
 function ANode({ href, children, title }: HastComponentProps<'a'>) {

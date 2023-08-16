@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next'
 
 import { formatSectionTitle } from '@innodoc/utils/content'
 
-import { HomeLink, Icon, SectionLink } from '#components/common'
-import { useSelectBreadcrumbSections } from '#hooks/store'
+import { HomeLink, SectionLink } from '#components/common/links'
+import { Icon } from '#components/common/misc'
+import { useSelectBreadcrumbSections } from '#hooks/select'
 
 const StyledBreadcrumbs = styled(MuiBreadcrumbs)(({ theme }) => ({
   marginBottom: theme.spacing(1),

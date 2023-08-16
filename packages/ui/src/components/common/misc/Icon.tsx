@@ -4,8 +4,9 @@ import { Trans } from 'react-i18next'
 
 import iconBundle from '@innodoc/commands/icon-bundle' assert { type: 'json' }
 
+import { InlineError } from '#components/common/errors'
+
 import Code from './Code'
-import InlineError from './error/InlineError'
 
 function Icon({ name, ...other }: IconProps) {
   const pathData = iconBundle[name]

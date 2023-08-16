@@ -4,8 +4,9 @@ import type { ComponentProps } from 'react'
 
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 
-import { AppLink } from '#components/common'
-import { useSelectCurrentCourse, useSelector } from '#hooks/store'
+import { AppLink } from '#components/common/links'
+import { useSelector } from '#hooks/redux'
+import { useSelectCurrentCourse } from '#hooks/select'
 
 function MenuItemsLanguages({ closeMenu = () => undefined, inset }: MenuItemsLanguagesProps) {
   const { t } = useTranslation()

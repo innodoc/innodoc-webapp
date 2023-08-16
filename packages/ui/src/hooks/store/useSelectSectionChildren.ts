@@ -7,7 +7,7 @@ import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCourseSectionsQuery } from '@innodoc/store/slices/content/sections'
 import { defaultTranslatableFields } from '@innodoc/types/entities'
 
-import { useSelector } from './store'
+import { useSelector } from './redux'
 import { translateEntityArray } from './utils'
 
 /** Return sections children */

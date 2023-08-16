@@ -1,7 +1,11 @@
 import { styled } from '@mui/material'
 import { Children, forwardRef } from 'react'
 
-import { BaseLink, Icon, type LinkProps, SpecLink } from '#components/common'
+import { Icon } from '#components/common/misc'
+
+import BaseLink from './BaseLink'
+import SpecLink from './SpecLink'
+import type { LinkProps } from './types'
 
 const StyledIcon = styled(Icon)({ fontSize: '1em' })
 
