@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@innodoc/constants": "workspace:^",
+    "iso-639-1": "2.1.15",
     "dotenv": "16.3.1"
   },
   "devDependencies": {
