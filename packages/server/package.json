@@ -34,7 +34,7 @@
     "pg-protocol": "1.6.0",
     "sirv": "2.0.3",
     "vite": "4.4.3",
-    "vite-plugin-ssr": "0.4.133"
+    "vite-plugin-ssr": "0.4.134"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:^",

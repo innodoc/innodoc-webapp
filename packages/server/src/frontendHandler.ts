@@ -1,5 +1,5 @@
-import { renderPage } from 'vite-plugin-ssr/server'
 import type { LanguageCode } from 'iso-639-1'
+import { renderPage } from 'vite-plugin-ssr/server'
 
 import type { PageContextInit, PageContextServer } from '#types'
 
@@ -29,9 +29,12 @@ const frontendHandler = asyncWrapper(async (req, res) => {
   }
 
   // Send result
-  else if (pageContext.httpResponse !== null) {
-    const { body, statusCode, contentType } = pageContext.httpResponse
-    res.status(statusCode).type(contentType).send(body)
+  const { httpResponse } = pageContext
+  if (httpResponse) {
+    const { body, statusCode, headers } = httpResponse
+    res.status(statusCode)
+    headers.forEach(([name, value]) => res.setHeader(name, value))
+    res.send(body)
   }
 
   // Otherwise send 404
