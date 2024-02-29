@@ -1,5 +1,5 @@
 import type { LanguageCode } from 'iso-639-1'
-import { renderPage } from 'vite-plugin-ssr/server'
+import { renderPage } from 'vike/server'
 
 import type { PageContextInit, PageContextServer } from '#types'
 

@@ -1,4 +1,4 @@
-import { RenderErrorPage } from 'vite-plugin-ssr/RenderErrorPage'
+import { RenderErrorPage } from 'vike/RenderErrorPage'
 import type { PageContextServer, PageContextUpdate } from '@innodoc/server/types'
 import type { ContentType } from '@innodoc/types/common'
 

@@ -7,7 +7,7 @@ import type { ComponentType } from 'react'
 import type {
   PageContextBuiltIn,
   PageContextBuiltInClientWithClientRouting,
-} from 'vite-plugin-ssr/types'
+} from 'vike/types'
 
 /** Properties passed into `renderPage` (Express handler) */
 export interface PageContextInit extends Pick<PageContextBuiltIn, 'urlOriginal'> {

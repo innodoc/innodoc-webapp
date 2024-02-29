@@ -34,7 +34,7 @@ function makeRouteFunc(routeName: AppRouteName) {
 
     return {
       match: true,
-      // vite-plugin-ssr doesn't allow writing to routeInfo here, so we put
+      // vike doesn't allow writing to routeInfo here, so we put
       // info in routeParams and copy it to routeInfo in onBeforeRender
       routeParams: {
         routeName,

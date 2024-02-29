@@ -1,4 +1,4 @@
-import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr/server'
+import { dangerouslySkipEscape, escapeInject } from 'vike/server'
 import type { PageContextRender, PageContextUpdate } from '@innodoc/server/types'
 import type { FilledContext } from 'react-helmet-async'
 

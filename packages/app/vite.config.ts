@@ -1,7 +1,7 @@
 import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
-import ssr from 'vite-plugin-ssr/plugin'
+import ssr from 'vike/plugin'
 import { type InlineConfig as VitestInlineConfig } from 'vitest'
 import { type UserConfigExport } from 'vitest/config'
 
