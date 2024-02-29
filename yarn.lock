@@ -3026,7 +3026,7 @@ __metadata:
     mongoose: ^5.11.15
     next: ^9.5.3
     next-i18next: ^6.0.2
-    nodemailer: ^6.4.17
+    nodemailer: ^6.9.9
     passport: ^0.4.1
     passport-jwt: ^4.0.0
     passport-local: ^1.0.0
@@ -14498,10 +14498,10 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"nodemailer@npm:^6.4.17":
-  version: 6.4.17
-  resolution: "nodemailer@npm:6.4.17"
-  checksum: 2031aa60ea495f4e014d7236a9dd91dd7189b7b014c3edec63f1483bb975f1eb92730de495fa23317ec61c21eded62d310ac058eb20401188467cc11396386e9
+"nodemailer@npm:^6.9.9":
+  version: 6.9.11
+  resolution: "nodemailer@npm:6.9.11"
+  checksum: d6c7640b53d745318eb4a4bf2a79dda44e5b39e85941ab0b12fa3ff3e814baa050a02ce8ee16df9d936221814a42a4e4d047447926c10cf46ee2b7cdf90c6e91
   languageName: node
   linkType: hard
 
