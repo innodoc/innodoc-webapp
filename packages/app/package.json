@@ -34,7 +34,7 @@
     "react-dom": "18.2.0",
     "react-helmet-async": "1.3.0",
     "vite": "4.4.3",
-    "vike": "0.4.142"
+    "vike": "0.4.164"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:^",
