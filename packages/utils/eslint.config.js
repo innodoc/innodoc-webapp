@@ -51,7 +51,7 @@ const config = [
       parserOptions: {
         ...react.configs.recommended.parserOptions,
         ...react.configs['jsx-runtime'].parserOptions,
-        ecmaVersion: 2023,
+        ecmaVersion: 'latest',
         project: true,
         sourceType: 'module',
       },

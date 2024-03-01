@@ -101,7 +101,7 @@ const config = [
       },
       parser: typescriptParser,
       parserOptions: {
-        ecmaVersion: 2023,
+        ecmaVersion: 'latest',
         project: true,
         sourceType: 'module',
       },
