@@ -2,7 +2,7 @@ import { compile, match, type MatchFunction, type PathFunction } from 'path-to-r
 
 import { API_COURSE_PREFIX } from '@innodoc/constants'
 import { getStringIdField } from '@innodoc/utils/content'
-import { isArbitraryObject, isContentType } from '@innodoc/utils/type-guards'
+import { isArbitraryObject, isContentType } from '@innodoc/utils/typeGuards'
 import type { CourseSlugMode } from '@innodoc/types/common'
 
 import { routesApi, routesBuiltinPages, routesContentPages, routesUser } from './routes'

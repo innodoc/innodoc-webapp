@@ -2,7 +2,7 @@ import { Button, type ButtonProps, Stack, styled } from '@mui/material'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import builtInPages from '#components/common/built-in-pages'
+import builtInPages from '#components/common/builtInPages'
 import { AppLink, PageLink } from '#components/common/links'
 import { Icon } from '#components/common/misc'
 import useRouteManager from '#hooks/routes'

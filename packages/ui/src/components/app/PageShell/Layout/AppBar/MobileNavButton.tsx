@@ -1,7 +1,7 @@
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import builtInPages from '#components/common/built-in-pages'
+import builtInPages from '#components/common/builtInPages'
 import { DrawerButton } from '#components/common/buttons'
 import { AppLink, PageLink } from '#components/common/links'
 import { Icon } from '#components/common/misc'

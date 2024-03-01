@@ -7,7 +7,7 @@
   "exports": {
     "./common": "./src/common.ts",
     "./entities": "./src/entities.ts",
-    "./server-config": "./src/ServerConfig.ts"
+    "./ServerConfig": "./src/ServerConfig.ts"
   },
   "imports": {
     "#common": "./src/common.ts"

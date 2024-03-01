@@ -6,16 +6,16 @@ import {
   DEFAULT_PAGE_PATH_PREFIX,
   DEFAULT_SECTION_PATH_PREFIX,
 } from '@innodoc/constants'
-import dotEnv from '@innodoc/utils/dot-env'
+import loadDotEnv from '@innodoc/utils/loadDotEnv'
 import type { CourseSlugMode } from '@innodoc/types/common'
-import type ServerConfig from '@innodoc/types/server-config'
+import type ServerConfig from '@innodoc/types/ServerConfig'
 
 let rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
 if (process.env.NODE_ENV !== 'production') {
   rootDir = path.resolve(rootDir, '..')
 }
 
-dotEnv(path.resolve(rootDir))
+loadDotEnv(path.resolve(rootDir))
 
 function isCourseSlugMode(mode: string | undefined): mode is CourseSlugMode {
   return mode !== undefined && COURSE_SLUG_MODES.includes(mode as CourseSlugMode)

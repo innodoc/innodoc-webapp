@@ -1,6 +1,6 @@
 import type { Element } from 'hast'
 
-import { isHastMdxJsxFlowDivElementTabItem, isHastMdxJsxFlowDivElementTabs } from '#type-guards'
+import { isHastMdxJsxFlowDivElementTabItem, isHastMdxJsxFlowDivElementTabs } from '#typeGuards'
 
 let tabIndex = 0
 

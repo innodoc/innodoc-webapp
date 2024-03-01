@@ -5,10 +5,10 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    "./attributes-to-props": "./src/attributesToProps.ts",
+    "./attributesToProps": "./src/attributesToProps.ts",
     "./content": "./src/content.ts",
-    "./dot-env": "./src/loadDotEnv.ts",
-    "./type-guards": "./src/typeGuards.ts"
+    "./loadDotEnv": "./src/loadDotEnv.ts",
+    "./typeGuards": "./src/typeGuards.ts"
   },
   "scripts": {
     "lint:eslint": "eslint .",

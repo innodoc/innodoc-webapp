@@ -1,7 +1,7 @@
 import type { MdxJsxAttribute } from 'mdast-util-mdx-jsx'
 import type { Handlers } from 'mdast-util-to-hast'
 
-import { isMdxJsxAttribute, isMdxJsxFlowElement, isMdxJsxTextElement } from '#type-guards'
+import { isMdxJsxAttribute, isMdxJsxFlowElement, isMdxJsxTextElement } from '#typeGuards'
 
 const remarkRehypeHandlers: Handlers = {
   // Annotate root element, so we can render as `React.Fragment`

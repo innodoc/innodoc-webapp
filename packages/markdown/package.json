@@ -7,11 +7,11 @@
   "exports": {
     ".": "./src/markdownToHast.ts",
     "./properties": "./src/sanitization/properties.ts",
-    "./type-guards": "./src/typeGuards.ts",
+    "./typeGuards": "./src/typeGuards.ts",
     "./types": "./src/types.ts"
   },
   "imports": {
-    "#type-guards": "./src/typeGuards.ts",
+    "#typeGuards": "./src/typeGuards.ts",
     "#types": "./src/types.ts"
   },
   "scripts": {

@@ -5,7 +5,7 @@ import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '@innodoc/constan
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetFragmentContentQuery } from '@innodoc/store/slices/content/fragments'
 
-import builtInPages from '#components/common/built-in-pages'
+import builtInPages from '#components/common/builtInPages'
 import { AppLink, PageLink } from '#components/common/links'
 import { HastNode } from '#components/content/hast'
 import { useSelector } from '#hooks/redux'

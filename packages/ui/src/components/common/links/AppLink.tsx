@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import type { RouteInfo } from '@innodoc/routes/types'
 
-import builtInPages from '#components/common/built-in-pages'
+import builtInPages from '#components/common/builtInPages'
 import useRouteManager from '#hooks/routes'
 
 import BaseLink from './BaseLink'

@@ -1,4 +1,4 @@
-import type ServerConfig from '@innodoc/types/server-config'
+import type ServerConfig from '@innodoc/types/ServerConfig'
 
 import RouteManager from './RouteManager'
 

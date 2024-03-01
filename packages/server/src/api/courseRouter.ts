@@ -3,7 +3,7 @@ import { param, validationResult } from 'express-validator'
 import type { LanguageCode } from 'iso-639-1'
 
 import { API_COURSE_PREFIX } from '@innodoc/constants'
-import { isFragmentType, isLanguageCode } from '@innodoc/utils/type-guards'
+import { isFragmentType, isLanguageCode } from '@innodoc/utils/typeGuards'
 import type { ApiRouteName } from '@innodoc/routes/types'
 import type { FragmentType } from '@innodoc/types/entities'
 

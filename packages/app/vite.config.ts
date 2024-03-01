@@ -5,7 +5,7 @@ import ssr from 'vike/plugin'
 import { type InlineConfig as VitestInlineConfig } from 'vitest'
 import { type UserConfigExport } from 'vitest/config'
 
-import dotEnv from '@innodoc/utils/dot-env'
+import loadDotEnv from '@innodoc/utils/loadDotEnv'
 
 // import pkg from './package.json' assert { type: 'json' }
 
@@ -39,7 +39,7 @@ function testConfig(testMode: string) {
 
 /* vite configuration */
 function config() {
-  dotEnv(projectDir)
+  loadDotEnv(projectDir)
 
   const testMode = process.env.VITEST_MODE
 

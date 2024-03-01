@@ -1,6 +1,6 @@
 import type { ComponentType, ReactNode } from 'react'
 
-import { isHastMdxJsxFlowDivElement, isHastRootDivElement } from '@innodoc/markdown/type-guards'
+import { isHastMdxJsxFlowDivElement, isHastRootDivElement } from '@innodoc/markdown/typeGuards'
 import type { HastMdxJsxFlowDivElement } from '@innodoc/markdown/types'
 
 import {

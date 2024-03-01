@@ -1,6 +1,6 @@
 import markdownToHast from '@innodoc/markdown'
 import { serializeParserError } from '@innodoc/utils/content'
-import { isContentWithHash, isParserError } from '@innodoc/utils/type-guards'
+import { isContentWithHash, isParserError } from '@innodoc/utils/typeGuards'
 
 self.onmessage = ({ data }: MessageEvent<unknown>) => {
   if (isContentWithHash(data)) {

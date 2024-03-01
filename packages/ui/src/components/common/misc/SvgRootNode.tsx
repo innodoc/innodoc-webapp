@@ -4,7 +4,7 @@ import { type ComponentType, createElement, type SVGProps } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ElementNode, RootNode } from 'svg-parser'
 
-import attributesToProps from '@innodoc/utils/attributes-to-props'
+import attributesToProps from '@innodoc/utils/attributesToProps'
 
 import { InlineError } from '#components/common/errors'
 

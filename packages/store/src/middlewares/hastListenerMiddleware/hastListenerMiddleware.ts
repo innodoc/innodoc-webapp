@@ -1,8 +1,6 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
 import type { AnyAction, PayloadAction } from '@reduxjs/toolkit'
 
-import { isHastRootDivElement } from '@innodoc/markdown/type-guards'
-import { isParserError, isWithContentHash } from '@innodoc/utils/type-guards'
 import type { RouteInfo } from '@innodoc/routes/types'
 import type { ContentWithHash, HastResultWithHash } from '@innodoc/types/common'
 

@@ -1,6 +1,6 @@
 import type { Node } from 'unist'
 
-import { isMdastLink } from '#type-guards'
+import { isMdastLink } from '#typeGuards'
 
 /**
  * Rewrite 'app:route|param' link specifiers -> 'app://route|param'

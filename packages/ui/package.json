@@ -9,7 +9,7 @@
     "./pages": "./src/components/app/pages.ts"
   },
   "imports": {
-    "#components/common/built-in-pages": "./src/components/common/builtInPages.tsx",
+    "#components/common/builtInPages": "./src/components/common/builtInPages.tsx",
     "#components/common/buttons": "./src/components/common/buttons/buttons.ts",
     "#components/common/errors": "./src/components/common/errors/errors.ts",
     "#components/common/links": "./src/components/common/links/links.ts",
