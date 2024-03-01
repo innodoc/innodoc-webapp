@@ -13,7 +13,7 @@ function parse({ icons, prefix, width = 24, height = 24 }: IconifyJSON) {
     Object.entries(icons).map(([name, { body }]) => [
       `${prefix}:${name}`,
       parseSvg(`<svg viewBox='0 0 ${width} ${height}'>${body}</svg>`),
-    ])
+    ]),
   )
 }
 
@@ -25,7 +25,7 @@ function filterBySet(set: string, iconNames: string[]) {
       .reduce<string[]>(
         (acc, icon) =>
           icon.startsWith(`${set}:`) ? [...acc, icon.substring(set.length + 1)] : acc,
-        []
+        [],
       )
       // Unique
       .filter((val, idx, self) => self.indexOf(val) === idx)

@@ -2,9 +2,6 @@ import createCache, { type EmotionCache } from '@emotion/cache'
 import I18NextHttpBackend from 'i18next-http-backend'
 import { type ComponentType } from 'react'
 import { hydrateRoot, type Root } from 'react-dom/client'
-import type { RouteInfo } from '@innodoc/routes/types'
-import type { PageContextClient } from '@innodoc/server/types'
-import type { RootState, Store } from '@innodoc/store/types'
 import type { PreloadedState } from '@reduxjs/toolkit'
 import type { i18n as I18nInstance } from 'i18next'
 
@@ -13,6 +10,9 @@ import getI18n from '@innodoc/i18n'
 import makeStore from '@innodoc/store'
 import { changeRouteTransitionInfo } from '@innodoc/store/slices/app'
 import renderPage from '@innodoc/ui'
+import type { RouteInfo } from '@innodoc/routes/types'
+import type { PageContextClient } from '@innodoc/server/types'
+import type { RootState, Store } from '@innodoc/store/types'
 
 class ClientRenderer {
   /** react-dom root */
@@ -54,7 +54,7 @@ class ClientRenderer {
       this.i18nBackendOpts,
       routeInfo.locale,
       routeInfo.courseSlug,
-      this.store
+      this.store,
     )
     this.emotionCache = this.createEmotionCache()
   }
@@ -85,7 +85,7 @@ class ClientRenderer {
       this.i18n,
       this.store,
       undefined,
-      this.PagePrev ?? Page
+      this.PagePrev ?? Page,
     )
 
     // Hydration
@@ -128,7 +128,7 @@ class ClientRenderer {
   /** Create emotion style cache */
   private createEmotionCache() {
     const emotionInsertionPoint = document.querySelector<HTMLMetaElement>(
-      `meta[name="${EMOTION_STYLE_INSERTION_POINT_NAME}"]`
+      `meta[name="${EMOTION_STYLE_INSERTION_POINT_NAME}"]`,
     )
     if (emotionInsertionPoint === null) {
       throw new Error('Could not find emotion insertion meta tag.')

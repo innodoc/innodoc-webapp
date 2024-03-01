@@ -1,8 +1,8 @@
 import { Box, styled } from '@mui/material'
 import { Children, type ReactNode } from 'react'
-import type { YOUTUBE_VIDEO_PROPERTIES } from '@innodoc/markdown/properties'
 
 import { selectRouteInfo } from '@innodoc/store/slices/app'
+import type { YOUTUBE_VIDEO_PROPERTIES } from '@innodoc/markdown/properties'
 
 import { useSelector } from '#hooks/redux'
 import type { NodeProps } from '#components/content/types'

@@ -2,10 +2,10 @@ import camelcaseKeys from 'camelcase-keys'
 import fs from 'fs/promises'
 import path from 'path'
 import { parse as yamlParse } from 'yaml'
-import type { DbCourse, DbSection } from '@innodoc/types/entities'
 import type { Knex } from 'knex'
 
 import getDatabase from '@innodoc/server/database'
+import type { DbCourse, DbSection } from '@innodoc/types/entities'
 
 import type { InsertResult, Manifest, ManifestPage } from './types'
 
@@ -186,7 +186,7 @@ class Importer {
   protected async createSection(
     sectionPath: string,
     order: number,
-    parentId: DbSection['parent_id']
+    parentId: DbSection['parent_id'],
   ) {
     if (!this.trx || !this.importFolder || !this.courseId || !this.manifest) {
       throw new Error("Importer wasn't initialized")

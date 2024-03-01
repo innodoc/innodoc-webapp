@@ -18,7 +18,7 @@ const StyledPre = styled('pre', { shouldForwardProp: (prop) => prop !== 'wrap' }
       whiteSpace: wrap ? 'normal' : 'pre',
       textWrap: wrap ? 'wrap' : 'nowrap',
     },
-  })
+  }),
 )
 
 interface StyledPreProps {

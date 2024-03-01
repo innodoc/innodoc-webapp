@@ -1,11 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
-import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
 import type { LanguageCode } from 'iso-639-1'
 
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCourseSectionsQuery } from '@innodoc/store/slices/content/sections'
 import { defaultTranslatableFields } from '@innodoc/types/entities'
+import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
 
 import { useSelector } from './redux'
 import { translateEntityArray } from './utils'
@@ -50,7 +50,7 @@ function useSelectBreadcrumbSections() {
           return sec !== undefined ? [...acc, sec] : acc
         }, [])
         return translateEntityArray(bcSections, defaultTranslatableFields, _locale)
-      }
+      },
     )
   }, [])
 
@@ -61,7 +61,7 @@ function useSelectBreadcrumbSections() {
         sections: selectBreadcrumbSections(result, sectionPath, locale),
       }),
       skip: courseSlug === null,
-    }
+    },
   )
 
   return result

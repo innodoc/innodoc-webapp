@@ -1,5 +1,6 @@
-import type { ContentType } from '@innodoc/types/common'
 import type { LanguageCode } from 'iso-639-1'
+
+import type { ContentType } from '@innodoc/types/common'
 
 import pages from '#slices/content/pages'
 import sections from '#slices/content/sections'
@@ -11,7 +12,7 @@ export function fetchContent(
   courseSlug: string,
   locale: LanguageCode,
   stringIdValue: string,
-  dispatch: AppDispatch
+  dispatch: AppDispatch,
 ) {
   if (contentType === 'page') {
     return dispatch(
@@ -19,7 +20,7 @@ export function fetchContent(
         courseSlug,
         locale,
         pageSlug: stringIdValue,
-      })
+      }),
     )
   }
 
@@ -29,6 +30,6 @@ export function fetchContent(
       courseSlug,
       locale,
       sectionPath: stringIdValue,
-    })
+    }),
   )
 }

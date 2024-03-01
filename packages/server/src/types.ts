@@ -1,13 +1,11 @@
-import type { PASS_TO_CLIENT_PROPS } from '@innodoc/constants'
-import type { RouteInfo } from '@innodoc/routes/types'
-import type { RootState, Store } from '@innodoc/store/types'
 import type { PreloadedState } from '@reduxjs/toolkit'
 import type { LanguageCode } from 'iso-639-1'
 import type { ComponentType } from 'react'
-import type {
-  PageContextBuiltIn,
-  PageContextBuiltInClientWithClientRouting,
-} from 'vike/types'
+import type { PageContextBuiltIn, PageContextBuiltInClientWithClientRouting } from 'vike/types'
+
+import type { PASS_TO_CLIENT_PROPS } from '@innodoc/constants'
+import type { RouteInfo } from '@innodoc/routes/types'
+import type { RootState, Store } from '@innodoc/store/types'
 
 /** Properties passed into `renderPage` (Express handler) */
 export interface PageContextInit extends Pick<PageContextBuiltIn, 'urlOriginal'> {

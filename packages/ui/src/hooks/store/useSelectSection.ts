@@ -1,11 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
-import type { ApiSection } from '@innodoc/types/entities'
 import type { LanguageCode } from 'iso-639-1'
 
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCourseSectionsQuery } from '@innodoc/store/slices/content/sections'
 import { defaultTranslatableFields } from '@innodoc/types/entities'
+import type { ApiSection } from '@innodoc/types/entities'
 
 import { useSelector } from './redux'
 import { translateEntity } from './utils'
@@ -31,9 +31,9 @@ function useSelectSection(sectionPath: ApiSection['path'] | undefined) {
             return undefined
           }
           return translateEntity(section, defaultTranslatableFields, _locale)
-        }
+        },
       ),
-    []
+    [],
   )
 
   const result = useGetCourseSectionsQuery(
@@ -41,7 +41,7 @@ function useSelectSection(sectionPath: ApiSection['path'] | undefined) {
     {
       selectFromResult: (result) => ({ section: selectSection(result, sectionPath, locale) }),
       skip: courseSlug === null || sectionPath === undefined,
-    }
+    },
   )
 
   return result

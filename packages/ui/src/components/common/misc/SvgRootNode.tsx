@@ -31,7 +31,7 @@ function SvgElementNode({ node: { tagName, properties = {}, children } }: SvgEle
     ? createElement(
         tagName,
         attributesToProps(properties),
-        children.filter(isElementNode).map((node, idx) => <SvgElementNode key={idx} node={node} />)
+        children.filter(isElementNode).map((node, idx) => <SvgElementNode key={idx} node={node} />),
       )
     : null
 }

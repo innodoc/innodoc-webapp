@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import { Trans } from 'react-i18next'
+
 import type { RouteInfo } from '@innodoc/routes/types'
 
 import { InlineError } from '#components/common/errors'
@@ -12,7 +13,7 @@ import type { LinkProps } from './types'
 /** Link from specifier */
 const SpecLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLink(
   { to, ...other },
-  ref
+  ref,
 ) {
   const { parseLinkSpecifier } = useRouteManager()
   let routeInfo: Partial<RouteInfo>

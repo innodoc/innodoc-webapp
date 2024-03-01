@@ -1,9 +1,9 @@
 import { Trans } from 'react-i18next'
-import type { ContentType } from '@innodoc/types/common'
-import type { TranslatedCourse, TranslatedPage, TranslatedSection } from '@innodoc/types/entities'
 import type { ReactNode } from 'react'
 
 import { getStringIdField } from '@innodoc/utils/content'
+import type { ContentType } from '@innodoc/types/common'
+import type { TranslatedCourse, TranslatedPage, TranslatedSection } from '@innodoc/types/entities'
 
 import { Code } from '#components/common/misc'
 import { HastNode } from '#components/content/hast'

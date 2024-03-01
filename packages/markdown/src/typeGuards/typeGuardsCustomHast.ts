@@ -9,17 +9,17 @@ import type {
 } from '#types'
 
 export const isHastRootDivElement = convertElement(
-  (el): el is HastRootDivElement => el.tagName === 'div' && el.properties?.root === 'true'
+  (el): el is HastRootDivElement => el.tagName === 'div' && el.properties?.root === 'true',
 )
 
 export const isHastMdxJsxFlowDivElement = convertElement(
   (el): el is HastMdxJsxFlowDivElement =>
-    el.tagName === 'div' && el.properties?.type === 'mdxJsxFlowElement'
+    el.tagName === 'div' && el.properties?.type === 'mdxJsxFlowElement',
 )
 
 export const isHastMdxJsxTextSpanElement = convertElement(
   (el): el is HastMdxJsxTextSpanElement =>
-    el.tagName === 'span' && el.properties?.type === 'mdxJsxTextElement'
+    el.tagName === 'span' && el.properties?.type === 'mdxJsxTextElement',
 )
 
 export function isHastMdxJsxFlowDivElementTabs(el: unknown): el is HastMdxJsxFlowDivElementTabs {
@@ -27,7 +27,7 @@ export function isHastMdxJsxFlowDivElementTabs(el: unknown): el is HastMdxJsxFlo
 }
 
 export function isHastMdxJsxFlowDivElementTabItem(
-  el: unknown
+  el: unknown,
 ): el is HastMdxJsxFlowDivElementTabItem {
   return (
     isHastMdxJsxFlowDivElement(el) &&

@@ -5,11 +5,11 @@ import I18NextFsBackend, { type FsBackendOptions } from 'i18next-fs-backend'
 import path from 'path'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { fileURLToPath } from 'url'
-import type { RouteInfo } from '@innodoc/routes/types'
-import type { Store } from '@innodoc/store/types'
 
 import { EMOTION_STYLE_KEY } from '@innodoc/constants'
 import getI18n from '@innodoc/i18n'
+import type { RouteInfo } from '@innodoc/routes/types'
+import type { Store } from '@innodoc/store/types'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 

@@ -520,7 +520,7 @@ function getPropsKey(key: string) {
 
   const kebabKey = key.replace(
     /[A-Z\u00C0-\u00D6\u00D8-\u00DE]/g,
-    (match) => `-${match.toLowerCase()}`
+    (match) => `-${match.toLowerCase()}`,
   )
 
   if (kebabKey.startsWith('aria-')) {

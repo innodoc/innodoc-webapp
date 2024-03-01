@@ -38,8 +38,8 @@ function useManageExpanded() {
       setExpanded((prevExpanded) =>
         expandedWithParents.reduce(
           (acc, sectionPath) => (acc.includes(sectionPath) ? acc : [...acc, sectionPath]),
-          prevExpanded
-        )
+          prevExpanded,
+        ),
       )
     }
   }, [currentSectionPath, expanded, expandedWithParents, setExpanded])

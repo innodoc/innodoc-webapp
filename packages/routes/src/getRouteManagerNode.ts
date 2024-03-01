@@ -7,7 +7,7 @@ function getRouteManagerNode(config: ServerConfig) {
   return RouteManager.getInstance(
     config.courseSlugMode,
     config.pagePathPrefix,
-    config.sectionPathPrefix
+    config.sectionPathPrefix,
   )
 }
 

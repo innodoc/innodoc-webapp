@@ -1,6 +1,7 @@
 import { styled } from '@mui/material'
 import { Children, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import type { VIDEO_PROPERTIES } from '@innodoc/markdown/properties'
 
 import type { NodeProps } from '#components/content/types'

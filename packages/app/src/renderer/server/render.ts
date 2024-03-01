@@ -1,8 +1,8 @@
 import { dangerouslySkipEscape, escapeInject } from 'vike/server'
-import type { PageContextRender, PageContextUpdate } from '@innodoc/server/types'
 import type { FilledContext } from 'react-helmet-async'
 
 import renderPage from '@innodoc/ui'
+import type { PageContextRender, PageContextUpdate } from '@innodoc/server/types'
 
 import renderToHtml from './renderToHtml'
 import { createEmotionCache, emotionStyleTags, initColorSchemeScript, initI18n } from './utils'

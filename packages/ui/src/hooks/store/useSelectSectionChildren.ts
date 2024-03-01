@@ -1,11 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
-import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
 import type { LanguageCode } from 'iso-639-1'
 
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCourseSectionsQuery } from '@innodoc/store/slices/content/sections'
 import { defaultTranslatableFields } from '@innodoc/types/entities'
+import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
 
 import { useSelector } from './redux'
 import { translateEntityArray } from './utils'
@@ -29,7 +29,7 @@ function useSelectSectionChildren(parentId: ApiSection['parentId']) {
         }
         const children = sections.filter((s) => s.parentId === _parentId)
         return translateEntityArray(children, defaultTranslatableFields, _locale)
-      }
+      },
     )
   }, [])
 
@@ -38,7 +38,7 @@ function useSelectSectionChildren(parentId: ApiSection['parentId']) {
     {
       selectFromResult: (result) => ({ sections: selectSectionChildren(result, parentId, locale) }),
       skip: courseSlug === null,
-    }
+    },
   )
 
   return result

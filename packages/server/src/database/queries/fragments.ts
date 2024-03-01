@@ -1,5 +1,6 @@
-import type { DbCourse, FragmentType } from '@innodoc/types/entities'
 import type { LanguageCode } from 'iso-639-1'
+
+import type { DbCourse, FragmentType } from '@innodoc/types/entities'
 
 import getDatabase from '#database'
 
@@ -9,7 +10,7 @@ import type { ResultFromValue } from './types'
 export async function getFragmentContent(
   courseSlug: DbCourse['slug'],
   locale: LanguageCode,
-  fragmentType: FragmentType
+  fragmentType: FragmentType,
 ): Promise<string | undefined> {
   const db = getDatabase()
   const result = await db

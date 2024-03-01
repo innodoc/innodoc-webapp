@@ -1,12 +1,12 @@
 import { RenderErrorPage } from 'vike/RenderErrorPage'
-import type { PageContextServer, PageContextUpdate } from '@innodoc/server/types'
-import type { ContentType } from '@innodoc/types/common'
 
 import markdownToHast from '@innodoc/markdown'
 import { addHastResult } from '@innodoc/store/slices/hast'
 import { fetchContent } from '@innodoc/store/utils'
 import { getStringIdField, serializeParserError } from '@innodoc/utils/content'
 import { isParserError } from '@innodoc/utils/type-guards'
+import type { PageContextServer, PageContextUpdate } from '@innodoc/server/types'
+import type { ContentType } from '@innodoc/types/common'
 
 import { onBeforeRender as onBeforeRenderDefault } from '#renderer/server'
 
@@ -46,7 +46,7 @@ function makeOnBeforeRenderContent(contentType: ContentType) {
       pageContext.routeInfo.courseSlug,
       pageContext.routeInfo.locale,
       stringIdValue,
-      store.dispatch
+      store.dispatch,
     )
 
     // Fetch error?

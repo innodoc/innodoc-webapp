@@ -81,7 +81,7 @@ const cssVarsOpts = {
         },
         Card: CARD_TYPES.reduce(
           (acc, cardType) => ({ ...acc, [cardType]: getCardColors('light', cardType) }),
-          {}
+          {},
         ),
         Code: {
           bg: 'rgba(0, 0, 0, 0.05)',
@@ -101,7 +101,7 @@ const cssVarsOpts = {
       palette: {
         Card: CARD_TYPES.reduce(
           (acc, cardType) => ({ ...acc, [cardType]: getCardColors('dark', cardType) }),
-          {}
+          {},
         ),
         Code: {
           bg: 'rgba(255, 255, 255, 0.2)',

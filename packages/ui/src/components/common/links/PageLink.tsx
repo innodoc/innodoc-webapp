@@ -1,5 +1,6 @@
 import { Children, forwardRef } from 'react'
 import { Trans } from 'react-i18next'
+
 import type { ApiPage, TranslatedPage } from '@innodoc/types/entities'
 
 import { InlineError } from '#components/common/errors'
@@ -30,7 +31,7 @@ const PageLinkFromSlug = forwardRef<HTMLAnchorElement, PageLinkFromSlugProps>(
     }
 
     return <PageLink ref={ref} page={page} {...other} />
-  }
+  },
 )
 
 interface PageLinkFromSlugProps extends Omit<PageLinkProps, 'page'> {
@@ -40,7 +41,7 @@ interface PageLinkFromSlugProps extends Omit<PageLinkProps, 'page'> {
 /** Link to a page */
 const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
   { children, page, preferShortTitle = false, showIcon = true, ...other },
-  ref
+  ref,
 ) {
   const { generateUrl } = useRouteManager()
   const { slug, icon, shortTitle, title } = page

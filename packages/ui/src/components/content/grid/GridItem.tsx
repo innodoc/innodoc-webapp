@@ -25,8 +25,8 @@ function nodeToGridProps(nodeProps: GridItemProps['nodeProps']) {
         }
         return acc
       },
-      {} as ComponentProps<typeof MuiGrid>
-    )
+      {} as ComponentProps<typeof MuiGrid>,
+    ),
   )
 }
 

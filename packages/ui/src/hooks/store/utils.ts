@@ -1,6 +1,7 @@
-import type { BaseEntity, TranslatableFields, TranslatedEntity } from '@innodoc/types/entities'
 import type { LanguageCode } from 'iso-639-1'
 import type { CamelCasedProperties } from 'type-fest'
+
+import type { BaseEntity, TranslatableFields, TranslatedEntity } from '@innodoc/types/entities'
 
 type TranslatableBaseEntity<F extends string> = CamelCasedProperties<BaseEntity> &
   TranslatableFields<F>
@@ -9,7 +10,7 @@ type TranslatableBaseEntity<F extends string> = CamelCasedProperties<BaseEntity>
 export function translateEntity<T extends TranslatableBaseEntity<F>, F extends string>(
   entity: T,
   fields: F[],
-  locale: LanguageCode
+  locale: LanguageCode,
 ) {
   return fields.reduce(
     (acc, field) =>
@@ -19,7 +20,7 @@ export function translateEntity<T extends TranslatableBaseEntity<F>, F extends s
             [field]: entity[field]?.[locale],
           }
         : acc,
-    { ...entity }
+    { ...entity },
   ) as TranslatedEntity<T>
 }
 
@@ -27,7 +28,7 @@ export function translateEntity<T extends TranslatableBaseEntity<F>, F extends s
 export function translateEntityArray<T extends TranslatableBaseEntity<F>, F extends string>(
   entities: T[],
   fields: F[],
-  locale: LanguageCode
+  locale: LanguageCode,
 ) {
   return entities.map((entity) => translateEntity(entity, fields, locale))
 }

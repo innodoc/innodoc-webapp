@@ -1,8 +1,8 @@
 import { Children, forwardRef } from 'react'
 import { Trans } from 'react-i18next'
-import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
 
 import { formatSectionTitle } from '@innodoc/utils/content'
+import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
 
 import { InlineError } from '#components/common/errors'
 import { Code } from '#components/common/misc'
@@ -32,7 +32,7 @@ const SectionLinkFromPath = forwardRef<HTMLAnchorElement, SectionLinkFromPathPro
     }
 
     return <SectionLink ref={ref} section={section} {...other} />
-  }
+  },
 )
 
 interface SectionLinkFromPathProps extends Omit<SectionLinkProps, 'section'> {
@@ -42,7 +42,7 @@ interface SectionLinkFromPathProps extends Omit<SectionLinkProps, 'section'> {
 /** Link to a section */
 const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function SectionLink(
   { children, preferShortTitle = false, section, ...other },
-  ref
+  ref,
 ) {
   const { generateUrl } = useRouteManager()
 

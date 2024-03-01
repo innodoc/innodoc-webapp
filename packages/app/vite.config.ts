@@ -63,7 +63,7 @@ function config() {
       visualizer({
         gzipSize: true,
         projectRoot: projectDir,
-      })
+      }),
     )
   }
 

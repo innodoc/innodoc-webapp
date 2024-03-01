@@ -1,6 +1,7 @@
 import camelcaseKeys from 'camelcase-keys'
-import type { ApiSection, DbCourse, DbQuerySection, DbSection } from '@innodoc/types/entities'
 import type { LanguageCode } from 'iso-639-1'
+
+import type { ApiSection, DbCourse, DbQuerySection, DbSection } from '@innodoc/types/entities'
 
 import getDatabase from '#database'
 
@@ -25,7 +26,7 @@ export async function getCourseSections(courseSlug: DbCourse['slug']): Promise<A
             's.parent_id',
             db.raw('array[s.order]::integer[]'),
             's.created_at',
-            's.updated_at'
+            's.updated_at',
           )
           .from('sections as s')
           .join('courses as c', 's.course_id', 'c.id')
@@ -43,12 +44,12 @@ export async function getCourseSections(courseSlug: DbCourse['slug']): Promise<A
                 's.parent_id',
                 db.raw('cte.order || s.order'),
                 's.created_at',
-                's.updated_at'
+                's.updated_at',
               )
               .from('sections as s')
               .join('cte', 'cte.id', 's.parent_id')
           })
-      }
+      },
     )
     .select(
       'cte.id',
@@ -62,8 +63,8 @@ export async function getCourseSections(courseSlug: DbCourse['slug']): Promise<A
       'cte.updated_at',
       db.raw('json_object_agg(t.locale, t.value) as title'),
       db.raw(
-        'json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title'
-      )
+        'json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title',
+      ),
     )
     .from('cte')
     .join('sections_title_trans as t', 'cte.id', 't.section_id')
@@ -77,7 +78,7 @@ export async function getCourseSections(courseSlug: DbCourse['slug']): Promise<A
       'cte.parent_id',
       'cte.order',
       'cte.created_at',
-      'cte.updated_at'
+      'cte.updated_at',
     )
     .orderBy('cte.order')) as DbQuerySection[] // somehow passing type doesn't work here
 
@@ -87,7 +88,7 @@ export async function getCourseSections(courseSlug: DbCourse['slug']): Promise<A
 /** Get section ID by path */
 export async function getSectionIdByPath(
   courseSlug: DbCourse['slug'],
-  sectionPath: DbSection['path']
+  sectionPath: DbSection['path'],
 ) {
   const db = getDatabase()
   const pathParts = sectionPath.split('/')
@@ -95,7 +96,7 @@ export async function getSectionIdByPath(
 
   const initialPartsArrRaw = db.raw(
     'array[' + pathParts.map(() => '?').join(',') + ']::varchar[]',
-    pathParts
+    pathParts,
   )
 
   // Walk down tree along section path
@@ -114,7 +115,7 @@ export async function getSectionIdByPath(
           void qb
             .select(
               's.id',
-              db.raw('cte.path[2:]') // Pass along parts removing 1st element
+              db.raw('cte.path[2:]'), // Pass along parts removing 1st element
             )
             .from('sections as s')
             .join('cte', 'cte.id', 's.parent_id')
@@ -132,7 +133,7 @@ export async function getSectionIdByPath(
 export async function getSectionContent(
   courseSlug: DbCourse['slug'],
   locale: LanguageCode,
-  sectionId: DbSection['id']
+  sectionId: DbSection['id'],
 ): Promise<string | undefined> {
   const db = getDatabase()
   const result = await db

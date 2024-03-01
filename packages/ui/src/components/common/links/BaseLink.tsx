@@ -6,7 +6,7 @@ import type { LinkProps } from './types'
 /** Link that handles `hash` */
 const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function BaseLink(
   { children, hash, to = '', ...other },
-  ref
+  ref,
 ) {
   return (
     <Link href={hash ? `${to}#${hash}` : to} keep-scroll-position="true" ref={ref} {...other}>

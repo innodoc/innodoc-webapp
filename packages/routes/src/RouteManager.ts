@@ -1,9 +1,9 @@
 import { compile, match, type MatchFunction, type PathFunction } from 'path-to-regexp'
-import type { CourseSlugMode } from '@innodoc/types/common'
 
 import { API_COURSE_PREFIX } from '@innodoc/constants'
 import { getStringIdField } from '@innodoc/utils/content'
 import { isArbitraryObject, isContentType } from '@innodoc/utils/type-guards'
+import type { CourseSlugMode } from '@innodoc/types/common'
 
 import { routesApi, routesBuiltinPages, routesContentPages, routesUser } from './routes'
 import type { ApiRouteName, AppRouteName, RouteInfo, RouteName } from './types'
@@ -51,7 +51,7 @@ class RouteManager {
   private constructor(
     courseSlugMode: CourseSlugMode,
     pagePathPrefix: string,
-    sectionPathPrefix: string
+    sectionPathPrefix: string,
   ) {
     this.courseSlugMode = courseSlugMode
     this.routeFuncArgs = { pagePathPrefix, sectionPathPrefix }
@@ -64,7 +64,7 @@ class RouteManager {
   public static getInstance(
     courseSlugMode: CourseSlugMode,
     pagePathPrefix: string,
-    sectionPathPrefix: string
+    sectionPathPrefix: string,
   ): RouteManager {
     if (!RouteManager.instance) {
       RouteManager.instance = new RouteManager(courseSlugMode, pagePathPrefix, sectionPathPrefix)
@@ -147,12 +147,12 @@ class RouteManager {
 
     // Build generators
     const generators = Object.fromEntries(
-      patterns.map(([routeName, pattern]) => [routeName, compile(pattern, this.parseOptions)])
+      patterns.map(([routeName, pattern]) => [routeName, compile(pattern, this.parseOptions)]),
     ) as Generators
 
     // Build matchers
     const matchers = Object.fromEntries(
-      patterns.map(([routeName, pattern]) => [routeName, match(pattern, this.parseOptions)])
+      patterns.map(([routeName, pattern]) => [routeName, match(pattern, this.parseOptions)]),
     ) as Matchers
 
     return { generators, matchers }

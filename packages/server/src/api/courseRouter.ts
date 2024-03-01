@@ -1,11 +1,11 @@
 import { type RequestHandler, Router } from 'express'
 import { param, validationResult } from 'express-validator'
-import type { ApiRouteName } from '@innodoc/routes/types'
-import type { FragmentType } from '@innodoc/types/entities'
 import type { LanguageCode } from 'iso-639-1'
 
 import { API_COURSE_PREFIX } from '@innodoc/constants'
 import { isFragmentType, isLanguageCode } from '@innodoc/utils/type-guards'
+import type { ApiRouteName } from '@innodoc/routes/types'
+import type { FragmentType } from '@innodoc/types/entities'
 
 import {
   getCourse,
@@ -44,7 +44,7 @@ const courseRouter = Router()
   // Get course pages
   .get(p('api:course:pages'), param('courseSlug').custom(isSlug), checkErrors, (async (
     req,
-    res
+    res,
   ) => {
     const pages = await getCoursePages(req.params.courseSlug)
     res.json(pages)
@@ -61,20 +61,20 @@ const courseRouter = Router()
       const pageContent = await getPageContent(
         req.params.courseSlug,
         req.params.locale as LanguageCode,
-        req.params.pageSlug
+        req.params.pageSlug,
       )
       if (pageContent === undefined) {
         return res.sendStatus(404)
       }
 
       res.type('text/markdown').send(pageContent)
-    }) as RequestHandler
+    }) as RequestHandler,
   )
 
   // Get course sections
   .get(p('api:course:sections'), param('courseSlug').custom(isSlug), checkErrors, (async (
     req,
-    res
+    res,
   ) => {
     const sections = await getCourseSections(req.params.courseSlug)
     res.json(sections)
@@ -96,14 +96,14 @@ const courseRouter = Router()
       const sectionContent = await getSectionContent(
         req.params.courseSlug,
         req.params.locale as LanguageCode,
-        sectionId
+        sectionId,
       )
       if (sectionContent === undefined) {
         return res.sendStatus(404)
       }
 
       res.type('text/markdown').send(sectionContent)
-    }) as RequestHandler
+    }) as RequestHandler,
   )
 
   // Get fragment content
@@ -117,7 +117,7 @@ const courseRouter = Router()
       const fragmentContent = await getFragmentContent(
         req.params.courseSlug,
         req.params.locale as LanguageCode,
-        req.params.fragmentType as FragmentType
+        req.params.fragmentType as FragmentType,
       )
 
       if (fragmentContent === undefined) {
@@ -125,7 +125,7 @@ const courseRouter = Router()
       }
 
       res.type('text/markdown').send(fragmentContent)
-    }) as RequestHandler
+    }) as RequestHandler,
   )
 
 export default courseRouter

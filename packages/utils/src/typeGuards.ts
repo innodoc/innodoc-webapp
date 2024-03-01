@@ -1,4 +1,6 @@
 import ISO6391, { type LanguageCode } from 'iso-639-1'
+
+import { CONTENT_TYPES, FRAGMENT_TYPES } from '@innodoc/constants'
 import type {
   ArbitraryObject,
   ContentType,
@@ -7,8 +9,6 @@ import type {
   WithContentHash,
 } from '@innodoc/types/common'
 import type { FragmentType } from '@innodoc/types/entities'
-
-import { CONTENT_TYPES, FRAGMENT_TYPES } from '@innodoc/constants'
 
 const languageCodes = ISO6391.getAllCodes()
 

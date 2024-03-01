@@ -1,4 +1,5 @@
 import { styled } from '@mui/material'
+
 import type { TranslatedSection } from '@innodoc/types/entities'
 
 import { SectionLink } from '#components/common/links'

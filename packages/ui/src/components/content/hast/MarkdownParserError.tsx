@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material'
 import { Trans, useTranslation } from 'react-i18next'
+
 import type { ParserError } from '@innodoc/types/common'
 
 import { BlockError } from '#components/common/errors'

@@ -18,7 +18,7 @@ function PagePage() {
       locale,
       pageSlug: pageSlug ?? '',
     },
-    { skip: course === undefined || courseSlug === null || pageSlug === undefined }
+    { skip: course === undefined || courseSlug === null || pageSlug === undefined },
   )
 
   return (

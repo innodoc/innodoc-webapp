@@ -31,7 +31,7 @@ function Footer() {
       locale,
       fragmentType: FRAGMENT_TYPE_FOOTER_A,
     },
-    { skip: courseSlug === null }
+    { skip: courseSlug === null },
   )
   const { data: dataB } = useGetFragmentContentQuery(
     {
@@ -39,7 +39,7 @@ function Footer() {
       locale,
       fragmentType: FRAGMENT_TYPE_FOOTER_B,
     },
-    { skip: courseSlug === null }
+    { skip: courseSlug === null },
   )
 
   if (course === undefined) {

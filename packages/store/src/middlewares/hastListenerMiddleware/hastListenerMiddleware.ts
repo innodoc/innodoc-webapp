@@ -1,10 +1,10 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
-import type { RouteInfo } from '@innodoc/routes/types'
-import type { ContentWithHash, HastResultWithHash } from '@innodoc/types/common'
 import type { AnyAction, PayloadAction } from '@reduxjs/toolkit'
 
 import { isHastRootDivElement } from '@innodoc/markdown/type-guards'
 import { isParserError, isWithContentHash } from '@innodoc/utils/type-guards'
+import type { RouteInfo } from '@innodoc/routes/types'
+import type { ContentWithHash, HastResultWithHash } from '@innodoc/types/common'
 
 import { changeRouteTransitionInfo } from '#slices/app'
 import { addHastResult, changeIsProcessing, selectHastResultByHash } from '#slices/hast'
@@ -57,7 +57,7 @@ if (!import.meta.env.SSR) {
         worker.addEventListener('message', workerListener)
         worker.postMessage(content)
         await listenerApi.take(
-          (action) => addHastResult.match(action) && action.payload.hash === content.hash
+          (action) => addHastResult.match(action) && action.payload.hash === content.hash,
         )
       } finally {
         worker.removeEventListener('message', workerListener)
@@ -69,7 +69,7 @@ if (!import.meta.env.SSR) {
   // Page route transition effect
   const pageRouteTransitionEffect = async (
     { payload: { courseSlug, locale, pageSlug } }: PayloadAction<PageRouteInfo>,
-    listenerApi: AppListenerEffectAPI
+    listenerApi: AppListenerEffectAPI,
   ) => {
     if (courseSlug !== null && pageSlug !== undefined) {
       const result = await fetchContent('page', courseSlug, locale, pageSlug, listenerApi.dispatch)
@@ -82,7 +82,7 @@ if (!import.meta.env.SSR) {
   // Section route transition effect
   const sectionRouteTransitionEffect = async (
     { payload: { courseSlug, locale, sectionPath } }: PayloadAction<SectionRouteInfo>,
-    listenerApi: AppListenerEffectAPI
+    listenerApi: AppListenerEffectAPI,
   ) => {
     if (courseSlug !== null && sectionPath !== undefined) {
       const result = await fetchContent(
@@ -90,7 +90,7 @@ if (!import.meta.env.SSR) {
         courseSlug,
         locale,
         sectionPath,
-        listenerApi.dispatch
+        listenerApi.dispatch,
       )
       if (result.isSuccess && result.data !== undefined) {
         await processMarkdown(result.data, listenerApi)

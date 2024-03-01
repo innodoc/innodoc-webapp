@@ -1,7 +1,6 @@
-import type { RouteName } from '@innodoc/routes/types'
-
 import getRouteManager from '@innodoc/routes/node/getRouteManager'
 import config from '@innodoc/server/config'
+import type { RouteName } from '@innodoc/routes/types'
 
 const routeManager = getRouteManager(config)
 

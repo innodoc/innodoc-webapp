@@ -16,7 +16,7 @@ const StyledIcon = styled(Icon)({ fontSize: '1em' })
  */
 const ContentLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLink(
   { children, hash, to, ...other },
-  ref
+  ref,
 ) {
   // Link to anchor on same page
   if (to === '' && hash) {

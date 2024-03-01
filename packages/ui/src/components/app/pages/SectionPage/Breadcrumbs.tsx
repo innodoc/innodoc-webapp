@@ -40,7 +40,7 @@ function Breadcrumbs() {
           <Typography component="span" key={section.id}>
             {formatSectionTitle(section, true)}
           </Typography>
-        )
+        ),
       )}
     </StyledBreadcrumbs>
   )

@@ -1,5 +1,6 @@
 import { Children, forwardRef, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import type { RouteInfo } from '@innodoc/routes/types'
 
 import builtInPages from '#components/common/built-in-pages'
@@ -14,7 +15,7 @@ import type { LinkProps } from './types'
 /** App-internal link */
 const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink(
   { children, routeInfo, ...other },
-  ref
+  ref,
 ) {
   const { t } = useTranslation()
   const { generateUrl } = useRouteManager()

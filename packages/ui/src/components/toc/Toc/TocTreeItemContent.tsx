@@ -3,9 +3,9 @@ import { Box, IconButton, styled, Typography } from '@mui/material'
 import clsx from 'clsx'
 import { type ForwardedRef, forwardRef, type SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { TranslatedSection } from '@innodoc/types/entities'
 
 import { formatSectionTitle } from '@innodoc/utils/content'
+import type { TranslatedSection } from '@innodoc/types/entities'
 
 import { SectionLink } from '#components/common/links'
 
@@ -28,7 +28,7 @@ const TocTreeItemContent = forwardRef(function TocTreeItemContent(
     nodeId,
     section,
   }: TocTreeItemContentProps,
-  ref
+  ref,
 ) {
   const { t } = useTranslation()
   const { expanded, handleExpansion, disabled, focused, selected } = useTreeItem(nodeId)

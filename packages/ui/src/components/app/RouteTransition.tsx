@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from '#hooks/redux'
 
 const TransitionChild = forwardRef(function TransitionChild(
   { children, ...props }: TransitionChildProps,
-  ref: ForwardedRef<HTMLDivElement>
+  ref: ForwardedRef<HTMLDivElement>,
 ) {
   return (
     <div ref={ref} {...props}>

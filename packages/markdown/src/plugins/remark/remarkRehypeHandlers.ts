@@ -16,13 +16,13 @@ const remarkRehypeHandlers: Handlers = {
   mdxJsxFlowElement: (state, node) => {
     if (isMdxJsxFlowElement(node) && node.name !== null) {
       const attributes = node.attributes.filter((attr): attr is MdxJsxAttribute =>
-        isMdxJsxAttribute(attr)
+        isMdxJsxAttribute(attr),
       )
 
       const properties = Object.fromEntries(
         attributes
           .filter((attr) => typeof attr.value === 'string')
-          .map((attr) => [attr.name, attr.value]) as [string, string][]
+          .map((attr) => [attr.name, attr.value]) as [string, string][],
       )
 
       return {
@@ -42,13 +42,13 @@ const remarkRehypeHandlers: Handlers = {
   mdxJsxTextElement: (state, node) => {
     if (isMdxJsxTextElement(node) && node.name !== null) {
       const attributes = node.attributes.filter((attr): attr is MdxJsxAttribute =>
-        isMdxJsxAttribute(attr)
+        isMdxJsxAttribute(attr),
       )
 
       const properties = Object.fromEntries(
         attributes
           .filter((attr) => typeof attr.value === 'string')
-          .map((attr) => [attr.name, attr.value]) as [string, string][]
+          .map((attr) => [attr.name, attr.value]) as [string, string][],
       )
 
       return {

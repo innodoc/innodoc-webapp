@@ -1,6 +1,4 @@
 import { RenderErrorPage } from 'vike/RenderErrorPage'
-import type { PageContextOnBeforeRender, PageContextUpdate } from '@innodoc/server/types'
-import type { ApiCourse } from '@innodoc/types/entities'
 
 import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 import makeStore from '@innodoc/store'
@@ -8,6 +6,8 @@ import { changeRouteInfo } from '@innodoc/store/slices/app'
 import courses from '@innodoc/store/slices/content/courses'
 import pages from '@innodoc/store/slices/content/pages'
 import sections from '@innodoc/store/slices/content/sections'
+import type { PageContextOnBeforeRender, PageContextUpdate } from '@innodoc/server/types'
+import type { ApiCourse } from '@innodoc/types/entities'
 
 const routeManager = getRouteManager()
 
@@ -82,7 +82,7 @@ async function onBeforeRenderDefault({
     // Load pages sections
     await pageContextUpdate.store.dispatch(pages.endpoints.getCoursePages.initiate(courseParam))
     await pageContextUpdate.store.dispatch(
-      sections.endpoints.getCourseSections.initiate(courseParam)
+      sections.endpoints.getCourseSections.initiate(courseParam),
     )
 
     // Load fragment content

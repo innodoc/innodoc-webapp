@@ -5,7 +5,7 @@ import path from 'path'
 
 const isJSXIdentifier = ASTUtils.isNodeOfType(AST_NODE_TYPES.JSXIdentifier)
 const isJSXAttribute = ASTUtils.isNodeOfType<AST_NODE_TYPES.JSXAttribute>(
-  AST_NODE_TYPES.JSXAttribute
+  AST_NODE_TYPES.JSXAttribute,
 )
 const isLiteral = ASTUtils.isNodeOfType(AST_NODE_TYPES.Literal)
 

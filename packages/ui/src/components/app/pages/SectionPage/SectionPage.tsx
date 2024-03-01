@@ -21,7 +21,7 @@ function SectionPage() {
       locale,
       sectionPath: sectionPath ?? '',
     },
-    { skip: course === undefined || courseSlug === null || sectionPath === undefined }
+    { skip: course === undefined || courseSlug === null || sectionPath === undefined },
   )
 
   return (

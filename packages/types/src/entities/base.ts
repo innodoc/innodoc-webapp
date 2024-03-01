@@ -19,7 +19,7 @@ export const dbDefaultTranslatableFields = ['title', 'short_title'] as const
 
 /** Default fields that are translatable (camel case) */
 export const defaultTranslatableFields = dbDefaultTranslatableFields.map((key) =>
-  camelCase(key)
+  camelCase(key),
 ) as CamelCase<DbDefaultTranslatableFields>[]
 
 /** Default fields that are translatable */

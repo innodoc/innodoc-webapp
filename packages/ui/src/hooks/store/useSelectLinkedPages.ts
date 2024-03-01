@@ -1,12 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
-import type { PageLinkLocation } from '@innodoc/types/common'
-import type { ApiPage, TranslatedPage } from '@innodoc/types/entities'
 import type { LanguageCode } from 'iso-639-1'
 
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCoursePagesQuery } from '@innodoc/store/slices/content/pages'
 import { defaultTranslatableFields } from '@innodoc/types/entities'
+import type { PageLinkLocation } from '@innodoc/types/common'
+import type { ApiPage, TranslatedPage } from '@innodoc/types/entities'
 
 import { useSelector } from './redux'
 import { translateEntityArray } from './utils'
@@ -29,7 +29,7 @@ function useSelectLinkedPages(linkLocation: PageLinkLocation) {
         }
         const linkedPages = pages.filter((p) => (p.linked ?? []).includes(linkLocation))
         return translateEntityArray(linkedPages, defaultTranslatableFields, _locale)
-      }
+      },
     )
   }, [linkLocation])
 
@@ -38,7 +38,7 @@ function useSelectLinkedPages(linkLocation: PageLinkLocation) {
     {
       selectFromResult: (result) => ({ pages: selectNavPages(result, locale) }),
       skip: courseSlug === null,
-    }
+    },
   )
 
   return result

@@ -1,7 +1,6 @@
-import type { RouteInfo } from '@innodoc/routes/types'
-
 import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
+import type { RouteInfo } from '@innodoc/routes/types'
 
 import { useSelector } from '#hooks/redux'
 

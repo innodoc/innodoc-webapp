@@ -1,6 +1,7 @@
 import camelcaseKeys from 'camelcase-keys'
-import type { ApiPage, DbCourse, DbPage } from '@innodoc/types/entities'
 import type { LanguageCode } from 'iso-639-1'
+
+import type { ApiPage, DbCourse, DbPage } from '@innodoc/types/entities'
 
 import getDatabase from '#database'
 
@@ -9,15 +10,16 @@ import type { ResultFromValue } from './types'
 /** Get course pages */
 export async function getCoursePages(courseSlug: DbCourse['slug']): Promise<ApiPage[]> {
   const db = getDatabase()
+  const columns = [
+    'p.*',
+    db.raw('array_to_json(p.linked) as linked'),
+    db.raw('json_object_agg(t.locale, t.value) as title'),
+    db.raw(
+      'json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title',
+    ),
+  ]
   const result = await db
-    .select<DbPage[]>(
-      'p.*',
-      db.raw('array_to_json(p.linked) as linked'),
-      db.raw('json_object_agg(t.locale, t.value) as title'),
-      db.raw(
-        'json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title'
-      )
-    )
+    .select<DbPage[]>(...columns)
     .from('pages as p')
     .join('courses as c', 'p.course_id', 'c.id')
     .join('pages_title_trans as t', 'p.id', 't.page_id')
@@ -32,7 +34,7 @@ export async function getCoursePages(courseSlug: DbCourse['slug']): Promise<ApiP
 export async function getPageContent(
   courseSlug: DbCourse['slug'],
   locale: LanguageCode,
-  pageSlug: DbPage['slug']
+  pageSlug: DbPage['slug'],
 ): Promise<string | undefined> {
   const db = getDatabase()
   const result = await db
