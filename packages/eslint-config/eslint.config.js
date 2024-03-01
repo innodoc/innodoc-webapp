@@ -26,6 +26,8 @@ const filenamesRules = {
   'filenames/no-index': 'error',
 }
 
+const groupWithTypes = (re) => [re, `${re}.*\\u0000$`]
+
 const importRules = {
   // TypeScript provides the same checks
   // https://typescript-eslint.io/linting/troubleshooting/performance-troubleshooting#eslint-plugin-import
@@ -45,11 +47,12 @@ const importRules = {
       // https://github.com/lydell/eslint-plugin-simple-import-sort#custom-grouping
       groups: [
         ['^\\u0000'], // side-effects
-        ['^node:', '^node:.*\\u0000$'], // node modules
-        ['^@?\\w', '^@?\\w.*\\u0000$'], // 3rd party imports
-        ['^@innodoc\\/', '^@innodoc\\/.*\\u0000$'], // monorepo packages
-        ['(?<!\\u0000)$', '(?<=\\u0000)$'], // absolute imports
-        ['^\\.', '^\\..*\\u0000$'], // relative imports
+        groupWithTypes('^node:'), // node modules
+        groupWithTypes('^@?(?:(?!innodoc\\/))\\w'), // 3rd party imports
+        groupWithTypes('^@innodoc\\/'),
+        ['(?<!\\u0000)$'], // absolute imports
+        groupWithTypes('^#'), // subpath exports
+        groupWithTypes('^\\.'), // relative imports
       ],
     },
   ],
