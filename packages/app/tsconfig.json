@@ -10,7 +10,6 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "target": "ESNext",
-    "types": ["vite/client", "vitest/globals"],
     "useDefineForClassFields": true
   },
   "include": ["eslint.config.js", "vite.config.ts", "src"],

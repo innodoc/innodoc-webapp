@@ -25,6 +25,7 @@
     "#components/pages/content": "./src/components/app/pages/ContentPage.tsx",
     "#components/toc": "./src/components/toc/toc.ts",
     "#contexts": "./src/contexts/contexts.ts",
+    "#hooks/pageContext": "./src/hooks/usePageContext.ts",
     "#hooks/redux": "./src/hooks/store/redux.ts",
     "#hooks/routes": "./src/hooks/useRouteManager.ts",
     "#hooks/select": "./src/hooks/store/select.ts",
@@ -71,6 +72,7 @@
     "eslint-plugin-react-redux": "4.0.0",
     "i18next": "23.2.11",
     "iso-639-1": "2.1.15",
-    "type-fest": "3.13.0"
+    "type-fest": "3.13.0",
+    "vike": "0.4.164"
   }
 }

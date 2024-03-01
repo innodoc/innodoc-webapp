@@ -6,6 +6,10 @@ import type { ApiRouteName } from '@innodoc/routes/types'
 
 import config from './config'
 
+export function isError(error: unknown): error is Error {
+  return isArbitraryObject(error) && error instanceof Error && typeof error.name === 'string'
+}
+
 export function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
   return isArbitraryObject(error) && error instanceof Error && typeof error.code === 'string'
 }
@@ -30,7 +34,10 @@ export function getRoutePath(name: ApiRouteName, removePrefix?: string) {
  */
 export function asyncWrapper(asyncFn: (req: Request, res: Response) => Promise<void>) {
   return function (req: Request, res: Response, next: NextFunction) {
-    // eslint-disable-next-line promise/no-callback-in-promise
-    asyncFn(req, res).catch(next)
+    asyncFn(req, res).catch((err) => {
+      if (isError(err)) {
+        setImmediate<[Error]>(next, err)
+      }
+    })
   }
 }

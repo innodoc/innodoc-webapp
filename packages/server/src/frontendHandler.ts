@@ -1,46 +1,36 @@
 import { renderPage } from 'vike/server'
-import type { LanguageCode } from 'iso-639-1'
 
-import type { PageContextInit, PageContextServer } from '#types'
-
-import { asyncWrapper } from './utils'
+import { asyncWrapper, isError } from './utils'
 
 const frontendHandler = asyncWrapper(async (req, res) => {
-  const locale = req.rawLocale.language as LanguageCode
-
   // Create page context
-  const pageContextInit: PageContextInit = {
-    requestLocale: locale,
-    urlOriginal: req.originalUrl,
+  const pageContextInit = {
     host: req.headers.host,
+    requestLocale: req.rawLocale.language,
+    urlOriginal: req.originalUrl,
   }
 
   // Render page
-  const pageContext = await renderPage<PageContextServer, PageContextInit>(pageContextInit)
+  const pageContext = await renderPage(pageContextInit)
 
-  // Check error
-  if (pageContext.errorWhileRendering) {
+  // Don't throw if there is a pageContext.httpResponse, otherwise
+  // the error page won't be rendered.
+  if (!pageContext.httpResponse && isError(pageContext.errorWhileRendering)) {
     throw pageContext.errorWhileRendering
   }
 
-  // Follow redirection directive from app
-  else if (pageContext.redirectTo !== undefined) {
-    res.redirect(307, pageContext.redirectTo)
+  // pageContext.httpResponse is missing if:
+  //  - There is an error, but no error page.
+  //  - Error page has a bug and couldn't be rendered.
+  if (!pageContext.httpResponse) {
+    return
   }
 
   // Send result
-  const { httpResponse } = pageContext
-  if (httpResponse) {
-    const { body, statusCode, headers } = httpResponse
-    res.status(statusCode)
-    headers.forEach(([name, value]) => res.setHeader(name, value))
-    res.send(body)
-  }
-
-  // Otherwise send 404
-  else {
-    res.status(404).send('404 Not found')
-  }
+  const { body, statusCode, headers } = pageContext.httpResponse
+  res.status(statusCode)
+  headers.forEach(([name, value]) => res.setHeader(name, value))
+  res.send(body)
 })
 
 export default frontendHandler

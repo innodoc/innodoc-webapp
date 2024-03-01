@@ -9,8 +9,7 @@ const config = [
     files: [
       'vite.config.ts',
       // vike files
-      'src/pages/**/*.page*.ts',
-      'src/renderer/_+(default|error).page*.ts',
+      'src/*/**/\\+*.ts',
     ],
     rules: {
       'filenames/match-exported': 'off',

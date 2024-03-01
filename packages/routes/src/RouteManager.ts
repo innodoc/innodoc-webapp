@@ -1,25 +1,38 @@
-import { compile, match, type MatchFunction, type PathFunction } from 'path-to-regexp'
+import { compile, match } from 'path-to-regexp'
+import type { Match, MatchFunction, PathFunction } from 'path-to-regexp'
 
 import { API_COURSE_PREFIX } from '@innodoc/constants'
-import { getStringIdField } from '@innodoc/utils/content'
 import { isArbitraryObject, isContentType } from '@innodoc/utils/typeGuards'
 import type { CourseSlugMode } from '@innodoc/types/common'
 
 import { routesApi, routesBuiltinPages, routesContentPages, routesUser } from './routes'
-import type { ApiRouteName, AppRouteName, RouteInfo, RouteName } from './types'
+import type { RouteParams } from './routes'
+import type {
+  ApiRouteName,
+  AppRouteInfo,
+  AppRouteName,
+  ContentRouteName,
+  ParamTypeForGenerator,
+  RouteInfo,
+  RouteName,
+} from './types'
 
 export interface RouteFuncArgs {
   pagePathPrefix: string
   sectionPathPrefix: string
 }
 
-type Generators = Record<RouteName, PathFunction>
-type Matchers = Record<RouteName, MatchFunction>
+type Generators = {
+  [key in RouteName]: PathFunction<RouteParams<key>>
+}
+type Matchers = {
+  [key in RouteName]: MatchFunction<RouteParams<key>>
+}
 type RouteFunc = (args: RouteFuncArgs) => string
 type RouteDef = string | RouteFunc
 
 class RouteManager {
-  private static instance: RouteManager
+  private static instance: RouteManager | null
 
   private readonly allRoutes = {
     // exclude `app:home` as it's dynamic
@@ -74,39 +87,56 @@ class RouteManager {
   }
 
   /** Generate URL path from route name and parameters */
-  public generate(routeInfo: RouteInfo): string
-  public generate(routeName: RouteName, params: object): string
-  public generate(nameOrInfo: RouteInfo | RouteName, params?: object) {
-    if (this.isRouteInfo(nameOrInfo)) {
-      const { routeName, ...routeArgs } = nameOrInfo
-      return this.generate(routeName, routeArgs)
+  public generate<R extends RouteName>(routeInfo: RouteInfo<R>): string
+  public generate<R extends RouteName>(routeName: R, params?: RouteParams<R>): string
+  public generate<R extends RouteName>(
+    nameOrInfo: R | RouteInfo<R>,
+    params?: RouteParams<R>,
+  ): string {
+    if (this.isRouteName(nameOrInfo)) {
+      return this.generators[nameOrInfo](params as ParamTypeForGenerator<R>)
     }
-    return this.generators[nameOrInfo](params)
+    if (this.isRouteInfo(nameOrInfo)) {
+      if (params) {
+        throw Error('params must be undefined if RouteInfo is given')
+      }
+      const { name, ...routeInfoParams } = nameOrInfo
+      return this.generate(name, routeInfoParams as ParamTypeForGenerator<R>)
+    }
+    throw Error('Wrong argument')
   }
 
-  /** Parse link specifier params */
-  public parseLinkSpecifier(specifier: string): Omit<RouteInfo, 'courseSlug' | 'locale'> {
+  /**
+   * Parse link specifier.
+   *
+   * Link specifiers take the form `ROUTE_NAME|ROUTE_PARAMS` (e.g.
+   * `app:page|about`).
+   *
+   * @params specifier Link specifier
+   * @returns `RouteInfo` object
+   */
+  public parseLinkSpecifier(specifier: string): Omit<AppRouteInfo, 'locale' | 'courseSlug'> {
     const [routeName, arg] = specifier.split('|')
 
     if (!this.isAppRouteName(routeName)) {
       throw new Error(`Unknown route name: ${routeName}`)
     }
 
-    const [routeNameFirst, routeNameSecond] = routeName.split(':')
-    if (routeNameFirst !== 'app') {
-      throw new Error(`Link specifier must start with 'app:', but got ${specifier}`)
+    if (this.isContentRouteName(routeName)) {
+      const contentType = routeName.split(':')[1]
+      if (isContentType(contentType)) {
+        if (contentType === 'page') {
+          return { name: routeName, pageSlug: arg } as AppRouteInfo<'app:page'>
+        }
+        return { name: routeName, sectionPath: arg } as AppRouteInfo<'app:section'>
+      }
     }
 
-    const params: Record<string, string> = {}
-    if (isContentType(routeNameSecond)) {
-      params[getStringIdField(routeNameSecond)] = arg
-    }
-
-    return { routeName, ...params }
+    return { name: routeName }
   }
 
   /** Match URL path */
-  public match(routeName: AppRouteName, path: string) {
+  public match<R extends AppRouteName>(routeName: R, path: string): Match<RouteParams<R>> {
     return this.matchers[routeName](path)
   }
 
@@ -136,9 +166,14 @@ class RouteManager {
     return typeof routeName === 'string' && this.appRouteNames.includes(routeName)
   }
 
+  /** Type guard for `ContentRouteName` */
+  public isContentRouteName(routeName: unknown): routeName is ContentRouteName {
+    return typeof routeName === 'string' && Object.keys(routesContentPages).includes(routeName)
+  }
+
   /** Type guard for `RouteInfo` */
-  public isRouteInfo(t: unknown): t is RouteInfo {
-    return isArbitraryObject(t) && this.isRouteName(t.routeName)
+  public isRouteInfo<R extends RouteName>(t: unknown): t is RouteInfo<R> {
+    return isArbitraryObject(t) && this.isRouteName(t.name)
   }
 
   private buildRoutes() {
@@ -178,4 +213,5 @@ class RouteManager {
   }
 }
 
+export type { ParamTypeForGenerator }
 export default RouteManager

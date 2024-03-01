@@ -13,6 +13,9 @@ import globals from 'globals'
 const eslintRules = {
   // Enforce all block statements to be wrapped in curly braces
   curly: 'error',
+
+  // Checked by TypeScript
+  'no-dupe-class-members': 'off',
 }
 
 const filenamesRules = {
@@ -80,6 +83,9 @@ const typescriptRules = {
 
   // Indentation is handled by prettier (https://typescript-eslint.io/rules/indent/)
   '@typescript-eslint/indent': 'off',
+
+  // Allow annotating this parameter of functions
+  '@typescript-eslint/no-invalid-void-type': ['error', { allowAsThisParameter: true }],
 }
 
 /** @type {import("eslint").Linter.FlatConfig} */

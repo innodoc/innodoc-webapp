@@ -2,22 +2,22 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { DEFAULT_ROUTE_NAME } from '@innodoc/constants'
-import type { RouteInfo } from '@innodoc/routes/types'
+import type { AppRouteInfo } from '@innodoc/routes/types'
 
 import { selectRouteInfo, selectRouteTransitionInfo } from './selectors'
 
 interface appSliceState {
   /** Current route info */
-  routeInfo: RouteInfo
+  routeInfo: AppRouteInfo
 
   /** Route info of current transition */
-  routeTransitionInfo: RouteInfo | null
+  routeTransitionInfo: AppRouteInfo | null
 }
 
 const initialState: appSliceState = {
   routeInfo: {
+    name: DEFAULT_ROUTE_NAME,
     courseSlug: null,
-    routeName: DEFAULT_ROUTE_NAME,
     locale: 'en',
   },
 
@@ -30,12 +30,12 @@ const appSlice = createSlice({
 
   reducers: {
     /** Change current route info */
-    changeRouteInfo(state, action: PayloadAction<RouteInfo>) {
+    changeRouteInfo(state, action: PayloadAction<AppRouteInfo>) {
       state.routeInfo = action.payload
     },
 
     /** Change route transition info */
-    changeRouteTransitionInfo(state, action: PayloadAction<RouteInfo | null>) {
+    changeRouteTransitionInfo(state, action: PayloadAction<AppRouteInfo | null>) {
       state.routeTransitionInfo = action.payload
     },
   },

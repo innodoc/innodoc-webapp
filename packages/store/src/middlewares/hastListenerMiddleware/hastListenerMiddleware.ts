@@ -1,21 +1,15 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
 import type { AnyAction, PayloadAction } from '@reduxjs/toolkit'
 
-import type { RouteInfo } from '@innodoc/routes/types'
+import { isHastRootDivElement } from '@innodoc/markdown/typeGuards'
+import { isParserError, isWithContentHash } from '@innodoc/utils/typeGuards'
+import type { ContentRouteInfo } from '@innodoc/routes/types'
 import type { ContentWithHash, HastResultWithHash } from '@innodoc/types/common'
 
 import { changeRouteTransitionInfo } from '#slices/app'
 import { addHastResult, changeIsProcessing, selectHastResultByHash } from '#slices/hast'
 import { fetchContent } from '#utils'
 import type { AppListenerEffectAPI, AppStartListening } from '#types'
-
-interface PageRouteInfo extends RouteInfo {
-  routeName: 'app:page'
-}
-
-interface SectionRouteInfo extends RouteInfo {
-  routeName: 'app:section'
-}
 
 /** Type guard for `HastResultWithHash` */
 export function isHastResultWithHash(obj: unknown): obj is HastResultWithHash {
@@ -66,7 +60,7 @@ if (!import.meta.env.SSR) {
 
   // Page route transition effect
   const pageRouteTransitionEffect = async (
-    { payload: { courseSlug, locale, pageSlug } }: PayloadAction<PageRouteInfo>,
+    { payload: { courseSlug, locale, pageSlug } }: PayloadAction<ContentRouteInfo<'app:page'>>,
     listenerApi: AppListenerEffectAPI,
   ) => {
     if (courseSlug !== null && pageSlug !== undefined) {
@@ -79,7 +73,9 @@ if (!import.meta.env.SSR) {
 
   // Section route transition effect
   const sectionRouteTransitionEffect = async (
-    { payload: { courseSlug, locale, sectionPath } }: PayloadAction<SectionRouteInfo>,
+    {
+      payload: { courseSlug, locale, sectionPath },
+    }: PayloadAction<ContentRouteInfo<'app:section'>>,
     listenerApi: AppListenerEffectAPI,
   ) => {
     if (courseSlug !== null && sectionPath !== undefined) {
@@ -98,15 +94,15 @@ if (!import.meta.env.SSR) {
 
   // Add page route transition listener
   startListening({
-    matcher: (action: AnyAction): action is PayloadAction<PageRouteInfo> =>
-      changeRouteTransitionInfo.match(action) && action.payload?.routeName === 'app:page',
+    matcher: (action: AnyAction): action is PayloadAction<ContentRouteInfo<'app:page'>> =>
+      changeRouteTransitionInfo.match(action) && action.payload?.name === 'app:page',
     effect: pageRouteTransitionEffect,
   })
 
   // Add section route transition listener
   startListening({
-    matcher: (action: AnyAction): action is PayloadAction<SectionRouteInfo> =>
-      changeRouteTransitionInfo.match(action) && action.payload?.routeName === 'app:section',
+    matcher: (action: AnyAction): action is PayloadAction<ContentRouteInfo<'app:section'>> =>
+      changeRouteTransitionInfo.match(action) && action.payload?.name === 'app:section',
     effect: sectionRouteTransitionEffect,
   })
 }

@@ -13,12 +13,17 @@ import type { FragmentType } from '@innodoc/types/entities'
 const languageCodes = ISO6391.getAllCodes()
 
 /** Type guard for arbitrary object */
-export function isArbitraryObject(obj: unknown): obj is ArbitraryObject {
+function isArbitraryObject(obj: unknown): obj is ArbitraryObject {
   return typeof obj === 'object' && obj !== null
 }
 
+/** Type guard for callable */
+function isCallable<T extends (...args: unknown[]) => unknown>(obj: unknown): obj is T {
+  return (isArbitraryObject(obj) && obj instanceof Function) || typeof obj === 'function'
+}
+
 /** Type guard for error object */
-export function isParserError(obj: unknown): obj is ParserError {
+function isParserError(obj: unknown): obj is ParserError {
   return (
     isArbitraryObject(obj) &&
     typeof obj.reason === 'string' &&
@@ -30,26 +35,37 @@ export function isParserError(obj: unknown): obj is ParserError {
 }
 
 /** Type guard for `ContentType` */
-export function isContentType(t: string): t is ContentType {
+function isContentType(t: string): t is ContentType {
   return CONTENT_TYPES.includes(t as ContentType)
 }
 
 /** Type guard for `FragmentType` */
-export function isFragmentType(t: string): t is FragmentType {
+function isFragmentType(t: string): t is FragmentType {
   return FRAGMENT_TYPES.includes(t as FragmentType)
 }
 
 /** Type guard for `LanguageCode` */
-export function isLanguageCode(t: unknown): t is LanguageCode {
+function isLanguageCode(t: unknown): t is LanguageCode {
   return typeof t === 'string' && languageCodes.includes(t as LanguageCode)
 }
 
 /** Type guard for `WithContentHash` */
-export function isWithContentHash(obj: unknown): obj is WithContentHash {
+function isWithContentHash(obj: unknown): obj is WithContentHash {
   return isArbitraryObject(obj) && typeof obj.hash === 'string' && obj.hash.length === 8
 }
 
 /** Type guard for `ContentWithHash` */
-export function isContentWithHash(obj: unknown): obj is ContentWithHash {
+function isContentWithHash(obj: unknown): obj is ContentWithHash {
   return isWithContentHash(obj) && typeof (obj as ContentWithHash).content === 'string'
+}
+
+export {
+  isArbitraryObject,
+  isCallable,
+  isContentType,
+  isContentWithHash,
+  isFragmentType,
+  isLanguageCode,
+  isParserError,
+  isWithContentHash,
 }

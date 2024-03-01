@@ -52,7 +52,7 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function Sec
 
   return (
     <BaseLink
-      to={generateUrl({ routeName: 'app:section', sectionPath: section.path })}
+      to={generateUrl({ name: 'app:section', sectionPath: section.path })}
       ref={ref}
       {...other}
     >

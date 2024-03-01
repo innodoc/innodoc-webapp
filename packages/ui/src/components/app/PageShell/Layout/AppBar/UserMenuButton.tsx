@@ -13,7 +13,7 @@ function UserMenuItems() {
 
   return (
     <>
-      <MenuItem component={AppLink} routeInfo={{ routeName: 'app:user:login' }}>
+      <MenuItem component={AppLink} routeInfo={{ name: 'app:user:login' }}>
         <ListItemIcon>
           <Icon name="mdi:login" />
         </ListItemIcon>

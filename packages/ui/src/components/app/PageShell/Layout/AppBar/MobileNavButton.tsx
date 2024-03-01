@@ -40,7 +40,7 @@ function MobileNavButton() {
               <ListItemButton
                 component={PageLink}
                 page={page}
-                selected={isActiveRoute({ routeName: 'app:page', pageSlug: page.slug })}
+                selected={isActiveRoute({ name: 'app:page', pageSlug: page.slug })}
               >
                 {page.icon !== undefined ? (
                   <ListItemIcon>
@@ -55,8 +55,8 @@ function MobileNavButton() {
             <ListItem disablePadding key={routeName} onClick={close}>
               <ListItemButton
                 component={AppLink}
-                routeInfo={{ routeName }}
-                selected={isActiveRoute({ routeName })}
+                routeInfo={{ name: routeName }}
+                selected={isActiveRoute({ name: routeName })}
               >
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={t(title)} />

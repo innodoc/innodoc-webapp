@@ -57,11 +57,11 @@ function NavMenu() {
       ))}
       {builtInPagesNav.map(({ icon, title, routeName }) => (
         <StyledNavButton
-          className={isActiveRoute({ routeName }) ? 'active' : undefined}
+          className={isActiveRoute({ name: routeName }) ? 'active' : undefined}
           component={AppLink}
           key={routeName}
           startIcon={icon}
-          routeInfo={{ routeName }}
+          routeInfo={{ name: routeName }}
         >
           {t(title)}
         </StyledNavButton>

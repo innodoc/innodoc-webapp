@@ -1,6 +1,6 @@
 import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
-import type { RouteInfo } from '@innodoc/routes/types'
+import type { AppRouteName, ParamTypeForGenerator, RouteInfo } from '@innodoc/routes/types'
 
 import { useSelector } from '#hooks/redux'
 
@@ -11,9 +11,10 @@ function useRouteManager() {
 
   return {
     /** Generate URL path from route name and parameters */
-    generateUrl: ({ routeName, ...params }: Partial<RouteInfo>) => {
-      const { routeName: currentRouteName, ...currentParams } = currentRouteInfo
-      return routeManager.generate(routeName ?? currentRouteName, { ...currentParams, ...params })
+    generateUrl: ({ name: routeName, ...params }: Partial<RouteInfo>) => {
+      const { name: currentRouteName, ...currentParams } = currentRouteInfo
+      const resultingParams = { ...currentParams, ...params } as ParamTypeForGenerator<AppRouteName>
+      return routeManager.generate(routeName ?? currentRouteName, resultingParams)
     },
 
     /** Check if is active route */

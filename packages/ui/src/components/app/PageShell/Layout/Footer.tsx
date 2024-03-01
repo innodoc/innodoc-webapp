@@ -51,7 +51,7 @@ function Footer() {
       <FooterLink component={PageLink} key={`page-${page.id}`} page={page} />
     )),
     ...builtInPagesNav.map(({ icon, routeName, title }) => (
-      <FooterLink component={AppLink} key={routeName} routeInfo={{ routeName }}>
+      <FooterLink component={AppLink} key={routeName} routeInfo={{ name: routeName }}>
         {icon}
         {t(title)}
       </FooterLink>

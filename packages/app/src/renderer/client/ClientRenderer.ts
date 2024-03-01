@@ -4,6 +4,7 @@ import { type ComponentType } from 'react'
 import { hydrateRoot, type Root } from 'react-dom/client'
 import type { PreloadedState } from '@reduxjs/toolkit'
 import type { i18n as I18nInstance } from 'i18next'
+import type { PageContextClient } from 'vike/types'
 
 import { EMOTION_STYLE_INSERTION_POINT_NAME, EMOTION_STYLE_KEY } from '@innodoc/constants'
 import getI18n from '@innodoc/i18n'
@@ -11,7 +12,6 @@ import makeStore from '@innodoc/store'
 import { changeRouteTransitionInfo } from '@innodoc/store/slices/app'
 import renderPage from '@innodoc/ui'
 import type { RouteInfo } from '@innodoc/routes/types'
-import type { PageContextClient } from '@innodoc/server/types'
 import type { RootState, Store } from '@innodoc/store/types'
 
 class ClientRenderer {
@@ -60,10 +60,8 @@ class ClientRenderer {
   }
 
   /** Hydrate page or handle navigation */
-  async render({ isHydration, Page, preloadedState, routeInfo }: PageContextClient) {
-    if (routeInfo.locale === undefined) {
-      throw new Error('locale undefined')
-    }
+  async render(pageContext: PageContextClient) {
+    const { isHydration, Page, preloadedState, routeInfo } = pageContext
 
     if (isHydration) {
       // Initialize on client hydration
@@ -77,13 +75,17 @@ class ClientRenderer {
     if (this.emotionCache === undefined || this.store === undefined || this.i18n === undefined) {
       throw new Error('init was not called')
     }
+    if (Page === undefined) {
+      throw new Error('Page component missing')
+    }
 
     // Create root app node
     const rootAppNode = renderPage(
+      pageContext,
       Page,
+      this.store,
       this.emotionCache,
       this.i18n,
-      this.store,
       undefined,
       this.PagePrev ?? Page,
     )

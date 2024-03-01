@@ -1,21 +1,16 @@
 import { dangerouslySkipEscape, escapeInject } from 'vike/server'
 import type { FilledContext } from 'react-helmet-async'
+import type { OnRenderHtmlAsync } from 'vike/types'
 
 import renderPage from '@innodoc/ui'
-import type { PageContextRender, PageContextUpdate } from '@innodoc/server/types'
 
 import renderToHtml from './renderToHtml'
 import { createEmotionCache, emotionStyleTags, initColorSchemeScript, initI18n } from './utils'
 
-async function render({
-  Page,
-  redirectTo,
-  routeInfo,
-  store,
-}: PageContextRender): Promise<PageContextUpdate | ReturnType<typeof escapeInject>> {
-  if (redirectTo !== undefined) {
-    return { pageContext: { redirectTo } }
-  }
+const onRenderHtml: OnRenderHtmlAsync = async function (
+  pageContext,
+): Promise<ReturnType<typeof escapeInject>> {
+  const { Page, routeInfo, store } = pageContext
 
   if (routeInfo.locale === undefined) {
     throw new Error('locale is undefined')
@@ -28,7 +23,9 @@ async function render({
   const helmetContext = {}
 
   // Render page
-  const pageHtml = await renderToHtml(renderPage(Page, emotionCache, i18n, store, helmetContext))
+  const pageHtml = await renderToHtml(
+    renderPage(pageContext, Page, pageContext.store, emotionCache, i18n, helmetContext),
+  )
 
   // Get document head tags
   const { helmet } = helmetContext as FilledContext
@@ -48,4 +45,4 @@ async function render({
     </html>`
 }
 
-export default render
+export default onRenderHtml

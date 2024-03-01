@@ -1,27 +1,24 @@
+import type { PageContextServer } from 'vike/types'
+
 import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 import type { AppRouteName } from '@innodoc/routes/types'
-import type { PageContextServer } from '@innodoc/server/types'
 
 const routeManager = getRouteManager()
-
-const removePageContextJsonRE = /\/index.pageContext.json$/
 
 /**
  * Factory for route function for all pages
  *
  * Match route and extract parameters.
  */
-function makeRouteFunc(routeName: AppRouteName) {
+function route<T extends AppRouteName>(routeName: T) {
   return (pageContext: PageContextServer) => {
-    if (pageContext.redirectTo) {
-      return false
-    }
-
+    // TODO: is this still needed?
     // Routes also need to match pageContext.json files used in client navigation
-    const url = pageContext.urlPathname.replace(removePageContextJsonRE, '')
+    // const removePageContextJsonRE = /\/index.pageContext.json$/
+    // const url = pageContext.urlLogical.replace(removePageContextJsonRE, '')
 
     // Match URL against route
-    const match = routeManager.match(routeName, url)
+    const match = routeManager.match(routeName, pageContext.urlOriginal)
     if (!match) {
       return false
     }
@@ -36,11 +33,11 @@ function makeRouteFunc(routeName: AppRouteName) {
       // vike doesn't allow writing to routeInfo here, so we put
       // info in routeParams and copy it to routeInfo in onBeforeRender
       routeParams: {
-        routeName,
+        name: routeName,
         ...match.params,
       },
     }
   }
 }
 
-export default makeRouteFunc
+export default route

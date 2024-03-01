@@ -5,14 +5,12 @@
   "type": "module",
   "exports": {
     "./config": "./src/config.ts",
-    "./database": "./src/database/getDatabase.ts",
-    "./types": "./src/types.ts"
+    "./database": "./src/database/getDatabase.ts"
   },
   "imports": {
     "#config": "./src/config.ts",
     "#database": "./src/database/getDatabase.ts",
     "#database/queries": "./src/database/queries.ts",
-    "#types": "./src/types.ts",
     "#utils": "./src/utils.ts"
   },
   "scripts": {

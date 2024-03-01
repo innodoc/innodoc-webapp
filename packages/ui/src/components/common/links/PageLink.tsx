@@ -47,7 +47,7 @@ const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
   const { slug, icon, shortTitle, title } = page
 
   return (
-    <BaseLink to={generateUrl({ routeName: 'app:page', pageSlug: slug })} ref={ref} {...other}>
+    <BaseLink to={generateUrl({ name: 'app:page', pageSlug: slug })} ref={ref} {...other}>
       {Children.count(children) ? (
         children
       ) : (

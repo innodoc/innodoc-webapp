@@ -23,14 +23,14 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink(
   // Determine content
   let content: ReactNode = children
   if (Children.count(children) === 0) {
-    const page = builtInPages.find((page) => page.routeName === routeInfo.routeName)
+    const page = builtInPages.find((page) => page.routeName === routeInfo.name)
     if (page) {
       content = t(page.title)
     }
   }
 
   // Page link
-  if (routeInfo.routeName === 'app:page' && routeInfo.pageSlug) {
+  if (routeInfo.name === 'app:page' && routeInfo.pageSlug) {
     return (
       <PageLinkFromSlug pageSlug={routeInfo.pageSlug} ref={ref} showIcon={false} {...other}>
         {content}
@@ -39,7 +39,7 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink(
   }
 
   // Section link
-  if (routeInfo.routeName === 'app:section' && routeInfo.sectionPath) {
+  if (routeInfo.name === 'app:section' && routeInfo.sectionPath) {
     return (
       <SectionLinkFromPath sectionPath={routeInfo.sectionPath} ref={ref} {...other}>
         {content}
@@ -48,7 +48,7 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink(
   }
 
   // Home link
-  if (routeInfo.routeName === 'app:home') {
+  if (routeInfo.name === 'app:home') {
     return (
       <HomeLink ref={ref} {...other}>
         {content}

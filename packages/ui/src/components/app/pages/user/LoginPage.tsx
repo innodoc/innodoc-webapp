@@ -44,12 +44,12 @@ function LoginPage() {
           </Button>
           <Grid container>
             <Grid item sm xs={12}>
-              <AppLink routeInfo={{ routeName: 'app:user:forgot-password' }} variant="body2">
+              <AppLink routeInfo={{ name: 'app:user:forgot-password' }} variant="body2">
                 {t('builtinPages.login.forgotPassword')}
               </AppLink>
             </Grid>
             <Grid item sm="auto" xs={12}>
-              <AppLink routeInfo={{ routeName: 'app:user:sign-up' }} variant="body2">
+              <AppLink routeInfo={{ name: 'app:user:sign-up' }} variant="body2">
                 {t('builtinPages.login.signUpLink')}
               </AppLink>
             </Grid>
