@@ -14,6 +14,8 @@
     "depcruise:generate:violation-report": "pnpm depcruise packages --config --output-type err-html --output-to dependency-violation-report.html",
     "dev": "nodemon --ext ts --watch packages/server --exec pnpm -- run server:dev",
     "dev:mock": "INNODOC_API_MOCK=true INNODOC_DEFAULT_COURSE_SLUG=testcourse INNODOC_COURSE_SLUG_MODE=DISABLED nodemon --ext ts --watch ./src/server --exec ts-node ./src/server/startMockServer.ts",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
     "import-v1": "pnpm run --filter @innodoc/commands import",
     "knex": "ts-node node_modules/knex/bin/cli.js",
     "knip": "knip",
