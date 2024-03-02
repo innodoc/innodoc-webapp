@@ -3,7 +3,7 @@
 import type { ElementNode } from 'svg-parser'
 
 // Taken from https://github.com/facebook/react/blob/main/packages/react-dom-bindings/src/shared/possibleStandardNames.js
-export const ATTRIBUTE_MAPPING = {
+const ATTRIBUTE_MAPPING = {
   // HTML
   accept: 'accept',
   acceptcharset: 'acceptCharset',
@@ -560,4 +560,5 @@ function attributesToProps(attributes: ElementNode['properties']) {
   return props
 }
 
+export { ATTRIBUTE_MAPPING }
 export default attributesToProps

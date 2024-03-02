@@ -4,7 +4,9 @@ import type { RootState } from '#types'
 const selectApp = (state: RootState) => state.app
 
 /** Select current route info */
-export const selectRouteInfo = (state: RootState) => selectApp(state).routeInfo
+const selectRouteInfo = (state: RootState) => selectApp(state).routeInfo
 
 /** Select current transition route info */
-export const selectRouteTransitionInfo = (state: RootState) => selectApp(state).routeTransitionInfo
+const selectRouteTransitionInfo = (state: RootState) => selectApp(state).routeTransitionInfo
+
+export { selectRouteInfo, selectRouteTransitionInfo }

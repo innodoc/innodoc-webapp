@@ -6,16 +6,16 @@ import type { ApiRouteName } from '@innodoc/routes/types'
 
 import config from './config'
 
-export function isError(error: unknown): error is Error {
+function isError(error: unknown): error is Error {
   return isArbitraryObject(error) && error instanceof Error && typeof error.name === 'string'
 }
 
-export function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
+function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
   return isArbitraryObject(error) && error instanceof Error && typeof error.code === 'string'
 }
 
 /** Get URL path for API route handlers */
-export function getRoutePath(name: ApiRouteName, removePrefix?: string) {
+function getRoutePath(name: ApiRouteName, removePrefix?: string) {
   const apiRoutes = getRouteManager(config).getApiRoutes()
 
   const pattern = apiRoutes[name]
@@ -32,7 +32,7 @@ export function getRoutePath(name: ApiRouteName, removePrefix?: string) {
  *  Workaround for Express typing issues
  *  https://github.com/standard/eslint-config-standard-with-typescript/issues/613#issuecomment-1082960337
  */
-export function asyncWrapper(asyncFn: (req: Request, res: Response) => Promise<void>) {
+function asyncWrapper(asyncFn: (req: Request, res: Response) => Promise<void>) {
   return function (req: Request, res: Response, next: NextFunction) {
     asyncFn(req, res).catch((err) => {
       if (isError(err)) {
@@ -41,3 +41,5 @@ export function asyncWrapper(asyncFn: (req: Request, res: Response) => Promise<v
     })
   }
 }
+
+export { asyncWrapper, getRoutePath, isErrnoException, isError }

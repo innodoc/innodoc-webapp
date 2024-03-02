@@ -12,7 +12,7 @@ import { fetchContent } from '#utils'
 import type { AppListenerEffectAPI, AppStartListening } from '#types'
 
 /** Type guard for `HastResultWithHash` */
-export function isHastResultWithHash(obj: unknown): obj is HastResultWithHash {
+function isHastResultWithHash(obj: unknown): obj is HastResultWithHash {
   const result = obj as HastResultWithHash
   return (
     isWithContentHash(obj) && (isHastRootDivElement(result.root) || isParserError(result.error))
@@ -107,4 +107,5 @@ if (!import.meta.env.SSR) {
   })
 }
 
+export { isHastResultWithHash }
 export default hastListenerMiddleware

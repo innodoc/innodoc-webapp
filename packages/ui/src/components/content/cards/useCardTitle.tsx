@@ -11,7 +11,7 @@ const CardTitleContext = createContext((id: string | undefined, title: string) =
 
 type Titles = Record<string, string>
 
-export function CardTitleProvider({ children }: NumberingProviderProps) {
+function CardTitleProvider({ children }: NumberingProviderProps) {
   const titles = useRef<Titles>({})
   const { sectionPath } = useSelector(selectRouteInfo)
   const { section } = useSelectSection(sectionPath)
@@ -52,4 +52,5 @@ function useCardTitle(id: string | undefined, title: string) {
   return formatTitle(id, title)
 }
 
+export { CardTitleProvider }
 export default useCardTitle

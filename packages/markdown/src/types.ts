@@ -6,7 +6,7 @@ import type {
 } from '@innodoc/constants'
 
 /** Custom document root that is marked and is rendered as fragment */
-export interface HastRootDivElement extends Element {
+interface HastRootDivElement extends Element {
   tagName: 'div'
   properties: { root: 'true' }
 }
@@ -16,7 +16,7 @@ interface HastMdxJsxFlowDivElementProperties extends Properties {
 }
 
 /** `MdxJsxFlowElement` as hast element */
-export interface HastMdxJsxFlowDivElement extends Element {
+interface HastMdxJsxFlowDivElement extends Element {
   tagName: 'div'
   properties: HastMdxJsxFlowDivElementProperties
 }
@@ -27,7 +27,7 @@ interface HastMdxJsxFlowDivElementTabsProperties extends HastMdxJsxFlowDivElemen
 }
 
 /** `<Tabs />` as hast element */
-export interface HastMdxJsxFlowDivElementTabs extends HastMdxJsxFlowDivElement {
+interface HastMdxJsxFlowDivElementTabs extends HastMdxJsxFlowDivElement {
   properties: HastMdxJsxFlowDivElementTabsProperties
 }
 
@@ -38,7 +38,7 @@ interface HastMdxJsxFlowDivElementTabItemProperties extends HastMdxJsxFlowDivEle
 }
 
 /** `<TabItem />` as hast element */
-export interface HastMdxJsxFlowDivElementTabItem extends Element {
+interface HastMdxJsxFlowDivElementTabItem extends Element {
   properties: HastMdxJsxFlowDivElementTabItemProperties
 }
 
@@ -46,7 +46,15 @@ interface HastMdxJsxTextSpanElementProperties extends Properties {
   name: (typeof HAST_MDX_JSX_TEXT_SPAN_ELEMENT_NAME)[number]
 }
 
-export interface HastMdxJsxTextSpanElement extends Element {
+interface HastMdxJsxTextSpanElement extends Element {
   tagName: 'span'
   properties: HastMdxJsxTextSpanElementProperties
+}
+
+export type {
+  HastMdxJsxFlowDivElement,
+  HastMdxJsxFlowDivElementTabItem,
+  HastMdxJsxFlowDivElementTabs,
+  HastMdxJsxTextSpanElement,
+  HastRootDivElement,
 }

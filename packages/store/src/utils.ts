@@ -7,7 +7,7 @@ import sections from '#slices/content/sections'
 import type { AppDispatch } from '#types'
 
 /** Fetch content */
-export function fetchContent(
+function fetchContent(
   contentType: ContentType,
   courseSlug: string,
   locale: LanguageCode,
@@ -33,3 +33,5 @@ export function fetchContent(
     }),
   )
 }
+
+export { fetchContent }

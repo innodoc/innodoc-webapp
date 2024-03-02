@@ -8,7 +8,7 @@ import contentApi from '#slices/content'
 
 const routeManager = getRouteManager()
 
-export const fragments = contentApi.injectEndpoints({
+const fragments = contentApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Fetch content */
     getFragmentContent: builder.query<ContentWithHash, FragmentContentFetchArgs>({
@@ -26,5 +26,6 @@ interface FragmentContentFetchArgs {
   fragmentType: FragmentType
 }
 
+export { fragments }
 export const { useGetFragmentContentQuery } = fragments
 export default fragments

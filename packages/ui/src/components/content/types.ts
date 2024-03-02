@@ -1,2 +1,4 @@
 /** Custom component properties */
-export type NodeProps<P extends readonly string[]> = Partial<Record<P[number], string>>
+type NodeProps<P extends readonly string[]> = Partial<Record<P[number], string>>
+
+export type { NodeProps }

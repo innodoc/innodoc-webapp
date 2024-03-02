@@ -5,7 +5,7 @@ import type { PageLinkLocation } from '#common'
 import type { BaseEntity, DbTranslatableFields, TranslatedEntity } from './base'
 
 /** Page object for database */
-export interface DbPage extends BaseEntity, DbTranslatableFields {
+interface DbPage extends BaseEntity, DbTranslatableFields {
   /** Page slug (unique within course) */
   slug: string
 
@@ -20,7 +20,9 @@ export interface DbPage extends BaseEntity, DbTranslatableFields {
 }
 
 /** Page object as returned by API */
-export type ApiPage = CamelCasedProperties<DbPage>
+type ApiPage = CamelCasedProperties<DbPage>
 
 /** Page object as consumed by components */
-export type TranslatedPage = TranslatedEntity<ApiPage>
+type TranslatedPage = TranslatedEntity<ApiPage>
+
+export type { ApiPage, DbPage, TranslatedPage }

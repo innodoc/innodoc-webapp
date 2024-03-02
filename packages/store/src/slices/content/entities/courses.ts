@@ -5,7 +5,7 @@ import contentApi from '#slices/content'
 
 const routeManager = getRouteManager()
 
-export const courses = contentApi.injectEndpoints({
+const courses = contentApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Fetch course */
     getCourse: builder.query<ApiCourse, CourseQueryArg>({
@@ -14,9 +14,11 @@ export const courses = contentApi.injectEndpoints({
   }),
 })
 
-export interface CourseQueryArg {
+interface CourseQueryArg {
   courseSlug: ApiCourse['slug']
 }
 
+export type { CourseQueryArg }
+export { courses }
 export const { useGetCourseQuery } = courses
 export default courses

@@ -7,5 +7,7 @@ import {
 
 import type { AppDispatch, RootState } from '@innodoc/store/types'
 
-export const useDispatch: () => AppDispatch = useDispatchReactRedux
-export const useSelector: TypedUseSelectorHook<RootState> = useSelectorReactRedux
+const useDispatch: () => AppDispatch = useDispatchReactRedux
+const useSelector: TypedUseSelectorHook<RootState> = useSelectorReactRedux
+
+export { useDispatch, useSelector }

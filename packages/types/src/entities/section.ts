@@ -5,7 +5,7 @@ import type { SectionType } from '#common'
 import type { BaseEntity, DbTranslatableFields, TranslatedEntity } from './base'
 
 /** Section object for database */
-export interface DbSection extends BaseEntity, DbTranslatableFields {
+interface DbSection extends BaseEntity, DbTranslatableFields {
   /** Section path */
   path: string
 
@@ -23,18 +23,20 @@ export interface DbSection extends BaseEntity, DbTranslatableFields {
 }
 
 /** Section object returned by database query. */
-export interface DbQuerySection extends Omit<DbSection, 'order'> {
+interface DbQuerySection extends Omit<DbSection, 'order'> {
   /** Array of section orders from the root section up to this section */
   order: number[]
 }
 
 /** Section object as returned by API */
-export type ApiSection = CamelCasedProperties<DbQuerySection>
+type ApiSection = CamelCasedProperties<DbQuerySection>
 
 /** Section object as consumed by components */
-export type TranslatedSection = TranslatedEntity<ApiSection>
+type TranslatedSection = TranslatedEntity<ApiSection>
 
 /** Section tree with chldren (used by Toc components) */
-export interface SectionWithChildren extends TranslatedSection {
+interface SectionWithChildren extends TranslatedSection {
   children: SectionWithChildren[]
 }
+
+export type { ApiSection, DbQuerySection, DbSection, SectionWithChildren, TranslatedSection }

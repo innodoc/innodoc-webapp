@@ -9,10 +9,10 @@ import type {
 } from './base'
 
 /** Course fields that are translatable */
-export type DbCourseTranslatableFields = DbDefaultTranslatableFields | 'description'
+type DbCourseTranslatableFields = DbDefaultTranslatableFields | 'description'
 
 /** Course object for database */
-export interface DbCourse extends BaseEntity, DbTranslatableFields<DbCourseTranslatableFields> {
+interface DbCourse extends BaseEntity, DbTranslatableFields<DbCourseTranslatableFields> {
   /** Course slug (unique among courses) */
   slug: string
 
@@ -30,7 +30,9 @@ export interface DbCourse extends BaseEntity, DbTranslatableFields<DbCourseTrans
 }
 
 /** Course as returned by API */
-export type ApiCourse = CamelCasedProperties<DbCourse>
+type ApiCourse = CamelCasedProperties<DbCourse>
 
 /** Course as consumed by components */
-export type TranslatedCourse = TranslatedEntity<ApiCourse>
+type TranslatedCourse = TranslatedEntity<ApiCourse>
+
+export type { ApiCourse, DbCourse, DbCourseTranslatableFields, TranslatedCourse }

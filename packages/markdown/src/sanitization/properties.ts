@@ -8,9 +8,9 @@ const TEXT_PROPERTIES = [
   'variables',
 ] as const
 
-export const QUESTION_PROPERTIES = [...COMMON_PROPERTIES, ...TEXT_PROPERTIES] as const
+const QUESTION_PROPERTIES = [...COMMON_PROPERTIES, ...TEXT_PROPERTIES] as const
 
-export const GRID_ITEM_PROPERTIES = [
+const GRID_ITEM_PROPERTIES = [
   'xs',
   'sm',
   'md',
@@ -23,10 +23,19 @@ export const GRID_ITEM_PROPERTIES = [
   'xl-offset',
 ] as const
 
-export const TABS_PROPERTIES = ['labels'] as const
+const TABS_PROPERTIES = ['labels'] as const
 
-export const TAB_ITEM_PROPERTIES = ['index'] as const
+const TAB_ITEM_PROPERTIES = ['index'] as const
 
-export const VIDEO_PROPERTIES = ['src'] as const
+const VIDEO_PROPERTIES = ['src'] as const
 
-export const YOUTUBE_VIDEO_PROPERTIES = ['videoId'] as const
+const YOUTUBE_VIDEO_PROPERTIES = ['videoId'] as const
+
+export {
+  GRID_ITEM_PROPERTIES,
+  QUESTION_PROPERTIES,
+  TAB_ITEM_PROPERTIES,
+  TABS_PROPERTIES,
+  VIDEO_PROPERTIES,
+  YOUTUBE_VIDEO_PROPERTIES,
+}

@@ -7,7 +7,7 @@ type TranslatableBaseEntity<F extends string> = CamelCasedProperties<BaseEntity>
   TranslatableFields<F>
 
 /** Translate entity */
-export function translateEntity<T extends TranslatableBaseEntity<F>, F extends string>(
+function translateEntity<T extends TranslatableBaseEntity<F>, F extends string>(
   entity: T,
   fields: F[],
   locale: LanguageCode,
@@ -25,10 +25,12 @@ export function translateEntity<T extends TranslatableBaseEntity<F>, F extends s
 }
 
 /** Translate array of entities */
-export function translateEntityArray<T extends TranslatableBaseEntity<F>, F extends string>(
+function translateEntityArray<T extends TranslatableBaseEntity<F>, F extends string>(
   entities: T[],
   fields: F[],
   locale: LanguageCode,
 ) {
   return entities.map((entity) => translateEntity(entity, fields, locale))
 }
+
+export { translateEntity, translateEntityArray }

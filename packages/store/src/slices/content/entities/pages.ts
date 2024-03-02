@@ -10,7 +10,7 @@ import type { CourseQueryArg } from './courses'
 
 const routeManager = getRouteManager()
 
-export const pages = contentApi.injectEndpoints({
+const pages = contentApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Fetch course pages */
     getCoursePages: builder.query<ApiPage[], CourseQueryArg>({
@@ -34,5 +34,6 @@ interface PageContentFetchArgs {
   pageSlug: ApiPage['slug']
 }
 
+export { pages }
 export const { useGetCoursePagesQuery, useGetPageContentQuery } = pages
 export default pages

@@ -10,7 +10,7 @@ import type { CourseQueryArg } from './courses'
 
 const routeManager = getRouteManager()
 
-export const sections = contentApi.injectEndpoints({
+const sections = contentApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Fetch course sections */
     getCourseSections: builder.query<ApiSection[], CourseQueryArg>({
@@ -34,5 +34,6 @@ interface SectionContentFetchArgs {
   sectionPath: ApiSection['path']
 }
 
+export { sections }
 export const { useGetCourseSectionsQuery, useGetSectionContentQuery } = sections
 export default sections

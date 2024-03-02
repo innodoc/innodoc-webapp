@@ -1,7 +1,9 @@
-export interface IdResult {
+interface IdResult {
   id: number
 }
 
-export interface ResultFromValue<T> {
+interface ResultFromValue<T> {
   value: T
 }
+
+export type { IdResult, ResultFromValue }

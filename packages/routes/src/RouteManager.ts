@@ -17,7 +17,7 @@ import type {
   RouteName,
 } from './types'
 
-export interface RouteFuncArgs {
+interface RouteFuncArgs {
   pagePathPrefix: string
   sectionPathPrefix: string
 }
@@ -213,5 +213,5 @@ class RouteManager {
   }
 }
 
-export type { ParamTypeForGenerator }
+export type { ParamTypeForGenerator, RouteFuncArgs }
 export default RouteManager
