@@ -9,9 +9,10 @@
   "scripts": {
     "build-icon-bundle": "ts-node src/buildIconBundle/main.ts",
     "import": "ts-node src/importer/main.ts",
-    "lint:eslint": "eslint .",
-    "lint:type-check": "tsc --noEmit -p .",
-    "routes": "ts-node src/printRoutes/main.ts"
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "routes": "ts-node src/printRoutes/main.ts",
+    "type-check": "tsc --noEmit -p ."
   },
   "dependencies": {
     "@innodoc/routes": "workspace:^",

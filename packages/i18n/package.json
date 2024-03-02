@@ -7,8 +7,9 @@
     ".": "./src/getI18n.ts"
   },
   "scripts": {
-    "lint:eslint": "eslint .",
-    "lint:type-check": "tsc --noEmit -p ."
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "type-check": "tsc --noEmit -p ."
   },
   "dependencies": {
     "@innodoc/store": "workspace:^",

@@ -6,8 +6,9 @@
   "sideEffects": false,
   "exports": "./src/constants.ts",
   "scripts": {
-    "lint:eslint": "eslint .",
-    "lint:type-check": "tsc --noEmit -p ."
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "type-check": "tsc --noEmit -p ."
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:^",
