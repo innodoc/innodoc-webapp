@@ -8,44 +8,52 @@
     "./database": "./src/database/getDatabase.ts"
   },
   "imports": {
+    "#api/errors": "./src/services/api/errors.ts",
     "#config": "./src/config.ts",
-    "#database": "./src/database/getDatabase.ts",
-    "#database/queries": "./src/database/queries.ts",
+    "#plugins/db": "./src/plugins/db/db.ts",
+    "#services/api/types": "./src/services/api/types.ts",
     "#utils": "./src/utils.ts"
   },
   "scripts": {
-    "dev": "ts-node ./src/startServer.ts",
+    "dev": "ts-node ./src/start.ts",
+    "dev:mkcert": "mkcert -install && mkdir -p cert && mkcert -key-file cert/key.pem -cert-file cert/cert.pem innodoc.dev '*.innodoc.dev' localhost 127.0.0.1 ::1",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "type-check": "tsc --noEmit -p ."
   },
   "dependencies": {
+    "@fastify/accepts": "^4.3.0",
+    "@fastify/autoload": "^5.8.0",
+    "@fastify/static": "^7.0.1",
+    "@innodoc/config": "workspace:^",
     "@innodoc/constants": "workspace:^",
+    "@innodoc/database": "workspace:^",
     "@innodoc/routes": "workspace:^",
+    "@innodoc/schema": "workspace:^",
     "@innodoc/utils": "workspace:^",
     "camelcase-keys": "8.0.2",
-    "express": "4.18.2",
-    "express-validator": "7.0.1",
-    "iso-639-1": "2.1.15",
-    "knex": "2.5.1",
-    "locale": "0.1.0",
-    "pg": "8.11.1",
-    "pg-protocol": "1.6.0",
-    "sirv": "2.0.3",
+    "fastify": "^4.26.1",
+    "fastify-plugin": "^4.5.1",
+    "fastify-type-provider-zod": "^1.1.9",
+    "i18next-http-middleware": "^3.5.0",
     "vike": "0.4.164",
-    "vite": "4.4.3"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@fastify/swagger": "^8.14.0",
+    "@fastify/vite": "^6.0.6",
     "@innodoc/eslint-config": "workspace:^",
     "@innodoc/store": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
     "@innodoc/types": "workspace:^",
     "@reduxjs/toolkit": "1.9.5",
-    "@types/express": "4.17.17",
-    "@types/express-serve-static-core": "4.17.35",
+    "@scalar/fastify-api-reference": "^1.17.15",
     "@types/locale": "0.1.1",
     "@types/node": "20.4.2",
     "@types/react": "18.2.14",
-    "globals": "14.0.0"
+    "fastify-print-routes": "^3.1.1",
+    "globals": "14.0.0",
+    "pino-pretty": "^10.3.1",
+    "vite": "4.4.3"
   }
 }

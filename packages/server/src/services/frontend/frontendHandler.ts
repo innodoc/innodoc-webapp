@@ -1,14 +1,24 @@
 import { isNativeError } from 'node:util/types'
 
 import { renderPage } from 'vike/server'
+import type { RouteHandlerMethod } from 'fastify'
 
-import { asyncWrapper } from './utils'
+/**
+ * Handle app frontend request.
+ *
+ * Create an initial `PageContext` and pass it to vike to render the page.
+ *
+ * @param req Incoming request
+ * @param reply HTTP response
+ * @returns HTTP response
+ */
+const frontendHandler: RouteHandlerMethod = async (req, reply) => {
+  const locales = req.languages().filter((locale) => locale !== '*')
 
-const frontendHandler = asyncWrapper(async (req, res) => {
   // Create page context
   const pageContextInit = {
     host: req.headers.host,
-    requestLocale: req.rawLocale.language,
+    requestLocale: locales,
     urlOriginal: req.originalUrl,
   }
 
@@ -25,14 +35,20 @@ const frontendHandler = asyncWrapper(async (req, res) => {
   //  - There is an error, but no error page.
   //  - Error page has a bug and couldn't be rendered.
   if (!pageContext.httpResponse) {
+    reply.callNotFound()
     return
   }
 
   // Send result
-  const { body, statusCode, headers } = pageContext.httpResponse
-  res.status(statusCode)
-  headers.forEach(([name, value]) => res.setHeader(name, value))
-  res.send(body)
-})
+  const { statusCode, headers } = pageContext.httpResponse
+  reply.statusCode = statusCode
+
+  for (const [name, value] of headers) {
+    // TS wants us to await this, but it would hang indefinitely
+    void reply.header(name, value)
+  }
+
+  pageContext.httpResponse.pipe(reply.raw)
+}
 
 export default frontendHandler

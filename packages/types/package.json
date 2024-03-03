@@ -7,6 +7,7 @@
   "exports": {
     "./common": "./src/common.ts",
     "./entities": "./src/entities.ts",
+    "./schema": "./src/schema.ts",
     "./ServerConfig": "./src/ServerConfig.ts"
   },
   "imports": {
@@ -19,7 +20,9 @@
   },
   "dependencies": {
     "@innodoc/constants": "workspace:^",
-    "camelcase": "7.0.1"
+    "camelcase": "7.0.1",
+    "validator": "^13.11.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:^",
@@ -27,6 +30,7 @@
     "@reduxjs/toolkit": "1.9.5",
     "@types/hast": "2.3.4",
     "@types/svg-parser": "2.0.3",
+    "@types/validator": "^13.11.9",
     "iso-639-1": "2.1.15",
     "react": "18.2.0",
     "type-fest": "3.13.0"

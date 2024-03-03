@@ -1,7 +1,7 @@
 import { compile, match } from 'path-to-regexp'
 import type { Match, MatchFunction, PathFunction } from 'path-to-regexp'
 
-import { API_COURSE_PREFIX } from '@innodoc/constants'
+import { API_COURSE_PREFIX, API_PREFIX } from '@innodoc/constants'
 import { isArbitraryObject, isContentType } from '@innodoc/utils/typeGuards'
 import type { CourseSlugMode } from '@innodoc/types/common'
 
@@ -209,7 +209,7 @@ class RouteManager {
   }
 
   private makeApiPattern(pattern: string) {
-    return `${API_COURSE_PREFIX}${pattern}`
+    return `${API_PREFIX}${API_COURSE_PREFIX}${pattern}`
   }
 }
 

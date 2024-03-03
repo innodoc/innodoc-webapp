@@ -34,9 +34,11 @@ const MAX_KEEP_UNUSED_DATA_FOR_MAX = Math.floor((2 ** 31 - 1) / 1000)
 /** Default required score to pass a test */
 const DEFAULT_MIN_SCORE = 90
 
+// TODO: remove
 /** Page/section/course slug regex */
 const SLUG_RE = '[a-z0-9]+(?:-[a-z0-9]+)*'
 
+// TODO: remove
 /** Page/section/course slug regex (Posix variant for PostgreSQL) */
 const SLUG_RE_POSIX = SLUG_RE.replace('(?:', '(')
 
@@ -58,11 +60,8 @@ const EMOTION_STYLE_INSERTION_POINT_NAME = 'emotion-insertion-point'
 /** API path prefix */
 const API_PREFIX = '/api'
 
-/** Course path prefix */
-const COURSE_PREFIX = '/course'
-
-/** API/course prefix */
-const API_COURSE_PREFIX = `${API_PREFIX}${COURSE_PREFIX}`
+/** API course path prefix */
+const API_COURSE_PREFIX = '/course'
 
 /** Possible names for custom hast MDX flow element */
 const HAST_MDX_JSX_FLOW_DIV_ELEMENT_NAME = [
@@ -83,7 +82,6 @@ export {
   API_COURSE_PREFIX,
   API_PREFIX,
   CONTENT_TYPES,
-  COURSE_PREFIX,
   COURSE_SLUG_MODES,
   DEFAULT_MIN_SCORE,
   DEFAULT_PAGE_PATH_PREFIX,

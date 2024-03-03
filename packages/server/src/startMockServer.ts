@@ -1,7 +1,9 @@
-import { makeServer } from '../../tests/mocks/node'
-import config from './config'
-import createServer from './createServer'
+import config from '@innodoc/config'
 
+import { makeServer } from '../../tests/mocks/node' // eslint-disable-line @typescript-eslint/no-restricted-imports
+import setupApp from './app/setupApp'
+
+// TODO
 function startApiMockServer() {
   makeServer(config.appRoot).listen({ onUnhandledRequest: 'error' })
 
