@@ -34,7 +34,7 @@ if (!import.meta.env.SSR) {
   // Process Markdown->hast in web worker
   const processMarkdown = async (content: ContentWithHash, listenerApi: AppListenerEffectAPI) => {
     // Cache miss?
-    if (selectHastResultByHash(listenerApi.getState(), content.hash) === undefined) {
+    if (!selectHastResultByHash(listenerApi.getState(), content.hash)) {
       listenerApi.dispatch(changeIsProcessing(true))
 
       // Process Markdown->hast in web worker
@@ -63,9 +63,9 @@ if (!import.meta.env.SSR) {
     { payload: { courseSlug, locale, pageSlug } }: PayloadAction<ContentRouteInfo<'app:page'>>,
     listenerApi: AppListenerEffectAPI,
   ) => {
-    if (courseSlug !== null && pageSlug !== undefined) {
+    if (courseSlug !== null && pageSlug) {
       const result = await fetchContent('page', courseSlug, locale, pageSlug, listenerApi.dispatch)
-      if (result.isSuccess && result.data !== undefined) {
+      if (result.isSuccess) {
         await processMarkdown(result.data, listenerApi)
       }
     }
@@ -78,7 +78,7 @@ if (!import.meta.env.SSR) {
     }: PayloadAction<ContentRouteInfo<'app:section'>>,
     listenerApi: AppListenerEffectAPI,
   ) => {
-    if (courseSlug !== null && sectionPath !== undefined) {
+    if (courseSlug !== null) {
       const result = await fetchContent(
         'section',
         courseSlug,
@@ -86,7 +86,7 @@ if (!import.meta.env.SSR) {
         sectionPath,
         listenerApi.dispatch,
       )
-      if (result.isSuccess && result.data !== undefined) {
+      if (result.isSuccess) {
         await processMarkdown(result.data, listenerApi)
       }
     }

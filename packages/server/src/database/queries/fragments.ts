@@ -4,7 +4,8 @@ import type { DbCourse, FragmentType } from '@innodoc/types/entities'
 
 import getDatabase from '#database'
 
-import type { ResultFromValue } from './types'
+import { unpackValue } from './utils'
+import type { ValueResult } from './types'
 
 /** Get fragment content */
 export async function getFragmentContent(
@@ -14,7 +15,7 @@ export async function getFragmentContent(
 ): Promise<string | undefined> {
   const db = getDatabase()
   const result = await db
-    .first<ResultFromValue<string> | undefined>('ct.value')
+    .first<ValueResult<string> | undefined>('ct.value')
     .from('fragments as f')
     .join('courses as c', 'f.course_id', 'c.id')
     .leftOuterJoin('fragments_content_trans as ct', 'f.id', 'ct.fragment_id')
@@ -22,5 +23,5 @@ export async function getFragmentContent(
     .where('c.slug', courseSlug)
     .where('ct.locale', locale)
 
-  return result ? result.value : undefined
+  return unpackValue(result)
 }

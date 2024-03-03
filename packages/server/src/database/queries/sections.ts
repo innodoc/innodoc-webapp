@@ -5,7 +5,8 @@ import type { ApiSection, DbCourse, DbQuerySection, DbSection } from '@innodoc/t
 
 import getDatabase from '#database'
 
-import type { IdResult, ResultFromValue } from './types'
+import { unpackId, unpackValue } from './utils'
+import type { IdResult, ValueResult } from './types'
 
 /** Get course sections by course ID */
 export async function getCourseSections(courseSlug: DbCourse['slug']): Promise<ApiSection[]> {
@@ -126,7 +127,7 @@ export async function getSectionIdByPath(
     .from('cte')
     .where('cte.path', db.raw('array[]::varchar[]'))
 
-  return result?.id
+  return unpackId(result)
 }
 
 /** Get section content */
@@ -137,7 +138,7 @@ export async function getSectionContent(
 ): Promise<string | undefined> {
   const db = getDatabase()
   const result = await db
-    .first<ResultFromValue<string>>('ct.value')
+    .first<ValueResult<string>>('ct.value')
     .from('sections as s')
     .join('courses as c', 's.course_id', 'c.id')
     .leftOuterJoin('sections_content_trans as ct', 's.id', 'ct.section_id')
@@ -145,5 +146,5 @@ export async function getSectionContent(
     .where('c.slug', courseSlug)
     .where('ct.locale', locale)
 
-  return result ? result.value : undefined
+  return unpackValue(result)
 }

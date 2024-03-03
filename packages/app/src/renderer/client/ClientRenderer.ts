@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 import createCache, { type EmotionCache } from '@emotion/cache'
 import I18NextHttpBackend from 'i18next-http-backend'
 import { type ComponentType } from 'react'
@@ -31,7 +33,7 @@ class ClientRenderer {
   private emotionCache: EmotionCache | undefined
 
   /** API mock */
-  private mockApiEnabled = false
+  // private mockApiEnabled = false
 
   /** Remember previous Page for route transition */
   private PagePrev: ComponentType | undefined
@@ -47,7 +49,7 @@ class ClientRenderer {
 
   /** Initialize client rendering */
   private async init(preloadedState: PreloadedState<RootState>, routeInfo: RouteInfo) {
-    await this.enableMockApi()
+    // await this.enableMockApi()
     this.store = makeStore(preloadedState)
     this.i18n = await getI18n(
       I18NextHttpBackend,
@@ -104,19 +106,18 @@ class ClientRenderer {
     this.PagePrev = Page
   }
 
-  /** Enable Mock API */
-  private async enableMockApi() {
-    // Stripped in production build
-    if (import.meta.env.DEV) {
-      if (import.meta.env.INNODOC_API_MOCK === 'true' && !this.mockApiEnabled) {
-        // FIXME
-        // const makeWorker = (await import('../../../tests/mocks/browser')).default
-        // const worker = makeWorker(import.meta.env.INNODOC_APP_ROOT)
-        // await worker.start({ onUnhandledRequest: 'bypass' })
-        // this.mockApiEnabled = true
-      }
-    }
-  }
+  /** FIXME: Enable Mock API */
+  // private async enableMockApi() {
+  //   // Stripped in production build
+  //   if (import.meta.env.DEV) {
+  //     if (import.meta.env.INNODOC_API_MOCK === 'true' && !this.mockApiEnabled) {
+  //       const makeWorker = (await import('../../../tests/mocks/browser')).default
+  //       const worker = makeWorker(import.meta.env.INNODOC_APP_ROOT)
+  //       await worker.start({ onUnhandledRequest: 'bypass' })
+  //       this.mockApiEnabled = true
+  //     }
+  //   }
+  // }
 
   /** Determine React root element */
   private findRootElement() {

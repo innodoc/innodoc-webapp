@@ -1,6 +1,8 @@
+import { isNativeError } from 'node:util/types'
+
 import { renderPage } from 'vike/server'
 
-import { asyncWrapper, isError } from './utils'
+import { asyncWrapper } from './utils'
 
 const frontendHandler = asyncWrapper(async (req, res) => {
   // Create page context
@@ -15,7 +17,7 @@ const frontendHandler = asyncWrapper(async (req, res) => {
 
   // Don't throw if there is a pageContext.httpResponse, otherwise
   // the error page won't be rendered.
-  if (!pageContext.httpResponse && isError(pageContext.errorWhileRendering)) {
+  if (!pageContext.httpResponse && isNativeError(pageContext.errorWhileRendering)) {
     throw pageContext.errorWhileRendering
   }
 

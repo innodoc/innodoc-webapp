@@ -1,7 +1,5 @@
 /// <reference types="vite/client" />
 
-import type { CourseSlugMode } from '@innodoc/types/common'
-
 interface ImportMetaEnv {
   /** Application base URL */
   readonly INNODOC_APP_ROOT: string
@@ -13,7 +11,7 @@ interface ImportMetaEnv {
   readonly INNODOC_SECTION_PATH_PREFIX: string
 
   /** URL path prefix for sections (e.g. `section`) */
-  readonly INNODOC_COURSE_SLUG_MODE: CourseSlugMode
+  readonly INNODOC_COURSE_SLUG_MODE: string
 
   /** URL path prefix for sections (e.g. `section`) */
   readonly INNODOC_DEFAULT_COURSE_SLUG: string

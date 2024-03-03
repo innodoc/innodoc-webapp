@@ -5,7 +5,8 @@ import type { ApiPage, DbCourse, DbPage } from '@innodoc/types/entities'
 
 import getDatabase from '#database'
 
-import type { ResultFromValue } from './types'
+import { unpackValue } from './utils'
+import type { ValueResult } from './types'
 
 /** Get course pages */
 export async function getCoursePages(courseSlug: DbCourse['slug']): Promise<ApiPage[]> {
@@ -38,7 +39,7 @@ export async function getPageContent(
 ): Promise<string | undefined> {
   const db = getDatabase()
   const result = await db
-    .first<ResultFromValue<string>>('ct.value')
+    .first<ValueResult<string>>('ct.value')
     .from('pages as p')
     .join('courses as c', 'p.course_id', 'c.id')
     .leftOuterJoin('pages_content_trans as ct', 'p.id', 'ct.page_id')
@@ -46,5 +47,5 @@ export async function getPageContent(
     .where('c.slug', courseSlug)
     .where('ct.locale', locale)
 
-  return result ? result.value : undefined
+  return unpackValue(result)
 }

@@ -2,7 +2,7 @@ import knex, { type Knex } from 'knex'
 
 import knexConfig from './knexConfig'
 
-let connection: Knex
+let connection: Knex | undefined
 
 /** knex database instance singleton factory */
 function getDatabase() {

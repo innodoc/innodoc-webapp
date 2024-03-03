@@ -16,6 +16,7 @@ const eslintRules = {
 
   // Checked by TypeScript
   'no-dupe-class-members': 'off',
+  'no-undef': 'off', // https://typescript-eslint.io/troubleshooting/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
 }
 
 const filenamesRules = {

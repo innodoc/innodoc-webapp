@@ -172,8 +172,8 @@ class RouteManager {
   }
 
   /** Type guard for `RouteInfo` */
-  public isRouteInfo<R extends RouteName>(t: unknown): t is RouteInfo<R> {
-    return isArbitraryObject(t) && this.isRouteName(t.name)
+  public isRouteInfo<R extends RouteName>(t: unknown, routeName?: R): t is RouteInfo<R> {
+    return isArbitraryObject(t) && (routeName ? t.name === routeName : this.isRouteName(t.name))
   }
 
   private buildRoutes() {

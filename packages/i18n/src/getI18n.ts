@@ -1,6 +1,6 @@
 import i18next, { type i18n } from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import type { i18nextFsBackend } from 'i18next-fs-backend'
+import type { FsBackendOptions } from 'i18next-fs-backend'
 import type { HttpBackendOptions } from 'i18next-http-backend'
 import type { LanguageCode } from 'iso-639-1'
 
@@ -17,7 +17,7 @@ type I18nBackend = Parameters<i18n['use']>[0]
 /** i18next instance singleton factory */
 async function getI18n(
   backend: I18nBackend,
-  backendOpts: i18nextFsBackend.i18nextFsBackendOptions | HttpBackendOptions,
+  backendOpts: FsBackendOptions | HttpBackendOptions,
   currentLocale: LanguageCode | 'cimode',
   courseSlug: ApiCourse['slug'] | null,
   store: Store,

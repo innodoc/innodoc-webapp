@@ -500,11 +500,11 @@ function stringToObjectStyle(stringStyles: string | undefined) {
         }
 
         const camelCaseProperty = style
-            .substr(0, colonPosition)
+            .substring(0, colonPosition)
             .trim()
             .replace(/^-ms-/, 'ms-')
-            .replace(/-./g, (c) => c.substr(1).toUpperCase()),
-          value = style.substr(colonPosition + 1).trim()
+            .replace(/-./g, (c) => c.substring(1).toUpperCase()),
+          value = style.substring(colonPosition + 1).trim()
 
         return value ? { ...acc, [camelCaseProperty]: value } : acc
       }, {})

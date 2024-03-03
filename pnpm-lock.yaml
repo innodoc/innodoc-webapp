@@ -200,12 +200,18 @@ importers:
       '@types/innodoc-global-types':
         specifier: workspace:^
         version: link:../global-types
+      '@types/node':
+        specifier: 20.4.2
+        version: 20.4.2
       '@types/react':
         specifier: 18.2.14
         version: 18.2.14
       '@types/react-dom':
         specifier: 18.2.7
         version: 18.2.7
+      globals:
+        specifier: 14.0.0
+        version: 14.0.0
       rollup-plugin-visualizer:
         specifier: 5.9.2
         version: 5.9.2
@@ -336,9 +342,6 @@ importers:
       '@innodoc/store':
         specifier: workspace:^
         version: link:../store
-      '@innodoc/types':
-        specifier: workspace:^
-        version: link:../types
       '@reduxjs/toolkit':
         specifier: 1.9.5
         version: 1.9.5(react-redux@8.1.2)(react@18.2.0)
@@ -379,15 +382,15 @@ importers:
       '@innodoc/types':
         specifier: workspace:^
         version: link:../types
-      '@types/i18next-fs-backend':
-        specifier: 1.1.2
-        version: 1.1.2
       '@types/innodoc-global-types':
         specifier: workspace:^
         version: link:../global-types
       '@types/svg-parser':
         specifier: 2.0.3
         version: 2.0.3
+      i18next-fs-backend:
+        specifier: 2.1.5
+        version: 2.1.5
       iso-639-1:
         specifier: 2.1.15
         version: 2.1.15
@@ -580,9 +583,15 @@ importers:
       '@types/locale':
         specifier: 0.1.1
         version: 0.1.1
+      '@types/node':
+        specifier: 20.4.2
+        version: 20.4.2
       '@types/react':
         specifier: 18.2.14
         version: 18.2.14
+      globals:
+        specifier: 14.0.0
+        version: 14.0.0
 
   packages/store:
     dependencies:
@@ -2380,12 +2389,6 @@ packages:
 
   /@types/http-errors@2.0.4:
     resolution: {integrity: sha512-D0CFMMtydbJAegzOyHjtiKPLlvnm3iTZyZRSZoLq2mRhDdmLfIWOCYPfQJ4cu2erKghU++QvjcUjp/5h7hESpA==}
-    dev: true
-
-  /@types/i18next-fs-backend@1.1.2:
-    resolution: {integrity: sha512-ZzTRXA5B0x0oGhzKNp08IsYjZpli4LjRZpg3q4j0XFxN5lKG2MVLnR4yHX8PPExBk4sj9Yfk1z9O6CjPrAlmIQ==}
-    dependencies:
-      i18next: 21.10.0
     dev: true
 
   /@types/istanbul-lib-coverage@2.0.6:
@@ -5723,7 +5726,6 @@ packages:
 
   /i18next-fs-backend@2.1.5:
     resolution: {integrity: sha512-7fgSH8nVhXSBYPHR/W3tEXXhcnwHwNiND4Dfx9knzPzdsWTUTL/TdDVV+DY0dL0asHKLbdoJaXS4LdVW6R8MVQ==}
-    dev: false
 
   /i18next-http-backend@2.2.1:
     resolution: {integrity: sha512-ZXIdn/8NJIBJ0X4hzXfc3STYxKrCKh1fYjji9HPyIpEJfvTvy8/ZlTl8RuTizzCPj2ZcWrfaecyOMKs6bQ7u5A==}
@@ -5732,12 +5734,6 @@ packages:
     transitivePeerDependencies:
       - encoding
     dev: false
-
-  /i18next@21.10.0:
-    resolution: {integrity: sha512-YeuIBmFsGjUfO3qBmMOc0rQaun4mIpGKET5WDwvu8lU7gvwpcariZLNtL0Fzj+zazcHUrlXHiptcFhBMFaxzfg==}
-    dependencies:
-      '@babel/runtime': 7.24.0
-    dev: true
 
   /i18next@23.2.11:
     resolution: {integrity: sha512-MA4FsxOjyCaOZtRDB4yuwjCvqYEioD4G4LlXOn7SO3rnQUlxTufyLsOqfL9MKakeLRBkefe8bqcs0D6Z/xFk1w==}

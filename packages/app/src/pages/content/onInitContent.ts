@@ -2,11 +2,14 @@ import { render } from 'vike/abort'
 import type { PageContextServer } from 'vike/types'
 
 import markdownToHast from '@innodoc/markdown'
+import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 import { addHastResult } from '@innodoc/store/slices/hast'
 import { fetchContent } from '@innodoc/store/utils'
-import { getStringIdField, serializeParserError } from '@innodoc/utils/content'
+import { serializeParserError } from '@innodoc/utils/content'
 import { isParserError } from '@innodoc/utils/typeGuards'
 import type { ContentType } from '@innodoc/types/common'
+
+const routeManager = getRouteManager()
 
 /**
  * Factory function for `onInit` hook for content pages.
@@ -21,24 +24,25 @@ import type { ContentType } from '@innodoc/types/common'
  * @returns `onInit` function
  */
 function onInitContent(contentType: ContentType) {
-  return async (pageContext: PageContextServer): Promise<void> => {
-    const stringIdField = getStringIdField(contentType)
-
-    const { routeInfo, store } = pageContext
-    const stringIdValue = routeInfo[stringIdField]
-
-    if (stringIdValue === undefined) {
-      throw render(500, `routeInfo.${stringIdField} is undefined`)
+  return async ({ routeInfo, store }: PageContextServer): Promise<void> => {
+    let stringIdValue
+    if (routeManager.isRouteInfo(routeInfo, 'app:page')) {
+      stringIdValue = routeInfo.pageSlug
+    } else if (routeManager.isRouteInfo(routeInfo, 'app:section')) {
+      stringIdValue = routeInfo.sectionPath
+    } else {
+      throw new Error('Invalid routeInfo received')
     }
-    if (!pageContext.routeInfo.courseSlug) {
+
+    if (!routeInfo.courseSlug) {
       throw render(500, 'courseSlug is undefined')
     }
 
     // Fetch content
     const { data, error } = await fetchContent(
       contentType,
-      pageContext.routeInfo.courseSlug,
-      pageContext.routeInfo.locale,
+      routeInfo.courseSlug,
+      routeInfo.locale,
       stringIdValue,
       store.dispatch,
     )

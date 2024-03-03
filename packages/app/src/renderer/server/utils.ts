@@ -39,7 +39,7 @@ function createEmotionCache() {
 function emotionStyleTags(cache: EmotionCache, html: string) {
   const emotionServer = createEmotionServer(cache)
   const chunks = emotionServer.extractCriticalToChunks(html)
-  return emotionServer.constructStyleTagsFromChunks(chunks) ?? ''
+  return emotionServer.constructStyleTagsFromChunks(chunks)
 }
 
 /**

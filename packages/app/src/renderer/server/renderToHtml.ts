@@ -1,5 +1,7 @@
+import { Writable } from 'node:stream'
+import { isNativeError } from 'node:util/types'
+
 import { renderToPipeableStream } from 'react-dom/server'
-import { Writable } from 'stream'
 import type { ReactNode } from 'react'
 
 class HtmlWritable extends Writable {
@@ -30,7 +32,9 @@ const renderToHtml = (children: ReactNode): Promise<string> =>
         stream.pipe(writable)
       },
       onError(err) {
-        reject(err)
+        if (isNativeError(err)) {
+          reject(err)
+        }
       },
     })
     writable.on('finish', () => {

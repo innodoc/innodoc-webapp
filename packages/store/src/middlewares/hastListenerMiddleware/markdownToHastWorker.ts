@@ -9,6 +9,7 @@ self.onmessage = ({ data }: MessageEvent<unknown>) => {
     void markdownToHast(content)
       .then((root) => {
         self.postMessage({ hash, root })
+        return undefined
       })
       .catch((error) => {
         if (isParserError(error)) {

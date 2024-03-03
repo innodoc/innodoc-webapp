@@ -45,10 +45,13 @@
     "@innodoc/server": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
     "@innodoc/types": "workspace:^",
+    "@innodoc/utils": "workspace:^",
     "@reduxjs/toolkit": "1.9.5",
     "@types/innodoc-global-types": "workspace:^",
+    "@types/node": "20.4.2",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.7",
+    "globals": "14.0.0",
     "rollup-plugin-visualizer": "5.9.2"
   }
 }
