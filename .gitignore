@@ -8,7 +8,7 @@ dist
 **/public/locales/*/*.missing.json
 *.local
 .env
-/vite.config.ts.timestamp-*.mjs
+vite.config.ts.timestamp-*.mjs
 /stats.html
 /test-results/
 /playwright-report/
