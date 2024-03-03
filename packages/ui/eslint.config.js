@@ -7,12 +7,15 @@ import reactRedux from 'eslint-plugin-react-redux'
 import innodocConfig from '@innodoc/eslint-config'
 
 // Restricted imports
-const restrictedImportsRules = {
-  'no-restricted-imports': 'off',
+const prevRestrictedImportsRules =
+  innodocConfig[1].rules['@typescript-eslint/no-restricted-imports'][1]
+const restrictedImportsRule = {
   '@typescript-eslint/no-restricted-imports': [
     'error',
     {
+      ...(prevRestrictedImportsRules ?? {}),
       paths: [
+        ...(prevRestrictedImportsRules?.paths ?? []),
         // Warn when using hooks from react-redux directly
         {
           name: 'react-redux',
@@ -39,6 +42,12 @@ const allowOmitPropsRules = {
 /** @type {import("eslint").Linter.FlatConfig} */
 const config = [
   ...innodocConfig,
+  {
+    files: ['src/**/*.+(ts|tsx)'],
+    rules: {
+      ...restrictedImportsRule,
+    },
+  },
   {
     files: ['src/**/*.tsx'],
     plugins: {
@@ -69,7 +78,6 @@ const config = [
       ...reactRedux.configs.recommended.rules,
 
       // Custom rules
-      ...restrictedImportsRules,
       ...allowOmitPropsRules,
     },
   },

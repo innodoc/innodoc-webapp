@@ -14,6 +14,9 @@ const eslintRules = {
   // Enforce all block statements to be wrapped in curly braces
   curly: 'error',
 
+  // disable as we're using @typescript-eslint/no-restricted-imports
+  'no-restricted-imports': 'off',
+
   // Checked by TypeScript
   'no-dupe-class-members': 'off',
   'no-undef': 'off', // https://typescript-eslint.io/troubleshooting/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
@@ -87,6 +90,20 @@ const typescriptRules = {
 
   // Allow annotating this parameter of functions
   '@typescript-eslint/no-invalid-void-type': ['error', { allowAsThisParameter: true }],
+
+  '@typescript-eslint/no-restricted-imports': [
+    'error',
+    {
+      // Ban relative parent imports (import/no-relative-parent-imports gives false positives for '#' aliases)
+      patterns: [
+        {
+          group: ['../*'],
+          message:
+            'Usage of relative parent imports is not allowed. Use `#` subpath aliases instead (https://nodejs.org/api/packages.html#subpath-imports).',
+        },
+      ],
+    },
+  ],
 }
 
 /** @type {import("eslint").Linter.FlatConfig} */
