@@ -16,7 +16,7 @@
     "depcruise:generate:high-level": "mkdir -p reports/depcruise && pnpm exec depcruise packages --config --output-type archi | dot -T svg | pnpm exec depcruise-wrap-stream-in-html > reports/depcruise/dependency-graph-high-level.html",
     "depcruise:generate:violation-report": "mkdir -p reports/depcruise && pnpm exec depcruise packages --config --output-type err-html --output-to reports/depcruise/dependency-violation-report.html",
     "depcruise:validate": "pnpm exec depcruise --config -- packages",
-    "dev": "nodemon --ext ts --watch packages/server --exec pnpm -- run server:dev",
+    "dev": "nodemon --ext ts --watch packages/config --watch packages/constants --watch packages/database --watch packages/routes --watch packages/schema --watch packages/server --watch packages/utils --exec pnpm -- run server:dev",
     "dev:mkcert": "pnpm run --filter @innodoc/server dev:mkcert",
     "dev:mock": "INNODOC_API_MOCK=true INNODOC_DEFAULT_COURSE_SLUG=testcourse INNODOC_COURSE_SLUG_MODE=DISABLED nodemon --ext ts --watch ./src/server --exec ts-node ./src/server/startMockServer.ts",
     "format:check": "prettier --check .",
