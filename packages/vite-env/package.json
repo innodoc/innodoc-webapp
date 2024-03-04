@@ -1,0 +1,17 @@
+{
+  "name": "@types/innodoc-vite-env",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "types": "./src/vite-env.d.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "type-check": "tsc --noEmit -p ."
+  },
+  "devDependencies": {
+    "vite": "4.4.3"
+  }
+}

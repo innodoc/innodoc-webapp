@@ -21,7 +21,7 @@
     "@innodoc/eslint-config": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
     "@innodoc/types": "workspace:^",
-    "@types/innodoc-global-types": "workspace:^",
+    "@types/innodoc-vite-env": "workspace:^",
     "@types/svg-parser": "2.0.3",
     "i18next-fs-backend": "2.1.5",
     "iso-639-1": "2.1.15",

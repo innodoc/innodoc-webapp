@@ -47,7 +47,7 @@
     "@innodoc/types": "workspace:^",
     "@innodoc/utils": "workspace:^",
     "@reduxjs/toolkit": "1.9.5",
-    "@types/innodoc-global-types": "workspace:^",
+    "@types/innodoc-vite-env": "workspace:^",
     "@types/node": "20.4.2",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.7",

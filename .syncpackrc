@@ -32,7 +32,7 @@
       ],
       "dependencies": [
         "@innodoc/*",
-        "@types/innodoc-global-types"
+        "@types/innodoc-*"
       ],
       "isIgnored": true
     }
@@ -48,7 +48,7 @@
         "@innodoc/eslint-config",
         "@innodoc/ts-config",
         "@innodoc/types",
-        "@types/innodoc-global-types"
+        "@types/innodoc-*"
       ],
       "dependencyTypes": [
         "dev"

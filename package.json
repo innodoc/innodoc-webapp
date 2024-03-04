@@ -22,8 +22,8 @@
     "import-v1": "pnpm run --filter @innodoc/commands import",
     "knex": "ts-node node_modules/knex/bin/cli.js",
     "knip": "knip",
-    "lint": "pnpm run --parallel --filter @innodoc/* --filter @types/innodoc-global-types lint",
-    "lint:fix": "pnpm run --parallel --filter @innodoc/* --filter @types/innodoc-global-types lint:fix",
+    "lint": "pnpm run --parallel --filter @innodoc/* --filter @types/innodoc-* lint",
+    "lint:fix": "pnpm run --parallel --filter @innodoc/* --filter @types/innodoc-* lint:fix",
     "prepush": "pnpm run lint && pnpm run test",
     "prod": "pnpm run build && pnpm run server:prod",
     "routes": "pnpm run --filter @innodoc/commands routes",
@@ -35,7 +35,7 @@
     "test:integration": "VITEST_MODE=integration pnpm run test:vitest",
     "test:unit": "VITEST_MODE=unit pnpm run test:vitest",
     "test:vitest": "vitest run",
-    "type-check": "pnpm run --parallel --filter @innodoc/* --filter @types/innodoc-global-types type-check",
+    "type-check": "pnpm run --parallel --filter @innodoc/* --filter @types/innodoc-* type-check",
     "visualize-bundle": "VISUALIZE_BUNDLE=true pnpm run build"
   },
   "dependencies": {
