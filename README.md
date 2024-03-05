@@ -48,8 +48,7 @@ $ pnpm install
 
 #### 2. Configuration
 
-Copy the example configuration `.env.example` to `.env` and edit to your
-liking.
+Copy the example configuration `.env` to `.env.local` and edit to your liking.
 
 #### 3. Build the application
 
@@ -80,8 +79,9 @@ headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) if needed.
 
 ### Configuration options
 
-Configuration options are set in the `.env` file. You can use `.env.example` as
-a basis. For `docker run` you might want to use `--env` or `--env-file`.
+Configuration options are set in the `.env.local` file or through environment
+variables. You can use `.env` as a basis. For `docker run` you might want to use
+`--env` or `--env-file`.
 
 ## Deployment
 

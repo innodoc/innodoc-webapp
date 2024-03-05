@@ -1,0 +1,28 @@
+{
+  "name": "@innodoc/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/config.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "type-check": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@innodoc/constants": "workspace:^",
+    "@innodoc/logging": "workspace:^",
+    "@innodoc/schema": "workspace:^",
+    "@innodoc/utils": "workspace:^",
+    "dotenv": "16.4.5",
+    "zod-validation-error": "^3.0.3"
+  },
+  "devDependencies": {
+    "@innodoc/eslint-config": "workspace:^",
+    "@innodoc/ts-config": "workspace:^",
+    "globals": "14.0.0"
+  }
+}
