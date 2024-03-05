@@ -1,3 +1,5 @@
+import type { LanguageCode } from 'iso-639-1'
+
 /** Fragment type for footer A */
 const FRAGMENT_TYPE_FOOTER_A = 'footer-a'
 
@@ -25,6 +27,9 @@ const DEFAULT_PAGE_PATH_PREFIX = 'section'
 /** Default route name */
 const DEFAULT_ROUTE_NAME = 'app:index'
 
+/** Default locales */
+const DEFAULT_LOCALES = ['de'] as readonly LanguageCode[]
+
 /**
  * Content should never be refetched (use highest possible value)
  * https://github.com/reduxjs/redux-toolkit/issues/2535
@@ -47,6 +52,9 @@ const PATH_RE = '[a-z0-9]+(?:-[a-z0-9]+)*(?:\\/[a-z0-9]+(?:-[a-z0-9]+)*){0,10}'
 
 /** Extract course slug from subdomain/url */
 const COURSE_SLUG_MODES = ['SUBDOMAIN', 'URL', 'DISABLE'] as const
+
+/** Default course slug mode */
+const DEFAULT_COURSE_SLUG_MODE = 'DISABLE'
 
 /** Props to be passed to client */
 const PASS_TO_CLIENT_PROPS = ['preloadedState', 'routeInfo', 'routeParams'] as const
@@ -83,6 +91,8 @@ export {
   API_PREFIX,
   CONTENT_TYPES,
   COURSE_SLUG_MODES,
+  DEFAULT_COURSE_SLUG_MODE,
+  DEFAULT_LOCALES,
   DEFAULT_MIN_SCORE,
   DEFAULT_PAGE_PATH_PREFIX,
   DEFAULT_ROUTE_NAME,

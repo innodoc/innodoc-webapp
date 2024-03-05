@@ -1,0 +1,4 @@
+{
+  "extends": "@innodoc/ts-config/tsconfig.base.json",
+  "include": ["eslint.config.js", "src"]
+}

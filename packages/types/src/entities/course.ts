@@ -8,6 +8,8 @@ import type {
   TranslatedEntity,
 } from './base'
 
+// TODO delete all
+
 /** Course fields that are translatable */
 type DbCourseTranslatableFields = DbDefaultTranslatableFields | 'description'
 

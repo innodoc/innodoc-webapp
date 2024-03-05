@@ -1,6 +1,8 @@
-import camelCase from 'camelcase'
+// import camelCase from 'camelcase'
 import type { LanguageCode } from 'iso-639-1'
 import type { CamelCase } from 'type-fest'
+
+// TODO delete all
 
 /** Base database entity */
 interface BaseEntity {
@@ -18,9 +20,10 @@ interface BaseEntity {
 const dbDefaultTranslatableFields = ['title', 'short_title'] as const
 
 /** Default fields that are translatable (camel case) */
-const defaultTranslatableFields = dbDefaultTranslatableFields.map((key) =>
-  camelCase(key),
-) as CamelCase<DbDefaultTranslatableFields>[]
+// const defaultTranslatableFields = dbDefaultTranslatableFields.map((key) =>
+//   camelCase(key),
+// ) as CamelCase<DbDefaultTranslatableFields>[]
+const defaultTranslatableFields = [] as CamelCase<DbDefaultTranslatableFields>[]
 
 /** Default fields that are translatable */
 type DbDefaultTranslatableFields = (typeof dbDefaultTranslatableFields)[number]

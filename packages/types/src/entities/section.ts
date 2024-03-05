@@ -4,6 +4,8 @@ import type { SectionType } from '#common'
 
 import type { BaseEntity, DbTranslatableFields, TranslatedEntity } from './base'
 
+// TODO delete all
+
 /** Section object for database */
 interface DbSection extends BaseEntity, DbTranslatableFields {
   /** Section path */

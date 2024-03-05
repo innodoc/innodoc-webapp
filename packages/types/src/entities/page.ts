@@ -4,6 +4,8 @@ import type { PageLinkLocation } from '#common'
 
 import type { BaseEntity, DbTranslatableFields, TranslatedEntity } from './base'
 
+// TODO delete all
+
 /** Page object for database */
 interface DbPage extends BaseEntity, DbTranslatableFields {
   /** Page slug (unique within course) */

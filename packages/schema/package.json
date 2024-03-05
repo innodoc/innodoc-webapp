@@ -1,13 +1,13 @@
 {
-  "name": "@innodoc/types",
+  "name": "@innodoc/schema",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "sideEffects": false,
   "exports": {
+    ".": "./src/entities.ts",
     "./common": "./src/common.ts",
-    "./entities": "./src/entities.ts",
-    "./ServerConfig": "./src/ServerConfig.ts"
+    "./config": "./src/config.ts"
   },
   "imports": {
     "#common": "./src/common.ts"
@@ -19,18 +19,13 @@
   },
   "dependencies": {
     "@innodoc/constants": "workspace:^",
-    "@innodoc/schema": "workspace:^",
+    "@innodoc/utils": "workspace:^",
     "validator": "^13.11.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
-    "@reduxjs/toolkit": "1.9.5",
-    "@types/hast": "2.3.4",
-    "@types/svg-parser": "2.0.3",
-    "iso-639-1": "2.1.15",
-    "react": "18.2.0",
-    "type-fest": "3.13.0"
+    "@types/validator": "^13.11.9"
   }
 }
