@@ -1,0 +1,33 @@
+{
+  "name": "@innodoc/database",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/Database.ts"
+  },
+  "imports": {
+    "#database": "./src/Database.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "type-check": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@innodoc/config": "workspace:^",
+    "@innodoc/constants": "workspace:^",
+    "@innodoc/schema": "workspace:^",
+    "iso-639-1": "2.1.15",
+    "knex": "2.5.1",
+    "pg": "8.11.1",
+    "pg-protocol": "1.6.0"
+  },
+  "devDependencies": {
+    "@innodoc/eslint-config": "workspace:^",
+    "@innodoc/ts-config": "workspace:^",
+    "@innodoc/types": "workspace:^",
+    "globals": "14.0.0"
+  }
+}
