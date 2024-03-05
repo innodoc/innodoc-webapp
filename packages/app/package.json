@@ -7,6 +7,7 @@
     "#pages/content/onInit": "./src/pages/content/onInitContent.ts",
     "#route": "./src/route/route.ts",
     "#route/onBeforeRoute": "./src/route/onBeforeRoute.ts",
+    "#renderer/common/getCourseLocales": "./src/renderer/common/getCourseLocales.ts",
     "#renderer/route/makeRouteFunc": "./src/renderer/route/makeRouteFunc.ts",
     "#renderer/server/onBeforeRenderDefault": "./src/renderer/server/onBeforeRenderDefault.ts",
     "#renderer/server/makeOnBeforeRenderContent": "./src/renderer/server/makeOnBeforeRenderContent.ts"
@@ -22,6 +23,7 @@
     "@emotion/react": "11.11.1",
     "@emotion/server": "11.11.0",
     "@fontsource/lato": "5.0.5",
+    "@innodoc/config": "workspace:^",
     "@innodoc/constants": "workspace:^",
     "@innodoc/i18n": "workspace:^",
     "@innodoc/markdown": "workspace:^",
@@ -42,10 +44,8 @@
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:^",
-    "@innodoc/server": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
     "@innodoc/types": "workspace:^",
-    "@innodoc/utils": "workspace:^",
     "@reduxjs/toolkit": "1.9.5",
     "@types/innodoc-vite-env": "workspace:^",
     "@types/node": "20.4.2",

@@ -5,19 +5,7 @@ import ssr from 'vike/plugin'
 import { type InlineConfig as VitestInlineConfig } from 'vitest'
 import { type UserConfigExport } from 'vitest/config'
 
-import loadDotEnv from '@innodoc/utils/loadDotEnv'
-
-// import pkg from './package.json' assert { type: 'json' }
-
-const projectDir = path.resolve(__dirname, '..', '..')
-
-/* Use package.json import mapping as source of truth for aliases */
-// const alias = Object.fromEntries(
-//   Object.entries(pkg.imports).map(([key, val]) => [
-//     key.replace('/*', ''),
-//     path.join(projectDir, val.replace('/*', '')),
-//   ])
-// )
+import appConfig from '@innodoc/config'
 
 /* Configure tests */
 function testConfig(testMode: string) {
@@ -31,7 +19,7 @@ function testConfig(testMode: string) {
 
   if (testMode === 'integration') {
     config.environment = 'jsdom'
-    config.setupFiles = path.join(projectDir, 'tests', 'integration', 'setup.ts')
+    config.setupFiles = path.join(appConfig.rootDir, 'tests', 'integration', 'setup.ts')
   }
 
   return config
@@ -39,14 +27,11 @@ function testConfig(testMode: string) {
 
 /* vite configuration */
 function config() {
-  loadDotEnv(projectDir)
-
   const testMode = process.env.VITEST_MODE
 
   const config: UserConfigExport = {
     envPrefix: 'INNODOC_', // Exposed to client
     plugins: [react(), ssr({ prerender: false })],
-    // resolve: { alias },
     ssr: {
       noExternal: [
         '@reduxjs/toolkit', // otherwise can't be loaded on prerendering
@@ -62,7 +47,7 @@ function config() {
     config.plugins?.push(
       visualizer({
         gzipSize: true,
-        projectRoot: projectDir,
+        projectRoot: appConfig.rootDir,
       }),
     )
   }

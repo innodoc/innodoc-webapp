@@ -3,19 +3,19 @@ import type { OnBeforeRouteSync } from 'vike/types'
 
 import { DEFAULT_ROUTE_NAME } from '@innodoc/constants'
 import { isLanguageCode } from '@innodoc/utils/typeGuards'
-import type { RouteInfo } from '@innodoc/routes/types'
+import type { AppRouteInfo } from '@innodoc/routes/types'
 
 import { ExtractionError } from './errors'
 import { extractCourseSlugFromDomain, extractCourseSlugFromUrl, extractLocale } from './extractInfo'
 
 interface OnBeforeRouteReturnType {
-  pageContext: { routeInfo: RouteInfo }
+  pageContext: { routeInfo: AppRouteInfo }
 }
 
 /**
  * Prepare app routing.
  *
- * - Create initial {@link RouteInfo} object.
+ * - Create initial {@link AppRouteInfo} object.
  * - Extract locale and course slug.
  *
  * Context: browser/server
@@ -26,7 +26,7 @@ interface OnBeforeRouteReturnType {
 const onBeforeRoute: OnBeforeRouteSync = function (pageContext): OnBeforeRouteReturnType {
   const { host, requestLocale } = pageContext
 
-  const routeInfo: RouteInfo = {
+  const routeInfo: AppRouteInfo = {
     courseSlug: import.meta.env.INNODOC_DEFAULT_COURSE_SLUG,
     name: DEFAULT_ROUTE_NAME,
     locale: 'en',

@@ -11,9 +11,9 @@ import RouteTransition from './RouteTransition'
 function renderPage(
   pageContext: PageContext,
   Page: ComponentType,
-  store: Store,
   emotionCache: EmotionCache,
   i18n: I18nInstance,
+  store: Store,
   helmetContext?: Record<string, never>,
   pagePrev?: ComponentType,
 ) {

@@ -62,7 +62,6 @@ function onInitContent(contentType: ContentType) {
       if (isParserError(error)) {
         store.dispatch(addHastResult({ hash, error: serializeParserError(error) }))
       } else {
-        console.error('Received unhandled error from Markdown parser!')
         throw error
       }
     }

@@ -11,7 +11,7 @@ const routeManager = getRouteManager()
  * Match route and extract parameters.
  */
 function route<T extends AppRouteName>(routeName: T) {
-  return (pageContext: PageContextServer) => {
+  const routeFunc = (pageContext: PageContextServer) => {
     // TODO: is this still needed?
     // Routes also need to match pageContext.json files used in client navigation
     // const removePageContextJsonRE = /\/index.pageContext.json$/
@@ -38,6 +38,11 @@ function route<T extends AppRouteName>(routeName: T) {
       },
     }
   }
+
+  // Pretty-print route in dev mode
+  routeFunc.toString = () => routeName
+
+  return routeFunc
 }
 
 export default route

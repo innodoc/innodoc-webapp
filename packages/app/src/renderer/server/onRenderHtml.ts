@@ -1,19 +1,32 @@
+import createCache from '@emotion/cache'
 import { render } from 'vike/abort'
 import { dangerouslySkipEscape, escapeInject } from 'vike/server'
 import type { FilledContext } from 'react-helmet-async'
-import type { OnRenderHtmlAsync } from 'vike/types'
+import type { PageContextServer } from 'vike/types'
 
+import { EMOTION_STYLE_KEY } from '@innodoc/constants'
+import makeStore from '@innodoc/store'
 import renderPage from '@innodoc/ui'
 
 import renderToHtml from './renderToHtml'
-import { createEmotionCache, emotionStyleTags, initColorSchemeScript, initI18n } from './utils'
+import { emotionStyleTags, initColorSchemeScript, initI18n } from './utils'
 
-const onRenderHtml: OnRenderHtmlAsync = async function (
-  pageContext,
-): Promise<ReturnType<typeof escapeInject>> {
-  const { Page, routeInfo, store } = pageContext
+interface OnRenderHtmlPageContext extends Omit<PageContextServer, 'store'> {
+  store?: PageContextServer['store']
+}
 
-  const emotionCache = createEmotionCache()
+type OnRenderHtmlAsync = (
+  pageContext: OnRenderHtmlPageContext,
+) => Promise<ReturnType<typeof escapeInject>>
+
+const onRenderHtml: OnRenderHtmlAsync = async function (pageContextIn) {
+  const { Page, routeInfo, store: storeIn } = pageContextIn
+
+  // store might not be present if previous steps failed
+  const store = storeIn ? storeIn : makeStore()
+  const pageContext = { ...pageContextIn, store }
+
+  const emotionCache = createCache({ key: EMOTION_STYLE_KEY })
   const i18n = await initI18n(routeInfo, store)
 
   // Initialize helmet context
@@ -25,7 +38,7 @@ const onRenderHtml: OnRenderHtmlAsync = async function (
 
   // Render page
   const pageHtml = await renderToHtml(
-    renderPage(pageContext, Page, pageContext.store, emotionCache, i18n, helmetContext),
+    renderPage(pageContext, Page, emotionCache, i18n, store, helmetContext),
   )
 
   // Get document head tags

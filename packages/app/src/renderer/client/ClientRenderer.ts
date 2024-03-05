@@ -1,5 +1,3 @@
-/* eslint-env browser */
-
 import createCache, { type EmotionCache } from '@emotion/cache'
 import I18NextHttpBackend from 'i18next-http-backend'
 import { type ComponentType } from 'react'
@@ -13,8 +11,10 @@ import getI18n from '@innodoc/i18n'
 import makeStore from '@innodoc/store'
 import { changeRouteTransitionInfo } from '@innodoc/store/slices/app'
 import renderPage from '@innodoc/ui'
-import type { RouteInfo } from '@innodoc/routes/types'
+import type { AppRouteInfo } from '@innodoc/routes/types'
 import type { RootState, Store } from '@innodoc/store/types'
+
+import { getCourseLocales } from '#renderer/common/getCourseLocales'
 
 class ClientRenderer {
   /** react-dom root */
@@ -48,9 +48,13 @@ class ClientRenderer {
   }
 
   /** Initialize client rendering */
-  private async init(preloadedState: PreloadedState<RootState>, routeInfo: RouteInfo) {
+  private async init(preloadedState: PreloadedState<RootState>, routeInfo: AppRouteInfo) {
     // await this.enableMockApi()
     this.store = makeStore(preloadedState)
+
+    // Get course locales
+    const locales = getCourseLocales(this.store, routeInfo)
+
     this.i18n = await getI18n(
       I18NextHttpBackend,
       this.i18nBackendOpts,
@@ -85,9 +89,9 @@ class ClientRenderer {
     const rootAppNode = renderPage(
       pageContext,
       Page,
-      this.store,
       this.emotionCache,
       this.i18n,
+      this.store,
       undefined,
       this.PagePrev ?? Page,
     )

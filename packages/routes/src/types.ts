@@ -65,10 +65,6 @@ type RouteInfo<R extends RouteName = RouteName> =
   | (R extends AppRouteName ? AppRouteInfo<R> : never)
   | (R extends ApiRouteName ? ApiRouteInfo<R> : never)
 
-/** Route info containing extra parameters */
-type ParameterizedRouteInfo<R extends RouteName> =
-  RouteInfo<R> extends RouteParams<R> ? RouteInfo<R> : never
-
 /* Extract specific parameter type expected by generator function */
 type ParamTypeForGenerator<R extends RouteName> =
   RouteParams<R> extends infer P ? (P extends object ? P : never) : never
@@ -81,7 +77,6 @@ export type {
   BuiltinRouteName,
   ContentRouteInfo,
   ContentRouteName,
-  ParameterizedRouteInfo,
   ParamTypeForGenerator,
   RouteInfo,
   RouteName,
