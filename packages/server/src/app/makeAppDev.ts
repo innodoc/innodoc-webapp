@@ -4,41 +4,44 @@ import path from 'node:path'
 import fastifySwagger from '@fastify/swagger'
 import scalarApiReference from '@scalar/fastify-api-reference'
 import fastify from 'fastify'
-import fastifyPrintRoutes from 'fastify-print-routes'
 import { jsonSchemaTransform } from 'fastify-type-provider-zod'
 import { createServer as viteCreateServer } from 'vite'
 
 import config from '@innodoc/config'
 
+import loggingPlugin from '#plugins/logging'
 import { getServerPath } from '#utils'
 
 const certPath = path.join(getServerPath(), 'cert')
 
-async function options() {
-  return {
-    logger: {
-      level: 'debug',
-      transport: {
-        target: 'pino-pretty',
-        options: {
-          translateTime: 'HH:MM:ss Z',
-          ignore: 'pid,hostname',
-        },
+const options = async () => ({
+  disableRequestLogging: true, // turn off globally (prevent vite dev server spamming)
+  logger: {
+    msgPrefix: '[HTTP] ',
+    level: 'debug',
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        translateTime: 'HH:MM:ss Z',
+        ignore: 'pid,hostname',
       },
     },
-    http2: true,
-    https: {
-      key: await fs.readFile(path.join(certPath, 'key.pem')),
-      cert: await fs.readFile(path.join(certPath, 'cert.pem')),
-    },
-  }
-}
+  },
+  http2: true,
+  https: {
+    key: await fs.readFile(path.join(certPath, 'key.pem')),
+    cert: await fs.readFile(path.join(certPath, 'cert.pem')),
+  },
+})
 
 async function makeAppDev() {
   const app = fastify(await options())
 
+  // Custom logging
+  await app.register(loggingPlugin)
+
   // Print routes on start-up
-  await app.register(fastifyPrintRoutes)
+  // await app.register(import('fastify-print-routes'))
 
   await app.register(fastifySwagger, {
     openapi: {
