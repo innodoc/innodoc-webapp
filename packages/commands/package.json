@@ -15,6 +15,7 @@
     "type-check": "tsc --noEmit -p ."
   },
   "dependencies": {
+    "@innodoc/config": "workspace:^",
     "@innodoc/routes": "workspace:^",
     "@innodoc/server": "workspace:^"
   },
