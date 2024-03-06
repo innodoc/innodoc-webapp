@@ -65,6 +65,7 @@
         "@innodoc/constants",
         "@innodoc/database",
         "@innodoc/i18n",
+        "@innodoc/logging",
         "@innodoc/markdown",
         "@innodoc/routes",
         "@innodoc/schema",
