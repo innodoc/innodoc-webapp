@@ -18,7 +18,7 @@
     "@innodoc/schema": "workspace:^",
     "@innodoc/utils": "workspace:^",
     "dotenv": "16.4.5",
-    "zod-validation-error": "^3.0.3"
+    "zod-validation-error": "3.0.3"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:^",

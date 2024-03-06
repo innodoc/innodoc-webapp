@@ -13,8 +13,8 @@
     "type-check": "tsc --noEmit -p ."
   },
   "dependencies": {
-    "pino": "^8.19.0",
-    "pino-pretty": "^10.3.1"
+    "pino": "8.19.0",
+    "pino-pretty": "10.3.1"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:^",

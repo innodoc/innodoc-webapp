@@ -95,6 +95,13 @@
         "prod"
       ],
       "isBanned": true
+    },
+    {
+      "label": "Pin @emotion/react (required by @mui/material)",
+      "dependencies": [
+        "@emotion/react"
+      ],
+      "pinVersion": "11.11.1"
     }
   ]
 }

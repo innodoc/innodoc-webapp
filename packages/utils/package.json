@@ -16,12 +16,12 @@
   },
   "dependencies": {
     "@innodoc/constants": "workspace:^",
-    "iso-639-1": "2.1.15"
+    "iso-639-1": "3.1.2"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
     "@innodoc/types": "workspace:^",
-    "@types/svg-parser": "2.0.3"
+    "@types/svg-parser": "2.0.6"
   }
 }
