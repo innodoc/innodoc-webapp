@@ -35,6 +35,7 @@ function config() {
     ssr: {
       noExternal: [
         '@reduxjs/toolkit', // otherwise can't be loaded on prerendering
+        'react-helmet-async', // staylor/react-helmet-async#208
       ],
     },
   }
