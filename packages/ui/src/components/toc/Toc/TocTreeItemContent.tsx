@@ -1,5 +1,5 @@
-import { type TreeItemContentProps, useTreeItem } from '@mui/lab'
 import { Box, IconButton, styled, Typography } from '@mui/material'
+import { type TreeItemContentProps, useTreeItem } from '@mui/x-tree-view'
 import clsx from 'clsx'
 import { type ForwardedRef, forwardRef, type SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'

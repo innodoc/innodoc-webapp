@@ -1,5 +1,5 @@
-import { TreeView } from '@mui/lab'
 import { styled } from '@mui/material'
+import { TreeView } from '@mui/x-tree-view'
 import { memo } from 'react'
 
 import { Icon } from '#components/common/misc'

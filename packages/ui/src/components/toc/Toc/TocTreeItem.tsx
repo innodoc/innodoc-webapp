@@ -1,5 +1,5 @@
-import { TreeItem, type TreeItemProps } from '@mui/lab'
 import { styled } from '@mui/material'
+import { TreeItem, type TreeItemProps } from '@mui/x-tree-view'
 
 import type { TranslatedSection } from '@innodoc/types/entities'
 
@@ -31,7 +31,7 @@ function TocTreeItem({ section, nodeId }: TocTreeItemProps) {
   )
 }
 
-declare module '@mui/lab/TreeItem' {
+declare module '@mui/x-tree-view/TreeItem' {
   interface TreeItemContentProps {
     section: TranslatedSection
   }
