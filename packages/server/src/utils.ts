@@ -1,9 +1,10 @@
+import fs from 'node:fs/promises'
 import path from 'node:path'
 
 import config from '@innodoc/config'
 import getRouteManager from '@innodoc/routes/node/getRouteManager'
 import { isArbitraryObject } from '@innodoc/utils/typeGuards'
-import type { ApiRouteName } from '@innodoc/routes/types'
+import type { ApiRouteName } from '@innodoc/routes/types/routeNames'
 
 function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
   return isArbitraryObject(error) && error instanceof Error && typeof error.code === 'string'
@@ -39,4 +40,20 @@ function getServerPath() {
   return path.join(config.rootDir, 'packages', 'server')
 }
 
-export { getRoutePath, getServerPath, isErrnoException }
+/**
+ * Get dev server certificates.
+ *
+ * @returns object containing certificates
+ */
+async function devCerts() {
+  const certPath = path.join(getServerPath(), 'cert')
+  return {
+    https: {
+      allowHTTP1: true,
+      key: await fs.readFile(path.join(certPath, 'key.pem')),
+      cert: await fs.readFile(path.join(certPath, 'cert.pem')),
+    },
+  }
+}
+
+export { devCerts, getRoutePath, getServerPath, isErrnoException }

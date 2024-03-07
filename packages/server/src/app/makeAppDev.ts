@@ -1,15 +1,7 @@
-import fs from 'node:fs/promises'
-import path from 'node:path'
-
 import fastify from 'fastify'
-import { createServer as viteCreateServer } from 'vite'
-
-import config from '@innodoc/config'
 
 import loggingPlugin from '#plugins/logging'
-import { getServerPath } from '#utils'
-
-const certPath = path.join(getServerPath(), 'cert')
+import { devCerts } from '#utils'
 
 const options = async () => ({
   disableRequestLogging: true, // turn off globally (prevent vite dev server spamming)
@@ -24,11 +16,8 @@ const options = async () => ({
       },
     },
   },
+  ...(await devCerts()),
   http2: true,
-  https: {
-    key: await fs.readFile(path.join(certPath, 'key.pem')),
-    cert: await fs.readFile(path.join(certPath, 'cert.pem')),
-  },
 })
 
 async function makeAppDev() {
@@ -40,30 +29,8 @@ async function makeAppDev() {
   // Print routes on start-up
   await app.register(import('fastify-print-routes'))
 
-  // Taken from: github.com/royalswe/vike-fastify-boilerplate/blob/main/server/index.ts
-  const viteServer = await viteCreateServer({
-    root: path.join(config.rootDir, 'packages', 'app'),
-    server: {
-      middlewareMode: true,
-      https: {
-        key: await fs.readFile(path.join(certPath, 'key.pem')),
-        cert: await fs.readFile(path.join(certPath, 'cert.pem')),
-      },
-      hmr: {
-        protocol: 'wss',
-        clientPort: 24032,
-        port: 24032,
-      },
-    },
-  })
-
-  app.addHook('onRequest', async (request, reply) => {
-    const next = () =>
-      new Promise<void>((resolve) => {
-        viteServer.middlewares(request.raw, reply.raw, resolve)
-      })
-    await next()
-  })
+  // Print routes on start-up
+  await app.register(import('#plugins/viteDevServer'))
 
   return app
 }
