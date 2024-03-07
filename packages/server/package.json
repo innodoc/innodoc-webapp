@@ -10,6 +10,7 @@
   "imports": {
     "#api/errors": "./src/services/api/errors.ts",
     "#config": "./src/config.ts",
+    "#plugins/apiReference": "./src/plugins/apiReference.ts",
     "#plugins/db": "./src/plugins/db/db.ts",
     "#plugins/logging": "./src/plugins/logging.ts",
     "#services/api/types": "./src/services/api/types.ts",
