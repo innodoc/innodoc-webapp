@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 
-import type { RouteInfo } from '@innodoc/routes/types'
+import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
 
 import { InlineError } from '#components/common/errors'
 import { Code } from '#components/common/misc'
@@ -16,7 +16,7 @@ const SpecLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLink(
   ref,
 ) {
   const { parseLinkSpecifier } = useRouteManager()
-  let routeInfo: Partial<RouteInfo>
+  let routeInfo: Partial<AppRouteInfo>
 
   try {
     routeInfo = parseLinkSpecifier(to)

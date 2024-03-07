@@ -2,17 +2,23 @@ import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
 import type { LanguageCode } from 'iso-639-1'
 
+import { isCourseRouteInfo } from '@innodoc/routes/typeGuards'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCourseSectionsQuery } from '@innodoc/store/slices/content/sections'
-import { defaultTranslatableFields } from '@innodoc/types/entities'
 import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
 
 import { useSelector } from './redux'
 import { translateEntityArray } from './utils'
 
+const empty = { sections: [] }
+
 /** Return sections children */
 function useSelectSectionChildren(parentId: ApiSection['parentId']) {
-  const { courseSlug, locale } = useSelector(selectRouteInfo)
+  const routeInfo = useSelector(selectRouteInfo)
+  if (!isCourseRouteInfo(routeInfo)) {
+    return empty
+  }
+  const { courseSlug, locale } = routeInfo
 
   const selectSectionChildren = useMemo(() => {
     const emptyArray: TranslatedSection[] = []
@@ -28,16 +34,15 @@ function useSelectSectionChildren(parentId: ApiSection['parentId']) {
           return emptyArray
         }
         const children = sections.filter((s) => s.parentId === _parentId)
-        return translateEntityArray(children, defaultTranslatableFields, _locale)
+        return translateEntityArray(children, _locale)
       },
     )
   }, [])
 
   const result = useGetCourseSectionsQuery(
-    { courseSlug: courseSlug ?? '' },
+    { courseSlug },
     {
       selectFromResult: (result) => ({ sections: selectSectionChildren(result, parentId, locale) }),
-      skip: courseSlug === null,
     },
   )
 

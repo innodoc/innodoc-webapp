@@ -280,7 +280,9 @@ class Importer {
 
   /** Transform link to specififer syntax */
   protected static transformLink(href: string) {
-    return href.replace(/^\/page\//, 'app:page|').replace(/^\/section\//, 'app:section|')
+    return href
+      .replace(/^\/page\//, 'app:course:page|')
+      .replace(/^\/section\//, 'app:course:section|')
   }
 }
 

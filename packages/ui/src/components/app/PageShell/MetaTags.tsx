@@ -8,13 +8,15 @@ import useRouteManager from '#hooks/routes'
 import { useSelectCurrentCourse } from '#hooks/select'
 
 function MetaTags() {
-  const { generateUrl } = useRouteManager()
+  const { url } = useRouteManager()
   const { course } = useSelectCurrentCourse()
   const { locale: currentLocale } = useSelector(selectRouteInfo)
 
   const languageLinks = (course?.locales ?? []).map((locale) => (
-    <link href={generateUrl({ locale })} hrefLang={locale} key={locale} rel="alternate" />
+    <link href={url({ locale })} hrefLang={locale} key={locale} rel="alternate" />
   ))
+
+  console.log(`MetaTags ${JSON.stringify(course?.title, undefined, 2)}`)
 
   return (
     <Helmet>

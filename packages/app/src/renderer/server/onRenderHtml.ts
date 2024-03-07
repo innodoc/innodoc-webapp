@@ -15,11 +15,7 @@ interface OnRenderHtmlPageContext extends Omit<PageContextServer, 'store'> {
   store?: PageContextServer['store']
 }
 
-type OnRenderHtmlAsync = (
-  pageContext: OnRenderHtmlPageContext,
-) => Promise<ReturnType<typeof escapeInject>>
-
-const onRenderHtml: OnRenderHtmlAsync = async function (pageContextIn) {
+async function onRenderHtml(pageContextIn: OnRenderHtmlPageContext) {
   const { Page, routeInfo, store: storeIn } = pageContextIn
 
   // store might not be present if previous steps failed
@@ -27,6 +23,7 @@ const onRenderHtml: OnRenderHtmlAsync = async function (pageContextIn) {
   const pageContext = { ...pageContextIn, store }
 
   const emotionCache = createCache({ key: EMOTION_STYLE_KEY })
+  console.log(`!!!!!!!!! OnRenderHtmlAsync ${JSON.stringify(routeInfo, undefined, 2)}`)
   const i18n = await initI18n(routeInfo, store)
 
   // Initialize helmet context

@@ -1,12 +1,13 @@
-import { redirect, render } from 'vike/abort'
+import { redirect } from 'vike/abort'
+import type { LanguageCode } from 'iso-639-1'
 import type { OnBeforeRouteSync } from 'vike/types'
 
 import { DEFAULT_ROUTE_NAME } from '@innodoc/constants'
 import { isLanguageCode } from '@innodoc/utils/typeGuards'
-import type { AppRouteInfo } from '@innodoc/routes/types'
+import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
 
 import { ExtractionError } from './errors'
-import { extractCourseSlugFromDomain, extractCourseSlugFromUrl, extractLocale } from './extractInfo'
+import { extractLocale } from './extractInfo'
 
 interface OnBeforeRouteReturnType {
   pageContext: { routeInfo: AppRouteInfo }
@@ -24,16 +25,16 @@ interface OnBeforeRouteReturnType {
  * @returns updated page context
  **/
 const onBeforeRoute: OnBeforeRouteSync = function (pageContext): OnBeforeRouteReturnType {
-  const { host, requestLocale } = pageContext
+  const { requestLocales } = pageContext
 
-  const routeInfo: AppRouteInfo = {
-    courseSlug: import.meta.env.INNODOC_DEFAULT_COURSE_SLUG,
+  let routeInfo: AppRouteInfo = {
+    // courseSlug: import.meta.env.INNODOC_DEFAULT_COURSE_SLUG,
     name: DEFAULT_ROUTE_NAME,
     locale: 'en',
   }
 
-  if (isLanguageCode(requestLocale)) {
-    routeInfo.locale = requestLocale // fallback to browser locale
+  if (isLanguageCode(pageContext.requestLocales[0])) {
+    routeInfo.locale = requestLocales[0] as LanguageCode // fallback to browser locale
   }
 
   // Extract locale
@@ -53,31 +54,19 @@ const onBeforeRoute: OnBeforeRouteSync = function (pageContext): OnBeforeRouteRe
     }
   }
 
+  // TODO: slug domain mode
   // Extract slug from domain
-  if (import.meta.env.INNODOC_COURSE_SLUG_MODE === 'SUBDOMAIN' && host !== undefined) {
-    try {
-      routeInfo.courseSlug = extractCourseSlugFromDomain(host)
-    } catch (err) {
-      if (err instanceof ExtractionError) {
-        throw render(500, 'Unable to extract course slug from sub-domain.')
-      } else {
-        throw err
-      }
-    }
-  }
-
-  // Extract slug from url path
-  else if (import.meta.env.INNODOC_COURSE_SLUG_MODE === 'URL') {
-    try {
-      routeInfo.courseSlug = extractCourseSlugFromUrl(pageContext.urlPathname)
-    } catch (err) {
-      if (err instanceof ExtractionError) {
-        throw render(500, 'Unable to extract course slug from URL.')
-      } else {
-        throw err
-      }
-    }
-  }
+  // if (import.meta.env.INNODOC_COURSE_SLUG_MODE === 'SUBDOMAIN' && host !== undefined) {
+  //   try {
+  //     routeInfo.courseSlug = extractCourseSlugFromDomain(host)
+  //   } catch (err) {
+  //     if (err instanceof ExtractionError) {
+  //       throw render(500, 'Unable to extract course slug from sub-domain.')
+  //     } else {
+  //       throw err
+  //     }
+  //   }
+  // }
 
   return { pageContext: { routeInfo } }
 }

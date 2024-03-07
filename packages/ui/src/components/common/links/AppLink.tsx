@@ -1,7 +1,7 @@
 import { Children, forwardRef, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import type { RouteInfo } from '@innodoc/routes/types'
+import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
 
 import builtInPages from '#components/common/builtInPages'
 import useRouteManager from '#hooks/routes'
@@ -18,7 +18,7 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink(
   ref,
 ) {
   const { t } = useTranslation()
-  const { generateUrl } = useRouteManager()
+  const { url } = useRouteManager()
 
   // Determine content
   let content: ReactNode = children
@@ -29,8 +29,9 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink(
     }
   }
 
+  // TODO: use type guards
   // Page link
-  if (routeInfo.name === 'app:page' && routeInfo.pageSlug) {
+  if (routeInfo.name === 'app:course:page' && routeInfo.pageSlug) {
     return (
       <PageLinkFromSlug pageSlug={routeInfo.pageSlug} ref={ref} showIcon={false} {...other}>
         {content}
@@ -39,7 +40,7 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink(
   }
 
   // Section link
-  if (routeInfo.name === 'app:section' && routeInfo.sectionPath) {
+  if (routeInfo.name === 'app:course:section' && routeInfo.sectionPath) {
     return (
       <SectionLinkFromPath sectionPath={routeInfo.sectionPath} ref={ref} {...other}>
         {content}
@@ -48,7 +49,7 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink(
   }
 
   // Home link
-  if (routeInfo.name === 'app:home') {
+  if (routeInfo.name === 'app:course') {
     return (
       <HomeLink ref={ref} {...other}>
         {content}
@@ -58,14 +59,14 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink(
 
   // Other route
   return (
-    <BaseLink to={generateUrl(routeInfo)} ref={ref} {...other}>
+    <BaseLink to={url(routeInfo)} ref={ref} {...other}>
       {content}
     </BaseLink>
   )
 })
 
 interface AppLinkProps extends Omit<LinkProps, 'to'> {
-  routeInfo: Partial<RouteInfo>
+  routeInfo: Partial<AppRouteInfo>
 }
 
 export default AppLink

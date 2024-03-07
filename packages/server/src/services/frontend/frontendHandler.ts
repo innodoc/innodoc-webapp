@@ -18,7 +18,7 @@ const frontendHandler: RouteHandlerMethod = async (req, reply) => {
   // Create page context
   const pageContextInit = {
     host: req.headers.host,
-    requestLocale: locales,
+    requestLocales: locales,
     urlOriginal: req.originalUrl,
   }
 

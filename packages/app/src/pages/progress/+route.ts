@@ -1,3 +1,3 @@
 import route from '#route'
 
-export default route('app:progress')
+export default route('app:course:progress')

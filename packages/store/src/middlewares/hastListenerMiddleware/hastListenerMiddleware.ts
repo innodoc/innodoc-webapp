@@ -1,9 +1,9 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
-import type { AnyAction, PayloadAction } from '@reduxjs/toolkit'
+import type { PayloadAction, UnknownAction } from '@reduxjs/toolkit'
 
 import { isHastRootDivElement } from '@innodoc/markdown/typeGuards'
 import { isParserError, isWithContentHash } from '@innodoc/utils/typeGuards'
-import type { ContentRouteInfo } from '@innodoc/routes/types'
+import type { CourseContentRouteInfo } from '@innodoc/routes/types/routeInfos'
 import type { ContentWithHash, HastResultWithHash } from '@innodoc/types/common'
 
 import { changeRouteTransitionInfo } from '#slices/app'
@@ -60,10 +60,12 @@ if (!import.meta.env.SSR) {
 
   // Page route transition effect
   const pageRouteTransitionEffect = async (
-    { payload: { courseSlug, locale, pageSlug } }: PayloadAction<ContentRouteInfo<'app:page'>>,
+    {
+      payload: { courseSlug, locale, pageSlug },
+    }: PayloadAction<CourseContentRouteInfo<'app:course:page'>>,
     listenerApi: AppListenerEffectAPI,
   ) => {
-    if (courseSlug !== null && pageSlug) {
+    if (pageSlug) {
       const result = await fetchContent('page', courseSlug, locale, pageSlug, listenerApi.dispatch)
       if (result.isSuccess) {
         await processMarkdown(result.data, listenerApi)
@@ -75,34 +77,36 @@ if (!import.meta.env.SSR) {
   const sectionRouteTransitionEffect = async (
     {
       payload: { courseSlug, locale, sectionPath },
-    }: PayloadAction<ContentRouteInfo<'app:section'>>,
+    }: PayloadAction<CourseContentRouteInfo<'app:course:section'>>,
     listenerApi: AppListenerEffectAPI,
   ) => {
-    if (courseSlug !== null) {
-      const result = await fetchContent(
-        'section',
-        courseSlug,
-        locale,
-        sectionPath,
-        listenerApi.dispatch,
-      )
-      if (result.isSuccess) {
-        await processMarkdown(result.data, listenerApi)
-      }
+    const result = await fetchContent(
+      'section',
+      courseSlug,
+      locale,
+      sectionPath,
+      listenerApi.dispatch,
+    )
+    if (result.isSuccess) {
+      await processMarkdown(result.data, listenerApi)
     }
   }
 
   // Add page route transition listener
   startListening({
-    matcher: (action: AnyAction): action is PayloadAction<ContentRouteInfo<'app:page'>> =>
-      changeRouteTransitionInfo.match(action) && action.payload?.name === 'app:page',
+    matcher: (
+      action: UnknownAction,
+    ): action is PayloadAction<CourseContentRouteInfo<'app:course:page'>> =>
+      changeRouteTransitionInfo.match(action) && action.payload?.name === 'app:course:page',
     effect: pageRouteTransitionEffect,
   })
 
   // Add section route transition listener
   startListening({
-    matcher: (action: AnyAction): action is PayloadAction<ContentRouteInfo<'app:section'>> =>
-      changeRouteTransitionInfo.match(action) && action.payload?.name === 'app:section',
+    matcher: (
+      action: UnknownAction,
+    ): action is PayloadAction<CourseContentRouteInfo<'app:course:section'>> =>
+      changeRouteTransitionInfo.match(action) && action.payload?.name === 'app:course:section',
     effect: sectionRouteTransitionEffect,
   })
 }

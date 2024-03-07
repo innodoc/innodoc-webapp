@@ -2,7 +2,6 @@ import createCache, { type EmotionCache } from '@emotion/cache'
 import I18NextHttpBackend from 'i18next-http-backend'
 import { type ComponentType } from 'react'
 import { hydrateRoot, type Root } from 'react-dom/client'
-import type { PreloadedState } from '@reduxjs/toolkit'
 import type { i18n as I18nInstance } from 'i18next'
 import type { PageContextClient } from 'vike/types'
 
@@ -11,10 +10,10 @@ import getI18n from '@innodoc/i18n'
 import makeStore from '@innodoc/store'
 import { changeRouteTransitionInfo } from '@innodoc/store/slices/app'
 import renderPage from '@innodoc/ui'
-import type { AppRouteInfo } from '@innodoc/routes/types'
+import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
 import type { RootState, Store } from '@innodoc/store/types'
 
-import { getCourseLocales } from '#renderer/common/getCourseLocales'
+import { getSupportedLocales } from '#renderer/common'
 
 class ClientRenderer {
   /** react-dom root */
@@ -48,20 +47,13 @@ class ClientRenderer {
   }
 
   /** Initialize client rendering */
-  private async init(preloadedState: PreloadedState<RootState>, routeInfo: AppRouteInfo) {
+  private async init(preloadedState: RootState, routeInfo: AppRouteInfo) {
     // await this.enableMockApi()
     this.store = makeStore(preloadedState)
 
-    // Get course locales
-    const locales = getCourseLocales(this.store, routeInfo)
+    const locales = getSupportedLocales(this.store, routeInfo)
 
-    this.i18n = await getI18n(
-      I18NextHttpBackend,
-      this.i18nBackendOpts,
-      routeInfo.locale,
-      routeInfo.courseSlug,
-      this.store,
-    )
+    this.i18n = await getI18n(I18NextHttpBackend, this.i18nBackendOpts, routeInfo.locale, locales)
     this.emotionCache = this.createEmotionCache()
   }
 

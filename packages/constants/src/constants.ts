@@ -28,7 +28,7 @@ const DEFAULT_PAGE_PATH_PREFIX = 'section'
 const DEFAULT_ROUTE_NAME = 'app:index'
 
 /** Default locales */
-const DEFAULT_LOCALES = ['de'] as readonly LanguageCode[]
+const DEFAULT_LOCALES = ['en'] as readonly LanguageCode[]
 
 /**
  * Content should never be refetched (use highest possible value)

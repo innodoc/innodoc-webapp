@@ -44,7 +44,7 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function Sec
   { children, preferShortTitle = false, section, ...other },
   ref,
 ) {
-  const { generateUrl } = useRouteManager()
+  const { url } = useRouteManager()
 
   if (section === undefined) {
     return null
@@ -52,7 +52,7 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function Sec
 
   return (
     <BaseLink
-      to={generateUrl({ name: 'app:section', sectionPath: section.path })}
+      to={url({ name: 'app:course:section', sectionPath: section.path })}
       ref={ref}
       {...other}
     >

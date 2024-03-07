@@ -45,7 +45,9 @@ function NavMenu() {
       {pages.map((page) => (
         <StyledNavButton
           className={
-            isActiveRoute({ routeName: 'app:page', pageSlug: page.slug }) ? 'active' : undefined
+            isActiveRoute({ routeName: 'app:course:page', pageSlug: page.slug })
+              ? 'active'
+              : undefined
           }
           component={PageLink}
           key={page.slug}

@@ -14,7 +14,7 @@ const sectionSchema = baseEntity
     parent_id: dbKey.describe('ID of parent section').nullable(),
     title: translatableString.describe('Page title'),
     short_title: translatableString.nullable().describe('Page title (short)'),
-    type: z.array(z.enum(SECTION_TYPES)).nullable().describe('Section type'),
+    type: z.enum(SECTION_TYPES).describe('Section type'),
     order: orderNumber,
   })
   .describe('Database page schema')
@@ -26,6 +26,7 @@ const querySectionSchema = sectionSchema.extend({
     .describe('Array of section orders from the root section up to this section'),
 })
 
+// TODO: fix this
 // /** Section tree with chldren (used by Toc components) */
 // interface SectionWithChildren extends TranslatedSection {
 //   children: SectionWithChildren[]

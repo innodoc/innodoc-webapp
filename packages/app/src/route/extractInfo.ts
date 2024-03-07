@@ -37,20 +37,4 @@ function extractCourseSlugFromDomain(host: string): string {
   throw new ExtractionError()
 }
 
-/**
- * Extract course slug from URL path.
- *
- * @param urlPathname URL path
- * @returns course slug
- *
- * @throws {ExtractionError} if it failed to extract course slug
- **/
-function extractCourseSlugFromUrl(urlPathname: string): string {
-  const [, , courseSlug] = urlPathname.split('/')
-  if (courseSlug && isSlug(courseSlug)) {
-    return courseSlug
-  }
-  throw new ExtractionError()
-}
-
-export { extractCourseSlugFromDomain, extractCourseSlugFromUrl, extractLocale }
+export { extractCourseSlugFromDomain, extractLocale }

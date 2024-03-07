@@ -2,57 +2,38 @@ import { compile, match } from 'path-to-regexp'
 import type { Match, MatchFunction, PathFunction } from 'path-to-regexp'
 
 import { API_COURSE_PREFIX, API_PREFIX } from '@innodoc/constants'
-import { isArbitraryObject, isContentType } from '@innodoc/utils/typeGuards'
+import { isContentType } from '@innodoc/utils/typeGuards'
 import type { CourseSlugMode } from '@innodoc/types/common'
 
-import { routesApi, routesBuiltinPages, routesContentPages, routesUser } from './routes'
-import type { RouteParams } from './routes'
-import type {
-  ApiRouteName,
-  AppRouteInfo,
-  AppRouteName,
-  ContentRouteName,
-  ParamTypeForGenerator,
-  RouteInfo,
-  RouteName,
-} from './types'
+import { apiRoutes, builtinRoutes, courseRoutes, userRoutes } from './routes/routes'
+import { isAppRouteInfo, isAppRouteName, isCourseContentRouteName } from './typeGuards'
+import type { ApiRouteParams } from './routes/routes'
+import type { ParamsForGenerator, RouteDef, RouteFuncArgs, RouteParams } from './types/common'
+import type { AppRouteInfo, CourseContentRouteInfo } from './types/routeInfos'
+import type { ApiRouteName, AppRouteName, RouteName } from './types/routeNames'
 
-interface RouteFuncArgs {
-  pagePathPrefix: string
-  sectionPathPrefix: string
-}
-
-type Generators = {
+type PathFunctions = {
   [key in RouteName]: PathFunction<RouteParams<key>>
 }
 type Matchers = {
   [key in RouteName]: MatchFunction<RouteParams<key>>
 }
-type RouteFunc = (args: RouteFuncArgs) => string
-type RouteDef = string | RouteFunc
 
 class RouteManager {
   private static instance: RouteManager | null
 
-  private readonly allRoutes = {
-    // exclude `app:home` as it's dynamic
-    ...Object.fromEntries(Object.entries(routesBuiltinPages).filter(([key]) => key !== 'app:home')),
-    ...routesContentPages,
-    ...routesUser,
-    ...routesApi,
+  private readonly routes = {
+    ...apiRoutes,
+    ...builtinRoutes,
+    ...courseRoutes,
+    ...userRoutes,
   }
-
-  private readonly appRouteNames = [
-    ...Object.keys(routesBuiltinPages),
-    ...Object.keys(routesContentPages),
-    ...Object.keys(routesUser),
-  ]
 
   private readonly courseSlugMode: CourseSlugMode
 
   private routeFuncArgs: RouteFuncArgs
 
-  private generators: Generators
+  private pathFunctions: PathFunctions
 
   private matchers: Matchers
 
@@ -68,8 +49,8 @@ class RouteManager {
   ) {
     this.courseSlugMode = courseSlugMode
     this.routeFuncArgs = { pagePathPrefix, sectionPathPrefix }
-    const { generators, matchers } = this.buildRoutes()
-    this.generators = generators
+    const { pathFunctions, matchers } = this.buildRoutes()
+    this.pathFunctions = pathFunctions
     this.matchers = matchers
   }
 
@@ -86,49 +67,54 @@ class RouteManager {
     return RouteManager.instance
   }
 
-  /** Generate URL path from route name and parameters */
-  public generate<R extends RouteName>(routeInfo: RouteInfo<R>): string
-  public generate<R extends RouteName>(routeName: R, params?: RouteParams<R>): string
-  public generate<R extends RouteName>(
-    nameOrInfo: R | RouteInfo<R>,
-    params?: RouteParams<R>,
-  ): string {
-    if (this.isRouteName(nameOrInfo)) {
-      return this.generators[nameOrInfo](params as ParamTypeForGenerator<R>)
+  /**
+   * Generate app URL path from route name and parameters.
+   *
+   * @param routeInfo route info object
+   * @returns URL
+   */
+  public appUrl<R extends AppRouteName>(routeInfo: AppRouteInfo<R>): string {
+    if (isAppRouteInfo(routeInfo)) {
+      const { name, ...params } = routeInfo
+      return this.pathFunctions[name](params as ParamsForGenerator<R>)
     }
-    if (this.isRouteInfo(nameOrInfo)) {
-      if (params) {
-        throw Error('params must be undefined if RouteInfo is given')
-      }
-      const { name, ...routeInfoParams } = nameOrInfo
-      return this.generate(name, routeInfoParams as ParamTypeForGenerator<R>)
-    }
-    throw Error('Wrong argument')
+    throw TypeError('Unable to parse routeInfo object')
   }
 
   /**
+   * Generate API URL path from route name and parameters.
+   *
+   * @param routeInfo route info object
+   * @returns URL
+   */
+  public apiUrl<R extends ApiRouteName>(name: R, params: ApiRouteParams[R]): string {
+    return this.pathFunctions[name](params as ParamsForGenerator<R>)
+  }
+
+  /**
+   *
    * Parse link specifier.
    *
    * Link specifiers take the form `ROUTE_NAME|ROUTE_PARAMS` (e.g.
-   * `app:page|about`).
+   * `app:section:page|about`).
    *
    * @params specifier Link specifier
-   * @returns `RouteInfo` object
+   * @returns `AppRouteInfo` object
    */
-  public parseLinkSpecifier(specifier: string): Omit<AppRouteInfo, 'locale' | 'courseSlug'> {
+  public parseLinkSpecifier(specifier: string) {
     const [routeName, arg] = specifier.split('|')
 
-    if (!this.isAppRouteName(routeName)) {
-      throw new Error(`Unknown route name: ${routeName}`)
+    if (!isAppRouteName(routeName)) {
+      throw new TypeError(`Unknown route name: ${routeName}`)
     }
 
-    if (this.isContentRouteName(routeName)) {
-      const contentType = routeName.split(':')[1]
+    if (isCourseContentRouteName(routeName)) {
+      const contentType = routeName.split(':')[-1]
       if (isContentType(contentType)) {
         if (contentType === 'page') {
-          return { name: routeName, pageSlug: arg } as AppRouteInfo<'app:page'>
+          return { name: routeName, pageSlug: arg } as CourseContentRouteInfo<'app:course:page'>
         }
-        return { name: routeName, sectionPath: arg } as AppRouteInfo<'app:section'>
+        return { name: routeName, sectionPath: arg } as CourseContentRouteInfo<'app:course:section'>
       }
     }
 
@@ -142,55 +128,31 @@ class RouteManager {
 
   /** Get all routes */
   public getAllRoutes() {
-    return Object.fromEntries(this.buildPatterns(this.allRoutes)) as Partial<
-      Record<RouteName, string>
-    >
+    return Object.fromEntries(this.buildPatterns(this.routes)) as Partial<Record<RouteName, string>>
   }
 
   /** Get API routes */
   public getApiRoutes() {
-    return Object.fromEntries(this.buildPatterns(routesApi)) as Partial<
+    return Object.fromEntries(this.buildPatterns(apiRoutes)) as Partial<
       Record<ApiRouteName, string>
     >
   }
 
-  /** Type guard for `RouteName` */
-  public isRouteName(routeName: unknown): routeName is RouteName {
-    return (
-      typeof routeName === 'string' && Object.keys(this.generators).includes(routeName as RouteName)
-    )
-  }
-
-  /** Type guard for `AppRouteName` */
-  public isAppRouteName(routeName: unknown): routeName is AppRouteName {
-    return typeof routeName === 'string' && this.appRouteNames.includes(routeName)
-  }
-
-  /** Type guard for `ContentRouteName` */
-  public isContentRouteName(routeName: unknown): routeName is ContentRouteName {
-    return typeof routeName === 'string' && Object.keys(routesContentPages).includes(routeName)
-  }
-
-  /** Type guard for `RouteInfo` */
-  public isRouteInfo<R extends RouteName>(t: unknown, routeName?: R): t is RouteInfo<R> {
-    return isArbitraryObject(t) && (routeName ? t.name === routeName : this.isRouteName(t.name))
-  }
-
   private buildRoutes() {
     // Build full patterns
-    const patterns = this.buildPatterns(this.allRoutes)
+    const patterns = this.buildPatterns(this.routes)
 
-    // Build generators
-    const generators = Object.fromEntries(
+    // Build path functions
+    const pathFunctions = Object.fromEntries(
       patterns.map(([routeName, pattern]) => [routeName, compile(pattern, this.parseOptions)]),
-    ) as Generators
+    ) as PathFunctions
 
     // Build matchers
     const matchers = Object.fromEntries(
       patterns.map(([routeName, pattern]) => [routeName, match(pattern, this.parseOptions)]),
     ) as Matchers
 
-    return { generators, matchers }
+    return { pathFunctions, matchers }
   }
 
   private buildPatterns(routes: Partial<Record<RouteName, RouteDef>>) {
@@ -204,8 +166,7 @@ class RouteManager {
   }
 
   private makeAppPattern(pattern: string) {
-    const localeRoute = `/:locale${pattern}`
-    return this.courseSlugMode === 'URL' ? `/:courseSlug/${localeRoute}` : localeRoute
+    return this.courseSlugMode === 'URL' ? `/:locale/:courseSlug${pattern}` : `/:locale${pattern}`
   }
 
   private makeApiPattern(pattern: string) {
@@ -213,5 +174,4 @@ class RouteManager {
   }
 }
 
-export type { ParamTypeForGenerator, RouteFuncArgs }
 export default RouteManager

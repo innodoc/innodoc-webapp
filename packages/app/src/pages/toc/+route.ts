@@ -1,3 +1,3 @@
 import route from '#route'
 
-export default route('app:toc')
+export default route('app:course:toc')

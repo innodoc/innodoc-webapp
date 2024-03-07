@@ -1,7 +1,7 @@
 import type { PageContextServer } from 'vike/types'
 
 import getRouteManager from '@innodoc/routes/vite/getRouteManager'
-import type { AppRouteName } from '@innodoc/routes/types'
+import type { AppRouteName } from '@innodoc/routes/types/routeNames'
 
 const routeManager = getRouteManager()
 
@@ -10,22 +10,12 @@ const routeManager = getRouteManager()
  *
  * Match route and extract parameters.
  */
-function route<T extends AppRouteName>(routeName: T) {
-  const routeFunc = (pageContext: PageContextServer) => {
-    // TODO: is this still needed?
-    // Routes also need to match pageContext.json files used in client navigation
-    // const removePageContextJsonRE = /\/index.pageContext.json$/
-    // const url = pageContext.urlLogical.replace(removePageContextJsonRE, '')
-
+function route(routeName: AppRouteName) {
+  const routeFunc = ({ urlOriginal }: PageContextServer) => {
     // Match URL against route
-    const match = routeManager.match(routeName, pageContext.urlOriginal)
+    const match = routeManager.match(routeName, urlOriginal)
     if (!match) {
       return false
-    }
-
-    // locale is already handled
-    if ('locale' in match.params) {
-      delete match.params.locale
     }
 
     return {

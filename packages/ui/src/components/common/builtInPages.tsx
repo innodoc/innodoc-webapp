@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 
-import type { BuiltinRouteName } from '@innodoc/routes/types'
+import type { BuiltinRouteName } from '@innodoc/routes/types/routeNames'
 import type { PageLinkLocation } from '@innodoc/types/common'
 
 import { Icon } from '#components/common/misc'
@@ -25,25 +25,25 @@ const builtInPages: BuiltinPage[] = [
   {
     icon: <Icon name="mdi:home" />,
     title: 'builtinPages.home.title',
-    routeName: 'app:home',
+    routeName: 'app:course',
   },
   {
     icon: <Icon name="mdi:chart-line" />,
     linked: ['footer', 'nav'],
     title: 'builtinPages.progress.title',
-    routeName: 'app:progress',
+    routeName: 'app:course:progress',
   },
   {
     icon: <Icon name="mdi:table-of-contents" />,
     linked: ['footer'],
     title: 'builtinPages.toc.title',
-    routeName: 'app:toc',
+    routeName: 'app:course:toc',
   },
   {
     icon: <Icon name="mdi:list-box" />,
     linked: ['footer'],
     title: 'builtinPages.glossary.title',
-    routeName: 'app:glossary',
+    routeName: 'app:course:glossary',
   },
 ]
 

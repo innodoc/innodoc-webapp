@@ -8,4 +8,7 @@ const baseEntity = z.object({
   updated_at: z.date().describe('Update date (ISO8601)'),
 })
 
+type BaseEntitySchema = z.infer<typeof baseEntity>
+
+export type { BaseEntitySchema }
 export { baseEntity }

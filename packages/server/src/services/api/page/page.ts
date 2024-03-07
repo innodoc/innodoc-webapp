@@ -1,4 +1,4 @@
-import type { ApiRouteName } from '@innodoc/routes/types'
+import type { ApiRouteName } from '@innodoc/routes/types/routeNames'
 
 import { getRoutePath } from '#utils'
 import type { FastifyZodPluginCallback } from '#services/api/types'

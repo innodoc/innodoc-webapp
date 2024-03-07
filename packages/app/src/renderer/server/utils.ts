@@ -7,10 +7,10 @@ import { fileURLToPath } from 'url'
 import type { EmotionCache } from '@emotion/cache'
 
 import getI18n from '@innodoc/i18n'
-import type { AppRouteInfo } from '@innodoc/routes/types'
+import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
 import type { Store } from '@innodoc/store/types'
 
-import { getCourseLocales } from '#renderer/common/getCourseLocales'
+import { getSupportedLocales } from '#renderer/common'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -36,7 +36,7 @@ function initI18n(routeInfo: AppRouteInfo, store: Store) {
   }
 
   // Get course locales
-  const locales = getCourseLocales(store, routeInfo)
+  const locales = getSupportedLocales(store, routeInfo)
 
   // Create i18n instance
   return getI18n(I18NextFsBackend, opts, routeInfo.locale, locales)

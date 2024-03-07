@@ -2,14 +2,11 @@ import { render } from 'vike/abort'
 import type { PageContextServer } from 'vike/types'
 
 import markdownToHast from '@innodoc/markdown'
-import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 import { addHastResult } from '@innodoc/store/slices/hast'
 import { fetchContent } from '@innodoc/store/utils'
 import { serializeParserError } from '@innodoc/utils/content'
 import { isParserError } from '@innodoc/utils/typeGuards'
 import type { ContentType } from '@innodoc/types/common'
-
-const routeManager = getRouteManager()
 
 /**
  * Factory function for `onInit` hook for content pages.
@@ -26,9 +23,9 @@ const routeManager = getRouteManager()
 function onInitContent(contentType: ContentType) {
   return async ({ routeInfo, store }: PageContextServer): Promise<void> => {
     let stringIdValue
-    if (routeManager.isRouteInfo(routeInfo, 'app:page')) {
+    if (routeInfo.name === 'app:course:page') {
       stringIdValue = routeInfo.pageSlug
-    } else if (routeManager.isRouteInfo(routeInfo, 'app:section')) {
+    } else if (routeInfo.name === 'app:course:section') {
       stringIdValue = routeInfo.sectionPath
     } else {
       throw new Error('Invalid routeInfo received')

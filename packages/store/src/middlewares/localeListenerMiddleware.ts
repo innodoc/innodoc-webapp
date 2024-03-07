@@ -5,9 +5,10 @@ import { changeRouteInfo } from '#slices/app'
 import type { AppStartListening } from '#types'
 
 const localeListenerMiddleware = createListenerMiddleware()
-const startListening = localeListenerMiddleware.startListening as AppStartListening
 
+// Client-only, on server language doesn't change
 if (!import.meta.env.SSR) {
+  const startListening = localeListenerMiddleware.startListening as AppStartListening
   startListening({
     actionCreator: changeRouteInfo,
     effect: async (action) => {

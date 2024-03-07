@@ -4,9 +4,16 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./vite/getRouteManager": "./src/getRouteManagerVite.ts",
     "./node/getRouteManager": "./src/getRouteManagerNode.ts",
-    "./types": "./src/types.ts"
+    "./vite/getRouteManager": "./src/getRouteManagerVite.ts",
+    "./types": "./src/types/common.ts",
+    "./types/routeInfos": "./src/types/routeInfos.ts",
+    "./types/routeNames": "./src/types/routeNames.ts",
+    "./typeGuards": "./src/typeGuards.ts"
+  },
+  "imports": {
+    "#routes": "./src/routes/routes.ts",
+    "#types/common": "./src/types/common.ts"
   },
   "scripts": {
     "build": "tsc",

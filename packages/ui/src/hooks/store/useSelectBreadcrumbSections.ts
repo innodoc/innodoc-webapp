@@ -2,13 +2,15 @@ import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
 import type { LanguageCode } from 'iso-639-1'
 
+import { isCourseSectionRouteInfo } from '@innodoc/routes/typeGuards'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCourseSectionsQuery } from '@innodoc/store/slices/content/sections'
-import { defaultTranslatableFields } from '@innodoc/types/entities'
 import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
 
 import { useSelector } from './redux'
 import { translateEntityArray } from './utils'
+
+const empty = { sections: [] }
 
 /**
  * Return an array of sections for the Breadcrumb component. E.g.:
@@ -21,8 +23,11 @@ import { translateEntityArray } from './utils'
  * ```
  */
 function useSelectBreadcrumbSections() {
-  const { courseSlug, locale } = useSelector(selectRouteInfo)
-  const { sectionPath } = useSelector(selectRouteInfo)
+  const routeInfo = useSelector(selectRouteInfo)
+  if (!isCourseSectionRouteInfo(routeInfo)) {
+    return empty
+  }
+  const { courseSlug, locale, sectionPath } = routeInfo
 
   const selectBreadcrumbSections = useMemo(() => {
     const emptyArray: TranslatedSection[] = []
@@ -49,18 +54,17 @@ function useSelectBreadcrumbSections() {
           const sec = sections.find((s) => s.path === _path)
           return sec !== undefined ? [...acc, sec] : acc
         }, [])
-        return translateEntityArray(bcSections, defaultTranslatableFields, _locale)
+        return translateEntityArray(bcSections, _locale)
       },
     )
   }, [])
 
   const result = useGetCourseSectionsQuery(
-    { courseSlug: courseSlug ?? '' },
+    { courseSlug },
     {
       selectFromResult: (result) => ({
         sections: selectBreadcrumbSections(result, sectionPath, locale),
       }),
-      skip: courseSlug === null,
     },
   )
 

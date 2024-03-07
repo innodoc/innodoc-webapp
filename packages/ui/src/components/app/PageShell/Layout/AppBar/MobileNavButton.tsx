@@ -40,7 +40,7 @@ function MobileNavButton() {
               <ListItemButton
                 component={PageLink}
                 page={page}
-                selected={isActiveRoute({ name: 'app:page', pageSlug: page.slug })}
+                selected={isActiveRoute({ name: 'app:course:page', pageSlug: page.slug })}
               >
                 {page.icon !== undefined ? (
                   <ListItemIcon>

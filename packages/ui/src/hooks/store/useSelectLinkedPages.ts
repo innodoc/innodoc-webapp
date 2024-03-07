@@ -2,18 +2,24 @@ import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
 import type { LanguageCode } from 'iso-639-1'
 
+import { isCourseRouteInfo } from '@innodoc/routes/typeGuards'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCoursePagesQuery } from '@innodoc/store/slices/content/pages'
-import { defaultTranslatableFields } from '@innodoc/types/entities'
 import type { PageLinkLocation } from '@innodoc/types/common'
 import type { ApiPage, TranslatedPage } from '@innodoc/types/entities'
 
 import { useSelector } from './redux'
 import { translateEntityArray } from './utils'
 
+const empty = { pages: [] }
+
 /** Return pages for link lists */
 function useSelectLinkedPages(linkLocation: PageLinkLocation) {
-  const { courseSlug, locale } = useSelector(selectRouteInfo)
+  const routeInfo = useSelector(selectRouteInfo)
+  if (!isCourseRouteInfo(routeInfo)) {
+    return empty
+  }
+  const { courseSlug, locale } = routeInfo
 
   const selectNavPages = useMemo(() => {
     const emptyArray: TranslatedPage[] = []
@@ -28,17 +34,14 @@ function useSelectLinkedPages(linkLocation: PageLinkLocation) {
           return emptyArray
         }
         const linkedPages = pages.filter((p) => (p.linked ?? []).includes(linkLocation))
-        return translateEntityArray(linkedPages, defaultTranslatableFields, _locale)
+        return translateEntityArray(linkedPages, _locale)
       },
     )
   }, [linkLocation])
 
   const result = useGetCoursePagesQuery(
-    { courseSlug: courseSlug ?? '' },
-    {
-      selectFromResult: (result) => ({ pages: selectNavPages(result, locale) }),
-      skip: courseSlug === null,
-    },
+    { courseSlug },
+    { selectFromResult: (result) => ({ pages: selectNavPages(result, locale) }) },
   )
 
   return result

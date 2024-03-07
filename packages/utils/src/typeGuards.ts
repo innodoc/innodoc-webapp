@@ -22,6 +22,15 @@ function isCallable<T extends (...args: unknown[]) => unknown>(obj: unknown): ob
   return (isArbitraryObject(obj) && obj instanceof Function) || typeof obj === 'function'
 }
 
+/** Type guard for object with a string `message` property */
+function isErrorWithMessage(error: unknown): error is { message: string } {
+  return (
+    isArbitraryObject(error) &&
+    'message' in error &&
+    typeof (error as { message: string }).message === 'string'
+  )
+}
+
 /** Type guard for error object */
 function isParserError(obj: unknown): obj is ParserError {
   return (
@@ -64,6 +73,7 @@ export {
   isCallable,
   isContentType,
   isContentWithHash,
+  isErrorWithMessage,
   isFragmentType,
   isLanguageCode,
   isParserError,

@@ -1,7 +1,6 @@
-import type { PreloadedState } from '@reduxjs/toolkit'
 import type { ReactNode } from 'react'
 
-import type { AppRouteInfo } from '@innodoc/routes/types'
+import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
 import type { RootState, Store } from '@innodoc/store/types'
 
 declare global {
@@ -21,7 +20,7 @@ declare global {
       /** Request host */
       host?: string
 
-      /** Browser locale */
+      /** Browser locales */
       requestLocales: readonly string[]
 
       /** Route info of current page */
@@ -31,7 +30,7 @@ declare global {
       store: Store
 
       /** Preloaded store state */
-      preloadedState: PreloadedState<RootState>
+      preloadedState: RootState
     }
   }
 }

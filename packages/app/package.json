@@ -5,7 +5,7 @@
   "type": "module",
   "imports": {
     "#pages/content/onInit": "./src/pages/content/onInitContent.ts",
-    "#renderer/common/getCourseLocales": "./src/renderer/common/getCourseLocales.ts",
+    "#renderer/common": "./src/renderer/common/common.ts",
     "#renderer/route/makeRouteFunc": "./src/renderer/route/makeRouteFunc.ts",
     "#renderer/server/makeOnBeforeRenderContent": "./src/renderer/server/makeOnBeforeRenderContent.ts",
     "#renderer/server/onBeforeRenderDefault": "./src/renderer/server/onBeforeRenderDefault.ts",

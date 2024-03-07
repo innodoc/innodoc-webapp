@@ -1,12 +1,17 @@
 import type { CamelCasedProperties } from 'type-fest'
 
 import type { FRAGMENT_TYPES } from '@innodoc/constants'
-import type { CourseSchema, PageSchema, SectionSchema } from '@innodoc/schema'
+import type { BaseEntitySchema, CourseSchema, PageSchema, SectionSchema } from '@innodoc/schema'
 
-import { defaultTranslatableFields } from './entities/base'
-import type { TranslatableFields, TranslatableString, TranslatedEntity } from './entities/base'
-import type { DbQuerySection } from './entities/section'
+import type { TranslatableString } from './common'
 
+/** Base entity returned by the API */
+type ApiBaseEntity = CamelCasedProperties<BaseEntitySchema>
+
+/** Entity that has all translatable fields replaced with the actual translation */
+type TranslatedEntity<T extends Record<string, unknown>> = {
+  [Property in keyof T]: T[Property] extends TranslatableString ? string | null : T[Property]
+}
 /** Course object returned by the API */
 type ApiCourse = CamelCasedProperties<CourseSchema>
 
@@ -29,16 +34,13 @@ type TranslatedSection = TranslatedEntity<ApiSection>
 type FragmentType = (typeof FRAGMENT_TYPES)[number]
 
 export type {
+  ApiBaseEntity,
   ApiCourse,
   ApiPage,
   ApiSection,
-  DbQuerySection,
   FragmentType,
-  TranslatableFields,
-  TranslatableString,
   TranslatedCourse,
   TranslatedEntity,
   TranslatedPage,
   TranslatedSection,
 }
-export { defaultTranslatableFields }

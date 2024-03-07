@@ -2,17 +2,23 @@ import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
 import type { LanguageCode } from 'iso-639-1'
 
+import { isCourseRouteInfo } from '@innodoc/routes/typeGuards'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCourseSectionsQuery } from '@innodoc/store/slices/content/sections'
-import { defaultTranslatableFields } from '@innodoc/types/entities'
 import type { ApiSection } from '@innodoc/types/entities'
 
 import { useSelector } from './redux'
 import { translateEntity } from './utils'
 
+const empty = { section: undefined }
+
 /** Return section by path */
 function useSelectSection(sectionPath: ApiSection['path'] | undefined) {
-  const { courseSlug, locale } = useSelector(selectRouteInfo)
+  const routeInfo = useSelector(selectRouteInfo)
+  if (!isCourseRouteInfo(routeInfo) || !sectionPath) {
+    return empty
+  }
+  const { courseSlug, locale } = routeInfo
 
   const selectSection = useMemo(
     () =>
@@ -30,18 +36,15 @@ function useSelectSection(sectionPath: ApiSection['path'] | undefined) {
           if (section === undefined) {
             return undefined
           }
-          return translateEntity(section, defaultTranslatableFields, _locale)
+          return translateEntity(section, _locale)
         },
       ),
     [],
   )
 
   const result = useGetCourseSectionsQuery(
-    { courseSlug: courseSlug ?? '' },
-    {
-      selectFromResult: (result) => ({ section: selectSection(result, sectionPath, locale) }),
-      skip: courseSlug === null || sectionPath === undefined,
-    },
+    { courseSlug },
+    { selectFromResult: (result) => ({ section: selectSection(result, sectionPath, locale) }) },
   )
 
   return result

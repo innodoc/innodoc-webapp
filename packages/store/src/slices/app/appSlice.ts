@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { DEFAULT_ROUTE_NAME } from '@innodoc/constants'
-import type { AppRouteInfo } from '@innodoc/routes/types'
+import { DEFAULT_LOCALES, DEFAULT_ROUTE_NAME } from '@innodoc/constants'
+import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
 
 import { selectRouteInfo, selectRouteTransitionInfo } from './selectors'
 
@@ -17,8 +17,7 @@ interface appSliceState {
 const initialState: appSliceState = {
   routeInfo: {
     name: DEFAULT_ROUTE_NAME,
-    courseSlug: null,
-    locale: 'en',
+    locale: DEFAULT_LOCALES[0],
   },
 
   routeTransitionInfo: null,

@@ -2,17 +2,23 @@ import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
 import type { LanguageCode } from 'iso-639-1'
 
+import { isCourseRouteInfo } from '@innodoc/routes/typeGuards'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCoursePagesQuery } from '@innodoc/store/slices/content/pages'
-import { defaultTranslatableFields } from '@innodoc/types/entities'
 import type { ApiPage } from '@innodoc/types/entities'
 
 import { useSelector } from './redux'
 import { translateEntity } from './utils'
 
+const empty = { page: undefined }
+
 /** Return page by slug */
 function useSelectPage(pageSlug: ApiPage['slug'] | undefined) {
-  const { courseSlug, locale } = useSelector(selectRouteInfo)
+  const routeInfo = useSelector(selectRouteInfo)
+  if (!isCourseRouteInfo(routeInfo) || !pageSlug) {
+    return empty
+  }
+  const { courseSlug, locale } = routeInfo
 
   const selectPage = useMemo(
     () =>
@@ -30,18 +36,15 @@ function useSelectPage(pageSlug: ApiPage['slug'] | undefined) {
           if (page === undefined) {
             return undefined
           }
-          return translateEntity(page, defaultTranslatableFields, _locale)
+          return translateEntity(page, _locale)
         },
       ),
     [],
   )
 
   const result = useGetCoursePagesQuery(
-    { courseSlug: courseSlug ?? '' },
-    {
-      selectFromResult: (result) => ({ page: selectPage(result, pageSlug, locale) }),
-      skip: courseSlug === null,
-    },
+    { courseSlug },
+    { selectFromResult: (result) => ({ page: selectPage(result, pageSlug, locale) }) },
   )
 
   return result

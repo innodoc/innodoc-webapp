@@ -1,4 +1,5 @@
 import type {
+  configureStore,
   ListenerEffectAPI,
   StateFromReducersMapObject,
   TypedStartListening,
@@ -22,4 +23,15 @@ type AppStartListening = TypedStartListening<RootState, AppDispatch>
 /** Middleware listener effect API */
 type AppListenerEffectAPI = ListenerEffectAPI<RootState, AppDispatch>
 
-export type { AppDispatch, AppListenerEffectAPI, AppStartListening, RootState, Store }
+// Infer type of RTK's `getDefaultMiddleware`
+type MiddlewareOption = NonNullable<Parameters<typeof configureStore<RootState>>[0]['middleware']>
+type GetDefaultMiddleware = Parameters<MiddlewareOption>[0]
+
+export type {
+  AppDispatch,
+  AppListenerEffectAPI,
+  AppStartListening,
+  GetDefaultMiddleware,
+  RootState,
+  Store,
+}

@@ -16,6 +16,8 @@ const routeManager = getRouteManager()
 function onInit(pageContext: PageContextServer): void {
   let course: ApiCourse | undefined = undefined
 
+  // TODO
+
   if (!pageContext.routeInfo.courseSlug) {
     throw render(500, 'No course loaded')
   }
@@ -34,7 +36,7 @@ function onInit(pageContext: PageContextServer): void {
     throw render(500, 'Redirect loop detected: app:index cannot redirect to itself')
   }
 
-  const redirectUrl = routeManager.generate({
+  const redirectUrl = routeManager.appUrl({
     courseSlug,
     locale: pageContext.routeInfo.locale,
     ...routeManager.parseLinkSpecifier(course.homeLink),
