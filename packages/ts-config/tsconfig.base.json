@@ -17,12 +17,5 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true
-  },
-  "ts-node": {
-    "esm": true,
-    "experimentalResolver": true,
-    "experimentalSpecifierResolution": "node",
-    "swc": true,
-    "transpileOnly": true
   }
 }

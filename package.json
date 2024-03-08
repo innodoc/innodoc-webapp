@@ -18,11 +18,11 @@
     "depcruise:validate": "pnpm exec depcruise --config -- packages",
     "dev": "nodemon --ext ts --watch packages/config --watch packages/constants --watch packages/database --watch packages/routes --watch packages/schema --watch packages/server --watch packages/utils --exec pnpm -- run server:dev",
     "dev:mkcert": "pnpm run --filter @innodoc/server dev:mkcert",
-    "dev:mock": "INNODOC_API_MOCK=true INNODOC_DEFAULT_COURSE_SLUG=testcourse INNODOC_COURSE_SLUG_MODE=DISABLED nodemon --ext ts --watch ./src/server --exec ts-node ./src/server/startMockServer.ts",
+    "dev:mock": "INNODOC_API_MOCK=true INNODOC_DEFAULT_COURSE_SLUG=testcourse INNODOC_COURSE_SLUG_MODE=DISABLED nodemon --ext ts --watch ./src/server --exec tsx ./src/server/startMockServer.ts",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "import-v1": "pnpm run --filter @innodoc/commands import",
-    "knex": "ts-node node_modules/knex/bin/cli.js",
+    "knex": "tsx node_modules/knex/bin/cli.js",
     "knip": "knip",
     "lint": "pnpm run --parallel --filter @innodoc/* --filter @types/innodoc-* lint",
     "lint:fix": "pnpm run --parallel --filter @innodoc/* --filter @types/innodoc-* lint:fix",
@@ -69,7 +69,7 @@
     "nodemon": "3.1.0",
     "rimraf": "5.0.5",
     "syncpack": "12.3.0",
-    "ts-node": "10.9.2",
+    "tsx": "^4.7.1",
     "vitest": "1.3.1"
   },
   "engines": {

@@ -7,11 +7,11 @@
     "./icon-bundle": "./dist/iconBundle.json"
   },
   "scripts": {
-    "build-icon-bundle": "ts-node src/buildIconBundle/main.ts",
-    "import": "ts-node src/importer/main.ts",
+    "build-icon-bundle": "tsx src/buildIconBundle/main.ts",
+    "import": "tsx src/importer/main.ts",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "routes": "ts-node src/printRoutes/main.ts",
+    "routes": "tsx src/printRoutes/main.ts",
     "type-check": "tsc --noEmit -p ."
   },
   "dependencies": {
