@@ -27,9 +27,9 @@ const StyledIframe = styled('iframe')({
 function YouTubeVideo({ children, id, nodeProps }: YouTubeVideoProps) {
   const { locale } = useSelector(selectRouteInfo)
 
-  let title: string | undefined = undefined
+  let title: string | undefined
   const childrenArr = Children.toArray(children)
-  if (childrenArr.length >= 1) {
+  if (childrenArr.length > 0) {
     const child = childrenArr[0]
     if (typeof child === 'string') {
       title = child

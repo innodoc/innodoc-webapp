@@ -20,7 +20,7 @@ function isContainerDirectiveName(name: unknown): name is ContainerDirectiveName
 }
 
 function LeafDirective({ children, id, node }: LeafDirectiveProps) {
-  const name = node.properties?.name
+  const name = node.properties.name
   if (isContainerDirectiveName(name)) {
     const Component = componentMap[name]
     return (

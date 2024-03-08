@@ -21,13 +21,13 @@ function SectionItem({ section }: SectionProps) {
   const { sections } = useSelectSectionChildren(section.id)
 
   const children =
-    sections !== undefined ? (
+    sections === undefined ? null : (
       <StyledUl>
         {sections.map((child) => (
           <SectionItem key={child.id} section={child} />
         ))}
       </StyledUl>
-    ) : null
+    )
 
   return (
     <li>
@@ -45,7 +45,7 @@ function StaticToc() {
   const { sections } = useSelectSectionChildren(null)
 
   const children = sections.map((section) => <SectionItem key={section.path} section={section} />)
-  return sections !== undefined ? <StyledUlRoot>{children}</StyledUlRoot> : null
+  return sections === undefined ? null : <StyledUlRoot>{children}</StyledUlRoot>
 }
 
 export default StaticToc

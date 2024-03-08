@@ -1,7 +1,8 @@
 // FIXME Somehow TS complains about not finding '@typescript-eslint/utils'
+import path from 'node:path'
+
 import { AST_NODE_TYPES, ASTUtils, ESLintUtils } from '@typescript-eslint/utils'
 import { ESLint, type Rule } from 'eslint'
-import path from 'path'
 
 const isJSXIdentifier = ASTUtils.isNodeOfType(AST_NODE_TYPES.JSXIdentifier)
 const isJSXAttribute = ASTUtils.isNodeOfType<AST_NODE_TYPES.JSXAttribute>(AST_NODE_TYPES.JSXAttribute)
@@ -29,26 +30,24 @@ async function scanIconNames(projectDir: string) {
             node.openingElement.name.name.endsWith('Icon')
           ) {
             // name attribute
-            node.openingElement.attributes
+            for (const attribute of node.openingElement.attributes
               .filter(isJSXAttribute)
-              .filter((a) => a.name.name === 'name')
-              .forEach((attribute) => {
-                if (isLiteral(attribute.value) && typeof attribute.value.value === 'string') {
-                  iconNames.add(attribute.value.value)
-                }
-              })
+              .filter((a) => a.name.name === 'name')) {
+              if (isLiteral(attribute.value) && typeof attribute.value.value === 'string') {
+                iconNames.add(attribute.value.value)
+              }
+            }
           }
           // All other components
           else {
             // iconName attribute
-            node.openingElement.attributes
+            for (const attribute of node.openingElement.attributes
               .filter(isJSXAttribute)
-              .filter((a) => a.name.name === 'iconName')
-              .forEach((attribute) => {
-                if (isLiteral(attribute.value) && typeof attribute.value.value === 'string') {
-                  iconNames.add(attribute.value.value)
-                }
-              })
+              .filter((a) => a.name.name === 'iconName')) {
+              if (isLiteral(attribute.value) && typeof attribute.value.value === 'string') {
+                iconNames.add(attribute.value.value)
+              }
+            }
           }
         },
       }
@@ -83,7 +82,7 @@ async function scanIconNames(projectDir: string) {
   // Scan files
   await eslint.lintFiles([path.join(projectDir, 'packages', 'ui', 'src', '**', '*.tsx')])
 
-  return Array.from(iconNames)
+  return [...iconNames]
 }
 
 export default scanIconNames

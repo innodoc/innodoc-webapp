@@ -14,9 +14,9 @@ const StyledVideo = styled('video')(({ theme }) => ({
 function Video({ children, id, nodeProps }: VideoProps) {
   const { t } = useTranslation()
 
-  let title: string | undefined = undefined
+  let title: string | undefined
   const childrenArr = Children.toArray(children)
-  if (childrenArr.length >= 1) {
+  if (childrenArr.length > 0) {
     const child = childrenArr[0]
     if (typeof child === 'string') {
       title = child

@@ -1,9 +1,10 @@
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 import createEmotionServer from '@emotion/server/create-instance'
 import { getInitColorSchemeScript } from '@mui/material'
 import I18NextFsBackend, { type FsBackendOptions } from 'i18next-fs-backend'
-import path from 'path'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { fileURLToPath } from 'url'
 import type { EmotionCache } from '@emotion/cache'
 
 import getI18n from '@innodoc/i18n'

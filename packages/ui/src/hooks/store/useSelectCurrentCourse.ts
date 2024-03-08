@@ -26,7 +26,7 @@ function useSelectCurrentCourse() {
         [(_result: { data: ApiCourse | undefined }) => _result.data, (_result, _locale: LanguageCode) => _locale],
         (course, _locale) => {
           if (course === undefined) {
-            return undefined
+            return
           }
           return translateEntity(course, _locale)
         },

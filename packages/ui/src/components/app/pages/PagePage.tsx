@@ -31,7 +31,7 @@ function PagePage() {
       isLoading={isLoading}
       stringIdValue={pageSlug}
     >
-      {page !== undefined ? <PageHeader iconName={page.icon}>{page.title}</PageHeader> : null}
+      {page === undefined ? null : <PageHeader iconName={page.icon}>{page.title}</PageHeader>}
     </ContentPage>
   )
 }

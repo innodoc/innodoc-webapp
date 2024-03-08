@@ -13,7 +13,7 @@ function parseSvg(svgCode: string) {
   for (const child of rootNode.children) {
     if (isElement(child, 'svg')) {
       const path = child.children[0]
-      if (isElement(path, 'path') && typeof path.properties?.d === 'string') {
+      if (isElement(path, 'path') && typeof path.properties.d === 'string') {
         return path.properties.d
       }
     }

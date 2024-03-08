@@ -45,7 +45,7 @@ function isContainerDirectiveName(name: unknown): name is ContainerDirectiveName
 }
 
 function ContainerDirective({ children, id, node }: ContainerDirectiveProps) {
-  const name = node.properties?.name
+  const name = node.properties.name
   if (isContainerDirectiveName(name)) {
     const Component = componentMap[name]
     return (

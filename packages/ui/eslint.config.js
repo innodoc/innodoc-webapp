@@ -12,7 +12,7 @@ const restrictedImportsRule = {
   '@typescript-eslint/no-restricted-imports': [
     'error',
     {
-      ...(prevRestrictedImportsRules ?? {}),
+      ...prevRestrictedImportsRules,
       paths: [
         ...(prevRestrictedImportsRules?.paths ?? []),
         // Warn when using hooks from react-redux directly

@@ -8,7 +8,7 @@ function LoginPage() {
   const { t } = useTranslation()
 
   // TODO
-  const onSubmit = () => undefined
+  const onSubmit = () => {}
 
   return (
     <>

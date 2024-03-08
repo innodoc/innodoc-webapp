@@ -23,7 +23,7 @@ function filterBySet(set: string, iconNames: string[]) {
     iconNames
       // Filter for and strip 'mdi:...'
       .reduce<string[]>(
-        (acc, icon) => (icon.startsWith(`${set}:`) ? [...acc, icon.substring(set.length + 1)] : acc),
+        (acc, icon) => (icon.startsWith(`${set}:`) ? [...acc, icon.slice(Math.max(0, set.length + 1))] : acc),
         [],
       )
       // Unique

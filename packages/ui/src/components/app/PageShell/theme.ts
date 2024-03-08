@@ -65,7 +65,7 @@ const cssVarsOpts = {
         background: {
           default: '#eee', // grey[200]
         },
-        Card: CARD_TYPES.reduce((acc, cardType) => ({ ...acc, [cardType]: getCardColors('light', cardType) }), {}),
+        Card: Object.fromEntries(CARD_TYPES.map((cardType) => [cardType, getCardColors('light', cardType)])),
         Code: {
           bg: 'rgba(0, 0, 0, 0.05)',
           border: 'rgba(0, 0, 0, 0.1)',
@@ -82,7 +82,7 @@ const cssVarsOpts = {
     },
     dark: {
       palette: {
-        Card: CARD_TYPES.reduce((acc, cardType) => ({ ...acc, [cardType]: getCardColors('dark', cardType) }), {}),
+        Card: Object.fromEntries(CARD_TYPES.map((cardType) => [cardType, getCardColors('dark', cardType)])),
         Code: {
           bg: 'rgba(255, 255, 255, 0.2)',
           border: 'rgba(255, 255, 255, 0.1)',

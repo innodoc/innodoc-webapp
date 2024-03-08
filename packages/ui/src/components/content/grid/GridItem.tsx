@@ -20,7 +20,7 @@ function nodeToGridProps(nodeProps: GridItemProps['nodeProps']) {
         if (propVal) {
           return {
             ...acc,
-            [prop]: nodeProps[prop] === 'auto' ? propVal : parseInt(propVal),
+            [prop]: nodeProps[prop] === 'auto' ? propVal : Number.parseInt(propVal),
           }
         }
         return acc

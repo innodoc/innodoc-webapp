@@ -1,5 +1,6 @@
+import path from 'node:path'
+
 import dotenv from 'dotenv'
-import path from 'path'
 
 function loadDotEnv(baseDir: string) {
   const extraDotEnv = process.env.VITEST_MODE ? '.env.test' : '.env.local'

@@ -1,6 +1,7 @@
+import fs from 'node:fs/promises'
+import path from 'node:path'
+
 import camelcaseKeys from 'camelcase-keys'
-import fs from 'fs/promises'
-import path from 'path'
 import { parse as yamlParse } from 'yaml'
 import type { Knex } from 'knex'
 
@@ -47,9 +48,9 @@ class Importer {
 
     try {
       await this.trx.commit()
-    } catch (err) {
+    } catch (error) {
       await this.trx.rollback()
-      throw err
+      throw error
     } finally {
       await this.db.destroy()
       this.db = null
@@ -245,7 +246,7 @@ class Importer {
   /** Convert Pandoc syntax to remark-compatible generic directives */
   protected static convertPandocSyntax(content: string) {
     // Extract meta data
-    const matches = content.match(/---\s([\s\S]*?)---[\s\S]{2}([\s\S]+)/)
+    const matches = content.match(/---\s([\S\s]*?)---[\S\s]{2}([\S\s]+)/)
     if (!matches) {
       console.log(content)
       throw new Error('Could not extract YAML frontmatter')
@@ -257,19 +258,19 @@ class Importer {
     const source = rest
 
       // cards
-      .replace(/(:{3,}) ?\{.hint-text\}/g, '$1input-hint')
-      .replace(/\[([^\]]+)\]\{\.hint-text\}/g, ':::input-hint\n$1\n:::\n')
-      .replace(/(:{3,}) ?\{.hint\}/g, '$1hint')
-      .replace(/(:{3,}) ?\{.hint caption="(?:Lösung|Solution)"\}/g, '$1solution')
-      .replace(/(:{3,}) ?\{\.(example|exercise|figure|info) (#[^}]+)\}/g, '$1$2{$3}')
-      .replace(/(:{3,}) ?\{\.(example|exercise|figure|info)\}/g, '$1$2')
+      .replaceAll(/(:{3,}) ?{.hint-text}/g, '$1input-hint')
+      .replaceAll(/\[([^\]]+)]{\.hint-text}/g, ':::input-hint\n$1\n:::\n')
+      .replaceAll(/(:{3,}) ?{.hint}/g, '$1hint')
+      .replaceAll(/(:{3,}) ?{.hint caption="(?:Lösung|Solution)"}/g, '$1solution')
+      .replaceAll(/(:{3,}) ?{\.(example|exercise|figure|info) (#[^}]+)}/g, '$1$2{$3}')
+      .replaceAll(/(:{3,}) ?{\.(example|exercise|figure|info)}/g, '$1$2')
 
       // exercises
-      .replace(/:{3,} ?\{\.verify-input-button\}\n(.+)\n:{3,}\n/g, '::verify-button[$1]\n')
-      .replace(/\[\]\{\.question \.(text|checkbox) ([^}]+)\}/g, ':question-$1{$2}')
+      .replaceAll(/:{3,} ?{\.verify-input-button}\n(.+)\n:{3,}\n/g, '::verify-button[$1]\n')
+      .replaceAll(/\[]{\.question \.(text|checkbox) ([^}]+)}/g, ':question-$1{$2}')
 
       // links
-      .replace(/\[([^\]]*)\]\(\/(section|page)\/([^)]+)\)/g, '[$1](app:$2|$3)')
+      .replaceAll(/\[([^\]]*)]\(\/(section|page)\/([^)]+)\)/g, '[$1](app:$2|$3)')
 
     return { frontmatter, source }
   }

@@ -29,12 +29,12 @@ function Tabs({ children, nodeProps: { labels: labelsProp } }: TabsProps) {
 
   const panelWrapper = useRef<HTMLDivElement>(null)
   const [heights, setHeights] = useState<(number | null)[]>(labels.map(() => null))
-  const panelIdx = parseInt(value)
+  const panelIdx = Number.parseInt(value)
   const height = heights[panelIdx]
 
   useEffect(() => {
     if (panelWrapper.current) {
-      const children = Array.from(panelWrapper.current.children)
+      const children = [...panelWrapper.current.children]
       const observer = new ResizeObserver((entries) => {
         for (const entry of entries) {
           const idx = children.indexOf(entry.target)
@@ -58,7 +58,7 @@ function Tabs({ children, nodeProps: { labels: labelsProp } }: TabsProps) {
     }
   }, [labels.length])
 
-  if (labels.length < 1) {
+  if (labels.length === 0) {
     return null
   }
 

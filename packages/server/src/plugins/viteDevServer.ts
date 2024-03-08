@@ -17,8 +17,8 @@ const viteDevServerPlugin: FastifyPluginAsync = async function (app) {
       middlewareMode: true,
       hmr: {
         protocol: 'wss',
-        clientPort: 24032,
-        port: 24032,
+        clientPort: 24_032,
+        port: 24_032,
       },
     },
   })

@@ -10,7 +10,7 @@ function startApiMockServer() {
   createServer()
     .then(() => {
       console.log(`Server (with Mock API) running at http://${config.host}:${config.port}`)
-      return undefined
+      return
     })
     .catch((error) => {
       console.error(error)

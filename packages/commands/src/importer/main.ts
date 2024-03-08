@@ -21,8 +21,8 @@ async function importFromV1() {
 importFromV1()
   .then((courseId) => {
     console.log(`Imported course ID=${courseId}`)
-    return undefined
+    return
   })
-  .catch((err) => {
-    console.error(err)
+  .catch((error) => {
+    console.error(error)
   })

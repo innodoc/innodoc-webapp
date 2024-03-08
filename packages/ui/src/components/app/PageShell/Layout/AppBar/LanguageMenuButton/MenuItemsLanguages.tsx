@@ -8,7 +8,7 @@ import { AppLink } from '#components/common/links'
 import { useSelector } from '#hooks/redux'
 import { useSelectCurrentCourse } from '#hooks/select'
 
-function MenuItemsLanguages({ closeMenu = () => undefined, inset }: MenuItemsLanguagesProps) {
+function MenuItemsLanguages({ closeMenu = () => {}, inset }: MenuItemsLanguagesProps) {
   const { t } = useTranslation()
 
   const { course } = useSelectCurrentCourse()

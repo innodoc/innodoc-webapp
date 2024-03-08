@@ -1,6 +1,6 @@
-import fs from 'fs/promises'
-import path from 'path'
-import { fileURLToPath } from 'url'
+import fs from 'node:fs/promises'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 import getIconBundle from './getIconBundle'
 
@@ -21,9 +21,9 @@ async function buildIconBundle() {
 
   try {
     await fs.mkdir(distDir)
-  } catch (err) {
-    if (!isSystemError(err) || err.code !== 'EEXIST') {
-      throw err
+  } catch (error) {
+    if (!isSystemError(error) || error.code !== 'EEXIST') {
+      throw error
     }
   }
 
@@ -36,10 +36,10 @@ async function buildIconBundle() {
 buildIconBundle()
   .then((iconBundleFilename) => {
     console.log(`Wrote ${iconBundleFilename}`)
-    return undefined
+    return
   })
-  .catch((err) => {
+  .catch((error) => {
     console.error('Failed to write icon bundle!')
-    console.error(err)
+    console.error(error)
     process.exit(-1)
   })

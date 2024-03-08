@@ -48,7 +48,7 @@ function NavMenu() {
           component={PageLink}
           key={page.slug}
           page={page}
-          startIcon={page.icon !== undefined ? <Icon name={page.icon} /> : undefined}
+          startIcon={page.icon === undefined ? undefined : <Icon name={page.icon} />}
         >
           {page.shortTitle ?? page.title}
         </StyledNavButton>

@@ -25,7 +25,7 @@ interface TransitionChildProps {
 /** Scroll to hash */
 function scrollToHash() {
   let { hash } = window.location
-  hash = hash.substring(1)
+  hash = hash.slice(1)
   if (!hash) {
     return
   }

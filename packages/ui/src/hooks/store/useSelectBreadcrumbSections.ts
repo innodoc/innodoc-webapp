@@ -52,7 +52,7 @@ function useSelectBreadcrumbSections() {
         const bcSections = parts.reduce<ApiSection[]>((acc, _, idx) => {
           const _path = parts.slice(0, idx + 1).join('/')
           const sec = sections.find((s) => s.path === _path)
-          return sec !== undefined ? [...acc, sec] : acc
+          return sec === undefined ? acc : [...acc, sec]
         }, [])
         return translateEntityArray(bcSections, _locale)
       },

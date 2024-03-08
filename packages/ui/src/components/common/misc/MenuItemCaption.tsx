@@ -11,11 +11,11 @@ const StyledMenuItem = styled(MenuItem)({
 
 function MenuItemCaption({ iconName, text }: MenuItemCaptionProps) {
   const listItemIcon =
-    iconName !== undefined ? (
+    iconName === undefined ? null : (
       <ListItemIcon>
         <Icon name={iconName} />
       </ListItemIcon>
-    ) : null
+    )
 
   return (
     <StyledMenuItem disableRipple>

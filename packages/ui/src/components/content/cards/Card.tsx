@@ -9,7 +9,7 @@ import type { CardType, ContentCardProps } from './types'
 const ExpandIcon = styled(Icon, {
   shouldForwardProp: (prop) => prop !== 'expand',
 })<ExpandIconProps>(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  transform: expand ? 'rotate(180deg)' : 'rotate(0deg)',
   marginLeft: 'auto',
   transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shortest,
@@ -61,7 +61,7 @@ function Card({
   const cardHeader = (
     <StyledCardHeader
       action={action}
-      avatar={iconName !== undefined ? <Icon name={iconName} /> : null}
+      avatar={iconName === undefined ? null : <Icon name={iconName} />}
       cardType={cardType}
       collapsible={collapsible}
       dense={dense}

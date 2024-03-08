@@ -117,7 +117,7 @@ class ClientRenderer {
 
   /** Determine React root element */
   private findRootElement() {
-    const elem = document.getElementById('root')
+    const elem = document.querySelector('#root')
     if (elem === null) {
       throw new Error('React root element not found!')
     }

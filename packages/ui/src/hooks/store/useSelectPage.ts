@@ -30,11 +30,11 @@ function useSelectPage(pageSlug: ApiPage['slug'] | undefined) {
         ],
         (pages, _pageSlug, _locale) => {
           if (pages === undefined) {
-            return undefined
+            return
           }
           const page = pages.find((p) => p.slug === _pageSlug)
           if (page === undefined) {
-            return undefined
+            return
           }
           return translateEntity(page, _locale)
         },

@@ -30,11 +30,11 @@ function useSelectSection(sectionPath: ApiSection['path'] | undefined) {
         ],
         (sections, _sectionPath, _locale) => {
           if (sections === undefined) {
-            return undefined
+            return
           }
           const section = sections.find((p) => p.path === _sectionPath)
           if (section === undefined) {
-            return undefined
+            return
           }
           return translateEntity(section, _locale)
         },
