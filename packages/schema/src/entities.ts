@@ -8,12 +8,5 @@ import type { FragmentTypeSchema } from './entities/fragment'
 import type { PageSchema } from './entities/page'
 import type { QuerySectionSchema, SectionSchema } from './entities/section'
 
-export type {
-  BaseEntitySchema,
-  CourseSchema,
-  FragmentTypeSchema,
-  PageSchema,
-  QuerySectionSchema,
-  SectionSchema,
-}
+export type { BaseEntitySchema, CourseSchema, FragmentTypeSchema, PageSchema, QuerySectionSchema, SectionSchema }
 export { courseSchema, fragmentTypeSchema, pageSchema, querySectionSchema, sectionSchema }

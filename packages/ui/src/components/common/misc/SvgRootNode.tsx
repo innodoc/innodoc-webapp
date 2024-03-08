@@ -21,9 +21,7 @@ function isRootNode(node: unknown): node is RootNode {
     return false
   }
   const rootNode = node as RootNode
-  return (
-    rootNode.type === 'root' && Array.isArray(rootNode.children) && rootNode.children.length === 1
-  )
+  return rootNode.type === 'root' && Array.isArray(rootNode.children) && rootNode.children.length === 1
 }
 
 function SvgElementNode({ node: { tagName, properties = {}, children } }: SvgElementNodeProps) {

@@ -47,9 +47,7 @@ function Footer() {
   }
 
   const linkList = [
-    ...coursePages.map((page) => (
-      <FooterLink component={PageLink} key={`page-${page.id}`} page={page} />
-    )),
+    ...coursePages.map((page) => <FooterLink component={PageLink} key={`page-${page.id}`} page={page} />),
     ...builtInPagesNav.map(({ icon, routeName, title }) => (
       <FooterLink component={AppLink} key={routeName} routeInfo={{ name: routeName }}>
         {icon}

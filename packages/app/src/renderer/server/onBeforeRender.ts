@@ -11,9 +11,7 @@ import type { AppRouteName } from '@innodoc/routes/types/routeNames'
 
 import populateStore from './populateStore'
 
-function isRouteParams<R extends AppRouteName>(
-  params: PageContextServer['routeParams'],
-): params is RouteParams<R> {
+function isRouteParams<R extends AppRouteName>(params: PageContextServer['routeParams']): params is RouteParams<R> {
   return isAppRouteName(params.name)
 }
 
@@ -34,11 +32,7 @@ function mergeRouteInfo(routeInfo: AppRouteInfo, params: PageContextServer['rout
   return routeInfo
 }
 
-const onBeforeRender: OnBeforeRenderAsync = async function ({
-  routeInfo: routeInfoInput,
-  routeParams,
-  config,
-}) {
+const onBeforeRender: OnBeforeRenderAsync = async function ({ routeInfo: routeInfoInput, routeParams, config }) {
   const routeInfo = mergeRouteInfo(routeInfoInput, routeParams)
 
   // Initialize store

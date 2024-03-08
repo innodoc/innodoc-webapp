@@ -7,8 +7,7 @@ import reactRedux from 'eslint-plugin-react-redux'
 import innodocConfig from '@innodoc/eslint-config'
 
 // Restricted imports
-const prevRestrictedImportsRules =
-  innodocConfig[1].rules['@typescript-eslint/no-restricted-imports'][1]
+const prevRestrictedImportsRules = innodocConfig[1].rules['@typescript-eslint/no-restricted-imports'][1]
 const restrictedImportsRule = {
   '@typescript-eslint/no-restricted-imports': [
     'error',
@@ -20,8 +19,7 @@ const restrictedImportsRule = {
         {
           name: 'react-redux',
           importNames: ['useSelector', 'useDispatch'],
-          message:
-            'Use typed hooks `useDispatch` and `useSelector` from `@innodoc/store/redux` instead.',
+          message: 'Use typed hooks `useDispatch` and `useSelector` from `@innodoc/store/redux` instead.',
         },
         // Warn when using hooks from react-redux directly
         {

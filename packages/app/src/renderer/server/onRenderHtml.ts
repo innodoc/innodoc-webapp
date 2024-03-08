@@ -34,9 +34,7 @@ async function onRenderHtml(pageContextIn: OnRenderHtmlPageContext) {
   }
 
   // Render page
-  const pageHtml = await renderToHtml(
-    renderPage(pageContext, Page, emotionCache, i18n, store, helmetContext),
-  )
+  const pageHtml = await renderToHtml(renderPage(pageContext, Page, emotionCache, i18n, store, helmetContext))
 
   // Get document head tags
   const { helmet } = helmetContext as FilledContext

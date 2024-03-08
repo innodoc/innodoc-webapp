@@ -15,15 +15,13 @@ const sections = contentApi.injectEndpoints({
     }),
 
     /** Fetch content for a section */
-    getSectionContent: builder.query<ContentWithHash, ApiRouteParams['api:course:section:content']>(
-      {
-        query: (args) => ({
-          responseHandler: 'text',
-          url: routeManager.apiUrl('api:course:section:content', args),
-        }),
-        transformResponse: hashContentResponse,
-      },
-    ),
+    getSectionContent: builder.query<ContentWithHash, ApiRouteParams['api:course:section:content']>({
+      query: (args) => ({
+        responseHandler: 'text',
+        url: routeManager.apiUrl('api:course:section:content', args),
+      }),
+      transformResponse: hashContentResponse,
+    }),
   }),
 })
 

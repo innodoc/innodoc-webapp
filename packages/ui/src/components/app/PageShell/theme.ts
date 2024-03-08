@@ -1,13 +1,6 @@
-import {
-  experimental_extendTheme as extendTheme,
-  responsiveFontSizes,
-  type ThemeOptions,
-} from '@mui/material'
+import { experimental_extendTheme as extendTheme, responsiveFontSizes, type ThemeOptions } from '@mui/material'
 import type {} from '@mui/lab/themeAugmentation'
-import type {
-  CssVarsThemeOptions,
-  DefaultColorScheme,
-} from '@mui/material/styles/experimental_extendTheme'
+import type { CssVarsThemeOptions, DefaultColorScheme } from '@mui/material/styles/experimental_extendTheme'
 // Augment theme type
 import type {} from '@mui/material/themeCssVarsAugmentation'
 
@@ -18,14 +11,7 @@ import type { PaletteCard } from '#types'
 const fontFamily = ['Lato', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(',')
 
 // Monospace font family
-const fontFamilyMonospace = [
-  'Consolas',
-  'Menlo',
-  'Monaco',
-  'Andale Mono',
-  'Ubuntu Mono',
-  'monospace',
-].join(',')
+const fontFamilyMonospace = ['Consolas', 'Menlo', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'monospace'].join(',')
 
 const cardColors: Record<CardType, CardColors> = {
   example: {
@@ -79,10 +65,7 @@ const cssVarsOpts = {
         background: {
           default: '#eee', // grey[200]
         },
-        Card: CARD_TYPES.reduce(
-          (acc, cardType) => ({ ...acc, [cardType]: getCardColors('light', cardType) }),
-          {},
-        ),
+        Card: CARD_TYPES.reduce((acc, cardType) => ({ ...acc, [cardType]: getCardColors('light', cardType) }), {}),
         Code: {
           bg: 'rgba(0, 0, 0, 0.05)',
           border: 'rgba(0, 0, 0, 0.1)',
@@ -99,10 +82,7 @@ const cssVarsOpts = {
     },
     dark: {
       palette: {
-        Card: CARD_TYPES.reduce(
-          (acc, cardType) => ({ ...acc, [cardType]: getCardColors('dark', cardType) }),
-          {},
-        ),
+        Card: CARD_TYPES.reduce((acc, cardType) => ({ ...acc, [cardType]: getCardColors('dark', cardType) }), {}),
         Code: {
           bg: 'rgba(255, 255, 255, 0.2)',
           border: 'rgba(255, 255, 255, 0.1)',

@@ -19,25 +19,26 @@ function isWrappedSchema(maybeSchema: unknown): maybeSchema is { properties: Zod
  * @param routeSchema Zod schema for the route
  * @returns Serialization function
  */
-const camelcaseSerializerCompiler: FastifySerializerCompiler<ZodAny | { properties: ZodAny }> =
-  function ({ schema: maybeSchema }) {
-    let schema: ZodAny
-    if (isSchema(maybeSchema)) {
-      schema = maybeSchema
-    } else if (isWrappedSchema(maybeSchema)) {
-      schema = maybeSchema.properties
-    } else {
-      throw new Error(`Invalid schema passed: ${JSON.stringify(maybeSchema)}`)
-    }
-
-    return (data) => {
-      const result = schema.safeParse(data)
-      if (result.success) {
-        return JSON.stringify(camelcaseKeys(result.data))
-      }
-
-      throw new ResponseValidationError(result)
-    }
+const camelcaseSerializerCompiler: FastifySerializerCompiler<ZodAny | { properties: ZodAny }> = function ({
+  schema: maybeSchema,
+}) {
+  let schema: ZodAny
+  if (isSchema(maybeSchema)) {
+    schema = maybeSchema
+  } else if (isWrappedSchema(maybeSchema)) {
+    schema = maybeSchema.properties
+  } else {
+    throw new Error(`Invalid schema passed: ${JSON.stringify(maybeSchema)}`)
   }
+
+  return (data) => {
+    const result = schema.safeParse(data)
+    if (result.success) {
+      return JSON.stringify(camelcaseKeys(result.data))
+    }
+
+    throw new ResponseValidationError(result)
+  }
+}
 
 export default camelcaseSerializerCompiler

@@ -12,27 +12,24 @@ import BaseLink from './BaseLink'
 import type { LinkProps } from './types'
 
 /** Link to a page using `pageSlug` */
-const PageLinkFromSlug = forwardRef<HTMLAnchorElement, PageLinkFromSlugProps>(
-  function PageLinkFromSlug({ pageSlug, ...other }, ref) {
-    const { page } = useSelectPage(pageSlug)
+const PageLinkFromSlug = forwardRef<HTMLAnchorElement, PageLinkFromSlugProps>(function PageLinkFromSlug(
+  { pageSlug, ...other },
+  ref,
+) {
+  const { page } = useSelectPage(pageSlug)
 
-    if (page === undefined) {
-      return (
-        <InlineError>
-          <Trans
-            i18nKey="error.pageLinkPageSlugProp"
-            components={{ 0: <Code />, 2: <Code /> }}
-            values={{ pageSlug }}
-          >
-            {`<0>PageLink</0>: <2>{{pageSlug}}</2> not found`}
-          </Trans>
-        </InlineError>
-      )
-    }
+  if (page === undefined) {
+    return (
+      <InlineError>
+        <Trans i18nKey="error.pageLinkPageSlugProp" components={{ 0: <Code />, 2: <Code /> }} values={{ pageSlug }}>
+          {`<0>PageLink</0>: <2>{{pageSlug}}</2> not found`}
+        </Trans>
+      </InlineError>
+    )
+  }
 
-    return <PageLink ref={ref} page={page} {...other} />
-  },
-)
+  return <PageLink ref={ref} page={page} {...other} />
+})
 
 interface PageLinkFromSlugProps extends Omit<PageLinkProps, 'page'> {
   pageSlug: ApiPage['slug']

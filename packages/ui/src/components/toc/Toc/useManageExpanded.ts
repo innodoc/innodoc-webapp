@@ -10,9 +10,7 @@ function getExpandedWithParents(sectionPath?: string) {
     return []
   }
   const parts = sectionPath.split('/')
-  const parents = parts
-    .slice(0, parts.length - 1)
-    .map((_, idx) => parts.slice(0, idx + 1).join('/'))
+  const parents = parts.slice(0, parts.length - 1).map((_, idx) => parts.slice(0, idx + 1).join('/'))
   return [...parents, sectionPath]
 }
 

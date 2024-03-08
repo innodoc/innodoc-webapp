@@ -12,10 +12,7 @@ import type { IdResult, ValueResult } from './types'
  * @param courseSlug Course slug
  * @returns Array of course sections
  */
-export function getCourseSections(
-  this: Database,
-  courseSlug: CourseSchema['slug'],
-): Promise<QuerySectionSchema[]> {
+export function getCourseSections(this: Database, courseSlug: CourseSchema['slug']): Promise<QuerySectionSchema[]> {
   if (!this.knex) {
     throw new Error('Database not initialized')
   }
@@ -73,9 +70,7 @@ export function getCourseSections(
       'cte.created_at',
       'cte.updated_at',
       knex.raw('json_object_agg(t.locale, t.value) as title'),
-      knex.raw(
-        'json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title',
-      ),
+      knex.raw('json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title'),
     )
     .from('cte')
     .join('sections_title_trans as t', 'cte.id', 't.section_id')
@@ -114,10 +109,7 @@ export async function getSectionIdByPath(
   const pathParts = sectionPath.split('/')
   const rootSlug = pathParts.shift()
 
-  const initialPartsArrRaw = knex.raw(
-    'array[' + pathParts.map(() => '?').join(',') + ']::varchar[]',
-    pathParts,
-  )
+  const initialPartsArrRaw = knex.raw('array[' + pathParts.map(() => '?').join(',') + ']::varchar[]', pathParts)
 
   // Walk down tree along section path
   const result = await knex

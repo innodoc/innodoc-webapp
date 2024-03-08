@@ -1,13 +1,7 @@
 import ISO6391, { type LanguageCode } from 'iso-639-1'
 
 import { CONTENT_TYPES, FRAGMENT_TYPES } from '@innodoc/constants'
-import type {
-  ArbitraryObject,
-  ContentType,
-  ContentWithHash,
-  ParserError,
-  WithContentHash,
-} from '@innodoc/types/common'
+import type { ArbitraryObject, ContentType, ContentWithHash, ParserError, WithContentHash } from '@innodoc/types/common'
 import type { FragmentType } from '@innodoc/types/entities'
 
 const languageCodes = ISO6391.getAllCodes()
@@ -24,11 +18,7 @@ function isCallable<T extends (...args: unknown[]) => unknown>(obj: unknown): ob
 
 /** Type guard for object with a string `message` property */
 function isErrorWithMessage(error: unknown): error is { message: string } {
-  return (
-    isArbitraryObject(error) &&
-    'message' in error &&
-    typeof (error as { message: string }).message === 'string'
-  )
+  return isArbitraryObject(error) && 'message' in error && typeof (error as { message: string }).message === 'string'
 }
 
 /** Type guard for error object */

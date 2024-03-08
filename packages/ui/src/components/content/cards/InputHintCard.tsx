@@ -18,12 +18,7 @@ function InputHintCard({ children, id }: ContentCardProps) {
   // TODO title
 
   return (
-    <StyledAlert
-      icon={<Icon name="mdi:keyboard-outline" />}
-      id={id}
-      severity="info"
-      variant="outlined"
-    >
+    <StyledAlert icon={<Icon name="mdi:keyboard-outline" />} id={id} severity="info" variant="outlined">
       <AlertTitle>{t('content.inputHint')}</AlertTitle>
       {children}
     </StyledAlert>

@@ -25,10 +25,7 @@ function useSelectLinkedPages(linkLocation: PageLinkLocation) {
     const emptyArray: TranslatedPage[] = []
 
     return createSelector(
-      [
-        (_result: { data: ApiPage[] | undefined }) => _result.data,
-        (_result, _locale: LanguageCode) => _locale,
-      ],
+      [(_result: { data: ApiPage[] | undefined }) => _result.data, (_result, _locale: LanguageCode) => _locale],
       (pages, _locale) => {
         if (pages === undefined) {
           return emptyArray

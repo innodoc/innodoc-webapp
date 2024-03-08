@@ -24,15 +24,9 @@ const configSchema = z
     isProduction: z.boolean().default(false).describe("If we're running in production mode"),
     rootDir: z.string().describe('Project root directory path'),
     distDir: z.string().describe('Project dist directory path'),
-    pagePathPrefix: slugSchema
-      .default(DEFAULT_PAGE_PATH_PREFIX)
-      .describe('URL path component for pages'),
-    sectionPathPrefix: slugSchema
-      .default(DEFAULT_SECTION_PATH_PREFIX)
-      .describe('URL path component for sections'),
-    jwtSecret: z
-      .string()
-      .describe("JWT secret (generate with `openssl rand -base64 256 | tr -d '\n'`"),
+    pagePathPrefix: slugSchema.default(DEFAULT_PAGE_PATH_PREFIX).describe('URL path component for pages'),
+    sectionPathPrefix: slugSchema.default(DEFAULT_SECTION_PATH_PREFIX).describe('URL path component for sections'),
+    jwtSecret: z.string().describe("JWT secret (generate with `openssl rand -base64 256 | tr -d '\n'`"),
     dbConnectionString: z
       .string()
       .url()
@@ -43,9 +37,7 @@ const configSchema = z
     courseSlugMode: z
       .enum(COURSE_SLUG_MODES)
       .default(DEFAULT_COURSE_SLUG_MODE)
-      .describe(
-        `Course slug mode (${COURSE_SLUG_MODES.join(', ')}, default=${DEFAULT_COURSE_SLUG_MODE})`,
-      ),
+      .describe(`Course slug mode (${COURSE_SLUG_MODES.join(', ')}, default=${DEFAULT_COURSE_SLUG_MODE})`),
     defaultCourseSlug: slugSchema.nullable().describe('Default course slug'),
 
     // Mailer configuration

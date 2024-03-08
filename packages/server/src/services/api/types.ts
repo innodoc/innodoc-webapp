@@ -29,15 +29,14 @@ type FastifyZodPluginAsync<
   Logger extends FastifyBaseLogger = FastifyBaseLogger,
 > = FastifyPluginAsync<Options, Server, TypeProvider, Logger>
 
-type ApiRouteHandlerMethod<SchemaCompiler extends FastifySchema = FastifySchema> =
-  RouteHandlerMethod<
-    RawServerDefault,
-    RawRequestDefaultExpression,
-    RawReplyDefaultExpression,
-    RouteGenericInterface,
-    ContextConfigDefault,
-    SchemaCompiler,
-    ZodTypeProvider
-  >
+type ApiRouteHandlerMethod<SchemaCompiler extends FastifySchema = FastifySchema> = RouteHandlerMethod<
+  RawServerDefault,
+  RawRequestDefaultExpression,
+  RawReplyDefaultExpression,
+  RouteGenericInterface,
+  ContextConfigDefault,
+  SchemaCompiler,
+  ZodTypeProvider
+>
 
 export type { ApiRouteHandlerMethod, FastifyZodPluginAsync, FastifyZodPluginCallback }

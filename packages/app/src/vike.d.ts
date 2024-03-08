@@ -7,10 +7,7 @@ declare global {
   namespace Vike {
     interface Config {
       /** Hook called before the page is rendered (server) */
-      onInit?(
-        this: void,
-        pageContext: Pick<PageContext, 'routeInfo' | 'store'>,
-      ): void | Promise<void>
+      onInit?(this: void, pageContext: Pick<PageContext, 'routeInfo' | 'store'>): void | Promise<void>
     }
 
     interface PageContext {

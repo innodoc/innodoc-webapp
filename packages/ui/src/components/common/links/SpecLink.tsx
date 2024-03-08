@@ -11,10 +11,7 @@ import AppLink from './AppLink'
 import type { LinkProps } from './types'
 
 /** Link from specifier */
-const SpecLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLink(
-  { to, ...other },
-  ref,
-) {
+const SpecLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLink({ to, ...other }, ref) {
   const { parseLinkSpecifier } = useRouteManager()
   let routeInfo: Partial<AppRouteInfo>
 
@@ -23,11 +20,7 @@ const SpecLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLink(
   } catch {
     return (
       <InlineError>
-        <Trans
-          i18nKey="error.specLinkToProp"
-          components={{ 0: <Code />, 2: <Code /> }}
-          values={{ to }}
-        >
+        <Trans i18nKey="error.specLinkToProp" components={{ 0: <Code />, 2: <Code /> }} values={{ to }}>
           {`<0>Link</0>: <2>{{to}}</2> is invalid`}
         </Trans>
       </InlineError>

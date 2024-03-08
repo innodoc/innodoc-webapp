@@ -21,9 +21,7 @@ const sectionSchema = baseEntity
 
 /** Section object returned by database query. */
 const querySectionSchema = sectionSchema.extend({
-  order: z
-    .array(orderNumber)
-    .describe('Array of section orders from the root section up to this section'),
+  order: z.array(orderNumber).describe('Array of section orders from the root section up to this section'),
 })
 
 // TODO: fix this

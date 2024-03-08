@@ -26,9 +26,7 @@ function SubsectionList({ sectionId }: SubsectionListProps) {
         <List dense sx={{ py: 0 }}>
           {children.map((section) => (
             <ListItem key={section.id} sx={{ p: 0 }}>
-              <ListItemText
-                primary={<SectionLink section={section} sx={{ typography: 'subtitle1' }} />}
-              />
+              <ListItemText primary={<SectionLink section={section} sx={{ typography: 'subtitle1' }} />} />
             </ListItem>
           ))}
         </List>

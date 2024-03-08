@@ -13,11 +13,7 @@ export async function up(knex: Knex) {
   await knex.schema.createTable('sections', (t) => {
     t.increments('id').primary()
     t.string('slug').notNullable().checkRegex(`^${SLUG_RE_POSIX}$`)
-    t.integer('course_id')
-      .notNullable()
-      .references('courses.id')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE')
+    t.integer('course_id').notNullable().references('courses.id').onUpdate('CASCADE').onDelete('CASCADE')
     t.enum('type', null, {
       enumName: 'section_type',
       existingType: true,
@@ -36,11 +32,7 @@ export async function up(knex: Knex) {
   // Translations
 
   await knex.schema.createTable('sections_title_trans', (t) => {
-    t.integer('section_id')
-      .notNullable()
-      .references('sections.id')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE')
+    t.integer('section_id').notNullable().references('sections.id').onUpdate('CASCADE').onDelete('CASCADE')
     t.string('value').notNullable()
     t.enum('locale', null, {
       enumName: 'locale',
@@ -51,11 +43,7 @@ export async function up(knex: Knex) {
   })
 
   await knex.schema.createTable('sections_short_title_trans', (t) => {
-    t.integer('section_id')
-      .notNullable()
-      .references('sections.id')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE')
+    t.integer('section_id').notNullable().references('sections.id').onUpdate('CASCADE').onDelete('CASCADE')
     t.string('value').notNullable()
     t.enum('locale', null, {
       enumName: 'locale',
@@ -66,11 +54,7 @@ export async function up(knex: Knex) {
   })
 
   await knex.schema.createTable('sections_content_trans', (t) => {
-    t.integer('section_id')
-      .notNullable()
-      .references('sections.id')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE')
+    t.integer('section_id').notNullable().references('sections.id').onUpdate('CASCADE').onDelete('CASCADE')
     t.text('value').notNullable()
     t.enum('locale', null, {
       enumName: 'locale',

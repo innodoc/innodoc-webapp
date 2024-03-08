@@ -19,15 +19,7 @@ const StyledLink = styled(SectionLink)(({ theme }) => ({
 }))
 
 const TocTreeItemContent = forwardRef(function TocTreeItemContent(
-  {
-    classes,
-    className,
-    displayIcon,
-    expansionIcon,
-    icon: iconProp,
-    nodeId,
-    section,
-  }: TocTreeItemContentProps,
+  { classes, className, displayIcon, expansionIcon, icon: iconProp, nodeId, section }: TocTreeItemContentProps,
   ref,
 ) {
   const { t } = useTranslation()

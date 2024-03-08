@@ -1,12 +1,4 @@
-import {
-  Card as MuiCard,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardHeader,
-  Collapse,
-  styled,
-} from '@mui/material'
+import { Card as MuiCard, CardActionArea, CardActions, CardContent, CardHeader, Collapse, styled } from '@mui/material'
 import { type ComponentProps, type ReactNode, useState } from 'react'
 import type { CardHeaderProps } from '@mui/material'
 
@@ -84,9 +76,7 @@ function Card({
     cardHeader
   )
 
-  const cardContent = (
-    <CardContent sx={{ py: 0, '&:last-child': { pb: 0 } }}>{children}</CardContent>
-  )
+  const cardContent = <CardContent sx={{ py: 0, '&:last-child': { pb: 0 } }}>{children}</CardContent>
 
   const wrappedCardContent = collapsible ? (
     <Collapse in={expanded} timeout="auto">
@@ -112,9 +102,7 @@ function Card({
   )
 }
 
-interface CardProps
-  extends ContentCardProps,
-    Pick<ComponentProps<typeof MuiCard>, 'elevation' | 'sx'> {
+interface CardProps extends ContentCardProps, Pick<ComponentProps<typeof MuiCard>, 'elevation' | 'sx'> {
   actions?: ReactNode
   cardType: CardType
   collapsible?: boolean

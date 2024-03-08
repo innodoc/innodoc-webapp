@@ -4,8 +4,7 @@ import type { ReactNode } from 'react'
 import Icon, { type IconProps } from './Icon'
 
 function PageHeader({ children, iconName }: PageHeaderProps) {
-  const icon =
-    iconName !== undefined ? <Icon fontSize="inherit" name={iconName} sx={{ mr: 1 }} /> : null
+  const icon = iconName !== undefined ? <Icon fontSize="inherit" name={iconName} sx={{ mr: 1 }} /> : null
 
   return (
     <Typography gutterBottom sx={{ alignItems: 'center', display: 'inline-flex' }} variant="h1">

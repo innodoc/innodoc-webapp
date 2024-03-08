@@ -1,12 +1,7 @@
 import type { LanguageCode } from 'iso-639-1'
 import type { CamelCasedProperties } from 'type-fest'
 
-import type {
-  BaseEntity,
-  DbDefaultTranslatableFields,
-  DbTranslatableFields,
-  TranslatedEntity,
-} from './base'
+import type { BaseEntity, DbDefaultTranslatableFields, DbTranslatableFields, TranslatedEntity } from './base'
 
 // TODO delete all
 

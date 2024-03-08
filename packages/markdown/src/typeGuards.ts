@@ -5,12 +5,7 @@ import {
   isHastMdxJsxTextSpanElement,
   isHastRootDivElement,
 } from './typeGuards/typeGuardsCustomHast'
-import {
-  isMdastLink,
-  isMdxJsxAttribute,
-  isMdxJsxFlowElement,
-  isMdxJsxTextElement,
-} from './typeGuards/typeGuardsMdast'
+import { isMdastLink, isMdxJsxAttribute, isMdxJsxFlowElement, isMdxJsxTextElement } from './typeGuards/typeGuardsMdast'
 
 export {
   isHastMdxJsxFlowDivElement,

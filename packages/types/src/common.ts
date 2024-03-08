@@ -1,12 +1,7 @@
 import type { Root } from 'hast'
 import type { z } from 'zod'
 
-import type {
-  CONTENT_TYPES,
-  COURSE_SLUG_MODES,
-  PAGE_LINK_LOCACTIONS,
-  SECTION_TYPES,
-} from '@innodoc/constants'
+import type { CONTENT_TYPES, COURSE_SLUG_MODES, PAGE_LINK_LOCACTIONS, SECTION_TYPES } from '@innodoc/constants'
 import type { translatableString } from '@innodoc/schema/common'
 
 /** Arbitrary object */

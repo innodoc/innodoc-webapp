@@ -42,11 +42,7 @@ class RouteManager {
     strict: true,
   }
 
-  private constructor(
-    courseSlugMode: CourseSlugMode,
-    pagePathPrefix: string,
-    sectionPathPrefix: string,
-  ) {
+  private constructor(courseSlugMode: CourseSlugMode, pagePathPrefix: string, sectionPathPrefix: string) {
     this.courseSlugMode = courseSlugMode
     this.routeFuncArgs = { pagePathPrefix, sectionPathPrefix }
     const { pathFunctions, matchers } = this.buildRoutes()
@@ -133,9 +129,7 @@ class RouteManager {
 
   /** Get API routes */
   public getApiRoutes() {
-    return Object.fromEntries(this.buildPatterns(apiRoutes)) as Partial<
-      Record<ApiRouteName, string>
-    >
+    return Object.fromEntries(this.buildPatterns(apiRoutes)) as Partial<Record<ApiRouteName, string>>
   }
 
   private buildRoutes() {
@@ -158,9 +152,7 @@ class RouteManager {
   private buildPatterns(routes: Partial<Record<RouteName, RouteDef>>) {
     return Object.entries(routes).map(([routeName, routeDef]) => {
       const pattern = typeof routeDef === 'string' ? routeDef : routeDef(this.routeFuncArgs)
-      const fullPattern = routeName.startsWith('app')
-        ? this.makeAppPattern(pattern)
-        : this.makeApiPattern(pattern)
+      const fullPattern = routeName.startsWith('app') ? this.makeAppPattern(pattern) : this.makeApiPattern(pattern)
       return [routeName, fullPattern]
     }) as [RouteName, string][]
   }

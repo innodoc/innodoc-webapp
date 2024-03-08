@@ -13,11 +13,10 @@ interface SpanComponentProps {
 
 type SpanComponent = ComponentType<SpanComponentProps>
 
-const flowSpanComponentMap: Record<HastMdxJsxTextSpanElement['properties']['name'], SpanComponent> =
-  {
-    // questions
-    TextQuestion,
-  }
+const flowSpanComponentMap: Record<HastMdxJsxTextSpanElement['properties']['name'], SpanComponent> = {
+  // questions
+  TextQuestion,
+}
 
 function SpanNode({ children, id, node, ...other }: HastComponentProps<'span'>) {
   if (isHastMdxJsxTextSpanElement(node)) {

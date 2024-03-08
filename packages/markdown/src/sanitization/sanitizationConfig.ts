@@ -25,11 +25,7 @@ const sanitizationConfig: Schema = {
       ...VIDEO_PROPERTIES,
     ],
 
-    span: [
-      ...(defaultSchema.attributes?.span ?? []),
-      ['className', 'math', 'math-inline'],
-      ...QUESTION_PROPERTIES,
-    ],
+    span: [...(defaultSchema.attributes?.span ?? []), ['className', 'math', 'math-inline'], ...QUESTION_PROPERTIES],
   },
   clobber: undefined,
   protocols: {

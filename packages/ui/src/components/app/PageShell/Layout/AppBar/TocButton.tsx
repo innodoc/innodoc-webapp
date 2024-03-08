@@ -1,12 +1,4 @@
-import {
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Toolbar,
-} from '@mui/material'
+import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import { DrawerButton } from '#components/common/buttons'

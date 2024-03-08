@@ -1,9 +1,5 @@
 import { CacheProvider, type EmotionCache } from '@emotion/react'
-import {
-  CssBaseline,
-  Experimental_CssVarsProvider as CssVarsProvider,
-  GlobalStyles,
-} from '@mui/material'
+import { CssBaseline, Experimental_CssVarsProvider as CssVarsProvider, GlobalStyles } from '@mui/material'
 import { StrictMode } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
 import { I18nextProvider } from 'react-i18next'
@@ -24,14 +20,7 @@ const globalStyles = {
   html: { scrollBehavior: 'smooth' },
 } as const
 
-function PageShell({
-  children,
-  emotionCache,
-  helmetContext,
-  i18n,
-  pageContext,
-  store,
-}: PageShellProps) {
+function PageShell({ children, emotionCache, helmetContext, i18n, pageContext, store }: PageShellProps) {
   return (
     <StrictMode>
       <VikePageContextProvider pageContext={pageContext}>

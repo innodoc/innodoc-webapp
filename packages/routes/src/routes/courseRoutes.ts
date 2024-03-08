@@ -18,8 +18,7 @@ const courseMiscRoutes = {
 
 const courseContentRoutes = {
   // Page
-  'app:course:page': ({ pagePathPrefix }: RouteFuncArgs) =>
-    `/:courseSlug/${pagePathPrefix}/:pageSlug`,
+  'app:course:page': ({ pagePathPrefix }: RouteFuncArgs) => `/:courseSlug/${pagePathPrefix}/:pageSlug`,
 
   // Section
   'app:course:section': ({ sectionPathPrefix }: RouteFuncArgs) =>

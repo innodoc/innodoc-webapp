@@ -13,27 +13,28 @@ import BaseLink from './BaseLink'
 import type { LinkProps } from './types'
 
 /** Link to a section using `sectionPath` */
-const SectionLinkFromPath = forwardRef<HTMLAnchorElement, SectionLinkFromPathProps>(
-  function SectionLinkFromPath({ sectionPath, ...other }, ref) {
-    const { section } = useSelectSection(sectionPath)
+const SectionLinkFromPath = forwardRef<HTMLAnchorElement, SectionLinkFromPathProps>(function SectionLinkFromPath(
+  { sectionPath, ...other },
+  ref,
+) {
+  const { section } = useSelectSection(sectionPath)
 
-    if (section === undefined) {
-      return (
-        <InlineError>
-          <Trans
-            i18nKey="error.sectionLinkSectionPathProp"
-            components={{ 0: <Code />, 2: <Code /> }}
-            values={{ sectionPath }}
-          >
-            {`<0>SectionLink</0>: <2>{{sectionPath}}</2> not found`}
-          </Trans>
-        </InlineError>
-      )
-    }
+  if (section === undefined) {
+    return (
+      <InlineError>
+        <Trans
+          i18nKey="error.sectionLinkSectionPathProp"
+          components={{ 0: <Code />, 2: <Code /> }}
+          values={{ sectionPath }}
+        >
+          {`<0>SectionLink</0>: <2>{{sectionPath}}</2> not found`}
+        </Trans>
+      </InlineError>
+    )
+  }
 
-    return <SectionLink ref={ref} section={section} {...other} />
-  },
-)
+  return <SectionLink ref={ref} section={section} {...other} />
+})
 
 interface SectionLinkFromPathProps extends Omit<SectionLinkProps, 'section'> {
   sectionPath: ApiSection['path']
@@ -51,11 +52,7 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function Sec
   }
 
   return (
-    <BaseLink
-      to={url({ name: 'app:course:section', sectionPath: section.path })}
-      ref={ref}
-      {...other}
-    >
+    <BaseLink to={url({ name: 'app:course:section', sectionPath: section.path })} ref={ref} {...other}>
       {Children.count(children) ? children : <>{formatSectionTitle(section, preferShortTitle)}</>}
     </BaseLink>
   )

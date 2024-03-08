@@ -15,14 +15,13 @@ const remarkRehypeHandlers: Handlers = {
   // Turn MdxJsxFlowElement to `div`
   mdxJsxFlowElement: (state, node) => {
     if (isMdxJsxFlowElement(node) && node.name !== null) {
-      const attributes = node.attributes.filter((attr): attr is MdxJsxAttribute =>
-        isMdxJsxAttribute(attr),
-      )
+      const attributes = node.attributes.filter((attr): attr is MdxJsxAttribute => isMdxJsxAttribute(attr))
 
       const properties = Object.fromEntries(
-        attributes
-          .filter((attr) => typeof attr.value === 'string')
-          .map((attr) => [attr.name, attr.value]) as [string, string][],
+        attributes.filter((attr) => typeof attr.value === 'string').map((attr) => [attr.name, attr.value]) as [
+          string,
+          string,
+        ][],
       )
 
       return {
@@ -41,14 +40,13 @@ const remarkRehypeHandlers: Handlers = {
   // Turn MdxJsxTextElement to `span`
   mdxJsxTextElement: (state, node) => {
     if (isMdxJsxTextElement(node) && node.name !== null) {
-      const attributes = node.attributes.filter((attr): attr is MdxJsxAttribute =>
-        isMdxJsxAttribute(attr),
-      )
+      const attributes = node.attributes.filter((attr): attr is MdxJsxAttribute => isMdxJsxAttribute(attr))
 
       const properties = Object.fromEntries(
-        attributes
-          .filter((attr) => typeof attr.value === 'string')
-          .map((attr) => [attr.name, attr.value]) as [string, string][],
+        attributes.filter((attr) => typeof attr.value === 'string').map((attr) => [attr.name, attr.value]) as [
+          string,
+          string,
+        ][],
       )
 
       return {

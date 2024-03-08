@@ -1,11 +1,4 @@
-import {
-  Box,
-  type BoxProps,
-  IconButton,
-  SwipeableDrawer,
-  type SwipeableDrawerProps,
-  Tooltip,
-} from '@mui/material'
+import { Box, type BoxProps, IconButton, SwipeableDrawer, type SwipeableDrawerProps, Tooltip } from '@mui/material'
 import { type ReactNode, useState } from 'react'
 
 import { Icon, type IconProps } from '#components/common/misc'

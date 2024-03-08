@@ -183,11 +183,7 @@ class Importer {
   }
 
   /** Create section entity */
-  protected async createSection(
-    sectionPath: string,
-    order: number,
-    parentId: DbSection['parent_id'],
-  ) {
+  protected async createSection(sectionPath: string, order: number, parentId: DbSection['parent_id']) {
     if (!this.trx || !this.importFolder || !this.courseId || !this.manifest) {
       throw new Error("Importer wasn't initialized")
     }
@@ -280,9 +276,7 @@ class Importer {
 
   /** Transform link to specififer syntax */
   protected static transformLink(href: string) {
-    return href
-      .replace(/^\/page\//, 'app:course:page|')
-      .replace(/^\/section\//, 'app:course:section|')
+    return href.replace(/^\/page\//, 'app:course:page|').replace(/^\/section\//, 'app:course:section|')
   }
 }
 

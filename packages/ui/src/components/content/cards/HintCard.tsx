@@ -9,14 +9,7 @@ function HintCard({ children, id }: ContentCardProps) {
   // TODO title
 
   return (
-    <Card
-      cardType="hint"
-      dense
-      elevation={1}
-      iconName="mdi:lightbulb-outline"
-      id={id}
-      title={t('content.hint')}
-    >
+    <Card cardType="hint" dense elevation={1} iconName="mdi:lightbulb-outline" id={id} title={t('content.hint')}>
       {children}
     </Card>
   )

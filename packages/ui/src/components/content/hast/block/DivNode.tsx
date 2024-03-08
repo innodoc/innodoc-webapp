@@ -3,14 +3,7 @@ import type { ComponentType, ReactNode } from 'react'
 import { isHastMdxJsxFlowDivElement, isHastRootDivElement } from '@innodoc/markdown/typeGuards'
 import type { HastMdxJsxFlowDivElement } from '@innodoc/markdown/types'
 
-import {
-  ExampleCard,
-  ExerciseCard,
-  HintCard,
-  InfoCard,
-  InputHintCard,
-  SolutionCard,
-} from '#components/content/cards'
+import { ExampleCard, ExerciseCard, HintCard, InfoCard, InputHintCard, SolutionCard } from '#components/content/cards'
 // import { TableContainer } from '#components/content/misc'
 import { TabItem, Tabs } from '#components/content/tabs'
 // import { Grid, GridItem } from '#components/content/grid'

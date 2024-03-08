@@ -27,11 +27,4 @@ type AppListenerEffectAPI = ListenerEffectAPI<RootState, AppDispatch>
 type MiddlewareOption = NonNullable<Parameters<typeof configureStore<RootState>>[0]['middleware']>
 type GetDefaultMiddleware = Parameters<MiddlewareOption>[0]
 
-export type {
-  AppDispatch,
-  AppListenerEffectAPI,
-  AppStartListening,
-  GetDefaultMiddleware,
-  RootState,
-  Store,
-}
+export type { AppDispatch, AppListenerEffectAPI, AppStartListening, GetDefaultMiddleware, RootState, Store }

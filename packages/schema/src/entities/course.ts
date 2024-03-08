@@ -13,10 +13,7 @@ const courseSchema = baseEntity
     description: translatableString.nullable().describe('Course description'),
     home_link: z.string().describe('Course home link'),
     locales: z.array(localeSchema).describe('Course locales'),
-    min_score: z
-      .number()
-      .optional()
-      .describe('Minimal score a user has to achieve for a test to be passed'),
+    min_score: z.number().optional().describe('Minimal score a user has to achieve for a test to be passed'),
     logo: z.string().optional().describe('Course logo URL or identifier'),
   })
   .describe('Database course schema')

@@ -12,14 +12,6 @@ type RouteFunc = (args: RouteFuncArgs) => string
 type RouteDef = string | RouteFunc
 
 // Extract specific parameter type expected by generator function
-type ParamsForGenerator<R extends RouteName> =
-  RouteParams<R> extends infer P ? (P extends object ? P : never) : never
+type ParamsForGenerator<R extends RouteName> = RouteParams<R> extends infer P ? (P extends object ? P : never) : never
 
-export type {
-  ApiRouteParams,
-  CourseContentRouteParams,
-  ParamsForGenerator,
-  RouteDef,
-  RouteFuncArgs,
-  RouteParams,
-}
+export type { ApiRouteParams, CourseContentRouteParams, ParamsForGenerator, RouteDef, RouteFuncArgs, RouteParams }

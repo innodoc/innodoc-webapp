@@ -13,11 +13,7 @@ export async function up(knex: Knex) {
   await knex.schema.createTable('pages', (t) => {
     t.increments('id').primary()
     t.string('slug').notNullable().checkRegex(`^${SLUG_RE_POSIX}$`)
-    t.integer('course_id')
-      .notNullable()
-      .references('courses.id')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE')
+    t.integer('course_id').notNullable().references('courses.id').onUpdate('CASCADE').onDelete('CASCADE')
     t.specificType('linked', 'page_link_location[]')
     t.string('icon')
     t.timestamp('created_at').defaultTo(knex.fn.now())
@@ -29,11 +25,7 @@ export async function up(knex: Knex) {
   // Translations
 
   await knex.schema.createTable('pages_title_trans', (t) => {
-    t.integer('page_id')
-      .notNullable()
-      .references('pages.id')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE')
+    t.integer('page_id').notNullable().references('pages.id').onUpdate('CASCADE').onDelete('CASCADE')
     t.string('value').notNullable()
     t.enum('locale', null, {
       enumName: 'locale',
@@ -44,11 +36,7 @@ export async function up(knex: Knex) {
   })
 
   await knex.schema.createTable('pages_short_title_trans', (t) => {
-    t.integer('page_id')
-      .notNullable()
-      .references('pages.id')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE')
+    t.integer('page_id').notNullable().references('pages.id').onUpdate('CASCADE').onDelete('CASCADE')
     t.string('value').notNullable()
     t.enum('locale', null, {
       enumName: 'locale',
@@ -59,11 +47,7 @@ export async function up(knex: Knex) {
   })
 
   await knex.schema.createTable('pages_content_trans', (t) => {
-    t.integer('page_id')
-      .notNullable()
-      .references('pages.id')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE')
+    t.integer('page_id').notNullable().references('pages.id').onUpdate('CASCADE').onDelete('CASCADE')
     t.text('value').notNullable()
     t.enum('locale', null, {
       enumName: 'locale',

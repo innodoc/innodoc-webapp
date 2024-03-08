@@ -19,25 +19,14 @@ function ExerciseCard({ children, id }: ContentCardProps) {
   }
 
   const action = (
-    <Button
-      color="primary"
-      onClick={handleClick}
-      size="small"
-      startIcon={<Icon name="mdi:check" />}
-    >
+    <Button color="primary" onClick={handleClick} size="small" startIcon={<Icon name="mdi:check" />}>
       {t('content.exercise.verifyInput')}
     </Button>
   )
 
   return (
     <ExerciseContext.Provider value={{}}>
-      <Card
-        actions={action}
-        cardType="exercise"
-        iconName="mdi:application-edit-outline"
-        id={id}
-        title={title}
-      >
+      <Card actions={action} cardType="exercise" iconName="mdi:application-edit-outline" id={id} title={title}>
         {children}
       </Card>
     </ExerciseContext.Provider>

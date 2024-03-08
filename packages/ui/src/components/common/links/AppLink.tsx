@@ -13,10 +13,7 @@ import { SectionLinkFromPath } from './SectionLink'
 import type { LinkProps } from './types'
 
 /** App-internal link */
-const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink(
-  { children, routeInfo, ...other },
-  ref,
-) {
+const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink({ children, routeInfo, ...other }, ref) {
   const { t } = useTranslation()
   const { url } = useRouteManager()
 

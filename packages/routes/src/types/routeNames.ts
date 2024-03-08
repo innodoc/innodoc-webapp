@@ -1,10 +1,4 @@
-import type {
-  apiRoutes,
-  builtinRoutes,
-  courseContentRoutes,
-  courseRoutes,
-  userRoutes,
-} from '#routes'
+import type { apiRoutes, builtinRoutes, courseContentRoutes, courseRoutes, userRoutes } from '#routes'
 
 /** API route name */
 type ApiRouteName = keyof typeof apiRoutes

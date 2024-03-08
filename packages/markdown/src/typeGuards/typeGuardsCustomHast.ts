@@ -13,13 +13,11 @@ const isHastRootDivElement = convertElement(
 )
 
 const isHastMdxJsxFlowDivElement = convertElement(
-  (el): el is HastMdxJsxFlowDivElement =>
-    el.tagName === 'div' && el.properties?.type === 'mdxJsxFlowElement',
+  (el): el is HastMdxJsxFlowDivElement => el.tagName === 'div' && el.properties?.type === 'mdxJsxFlowElement',
 )
 
 const isHastMdxJsxTextSpanElement = convertElement(
-  (el): el is HastMdxJsxTextSpanElement =>
-    el.tagName === 'span' && el.properties?.type === 'mdxJsxTextElement',
+  (el): el is HastMdxJsxTextSpanElement => el.tagName === 'span' && el.properties?.type === 'mdxJsxTextElement',
 )
 
 function isHastMdxJsxFlowDivElementTabs(el: unknown): el is HastMdxJsxFlowDivElementTabs {
@@ -27,11 +25,7 @@ function isHastMdxJsxFlowDivElementTabs(el: unknown): el is HastMdxJsxFlowDivEle
 }
 
 function isHastMdxJsxFlowDivElementTabItem(el: unknown): el is HastMdxJsxFlowDivElementTabItem {
-  return (
-    isHastMdxJsxFlowDivElement(el) &&
-    el.properties.name === 'TabItem' &&
-    typeof el.properties.label === 'string'
-  )
+  return isHastMdxJsxFlowDivElement(el) && el.properties.name === 'TabItem' && typeof el.properties.label === 'string'
 }
 
 export {

@@ -14,9 +14,7 @@ import type { AppListenerEffectAPI, AppStartListening } from '#types'
 /** Type guard for `HastResultWithHash` */
 function isHastResultWithHash(obj: unknown): obj is HastResultWithHash {
   const result = obj as HastResultWithHash
-  return (
-    isWithContentHash(obj) && (isHastRootDivElement(result.root) || isParserError(result.error))
-  )
+  return isWithContentHash(obj) && (isHastRootDivElement(result.root) || isParserError(result.error))
 }
 
 const hastListenerMiddleware = createListenerMiddleware()
@@ -48,9 +46,7 @@ if (!import.meta.env.SSR) {
       try {
         worker.addEventListener('message', workerListener)
         worker.postMessage(content)
-        await listenerApi.take(
-          (action) => addHastResult.match(action) && action.payload.hash === content.hash,
-        )
+        await listenerApi.take((action) => addHastResult.match(action) && action.payload.hash === content.hash)
       } finally {
         worker.removeEventListener('message', workerListener)
         listenerApi.dispatch(changeIsProcessing(false))
@@ -60,9 +56,7 @@ if (!import.meta.env.SSR) {
 
   // Page route transition effect
   const pageRouteTransitionEffect = async (
-    {
-      payload: { courseSlug, locale, pageSlug },
-    }: PayloadAction<CourseContentRouteInfo<'app:course:page'>>,
+    { payload: { courseSlug, locale, pageSlug } }: PayloadAction<CourseContentRouteInfo<'app:course:page'>>,
     listenerApi: AppListenerEffectAPI,
   ) => {
     if (pageSlug) {
@@ -75,18 +69,10 @@ if (!import.meta.env.SSR) {
 
   // Section route transition effect
   const sectionRouteTransitionEffect = async (
-    {
-      payload: { courseSlug, locale, sectionPath },
-    }: PayloadAction<CourseContentRouteInfo<'app:course:section'>>,
+    { payload: { courseSlug, locale, sectionPath } }: PayloadAction<CourseContentRouteInfo<'app:course:section'>>,
     listenerApi: AppListenerEffectAPI,
   ) => {
-    const result = await fetchContent(
-      'section',
-      courseSlug,
-      locale,
-      sectionPath,
-      listenerApi.dispatch,
-    )
+    const result = await fetchContent('section', courseSlug, locale, sectionPath, listenerApi.dispatch)
     if (result.isSuccess) {
       await processMarkdown(result.data, listenerApi)
     }
@@ -94,18 +80,14 @@ if (!import.meta.env.SSR) {
 
   // Add page route transition listener
   startListening({
-    matcher: (
-      action: UnknownAction,
-    ): action is PayloadAction<CourseContentRouteInfo<'app:course:page'>> =>
+    matcher: (action: UnknownAction): action is PayloadAction<CourseContentRouteInfo<'app:course:page'>> =>
       changeRouteTransitionInfo.match(action) && action.payload?.name === 'app:course:page',
     effect: pageRouteTransitionEffect,
   })
 
   // Add section route transition listener
   startListening({
-    matcher: (
-      action: UnknownAction,
-    ): action is PayloadAction<CourseContentRouteInfo<'app:course:section'>> =>
+    matcher: (action: UnknownAction): action is PayloadAction<CourseContentRouteInfo<'app:course:section'>> =>
       changeRouteTransitionInfo.match(action) && action.payload?.name === 'app:course:section',
     effect: sectionRouteTransitionEffect,
   })

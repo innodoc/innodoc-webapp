@@ -12,11 +12,7 @@ export async function up(knex: Knex) {
 
   await knex.schema.createTable('fragments', (t) => {
     t.increments('id').primary()
-    t.integer('course_id')
-      .notNullable()
-      .references('courses.id')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE')
+    t.integer('course_id').notNullable().references('courses.id').onUpdate('CASCADE').onDelete('CASCADE')
     t.enum('type', null, {
       enumName: 'fragment_type',
       existingType: true,
@@ -30,11 +26,7 @@ export async function up(knex: Knex) {
   // Translations
 
   await knex.schema.createTable('fragments_content_trans', (t) => {
-    t.integer('fragment_id')
-      .notNullable()
-      .references('fragments.id')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE')
+    t.integer('fragment_id').notNullable().references('fragments.id').onUpdate('CASCADE').onDelete('CASCADE')
     t.text('value').notNullable()
     t.enum('locale', null, {
       enumName: 'locale',

@@ -1,9 +1,6 @@
 import type { Element, Properties } from 'hast'
 
-import type {
-  HAST_MDX_JSX_FLOW_DIV_ELEMENT_NAME,
-  HAST_MDX_JSX_TEXT_SPAN_ELEMENT_NAME,
-} from '@innodoc/constants'
+import type { HAST_MDX_JSX_FLOW_DIV_ELEMENT_NAME, HAST_MDX_JSX_TEXT_SPAN_ELEMENT_NAME } from '@innodoc/constants'
 
 /** Custom document root that is marked and is rendered as fragment */
 interface HastRootDivElement extends Element {

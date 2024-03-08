@@ -17,9 +17,7 @@ function middleware(getDefaultMiddleware: GetDefaultMiddleware) {
   }
 
   // Add client middlewares
-  return middlewares
-    .prepend(localeListenerMiddleware.middleware)
-    .concat(hastListenerMiddleware.middleware)
+  return middlewares.prepend(localeListenerMiddleware.middleware).concat(hastListenerMiddleware.middleware)
 }
 
 export default middleware

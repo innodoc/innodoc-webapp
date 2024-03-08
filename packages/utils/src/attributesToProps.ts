@@ -518,10 +518,7 @@ function getPropsKey(key: string) {
     return ATTRIBUTE_MAPPING[lowerCaseKey as keyof typeof ATTRIBUTE_MAPPING]
   }
 
-  const kebabKey = key.replace(
-    /[A-Z\u00C0-\u00D6\u00D8-\u00DE]/g,
-    (match) => `-${match.toLowerCase()}`,
-  )
+  const kebabKey = key.replace(/[A-Z\u00C0-\u00D6\u00D8-\u00DE]/g, (match) => `-${match.toLowerCase()}`)
 
   if (kebabKey.startsWith('aria-')) {
     const [aria, ...parts] = kebabKey.split('-')

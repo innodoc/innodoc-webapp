@@ -24,8 +24,7 @@ const StyledDiv = styled('div')(({ theme }) => ({
 }))
 
 function Tabs({ children, nodeProps: { labels: labelsProp } }: TabsProps) {
-  const labels =
-    Array.isArray(labelsProp) && labelsProp.every((l) => typeof l === 'string') ? labelsProp : []
+  const labels = Array.isArray(labelsProp) && labelsProp.every((l) => typeof l === 'string') ? labelsProp : []
   const [value, setValue] = useState('0')
 
   const panelWrapper = useRef<HTMLDivElement>(null)

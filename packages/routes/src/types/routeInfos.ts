@@ -31,8 +31,7 @@ type CourseRouteInfo<R extends CourseRouteName = CourseRouteName> = BaseRouteInf
   }
 
 /** Course content page route info */
-type CourseContentRouteInfo<R extends CourseContentRouteName = CourseContentRouteName> =
-  CourseRouteInfo<R>
+type CourseContentRouteInfo<R extends CourseContentRouteName = CourseContentRouteName> = CourseRouteInfo<R>
 
 /** Course section route info */
 type CourseSectionRouteInfo = CourseContentRouteInfo<'app:course:section'>

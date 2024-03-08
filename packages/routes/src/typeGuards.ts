@@ -4,12 +4,7 @@ import apiRoutes from './routes/apiRoutes'
 import builtinRoutes from './routes/builtinRoutes'
 import courseRoutes, { courseContentRoutes } from './routes/courseRoutes'
 import userRoutes from './routes/userRoutes'
-import type {
-  AppRouteInfo,
-  CoursePageRouteInfo,
-  CourseRouteInfo,
-  CourseSectionRouteInfo,
-} from './types/routeInfos'
+import type { AppRouteInfo, CoursePageRouteInfo, CourseRouteInfo, CourseSectionRouteInfo } from './types/routeInfos'
 import type { AppRouteName, CourseContentRouteName, RouteName } from './types/routeNames'
 
 const apiRouteNames = Object.keys(apiRoutes)
@@ -44,17 +39,12 @@ function isCourseRouteInfo(routeInfo: unknown): routeInfo is CourseRouteInfo {
 
 /** Type guard for `CourseSectionRouteInfo` */
 function isCourseSectionRouteInfo(routeInfo: unknown): routeInfo is CourseSectionRouteInfo {
-  return (
-    isCourseRouteInfo(routeInfo) &&
-    typeof (routeInfo as CourseSectionRouteInfo).sectionPath === 'string'
-  )
+  return isCourseRouteInfo(routeInfo) && typeof (routeInfo as CourseSectionRouteInfo).sectionPath === 'string'
 }
 
 /** Type guard for `CoursePageRouteInfo` */
 function isCoursePageRouteInfo(routeInfo: unknown): routeInfo is CoursePageRouteInfo {
-  return (
-    isCourseRouteInfo(routeInfo) && typeof (routeInfo as CoursePageRouteInfo).pageSlug === 'string'
-  )
+  return isCourseRouteInfo(routeInfo) && typeof (routeInfo as CoursePageRouteInfo).pageSlug === 'string'
 }
 
 export {

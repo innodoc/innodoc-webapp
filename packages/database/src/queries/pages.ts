@@ -12,10 +12,7 @@ import type { ValueResult } from './types'
  * @param courseSlug Course slug
  * @returns Array of page objects
  */
-export function getCoursePages(
-  this: Database,
-  courseSlug: CourseSchema['slug'],
-): Promise<PageSchema[]> {
+export function getCoursePages(this: Database, courseSlug: CourseSchema['slug']): Promise<PageSchema[]> {
   if (!this.knex) {
     throw new Error('Database not initialized')
   }
@@ -24,9 +21,7 @@ export function getCoursePages(
     'p.*',
     this.knex.raw('array_to_json(p.linked) as linked'),
     this.knex.raw('json_object_agg(t.locale, t.value) as title'),
-    this.knex.raw(
-      'json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title',
-    ),
+    this.knex.raw('json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title'),
   ]
   return this.knex
     .select<PageSchema[]>(...columns)

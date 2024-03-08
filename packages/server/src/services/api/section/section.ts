@@ -10,11 +10,7 @@ const section: FastifyZodPluginCallback = function (app, opts, done) {
   const p = (name: ApiRouteName) => getRoutePath(name, app.prefix)
 
   app.get(p('api:course:sections'), { schema: getSections.schema }, getSections.handler)
-  app.get(
-    p('api:course:section:content'),
-    { schema: getSectionContent.schema },
-    getSectionContent.handler,
-  )
+  app.get(p('api:course:section:content'), { schema: getSectionContent.schema }, getSectionContent.handler)
 
   done()
 }
