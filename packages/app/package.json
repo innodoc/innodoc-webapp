@@ -29,8 +29,8 @@
     "@innodoc/markdown": "workspace:^",
     "@innodoc/routes": "workspace:^",
     "@innodoc/store": "workspace:^",
+    "@innodoc/typeguards": "workspace:^",
     "@innodoc/ui": "workspace:^",
-    "@innodoc/utils": "workspace:^",
     "@mui/material": "5.15.12",
     "@vitejs/plugin-react-swc": "3.6.0",
     "i18next": "23.10.0",
@@ -39,6 +39,7 @@
     "katex": "0.16.9",
     "react-dom": "18.2.0",
     "react-helmet-async": "2.0.4",
+    "validator": "13.11.0",
     "vike": "0.4.165",
     "vite": "5.1.5"
   },
@@ -51,6 +52,7 @@
     "@types/node": "20.11.24",
     "@types/react": "18.2.63",
     "@types/react-dom": "18.2.20",
+    "@types/validator": "13.11.9",
     "globals": "14.0.0",
     "rollup-plugin-visualizer": "5.12.0"
   }

@@ -1,16 +1,16 @@
 import { Trans } from 'react-i18next'
 import type { ReactNode } from 'react'
 
-import { getStringIdField } from '@innodoc/utils/content'
 import type { ContentType } from '@innodoc/types/common'
 import type { TranslatedCourse, TranslatedPage, TranslatedSection } from '@innodoc/types/entities'
 
 import { Code } from '#components/common/misc'
 import { HastNode } from '#components/content/hast'
+import { getStringIdField } from '#utils'
 
 import ErrorPage from './ErrorPage'
 
-function ContentError({ contentType, stringIdValue }: ErrorProps) {
+function ContentError({ contentType, stringIdValue }: ErrorProperties) {
   const stringIdField = getStringIdField(contentType)
 
   return (
@@ -28,7 +28,7 @@ function ContentError({ contentType, stringIdValue }: ErrorProps) {
   )
 }
 
-interface ErrorProps {
+interface ErrorProperties {
   contentType: ContentType
   stringIdValue: string
 }
@@ -42,7 +42,7 @@ function ContentPage({
   isError,
   isLoading,
   stringIdValue,
-}: ContentPageProps) {
+}: ContentPageProperties) {
   if (isLoading) {
     return null
   }
@@ -67,7 +67,7 @@ function ContentPage({
   )
 }
 
-interface ContentPageProps {
+interface ContentPageProperties {
   children: ReactNode
   contentHash?: string
   contentObj?: TranslatedPage | TranslatedSection

@@ -1,7 +1,6 @@
+import isLocale from 'validator/lib/isLocale'
+import isSlug from 'validator/lib/isSlug'
 import type { LanguageCode } from 'iso-639-1'
-
-import { isSlug } from '@innodoc/utils/content'
-import { isLanguageCode } from '@innodoc/utils/typeGuards'
 
 import { ExtractionError } from './errors'
 
@@ -15,8 +14,8 @@ import { ExtractionError } from './errors'
  **/
 function extractLocale(urlPathname: string): LanguageCode {
   const [, locale] = urlPathname.split('/')
-  if (isLanguageCode(locale)) {
-    return locale
+  if (isLocale(locale)) {
+    return locale as LanguageCode
   }
   throw new ExtractionError()
 }

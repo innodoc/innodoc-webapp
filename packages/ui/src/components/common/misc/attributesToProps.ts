@@ -492,33 +492,33 @@ const ATTRIBUTE_MAPPING = {
 /** Transform style string to React style object */
 function stringToObjectStyle(stringStyles: string | undefined) {
   return typeof stringStyles === 'string'
-    ? stringStyles.split(';').reduce((acc, style) => {
+    ? stringStyles.split(';').reduce((accumulator, style) => {
         const colonPosition = style.indexOf(':')
 
         if (colonPosition === -1) {
-          return acc
+          return accumulator
         }
 
         const camelCaseProperty = style
-            .substring(0, colonPosition)
+            .slice(0, Math.max(0, colonPosition))
             .trim()
             .replace(/^-ms-/, 'ms-')
-            .replace(/-./g, (c) => c.substring(1).toUpperCase()),
-          value = style.substring(colonPosition + 1).trim()
+            .replaceAll(/-./g, (c) => c.slice(1).toUpperCase()),
+          value = style.slice(Math.max(0, colonPosition + 1)).trim()
 
-        return value ? { ...acc, [camelCaseProperty]: value } : acc
+        return value ? { ...accumulator, [camelCaseProperty]: value } : accumulator
       }, {})
     : {}
 }
 
 /** Convert HTML attribute key to React props key */
-function getPropsKey(key: string) {
+function getPropertiesKey(key: string) {
   const lowerCaseKey = key.toLocaleLowerCase()
   if (Object.keys(ATTRIBUTE_MAPPING).includes(lowerCaseKey)) {
     return ATTRIBUTE_MAPPING[lowerCaseKey as keyof typeof ATTRIBUTE_MAPPING]
   }
 
-  const kebabKey = key.replace(/[A-Z\u00C0-\u00D6\u00D8-\u00DE]/g, (match) => `-${match.toLowerCase()}`)
+  const kebabKey = key.replaceAll(/[A-Z\u00C0-\u00D6\u00D8-\u00DE]/g, (match) => `-${match.toLowerCase()}`)
 
   if (kebabKey.startsWith('aria-')) {
     const [aria, ...parts] = kebabKey.split('-')
@@ -535,26 +535,22 @@ function getPropsKey(key: string) {
 /** Transform object of HTML attributes to React props */
 function attributesToProps(attributes: ElementNode['properties']) {
   if (attributes === undefined) {
-    return undefined
+    return
   }
 
   const keys = Object.keys(attributes)
-  const props: Record<string, string | number | object> = {}
+  const properties: Record<string, string | number | object> = {}
 
   let index = -1
 
   while (++index < keys.length) {
     const key = keys[index]
-    const propsKey = getPropsKey(key)
+    const propertiesKey = getPropertiesKey(key)
     const value = attributes[key]
-    if (key === 'style' && typeof value === 'string') {
-      props[propsKey] = stringToObjectStyle(value)
-    } else {
-      props[propsKey] = value
-    }
+    properties[propertiesKey] = key === 'style' && typeof value === 'string' ? stringToObjectStyle(value) : value
   }
 
-  return props
+  return properties
 }
 
 export { ATTRIBUTE_MAPPING }

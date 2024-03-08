@@ -8,7 +8,8 @@
     ".": "./src/markdownToHast.ts",
     "./properties": "./src/sanitization/properties.ts",
     "./typeGuards": "./src/typeGuards.ts",
-    "./types": "./src/types.ts"
+    "./types": "./src/types.ts",
+    "./utils": "./src/utils.ts"
   },
   "imports": {
     "#typeGuards": "./src/typeGuards.ts",
@@ -21,7 +22,7 @@
   },
   "dependencies": {
     "@innodoc/constants": "workspace:^",
-    "@innodoc/utils": "workspace:^",
+    "@innodoc/typeguards": "workspace:^",
     "hast-util-is-element": "3.0.0",
     "mdast-util-gfm-strikethrough": "2.0.0",
     "mdast-util-gfm-table": "2.0.0",

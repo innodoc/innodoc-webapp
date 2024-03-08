@@ -1,7 +1,7 @@
 import type { CamelCasedProperties } from 'type-fest'
 
 import type { FRAGMENT_TYPES } from '@innodoc/constants'
-import type { BaseEntitySchema, CourseSchema, PageSchema, SectionSchema } from '@innodoc/schema'
+import type { BaseEntitySchema, CourseSchema, PageSchema, QuerySectionSchema } from '@innodoc/schema'
 
 import type { TranslatableString } from './common'
 
@@ -25,7 +25,7 @@ type ApiPage = CamelCasedProperties<PageSchema>
 type TranslatedPage = TranslatedEntity<ApiPage>
 
 /** Section object returned by the API */
-type ApiSection = CamelCasedProperties<SectionSchema>
+type ApiSection = CamelCasedProperties<QuerySectionSchema>
 
 /** Section with translated fields */
 type TranslatedSection = TranslatedEntity<ApiSection>

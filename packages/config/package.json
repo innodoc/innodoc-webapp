@@ -16,7 +16,7 @@
     "@innodoc/constants": "workspace:^",
     "@innodoc/logging": "workspace:^",
     "@innodoc/schema": "workspace:^",
-    "@innodoc/utils": "workspace:^",
+    "@innodoc/typeguards": "workspace:^",
     "dotenv": "16.4.5",
     "zod-validation-error": "3.0.3"
   },

@@ -110,7 +110,8 @@ const typescriptRules = {
 const unicornRules = {
   'unicorn/filename-case': 'off', // covered by 'filenames/*' rules
   'unicorn/no-null': 'off',
-  // 'unicorn/prefer-export-from': 'off', // collides with simple-import-sort
+  'unicorn/prefer-export-from': 'off', // collides with simple-import-sort
+  'unicorn/prevent-abbreviations': 'off',
 }
 
 const customConfig = {

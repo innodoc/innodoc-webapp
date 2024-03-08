@@ -29,7 +29,8 @@
     "#hooks/redux": "./src/hooks/store/redux.ts",
     "#hooks/routes": "./src/hooks/useRouteManager.ts",
     "#hooks/select": "./src/hooks/store/select.ts",
-    "#types": "./src/types/types.ts"
+    "#types": "./src/types/types.ts",
+    "#utils": "./src/utils.ts"
   },
   "scripts": {
     "lint": "eslint .",
@@ -44,7 +45,7 @@
     "@innodoc/routes": "workspace:^",
     "@innodoc/schema": "workspace:^",
     "@innodoc/store": "workspace:^",
-    "@innodoc/utils": "workspace:^",
+    "@innodoc/typeguards": "workspace:^",
     "@mui/lab": "5.0.0-alpha.167",
     "@mui/material": "5.15.12",
     "@mui/x-tree-view": "^6.17.0",

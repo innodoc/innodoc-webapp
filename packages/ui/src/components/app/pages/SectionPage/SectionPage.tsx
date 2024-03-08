@@ -1,11 +1,11 @@
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetSectionContentQuery } from '@innodoc/store/slices/content/sections'
-import { formatSectionTitle } from '@innodoc/utils/content'
 
 import { PageHeader } from '#components/common/misc'
 import ContentPage from '#components/pages/content'
 import { useSelector } from '#hooks/redux'
 import { useSelectCurrentCourse, useSelectSection } from '#hooks/select'
+import { formatSectionTitle } from '#utils'
 
 import Breadcrumbs from './Breadcrumbs'
 import SubsectionList from './SubsectionList'
@@ -35,8 +35,8 @@ function SectionPage() {
       stringIdValue={sectionPath}
     >
       <Breadcrumbs />
-      <PageHeader>{section !== undefined ? formatSectionTitle(section) : ''}</PageHeader>
-      {section !== undefined ? <SubsectionList sectionId={section.id} /> : null}
+      <PageHeader>{section === undefined ? '' : formatSectionTitle(section)}</PageHeader>
+      {section === undefined ? null : <SubsectionList sectionId={section.id} />}
     </ContentPage>
   )
 }

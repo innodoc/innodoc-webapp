@@ -1,6 +1,7 @@
 import markdownToHast from '@innodoc/markdown'
-import { serializeParserError } from '@innodoc/utils/content'
-import { isContentWithHash, isParserError } from '@innodoc/utils/typeGuards'
+import { serializeParserError } from '@innodoc/markdown/utils'
+import { isContentWithHash } from '@innodoc/typeguards/content'
+import { isParserError } from '@innodoc/typeguards/errors'
 
 self.onmessage = ({ data }: MessageEvent<unknown>) => {
   if (isContentWithHash(data)) {
@@ -9,7 +10,7 @@ self.onmessage = ({ data }: MessageEvent<unknown>) => {
     void markdownToHast(content)
       .then((root) => {
         self.postMessage({ hash, root })
-        return undefined
+        return
       })
       .catch((error) => {
         if (isParserError(error)) {

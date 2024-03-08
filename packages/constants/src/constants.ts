@@ -39,13 +39,8 @@ const MAX_KEEP_UNUSED_DATA_FOR_MAX = Math.floor((2 ** 31 - 1) / 1000)
 /** Default required score to pass a test */
 const DEFAULT_MIN_SCORE = 90
 
-// TODO: remove
-/** Page/section/course slug regex */
-const SLUG_RE = '[a-z0-9]+(?:-[a-z0-9]+)*'
-
-// TODO: remove
-/** Page/section/course slug regex (Posix variant for PostgreSQL) */
-const SLUG_RE_POSIX = SLUG_RE.replace('(?:', '(')
+/** Slug regex (for PostgreSQL) */
+const SLUG_RE = '[a-z0-9]+(-[a-z0-9]+)*'
 
 /** Section path regex */
 const PATH_RE = '[a-z0-9]+(?:-[a-z0-9]+)*(?:\\/[a-z0-9]+(?:-[a-z0-9]+)*){0,10}'
@@ -110,5 +105,4 @@ export {
   PATH_RE,
   SECTION_TYPES,
   SLUG_RE,
-  SLUG_RE_POSIX,
 }

@@ -1,21 +1,21 @@
 import { Children, forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 
-import { formatSectionTitle } from '@innodoc/utils/content'
 import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
 
 import { InlineError } from '#components/common/errors'
 import { Code } from '#components/common/misc'
 import useRouteManager from '#hooks/routes'
 import { useSelectSection } from '#hooks/select'
+import { formatSectionTitle } from '#utils'
 
 import BaseLink from './BaseLink'
-import type { LinkProps } from './types'
+import type { LinkProps as LinkProperties } from './types'
 
 /** Link to a section using `sectionPath` */
-const SectionLinkFromPath = forwardRef<HTMLAnchorElement, SectionLinkFromPathProps>(function SectionLinkFromPath(
+const SectionLinkFromPath = forwardRef<HTMLAnchorElement, SectionLinkFromPathProperties>(function SectionLinkFromPath(
   { sectionPath, ...other },
-  ref,
+  reference,
 ) {
   const { section } = useSelectSection(sectionPath)
 
@@ -33,17 +33,17 @@ const SectionLinkFromPath = forwardRef<HTMLAnchorElement, SectionLinkFromPathPro
     )
   }
 
-  return <SectionLink ref={ref} section={section} {...other} />
+  return <SectionLink ref={reference} section={section} {...other} />
 })
 
-interface SectionLinkFromPathProps extends Omit<SectionLinkProps, 'section'> {
+interface SectionLinkFromPathProperties extends Omit<SectionLinkProperties, 'section'> {
   sectionPath: ApiSection['path']
 }
 
 /** Link to a section */
-const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function SectionLink(
+const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProperties>(function SectionLink(
   { children, preferShortTitle = false, section, ...other },
-  ref,
+  reference,
 ) {
   const { url } = useRouteManager()
 
@@ -52,13 +52,13 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProps>(function Sec
   }
 
   return (
-    <BaseLink to={url({ name: 'app:course:section', sectionPath: section.path })} ref={ref} {...other}>
+    <BaseLink to={url({ name: 'app:course:section', sectionPath: section.path })} ref={reference} {...other}>
       {Children.count(children) ? children : <>{formatSectionTitle(section, preferShortTitle)}</>}
     </BaseLink>
   )
 })
 
-interface SectionLinkProps extends Omit<LinkProps, 'to'> {
+interface SectionLinkProperties extends Omit<LinkProperties, 'to'> {
   preferShortTitle?: boolean
   section: TranslatedSection
 }

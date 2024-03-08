@@ -1,9 +1,9 @@
+import isLocale from 'validator/lib/isLocale'
 import { redirect } from 'vike/abort'
 import type { LanguageCode } from 'iso-639-1'
 import type { OnBeforeRouteSync } from 'vike/types'
 
 import { DEFAULT_ROUTE_NAME } from '@innodoc/constants'
-import { isLanguageCode } from '@innodoc/utils/typeGuards'
 import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
 
 import { ExtractionError } from './errors'
@@ -33,15 +33,15 @@ const onBeforeRoute: OnBeforeRouteSync = function (pageContext): OnBeforeRouteRe
     locale: 'en',
   }
 
-  if (isLanguageCode(pageContext.requestLocales[0])) {
+  if (isLocale(pageContext.requestLocales[0])) {
     routeInfo.locale = requestLocales[0] as LanguageCode // fallback to browser locale
   }
 
   // Extract locale
   try {
     routeInfo.locale = extractLocale(pageContext.urlOriginal)
-  } catch (err) {
-    if (err instanceof ExtractionError) {
+  } catch (error) {
+    if (error instanceof ExtractionError) {
       // Redirect to URL prefixed with locale
       // TODO: use RouteManager?
       let url = `/${routeInfo.locale}${pageContext.urlOriginal}`
@@ -50,7 +50,7 @@ const onBeforeRoute: OnBeforeRouteSync = function (pageContext): OnBeforeRouteRe
       }
       throw redirect(url)
     } else {
-      throw err
+      throw error
     }
   }
 

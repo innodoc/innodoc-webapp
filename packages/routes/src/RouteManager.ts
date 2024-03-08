@@ -2,7 +2,7 @@ import { compile, match } from 'path-to-regexp'
 import type { Match, MatchFunction, PathFunction } from 'path-to-regexp'
 
 import { API_COURSE_PREFIX, API_PREFIX } from '@innodoc/constants'
-import { isContentType } from '@innodoc/utils/typeGuards'
+import { isContentType } from '@innodoc/typeguards/content'
 import type { CourseSlugMode } from '@innodoc/types/common'
 
 import { apiRoutes, builtinRoutes, courseRoutes, userRoutes } from './routes/routes'
@@ -74,7 +74,7 @@ class RouteManager {
       const { name, ...params } = routeInfo
       return this.pathFunctions[name](params as ParamsForGenerator<R>)
     }
-    throw TypeError('Unable to parse routeInfo object')
+    throw new TypeError('Unable to parse routeInfo object')
   }
 
   /**

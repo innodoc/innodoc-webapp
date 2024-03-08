@@ -1,17 +1,17 @@
 import { createContext, type ReactNode, useContext, useEffect, useRef } from 'react'
 
 import { selectRouteInfo } from '@innodoc/store/slices/app'
-import { getSectionNumberFromOrder } from '@innodoc/utils/content'
 
 import { useSelector } from '#hooks/redux'
 import { useSelectSection } from '#hooks/select'
+import { getSectionNumberFromOrder } from '#utils'
 
 /** Provide consistent auto-incrementing numbering for cards within a document */
 const CardTitleContext = createContext((id: string | undefined, title: string) => title)
 
 type Titles = Record<string, string>
 
-function CardTitleProvider({ children }: NumberingProviderProps) {
+function CardTitleProvider({ children }: NumberingProviderProperties) {
   const titles = useRef<Titles>({})
   const { sectionPath } = useSelector(selectRouteInfo)
   const { section } = useSelectSection(sectionPath)
@@ -42,7 +42,7 @@ function CardTitleProvider({ children }: NumberingProviderProps) {
   return <CardTitleContext.Provider value={formatTitle}>{children}</CardTitleContext.Provider>
 }
 
-interface NumberingProviderProps {
+interface NumberingProviderProperties {
   children: ReactNode
 }
 

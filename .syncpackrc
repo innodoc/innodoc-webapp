@@ -71,8 +71,8 @@
         "@innodoc/schema",
         "@innodoc/server",
         "@innodoc/store",
-        "@innodoc/ui",
-        "@innodoc/utils"
+        "@innodoc/typeguards",
+        "@innodoc/ui"
       ],
       "dependencyTypes": [
         "prod",

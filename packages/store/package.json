@@ -36,7 +36,7 @@
     "@innodoc/constants": "workspace:^",
     "@innodoc/markdown": "workspace:^",
     "@innodoc/routes": "workspace:^",
-    "@innodoc/utils": "workspace:^",
+    "@innodoc/typeguards": "workspace:^",
     "@reduxjs/toolkit": "2.2.1",
     "crc": "4.3.2",
     "i18next": "23.10.0",

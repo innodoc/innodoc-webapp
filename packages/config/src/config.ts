@@ -6,7 +6,7 @@ import type { ZodError } from 'zod-validation-error'
 
 import createLogger from '@innodoc/logging'
 import { configSchema } from '@innodoc/schema/config'
-import { isArbitraryObject } from '@innodoc/utils/typeGuards'
+import { isArbitraryObject } from '@innodoc/typeguards/common'
 
 import loadDotEnv from './loadDotEnv'
 
@@ -63,12 +63,12 @@ function parseConfig() {
       enableMockApi: process.env.INNODOC_API_MOCK === 'true',
       skipMails: process.env.INNODOC_SMTP_SKIP_MAILS === 'true',
     })
-  } catch (err) {
-    if (!isZodError(err)) {
-      throw err
+  } catch (error) {
+    if (!isZodError(error)) {
+      throw error
     }
 
-    const validationError = fromZodError(err)
+    const validationError = fromZodError(error)
     createLogger('config').error(`Unable to read configuration: ${validationError.toString()}`)
     process.exit(-1)
   }

@@ -4,10 +4,10 @@ import clsx from 'clsx'
 import { type ForwardedRef, forwardRef, type SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { formatSectionTitle } from '@innodoc/utils/content'
 import type { TranslatedSection } from '@innodoc/types/entities'
 
 import { SectionLink } from '#components/common/links'
+import { formatSectionTitle } from '#utils'
 
 const StyledLink = styled(SectionLink)(({ theme }) => ({
   color: theme.vars.palette.text.primary,
@@ -19,28 +19,28 @@ const StyledLink = styled(SectionLink)(({ theme }) => ({
 }))
 
 const TocTreeItemContent = forwardRef(function TocTreeItemContent(
-  { classes, className, displayIcon, expansionIcon, icon: iconProp, nodeId, section }: TocTreeItemContentProps,
-  ref,
+  { classes, className, displayIcon, expansionIcon, icon: iconProperty, nodeId, section }: TocTreeItemContentProperties,
+  reference,
 ) {
   const { t } = useTranslation()
   const { expanded, handleExpansion, disabled, focused, selected } = useTreeItem(nodeId)
-  const iconNode = iconProp || expansionIcon || displayIcon
+  const iconNode = iconProperty || expansionIcon || displayIcon
 
   // Allow node toggle without triggering navigation
-  const onNodeToggle = (ev: SyntheticEvent) => {
-    ev.stopPropagation()
-    ev.preventDefault()
-    handleExpansion(ev)
+  const onNodeToggle = (event: SyntheticEvent) => {
+    event.stopPropagation()
+    event.preventDefault()
+    handleExpansion(event)
   }
 
   const iconAriaLabel = t(`toc.${expanded ? 'collapseSection' : 'expandSection'}`)
 
   const icon =
-    iconNode !== undefined ? (
+    iconNode === undefined ? null : (
       <IconButton aria-label={iconAriaLabel} onClick={onNodeToggle}>
         {iconNode}
       </IconButton>
-    ) : null
+    )
 
   return (
     <StyledLink
@@ -50,7 +50,7 @@ const TocTreeItemContent = forwardRef(function TocTreeItemContent(
         [classes.focused]: focused,
         [classes.disabled]: disabled,
       })}
-      ref={ref as ForwardedRef<HTMLAnchorElement>}
+      ref={reference as ForwardedRef<HTMLAnchorElement>}
       section={section}
     >
       <Box sx={{ width: (theme) => theme.spacing(section.order.length * 1) }} />
@@ -62,7 +62,7 @@ const TocTreeItemContent = forwardRef(function TocTreeItemContent(
   )
 })
 
-interface TocTreeItemContentProps extends TreeItemContentProps {
+interface TocTreeItemContentProperties extends TreeItemContentProps {
   section: TranslatedSection
 }
 

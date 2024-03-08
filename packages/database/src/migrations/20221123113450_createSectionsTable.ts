@@ -1,6 +1,6 @@
 import type { Knex } from 'knex'
 
-import { SECTION_TYPES, SLUG_RE_POSIX } from '@innodoc/constants'
+import { SECTION_TYPES, SLUG_RE } from '@innodoc/constants'
 
 export async function up(knex: Knex) {
   // section enum type
@@ -12,7 +12,7 @@ export async function up(knex: Knex) {
 
   await knex.schema.createTable('sections', (t) => {
     t.increments('id').primary()
-    t.string('slug').notNullable().checkRegex(`^${SLUG_RE_POSIX}$`)
+    t.string('slug').notNullable().checkRegex(`^${SLUG_RE}$`)
     t.integer('course_id').notNullable().references('courses.id').onUpdate('CASCADE').onDelete('CASCADE')
     t.enum('type', null, {
       enumName: 'section_type',

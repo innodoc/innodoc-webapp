@@ -3,7 +3,7 @@ import path from 'node:path'
 
 import config from '@innodoc/config'
 import getRouteManager from '@innodoc/routes/node/getRouteManager'
-import { isArbitraryObject } from '@innodoc/utils/typeGuards'
+import { isArbitraryObject } from '@innodoc/typeguards/common'
 import type { ApiRouteName } from '@innodoc/routes/types/routeNames'
 
 function isErrnoException(error: unknown): error is NodeJS.ErrnoException {

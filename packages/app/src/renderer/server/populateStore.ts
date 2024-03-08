@@ -5,7 +5,8 @@ import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 import courses from '@innodoc/store/slices/content/courses'
 import pages from '@innodoc/store/slices/content/pages'
 import sections from '@innodoc/store/slices/content/sections'
-import { isArbitraryObject, isErrorWithMessage } from '@innodoc/utils/typeGuards'
+import { isArbitraryObject } from '@innodoc/typeguards/common'
+import { isErrorWithMessage } from '@innodoc/typeguards/errors'
 import type { AppRouteInfo, CourseRouteInfo } from '@innodoc/routes/types/routeInfos'
 import type { Store } from '@innodoc/store/types'
 import type { ApiCourse } from '@innodoc/types/entities'
@@ -49,12 +50,12 @@ async function populateStore(store: Store, routeInfo: CourseRouteInfo) {
   let course: ApiCourse
   try {
     course = await store.dispatch(courses.endpoints.getCourse.initiate({ courseSlug })).unwrap()
-  } catch (err) {
-    throw queryError(err)
+  } catch (error) {
+    throw queryError(error)
   }
 
   // Assert we received locales from manifest
-  if (course.locales.length < 1) {
+  if (course.locales.length === 0) {
     throw render(500, 'Course has no locales')
   }
 

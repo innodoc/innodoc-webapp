@@ -1,10 +1,11 @@
-import { isPromise } from 'util/types'
+import { isPromise } from 'node:util/types'
+
 import type { Config, OnBeforeRenderAsync, PageContextServer } from 'vike/types'
 
 import { isAppRouteInfo, isAppRouteName, isCourseRouteInfo } from '@innodoc/routes/typeGuards'
 import makeStore from '@innodoc/store'
 import { changeRouteInfo } from '@innodoc/store/slices/app'
-import { isCallable } from '@innodoc/utils/typeGuards'
+import { isCallable } from '@innodoc/typeguards/common'
 import type { RouteParams } from '@innodoc/routes/types'
 import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
 import type { AppRouteName } from '@innodoc/routes/types/routeNames'

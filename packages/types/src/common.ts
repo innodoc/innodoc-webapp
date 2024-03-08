@@ -4,6 +4,8 @@ import type { z } from 'zod'
 import type { CONTENT_TYPES, COURSE_SLUG_MODES, PAGE_LINK_LOCACTIONS, SECTION_TYPES } from '@innodoc/constants'
 import type { translatableString } from '@innodoc/schema/common'
 
+import type { ParserError } from './errors'
+
 /** Arbitrary object */
 type ArbitraryObject = Record<string, unknown>
 
@@ -43,15 +45,6 @@ interface HastResult {
 /** Markdown parser result with hash */
 interface HastResultWithHash extends HastResult, WithContentHash {}
 
-/** Markdown parser error */
-interface ParserError {
-  column: number
-  line: number
-  reason: string
-  ruleId: string
-  source: string
-}
-
 export type {
   ArbitraryObject,
   ContentType,
@@ -60,7 +53,6 @@ export type {
   HastResult,
   HastResultWithHash,
   PageLinkLocation,
-  ParserError,
   SectionType,
   TranslatableString,
   WithContentHash,

@@ -6,7 +6,6 @@ import isSlug from 'validator/lib/isSlug'
 import z from 'zod'
 
 import { PATH_RE } from '@innodoc/constants'
-import { isLanguageCode } from '@innodoc/utils/typeGuards'
 
 function validateTranslatableString(obj: object) {
   return Object.entries(obj).every(([k, v]) => isLocale(k) && typeof v === 'string')
@@ -19,7 +18,7 @@ function isSectionPath(value: string) {
 }
 
 const slugSchema = z.string().refine(isSlug, { message: 'String must be a slug' })
-const localeSchema = z.string().refine(isLanguageCode, { message: 'String must be a valid locale' })
+const localeSchema = z.string().refine(isLocale, { message: 'String must be a valid locale' })
 const hostnameSchema = z.string().refine(isHostname, { message: 'Invalid hostname' })
 const portSchema = z.coerce
   .number()

@@ -4,9 +4,9 @@ import { type ComponentType, createElement, type SVGProps } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ElementNode, RootNode } from 'svg-parser'
 
-import attributesToProps from '@innodoc/utils/attributesToProps'
-
 import { InlineError } from '#components/common/errors'
+
+import attributesToProps from './attributesToProps'
 
 function isElementNode(node: unknown): node is ElementNode {
   if (node === null || typeof node !== 'object') {
@@ -25,13 +25,13 @@ function isRootNode(node: unknown): node is RootNode {
 }
 
 function SvgElementNode({ node: { tagName, properties = {}, children } }: SvgElementNodeProps) {
-  return tagName !== undefined
-    ? createElement(
+  return tagName === undefined
+    ? null
+    : createElement(
         tagName,
         attributesToProps(properties),
         children.filter(isElementNode).map((node, idx) => <SvgElementNode key={idx} node={node} />),
       )
-    : null
 }
 
 interface SvgElementNodeProps {

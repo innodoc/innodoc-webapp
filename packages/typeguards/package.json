@@ -1,13 +1,13 @@
 {
-  "name": "@innodoc/utils",
+  "name": "@innodoc/typeguards",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "sideEffects": false,
   "exports": {
-    "./attributesToProps": "./src/attributesToProps.ts",
+    "./common": "./src/common.ts",
     "./content": "./src/content.ts",
-    "./typeGuards": "./src/typeGuards.ts"
+    "./errors": "./src/errors.ts"
   },
   "scripts": {
     "lint": "eslint .",

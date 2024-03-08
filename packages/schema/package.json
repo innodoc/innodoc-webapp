@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@innodoc/constants": "workspace:^",
-    "@innodoc/utils": "workspace:^",
+    "@innodoc/typeguards": "workspace:^",
     "validator": "13.11.0",
     "zod": "3.22.4"
   },

@@ -1,11 +1,10 @@
 import { Breadcrumbs as MuiBreadcrumbs, styled, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import { formatSectionTitle } from '@innodoc/utils/content'
-
 import { HomeLink, SectionLink } from '#components/common/links'
 import { Icon } from '#components/common/misc'
 import { useSelectBreadcrumbSections } from '#hooks/select'
+import { formatSectionTitle } from '#utils'
 
 const StyledBreadcrumbs = styled(MuiBreadcrumbs)(({ theme }) => ({
   marginBottom: theme.spacing(1),
@@ -33,8 +32,8 @@ function Breadcrumbs() {
       <HomeLink title={homeTitle}>
         <Icon fontSize="small" name="mdi:home" sx={{ verticalAlign: 'text-top' }} />
       </HomeLink>
-      {sections.map((section, idx) =>
-        idx < sections.length - 1 ? (
+      {sections.map((section, index) =>
+        index < sections.length - 1 ? (
           <SectionLink key={section.id} preferShortTitle section={section} />
         ) : (
           <Typography component="span" key={section.id}>

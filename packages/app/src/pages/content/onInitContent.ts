@@ -2,10 +2,10 @@ import { render } from 'vike/abort'
 import type { PageContextServer } from 'vike/types'
 
 import markdownToHast from '@innodoc/markdown'
+import { serializeParserError } from '@innodoc/markdown/utils'
 import { addHastResult } from '@innodoc/store/slices/hast'
 import { fetchContent } from '@innodoc/store/utils'
-import { serializeParserError } from '@innodoc/utils/content'
-import { isParserError } from '@innodoc/utils/typeGuards'
+import { isParserError } from '@innodoc/typeguards/errors'
 import type { ContentType } from '@innodoc/types/common'
 
 /**

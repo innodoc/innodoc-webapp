@@ -1,4 +1,4 @@
-import { isArbitraryObject } from '@innodoc/utils/typeGuards'
+import { isArbitraryObject } from '@innodoc/typeguards/common'
 import type { TranslatableString } from '@innodoc/types/common'
 
 import { validateTranslatableString } from './common'

@@ -2,7 +2,8 @@ import { createListenerMiddleware } from '@reduxjs/toolkit'
 import type { PayloadAction, UnknownAction } from '@reduxjs/toolkit'
 
 import { isHastRootDivElement } from '@innodoc/markdown/typeGuards'
-import { isParserError, isWithContentHash } from '@innodoc/utils/typeGuards'
+import { isWithContentHash } from '@innodoc/typeguards/content'
+import { isParserError } from '@innodoc/typeguards/errors'
 import type { CourseContentRouteInfo } from '@innodoc/routes/types/routeInfos'
 import type { ContentWithHash, HastResultWithHash } from '@innodoc/types/common'
 
@@ -24,7 +25,7 @@ if (!import.meta.env.SSR) {
   const startListening = hastListenerMiddleware.startListening as AppStartListening
 
   // Markdown->hast worker
-  const worker = new Worker(new URL('./markdownToHastWorker.ts', import.meta.url), {
+  const worker = new Worker(new URL('markdownToHastWorker.ts', import.meta.url), {
     name: 'markdown-worker',
     type: 'module',
   })
