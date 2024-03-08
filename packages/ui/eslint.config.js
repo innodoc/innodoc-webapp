@@ -4,10 +4,10 @@ import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRedux from 'eslint-plugin-react-redux'
 
-import innodocConfig from '@innodoc/eslint-config'
+import innodocConfig, { customConfig } from '@innodoc/eslint-config'
 
 // Restricted imports
-const prevRestrictedImportsRules = innodocConfig[1].rules['@typescript-eslint/no-restricted-imports'][1]
+const prevRestrictedImportsRules = customConfig.rules['@typescript-eslint/no-restricted-imports'][1]
 const restrictedImportsRule = {
   '@typescript-eslint/no-restricted-imports': [
     'error',

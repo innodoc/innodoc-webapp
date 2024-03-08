@@ -8,6 +8,7 @@ import eslintPluginPrettier from 'eslint-plugin-prettier'
 import eslintPluginPromise from 'eslint-plugin-promise'
 import eslintPluginRegexp from 'eslint-plugin-regexp'
 import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort'
+import eslintPluginUnicorn from 'eslint-plugin-unicorn'
 import globals from 'globals'
 
 const eslintRules = {
@@ -106,64 +107,74 @@ const typescriptRules = {
   ],
 }
 
+const unicornRules = {
+  'unicorn/filename-case': 'off', // covered by 'filenames/*' rules
+  'unicorn/no-null': 'off',
+  // 'unicorn/prefer-export-from': 'off', // collides with simple-import-sort
+}
+
+const customConfig = {
+  files: ['eslint.config.js', '**/*.ts', '**/*.tsx'],
+  plugins: {
+    '@typescript-eslint': typescriptEslintPlugin,
+    deprecation: eslintPluginDeprecation,
+    filenames: eslintPluginFilenames,
+    import: eslintPluginImport,
+    prettier: eslintPluginPrettier,
+    promise: eslintPluginPromise,
+    regexp: eslintPluginRegexp,
+    'simple-import-sort': eslintPluginSimpleImportSort,
+  },
+  languageOptions: {
+    globals: {
+      ...globals.es2021,
+      ...globals.node,
+    },
+    parser: typescriptParser,
+    parserOptions: {
+      ecmaVersion: 'latest',
+      project: true,
+      sourceType: 'module',
+    },
+  },
+  settings: {
+    'import/extensions': ['.ts'],
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts'],
+    },
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+        project: true,
+      },
+    },
+  },
+  ignores: ['**/.cache', '**/coverage', '**/dist', '**/node_modules'],
+  rules: {
+    // Plugin configs
+    ...eslintPluginDeprecation.configs.recommended.rules,
+    ...typescriptEslintPlugin.configs['strict-type-checked'].rules,
+    ...typescriptEslintPlugin.configs['stylistic-type-checked'].rules,
+    ...eslintPluginImport.configs.typescript.rules,
+    ...eslintPluginPromise.configs.recommended.rules,
+    ...eslintPluginPrettier.configs.recommended.rules,
+
+    // Custom rules
+    ...eslintRules,
+    ...filenamesRules,
+    ...importRules,
+    ...prettierRules,
+    ...regexpRules,
+    ...typescriptRules,
+    ...unicornRules,
+  },
+}
+
 /** @type {import("eslint").Linter.FlatConfig} */
 const config = [
   js.configs.recommended,
-  {
-    files: ['eslint.config.js', '**/*.ts', '**/*.tsx'],
-    plugins: {
-      '@typescript-eslint': typescriptEslintPlugin,
-      deprecation: eslintPluginDeprecation,
-      filenames: eslintPluginFilenames,
-      import: eslintPluginImport,
-      prettier: eslintPluginPrettier,
-      promise: eslintPluginPromise,
-      regexp: eslintPluginRegexp,
-      'simple-import-sort': eslintPluginSimpleImportSort,
-    },
-    languageOptions: {
-      globals: {
-        ...globals.es2021,
-        ...globals.node,
-      },
-      parser: typescriptParser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        project: true,
-        sourceType: 'module',
-      },
-    },
-    settings: {
-      'import/extensions': ['.ts'],
-      'import/parsers': {
-        '@typescript-eslint/parser': ['.ts'],
-      },
-      'import/resolver': {
-        typescript: {
-          alwaysTryTypes: true,
-          project: true,
-        },
-      },
-    },
-    ignores: ['**/.cache', '**/coverage', '**/dist', '**/node_modules'],
-    rules: {
-      // Plugin configs
-      ...eslintPluginDeprecation.configs.recommended.rules,
-      ...typescriptEslintPlugin.configs['strict-type-checked'].rules,
-      ...typescriptEslintPlugin.configs['stylistic-type-checked'].rules,
-      ...eslintPluginImport.configs.typescript.rules,
-      ...eslintPluginPromise.configs.recommended.rules,
-      ...eslintPluginPrettier.configs.recommended.rules,
-
-      // Custom rules
-      ...eslintRules,
-      ...filenamesRules,
-      ...importRules,
-      ...prettierRules,
-      ...regexpRules,
-      ...typescriptRules,
-    },
-  },
+  eslintPluginUnicorn.configs['flat/recommended'],
+  customConfig,
 
   // No type-checking for JS files
   {
@@ -181,4 +192,5 @@ const config = [
   },
 ]
 
+export { customConfig }
 export default config
