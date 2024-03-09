@@ -20,13 +20,7 @@ function useRouteManager() {
     url: (partialRouteInfo: Partial<AppRouteInfo>) => {
       const routeInfo = { ...currentRouteInfo, ...partialRouteInfo }
 
-      console.log('--------------------- url')
-      console.log('  currentRouteInfo', currentRouteInfo)
-      console.log('  partialRouteInfo', partialRouteInfo)
-      console.log('  combined routeInfo', routeInfo)
-
       if (isAppRouteInfo(routeInfo)) {
-        console.log('  url=', routeManager.appUrl(routeInfo))
         return routeManager.appUrl(routeInfo)
       }
     },

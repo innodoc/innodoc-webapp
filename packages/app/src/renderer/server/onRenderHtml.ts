@@ -23,7 +23,6 @@ async function onRenderHtml(pageContextIn: OnRenderHtmlPageContext) {
   const pageContext = { ...pageContextIn, store }
 
   const emotionCache = createCache({ key: EMOTION_STYLE_KEY })
-  console.log(`!!!!!!!!! OnRenderHtmlAsync ${JSON.stringify(routeInfo, undefined, 2)}`)
   const i18n = await initI18n(routeInfo, store)
 
   // Initialize helmet context

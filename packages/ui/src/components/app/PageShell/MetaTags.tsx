@@ -16,8 +16,6 @@ function MetaTags() {
     <link href={url({ locale })} hrefLang={locale} key={locale} rel="alternate" />
   ))
 
-  console.log(`MetaTags ${JSON.stringify(course?.title, undefined, 2)}`)
-
   return (
     <Helmet>
       <html lang={currentLocale} />
