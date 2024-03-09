@@ -1,3 +1,5 @@
+import type { Components } from 'rehype-react'
+
 import BlockquoteNode from './block/BlockquoteNode'
 import DivNode from './block/DivNode'
 import HeadingNode from './block/HeadingNode'
@@ -48,6 +50,6 @@ const componentsMap = {
   a: ANode,
   code: CodeNode,
   span: SpanNode,
-}
+} as Partial<Components>
 
 export default componentsMap

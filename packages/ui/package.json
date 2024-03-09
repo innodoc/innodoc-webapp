@@ -18,6 +18,7 @@
     "#components/content/exercises": "./src/components/content/exercises/exercises.ts",
     "#components/content/grid": "./src/components/content/grid/grid.ts",
     "#components/content/hast": "./src/components/content/hast/hast.ts",
+    "#components/content/hast/componentsMap": "./src/components/content/hast/componentsMap.ts",
     "#components/content/misc": "./src/components/content/misc/misc.ts",
     "#components/content/tabs": "./src/components/content/tabs/tabs.ts",
     "#components/content/types": "./src/components/content/types.ts",

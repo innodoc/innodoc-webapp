@@ -3,7 +3,7 @@ import type { RootState } from '@innodoc/store/types'
 
 import { useSelector } from '#hooks/redux'
 
-import hastToReact from './hastToReact'
+import hastToReact from './hastToReact/hastToReact'
 import MarkdownParserError from './MarkdownParserError'
 
 function HastNode({ hash }: HastNodeProps) {
