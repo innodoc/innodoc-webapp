@@ -32,7 +32,7 @@ function SectionPage() {
       course={course}
       isError={isError}
       isLoading={isLoading}
-      stringIdValue={sectionPath}
+      contentIdValue={sectionPath}
     >
       <Breadcrumbs />
       <PageHeader>{section === undefined ? '' : formatSectionTitle(section)}</PageHeader>

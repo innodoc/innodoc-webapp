@@ -10,10 +10,8 @@ import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
 import { useSelector } from './redux'
 import { translateEntityArray } from './utils'
 
-const empty = { sections: [] }
-
 /**
- * Return an array of sections for the Breadcrumb component. E.g.:
+ * Create section data for the Breadcrumb component. E.g.:
  * ```
  * [
  *  { path: 'foo', ... },
@@ -21,13 +19,14 @@ const empty = { sections: [] }
  *  { path: 'foo/bar/baz', ... },
  * ]
  * ```
+ *
+ * @returns Array of sections
  */
 function useSelectBreadcrumbSections() {
   const routeInfo = useSelector(selectRouteInfo)
-  if (!isCourseSectionRouteInfo(routeInfo)) {
-    return empty
-  }
-  const { courseSlug, locale, sectionPath } = routeInfo
+  const { courseSlug, sectionPath } = isCourseSectionRouteInfo(routeInfo)
+    ? routeInfo
+    : { courseSlug: undefined, sectionPath: undefined }
 
   const selectBreadcrumbSections = useMemo(() => {
     const emptyArray: TranslatedSection[] = []
@@ -60,11 +59,10 @@ function useSelectBreadcrumbSections() {
   }, [])
 
   const result = useGetCourseSectionsQuery(
-    { courseSlug },
+    { courseSlug: courseSlug ?? '' },
     {
-      selectFromResult: (result) => ({
-        sections: selectBreadcrumbSections(result, sectionPath, locale),
-      }),
+      selectFromResult: (result) => ({ sections: selectBreadcrumbSections(result, sectionPath, routeInfo.locale) }),
+      skip: !courseSlug || !sectionPath,
     },
   )
 

@@ -10,15 +10,15 @@ import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
 import { useSelector } from './redux'
 import { translateEntityArray } from './utils'
 
-const empty = { sections: [] }
-
-/** Return sections children */
+/**
+ * Select section's children.
+ *
+ * @param parentId parent's ID
+ * @returns array of sections
+ */
 function useSelectSectionChildren(parentId: ApiSection['parentId']) {
   const routeInfo = useSelector(selectRouteInfo)
-  if (!isCourseRouteInfo(routeInfo)) {
-    return empty
-  }
-  const { courseSlug, locale } = routeInfo
+  const courseSlug = isCourseRouteInfo(routeInfo) ? routeInfo.courseSlug : undefined
 
   const selectSectionChildren = useMemo(() => {
     const emptyArray: TranslatedSection[] = []
@@ -40,9 +40,10 @@ function useSelectSectionChildren(parentId: ApiSection['parentId']) {
   }, [])
 
   const result = useGetCourseSectionsQuery(
-    { courseSlug },
+    { courseSlug: courseSlug ?? '' },
     {
-      selectFromResult: (result) => ({ sections: selectSectionChildren(result, parentId, locale) }),
+      selectFromResult: (result) => ({ sections: selectSectionChildren(result, parentId, routeInfo.locale) }),
+      skip: !courseSlug,
     },
   )
 

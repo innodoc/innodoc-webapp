@@ -1,5 +1,7 @@
 import type { ParserError } from '@innodoc/types/errors'
 
+import { isArbitraryObject } from './common'
+
 /** Type guard for error object */
 function isParserError(object: unknown): object is ParserError {
   return (

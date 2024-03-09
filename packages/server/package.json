@@ -39,6 +39,7 @@
     "fastify-plugin": "4.5.1",
     "fastify-type-provider-zod": "1.1.9",
     "i18next-http-middleware": "3.5.0",
+    "validator": "13.11.0",
     "vike": "0.4.165",
     "zod": "3.22.4"
   },
@@ -53,6 +54,7 @@
     "@scalar/fastify-api-reference": "1.17.15",
     "@types/node": "20.11.24",
     "@types/react": "18.2.63",
+    "@types/validator": "13.11.9",
     "fastify-print-routes": "3.1.1",
     "globals": "14.0.0",
     "pino-pretty": "10.3.1",

@@ -6,10 +6,10 @@ settings:
 
 patchedDependencies:
   decode-named-character-reference@1.0.2:
-    hash: jf3mjggrlainabc6twriie4wfy
+    hash: pf4x3zztban3yn743xjxic5vwm
     path: patches/decode-named-character-reference@1.0.2.patch
   hast-util-from-html-isomorphic@2.0.0:
-    hash: 5foqmojphoa5v4fg6ebaetwlqu
+    hash: qowuytoczqfbeoozmepta6rvku
     path: patches/hast-util-from-html-isomorphic@2.0.0.patch
 
 importers:
@@ -768,6 +768,9 @@ importers:
       iso-639-1:
         specifier: 3.1.2
         version: 3.1.2
+      validator:
+        specifier: 13.11.0
+        version: 13.11.0
     devDependencies:
       '@innodoc/eslint-config':
         specifier: workspace:^
@@ -781,6 +784,9 @@ importers:
       '@types/svg-parser':
         specifier: 2.0.6
         version: 2.0.6
+      '@types/validator':
+        specifier: 13.11.9
+        version: 13.11.9
 
   packages/types:
     dependencies:
@@ -4367,7 +4373,7 @@ packages:
     resolution: {integrity: sha512-VBBaLc1MgL5XpzgIP7ny5Z6Nx3UrRkIViUkPUdtl9aya5amy3De1gsUUSB1g3+3sExYNjCAsAznmukyxCb1GRA==}
     dev: true
 
-  /decode-named-character-reference@1.0.2(patch_hash=jf3mjggrlainabc6twriie4wfy):
+  /decode-named-character-reference@1.0.2(patch_hash=pf4x3zztban3yn743xjxic5vwm):
     resolution: {integrity: sha512-O8x12RzrUF8xyVcY0KJowWsmaJxQbmy0/EtnNtHRpsOcT7dFk5W598coHqBVpmWo1oQQfsCqfCmkZN5DJrZVdg==}
     dependencies:
       character-entities: 2.0.2
@@ -5960,7 +5966,7 @@ packages:
       web-namespaces: 2.0.1
     dev: false
 
-  /hast-util-from-html-isomorphic@2.0.0(patch_hash=5foqmojphoa5v4fg6ebaetwlqu):
+  /hast-util-from-html-isomorphic@2.0.0(patch_hash=qowuytoczqfbeoozmepta6rvku):
     resolution: {integrity: sha512-zJfpXq44yff2hmE0XmwEOzdWin5xwH+QIhMLOScpX91e/NSGPsAzNCvLQDIEPyO2TXi+lBmU6hjLIhV8MwP2kw==}
     dependencies:
       '@types/hast': 3.0.4
@@ -7235,7 +7241,7 @@ packages:
     dependencies:
       '@types/mdast': 4.0.3
       '@types/unist': 3.0.2
-      decode-named-character-reference: 1.0.2(patch_hash=jf3mjggrlainabc6twriie4wfy)
+      decode-named-character-reference: 1.0.2(patch_hash=pf4x3zztban3yn743xjxic5vwm)
       devlop: 1.1.0
       mdast-util-to-string: 4.0.0
       micromark: 4.0.0
@@ -7424,7 +7430,7 @@ packages:
   /micromark-core-commonmark@2.0.0:
     resolution: {integrity: sha512-jThOz/pVmAYUtkroV3D5c1osFXAMv9e0ypGDOIZuCeAe91/sD6BoE2Sjzt30yuXtwOYUmySOhMas/PVyh02itA==}
     dependencies:
-      decode-named-character-reference: 1.0.2(patch_hash=jf3mjggrlainabc6twriie4wfy)
+      decode-named-character-reference: 1.0.2(patch_hash=pf4x3zztban3yn743xjxic5vwm)
       devlop: 1.1.0
       micromark-factory-destination: 2.0.0
       micromark-factory-label: 2.0.0
@@ -7588,7 +7594,7 @@ packages:
   /micromark-util-decode-string@2.0.0:
     resolution: {integrity: sha512-r4Sc6leeUTn3P6gk20aFMj2ntPwn6qpDZqWvYmAG6NgvFTIlj4WtrAudLi65qYoaGdXYViXYw2pkmn7QnIFasA==}
     dependencies:
-      decode-named-character-reference: 1.0.2(patch_hash=jf3mjggrlainabc6twriie4wfy)
+      decode-named-character-reference: 1.0.2(patch_hash=pf4x3zztban3yn743xjxic5vwm)
       micromark-util-character: 2.1.0
       micromark-util-decode-numeric-character-reference: 2.0.1
       micromark-util-symbol: 2.0.0
@@ -7657,7 +7663,7 @@ packages:
     dependencies:
       '@types/debug': 4.1.12
       debug: 4.3.4(supports-color@5.5.0)
-      decode-named-character-reference: 1.0.2(patch_hash=jf3mjggrlainabc6twriie4wfy)
+      decode-named-character-reference: 1.0.2(patch_hash=pf4x3zztban3yn743xjxic5vwm)
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.0
       micromark-factory-space: 2.0.0
@@ -8264,7 +8270,7 @@ packages:
       character-entities: 2.0.2
       character-entities-legacy: 3.0.0
       character-reference-invalid: 2.0.1
-      decode-named-character-reference: 1.0.2(patch_hash=jf3mjggrlainabc6twriie4wfy)
+      decode-named-character-reference: 1.0.2(patch_hash=pf4x3zztban3yn743xjxic5vwm)
       is-alphanumerical: 2.0.1
       is-decimal: 2.0.1
       is-hexadecimal: 2.0.1
@@ -9008,7 +9014,7 @@ packages:
     dependencies:
       '@types/hast': 3.0.4
       '@types/katex': 0.16.7
-      hast-util-from-html-isomorphic: 2.0.0(patch_hash=5foqmojphoa5v4fg6ebaetwlqu)
+      hast-util-from-html-isomorphic: 2.0.0(patch_hash=qowuytoczqfbeoozmepta6rvku)
       hast-util-to-text: 4.0.0
       katex: 0.16.9
       unist-util-visit-parents: 6.0.1

@@ -10,33 +10,26 @@ import type { ApiCourse } from '@innodoc/types/entities'
 import { useSelector } from './redux'
 import { translateEntity } from './utils'
 
-const empty = { course: undefined }
-
-/** Return current course */
+/** Select current course */
 function useSelectCurrentCourse() {
   const routeInfo = useSelector(selectRouteInfo)
-  if (!isCourseRouteInfo(routeInfo)) {
-    return empty
-  }
-  const { courseSlug, locale } = routeInfo
+  const courseSlug = isCourseRouteInfo(routeInfo) ? routeInfo.courseSlug : undefined
 
   const selectCourse = useMemo(
     () =>
       createSelector(
-        [(_result: { data: ApiCourse | undefined }) => _result.data, (_result, _locale: LanguageCode) => _locale],
-        (course, _locale) => {
-          if (course === undefined) {
-            return
-          }
-          return translateEntity(course, _locale)
-        },
+        [(result: { data: ApiCourse | undefined }) => result.data, (result, locale: LanguageCode) => locale],
+        (course, locale) => (course ? translateEntity(course, locale) : undefined),
       ),
     [],
   )
 
   const result = useGetCourseQuery(
-    { courseSlug },
-    { selectFromResult: (result) => ({ course: selectCourse(result, locale) }) },
+    { courseSlug: courseSlug ?? '' },
+    {
+      selectFromResult: (result) => ({ course: selectCourse(result, routeInfo.locale) }),
+      skip: !courseSlug,
+    },
   )
 
   return result

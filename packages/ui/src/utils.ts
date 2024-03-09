@@ -12,9 +12,9 @@ function getSectionNumberFromOrder(section: TranslatedSection) {
   return section.order.map((n) => (n + 1).toString()).join('.')
 }
 
-/** Get string ID field for content type */
-function getStringIdField(type: ContentType) {
-  return type === 'page' ? 'pageSlug' : 'sectionPath'
+/** Get content ID field for content type */
+function getContentIdField(type: ContentType) {
+  return type === 'page' ? 'slug' : 'path'
 }
 
-export { formatSectionTitle, getSectionNumberFromOrder, getStringIdField }
+export { formatSectionTitle, getContentIdField, getSectionNumberFromOrder }

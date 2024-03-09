@@ -14,9 +14,7 @@ import type { Store } from '@innodoc/store/types'
 function getSupportedLocales(store: Store, routeInfo: AppRouteInfo) {
   // Try course locales
   if (isCourseRouteInfo(routeInfo)) {
-    const selectCurrentCourse = courses.endpoints.getCourse.select({
-      courseSlug: routeInfo.courseSlug,
-    })
+    const selectCurrentCourse = courses.endpoints.getCourse.select({ courseSlug: routeInfo.courseSlug })
     const { data: course } = selectCurrentCourse(store.getState())
     if (course !== undefined) {
       return course.locales

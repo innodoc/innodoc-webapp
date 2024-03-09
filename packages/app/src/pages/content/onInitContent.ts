@@ -22,11 +22,11 @@ import type { ContentType } from '@innodoc/types/common'
  */
 function onInitContent(contentType: ContentType) {
   return async ({ routeInfo, store }: PageContextServer): Promise<void> => {
-    let stringIdValue
+    let contentIdValue
     if (routeInfo.name === 'app:course:page') {
-      stringIdValue = routeInfo.pageSlug
+      contentIdValue = routeInfo.pageSlug
     } else if (routeInfo.name === 'app:course:section') {
-      stringIdValue = routeInfo.sectionPath
+      contentIdValue = routeInfo.sectionPath
     } else {
       throw new Error('Invalid routeInfo received')
     }
@@ -40,14 +40,14 @@ function onInitContent(contentType: ContentType) {
       contentType,
       routeInfo.courseSlug,
       routeInfo.locale,
-      stringIdValue,
+      contentIdValue,
       store.dispatch,
     )
 
     // Fetch error?
     if (error ?? data === undefined) {
       // TODO: differentiate between 404 and fetch error
-      throw render(404, `Failed to fetch content for ${contentType} ${stringIdValue}`)
+      throw render(404, `Failed to fetch content for ${contentType} ${contentIdValue}`)
     }
 
     // Transform Markdown->hast

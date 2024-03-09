@@ -11,7 +11,7 @@ function fetchContent(
   contentType: ContentType,
   courseSlug: string,
   locale: LanguageCode,
-  stringIdValue: string,
+  contentIdValue: string,
   dispatch: AppDispatch,
 ) {
   if (contentType === 'page') {
@@ -19,7 +19,7 @@ function fetchContent(
       pages.endpoints.getPageContent.initiate({
         courseSlug,
         locale,
-        pageSlug: stringIdValue,
+        pageSlug: contentIdValue,
       }),
     )
   }
@@ -29,7 +29,7 @@ function fetchContent(
     sections.endpoints.getSectionContent.initiate({
       courseSlug,
       locale,
-      sectionPath: stringIdValue,
+      sectionPath: contentIdValue,
     }),
   )
 }

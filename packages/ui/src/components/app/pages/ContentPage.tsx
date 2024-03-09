@@ -6,12 +6,12 @@ import type { TranslatedCourse, TranslatedPage, TranslatedSection } from '@innod
 
 import { Code } from '#components/common/misc'
 import { HastNode } from '#components/content/hast'
-import { getStringIdField } from '#utils'
+import { getContentIdField } from '#utils'
 
 import ErrorPage from './ErrorPage'
 
-function ContentError({ contentType, stringIdValue }: ErrorProperties) {
-  const stringIdField = getStringIdField(contentType)
+function ContentError({ contentType, contentIdValue }: ErrorProperties) {
+  const contentIdField = getContentIdField(contentType)
 
   return (
     <ErrorPage
@@ -19,9 +19,9 @@ function ContentError({ contentType, stringIdValue }: ErrorProperties) {
         <Trans
           components={{ 1: <Code /> }}
           i18nKey={`error.failedToLoad${contentType === 'page' ? 'Page' : 'Section'}`}
-          values={{ [stringIdField]: stringIdValue }}
+          values={{ [contentIdField]: contentIdValue }}
         >
-          {`Failed to load ${contentType}: <1>{{${stringIdField}}}</1>`}
+          {`Failed to load ${contentType}: <1>{{${contentIdField}}}</1>`}
         </Trans>
       }
     />
@@ -30,7 +30,7 @@ function ContentError({ contentType, stringIdValue }: ErrorProperties) {
 
 interface ErrorProperties {
   contentType: ContentType
-  stringIdValue: string
+  contentIdValue: string
 }
 
 function ContentPage({
@@ -38,25 +38,24 @@ function ContentPage({
   contentHash,
   contentObj,
   contentType,
-  course,
   isError,
   isLoading,
-  stringIdValue,
+  contentIdValue,
 }: ContentPageProperties) {
   if (isLoading) {
     return null
   }
 
-  if (course === undefined) {
+  if (!contentHash) {
     return <ErrorPage is404 />
   }
 
-  if (stringIdValue === undefined || contentObj === undefined) {
+  if (!contentIdValue || !contentObj) {
     return null
   }
 
   if (isError) {
-    return <ContentError contentType={contentType} stringIdValue={stringIdValue} />
+    return <ContentError contentType={contentType} contentIdValue={contentIdValue} />
   }
 
   return (
@@ -72,10 +71,9 @@ interface ContentPageProperties {
   contentHash?: string
   contentObj?: TranslatedPage | TranslatedSection
   contentType: ContentType
-  course?: TranslatedCourse
   isError: boolean
   isLoading: boolean
-  stringIdValue?: string
+  contentIdValue?: string
 }
 
 export default ContentPage

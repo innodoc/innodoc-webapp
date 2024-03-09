@@ -12,6 +12,7 @@ type ApiBaseEntity = CamelCasedProperties<BaseEntitySchema>
 type TranslatedEntity<T extends Record<string, unknown>> = {
   [Property in keyof T]: T[Property] extends TranslatableString ? string | null : T[Property]
 }
+
 /** Course object returned by the API */
 type ApiCourse = CamelCasedProperties<CourseSchema>
 
@@ -30,6 +31,12 @@ type ApiSection = CamelCasedProperties<QuerySectionSchema>
 /** Section with translated fields */
 type TranslatedSection = TranslatedEntity<ApiSection>
 
+/** Content unit (page or section) */
+type ContentUnit = ApiPage | ApiSection
+
+/** Content unit (page or section) with translated fields */
+type TranslatedContentUnit = TranslatedPage | TranslatedSection
+
 /** Content fragment type */
 type FragmentType = (typeof FRAGMENT_TYPES)[number]
 
@@ -38,7 +45,9 @@ export type {
   ApiCourse,
   ApiPage,
   ApiSection,
+  ContentUnit,
   FragmentType,
+  TranslatedContentUnit,
   TranslatedCourse,
   TranslatedEntity,
   TranslatedPage,

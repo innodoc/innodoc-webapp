@@ -11,15 +11,15 @@ import type { ApiPage, TranslatedPage } from '@innodoc/types/entities'
 import { useSelector } from './redux'
 import { translateEntityArray } from './utils'
 
-const empty = { pages: [] }
-
-/** Return pages for link lists */
+/**
+ * Select pages for link lists.
+ *
+ * @param linkLocation page location for links
+ * @returns array of pages
+ */
 function useSelectLinkedPages(linkLocation: PageLinkLocation) {
   const routeInfo = useSelector(selectRouteInfo)
-  if (!isCourseRouteInfo(routeInfo)) {
-    return empty
-  }
-  const { courseSlug, locale } = routeInfo
+  const courseSlug = isCourseRouteInfo(routeInfo) ? routeInfo.courseSlug : undefined
 
   const selectNavPages = useMemo(() => {
     const emptyArray: TranslatedPage[] = []
@@ -37,8 +37,11 @@ function useSelectLinkedPages(linkLocation: PageLinkLocation) {
   }, [linkLocation])
 
   const result = useGetCoursePagesQuery(
-    { courseSlug },
-    { selectFromResult: (result) => ({ pages: selectNavPages(result, locale) }) },
+    { courseSlug: courseSlug ?? '' },
+    {
+      selectFromResult: (result) => ({ pages: selectNavPages(result, routeInfo.locale) }),
+      skip: !courseSlug,
+    },
   )
 
   return result

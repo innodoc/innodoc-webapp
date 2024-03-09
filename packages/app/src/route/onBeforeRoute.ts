@@ -1,9 +1,9 @@
-import isLocale from 'validator/lib/isLocale'
 import { redirect } from 'vike/abort'
 import type { LanguageCode } from 'iso-639-1'
 import type { OnBeforeRouteSync } from 'vike/types'
 
 import { DEFAULT_ROUTE_NAME } from '@innodoc/constants'
+import { isLocale } from '@innodoc/typeguards/common'
 import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
 
 import { ExtractionError } from './errors'
@@ -28,12 +28,11 @@ const onBeforeRoute: OnBeforeRouteSync = function (pageContext): OnBeforeRouteRe
   const { requestLocales } = pageContext
 
   let routeInfo: AppRouteInfo = {
-    // courseSlug: import.meta.env.INNODOC_DEFAULT_COURSE_SLUG,
     name: DEFAULT_ROUTE_NAME,
     locale: 'en',
   }
 
-  if (isLocale(pageContext.requestLocales[0])) {
+  if (isLocale(requestLocales?.[0])) {
     routeInfo.locale = requestLocales[0] as LanguageCode // fallback to browser locale
   }
 

@@ -18,7 +18,7 @@ declare global {
       host?: string
 
       /** Browser locales */
-      requestLocales: readonly string[]
+      requestLocales?: readonly string[]
 
       /** Route info of current page */
       routeInfo: AppRouteInfo

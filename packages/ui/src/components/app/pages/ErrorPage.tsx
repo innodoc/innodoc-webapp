@@ -5,9 +5,9 @@ import usePageContext from '#hooks/pageContext'
 
 function ErrorPage({ errorMsg, is404: is404Prop }: ErrorPageProps) {
   const pageContext = usePageContext()
-  const { abortReason, is404: is404PageContext } = pageContext
+  const { abortReason } = pageContext
   const abortStatusCode = pageContext.abortStatusCode as unknown
-  const is404 = is404Prop ?? is404PageContext
+  const is404 = is404Prop ?? pageContext.is404
 
   let captionText = 'Error'
   let subtitle: ReactNode = 'Something went wrong.'

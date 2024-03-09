@@ -1,24 +1,28 @@
+import { isCoursePageRouteInfo } from '@innodoc/routes/typeGuards'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetPageContentQuery } from '@innodoc/store/slices/content/pages'
 
 import { PageHeader } from '#components/common/misc'
 import { useSelector } from '#hooks/redux'
-import { useSelectCurrentCourse, useSelectPage } from '#hooks/select'
+import { useSelectPage } from '#hooks/select'
 
 import ContentPage from './ContentPage'
 
 function PagePage() {
-  const { course } = useSelectCurrentCourse()
-  const { courseSlug, locale, pageSlug } = useSelector(selectRouteInfo)
+  const routeInfo = useSelector(selectRouteInfo)
+  const { locale } = routeInfo
+  const { courseSlug, pageSlug } = isCoursePageRouteInfo(routeInfo)
+    ? routeInfo
+    : { courseSlug: undefined, pageSlug: undefined }
   const { page } = useSelectPage(pageSlug)
 
   const { data, isError, isLoading } = useGetPageContentQuery(
     {
-      courseSlug: course?.slug ?? '',
+      courseSlug: courseSlug ?? '',
       locale,
       pageSlug: pageSlug ?? '',
     },
-    { skip: course === undefined || courseSlug === null || pageSlug === undefined },
+    { skip: !courseSlug || !pageSlug },
   )
 
   return (
@@ -26,12 +30,11 @@ function PagePage() {
       contentHash={data?.hash}
       contentObj={page}
       contentType="page"
-      course={course}
       isError={isError}
       isLoading={isLoading}
-      stringIdValue={pageSlug}
+      contentIdValue={pageSlug}
     >
-      {page === undefined ? null : <PageHeader iconName={page.icon}>{page.title}</PageHeader>}
+      {page ? <PageHeader iconName={page.icon}>{page.title}</PageHeader> : null}
     </ContentPage>
   )
 }

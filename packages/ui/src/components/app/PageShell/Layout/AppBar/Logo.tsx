@@ -19,7 +19,7 @@ import { useSelectCurrentCourse } from '#hooks/select'
 function Logo() {
   const { course } = useSelectCurrentCourse()
 
-  if (course === undefined) {
+  if (!course) {
     return null
   }
 

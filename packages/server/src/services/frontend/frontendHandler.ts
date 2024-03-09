@@ -1,5 +1,6 @@
 import { isNativeError } from 'node:util/types'
 
+import isLocale from 'validator/lib/isLocale'
 import { renderPage } from 'vike/server'
 import type { RouteHandlerMethod } from 'fastify'
 
@@ -13,7 +14,7 @@ import type { RouteHandlerMethod } from 'fastify'
  * @returns HTTP response
  */
 const frontendHandler: RouteHandlerMethod = async (req, reply) => {
-  const locales = req.languages().filter((locale) => locale !== '*')
+  const locales = req.languages().filter((locale) => isLocale(locale))
 
   // Create page context
   const pageContextInit = {
