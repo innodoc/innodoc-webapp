@@ -12,8 +12,14 @@ const routeManager = getRouteManager()
  */
 function route(routeName: AppRouteName) {
   const routeFunc = ({ urlOriginal }: PageContextServer) => {
+    // Routes also need to match pageContext.json files used in client navigation
+    let url = urlOriginal
+    if (import.meta.env.SSR) {
+      url = urlOriginal.replace(/\/index\.pageContext\.json$/, '')
+    }
+
     // Match URL against route
-    const match = routeManager.match(routeName, urlOriginal)
+    const match = routeManager.match(routeName, url)
     if (!match) {
       return false
     }

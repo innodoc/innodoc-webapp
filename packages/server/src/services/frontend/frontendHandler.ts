@@ -43,9 +43,9 @@ const frontendHandler: RouteHandlerMethod = async (req, reply) => {
   const { statusCode, headers } = pageContext.httpResponse
   reply.statusCode = statusCode
 
+  // Set headers from vike
   for (const [name, value] of headers) {
-    // TS wants us to await this, but it would hang indefinitely
-    void reply.header(name, value)
+    reply.raw.setHeader(name, value)
   }
 
   pageContext.httpResponse.pipe(reply.raw)
