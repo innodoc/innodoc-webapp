@@ -1,4 +1,5 @@
 import createCache from '@emotion/cache'
+import { renderToString } from 'react-dom/server'
 import { render } from 'vike/abort'
 import { dangerouslySkipEscape, escapeInject } from 'vike/server'
 import type { HelmetServerState } from 'react-helmet-async'
@@ -8,7 +9,6 @@ import { EMOTION_STYLE_KEY } from '@innodoc/constants'
 import makeStore from '@innodoc/store'
 import renderPage from '@innodoc/ui'
 
-import renderToHtml from './renderToHtml'
 import { emotionStyleTags, initColorSchemeScript, initI18n } from './utils'
 
 interface OnRenderHtmlPageContext extends Omit<PageContextServer, 'store'> {
@@ -33,7 +33,7 @@ async function onRenderHtml(pageContextIn: OnRenderHtmlPageContext) {
   }
 
   // Render page
-  const pageHtml = await renderToHtml(renderPage(pageContext, Page, emotionCache, i18n, store, helmetContext))
+  const pageHtml = renderToString(renderPage(pageContext, Page, emotionCache, i18n, store, helmetContext))
 
   // Get document head tags
   const { helmet } = helmetContext
