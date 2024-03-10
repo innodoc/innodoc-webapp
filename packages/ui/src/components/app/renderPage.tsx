@@ -1,6 +1,7 @@
 import type { EmotionCache } from '@emotion/react'
 import type { i18n as I18nInstance } from 'i18next'
 import type { ComponentType } from 'react'
+import type { HelmetServerState } from 'react-helmet-async'
 import type { PageContext } from 'vike/types'
 
 import type { Store } from '@innodoc/store/types'
@@ -14,7 +15,7 @@ function renderPage(
   emotionCache: EmotionCache,
   i18n: I18nInstance,
   store: Store,
-  helmetContext?: Record<string, never>,
+  helmetContext?: { helmet?: HelmetServerState },
   pagePrev?: ComponentType,
 ) {
   return (

@@ -1,7 +1,7 @@
 import createCache from '@emotion/cache'
 import { render } from 'vike/abort'
 import { dangerouslySkipEscape, escapeInject } from 'vike/server'
-import type { FilledContext } from 'react-helmet-async'
+import type { HelmetServerState } from 'react-helmet-async'
 import type { PageContextServer } from 'vike/types'
 
 import { EMOTION_STYLE_KEY } from '@innodoc/constants'
@@ -19,14 +19,14 @@ async function onRenderHtml(pageContextIn: OnRenderHtmlPageContext) {
   const { Page, routeInfo, store: storeIn } = pageContextIn
 
   // store might not be present if previous steps failed
-  const store = storeIn ? storeIn : makeStore()
+  const store = storeIn ?? makeStore()
   const pageContext = { ...pageContextIn, store }
 
   const emotionCache = createCache({ key: EMOTION_STYLE_KEY })
   const i18n = await initI18n(routeInfo, store)
 
   // Initialize helmet context
-  const helmetContext = {}
+  const helmetContext: { helmet?: HelmetServerState } = {}
 
   if (!Page) {
     throw render(500, `No Page component found for ${routeInfo.name}`)
@@ -36,7 +36,10 @@ async function onRenderHtml(pageContextIn: OnRenderHtmlPageContext) {
   const pageHtml = await renderToHtml(renderPage(pageContext, Page, emotionCache, i18n, store, helmetContext))
 
   // Get document head tags
-  const { helmet } = helmetContext as FilledContext
+  const { helmet } = helmetContext
+  if (!helmet) {
+    throw render(500, 'No helmet context received')
+  }
 
   return escapeInject`<!DOCTYPE html>
     <html ${dangerouslySkipEscape(helmet.htmlAttributes.toString())}>
