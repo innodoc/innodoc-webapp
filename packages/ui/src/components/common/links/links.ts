@@ -1,7 +1,7 @@
 import AppLink from './AppLink'
 import ContentLink from './ContentLink'
-import HomeLink from './HomeLink'
+import CourseHomeLink from './CourseHomeLink'
 import PageLink, { PageLinkFromSlug } from './PageLink'
 import SectionLink, { SectionLinkFromPath } from './SectionLink'
 
-export { AppLink, ContentLink, HomeLink, PageLink, PageLinkFromSlug, SectionLink, SectionLinkFromPath }
+export { AppLink, ContentLink, CourseHomeLink, PageLink, PageLinkFromSlug, SectionLink, SectionLinkFromPath }

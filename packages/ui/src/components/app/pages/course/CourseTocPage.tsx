@@ -7,7 +7,7 @@ function CourseTocPage() {
   const { t } = useTranslation()
   return (
     <>
-      <PageHeader iconName="mdi:table-of-contents">{t('builtinPages.toc.title')}</PageHeader>
+      <PageHeader iconName="mdi:table-of-contents">{t('pages.course.toc.title')}</PageHeader>
       <StaticToc />
     </>
   )

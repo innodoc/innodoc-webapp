@@ -49,8 +49,8 @@ const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
         children
       ) : (
         <>
-          {showIcon && icon !== undefined ? <Icon name={icon} /> : null}
-          {(preferShortTitle && shortTitle !== undefined ? shortTitle : title) || null}
+          {showIcon && icon ? <Icon name={icon} /> : null}
+          {(preferShortTitle && shortTitle ? shortTitle : title) ?? null}
         </>
       )}
     </BaseLink>

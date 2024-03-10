@@ -14,7 +14,7 @@ function TocButton() {
       drawerProps={{ sx: (theme) => ({ zIndex: `calc(${theme.vars.zIndex.appBar} - 1)` }) }}
       iconName="mdi:table-of-contents"
       id="appbar-toc-menu"
-      title={t('builtinPages.toc.title')}
+      title={t('pages.course.toc.title')}
     >
       {(close) => (
         <>

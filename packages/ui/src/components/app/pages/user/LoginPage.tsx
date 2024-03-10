@@ -12,15 +12,14 @@ function LoginPage() {
 
   return (
     <>
-      <PageHeader iconName="mdi:login">{t('builtinPages.login.title')}</PageHeader>
+      <PageHeader iconName="mdi:login">{t('pages.user.login.title')}</PageHeader>
       <Box sx={{ mx: 'auto', width: { xs: 1, sm: '24rem' } }}>
         <Box component="form" noValidate onSubmit={onSubmit}>
           <TextField
             autoComplete="email"
-            autoFocus
             fullWidth
             id="login-email"
-            label={t('builtinPages.login.email')}
+            label={t('pages.user.login.email')}
             margin="normal"
             name="login-email"
             required
@@ -29,7 +28,7 @@ function LoginPage() {
             autoComplete="current-password"
             fullWidth
             id="login-password"
-            label={t('builtinPages.login.password')}
+            label={t('pages.user.login.password')}
             margin="normal"
             name="login-password"
             required
@@ -37,20 +36,20 @@ function LoginPage() {
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label={t('builtinPages.login.rememberMe')}
+            label={t('pages.user.login.rememberMe')}
           />
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-            {t('builtinPages.login.signIn')}
+            {t('pages.user.login.signIn')}
           </Button>
           <Grid container>
             <Grid item sm xs={12}>
               <AppLink routeInfo={{ name: 'app:user:forgot-password' }} variant="body2">
-                {t('builtinPages.login.forgotPassword')}
+                {t('pages.user.login.forgotPassword')}
               </AppLink>
             </Grid>
             <Grid item sm="auto" xs={12}>
               <AppLink routeInfo={{ name: 'app:user:sign-up' }} variant="body2">
-                {t('builtinPages.login.signUpLink')}
+                {t('pages.user.login.signUpLink')}
               </AppLink>
             </Grid>
           </Grid>

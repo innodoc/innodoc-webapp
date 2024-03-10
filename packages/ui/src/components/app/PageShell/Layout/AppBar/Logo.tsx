@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 
-import { HomeLink } from '#components/common/links'
+import { AppLink, CourseHomeLink } from '#components/common/links'
 import { useSelectCurrentCourse } from '#hooks/select'
 
 // TODO: save logo in database?
@@ -20,7 +20,7 @@ function Logo() {
   const { course } = useSelectCurrentCourse()
 
   if (!course) {
-    return null
+    return <AppLink routeInfo={{ name: 'app:index' }} />
   }
 
   // const content = <StyledSvgLogo />
@@ -31,9 +31,9 @@ function Logo() {
   )
 
   return (
-    <HomeLink sx={{ display: 'inline-flex', mr: 2 }} title={course.title ?? ''}>
+    <CourseHomeLink sx={{ display: 'inline-flex', mr: 2 }} title={course.title ?? ''}>
       {content}
-    </HomeLink>
+    </CourseHomeLink>
   )
 }
 

@@ -2,13 +2,13 @@ import { Button, type ButtonProps, Stack, styled } from '@mui/material'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import builtInPages from '#components/common/builtInPages'
 import { AppLink, PageLink } from '#components/common/links'
 import { Icon } from '#components/common/misc'
+import pageLinks from '#components/pages/links'
 import useRouteManager from '#hooks/routes'
 import { useSelectLinkedPages } from '#hooks/select'
 
-const builtInPagesNav = builtInPages.filter((page) => page.linked?.includes('nav'))
+const pageLinksNav = pageLinks.filter((page) => page.linked?.includes('nav'))
 
 const NavButton = forwardRef<HTMLButtonElement | null, ButtonProps>(function NavButton(props, ref) {
   return <Button color="inherit" ref={ref} size="small" {...props} />
@@ -53,7 +53,7 @@ function NavMenu() {
           {page.shortTitle ?? page.title}
         </StyledNavButton>
       ))}
-      {builtInPagesNav.map(({ icon, title, routeName }) => (
+      {pageLinksNav.map(({ icon, title, routeName }) => (
         <StyledNavButton
           className={isActiveRoute({ name: routeName }) ? 'active' : undefined}
           component={AppLink}

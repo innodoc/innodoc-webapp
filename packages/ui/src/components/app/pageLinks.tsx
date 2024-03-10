@@ -1,17 +1,17 @@
 import type { ReactElement } from 'react'
 
-import type { BuiltinRouteName } from '@innodoc/routes/types/routeNames'
+import type { AppRouteName } from '@innodoc/routes/types/routeNames'
 import type { PageLinkLocation } from '@innodoc/types/common'
 
 import { Icon } from '#components/common/misc'
 
-/** Built-in page */
-interface BuiltinPage {
+/** Page link definition */
+interface PageLinkDefinition {
   /** URL path */
-  routeName: BuiltinRouteName
+  routeName: AppRouteName
 
   /** Page title i18n key */
-  title: string
+  title?: string
 
   /** Icon name */
   icon: ReactElement
@@ -20,32 +20,43 @@ interface BuiltinPage {
   linked?: PageLinkLocation[]
 }
 
-// TODO: course pages don't belong here
 /** Built-in pages */
-const builtInPages: BuiltinPage[] = [
+const builtInPageLinks: PageLinkDefinition[] = [
   {
     icon: <Icon name="mdi:home" />,
-    title: 'builtinPages.home.title',
+    linked: ['footer', 'nav'],
+    title: 'pages.builtin.home.title',
+    routeName: 'app:index',
+  },
+] as const
+
+/** Course pages */
+const coursePageLinks: PageLinkDefinition[] = [
+  {
+    icon: <Icon name="mdi:home" />,
+    linked: ['footer', 'nav'],
     routeName: 'app:course:index',
   },
   {
     icon: <Icon name="mdi:chart-line" />,
     linked: ['footer', 'nav'],
-    title: 'builtinPages.progress.title',
+    title: 'pages.course.progress.title',
     routeName: 'app:course:progress',
   },
   {
     icon: <Icon name="mdi:table-of-contents" />,
     linked: ['footer'],
-    title: 'builtinPages.toc.title',
+    title: 'pages.course.toc.title',
     routeName: 'app:course:toc',
   },
   {
     icon: <Icon name="mdi:list-box" />,
     linked: ['footer'],
-    title: 'builtinPages.glossary.title',
+    title: 'pages.course.glossary.title',
     routeName: 'app:course:glossary',
   },
-]
+] as const
 
-export default builtInPages
+const pageLinks = [...builtInPageLinks, ...coursePageLinks] as const
+
+export default pageLinks

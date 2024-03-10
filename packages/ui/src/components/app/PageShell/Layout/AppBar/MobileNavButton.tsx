@@ -1,14 +1,14 @@
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import builtInPages from '#components/common/builtInPages'
 import { DrawerButton } from '#components/common/buttons'
 import { AppLink, PageLink } from '#components/common/links'
 import { Icon } from '#components/common/misc'
+import pageLinks from '#components/pages/links'
 import useRouteManager from '#hooks/routes'
 import { useSelectLinkedPages } from '#hooks/select'
 
-const builtInPagesNav = builtInPages.filter((page) => page.linked?.includes('nav'))
+const pageLinksNav = pageLinks.filter((page) => page.linked?.includes('nav'))
 
 function MobileNavButton() {
   const { isActiveRoute } = useRouteManager()
@@ -51,7 +51,7 @@ function MobileNavButton() {
               </ListItemButton>
             </ListItem>
           ))}
-          {builtInPagesNav.map(({ icon, title, routeName }) => (
+          {pageLinksNav.map(({ icon, title, routeName }) => (
             <ListItem disablePadding key={routeName} onClick={close}>
               <ListItemButton
                 component={AppLink}

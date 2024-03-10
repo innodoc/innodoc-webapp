@@ -1,13 +1,13 @@
 import { Children, forwardRef, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
+import { isAppRouteInfo, isCoursePageRouteInfo, isCourseSectionRouteInfo } from '@innodoc/routes/typeGuards'
 
-import builtInPages from '#components/common/builtInPages'
+import pageLinks from '#components/pages/links'
 import useRouteManager from '#hooks/routes'
 
 import BaseLink from './BaseLink'
-import HomeLink from './HomeLink'
+import CourseHomeLink from './CourseHomeLink'
 import { PageLinkFromSlug } from './PageLink'
 import { SectionLinkFromPath } from './SectionLink'
 import type { LinkProps } from './types'
@@ -17,18 +17,21 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink({ c
   const { t } = useTranslation()
   const { url } = useRouteManager()
 
+  if (!isAppRouteInfo(routeInfo)) {
+    return null
+  }
+
   // Determine content
   let content: ReactNode = children
   if (Children.count(children) === 0) {
-    const page = builtInPages.find((page) => page.routeName === routeInfo.name)
-    if (page) {
+    const page = pageLinks.find((page) => page.routeName === routeInfo.name)
+    if (page?.title) {
       content = t(page.title)
     }
   }
 
-  // TODO: use type guards
   // Page link
-  if (routeInfo.name === 'app:course:page' && routeInfo.pageSlug) {
+  if (isCoursePageRouteInfo(routeInfo)) {
     return (
       <PageLinkFromSlug pageSlug={routeInfo.pageSlug} ref={ref} showIcon={false} {...other}>
         {content}
@@ -37,7 +40,7 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink({ c
   }
 
   // Section link
-  if (routeInfo.name === 'app:course:section' && routeInfo.sectionPath) {
+  if (isCourseSectionRouteInfo(routeInfo)) {
     return (
       <SectionLinkFromPath sectionPath={routeInfo.sectionPath} ref={ref} {...other}>
         {content}
@@ -48,9 +51,9 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink({ c
   // Home link
   if (routeInfo.name === 'app:course:index') {
     return (
-      <HomeLink ref={ref} {...other}>
+      <CourseHomeLink ref={ref} {...other}>
         {content}
-      </HomeLink>
+      </CourseHomeLink>
     )
   }
 
@@ -63,7 +66,7 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink({ c
 })
 
 interface AppLinkProps extends Omit<LinkProps, 'to'> {
-  routeInfo: Partial<AppRouteInfo>
+  routeInfo: unknown
 }
 
 export default AppLink

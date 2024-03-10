@@ -5,13 +5,13 @@ import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '@innodoc/constan
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetFragmentContentQuery } from '@innodoc/store/slices/content/fragments'
 
-import builtInPages from '#components/common/builtInPages'
 import { AppLink, PageLink } from '#components/common/links'
 import { HastNode } from '#components/content/hast'
+import pageLinks from '#components/pages/links'
 import { useSelector } from '#hooks/redux'
 import { useSelectCurrentCourse, useSelectLinkedPages } from '#hooks/select'
 
-const builtInPagesNav = builtInPages.filter((page) => page.linked?.includes('footer'))
+const pageLinksFooter = pageLinks.filter((page) => page.linked?.includes('footer'))
 
 const FooterLink = styled(Link)(({ theme }) => ({
   alignItems: 'center',
@@ -48,7 +48,7 @@ function Footer() {
 
   const linkList = [
     ...coursePages.map((page) => <FooterLink component={PageLink} key={`page-${page.id}`} page={page} />),
-    ...builtInPagesNav.map(({ icon, routeName, title }) => (
+    ...pageLinksFooter.map(({ icon, routeName, title }) => (
       <FooterLink component={AppLink} key={routeName} routeInfo={{ name: routeName }}>
         {icon}
         {t(title)}

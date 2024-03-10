@@ -1,7 +1,6 @@
 import { Breadcrumbs as MuiBreadcrumbs, styled, Typography } from '@mui/material'
-import { useTranslation } from 'react-i18next'
 
-import { HomeLink, SectionLink } from '#components/common/links'
+import { CourseHomeLink, SectionLink } from '#components/common/links'
 import { Icon } from '#components/common/misc'
 import { useSelectBreadcrumbSections } from '#hooks/select'
 import { formatSectionTitle } from '#utils'
@@ -23,15 +22,13 @@ const StyledBreadcrumbs = styled(MuiBreadcrumbs)(({ theme }) => ({
 }))
 
 function Breadcrumbs() {
-  const { t } = useTranslation()
   const { sections } = useSelectBreadcrumbSections()
-  const homeTitle = t('builtinPages.home.title')
 
   return (
     <StyledBreadcrumbs separator={<Icon name="mdi:chevron-right" />}>
-      <HomeLink title={homeTitle}>
+      <CourseHomeLink>
         <Icon fontSize="small" name="mdi:home" sx={{ verticalAlign: 'text-top' }} />
-      </HomeLink>
+      </CourseHomeLink>
       {sections.map((section, index) =>
         index < sections.length - 1 ? (
           <SectionLink key={section.id} preferShortTitle section={section} />

@@ -1,27 +1,4 @@
 {
-  "builtinPages": {
-    "glossary": {
-      "title": "Stichwortverzeichnis"
-    },
-    "home": {
-      "title": "Home"
-    },
-    "login": {
-      "email": "E-Mail-Adresse",
-      "forgotPassword": "Passwort vergessen?",
-      "password": "Passwort",
-      "rememberMe": "Angemeldet bleiben",
-      "signIn": "Anmelden",
-      "signUpLink": "Noch kein Konto? Anmelden",
-      "title": "Login"
-    },
-    "progress": {
-      "title": "Fortschritt"
-    },
-    "toc": {
-      "title": "Inhaltsverzeichnis"
-    }
-  },
   "common": {
     "close": "Schließen",
     "error": "Fehler"
@@ -67,6 +44,35 @@
       "dark": "Dunkel",
       "light": "Hell",
       "title": "Farbmodus"
+    }
+  },
+  "pages": {
+    "builtin": {
+      "home": {
+        "title": "Home"
+      }
+    },
+    "course": {
+      "glossary": {
+        "title": "Stichwortverzeichnis"
+      },
+      "progress": {
+        "title": "Fortschritt"
+      },
+      "toc": {
+        "title": "Inhaltsverzeichnis"
+      }
+    },
+    "user": {
+      "login": {
+        "email": "E-Mail-Adresse",
+        "forgotPassword": "Passwort vergessen?",
+        "password": "Passwort",
+        "rememberMe": "Angemeldet bleiben",
+        "signIn": "Anmelden",
+        "signUpLink": "Noch kein Konto? Anmelden",
+        "title": "Login"
+      }
     }
   },
   "toc": {

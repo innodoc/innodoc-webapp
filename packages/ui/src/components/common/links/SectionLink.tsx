@@ -47,10 +47,6 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProperties>(functio
 ) {
   const { url } = useRouteManager()
 
-  if (section === undefined) {
-    return null
-  }
-
   return (
     <BaseLink to={url({ name: 'app:course:section', sectionPath: section.path })} ref={reference} {...other}>
       {Children.count(children) ? children : <>{formatSectionTitle(section, preferShortTitle)}</>}

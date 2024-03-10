@@ -1,27 +1,4 @@
 {
-  "builtinPages": {
-    "glossary": {
-      "title": "Glossary"
-    },
-    "home": {
-      "title": "Home"
-    },
-    "login": {
-      "email": "Email Address",
-      "forgotPassword": "Forgot password?",
-      "password": "Password",
-      "rememberMe": "Remember me",
-      "signIn": "Sign In",
-      "signUpLink": "Don't have an account? Sign Up",
-      "title": "Login"
-    },
-    "progress": {
-      "title": "Progress"
-    },
-    "toc": {
-      "title": "Table of contents"
-    }
-  },
   "common": {
     "close": "Close",
     "error": "Error"
@@ -67,6 +44,35 @@
       "dark": "Dark",
       "light": "Light",
       "title": "Color mode"
+    }
+  },
+  "pages": {
+    "builtin": {
+      "home": {
+        "title": "Home"
+      }
+    },
+    "course": {
+      "glossary": {
+        "title": "Glossary"
+      },
+      "progress": {
+        "title": "Progress"
+      },
+      "toc": {
+        "title": "Table of contents"
+      }
+    },
+    "user": {
+      "login": {
+        "email": "Email Address",
+        "forgotPassword": "Forgot password?",
+        "password": "Password",
+        "rememberMe": "Remember me",
+        "signIn": "Sign In",
+        "signUpLink": "Don't have an account? Sign Up",
+        "title": "Login"
+      }
     }
   },
   "toc": {

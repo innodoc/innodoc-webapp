@@ -6,16 +6,23 @@ import SpecLink from './SpecLink'
 import type { LinkProps } from './types'
 
 /** Link to home as specified in course */
-const HomeLink = forwardRef<HTMLAnchorElement, HomeLinkProps>(function HomeLink(props, ref) {
+const CourseHomeLink = forwardRef<HTMLAnchorElement, HomeLinkProps>(function HomeLink({ children, ...props }, ref) {
   const { course } = useSelectCurrentCourse()
 
   if (!course) {
     return null
   }
 
-  return <SpecLink to={course.homeLink} ref={ref} {...props} />
+  const title = course.shortTitle ?? course.title
+  const content = children ?? title
+
+  return (
+    <SpecLink to={course.homeLink} ref={ref} {...props}>
+      {content}
+    </SpecLink>
+  )
 })
 
 type HomeLinkProps = Omit<LinkProps, 'to'>
 
-export default HomeLink
+export default CourseHomeLink
