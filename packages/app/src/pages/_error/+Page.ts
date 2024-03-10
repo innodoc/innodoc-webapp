@@ -1,3 +1,1 @@
-import { ErrorPage } from '@innodoc/ui/pages'
-
-export { ErrorPage as Page }
+export { ErrorPage as Page } from '@innodoc/ui/pages'

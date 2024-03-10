@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "imports": {
-    "#pages/content/onInit": "./src/pages/content/onInitContent.ts",
+    "#pages/course/content/onInit": "./src/pages/course/content/onInitContent.ts",
     "#renderer/common": "./src/renderer/common/common.ts",
     "#renderer/route/makeRouteFunc": "./src/renderer/route/makeRouteFunc.ts",
     "#renderer/server/makeOnBeforeRenderContent": "./src/renderer/server/makeOnBeforeRenderContent.ts",

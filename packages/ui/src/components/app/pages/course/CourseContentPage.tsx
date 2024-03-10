@@ -8,7 +8,7 @@ import { useSelectPage } from '#hooks/select'
 
 import ContentPage from './ContentPage'
 
-function PagePage() {
+function CourseContentPage() {
   const routeInfo = useSelector(selectRouteInfo)
   const { locale } = routeInfo
   const { courseSlug, pageSlug } = isCoursePageRouteInfo(routeInfo)
@@ -25,6 +25,9 @@ function PagePage() {
     { skip: !courseSlug || !pageSlug },
   )
 
+  // TODO: isIconName
+  // const iconName = isIconName(page.icon) ? page.icon : undefined
+
   return (
     <ContentPage
       contentHash={data?.hash}
@@ -39,4 +42,4 @@ function PagePage() {
   )
 }
 
-export default PagePage
+export default CourseContentPage

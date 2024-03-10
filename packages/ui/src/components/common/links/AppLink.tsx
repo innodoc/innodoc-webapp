@@ -46,7 +46,7 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink({ c
   }
 
   // Home link
-  if (routeInfo.name === 'app:course') {
+  if (routeInfo.name === 'app:course:index') {
     return (
       <HomeLink ref={ref} {...other}>
         {content}

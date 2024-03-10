@@ -9,7 +9,7 @@ import { apiRoutes, builtinRoutes, courseRoutes, userRoutes } from './routes/rou
 import { isAppRouteInfo, isAppRouteName, isCourseContentRouteName } from './typeGuards'
 import type { ApiRouteParams } from './routes/routes'
 import type { ParamsForGenerator, RouteDef, RouteFuncArgs, RouteParams } from './types/common'
-import type { AppRouteInfo, CourseContentRouteInfo } from './types/routeInfos'
+import type { CourseContentRouteInfo } from './types/routeInfos'
 import type { ApiRouteName, AppRouteName, RouteName } from './types/routeNames'
 
 type PathFunctions = {
@@ -69,10 +69,10 @@ class RouteManager {
    * @param routeInfo route info object
    * @returns URL
    */
-  public appUrl<R extends AppRouteName>(routeInfo: AppRouteInfo<R>): string {
+  public appUrl(routeInfo: Record<string, unknown>): string {
     if (isAppRouteInfo(routeInfo)) {
       const { name, ...params } = routeInfo
-      return this.pathFunctions[name](params as ParamsForGenerator<R>)
+      return this.pathFunctions[name](params as ParamsForGenerator<typeof name>)
     }
     throw new TypeError('Unable to parse routeInfo object')
   }

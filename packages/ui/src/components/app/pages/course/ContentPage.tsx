@@ -6,9 +6,8 @@ import type { ContentType } from '@innodoc/types/common'
 
 import { Code } from '#components/common/misc'
 import { HastNode } from '#components/content/hast'
+import ErrorPage from '#components/pages/error'
 import { getContentIdField } from '#utils'
-
-import ErrorPage from './ErrorPage'
 
 function ContentError({ contentType, contentIdValue }: ErrorProperties) {
   const contentIdField = getContentIdField(contentType)

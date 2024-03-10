@@ -4,7 +4,7 @@ import type { RouteFuncArgs } from '#types/common'
 
 const courseMiscRoutes = {
   // Course home
-  'app:course': '/:courseSlug',
+  'app:course:index': '/:courseSlug',
 
   // Progress
   'app:course:progress': '/:courseSlug/progress',

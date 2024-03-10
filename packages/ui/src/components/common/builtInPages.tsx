@@ -20,12 +20,13 @@ interface BuiltinPage {
   linked?: PageLinkLocation[]
 }
 
+// TODO: course pages don't belong here
 /** Built-in pages */
 const builtInPages: BuiltinPage[] = [
   {
     icon: <Icon name="mdi:home" />,
     title: 'builtinPages.home.title',
-    routeName: 'app:course',
+    routeName: 'app:course:index',
   },
   {
     icon: <Icon name="mdi:chart-line" />,

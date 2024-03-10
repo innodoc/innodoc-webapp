@@ -1,4 +1,3 @@
-import { isAppRouteInfo } from '@innodoc/routes/typeGuards'
 import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
@@ -19,10 +18,7 @@ function useRouteManager() {
      */
     url: (partialRouteInfo: Partial<AppRouteInfo>) => {
       const routeInfo = { ...currentRouteInfo, ...partialRouteInfo }
-
-      if (isAppRouteInfo(routeInfo)) {
-        return routeManager.appUrl(routeInfo)
-      }
+      return routeManager.appUrl(routeInfo)
     },
 
     /**
@@ -32,6 +28,7 @@ function useRouteManager() {
      * @returns `true` if `partialRouteInfo` is current route
      */
     isActiveRoute: (partialRouteInfo?: Partial<AppRouteInfo>) => {
+      // TODO: fix and put logic in route manager
       const routeInfo = { ...currentRouteInfo, ...partialRouteInfo }
 
       for (const key of Object.keys(currentRouteInfo) as (keyof AppRouteInfo)[]) {

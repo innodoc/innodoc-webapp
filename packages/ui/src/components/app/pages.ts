@@ -1,8 +1,9 @@
+import CourseContentPage from './pages/course/CourseContentPage'
+import CourseProgressPage from './pages/course/CourseProgressPage'
+import CourseSectionPage from './pages/course/CourseSectionPage/CourseSectionPage'
+import CourseTocPage from './pages/course/CourseTocPage'
 import ErrorPage from './pages/ErrorPage'
-import PagePage from './pages/PagePage'
-import ProgressPage from './pages/ProgressPage'
-import SectionPage from './pages/SectionPage/SectionPage'
-import TocPage from './pages/TocPage'
+import IndexPage from './pages/IndexPage'
 import LoginPage from './pages/user/LoginPage'
 
-export { ErrorPage, LoginPage, PagePage, ProgressPage, SectionPage, TocPage }
+export { CourseContentPage, CourseProgressPage, CourseSectionPage, CourseTocPage, ErrorPage, IndexPage, LoginPage }

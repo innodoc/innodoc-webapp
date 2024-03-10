@@ -1,27 +1,31 @@
+import { isCourseSectionRouteInfo } from '@innodoc/routes/typeGuards'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetSectionContentQuery } from '@innodoc/store/slices/content/sections'
 
 import { PageHeader } from '#components/common/misc'
 import ContentPage from '#components/pages/content'
 import { useSelector } from '#hooks/redux'
-import { useSelectCurrentCourse, useSelectSection } from '#hooks/select'
+import { useSelectSection } from '#hooks/select'
 import { formatSectionTitle } from '#utils'
 
 import Breadcrumbs from './Breadcrumbs'
 import SubsectionList from './SubsectionList'
 
-function SectionPage() {
-  const { course } = useSelectCurrentCourse()
-  const { courseSlug, locale, sectionPath } = useSelector(selectRouteInfo)
+function CourseSectionPage() {
+  const routeInfo = useSelector(selectRouteInfo)
+  const { locale } = routeInfo
+  const { courseSlug, sectionPath } = isCourseSectionRouteInfo(routeInfo)
+    ? routeInfo
+    : { courseSlug: undefined, sectionPath: undefined }
   const { section } = useSelectSection(sectionPath)
 
   const { data, isError, isLoading } = useGetSectionContentQuery(
     {
-      courseSlug: course?.slug ?? '',
+      courseSlug: courseSlug ?? '',
       locale,
       sectionPath: sectionPath ?? '',
     },
-    { skip: course === undefined || courseSlug === null || sectionPath === undefined },
+    { skip: !courseSlug || !sectionPath },
   )
 
   return (
@@ -29,7 +33,6 @@ function SectionPage() {
       contentHash={data?.hash}
       contentObj={section}
       contentType="section"
-      course={course}
       isError={isError}
       isLoading={isLoading}
       contentIdValue={sectionPath}
@@ -41,4 +44,4 @@ function SectionPage() {
   )
 }
 
-export default SectionPage
+export default CourseSectionPage
