@@ -9,6 +9,8 @@ import eslintPluginPromise from 'eslint-plugin-promise'
 import eslintPluginRegexp from 'eslint-plugin-regexp'
 import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort'
 import eslintPluginUnicorn from 'eslint-plugin-unicorn'
+import eslintPluginVitest from 'eslint-plugin-vitest'
+import eslintPluginVitestGlobals from 'eslint-plugin-vitest-globals'
 import globals from 'globals'
 
 const eslintRules = {
@@ -179,15 +181,30 @@ const config = [
 
   // No type-checking for JS files
   {
-    files: ['*.js'],
+    files: ['**/*.js'],
     rules: typescriptEslintPlugin.configs['disable-type-checked'].rules,
   },
 
   // Filename rule exceptions
   {
-    files: ['**/*.d.ts', 'eslint.config*.js'],
+    files: ['**/*.d.ts', '**/eslint.config*.js'],
     rules: {
       'filenames/match-exported': 'off',
+      'filenames/match-regex': 'off',
+    },
+  },
+
+  // Tests
+  {
+    files: ['**/*.test.{ts,tsx}'],
+    languageOptions: {
+      globals: eslintPluginVitestGlobals.environments.env.globals,
+    },
+    plugins: {
+      vitest: eslintPluginVitest,
+    },
+    rules: {
+      ...eslintPluginVitest.configs.recommended.rules,
       'filenames/match-regex': 'off',
     },
   },

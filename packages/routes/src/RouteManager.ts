@@ -107,6 +107,10 @@ class RouteManager {
     if (isCourseContentRouteName(routeName)) {
       const contentType = routeName.split(':').pop()
       if (isContentType(contentType)) {
+        if (!arg) {
+          throw new TypeError(`Not a valid argument: ${arg}`)
+        }
+
         if (contentType === 'page') {
           return { name: routeName, pageSlug: arg } as CourseContentRouteInfo<'app:course:page'>
         }
