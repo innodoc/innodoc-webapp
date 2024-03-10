@@ -7,6 +7,7 @@ import z from 'zod'
 
 import { PATH_RE } from '@innodoc/constants'
 
+// split off, so we don't create a circular typing on `translatableString` schema
 function validateTranslatableString(obj: object) {
   return Object.entries(obj).every(([k, v]) => isLocale(k) && typeof v === 'string')
 }
@@ -28,12 +29,12 @@ const portSchema = z.coerce
 const translatableString = z
   .record(localeSchema, z.string())
   .refine(validateTranslatableString, { message: 'Translatable string malformed' })
-const dbKey = z.number().int().positive()
+const dbKeySchema = z.number().int().positive()
 const orderNumber = z.number().int().describe('Sort order within parent')
 const sectionPathSchema = z.string().refine(isSectionPath, { message: 'String must be a valid section path' })
 
 export {
-  dbKey,
+  dbKeySchema,
   hostnameSchema,
   localeSchema,
   orderNumber,

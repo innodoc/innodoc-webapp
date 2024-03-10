@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { type ForwardedRef, forwardRef, type SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import type { TranslatedSection } from '@innodoc/types/entities'
+import type { TranslatedSection } from '@innodoc/schema/types'
 
 import { SectionLink } from '#components/common/links'
 import { formatSectionTitle } from '#utils'

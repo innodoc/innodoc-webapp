@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, List, ListItem, ListItemText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import type { TranslatedSection } from '@innodoc/types/entities'
+import type { TranslatedSection } from '@innodoc/schema/types'
 
 import { SectionLink } from '#components/common/links'
 import { Icon } from '#components/common/misc'

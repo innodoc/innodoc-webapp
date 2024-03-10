@@ -1,4 +1,4 @@
-import type { ApiPage, TranslatedPage } from '@innodoc/types/entities'
+import type { ApiPage, TranslatedPage } from '@innodoc/schema/types'
 
 import makeUseSelectContentUnit from './makeUseSelectContentUnit'
 

@@ -2,7 +2,7 @@ import z from 'zod'
 
 import { SECTION_TYPES } from '@innodoc/constants'
 
-import { dbKey, orderNumber, sectionPathSchema, translatableString } from '#common'
+import { dbKeySchema, orderNumber, sectionPathSchema, translatableString } from '#common'
 
 import { baseEntity } from './base'
 
@@ -10,8 +10,8 @@ import { baseEntity } from './base'
 const sectionSchema = baseEntity
   .extend({
     path: sectionPathSchema.describe('Section path'),
-    course_id: dbKey.describe('Course ID'),
-    parent_id: dbKey.describe('ID of parent section').nullable(),
+    course_id: dbKeySchema.describe('Course ID'),
+    parent_id: dbKeySchema.describe('ID of parent section').nullable(),
     title: translatableString.describe('Page title'),
     short_title: translatableString.nullable().describe('Page title (short)'),
     type: z.enum(SECTION_TYPES).describe('Section type'),
@@ -30,8 +30,4 @@ const querySectionSchema = sectionSchema.extend({
 //   children: SectionWithChildren[]
 // }
 
-type SectionSchema = z.infer<typeof sectionSchema>
-type QuerySectionSchema = z.infer<typeof querySectionSchema>
-
-export type { QuerySectionSchema, SectionSchema }
 export { querySectionSchema, sectionSchema }

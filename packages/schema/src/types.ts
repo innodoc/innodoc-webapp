@@ -1,12 +1,22 @@
 import type { CamelCasedProperties } from 'type-fest'
+import type z from 'zod'
 
-import type { FRAGMENT_TYPES } from '@innodoc/constants'
-import type { BaseEntitySchema, CourseSchema, PageSchema, QuerySectionSchema } from '@innodoc/schema'
+import type { translatableString } from './common'
+import type { courseSchema, fragmentTypeSchema, pageSchema, querySectionSchema, sectionSchema } from './entities'
+import type { baseEntity } from './entities/base'
 
-import type { TranslatableString } from './common'
+type BaseEntitySchema = z.infer<typeof baseEntity>
+type CourseSchema = z.infer<typeof courseSchema>
+type FragmentTypeSchema = z.infer<typeof fragmentTypeSchema>
+type PageSchema = z.infer<typeof pageSchema>
+type SectionSchema = z.infer<typeof sectionSchema>
+type QuerySectionSchema = z.infer<typeof querySectionSchema>
 
 /** Base entity returned by the API */
 type ApiBaseEntity = CamelCasedProperties<BaseEntitySchema>
+
+/** Field that holds a string in different languages */
+type TranslatableString = z.infer<typeof translatableString>
 
 /** Entity that has all translatable fields replaced with the actual translation */
 type TranslatedEntity<T extends Record<string, unknown>> = {
@@ -31,23 +41,18 @@ type ApiSection = CamelCasedProperties<QuerySectionSchema>
 /** Section with translated fields */
 type TranslatedSection = TranslatedEntity<ApiSection>
 
-/** Content unit (page or section) */
-type ContentUnit = ApiPage | ApiSection
-
-/** Content unit (page or section) with translated fields */
-type TranslatedContentUnit = TranslatedPage | TranslatedSection
-
-/** Content fragment type */
-type FragmentType = (typeof FRAGMENT_TYPES)[number]
-
 export type {
   ApiBaseEntity,
   ApiCourse,
   ApiPage,
   ApiSection,
-  ContentUnit,
-  FragmentType,
-  TranslatedContentUnit,
+  BaseEntitySchema,
+  CourseSchema,
+  FragmentTypeSchema,
+  PageSchema,
+  QuerySectionSchema,
+  SectionSchema,
+  TranslatableString,
   TranslatedCourse,
   TranslatedEntity,
   TranslatedPage,

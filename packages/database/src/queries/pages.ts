@@ -1,7 +1,7 @@
 import type { LanguageCode } from 'iso-639-1'
 
 import type Database from '@innodoc/database'
-import type { CourseSchema, PageSchema } from '@innodoc/schema'
+import type { CourseSchema, PageSchema } from '@innodoc/schema/types'
 
 import { unpackValue } from './utils'
 import type { ValueResult } from './types'

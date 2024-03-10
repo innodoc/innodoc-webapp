@@ -18,7 +18,4 @@ const courseSchema = baseEntity
   })
   .describe('Database course schema')
 
-type CourseSchema = z.infer<typeof courseSchema>
-
-export type { CourseSchema }
 export { courseSchema }

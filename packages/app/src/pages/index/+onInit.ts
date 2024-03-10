@@ -4,7 +4,7 @@ import type { PageContextServer } from 'vike/types'
 import { DEFAULT_ROUTE_NAME } from '@innodoc/constants'
 import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 import courses from '@innodoc/store/slices/content/courses'
-import type { ApiCourse } from '@innodoc/types/entities'
+import type { ApiCourse } from '@innodoc/schema/types'
 
 const routeManager = getRouteManager()
 

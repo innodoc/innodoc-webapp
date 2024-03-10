@@ -1,8 +1,7 @@
 import type { LanguageCode } from 'iso-639-1'
 
-import { isTranslatableString } from '@innodoc/schema/typeGuards'
-import type { TranslatableString } from '@innodoc/types/common'
-import type { ApiBaseEntity, TranslatedEntity } from '@innodoc/types/entities'
+import { isTranslatableString } from '@innodoc/typeguards/content'
+import type { ApiBaseEntity, TranslatableString, TranslatedEntity } from '@innodoc/schema/types'
 
 /** Translate entity */
 function translatedEntity<T extends ApiBaseEntity>(entity: T, locale: LanguageCode) {

@@ -1,16 +1,11 @@
 import type { Root } from 'hast'
-import type { z } from 'zod'
 
 import type { CONTENT_TYPES, COURSE_SLUG_MODES, PAGE_LINK_LOCACTIONS, SECTION_TYPES } from '@innodoc/constants'
-import type { translatableString } from '@innodoc/schema/common'
 
 import type { ParserError } from './errors'
 
 /** Arbitrary object */
 type ArbitraryObject = Record<string, unknown>
-
-/** Field that holds a string in different languages */
-type TranslatableString = z.infer<typeof translatableString>
 
 /** Location in the layout where page links can appear */
 type PageLinkLocation = (typeof PAGE_LINK_LOCACTIONS)[number]
@@ -54,6 +49,5 @@ export type {
   HastResultWithHash,
   PageLinkLocation,
   SectionType,
-  TranslatableString,
   WithContentHash,
 }

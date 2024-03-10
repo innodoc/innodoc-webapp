@@ -46,6 +46,7 @@
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
+    "@innodoc/schema": "workspace:^",
     "@innodoc/types": "workspace:^",
     "@reduxjs/toolkit": "2.2.1",
     "@types/innodoc-vite-env": "workspace:^",

@@ -7,19 +7,19 @@ import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCoursePagesQuery } from '@innodoc/store/slices/content/pages'
 import { useGetCourseSectionsQuery } from '@innodoc/store/slices/content/sections'
 import { isApiPage } from '@innodoc/typeguards/content'
+import type { ApiPage, ApiSection } from '@innodoc/schema/types'
 import type { ContentType } from '@innodoc/types/common'
-import type { ApiPage, ApiSection, ContentUnit } from '@innodoc/types/entities'
 
 import { useSelector } from './redux'
 import { translateEntity } from './utils'
 
 /**
- * Make content unit selection hook.
+ * Make page/section selection hook.
  *
  * @param contentType content type
- * @returns hook to select a content unit
+ * @returns hook to select a page/section
  */
-function makeUseSelectContentUnit<T extends ContentUnit>(contentType: ContentType) {
+function makeUseSelectContentUnit<T extends ApiPage | ApiSection>(contentType: ContentType) {
   type ContentIdField = T extends ApiPage ? ApiPage['slug'] : ApiSection['path']
   const useGetContentUnitsQuery = contentType === 'page' ? useGetCoursePagesQuery : useGetCourseSectionsQuery
 
@@ -58,5 +58,4 @@ function makeUseSelectContentUnit<T extends ContentUnit>(contentType: ContentTyp
   }
 }
 
-export type { UseUseSelectContentUnitResult }
 export default makeUseSelectContentUnit

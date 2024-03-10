@@ -6,7 +6,7 @@ import { parse as yamlParse } from 'yaml'
 import type { Knex } from 'knex'
 
 import getDatabase from '@innodoc/server/database'
-import type { DbCourse, DbSection } from '@innodoc/types/entities'
+import type { CourseSchema, SectionSchema } from '@innodoc/schema/types'
 
 import type { InsertResult, Manifest, ManifestPage } from './types'
 
@@ -21,9 +21,9 @@ class Importer {
   protected db: Knex | null = null
   protected trx: Knex.Transaction | null = null
   protected importFolder: string | null = null
-  protected courseSlug: DbCourse['slug'] | null = null
+  protected courseSlug: CourseSchema['slug'] | null = null
   protected manifest: Manifest | null = null
-  protected courseId: DbCourse['id'] | null = null
+  protected courseId: CourseSchema['id'] | null = null
 
   /** Import a course from a folder */
   public async import(importFolder: string, courseSlug: string) {
@@ -160,7 +160,7 @@ class Importer {
     // Walk down first tree of first locale
     const startDir = path.join(this.importFolder, this.manifest.languages[0])
 
-    const findSectionPaths = async (dirpath: string, parentId: DbSection['parent_id']) => {
+    const findSectionPaths = async (dirpath: string, parentId: SectionSchema['parent_id']) => {
       const entries = await fs.readdir(dirpath)
       let order = 0
       for (const entry of entries.sort()) {
@@ -184,7 +184,7 @@ class Importer {
   }
 
   /** Create section entity */
-  protected async createSection(sectionPath: string, order: number, parentId: DbSection['parent_id']) {
+  protected async createSection(sectionPath: string, order: number, parentId: SectionSchema['parent_id']) {
     if (!this.trx || !this.importFolder || !this.courseId || !this.manifest) {
       throw new Error("Importer wasn't initialized")
     }

@@ -1,4 +1,4 @@
-import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
+import type { ApiSection, TranslatedSection } from '@innodoc/schema/types'
 
 import makeUseSelectContentUnit from './makeUseSelectContentUnit'
 

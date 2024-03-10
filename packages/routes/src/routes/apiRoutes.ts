@@ -1,6 +1,6 @@
 import type { LanguageCode } from 'iso-639-1'
 
-import type { ApiCourse, ApiPage, ApiSection, FragmentType } from '@innodoc/types/entities'
+import type { ApiCourse, ApiPage, ApiSection, FragmentTypeSchema } from '@innodoc/schema/types'
 
 const apiRoutes = {
   // Course
@@ -35,7 +35,7 @@ interface ApiRouteParams {
   'api:course:fragment:content': {
     courseSlug: ApiCourse['slug']
     locale: LanguageCode
-    fragmentType: FragmentType
+    fragmentType: FragmentTypeSchema
   }
 }
 

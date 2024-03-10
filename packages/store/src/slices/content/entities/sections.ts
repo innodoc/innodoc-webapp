@@ -1,7 +1,7 @@
 import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 import type { ApiRouteParams } from '@innodoc/routes/types'
+import type { ApiSection } from '@innodoc/schema/types'
 import type { ContentWithHash } from '@innodoc/types/common'
-import type { ApiSection } from '@innodoc/types/entities'
 
 import contentApi, { hashContentResponse } from '#slices/content'
 

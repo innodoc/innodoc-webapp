@@ -1,6 +1,6 @@
 import { styled } from '@mui/material'
 
-import type { TranslatedSection } from '@innodoc/types/entities'
+import type { TranslatedSection } from '@innodoc/schema/types'
 
 import { SectionLink } from '#components/common/links'
 import { useSelectSectionChildren } from '#hooks/select'

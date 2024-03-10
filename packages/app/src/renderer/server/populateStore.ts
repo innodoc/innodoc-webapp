@@ -8,8 +8,8 @@ import sections from '@innodoc/store/slices/content/sections'
 import { isArbitraryObject } from '@innodoc/typeguards/common'
 import { isErrorWithMessage } from '@innodoc/typeguards/errors'
 import type { AppRouteInfo, CourseRouteInfo } from '@innodoc/routes/types/routeInfos'
+import type { ApiCourse } from '@innodoc/schema/types'
 import type { Store } from '@innodoc/store/types'
-import type { ApiCourse } from '@innodoc/types/entities'
 
 const routeManager = getRouteManager()
 

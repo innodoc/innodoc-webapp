@@ -46,6 +46,7 @@
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
+    "@innodoc/schema": "workspace:^",
     "@innodoc/types": "workspace:^",
     "@types/innodoc-vite-env": "workspace:^",
     "@types/react-redux": "7.1.33",

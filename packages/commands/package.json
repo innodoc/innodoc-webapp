@@ -25,6 +25,7 @@
     "@iconify/utils": "2.1.22",
     "@innodoc/eslint-config": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
+    "@innodoc/schema": "workspace:^",
     "@innodoc/types": "workspace:^",
     "@types/eslint": "8.56.5",
     "@types/svg-parser": "2.0.6",

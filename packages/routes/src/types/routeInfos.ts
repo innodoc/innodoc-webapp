@@ -1,6 +1,6 @@
 import type { LanguageCode } from 'iso-639-1'
 
-import type { ApiCourse } from '@innodoc/types/entities'
+import type { ApiCourse } from '@innodoc/schema/types'
 
 import type { RouteParams } from './common'
 import type {

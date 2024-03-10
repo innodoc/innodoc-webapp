@@ -1,15 +1,15 @@
+import type { ApiCourse, ApiPage, TranslatableString } from '@innodoc/schema/types'
 import type { PageLinkLocation } from '@innodoc/types/common'
-import type { DbCourse, DbPage, TranslatableString } from '@innodoc/types/entities'
 
-interface Manifest extends Omit<DbCourse, 'locales' | 'title' | 'short_title'> {
+interface Manifest extends Omit<ApiCourse, 'locales' | 'title' | 'short_title'> {
   pages: ManifestPage[]
   title: TranslatableString
   short_title?: TranslatableString
-  languages: DbCourse['locales']
+  languages: ApiCourse['locales']
 }
 
 interface ManifestPage {
-  id: DbPage['slug']
+  id: ApiPage['slug']
   icon: string
   linked: PageLinkLocation[]
 }

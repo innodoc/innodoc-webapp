@@ -1,7 +1,7 @@
 import { Children, forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 
-import type { ApiPage, TranslatedPage } from '@innodoc/types/entities'
+import type { ApiPage, TranslatedPage } from '@innodoc/schema/types'
 
 import { InlineError } from '#components/common/errors'
 import { Code, Icon } from '#components/common/misc'

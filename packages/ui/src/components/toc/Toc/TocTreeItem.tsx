@@ -1,7 +1,7 @@
 import { styled } from '@mui/material'
 import { TreeItem, type TreeItemProps } from '@mui/x-tree-view'
 
-import type { TranslatedSection } from '@innodoc/types/entities'
+import type { TranslatedSection } from '@innodoc/schema/types'
 
 import { useSelectSectionChildren } from '#hooks/select'
 

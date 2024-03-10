@@ -177,6 +177,9 @@ importers:
       '@innodoc/eslint-config':
         specifier: workspace:^
         version: link:../eslint-config
+      '@innodoc/schema':
+        specifier: workspace:^
+        version: link:../schema
       '@innodoc/ts-config':
         specifier: workspace:^
         version: link:../ts-config
@@ -232,6 +235,9 @@ importers:
       '@innodoc/eslint-config':
         specifier: workspace:^
         version: link:../eslint-config
+      '@innodoc/schema':
+        specifier: workspace:^
+        version: link:../schema
       '@innodoc/ts-config':
         specifier: workspace:^
         version: link:../ts-config
@@ -583,9 +589,6 @@ importers:
       '@innodoc/constants':
         specifier: workspace:^
         version: link:../constants
-      '@innodoc/typeguards':
-        specifier: workspace:^
-        version: link:../typeguards
       validator:
         specifier: 13.11.0
         version: 13.11.0
@@ -599,12 +602,12 @@ importers:
       '@innodoc/ts-config':
         specifier: workspace:^
         version: link:../ts-config
-      '@innodoc/types':
-        specifier: workspace:^
-        version: link:../types
       '@types/validator':
         specifier: 13.11.9
         version: 13.11.9
+      type-fest:
+        specifier: 4.11.1
+        version: 4.11.1
 
   packages/server:
     dependencies:
@@ -739,6 +742,9 @@ importers:
       '@innodoc/eslint-config':
         specifier: workspace:^
         version: link:../eslint-config
+      '@innodoc/schema':
+        specifier: workspace:^
+        version: link:../schema
       '@innodoc/ts-config':
         specifier: workspace:^
         version: link:../ts-config
@@ -765,6 +771,9 @@ importers:
       '@innodoc/constants':
         specifier: workspace:^
         version: link:../constants
+      '@innodoc/schema':
+        specifier: workspace:^
+        version: link:../schema
       iso-639-1:
         specifier: 3.1.2
         version: 3.1.2
@@ -793,15 +802,6 @@ importers:
       '@innodoc/constants':
         specifier: workspace:^
         version: link:../constants
-      '@innodoc/schema':
-        specifier: workspace:^
-        version: link:../schema
-      validator:
-        specifier: 13.11.0
-        version: 13.11.0
-      zod:
-        specifier: 3.22.4
-        version: 3.22.4
     devDependencies:
       '@innodoc/eslint-config':
         specifier: workspace:^
@@ -824,9 +824,6 @@ importers:
       react:
         specifier: 18.2.0
         version: 18.2.0
-      type-fest:
-        specifier: 4.11.1
-        version: 4.11.1
 
   packages/ui:
     dependencies:

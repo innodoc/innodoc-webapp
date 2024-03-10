@@ -8,7 +8,7 @@
     ".": "./src/entities.ts",
     "./common": "./src/common.ts",
     "./config": "./src/config.ts",
-    "./typeGuards": "./src/typeGuards.ts"
+    "./types": "./src/types.ts"
   },
   "imports": {
     "#common": "./src/common.ts"
@@ -20,14 +20,13 @@
   },
   "dependencies": {
     "@innodoc/constants": "workspace:^",
-    "@innodoc/typeguards": "workspace:^",
     "validator": "13.11.0",
     "zod": "3.22.4"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
-    "@innodoc/types": "workspace:^",
-    "@types/validator": "13.11.9"
+    "@types/validator": "13.11.9",
+    "type-fest": "4.11.1"
   }
 }

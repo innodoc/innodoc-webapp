@@ -5,7 +5,7 @@ import type { LanguageCode } from 'iso-639-1'
 import { isCourseRouteInfo } from '@innodoc/routes/typeGuards'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCourseSectionsQuery } from '@innodoc/store/slices/content/sections'
-import type { ApiSection, TranslatedSection } from '@innodoc/types/entities'
+import type { ApiSection, TranslatedSection } from '@innodoc/schema/types'
 
 import { useSelector } from './redux'
 import { translateEntityArray } from './utils'

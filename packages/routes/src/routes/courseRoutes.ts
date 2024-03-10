@@ -1,4 +1,4 @@
-import type { ApiPage, ApiSection } from '@innodoc/types/entities'
+import type { ApiPage, ApiSection } from '@innodoc/schema/types'
 
 import type { RouteFuncArgs } from '#types/common'
 
