@@ -17,11 +17,17 @@ import type { ContentType } from '@innodoc/types/common'
  * - Fetch content
  * - Transform Markdown->hast
  *
+ * Context: server
+ *
  * @param contentType content type (`page` or `course`)
  * @returns `onInit` function
  */
 function onInitContent(contentType: ContentType) {
-  return async ({ routeInfo, store }: PageContextServer): Promise<void> => {
+  return async ({ isClientSideNavigation, routeInfo, store }: PageContextServer): Promise<void> => {
+    if (isClientSideNavigation) {
+      return
+    }
+
     let contentIdValue
     if (routeInfo.name === 'app:course:page') {
       contentIdValue = routeInfo.pageSlug

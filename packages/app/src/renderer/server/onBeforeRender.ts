@@ -33,7 +33,12 @@ function mergeRouteInfo(routeInfo: AppRouteInfo, params: PageContextServer['rout
   return routeInfo
 }
 
-const onBeforeRender: OnBeforeRenderAsync = async function ({ routeInfo: routeInfoInput, routeParams, config }) {
+const onBeforeRender: OnBeforeRenderAsync = async function ({
+  isClientSideNavigation,
+  routeInfo: routeInfoInput,
+  routeParams,
+  config,
+}) {
   const routeInfo = mergeRouteInfo(routeInfoInput, routeParams)
 
   // Initialize store
@@ -43,7 +48,7 @@ const onBeforeRender: OnBeforeRenderAsync = async function ({ routeInfo: routeIn
   store.dispatch(changeRouteInfo(routeInfo))
 
   // Populate store with necessary data
-  if (isCourseRouteInfo(routeInfo)) {
+  if (!isClientSideNavigation && isCourseRouteInfo(routeInfo)) {
     await populateStore(store, routeInfo)
   }
 
@@ -56,7 +61,7 @@ const onBeforeRender: OnBeforeRenderAsync = async function ({ routeInfo: routeIn
   // onInit hook
   const { onInit } = config as Config // TODO: once vikejs/vike#1532 is released
   if (isCallable(onInit)) {
-    const ret = onInit({ routeInfo, store })
+    const ret = onInit({ isClientSideNavigation, routeInfo, store })
     if (isPromise(ret)) {
       await ret
     }
