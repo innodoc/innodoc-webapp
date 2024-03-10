@@ -28,7 +28,6 @@ function useRouteManager() {
      * @returns `true` if `partialRouteInfo` is current route
      */
     isActiveRoute: (partialRouteInfo?: Partial<AppRouteInfo>) => {
-      // TODO: fix and put logic in route manager
       const routeInfo = { ...currentRouteInfo, ...partialRouteInfo }
 
       for (const key of Object.keys(currentRouteInfo) as (keyof AppRouteInfo)[]) {

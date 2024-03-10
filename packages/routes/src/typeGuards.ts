@@ -39,12 +39,20 @@ function isCourseRouteInfo(routeInfo: unknown): routeInfo is CourseRouteInfo {
 
 /** Type guard for `CourseSectionRouteInfo` */
 function isCourseSectionRouteInfo(routeInfo: unknown): routeInfo is CourseSectionRouteInfo {
-  return isCourseRouteInfo(routeInfo) && typeof (routeInfo as CourseSectionRouteInfo).sectionPath === 'string'
+  return (
+    isCourseRouteInfo(routeInfo) &&
+    routeInfo.name === 'app:course:section' &&
+    typeof (routeInfo as CourseSectionRouteInfo).sectionPath === 'string'
+  )
 }
 
 /** Type guard for `CoursePageRouteInfo` */
 function isCoursePageRouteInfo(routeInfo: unknown): routeInfo is CoursePageRouteInfo {
-  return isCourseRouteInfo(routeInfo) && typeof (routeInfo as CoursePageRouteInfo).pageSlug === 'string'
+  return (
+    isCourseRouteInfo(routeInfo) &&
+    routeInfo.name === 'app:course:page' &&
+    typeof (routeInfo as CoursePageRouteInfo).pageSlug === 'string'
+  )
 }
 
 export {

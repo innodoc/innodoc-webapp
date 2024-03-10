@@ -6,8 +6,8 @@ import type { ContentType, ContentWithHash, WithContentHash } from '@innodoc/typ
 import { isArbitraryObject } from './common'
 
 /** Type guard for `ContentType` */
-function isContentType(t: string): t is ContentType {
-  return CONTENT_TYPES.includes(t as ContentType)
+function isContentType(t: unknown): t is ContentType {
+  return typeof t === 'string' && CONTENT_TYPES.includes(t as ContentType)
 }
 
 /** Type guard for `ApiPage` */

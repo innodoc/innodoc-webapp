@@ -105,7 +105,7 @@ class RouteManager {
     }
 
     if (isCourseContentRouteName(routeName)) {
-      const contentType = routeName.split(':')[-1]
+      const contentType = routeName.split(':').pop()
       if (isContentType(contentType)) {
         if (contentType === 'page') {
           return { name: routeName, pageSlug: arg } as CourseContentRouteInfo<'app:course:page'>
