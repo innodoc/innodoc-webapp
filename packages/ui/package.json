@@ -43,6 +43,7 @@
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@innodoc/constants": "workspace:^",
+    "@innodoc/icon-bundle": "workspace:^",
     "@innodoc/markdown": "workspace:^",
     "@innodoc/routes": "workspace:^",
     "@innodoc/schema": "workspace:^",
@@ -62,7 +63,6 @@
     "unified": "11.0.4"
   },
   "devDependencies": {
-    "@innodoc/commands": "workspace:^",
     "@innodoc/eslint-config": "workspace:^",
     "@innodoc/ts-config": "workspace:^",
     "@innodoc/types": "workspace:^",

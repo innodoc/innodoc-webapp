@@ -2,7 +2,7 @@ import z from 'zod'
 
 import { PAGE_LINK_LOCACTIONS } from '@innodoc/constants'
 
-import { dbKeySchema, slugSchema, translatableString } from '#common'
+import { dbKeySchema, iconNameSchema, slugSchema, translatableString } from '#common'
 
 import { baseEntity } from './base'
 
@@ -13,7 +13,7 @@ const pageSchema = baseEntity
     course_id: dbKeySchema.describe('Course ID'),
     title: translatableString.describe('Page title'),
     short_title: translatableString.nullable().describe('Page title (short)'),
-    icon: z.string().nullable().describe('Icon name'),
+    icon: iconNameSchema.nullable(),
     linked: z
       .array(z.enum(PAGE_LINK_LOCACTIONS))
       .nullable()

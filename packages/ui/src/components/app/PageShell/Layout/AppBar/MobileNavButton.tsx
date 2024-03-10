@@ -42,11 +42,11 @@ function MobileNavButton() {
                 page={page}
                 selected={isActiveRoute({ name: 'app:course:page', pageSlug: page.slug })}
               >
-                {page.icon === undefined ? null : (
+                {page.icon ? (
                   <ListItemIcon>
                     <Icon name={page.icon} />
                   </ListItemIcon>
-                )}
+                ) : null}
                 <ListItemText primary={page.shortTitle ?? page.title} />
               </ListItemButton>
             </ListItem>

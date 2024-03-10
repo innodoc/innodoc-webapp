@@ -64,6 +64,7 @@
         "@innodoc/config",
         "@innodoc/constants",
         "@innodoc/database",
+        "@innodoc/icon-bundle",
         "@innodoc/i18n",
         "@innodoc/logging",
         "@innodoc/markdown",

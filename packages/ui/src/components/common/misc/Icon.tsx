@@ -2,7 +2,8 @@ import { SvgIcon as MuiSvgIcon, type SxProps, type Theme } from '@mui/material'
 import { type ComponentProps } from 'react'
 import { Trans } from 'react-i18next'
 
-import iconBundle from '@innodoc/commands/icon-bundle' assert { type: 'json' }
+import iconBundle from '@innodoc/icon-bundle/iconBundle' assert { type: 'json' }
+import type { IconName } from '@innodoc/icon-bundle/types'
 
 import { InlineError } from '#components/common/errors'
 
@@ -36,9 +37,8 @@ interface IconProps {
    *
    * See https://icon-sets.iconify.design/mdi/ for available icons.
    */
-  name: keyof typeof iconBundle
+  name: IconName
   sx?: SxProps<Theme>
 }
 
-export type { IconProps }
 export default Icon

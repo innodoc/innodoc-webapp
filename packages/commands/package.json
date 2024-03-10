@@ -4,14 +4,16 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./icon-bundle": "./dist/iconBundle.json"
+    "./iconBundle": "./dist/iconBundle.json",
+    "./typeGuards": "./src/typeGuards.ts",
+    "./types": "./src/types.ts"
   },
   "scripts": {
-    "build-icon-bundle": "tsx src/buildIconBundle/main.ts",
-    "import": "tsx src/importer/main.ts",
+    "build-icon-bundle": "src/buildIconBundle/main.ts",
+    "import": "src/importer/main.ts",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "routes": "tsx src/printRoutes/main.ts",
+    "routes": "src/printRoutes/main.ts",
     "type-check": "tsc --noEmit -p ."
   },
   "dependencies": {

@@ -1,6 +1,9 @@
+#!/usr/bin/env tsx
+
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+
+import config from '@innodoc/config'
 
 import getIconBundle from './getIconBundle'
 
@@ -13,33 +16,27 @@ function isSystemError(err: unknown): err is SystemError {
 }
 
 async function buildIconBundle() {
-  const dirname = path.dirname(fileURLToPath(import.meta.url))
-  const packageDir = path.resolve(dirname, '..', '..')
-  const projectDir = path.resolve(dirname, '..', '..', '..', '..')
-  const distDir = path.resolve(packageDir, 'dist')
-  const iconBundleFilename = path.join(distDir, 'iconBundle.json')
-
   try {
-    await fs.mkdir(distDir)
-  } catch (error) {
-    if (!isSystemError(error) || error.code !== 'EEXIST') {
-      throw error
+    const distDir = path.resolve(config.rootDir, 'packages', 'icon-bundle', 'dist')
+    try {
+      await fs.mkdir(distDir)
+    } catch (error) {
+      if (!isSystemError(error) || error.code !== 'EEXIST') {
+        throw error
+      }
     }
-  }
 
-  const iconBundle = await getIconBundle(projectDir)
-  await fs.writeFile(iconBundleFilename, JSON.stringify(iconBundle))
+    const uiPackageDir = path.resolve(config.rootDir, 'packages', 'ui')
+    const iconBundle = await getIconBundle(uiPackageDir)
 
-  return iconBundleFilename
-}
-
-buildIconBundle()
-  .then((iconBundleFilename) => {
+    const iconBundleFilename = path.join(distDir, 'iconBundle.json')
+    await fs.writeFile(iconBundleFilename, JSON.stringify(iconBundle))
     console.log(`Wrote ${iconBundleFilename}`)
-    return
-  })
-  .catch((error) => {
+  } catch (error) {
     console.error('Failed to write icon bundle!')
     console.error(error)
     process.exit(-1)
-  })
+  }
+}
+
+await buildIconBundle()

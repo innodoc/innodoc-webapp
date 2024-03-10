@@ -449,6 +449,8 @@ importers:
         specifier: 4.11.1
         version: 4.11.1
 
+  packages/icon-bundle: {}
+
   packages/logging:
     dependencies:
       pino:
@@ -589,6 +591,9 @@ importers:
       '@innodoc/constants':
         specifier: workspace:^
         version: link:../constants
+      '@innodoc/icon-bundle':
+        specifier: workspace:^
+        version: link:../icon-bundle
       validator:
         specifier: 13.11.0
         version: 13.11.0
@@ -836,6 +841,9 @@ importers:
       '@innodoc/constants':
         specifier: workspace:^
         version: link:../constants
+      '@innodoc/icon-bundle':
+        specifier: workspace:^
+        version: link:../icon-bundle
       '@innodoc/markdown':
         specifier: workspace:^
         version: link:../markdown
@@ -888,9 +896,6 @@ importers:
         specifier: 11.0.4
         version: 11.0.4
     devDependencies:
-      '@innodoc/commands':
-        specifier: workspace:^
-        version: link:../commands
       '@innodoc/eslint-config':
         specifier: workspace:^
         version: link:../eslint-config

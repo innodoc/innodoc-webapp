@@ -6,6 +6,7 @@ import isSlug from 'validator/lib/isSlug'
 import z from 'zod'
 
 import { PATH_RE } from '@innodoc/constants'
+import { isIconName } from '@innodoc/icon-bundle/typeGuards'
 
 // split off, so we don't create a circular typing on `translatableString` schema
 function validateTranslatableString(obj: object) {
@@ -18,6 +19,7 @@ function isSectionPath(value: string) {
   return sectionPathRegex.test(value)
 }
 
+const iconNameSchema = z.string().refine(isIconName).describe('Icon name')
 const slugSchema = z.string().refine(isSlug, { message: 'String must be a slug' })
 const localeSchema = z.string().refine(isLocale, { message: 'String must be a valid locale' })
 const hostnameSchema = z.string().refine(isHostname, { message: 'Invalid hostname' })
@@ -36,6 +38,7 @@ const sectionPathSchema = z.string().refine(isSectionPath, { message: 'String mu
 export {
   dbKeySchema,
   hostnameSchema,
+  iconNameSchema,
   localeSchema,
   orderNumber,
   portSchema,
