@@ -10,11 +10,11 @@ import type { AppRouteName, CourseContentRouteName, RouteName } from './types/ro
 const apiRouteNames = Object.keys(apiRoutes)
 const appRouteNames = Object.keys({ ...builtinRoutes, ...courseRoutes, ...userRoutes })
 const courseContentRoutenames = Object.keys(courseContentRoutes)
-const allRouteName = new Set([...apiRouteNames, ...appRouteNames])
+const allRouteNames = new Set([...apiRouteNames, ...appRouteNames])
 
 /** Type guard for `AppRouteName` */
 function isRouteName(routeName: unknown): routeName is RouteName {
-  return typeof routeName === 'string' && allRouteName.has(routeName)
+  return typeof routeName === 'string' && allRouteNames.has(routeName)
 }
 
 /** Type guard for `AppRouteName` */
