@@ -52,7 +52,7 @@ const COURSE_SLUG_MODES = ['SUBDOMAIN', 'URL', 'DISABLE'] as const
 const DEFAULT_COURSE_SLUG_MODE = 'DISABLE'
 
 /** Props to be passed to client */
-const PASS_TO_CLIENT_PROPS = ['preloadedState', 'routeInfo', 'routeParams'] as const
+const PASS_TO_CLIENT_PROPS = ['is404', 'preloadedState', 'routeInfo', 'routeParams'] as const
 
 /** Emotion style cache key */
 const EMOTION_STYLE_KEY = 'emotion-style'
