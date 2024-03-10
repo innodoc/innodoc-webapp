@@ -32,15 +32,15 @@ function makeUseSelectContentUnit<T extends ApiPage | ApiSection>(contentType: C
         createSelector(
           [
             (_result: { data: T[] | undefined }) => _result.data,
-            (_result, _contentIdField: ContentIdField) => _contentIdField,
-            (_result, _contentIdField, _locale: LanguageCode) => _locale,
+            (_result, contentIdField: ContentIdField) => contentIdField,
+            (_result, contentIdField, locale: LanguageCode) => locale,
           ],
-          (contentUnits, _idField, _locale) => {
+          (contentUnits, idField, locale) => {
             if (contentUnits === undefined) {
               return
             }
-            const contentUnit = contentUnits.find((u) => (isApiPage(u) ? u.slug : u.path) === _idField)
-            return contentUnit ? translateEntity(contentUnit, _locale) : undefined
+            const contentUnit = contentUnits.find((u) => (isApiPage(u) ? u.slug : u.path) === idField)
+            return contentUnit ? translateEntity(contentUnit, locale) : undefined
           },
         ),
       [],

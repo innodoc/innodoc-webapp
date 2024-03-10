@@ -5,13 +5,13 @@ import type { LanguageCode } from 'iso-639-1'
 import { isCourseRouteInfo } from '@innodoc/routes/typeGuards'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCourseQuery } from '@innodoc/store/slices/content/courses'
-import type { ApiCourse } from '@innodoc/schema/types'
+import type { ApiCourse, TranslatedCourse } from '@innodoc/schema/types'
 
 import { useSelector } from './redux'
 import { translateEntity } from './utils'
 
 /** Select current course */
-function useSelectCurrentCourse() {
+function useSelectCurrentCourse(): { course?: TranslatedCourse } {
   const routeInfo = useSelector(selectRouteInfo)
   const courseSlug = isCourseRouteInfo(routeInfo) ? routeInfo.courseSlug : undefined
 

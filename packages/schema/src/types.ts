@@ -1,7 +1,6 @@
 import type { CamelCasedProperties } from 'type-fest'
 import type z from 'zod'
 
-import type { translatableString } from './common'
 import type { courseSchema, fragmentTypeSchema, pageSchema, querySectionSchema, sectionSchema } from './entities'
 import type { baseEntity } from './entities/base'
 
@@ -16,7 +15,7 @@ type QuerySectionSchema = z.infer<typeof querySectionSchema>
 type ApiBaseEntity = CamelCasedProperties<BaseEntitySchema>
 
 /** Field that holds a string in different languages */
-type TranslatableString = z.infer<typeof translatableString>
+type TranslatableString = Record<string, string> | null
 
 /** Entity that has all translatable fields replaced with the actual translation */
 type TranslatedEntity<T extends Record<string, unknown>> = {
