@@ -1,6 +1,9 @@
+import type { LanguageCode } from 'iso-639-1'
+
 import { DEFAULT_LOCALES } from '@innodoc/constants'
 import { isCourseRouteInfo } from '@innodoc/routes/typeGuards'
 import courses from '@innodoc/store/slices/content/courses'
+import { isLocale } from '@innodoc/typeguards/common'
 import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
 import type { Store } from '@innodoc/store/types'
 
@@ -17,7 +20,7 @@ function getSupportedLocales(store: Store, routeInfo: AppRouteInfo) {
     const selectCurrentCourse = courses.endpoints.getCourse.select({ courseSlug: routeInfo.courseSlug })
     const { data: course } = selectCurrentCourse(store.getState())
     if (course !== undefined) {
-      return course.locales
+      return course.locales.filter((locale): locale is LanguageCode => isLocale(locale))
     }
   }
 

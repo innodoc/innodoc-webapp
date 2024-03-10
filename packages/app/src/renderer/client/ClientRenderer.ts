@@ -20,7 +20,7 @@ class ClientRenderer {
   private root: Root | undefined
 
   /** root-dom node */
-  private rootEl: HTMLElement
+  private rootEl: Element
 
   /** Redux store */
   private store: Store | undefined
