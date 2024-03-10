@@ -1,4 +1,5 @@
-import fastify from 'fastify'
+import fastifyPlugin from 'fastify-plugin'
+import type { FastifyPluginAsync } from 'fastify'
 
 import loggingPlugin from '#plugins/logging'
 import { devCerts } from '#utils'
@@ -20,9 +21,7 @@ const options = async () => ({
   http2: true,
 })
 
-async function makeAppDev() {
-  const app = fastify(await options())
-
+const devPlugin: FastifyPluginAsync = async function (app) {
   // Custom logging
   await app.register(loggingPlugin)
 
@@ -31,8 +30,9 @@ async function makeAppDev() {
 
   // Print routes on start-up
   await app.register(import('#plugins/viteDevServer'))
-
-  return app
 }
 
-export default makeAppDev
+const dev = fastifyPlugin(devPlugin, { name: 'dev' })
+
+export { options }
+export default dev
