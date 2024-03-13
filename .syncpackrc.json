@@ -1,0 +1,82 @@
+{
+  "sortAz": [
+    "bin",
+    "contributors",
+    "dependencies",
+    "devDependencies",
+    "imports",
+    "keywords",
+    "peerDependencies",
+    "resolutions"
+  ],
+  "sortFirst": [
+    "name",
+    "version",
+    "private",
+    "type",
+    "sideEffects",
+    "exports",
+    "imports",
+    "scripts",
+    "dependencies",
+    "devDependencies",
+    "peerDependencies",
+    "resolutions",
+    "engines",
+    "pnpm"
+  ],
+  "semverGroups": [
+    {
+      "packages": ["**"],
+      "dependencies": ["@innodoc/*", "@types/innodoc-*"],
+      "isIgnored": true
+    }
+  ],
+  "versionGroups": [
+    {
+      "label": "Internal dev packages are pinned to workspace:*",
+      "packages": ["**"],
+      "dependencies": [
+        "@innodoc/command-*",
+        "@innodoc/commands",
+        "@innodoc/*-config",
+        "@innodoc/types",
+        "@types/innodoc-*"
+      ],
+      "dependencyTypes": ["dev"],
+      "pinVersion": "workspace:*"
+    },
+    {
+      "label": "Internal prod packages are pinned to workspace:*",
+      "packages": ["**"],
+      "dependencies": [
+        "@innodoc/config",
+        "@innodoc/constants",
+        "@innodoc/database",
+        "@innodoc/i18n",
+        "@innodoc/logging",
+        "@innodoc/markdown",
+        "@innodoc/routes",
+        "@innodoc/schema",
+        "@innodoc/server",
+        "@innodoc/store",
+        "@innodoc/typeguards",
+        "@innodoc/ui"
+      ],
+      "dependencyTypes": ["prod", "dev"],
+      "pinVersion": "workspace:*"
+    },
+    {
+      "label": "Types and internal dev packages are banned from dependencies (only allowed in devDependencies)",
+      "packages": ["**"],
+      "dependencies": ["@innodoc/command-*", "@innodoc/commands", "@innodoc/*-config", "@types/*", "*/types"],
+      "dependencyTypes": ["prod"],
+      "isBanned": true
+    },
+    {
+      "label": "Pin @emotion/react (required by @mui/material)",
+      "dependencies": ["@emotion/react"],
+      "pinVersion": "11.11.1"
+    }
+  ]
+}

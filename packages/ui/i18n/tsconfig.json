@@ -1,0 +1,10 @@
+{
+  "extends": "@innodoc/ts-config/tsconfig.base.json",
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "rootDir": ".",
+    "types": ["innodoc-vite-env"]
+  }
+}

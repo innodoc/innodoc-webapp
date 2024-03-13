@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["./src/middlewares/hastListenerMiddleware/markdownToHastWorker.ts"],
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    "lib": ["ESNext", "WebWorker"],
+    "outDir": "dist",
+    "rootDir": "src",
+    "types": []
+  }
+}

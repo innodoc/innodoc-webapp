@@ -1,0 +1,8 @@
+{
+  "extends": "@innodoc/ts-config/tsconfig.base.json",
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "rootDir": "src"
+  }
+}

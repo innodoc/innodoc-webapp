@@ -1,7 +1,0 @@
-{
-  "extends": "@innodoc/ts-config/tsconfig.base.json",
-  "compilerOptions": {
-    "jsx": "react-jsx"
-  },
-  "include": ["eslint.config.js", "src"]
-}

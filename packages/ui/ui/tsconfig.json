@@ -1,0 +1,9 @@
+{
+  "extends": "@innodoc/ts-config/tsconfig.react.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    "rootDir": ".",
+    "types": ["innodoc-vite-env"]
+  }
+}

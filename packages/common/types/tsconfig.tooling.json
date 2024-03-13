@@ -1,0 +1,5 @@
+{
+  "extends": "@innodoc/ts-config/tsconfig.tooling.json",
+  "include": ["eslint.config.js"],
+  "exclude": ["dist", "src", "node_modules"]
+}

@@ -5,11 +5,27 @@
   },
   "json.schemas": [
     {
-      "fileMatch": ["/.syncpackrc"],
-      "url": "https://unpkg.com/syncpack@11.2.1/dist/schema.json"
+      "fileMatch": ["/nx.json"],
+      "url": "./node_modules/nx/schemas/nx-schema.json"
+    },
+    {
+      "fileMatch": ["/.syncpackrc.json"],
+      "url": "./node_modules/syncpack/dist/schema.json"
+    },
+    {
+      "fileMatch": ["/packages/*/*/tsconfig*.json"],
+      "url": "http://json.schemastore.org/tsconfig"
     }
   ],
   "editor.formatOnSave": true,
   "eslint.experimental.useFlatConfig": true,
-  "eslint.workingDirectories": [{ "pattern": "./packages/*" }]
+  "eslint.workingDirectories": [{ "pattern": "./packages/*/*" }],
+  "search.exclude": {
+    "**/dist": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.preferTypeOnlyAutoImports": true,
+  "typescript.preferences.importModuleSpecifier": "project-relative",
+  "typescript.preferences.importModuleSpecifierEnding": "js"
 }
