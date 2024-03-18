@@ -19,7 +19,7 @@ async function setupApp() {
     dirNameRoutePrefix: false,
     forceESM: true,
     // auto-load files: `MODULE/MODULE.ts`
-    matchFilter: (path) => Boolean(/^\/(\w+)\/\1\.ts$/.test(path)),
+    matchFilter: (path) => Boolean(/^\/(\w+)\/\1\.js$/.test(path)),
   })
 
   return app

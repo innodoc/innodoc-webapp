@@ -7,6 +7,8 @@ import ssr from 'vike/plugin'
 import type { InlineConfig as VitestInlineConfig } from 'vitest'
 import type { UserConfigExport } from 'vitest/config'
 
+import packageJson from './package.json' assert { type: 'json' }
+
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const rootDir = path.resolve(dirname, '..', '..')
 
@@ -35,6 +37,10 @@ function config() {
   const config: UserConfigExport = {
     envPrefix: 'INNODOC_', // Exposed to client
     plugins: [react(), ssr({ prerender: false })],
+    optimizeDeps: {
+      // exclude local monorepo deps
+      exclude: Object.keys(packageJson.dependencies).filter((dep) => dep.startsWith('@innodoc/')),
+    },
     ssr: {
       noExternal: [
         '@reduxjs/toolkit', // otherwise can't be loaded on prerendering
