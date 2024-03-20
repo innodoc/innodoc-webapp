@@ -6,9 +6,9 @@ export default mergeConfig(
   configBase,
   defineConfig({
     test: {
-      environment: 'jsdom',
-      include: ['tests/integration/**/*.test.ts'],
       name: 'integration',
+      environment: 'jsdom',
+      include: ['tests/integration/**/*.test.ts?(x)'],
     },
   }),
 )

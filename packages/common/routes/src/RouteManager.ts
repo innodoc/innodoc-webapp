@@ -43,7 +43,7 @@ class RouteManager {
     strict: true,
   }
 
-  private constructor(courseSlugMode: CourseSlugMode, pagePathPrefix: string, sectionPathPrefix: string) {
+  constructor(courseSlugMode: CourseSlugMode, pagePathPrefix: string, sectionPathPrefix: string) {
     this.courseSlugMode = courseSlugMode
     this.routeFuncArgs = { pagePathPrefix, sectionPathPrefix }
     const { pathFunctions, matchers } = this.buildRoutes()
@@ -162,7 +162,8 @@ class RouteManager {
   }
 
   private makeAppPattern(pattern: string) {
-    return this.courseSlugMode === 'URL' ? `/:locale/:courseSlug${pattern}` : `/:locale${pattern}`
+    // Remove course slug parameter from URL pattern if we use single course or sub-domain mode
+    return this.courseSlugMode === 'URL' ? `/:locale${pattern}` : `/:locale${pattern.replace(/\/:courseSlug/, '')}`
   }
 
   private makeApiPattern(pattern: string) {

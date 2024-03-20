@@ -12,7 +12,7 @@ const appRouteNames = Object.keys({ ...builtinRoutes, ...courseRoutes, ...userRo
 const courseContentRoutenames = Object.keys(courseContentRoutes)
 const allRouteNames = new Set([...apiRouteNames, ...appRouteNames])
 
-/** Type guard for `AppRouteName` */
+/** Type guard for `RouteName` */
 function isRouteName(routeName: unknown): routeName is RouteName {
   return typeof routeName === 'string' && allRouteNames.has(routeName)
 }

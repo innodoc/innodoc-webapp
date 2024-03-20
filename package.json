@@ -20,9 +20,9 @@
     "depcruise:validate": "pnpm exec depcruise --config -- apps packages",
     "========= Development": "",
     "dev": "nx run-many --target=dev --exclude=innodoc",
-    "dev:checks": "pnpm run lint && pnpm run format && pnpm run type-check && pnpm run syncpack lint && pnpm run depcruise:validate && pnpm run test:unit && pnpm run test:integration && pnpm run test:e2e",
+    "dev:checks": "pnpm run lint && pnpm run format && pnpm run type-check && pnpm run syncpack lint && pnpm run depcruise:validate && pnpm run test && pnpm run test:e2e",
     "dev:mkcert": "nx run @innodoc/server:dev:mkcert",
-    "dev:mock": "#TODO INNODOC_API_MOCK=true INNODOC_DEFAULT_COURSE_SLUG=testcourse INNODOC_COURSE_SLUG_MODE=DISABLED nodemon --ext ts --watch ./src/server --exec tsx ./src/server/startMockServer.ts",
+    "dev:mock": "#TODO INNODOC_API_MOCK=true INNODOC_DEFAULT_COURSE_SLUG=testcourse INNODOC_COURSE_SLUG_MODE=SINGLE nodemon --ext ts --watch ./src/server --exec tsx ./src/server/startMockServer.ts",
     "========= Format": "",
     "format": "nx run-many --target=format --exclude=innodoc",
     "format:write": "nx run-many --target=format:write --exclude=innodoc",
@@ -32,9 +32,8 @@
     "========= Production": "",
     "start": "NODE_ENV=production nx run @innodoc/server:start",
     "========= Test": "",
-    "test:e2e": "pnpm run --filter @innodoc/e2e-tests test",
-    "test:integration": "VITEST_MODE=integration pnpm run test:vitest",
-    "test:unit": "nx run innodoc:vitest:unit",
+    "test": "nx run innodoc:vitest",
+    "test:e2e": "nx run @innodoc/e2e-tests:test",
     "========= Tools": "",
     "knex": "nx run @innodoc/database:knex",
     "knip": "knip",
@@ -78,7 +77,7 @@
   },
   "nx": {
     "targets": {
-      "vitest:unit": {
+      "vitest": {
         "executor": "nx:run-commands",
         "options": {
           "command": "vitest --run"

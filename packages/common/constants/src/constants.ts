@@ -46,10 +46,10 @@ const SLUG_RE = '[a-z0-9]+(-[a-z0-9]+)*'
 const PATH_RE = '[a-z0-9]+(?:-[a-z0-9]+)*(?:\\/[a-z0-9]+(?:-[a-z0-9]+)*){0,10}'
 
 /** Extract course slug from subdomain/url */
-const COURSE_SLUG_MODES = ['SUBDOMAIN', 'URL', 'DISABLE'] as const
+const COURSE_SLUG_MODES = ['SUBDOMAIN', 'URL', 'SINGLE'] as const
 
 /** Default course slug mode */
-const DEFAULT_COURSE_SLUG_MODE = 'DISABLE'
+const DEFAULT_COURSE_SLUG_MODE = 'SINGLE'
 
 /** Props to be passed to client */
 const PASS_TO_CLIENT_PROPS = ['is404', 'preloadedState', 'routeInfo', 'routeParams'] as const

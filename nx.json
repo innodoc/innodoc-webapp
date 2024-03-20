@@ -9,7 +9,7 @@
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test:integration", "test:unit", "type-check"]
+        "cacheableOperations": ["build", "lint", "test", "type-check"]
       }
     }
   },
@@ -19,11 +19,9 @@
       "dependsOn": ["^build"],
       "outputs": ["{projectRoot}/dist"]
     },
-    "test:integration": {
-      "inputs": ["default", "{projectRoot}/tests/integration/**/*"]
-    },
-    "test:unit": {
-      "inputs": ["default", "{projectRoot}/tests/unit/**/*"]
+    "test": {
+      "inputs": ["default", "{projectRoot}/tests/**/*"],
+      "dependsOn": ["^build", "build"]
     },
     "lint": {
       "inputs": ["default", "tests", "{projectRoot}/eslint.config.js"]

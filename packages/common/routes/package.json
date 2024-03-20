@@ -24,7 +24,7 @@
     "format:write": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "test:unit": "vitest",
+    "test": "vitest",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {

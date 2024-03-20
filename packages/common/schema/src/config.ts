@@ -56,7 +56,7 @@ const configSchema = z
     enableMockApi: z.boolean().default(false).describe('Enable mock API'),
     skipMails: z.boolean().default(false).describe("Don't send out any mails"),
   })
-  .refine((configObj) => configObj.courseSlugMode !== 'DISABLE' || configObj.defaultCourseSlug, {
+  .refine((configObj) => configObj.courseSlugMode !== 'SINGLE' || configObj.defaultCourseSlug, {
     message: 'Need a default course slug if course slug mode is disabled.',
   })
   .describe('innoDoc application configuration')
