@@ -5,11 +5,11 @@ import type { i18n as I18nInstance } from 'i18next'
 import type { ComponentType } from 'react'
 import type { PageContextClient } from 'vike/types'
 
+import renderPage from '@innodoc/components/renderPage'
 import { EMOTION_STYLE_INSERTION_POINT_NAME, EMOTION_STYLE_KEY } from '@innodoc/constants'
 import getI18n from '@innodoc/i18n'
 import makeStore from '@innodoc/store'
 import { changeRouteTransitionInfo } from '@innodoc/store/slices/app'
-import renderPage from '@innodoc/ui'
 import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
 import type { RootState, Store } from '@innodoc/store/types'
 

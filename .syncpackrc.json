@@ -50,9 +50,12 @@
       "label": "Internal prod packages are pinned to workspace:*",
       "packages": ["**"],
       "dependencies": [
+        "@innodoc/components",
         "@innodoc/config",
         "@innodoc/constants",
+        "@innodoc/contexts",
         "@innodoc/database",
+        "@innodoc/hooks",
         "@innodoc/i18n",
         "@innodoc/logging",
         "@innodoc/markdown",
@@ -60,8 +63,7 @@
         "@innodoc/schema",
         "@innodoc/server",
         "@innodoc/store",
-        "@innodoc/typeguards",
-        "@innodoc/ui"
+        "@innodoc/typeguards"
       ],
       "dependencyTypes": ["prod", "dev"],
       "pinVersion": "workspace:*"

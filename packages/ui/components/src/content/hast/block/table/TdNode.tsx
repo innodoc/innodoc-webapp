@@ -1,0 +1,13 @@
+import { TableCell } from '@mui/material'
+
+import type { HastComponentProps } from '#content/hast'
+
+function TdNode({ children, style }: HastComponentProps<'td'>) {
+  return (
+    <TableCell sx={style} variant="body">
+      {children}
+    </TableCell>
+  )
+}
+
+export default TdNode

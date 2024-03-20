@@ -1,1 +1,1 @@
-export { CourseSectionPage as Page } from '@innodoc/ui/pages'
+export { CourseSectionPage as Page } from '@innodoc/components'
