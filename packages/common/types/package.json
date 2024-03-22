@@ -19,7 +19,7 @@
     "#common": "./dist/common.js"
   },
   "scripts": {
-    "build": "tsc --emitDeclarationOnly",
+    "build": "tsc --project tsconfig.build.json --emitDeclarationOnly",
     "clean": "rm -rf dist",
     "dev": "tsc --project tsconfig.build.json --watch",
     "format": "prettier --check .",

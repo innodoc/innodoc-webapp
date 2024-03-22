@@ -34,7 +34,8 @@
     "@innodoc/prettier-config": "workspace:*",
     "@innodoc/ts-config": "workspace:*",
     "@innodoc/types": "workspace:*",
-    "tsx": "^4.7.1"
+    "tsx": "^4.7.1",
+    "typescript-eslint": "^7.2.0"
   },
   "nx": {
     "targets": {

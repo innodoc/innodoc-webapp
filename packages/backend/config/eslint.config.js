@@ -1,17 +1,12 @@
 import globals from 'globals'
+import typescriptEslint from 'typescript-eslint'
 
 import innodocConfig from '@innodoc/eslint-config'
 
-/** @type {import("eslint").Linter.FlatConfig} */
-const config = [
-  ...innodocConfig,
-
-  {
-    files: ['src/**/*.ts'],
-    languageOptions: {
-      globals: globals.node,
-    },
+export default typescriptEslint.config({
+  files: ['src/**/*.ts'],
+  extends: innodocConfig,
+  languageOptions: {
+    globals: globals.node,
   },
-]
-
-export default config
+})

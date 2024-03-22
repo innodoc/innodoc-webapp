@@ -1,11 +1,10 @@
 import globals from 'globals'
+import typescriptEslint from 'typescript-eslint'
 
 import innodocConfig from '@innodoc/eslint-config'
 
-/** @type {import("eslint").Linter.FlatConfig} */
-const config = [
+export default typescriptEslint.config(
   ...innodocConfig,
-
   {
     files: ['src/renderer/client/*.ts'],
     languageOptions: {
@@ -32,6 +31,4 @@ const config = [
       'filenames/match-regex': 'off',
     },
   },
-]
-
-export default config
+)

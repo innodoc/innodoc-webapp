@@ -24,7 +24,8 @@
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:*",
     "@innodoc/prettier-config": "workspace:*",
-    "@innodoc/ts-config": "workspace:*"
+    "@innodoc/ts-config": "workspace:*",
+    "typescript-eslint": "^7.2.0"
   },
   "prettier": "@innodoc/prettier-config"
 }
