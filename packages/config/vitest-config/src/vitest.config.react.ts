@@ -6,9 +6,13 @@ export default mergeConfig(
   configBase,
   defineConfig({
     test: {
-      name: 'integration',
+      name: 'rtl',
       environment: 'jsdom',
-      include: ['tests/integration/**/*.test.ts?(x)'],
+      include: ['tests/**/*.test.ts?(x)'],
+      mockReset: true,
+      sequence: { hooks: 'stack' },
+      setupFiles: '@innodoc/rtl/setup',
+      unstubEnvs: true,
     },
   }),
 )

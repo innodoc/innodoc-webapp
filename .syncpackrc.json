@@ -36,13 +36,7 @@
     {
       "label": "Internal dev packages are pinned to workspace:*",
       "packages": ["**"],
-      "dependencies": [
-        "@innodoc/command-*",
-        "@innodoc/commands",
-        "@innodoc/*-config",
-        "@innodoc/types",
-        "@types/innodoc-*"
-      ],
+      "dependencies": ["@innodoc/command-*", "@innodoc/*-config", "@innodoc/rtl", "@innodoc/types", "@types/innodoc-*"],
       "dependencyTypes": ["dev"],
       "pinVersion": "workspace:*"
     },
@@ -71,7 +65,7 @@
     {
       "label": "Types and internal dev packages are banned from dependencies (only allowed in devDependencies)",
       "packages": ["**"],
-      "dependencies": ["@innodoc/command-*", "@innodoc/commands", "@innodoc/*-config", "@types/*", "*/types"],
+      "dependencies": ["@innodoc/command-*", "@innodoc/*-config", "@innodoc/rtl", "@types/*", "*/types"],
       "dependencyTypes": ["prod"],
       "isBanned": true
     },

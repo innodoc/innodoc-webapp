@@ -3,7 +3,9 @@
   "parallel": 5,
   "namedInputs": {
     "default": ["{projectRoot}/src/**/*"],
-    "tests": ["{projectRoot}/tests/**/*"]
+    "eslint-config": ["{projectRoot}/eslint.config.js"],
+    "tests": ["{projectRoot}/tests/**/*"],
+    "ts-config": ["{projectRoot}/tsconfig*.json"]
   },
   "tasksRunnerOptions": {
     "default": {
@@ -15,19 +17,19 @@
   },
   "targetDefaults": {
     "build": {
-      "inputs": ["default", "{projectRoot}/tsconfig.build.json", "^tests"],
+      "inputs": ["default", "ts-config", "^tests"],
       "dependsOn": ["^build"],
       "outputs": ["{projectRoot}/dist"]
     },
     "test": {
-      "inputs": ["default", "{projectRoot}/tests/**/*"],
+      "inputs": ["default", "tests"],
       "dependsOn": ["^build", "build"]
     },
     "lint": {
-      "inputs": ["default", "tests", "{projectRoot}/eslint.config.js"]
+      "inputs": ["default", "tests", "eslint-config"]
     },
     "type-check": {
-      "inputs": ["default", "tests", "{projectRoot}/tsconfig.json"]
+      "inputs": ["default", "ts-config", "tests"]
     }
   }
 }

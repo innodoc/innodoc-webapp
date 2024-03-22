@@ -36,7 +36,12 @@ const rules = {
     'import/extensions': 'off',
 
     // Turn on errors for missing imports
-    'import/no-unresolved': 'error',
+    'import/no-unresolved': [
+      'error',
+      {
+        ignore: ['^msw/node$'], // https://github.com/mswjs/msw/issues/1786
+      },
+    ],
 
     // Import order setup
     'import/first': 'error',

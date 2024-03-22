@@ -9,7 +9,6 @@ export default mergeConfig(
       name: 'unit',
       environment: 'node',
       include: ['tests/**/*.test.ts'],
-      exclude: ['tests/integration/**/*.test.ts?(x)'],
     },
   }),
 )
