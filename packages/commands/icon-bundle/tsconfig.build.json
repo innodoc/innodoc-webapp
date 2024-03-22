@@ -1,9 +1,9 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": ["./tsconfig.json", "@innodoc/ts-config/build.json"],
   "include": ["src/**/*.ts"],
   "exclude": ["dist", "node_modules", "tests"],
   "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": "src"
   }
 }

@@ -1,6 +1,6 @@
 {
-  "extends": "@innodoc/ts-config/tsconfig.react.json",
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "extends": "@innodoc/ts-config/base.json",
+  "include": ["eslint.config.js", "src/**/*.ts"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "rootDir": "."

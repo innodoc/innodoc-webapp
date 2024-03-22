@@ -1,4 +1,4 @@
-const groupWithTypes = (re) => [re, `${re}.*\\u0000$`]
+const groupWithTypes = (/** @type {string} */ re) => [re, `${re}.*\\u0000$`]
 
 const rules = {
   eslint: {

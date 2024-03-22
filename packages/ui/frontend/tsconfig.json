@@ -1,12 +1,10 @@
 {
-  "extends": "@innodoc/ts-config/tsconfig.node.json",
-  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "extends": "@innodoc/ts-config/base.json",
+  "include": ["eslint.config.js", "vite.config.ts", "src/**/*.ts", "tests/**/*.ts"],
   "exclude": ["dist", "node_modules", "public"],
   "compilerOptions": {
     "esModuleInterop": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "noEmit": true,
-    "resolveJsonModule": true,
     "rootDir": ".",
     "types": ["innodoc-vite-env"]
   }

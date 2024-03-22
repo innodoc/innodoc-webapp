@@ -1,6 +1,6 @@
 {
-  "extends": "@innodoc/ts-config/tsconfig.react.json",
-  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "extends": "@innodoc/ts-config/react.json",
+  "include": ["eslint.config.js", "vitest.config.ts", "src/**/*.ts", "tests/**/*.ts"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "rootDir": "."

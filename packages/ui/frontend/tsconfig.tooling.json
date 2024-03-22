@@ -1,5 +1,0 @@
-{
-  "extends": "@innodoc/ts-config/tsconfig.tooling.json",
-  "include": ["eslint.config.js", "vitest.config.ts", "vite.config.ts"],
-  "exclude": ["dist", "node_modules", "public", "src", "tests"]
-}

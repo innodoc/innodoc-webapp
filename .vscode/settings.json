@@ -13,7 +13,11 @@
       "url": "./node_modules/syncpack/dist/schema.json"
     },
     {
-      "fileMatch": ["/packages/*/*/tsconfig*.json"],
+      "fileMatch": [
+        "/packages/config/ts-config/*.json",
+        "!/packages/config/ts-config/package.json",
+        "/packages/*/*/tsconfig*.json"
+      ],
       "url": "http://json.schemastore.org/tsconfig"
     }
   ],
