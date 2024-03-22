@@ -14,7 +14,7 @@ function isSystemError(err: unknown): err is SystemError {
   return err instanceof Error && typeof (err as SystemError).code === 'string'
 }
 
-async function buildIconBundle(srcDir: string, outFile: string, { force }: { force: boolean }) {
+async function checkSrcDir(srcDir: string) {
   try {
     const srcDirStats = await lstat(srcDir)
     if (!srcDirStats.isDirectory()) {
@@ -26,7 +26,9 @@ async function buildIconBundle(srcDir: string, outFile: string, { force }: { for
     }
     throw error
   }
+}
 
+async function checkOutFile(outFile: string, force: boolean) {
   try {
     const outFileStats = await lstat(outFile)
     if (outFileStats.isFile() && !force) {
@@ -37,15 +39,21 @@ async function buildIconBundle(srcDir: string, outFile: string, { force }: { for
       throw error
     }
   }
+}
 
-  await writeFile(outFile, JSON.stringify(await getIconBundle(srcDir)))
+async function buildIconBundle(srcDirs: string[], { force, output: outFile }: { force: boolean; output: string }) {
+  for (const srcDir of srcDirs) {
+    await checkSrcDir(srcDir)
+  }
+  await checkOutFile(outFile, force)
+  await writeFile(outFile, JSON.stringify(await getIconBundle(srcDirs)))
 }
 
 program
   .name('innodoc-icon-bundle')
   .description('Scan source tree, extract icon names and build a JSON icon bundle.')
-  .argument('<srcdir>', 'source tree to scan')
-  .argument('<outfile>', 'destination file')
+  .requiredOption('-o, --output <output>', 'Output file')
   .option('-f, --force', 'Overwrite output file', false)
+  .argument('<dirs...>', 'source directories to scan')
   .action(buildIconBundle)
   .parse()

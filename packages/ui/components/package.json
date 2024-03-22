@@ -21,7 +21,6 @@
     "#content/misc": "./dist/content/misc/misc.js",
     "#content/tabs": "./dist/content/tabs/tabs.js",
     "#content/types": "./dist/content/types.js",
-    "#iconBundle": "./dist/iconBundle.json",
     "#pageLinks": "./dist/pageLinks.js",
     "#pages": "./dist/pages/pages.js",
     "#pages/content": "./dist/pages/course/ContentPage.js",
@@ -33,7 +32,6 @@
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
-    "build:icon-bundle": "mkdir -p dist && innodoc-icon-bundle --force src dist/iconBundle.json",
     "clean": "rm -rf dist",
     "dev": "tsc --project tsconfig.build.json --watch",
     "format": "prettier --check .",
@@ -67,7 +65,6 @@
     "unified": "^11.0.4"
   },
   "devDependencies": {
-    "@innodoc/command-icon-bundle": "workspace:*",
     "@innodoc/eslint-config": "workspace:*",
     "@innodoc/prettier-config": "workspace:*",
     "@innodoc/rtl": "workspace:*",
@@ -91,20 +88,10 @@
       "build": {
         "dependsOn": [
           "^build",
-          "build:icon-bundle"
-        ]
-      },
-      "build:icon-bundle": {
-        "cache": true,
-        "dependsOn": [
-          "^build"
-        ],
-        "inputs": [
-          "default",
-          "^tests"
-        ],
-        "outputs": [
-          "{projectRoot}/dist/iconBundle.json"
+          {
+            "projects": "innodoc",
+            "target": "build:icon-bundle"
+          }
         ]
       }
     }

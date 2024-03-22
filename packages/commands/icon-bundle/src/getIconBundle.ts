@@ -8,34 +8,34 @@ const STATIC_ICONS = ['mdi:copyright']
 
 /** Parse SVG sources into HAST */
 function parse({ icons, prefix, width = 24, height = 24 }: IconifyJSON) {
-  return Object.fromEntries(
-    Object.entries(icons).map(([name, { body }]) => [
-      `${prefix}:${name}`,
-      parseSvg(`<svg viewBox='0 0 ${width} ${height}'>${body}</svg>`),
-    ]),
-  )
+  const parsedIcons: Record<string, string> = {}
+
+  for (const [name, { body }] of Object.entries(icons)) {
+    parsedIcons[`${prefix}:${name}`] = parseSvg(`<svg viewBox='0 0 ${width} ${height}'>${body}</svg>`)
+  }
+
+  return parsedIcons
 }
 
 /** Filter by icon set */
-function filterBySet(set: string, iconNames: string[]) {
-  return (
-    iconNames
-      // Filter for and strip 'mdi:...'
-      .reduce<string[]>(
-        (acc, icon) => (icon.startsWith(`${set}:`) ? [...acc, icon.slice(Math.max(0, set.length + 1))] : acc),
-        [],
-      )
-      // Unique
-      .filter((val, idx, self) => self.indexOf(val) === idx)
-  )
+function filterBySet(setName: string, iconNames: string[]) {
+  const filteredIconNames = new Set<string>()
+
+  for (const iconName of iconNames) {
+    if (iconName.startsWith(`${setName}:`)) {
+      filteredIconNames.add(iconName.slice(Math.max(0, setName.length + 1)))
+    }
+  }
+
+  return [...filteredIconNames]
 }
 
 /**
  * Create icon bundle from manifest pages and static info from source code.
  */
-async function getIconBundle(path: string) {
+async function getIconBundle(paths: string[]) {
   // Icon names from source code
-  const scannedIconName = await scanIconNames(path)
+  const scannedIconName = await scanIconNames(paths)
 
   // Read all icons
   const iconifyJsonAll = await import('@iconify-json/mdi/icons.json', { assert: { type: 'json' } })
@@ -47,6 +47,7 @@ async function getIconBundle(path: string) {
   if (iconifyJson === null) {
     throw new Error('Failed to get icon bundle')
   }
+
   return parse(iconifyJson)
 }
 

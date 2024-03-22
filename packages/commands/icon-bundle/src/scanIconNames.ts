@@ -1,10 +1,8 @@
-// FIXME Somehow TS complains about not finding '@typescript-eslint/utils'
-
 import { AST_NODE_TYPES, ASTUtils, ESLintUtils } from '@typescript-eslint/utils'
 import { ESLint, type Rule } from 'eslint'
 
 const isJSXIdentifier = ASTUtils.isNodeOfType(AST_NODE_TYPES.JSXIdentifier)
-const isJSXAttribute = ASTUtils.isNodeOfType<AST_NODE_TYPES.JSXAttribute>(AST_NODE_TYPES.JSXAttribute)
+const isJSXAttribute = ASTUtils.isNodeOfType(AST_NODE_TYPES.JSXAttribute)
 const isLiteral = ASTUtils.isNodeOfType(AST_NODE_TYPES.Literal)
 
 const PLUGIN_NAME = 'eslint-scan-icon-names'
@@ -14,7 +12,7 @@ const RULE_NAME = 'icon-name'
  * Finds all `<Icon name="..." />` components and extacts `name` attribute from
  * source code tree.
  */
-async function scanIconNames(path: string) {
+async function scanIconNames(paths: string[]) {
   // Collect icon names
   const iconNames = new Set<string>()
 
@@ -29,22 +27,28 @@ async function scanIconNames(path: string) {
             node.openingElement.name.name.endsWith('Icon')
           ) {
             // name attribute
-            for (const attribute of node.openingElement.attributes
-              .filter(isJSXAttribute)
-              .filter((a) => a.name.name === 'name')) {
-              if (isLiteral(attribute.value) && typeof attribute.value.value === 'string') {
-                iconNames.add(attribute.value.value)
+            for (const attr of node.openingElement.attributes) {
+              if (
+                isJSXAttribute(attr) &&
+                attr.name.name === 'name' &&
+                isLiteral(attr.value) &&
+                typeof attr.value.value === 'string'
+              ) {
+                iconNames.add(attr.value.value)
               }
             }
           }
           // All other components
           else {
             // iconName attribute
-            for (const attribute of node.openingElement.attributes
-              .filter(isJSXAttribute)
-              .filter((a) => a.name.name === 'iconName')) {
-              if (isLiteral(attribute.value) && typeof attribute.value.value === 'string') {
-                iconNames.add(attribute.value.value)
+            for (const attr of node.openingElement.attributes) {
+              if (
+                isJSXAttribute(attr) &&
+                attr.name.name === 'iconName' &&
+                isLiteral(attr.value) &&
+                typeof attr.value.value === 'string'
+              ) {
+                iconNames.add(attr.value.value)
               }
             }
           }
@@ -57,7 +61,7 @@ async function scanIconNames(path: string) {
       type: 'suggestion',
       schema: [],
     },
-  }) as unknown as Rule.RuleModule // @typescript-eslint/utils RuleModule not compatible with the @types/eslint one?
+  }) as unknown as Rule.RuleModule
 
   // Create eslint instance
   const eslint = new ESLint({
@@ -71,7 +75,6 @@ async function scanIconNames(path: string) {
     // https://github.com/eslint/eslint/issues/15453#issuecomment-1001200953
     plugins: {
       [PLUGIN_NAME]: {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         rules: { [RULE_NAME]: rule },
       },
     },
@@ -79,7 +82,7 @@ async function scanIconNames(path: string) {
   })
 
   // Scan files
-  await eslint.lintFiles([path])
+  await eslint.lintFiles(paths)
 
   return [...iconNames]
 }

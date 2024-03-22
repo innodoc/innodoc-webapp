@@ -3,8 +3,9 @@ import { type ComponentProps } from 'react'
 import { Trans } from 'react-i18next'
 
 import { InlineError } from '#common/errors'
-import iconBundle from '#iconBundle' assert { type: 'json' }
 
+// eslint-disable-next-line @typescript-eslint/no-restricted-imports
+import iconBundle from '../../../../../../dist/iconBundle.json' assert { type: 'json' }
 import Code from './Code.js'
 
 const iconNames = Object.getOwnPropertyNames(iconBundle)

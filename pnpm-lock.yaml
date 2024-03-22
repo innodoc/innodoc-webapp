@@ -22,6 +22,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^19.1.0
         version: 19.1.0
+      '@innodoc/command-icon-bundle':
+        specifier: workspace:*
+        version: link:packages/commands/icon-bundle
       '@innodoc/eslint-config':
         specifier: workspace:*
         version: link:packages/config/eslint-config
@@ -755,9 +758,6 @@ importers:
         specifier: ^11.0.4
         version: 11.0.4
     devDependencies:
-      '@innodoc/command-icon-bundle':
-        specifier: workspace:*
-        version: link:../../commands/icon-bundle
       '@innodoc/eslint-config':
         specifier: workspace:*
         version: link:../../config/eslint-config

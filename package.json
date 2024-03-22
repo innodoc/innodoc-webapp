@@ -6,6 +6,7 @@
   "scripts": {
     "========= Build": "",
     "build": "nx run-many --target=build --exclude=innodoc",
+    "build:icon-bundle": "nx run innodoc:build-icon-bundle",
     "clean": "nx run-many --target=clean --exclude=innodoc",
     "========= Commands": "",
     "import-v1": "#TODO",
@@ -45,6 +46,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.1.0",
     "@commitlint/config-conventional": "^19.1.0",
+    "@innodoc/command-icon-bundle": "workspace:*",
     "@innodoc/eslint-config": "workspace:*",
     "@innodoc/prettier-config": "workspace:*",
     "commit-and-tag-version": "12.2.0",
@@ -77,6 +79,28 @@
   },
   "nx": {
     "targets": {
+      "build-icon-bundle": {
+        "executor": "nx:run-commands",
+        "cache": true,
+        "options": {
+          "commands": [
+            "mkdir -p dist",
+            "innodoc-icon-bundle --force --output dist/iconBundle.json packages/ui/components/src"
+          ]
+        },
+        "dependsOn": [
+          {
+            "projects": "@innodoc/command-icon-bundle",
+            "target": "build"
+          }
+        ],
+        "inputs": [
+          "{workspaceRoot}/packages/ui/components/src"
+        ],
+        "outputs": [
+          "{workspaceRoot}/dist/iconBundle.json"
+        ]
+      },
       "vitest": {
         "executor": "nx:run-commands",
         "options": {
