@@ -1,4 +1,3 @@
-// import nxEslintPlugin from '@nx/eslint-plugin'
 import eslintPluginDeprecation from 'eslint-plugin-deprecation'
 import eslintPluginFilenames from 'eslint-plugin-filenames'
 import eslintPluginImport from 'eslint-plugin-import'
@@ -16,7 +15,6 @@ const tsConfig = typescriptEslint.config(
   {
     files: ['**/*.ts'],
     plugins: {
-      // '@nx': nxEslintPlugin,
       deprecation: eslintPluginDeprecation,
       filenames: eslintPluginFilenames,
       import: eslintPluginImport,
@@ -59,7 +57,6 @@ const tsConfig = typescriptEslint.config(
       ...rules.eslint,
       ...rules.filenames,
       ...rules.import,
-      // ...rules.nx,
       ...rules.prettier,
       ...rules.regexp,
       ...rules.simpleImportSort,

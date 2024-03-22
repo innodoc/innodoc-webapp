@@ -24,22 +24,6 @@ const rules = {
     'filenames/no-index': 'error',
   },
 
-  // nx: {
-  //   '@nx/enforce-module-boundaries': [
-  //     'error',
-  //     {
-  //       enforceBuildableLibDependency: true,
-  //       allow: [],
-  //       depConstraints: [
-  //         {
-  //           sourceTag: '*',
-  //           onlyDependOnLibsWithTags: ['*'],
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
-
   import: {
     // TypeScript provides the same checks
     // https://typescript-eslint.io/linting/troubleshooting/performance-troubleshooting#eslint-plugin-import

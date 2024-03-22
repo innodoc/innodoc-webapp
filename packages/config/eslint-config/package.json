@@ -16,7 +16,6 @@
     "@eslint/js": "8.57.0",
     "@innodoc/prettier-config": "workspace:*",
     "@innodoc/ts-config": "workspace:*",
-    "@nx/eslint-plugin": "^18.0.8",
     "@types/eslint": "^8.56.5",
     "@types/eslint__js": "^8.42.3",
     "eslint": "^8.57.0",
