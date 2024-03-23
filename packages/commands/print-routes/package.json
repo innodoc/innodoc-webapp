@@ -11,6 +11,7 @@
     "format:write": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+    "run": "node dist/main.js",
     "test:unit": "vitest",
     "type-check": "tsc --noEmit"
   },
@@ -24,9 +25,6 @@
     "@innodoc/prettier-config": "workspace:*",
     "@innodoc/ts-config": "workspace:*",
     "@types/node": "^20.11.28"
-  },
-  "bin": {
-    "innodoc-print-routes": "./dist/main.js"
   },
   "prettier": "@innodoc/prettier-config"
 }

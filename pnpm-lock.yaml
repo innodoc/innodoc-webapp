@@ -55,9 +55,6 @@ importers:
       typescript:
         specifier: ^5.4.2
         version: 5.4.2
-      vitest:
-        specifier: ^1.3.1
-        version: 1.4.0(@types/node@20.11.28)
 
   packages/backend/config:
     dependencies:
@@ -301,7 +298,7 @@ importers:
         specifier: ^12.0.0
         version: 12.0.0
 
-  packages/commands/importer-v1:
+  packages/commands/import-v1:
     dependencies:
       '@innodoc/database':
         specifier: workspace:*
@@ -645,7 +642,7 @@ importers:
         version: 51.0.1(eslint@8.57.0)
       eslint-plugin-vitest:
         specifier: ^0.3.26
-        version: 0.3.26(eslint@8.57.0)(typescript@5.4.2)(vitest@1.4.0)
+        version: 0.3.26(eslint@8.57.0)(typescript@5.4.2)
       eslint-plugin-vitest-globals:
         specifier: ^1.4.0
         version: 1.5.0
@@ -5697,7 +5694,7 @@ packages:
     resolution: {integrity: sha512-ZSsVOaOIig0oVLzRTyk8lUfBfqzWxr/J3/NFMfGGRIkGQPejJYmDH3gXmSJxAojts77uzAGB/UmVrwi2DC4LYA==}
     dev: false
 
-  /eslint-plugin-vitest@0.3.26(eslint@8.57.0)(typescript@5.4.2)(vitest@1.4.0):
+  /eslint-plugin-vitest@0.3.26(eslint@8.57.0)(typescript@5.4.2):
     resolution: {integrity: sha512-oxe5JSPgRjco8caVLTh7Ti8PxpwJdhSV0hTQAmkFcNcmy/9DnqLB/oNVRA11RmVRP//2+jIIT6JuBEcpW3obYg==}
     engines: {node: ^18.0.0 || >= 20.0.0}
     peerDependencies:
@@ -5712,7 +5709,6 @@ packages:
     dependencies:
       '@typescript-eslint/utils': 7.2.0(eslint@8.57.0)(typescript@5.4.2)
       eslint: 8.57.0
-      vitest: 1.4.0(@types/node@20.11.28)
     transitivePeerDependencies:
       - supports-color
       - typescript

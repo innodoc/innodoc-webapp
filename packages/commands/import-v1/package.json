@@ -1,5 +1,5 @@
 {
-  "name": "@innodoc/command-importer-v1",
+  "name": "@innodoc/command-import-v1",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,6 +11,7 @@
     "format:write": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+    "run": "node dist/main.js",
     "test:unit": "vitest",
     "type-check": "tsc --noEmit"
   },
@@ -26,9 +27,6 @@
     "@innodoc/types": "workspace:*",
     "@types/eslint": "^8.56.5",
     "@types/node": "^20.11.28"
-  },
-  "bin": {
-    "innodoc-importer-v1": "./dist/main.js"
   },
   "prettier": "@innodoc/prettier-config"
 }

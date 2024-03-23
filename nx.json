@@ -22,11 +22,15 @@
       "outputs": ["{projectRoot}/dist"]
     },
     "test": {
-      "inputs": ["default", "tests"],
+      "inputs": ["default", "ts-config", "tests"],
       "dependsOn": ["^build", "build"]
     },
     "lint": {
       "inputs": ["default", "tests", "eslint-config"]
+    },
+    "run": {
+      "inputs": ["default", "ts-config", "^tests"],
+      "dependsOn": ["^build", "build"]
     },
     "type-check": {
       "inputs": ["default", "ts-config", "tests"]
