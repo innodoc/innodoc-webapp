@@ -6,7 +6,6 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "dev": "tsc --project tsconfig.build.json --watch",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
     "lint": "eslint .",

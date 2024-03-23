@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "========= Build": "",
-    "build": "nx run-many --target=build --exclude=innodoc",
-    "build:icon-bundle": "nx run innodoc:build-icon-bundle",
-    "clean": "nx run-many --target=clean --exclude=innodoc",
+    "build": "turbo run build",
+    "build:icon-bundle": "turbo run _build:icon-bundle",
+    "_build:icon-bundle": "innodoc-icon-bundle --force --output packages/ui/components-common/dist/iconBundle.json packages/ui/components-*/src",
+    "clean": "turbo run clean",
     "========= Commands": "",
-    "import-v1": "nx run @innodoc/command-import-v1:run",
-    "routes": "nx run @innodoc/command-print-routes:run",
+    "import-v1": "turbo run --filter=@innodoc/command-import-v1 main",
+    "routes": "turbo run --filter=@innodoc/command-print-routes main",
     "========= Depcruise": "",
     "depcruise": "pnpm run depcruise:generate && pnpm run depcruise:serve",
     "depcruise:generate": "pnpm run depcruise:generate:full && pnpm run depcruise:generate:high-level && pnpm run depcruise:generate:violation-report",
@@ -20,28 +21,27 @@
     "depcruise:serve": "http-server -p 8001 reports/depcruise",
     "depcruise:validate": "pnpm exec depcruise --config -- apps packages",
     "========= Development": "",
-    "dev": "nx run-many --target=dev --exclude=innodoc",
+    "dev": "turbo run dev --concurrency=25 --log-prefix=none --output-logs=new-only",
     "dev:checks": "pnpm run lint && pnpm run format && pnpm run type-check && pnpm run syncpack lint && pnpm run depcruise:validate && pnpm run test && pnpm run test:e2e",
-    "dev:mkcert": "nx run @innodoc/server:dev:mkcert",
     "dev:mock": "#TODO INNODOC_API_MOCK=true INNODOC_DEFAULT_COURSE_SLUG=testcourse INNODOC_COURSE_SLUG_MODE=SINGLE nodemon --ext ts --watch ./src/server --exec tsx ./src/server/startMockServer.ts",
     "========= Format": "",
-    "format": "nx run-many --target=format --exclude=innodoc",
-    "format:write": "nx run-many --target=format:write --exclude=innodoc",
+    "format": "turbo run format",
+    "format:write": "turbo run format:write",
     "========= Lint": "",
-    "lint": "nx run-many --target=lint --exclude=innodoc",
-    "lint:fix": "nx run-many --target=lint:fix --exclude=innodoc",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
     "========= Production": "",
-    "start": "NODE_ENV=production nx run @innodoc/server:start",
+    "start": "NODE_ENV=production turbo run --filter=@innodoc/server start",
     "========= Test": "",
-    "test": "nx run-many --target=test --exclude=innodoc",
-    "test:e2e": "nx run @innodoc/e2e-tests:test",
+    "test": "turbo run test",
+    "test:e2e": "#TODO turbo run test:e2e",
     "========= Tools": "",
-    "knex": "nx run @innodoc/database:knex",
+    "knex": "turbo run knex",
     "knip": "knip",
     "syncpack": "pnpm exec syncpack",
     "visualize-bundle": "VISUALIZE_BUNDLE=true pnpm run build",
     "========= Type-check": "",
-    "type-check": "nx run-many --target=type-check --exclude=innodoc"
+    "type-check": "turbo run type-check"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.1.0",
@@ -53,9 +53,9 @@
     "dependency-cruiser": "^16.2.3",
     "eslint": "^8.57.0",
     "knip": "^5.0.4",
-    "nx": "^18.0.8",
     "prettier": "^3.2.5",
     "syncpack": "12.3.0",
+    "turbo": "^1.13.0",
     "typescript": "^5.4.2"
   },
   "engines": {
@@ -75,35 +75,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "nx": {
-    "targets": {
-      "build-icon-bundle": {
-        "executor": "nx:run-commands",
-        "cache": true,
-        "options": {
-          "commands": [
-            "mkdir -p dist",
-            "innodoc-icon-bundle --force --output packages/ui/components-common/dist/iconBundle.json packages/ui/components-app/src packages/ui/components-common/src packages/ui/components-content/src packages/ui/components-pages/src"
-          ]
-        },
-        "dependsOn": [
-          {
-            "projects": "@innodoc/command-icon-bundle",
-            "target": "build"
-          }
-        ],
-        "inputs": [
-          "{workspaceRoot}/packages/ui/components-app/src",
-          "{workspaceRoot}/packages/ui/components-common/src",
-          "{workspaceRoot}/packages/ui/components-content/src",
-          "{workspaceRoot}/packages/ui/components-pages/src"
-        ],
-        "outputs": [
-          "{workspaceRoot}/packages/ui/components-common/dist/iconBundle.json"
-        ]
-      }
-    }
   },
   "prettier": "@innodoc/prettier-config"
 }

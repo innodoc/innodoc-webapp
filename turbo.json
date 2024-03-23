@@ -1,0 +1,43 @@
+{
+  "globalDependencies": [".env"],
+  "globalDotEnv": [".env", ".env.development.local"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "dev:start": {
+      "cache": false,
+      "dependsOn": ["build"],
+      "persistent": true
+    },
+    "format": {},
+    "format:write": {},
+    "lint": {},
+    "lint:fix": {},
+    "main": {
+      "cache": false,
+      "dependsOn": ["build"]
+    },
+    "start": {
+      "cache": false,
+      "dependsOn": ["build"],
+      "persistent": true
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "dotEnv": [".env", ".env.test", ".env.test.local"],
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"]
+    },
+    "type-check": {},
+    "//#_build:icon-bundle": {
+      "dependsOn": ["@innodoc/command-icon-bundle#build"],
+      "outputs": ["packages/ui/components-common/dist/iconBundle.json"],
+      "inputs": ["packages/ui/components-*/src/**"]
+    }
+  }
+}

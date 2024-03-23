@@ -5,8 +5,8 @@
   },
   "json.schemas": [
     {
-      "fileMatch": ["/nx.json"],
-      "url": "./node_modules/nx/schemas/nx-schema.json"
+      "fileMatch": ["**/turbo.json"],
+      "url": "https://turbo.build/schema.json"
     },
     {
       "fileMatch": ["/.syncpackrc.json"],

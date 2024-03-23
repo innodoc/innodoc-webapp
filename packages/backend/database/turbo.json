@@ -1,0 +1,9 @@
+{
+  "extends": ["//"],
+  "pipeline": {
+    "knex": {
+      "dependsOn": ["^build"],
+      "cache": false
+    }
+  }
+}

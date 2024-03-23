@@ -1,9 +1,8 @@
+import { PageHeader } from '@innodoc/components-common/misc'
 import { useSelector, useSelectPage } from '@innodoc/hooks'
 import { isCoursePageRouteInfo } from '@innodoc/routes/typeGuards'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetPageContentQuery } from '@innodoc/store/slices/content/pages'
-
-import { PageHeader } from '@innodoc/components-common/misc'
 
 import ContentPage from './ContentPage.js'
 

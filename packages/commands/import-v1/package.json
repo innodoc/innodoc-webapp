@@ -6,12 +6,11 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "dev": "tsc --project tsconfig.build.json --watch",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "run": "node dist/main.js",
+    "main": "node dist/main.js",
     "test:unit": "vitest",
     "type-check": "tsc --noEmit"
   },

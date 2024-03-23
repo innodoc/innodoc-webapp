@@ -4,7 +4,7 @@
 /e2e/screenshots
 /_*.txt
 node_modules
-.nx/cache
+.turbo
 dist
 **/public/locales/*/*.missing.json
 *.local
