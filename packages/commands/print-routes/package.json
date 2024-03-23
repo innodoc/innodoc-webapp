@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "@innodoc/config": "workspace:*",
-    "@innodoc/routes": "workspace:*"
+    "@innodoc/routes": "workspace:*",
+    "chalk": "^5.3.0"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:*",
