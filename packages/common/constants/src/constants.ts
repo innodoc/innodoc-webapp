@@ -66,6 +66,9 @@ const API_PREFIX = '/api'
 /** API course path prefix */
 const API_COURSE_PREFIX = '/course'
 
+/** Content card types */
+const CARD_TYPES = ['example', 'exercise', 'hint', 'info', 'inputHint'] as const
+
 /** Possible names for custom hast MDX flow element */
 const HAST_MDX_JSX_FLOW_DIV_ELEMENT_NAME = [
   'Example',
@@ -84,6 +87,7 @@ const HAST_MDX_JSX_TEXT_SPAN_ELEMENT_NAME = ['TextQuestion'] as const
 export {
   API_COURSE_PREFIX,
   API_PREFIX,
+  CARD_TYPES,
   CONTENT_TYPES,
   COURSE_SLUG_MODES,
   DEFAULT_COURSE_SLUG_MODE,

@@ -1,0 +1,61 @@
+{
+  "name": "@innodoc/components-content",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/hast/hast.js"
+  },
+  "imports": {
+    "#cards": "./dist/cards/cards.js",
+    "#exercises": "./dist/exercises/exercises.js",
+    "#hast": "./dist/hast/hast.js",
+    "#hast/components": "./dist/hast/componentsMap.js",
+    "#tabs": "./dist/tabs/tabs.js",
+    "#types": "./src/types.ts"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "dev": "tsc --project tsconfig.build.json --watch",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@innodoc/components-common": "workspace:*",
+    "@innodoc/constants": "workspace:*",
+    "@innodoc/contexts": "workspace:*",
+    "@innodoc/hooks": "workspace:*",
+    "@innodoc/markdown": "workspace:*",
+    "@innodoc/routes": "workspace:*",
+    "@innodoc/store": "workspace:*",
+    "@innodoc/theme": "workspace:*",
+    "@mui/lab": "5.0.0-alpha.167",
+    "@mui/material": "5.15.12",
+    "camelcase-keys": "^9.1.3",
+    "react": "18.2.0",
+    "react-i18next": "14.0.5",
+    "rehype-react": "8.0.0",
+    "unified": "^11.0.4"
+  },
+  "devDependencies": {
+    "@innodoc/eslint-config": "workspace:*",
+    "@innodoc/prettier-config": "workspace:*",
+    "@innodoc/rtl": "workspace:*",
+    "@innodoc/ts-config": "workspace:*",
+    "@innodoc/types": "workspace:*",
+    "@innodoc/vitest-config": "workspace:*",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@types/innodoc-vite-env": "workspace:*",
+    "@types/hast": "3.0.4",
+    "@types/react": "18.2.63",
+    "hast-util-to-jsx-runtime": "^2.3.0",
+    "vitest": "^1.3.1"
+  },
+  "prettier": "@innodoc/prettier-config"
+}

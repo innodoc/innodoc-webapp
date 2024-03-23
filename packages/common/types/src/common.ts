@@ -1,6 +1,12 @@
 import type { Root } from 'hast'
 
-import type { CONTENT_TYPES, COURSE_SLUG_MODES, PAGE_LINK_LOCACTIONS, SECTION_TYPES } from '@innodoc/constants'
+import type {
+  CARD_TYPES,
+  CONTENT_TYPES,
+  COURSE_SLUG_MODES,
+  PAGE_LINK_LOCACTIONS,
+  SECTION_TYPES,
+} from '@innodoc/constants'
 
 import type { ParserError } from './errors.js'
 
@@ -18,6 +24,9 @@ type CourseSlugMode = (typeof COURSE_SLUG_MODES)[number]
 
 /** Content types */
 type ContentType = (typeof CONTENT_TYPES)[number]
+
+/** Content card type */
+type CardType = (typeof CARD_TYPES)[number]
 
 interface WithContentHash {
   /** CRC32 hash of content */
@@ -42,6 +51,7 @@ interface HastResultWithHash extends HastResult, WithContentHash {}
 
 export type {
   ArbitraryObject,
+  CardType,
   ContentType,
   ContentWithHash,
   CourseSlugMode,

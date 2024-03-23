@@ -44,7 +44,7 @@
       "label": "Internal prod packages are pinned to workspace:*",
       "packages": ["**"],
       "dependencies": [
-        "@innodoc/components",
+        "@innodoc/components-*",
         "@innodoc/config",
         "@innodoc/constants",
         "@innodoc/contexts",

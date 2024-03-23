@@ -1,1 +1,1 @@
-export { ErrorPage as Page } from '@innodoc/components'
+export { ErrorPage as Page } from '@innodoc/components-pages'

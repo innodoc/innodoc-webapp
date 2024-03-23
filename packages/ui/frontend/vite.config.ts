@@ -7,10 +7,10 @@ import ssr from 'vike/plugin'
 import type { InlineConfig as VitestInlineConfig } from 'vitest'
 import type { UserConfigExport } from 'vitest/config'
 
-import packageJson from './package.json' assert { type: 'json' }
+import packageJson from './package.json' with { type: 'json' }
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
-const rootDir = path.resolve(dirname, '..', '..')
+const rootDir = path.resolve(dirname, '..', '..', '..')
 
 /* Configure tests */
 function testConfig(testMode: string) {
@@ -35,6 +35,7 @@ function config() {
   const testMode = process.env.VITEST_MODE
 
   const config: UserConfigExport = {
+    envDir: rootDir,
     envPrefix: 'INNODOC_', // Exposed to client
     plugins: [react(), ssr({ prerender: false })],
     optimizeDeps: {

@@ -1,1 +1,1 @@
-export { IndexPage as Page } from '@innodoc/components'
+export { IndexPage as Page } from '@innodoc/components-pages'

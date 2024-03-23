@@ -1,1 +1,1 @@
-export { default } from '@innodoc/vitest-config/unit'
+export { default } from '@innodoc/vitest-config'
