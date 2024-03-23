@@ -1,9 +1,9 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { configSchema } from '@innodoc/schema/config'
+import { loadEnv } from 'vite'
 
-import loadDotEnv from './loadDotEnv.js'
+import { configSchema } from '@innodoc/schema/config'
 
 /**
  * Construct config object from env variables.
@@ -14,40 +14,40 @@ import loadDotEnv from './loadDotEnv.js'
  */
 function parseConfig() {
   const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..', '..')
-  loadDotEnv(rootDir)
+  const env = loadEnv(process.env.NODE_ENV ?? 'development', rootDir, '')
 
-  if (process.env.INNODOC_APP_ROOT === undefined) {
+  if (env.INNODOC_APP_ROOT === undefined) {
     throw new Error('You need to set the env variable INNODOC_APP_ROOT.')
   }
 
   return configSchema.parse({
-    host: process.env.INNODOC_HOST,
-    port: process.env.INNODOC_PORT,
+    host: env.INNODOC_HOST,
+    port: env.INNODOC_PORT,
 
-    appRoot: process.env.INNODOC_APP_ROOT,
-    isProduction: process.env.NODE_ENV === 'production',
+    appRoot: env.INNODOC_APP_ROOT,
+    isProduction: env.NODE_ENV === 'production',
     rootDir,
     distDir: path.join(rootDir, 'dist', 'client'),
-    pagePathPrefix: process.env.INNODOC_PAGE_PATH_PREFIX,
-    sectionPathPrefix: process.env.INNODOC_SECTION_PATH_PREFIX,
-    jwtSecret: process.env.INNODOC_JWT_SECRET,
-    dbConnectionString: process.env.INNODOC_DB_CONNECTION,
+    pagePathPrefix: env.INNODOC_PAGE_PATH_PREFIX,
+    sectionPathPrefix: env.INNODOC_SECTION_PATH_PREFIX,
+    jwtSecret: env.INNODOC_JWT_SECRET,
+    dbConnectionString: env.INNODOC_DB_CONNECTION,
 
-    courseSlugMode: process.env.INNODOC_COURSE_SLUG_MODE,
-    defaultCourseSlug: process.env.INNODOC_DEFAULT_COURSE_SLUG,
+    courseSlugMode: env.INNODOC_COURSE_SLUG_MODE,
+    defaultCourseSlug: env.INNODOC_DEFAULT_COURSE_SLUG,
 
-    smtpHost: process.env.INNODOC_SMTP_HOST,
-    smtpPort: process.env.INNODOC_SMTP_PORT,
-    smtpUser: process.env.INNODOC_SMTP_USER,
-    smtpPassword: process.env.INNODOC_SMTP_PASSWORD,
-    smtpSender: process.env.INNODOC_SMTP_SENDER,
+    smtpHost: env.INNODOC_SMTP_HOST,
+    smtpPort: env.INNODOC_SMTP_PORT,
+    smtpUser: env.INNODOC_SMTP_USER,
+    smtpPassword: env.INNODOC_SMTP_PASSWORD,
+    smtpSender: env.INNODOC_SMTP_SENDER,
 
-    discourseUrl: process.env.INNODOC_DISCOURSE_URL,
-    discourseSsoSecret: process.env.INNODOC_DISCOURSE_SSO_SECRET,
+    discourseUrl: env.INNODOC_DISCOURSE_URL,
+    discourseSsoSecret: env.INNODOC_DISCOURSE_SSO_SECRET,
 
-    dbDebug: process.env.INNODOC_DB_DEBUG === 'true',
-    enableMockApi: process.env.INNODOC_API_MOCK === 'true',
-    skipMails: process.env.INNODOC_SMTP_SKIP_MAILS === 'true',
+    dbDebug: env.INNODOC_DB_DEBUG === 'true',
+    enableMockApi: env.INNODOC_API_MOCK === 'true',
+    skipMails: env.INNODOC_SMTP_SKIP_MAILS === 'true',
   })
 }
 

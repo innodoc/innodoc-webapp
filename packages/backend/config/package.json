@@ -19,7 +19,7 @@
   "dependencies": {
     "@innodoc/constants": "workspace:*",
     "@innodoc/schema": "workspace:*",
-    "dotenv": "16.4.5"
+    "vite": "5.1.5"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:*",
