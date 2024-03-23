@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import config from '@innodoc/config'
 
 import setupApp from './app/setupApp.js'
