@@ -14,14 +14,14 @@ const pages = contentApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Fetch course pages */
     getCoursePages: builder.query<ApiPage[], ApiRouteParams['api:course:pages']>({
-      query: (args) => routeManager.apiUrl('api:course:pages', args),
+      query: (args) => routeManager.generateApiUrlPath('api:course:pages', args),
     }),
 
     /** Fetch content for a page */
     getPageContent: builder.query<ContentWithHash, ApiRouteParams['api:course:page:content']>({
       query: (args) => ({
         responseHandler: 'text',
-        url: routeManager.apiUrl('api:course:page:content', args),
+        url: routeManager.generateApiUrlPath('api:course:page:content', args),
       }),
       transformResponse: hashContentResponse,
     }),

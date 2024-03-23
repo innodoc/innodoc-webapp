@@ -13,7 +13,7 @@ const courses = contentApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Fetch course */
     getCourse: builder.query<ApiCourse, ApiRouteParams['api:course']>({
-      query: (args) => routeManager.apiUrl('api:course', args),
+      query: (args) => routeManager.generateApiUrlPath('api:course', args),
     }),
   }),
 })

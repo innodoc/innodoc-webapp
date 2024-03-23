@@ -33,7 +33,7 @@ function onInit({ routeInfo, store }: PageContextServer): void {
   // Redirect to home link
   try {
     const redirectRouteInfo = { ...routeManager.parseLinkSpecifier(course.homeLink), courseSlug, locale }
-    throw redirect(routeManager.appUrl(redirectRouteInfo))
+    throw redirect(routeManager.generateAppUrlPath(redirectRouteInfo))
   } catch {
     throw render(500, 'Invalid home link')
   }

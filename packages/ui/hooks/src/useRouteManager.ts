@@ -18,7 +18,7 @@ function useRouteManager() {
      */
     url: (partialRouteInfo: Partial<AppRouteInfo>) => {
       const routeInfo = { ...currentRouteInfo, ...partialRouteInfo }
-      return routeManager.appUrl(routeInfo)
+      return routeManager.generateAppUrlPath(routeInfo)
     },
 
     /**

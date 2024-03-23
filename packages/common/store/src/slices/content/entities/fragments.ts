@@ -15,7 +15,7 @@ const fragments = contentApi.injectEndpoints({
     getFragmentContent: builder.query<ContentWithHash, ApiRouteParams['api:course:fragment:content']>({
       query: (args) => ({
         responseHandler: 'text',
-        url: routeManager.apiUrl('api:course:fragment:content', args),
+        url: routeManager.generateApiUrlPath('api:course:fragment:content', args),
       }),
     }),
   }),

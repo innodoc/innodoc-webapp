@@ -62,7 +62,7 @@ async function populateStore(store: Store, routeInfo: CourseRouteInfo) {
   // Check if current locale is valid
   if (!course.locales.includes(locale)) {
     const newRouteInfo = { ...routeInfo, locale: course.locales[0] }
-    const redirectUrl = routeManager.appUrl(newRouteInfo)
+    const redirectUrl = routeManager.generateAppUrlPath(newRouteInfo)
     throw redirect(redirectUrl)
   }
 

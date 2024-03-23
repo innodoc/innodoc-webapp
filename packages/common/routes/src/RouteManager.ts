@@ -69,7 +69,7 @@ class RouteManager {
    * @param routeInfo route info object
    * @returns URL
    */
-  public appUrl(routeInfo: Record<string, unknown>): string {
+  public generateAppUrlPath(routeInfo: Record<string, unknown>): string {
     if (isAppRouteInfo(routeInfo)) {
       const { name, ...params } = routeInfo
       return this.pathFunctions[name](params as ParamsForGenerator<typeof name>)
@@ -83,7 +83,7 @@ class RouteManager {
    * @param routeInfo route info object
    * @returns URL
    */
-  public apiUrl<R extends ApiRouteName>(name: R, params: ApiRouteParams[R]): string {
+  public generateApiUrlPath<R extends ApiRouteName>(name: R, params: ApiRouteParams[R]): string {
     return this.pathFunctions[name](params as ParamsForGenerator<R>)
   }
 
