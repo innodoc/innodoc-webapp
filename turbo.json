@@ -23,6 +23,13 @@
       "cache": false,
       "dependsOn": ["build"]
     },
+    "playwright:install": {
+      "cache": false
+    },
+    "playwright:show-report": {
+      "cache": false,
+      "persistent": true
+    },
     "start": {
       "cache": false,
       "dependsOn": ["build"],
@@ -31,7 +38,7 @@
     "test": {
       "dependsOn": ["build"],
       "dotEnv": [".env", ".env.test", ".env.test.local"],
-      "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"]
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "tests/**/*.ts", "tests/**/*.tsx"]
     },
     "type-check": {},
     "//#_build:icon-bundle": {

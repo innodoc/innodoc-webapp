@@ -1,7 +1,6 @@
 .DS_Store
 *~
 /coverage
-/e2e/screenshots
 /_*.txt
 node_modules
 .turbo
@@ -10,7 +9,4 @@ dist
 *.local
 vite.config.ts.timestamp-*.mjs
 /stats.html
-/test-results/
-/playwright-report/
-/playwright/.cache/
 /reports

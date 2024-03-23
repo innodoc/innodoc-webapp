@@ -1,0 +1,10 @@
+{
+  "extends": ["//"],
+  "pipeline": {
+    "test": {
+      "cache": false,
+      "dependsOn": [],
+      "inputs": ["tests/**/*.ts"]
+    }
+  }
+}
