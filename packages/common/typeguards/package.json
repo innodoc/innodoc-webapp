@@ -32,7 +32,8 @@
     "@innodoc/ts-config": "workspace:*",
     "@innodoc/types": "workspace:*",
     "@types/svg-parser": "2.0.6",
-    "@types/validator": "13.11.9"
+    "@types/validator": "13.11.9",
+    "zod": "3.22.4"
   },
   "prettier": "@innodoc/prettier-config"
 }

@@ -19,7 +19,9 @@
   "dependencies": {
     "@innodoc/constants": "workspace:*",
     "@innodoc/schema": "workspace:*",
-    "vite": "5.1.5"
+    "@innodoc/typeguards": "workspace:*",
+    "vite": "5.1.5",
+    "zod-validation-error": "^3.0.3"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:*",

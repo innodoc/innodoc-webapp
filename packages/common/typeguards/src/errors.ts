@@ -1,3 +1,5 @@
+import type { ZodError } from 'zod'
+
 import type { ParserError } from '@innodoc/types/errors'
 
 import { isArbitraryObject } from './common.js'
@@ -19,4 +21,9 @@ function isErrorWithMessage(error: unknown): error is { message: string } {
   return isArbitraryObject(error) && 'message' in error && typeof (error as { message: string }).message === 'string'
 }
 
-export { isErrorWithMessage, isParserError }
+/** Type guard for `ZodError` */
+function isZodError(error: unknown): error is ZodError {
+  return isArbitraryObject(error) && 'issues' in error && Array.isArray(error.issues)
+}
+
+export { isErrorWithMessage, isParserError, isZodError }
