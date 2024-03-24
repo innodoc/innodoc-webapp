@@ -27,7 +27,7 @@ module.exports = {
           '(^|/).[^/]+.(js|cjs|mjs|ts|json)$', // dot files
           '.d.ts$', // TypeScript declaration files
           '(^|/)tsconfig.json$', // TypeScript config
-          '(^|/)(babel|webpack).config.(js|cjs|mjs|ts|json)$', // other configs
+          '(^|/)(eslint|playwright|vite|vitest).config.+.(js|cjs|mjs|ts|json)$', // other configs
         ],
       },
       to: {},
@@ -181,12 +181,12 @@ module.exports = {
     },
 
     exclude: {
-      path: '(node_modules|tests|dist|eslint.config.js|vite.config.ts|global-types)',
+      path: '(node_modules|tests|dist|eslint.config.js|playwright.config.ts|vite.config.ts|vitest.config.ts)',
     },
 
-    combinedDependencies: true,
+    combinedDependencies: false,
 
-    includeOnly: 'packages',
+    includeOnly: '^packages/',
 
     moduleSystems: ['es6'],
 
@@ -203,7 +203,7 @@ module.exports = {
         // don't use splines: 'ortho' here as this takes a long time
       },
       archi: {
-        collapsePattern: '^(packages)/[^/]+|node_modules/[^/]+',
+        collapsePattern: '^(packages)/[^/]+/[^/]+|node_modules/[^/]+',
         theme: {
           graph: { splines: 'ortho' },
         },
