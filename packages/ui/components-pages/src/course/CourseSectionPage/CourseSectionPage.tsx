@@ -1,7 +1,7 @@
 import { PageHeader } from '@innodoc/components-common/misc'
 import { formatSectionTitle } from '@innodoc/components-common/utils'
 import { useSelector, useSelectSection } from '@innodoc/hooks'
-import { isCourseSectionRouteInfo } from '@innodoc/routes/typeGuards'
+import { isCourseSectionRouteInfo } from '@innodoc/routes/typeguards'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetSectionContentQuery } from '@innodoc/store/slices/content/sections'
 

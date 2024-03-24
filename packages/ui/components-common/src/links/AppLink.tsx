@@ -2,7 +2,7 @@ import { Children, forwardRef, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useRouteManager } from '@innodoc/hooks'
-import { isAppRouteInfo, isCoursePageRouteInfo, isCourseSectionRouteInfo } from '@innodoc/routes/typeGuards'
+import { isAppRouteInfo, isCoursePageRouteInfo, isCourseSectionRouteInfo } from '@innodoc/routes/typeguards'
 
 import pageLinks from '#pageLinks'
 

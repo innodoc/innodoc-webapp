@@ -7,7 +7,7 @@ import { isContentType } from '@innodoc/typeguards/content'
 import type { CourseSlugMode } from '@innodoc/types/common'
 
 import { apiRoutes, builtinRoutes, courseRoutes, userRoutes } from './routes/routes.js'
-import { isAppRouteInfo, isAppRouteName, isCourseContentRouteName } from './typeGuards.js'
+import { isAppRouteInfo, isAppRouteName, isCourseContentRouteName } from './typeguards.js'
 import type { ApiRouteParams } from './routes/routes.js'
 import type { ParamsForGenerator, RouteDef, RouteFuncArgs, RouteParams } from './types/common.js'
 import type { CourseContentRouteInfo } from './types/routeInfos.js'

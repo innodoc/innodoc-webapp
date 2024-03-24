@@ -1,9 +1,9 @@
 import { createContext, type ReactNode, useContext, useEffect, useMemo, useRef } from 'react'
 
-import { useSelector, useSelectSection } from '@innodoc/hooks'
-import { isCourseSectionRouteInfo } from '@innodoc/routes/typeGuards'
-import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { getSectionNumberFromOrder } from '@innodoc/components-common/utils'
+import { useSelector, useSelectSection } from '@innodoc/hooks'
+import { isCourseSectionRouteInfo } from '@innodoc/routes/typeguards'
+import { selectRouteInfo } from '@innodoc/store/slices/app'
 
 /** Provide consistent auto-incrementing numbering for cards within a document */
 const CardTitleContext = createContext((id: string | undefined, title: string) => title)

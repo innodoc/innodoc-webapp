@@ -2,7 +2,7 @@ import { isPromise } from 'node:util/types'
 
 import type { Config, OnBeforeRenderAsync, PageContextServer } from 'vike/types'
 
-import { isAppRouteInfo, isAppRouteName, isCourseRouteInfo } from '@innodoc/routes/typeGuards'
+import { isAppRouteInfo, isAppRouteName, isCourseRouteInfo } from '@innodoc/routes/typeguards'
 import makeStore from '@innodoc/store'
 import { changeRouteInfo } from '@innodoc/store/slices/app'
 import { isCallable } from '@innodoc/typeguards/common'

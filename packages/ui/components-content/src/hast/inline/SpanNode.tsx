@@ -1,6 +1,6 @@
 import type { ComponentType, ReactNode } from 'react'
 
-import { isHastMdxJsxTextSpanElement } from '@innodoc/markdown/typeGuards'
+import { isHastMdxJsxTextSpanElement } from '@innodoc/markdown/typeguards'
 import type { HastMdxJsxTextSpanElement } from '@innodoc/markdown/types'
 
 import { TextQuestion } from '#exercises'

@@ -7,12 +7,12 @@
   "exports": {
     ".": "./dist/markdownToHast.js",
     "./properties": "./dist/sanitization/properties.js",
-    "./typeGuards": "./dist/typeGuards.js",
+    "./typeguards": "./dist/typeguards.js",
     "./types": "./dist/types.js",
     "./utils": "./dist/utils.js"
   },
   "imports": {
-    "#typeGuards": "./dist/typeGuards.js",
+    "#typeguards": "./dist/typeguards.js",
     "#types": "./dist/types.js"
   },
   "scripts": {

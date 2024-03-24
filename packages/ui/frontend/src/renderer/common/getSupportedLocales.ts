@@ -1,7 +1,7 @@
 import type { LanguageCode } from 'iso-639-1'
 
 import { DEFAULT_LOCALES } from '@innodoc/constants'
-import { isCourseRouteInfo } from '@innodoc/routes/typeGuards'
+import { isCourseRouteInfo } from '@innodoc/routes/typeguards'
 import courses from '@innodoc/store/slices/content/courses'
 import { isLocale } from '@innodoc/typeguards/common'
 import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'

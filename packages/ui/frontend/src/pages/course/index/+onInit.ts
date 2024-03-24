@@ -2,7 +2,7 @@ import { redirect, render } from 'vike/abort'
 import type { PageContextServer } from 'vike/types'
 
 import { DEFAULT_ROUTE_NAME } from '@innodoc/constants'
-import { isCourseRouteInfo } from '@innodoc/routes/typeGuards'
+import { isCourseRouteInfo } from '@innodoc/routes/typeguards'
 import getRouteManager from '@innodoc/routes/vite/getRouteManager'
 import courses from '@innodoc/store/slices/content/courses'
 

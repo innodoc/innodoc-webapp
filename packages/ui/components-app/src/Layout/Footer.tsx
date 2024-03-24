@@ -6,7 +6,7 @@ import pageLinks from '@innodoc/components-common/pageLinks'
 import HastNode from '@innodoc/components-content'
 import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '@innodoc/constants'
 import { useSelectCurrentCourse, useSelectLinkedPages, useSelector } from '@innodoc/hooks'
-import { isCourseRouteInfo } from '@innodoc/routes/typeGuards'
+import { isCourseRouteInfo } from '@innodoc/routes/typeguards'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetFragmentContentQuery } from '@innodoc/store/slices/content/fragments'
 

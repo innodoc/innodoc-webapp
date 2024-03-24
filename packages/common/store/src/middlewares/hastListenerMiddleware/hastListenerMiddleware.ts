@@ -1,7 +1,7 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
 import type { PayloadAction, UnknownAction } from '@reduxjs/toolkit'
 
-import { isHastRootDivElement } from '@innodoc/markdown/typeGuards'
+import { isHastRootDivElement } from '@innodoc/markdown/typeguards'
 import { isWithContentHash } from '@innodoc/typeguards/content'
 import { isParserError } from '@innodoc/typeguards/errors'
 import type { CourseContentRouteInfo } from '@innodoc/routes/types/routeInfos'

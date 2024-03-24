@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
 import type { LanguageCode } from 'iso-639-1'
 
-import { isCourseRouteInfo } from '@innodoc/routes/typeGuards'
+import { isCourseRouteInfo } from '@innodoc/routes/typeguards'
 import { selectRouteInfo } from '@innodoc/store/slices/app'
 import { useGetCourseSectionsQuery } from '@innodoc/store/slices/content/sections'
 import type { ApiSection, TranslatedSection } from '@innodoc/schema/types'

@@ -9,7 +9,7 @@
     "./types": "./dist/types/common.js",
     "./types/routeInfos": "./dist/types/routeInfos.js",
     "./types/routeNames": "./dist/types/routeNames.js",
-    "./typeGuards": "./dist/typeGuards.js"
+    "./typeguards": "./dist/typeguards.js"
   },
   "imports": {
     "#routeManager": "./dist/RouteManager.js",

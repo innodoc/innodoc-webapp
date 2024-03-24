@@ -1,6 +1,6 @@
 import type { ComponentType, ReactNode } from 'react'
 
-import { isHastMdxJsxFlowDivElement, isHastRootDivElement } from '@innodoc/markdown/typeGuards'
+import { isHastMdxJsxFlowDivElement, isHastRootDivElement } from '@innodoc/markdown/typeguards'
 import type { HastMdxJsxFlowDivElement } from '@innodoc/markdown/types'
 
 import { ExampleCard, ExerciseCard, HintCard, InfoCard, InputHintCard, SolutionCard } from '#cards'
