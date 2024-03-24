@@ -9,18 +9,24 @@ test('renders StaticToc', async () => {
 
   render(<StaticToc />)
 
-  expect(screen.getAllByRole('link')).toHaveLength(3)
+  expect(screen.getAllByRole('link')).toHaveLength(84)
 
-  const list = screen.getAllByRole('list').at(0)
-  assert(list, 'list not found')
+  // 1st section (no children)
+  const firstItem = screen.getAllByRole('listitem').at(0)
+  assert(firstItem, 'firstItem not found')
+  const firstSection = within(firstItem).getAllByRole('link')
+  expect(firstSection).toHaveLength(1)
+  expect(firstSection.at(0)).toHaveTextContent('1 Tabesco cilicium soluta')
 
-  const [item1, , item3] = within(list).getAllByRole('listitem')
-  assert(item1, 'list item found')
-  assert(item3, 'list item found')
-
-  const [section1, sectionA] = within(item1).getAllByRole('link')
-  expect(section1).toHaveTextContent('1 Course section 1')
-  expect(sectionA).toHaveTextContent('1.1 Course section A')
-
-  expect(within(item3).getByRole('link')).toHaveTextContent('2 Course section 2')
+  // 2nd section (4 children)
+  const secondItem = screen.getAllByRole('listitem').at(1)
+  assert(secondItem, 'secondItem not found')
+  const subSections = within(secondItem).getAllByRole('link')
+  expect(subSections).toHaveLength(5)
+  const [secondSection, subSection1, subSection2, subSection3, subSection4] = subSections
+  expect(secondSection).toHaveTextContent('2 Ut aggredior vix')
+  expect(subSection1).toHaveTextContent('2.1 Demulceo cito dolorem')
+  expect(subSection2).toHaveTextContent('2.2 Tondeo crur caritas')
+  expect(subSection3).toHaveTextContent('2.3 Vel decet terreo')
+  expect(subSection4).toHaveTextContent('2.4 Celebrer clarus atqui')
 })

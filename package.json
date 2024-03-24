@@ -33,7 +33,7 @@
     "========= Production": "",
     "start": "NODE_ENV=production turbo run --filter=@innodoc/server start",
     "========= Test": "",
-    "test": "turbo run test",
+    "test": "turbo run test --output-logs=new-only",
     "test:e2e": "turbo run test --filter=@innodoc/e2e",
     "test:e2e:show-report": "turbo run playwright:show-report --log-prefix=none --filter=@innodoc/e2e",
     "========= Tools": "",

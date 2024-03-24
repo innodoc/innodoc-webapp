@@ -8,6 +8,7 @@ const rootDir = path.resolve(dirname, '..', '..', '..', '..')
 
 export default defineConfig({
   envDir: rootDir,
+  envPrefix: 'INNODOC_',
   test: {
     watch: false,
   },
