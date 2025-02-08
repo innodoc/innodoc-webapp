@@ -1,7 +1,7 @@
 // Redirect / to custom homeLink. (Next.js does support redirects out-of-the-box
 // but homeLink would need to be known at build time for this to work.)
 const indexRedirectHandler = ({ manifest, pagePathPrefix, sectionPathPrefix }) => {
-  const { home_link: homeLink } = manifest
+  const { homeLink } = manifest
   let contentType
   let contentId
 
