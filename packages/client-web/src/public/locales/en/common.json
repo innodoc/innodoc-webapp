@@ -15,6 +15,7 @@
   "content": {
     "example": "Example",
     "exercise": {
+      "notFound": "Exercise not found!",
       "reset": "Reset",
       "title": "Exercise",
       "verify": "Check input"

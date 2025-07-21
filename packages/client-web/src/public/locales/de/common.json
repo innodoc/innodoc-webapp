@@ -15,6 +15,7 @@
   "content": {
     "example": "Beispiel",
     "exercise": {
+      "notFound": "Aufgabe nicht gefunden!",
       "reset": "Reset",
       "title": "Aufgabe",
       "verify": "Eingabe kontrollieren"

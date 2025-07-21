@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { CheckOutlined, FormOutlined, UndoOutlined } from '@ant-design/icons'
+import { Card as AntCard, Result } from 'antd'
 
 import { useTranslation } from '@innodoc/common/src/i18n'
 import { attributeType, contentType } from '@innodoc/client-misc/src/propTypes'
@@ -76,6 +77,14 @@ const ExerciseCard = ({ attributes, content, extra, id: exId }) => {
   ) : (
     exTitle
   )
+
+  if (exercise.id === 0) {
+    return (
+      <AntCard className={css.errorCard}>
+        <Result title={t('content.exercise.notFound')} />
+      </AntCard>
+    )
+  }
 
   return (
     <ExerciseProvider exercise={exercise} setShowResult={setShowResult} showResult={showResult}>
