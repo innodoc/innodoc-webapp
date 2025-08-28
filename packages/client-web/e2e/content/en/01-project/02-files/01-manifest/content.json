@@ -92,9 +92,9 @@
     "t": "Header",
     "c": [
       2,
-      ["home_link-optional", [], []],
+      ["homeLink-optional", [], []],
       [
-        { "t": "Code", "c": [["", [], []], "home_link"] },
+        { "t": "Code", "c": [["", [], []], "homeLink"] },
         { "t": "Str", "c": " (optional)" }
       ]
     ]
@@ -104,7 +104,7 @@
     "t": "Para",
     "c": [
       { "t": "Str", "c": "The value of the field " },
-      { "t": "Code", "c": [["", [], []], "home_link"] },
+      { "t": "Code", "c": [["", [], []], "homeLink"] },
       { "t": "Str", "c": " needs to a valid internal link as described in section " },
       { "t": "Link", "c": [["", [], []], [], ["/section/02-elements/02-links/01-internal", ""]] },
       {
@@ -113,7 +113,7 @@
       }
     ]
   },
-  { "t": "CodeBlock", "c": [["", ["yaml"], []], "home_link: /page/welcome"] },
+  { "t": "CodeBlock", "c": [["", ["yaml"], []], "homeLink: /page/welcome"] },
   {
     "t": "Header",
     "c": [

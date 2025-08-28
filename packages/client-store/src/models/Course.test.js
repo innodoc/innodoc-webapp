@@ -38,7 +38,7 @@ describe('Course', () => {
 
     describe('loadManifest', () => {
       const manifest = {
-        home_link: '/section/bar',
+        homeLink: '/section/bar',
         languages: ['en'],
         min_score: 50,
         title: { en: 'foobar' },
@@ -64,7 +64,7 @@ describe('Course', () => {
 
       test('loadManifestSuccess (w/o homeLink)', () => {
         const action = loadManifestSuccess({
-          content: { ...manifest, home_link: undefined },
+          content: { ...manifest, homeLink: undefined },
         })
         session.Course.reducer(action, session.Course)
         expect(session.Course.first().ref).toEqual({

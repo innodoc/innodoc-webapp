@@ -9,7 +9,7 @@ describe('indexRedirectHandler', () => {
   it.each(['page', 'section'])('should redirect to homeLink /%s/foo', (contentType) => {
     const handler = indexRedirectHandler({
       ...mockConfig,
-      manifest: { home_link: `/${contentType}/foo` },
+      manifest: { homeLink: `/${contentType}/foo` },
     })
     const redirect = jest.fn()
     handler({}, { redirect })
@@ -18,7 +18,7 @@ describe('indexRedirectHandler', () => {
 
   it('should fail with invalid homeLink', () => {
     expect(() => {
-      indexRedirectHandler({ ...mockConfig, manifest: { home_link: '/p/foo' } })
-    }).toThrow('Malformed home_link encountered')
+      indexRedirectHandler({ ...mockConfig, manifest: { homeLink: '/p/foo' } })
+    }).toThrow('Malformed homeLink encountered')
   })
 })

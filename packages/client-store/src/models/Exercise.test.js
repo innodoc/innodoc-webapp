@@ -2,7 +2,7 @@ import orm from '../orm'
 
 import { loadManifestSuccess } from '../actions/content'
 
-const boxes = {
+const cards = {
   section01: [
     ['info-1.1.1', '1.1.1', 'info'],
     ['EX_01', '1.1.2', 'exercise', 4, 2],
@@ -55,7 +55,7 @@ describe('Exercise', () => {
 
   describe('reducer', () => {
     test('loadManifestSuccess', () => {
-      session.Exercise.reducer(loadManifestSuccess({ content: { boxes } }), session.Exercise)
+      session.Exercise.reducer(loadManifestSuccess({ content: { cards } }), session.Exercise)
       expect(session.state).toEqual(loadedExercises)
     })
 

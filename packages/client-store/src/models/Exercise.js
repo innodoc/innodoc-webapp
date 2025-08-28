@@ -20,14 +20,14 @@ export default class Exercise extends Model {
   static reducer(action, ExerciseModel) {
     switch (action.type) {
       case contentActionTypes.LOAD_MANIFEST_SUCCESS: {
-        const { boxes } = action.data.content
-        if (boxes) {
-          Object.keys(boxes).forEach((sectionId) => {
-            const sectionBoxes = boxes[sectionId]
-            if (sectionBoxes) {
-              sectionBoxes.forEach((boxData) => {
-                if (boxData[2] === 'exercise') {
-                  const [id, number, , points, questionCount] = boxData
+        const { cards } = action.data.content
+        if (cards) {
+          Object.keys(cards).forEach((sectionId) => {
+            const sectionCards = cards[sectionId]
+            if (sectionCards) {
+              sectionCards.forEach((cardData) => {
+                if (cardData[2] === 'exercise') {
+                  const [id, number, , points, questionCount] = cardData
                   ExerciseModel.create({
                     id: `${sectionId}#${id}`,
                     number,

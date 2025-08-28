@@ -44,7 +44,7 @@ jest.mock('./middlewares', () => ({
 
 const defaultConfig = {
   appRoot: 'http://app.example.com/',
-  manifest: { home_link: '/page/foo' },
+  manifest: { homeLink: '/page/foo' },
   nodeEnv: 'production',
   smtp: {},
 }

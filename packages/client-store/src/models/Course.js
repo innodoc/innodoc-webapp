@@ -26,7 +26,7 @@ export default class Course extends Model {
       case contentActionTypes.LOAD_MANIFEST_SUCCESS: {
         const { content } = action.data
         CourseModel.create({
-          homeLink: content.home_link || `/section/${content.toc[0].id}`,
+          homeLink: content.homeLink || `/section/${content.toc[0].id}`,
           languages: content.languages,
           logo: content.logo || undefined,
           mathJaxOptions: content.mathjax || {},
