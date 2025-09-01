@@ -312,4 +312,126 @@ createTests('function', func, [
       simplification: 'antiderivative',
     },
   },
+
+  // Points
+
+  {
+    solution: '(-2,1)',
+    correct: [
+      ['(-2;1)', '{\\left(\\begin{matrix}{-2}\\\\{1}\\end{matrix}\\right)}'],
+      [
+        '(-2/1;1/1)',
+        '{\\left(\\begin{matrix}{-{\\frac{2}{1}}}\\\\{{\\frac{1}{1}}}\\end{matrix}\\right)}',
+      ],
+      ['(-4/2;1.0)', '{\\left(\\begin{matrix}{-{\\frac{4}{2}}}\\\\{1.0}\\end{matrix}\\right)}'],
+    ],
+    incorrect: [
+      ['(-2,1)', '{\\left(\\begin{matrix}{-2}\\\\{1}\\end{matrix}\\right)}', ['malformed-input']],
+      [
+        '(-2;2)',
+        '{\\left(\\begin{matrix}{-2}\\\\{2}\\end{matrix}\\right)}',
+        ['still-incorrect-answer'],
+      ],
+    ],
+    attrs: { precision: '5' },
+  },
+  {
+    solution: '(-2,5/2)',
+    correct: [
+      ['(-2;5/2)', '{\\left(\\begin{matrix}{-2}\\\\{{\\frac{5}{2}}}\\end{matrix}\\right)}'],
+      ['(-2;2.5)', '{\\left(\\begin{matrix}{-2}\\\\{2.5}\\end{matrix}\\right)}'],
+      ['(-2;2,5)', '{\\left(\\begin{matrix}{-2}\\\\{2.5}\\end{matrix}\\right)}'],
+    ],
+    incorrect: [
+      [
+        '(-2,5/2)',
+        '{\\left(\\begin{matrix}{-2}\\\\{{\\frac{5}{2}}}\\end{matrix}\\right)}',
+        ['malformed-input'],
+      ],
+      [
+        '(-2;2)',
+        '{\\left(\\begin{matrix}{-2}\\\\{2}\\end{matrix}\\right)}',
+        ['still-incorrect-answer'],
+      ],
+    ],
+    attrs: { precision: '5' },
+  },
+  {
+    solution: '(-sqrt(3),sqrt(3))',
+    correct: [
+      [
+        '(-sqrt(3);sqrt(3))',
+        '{\\left(\\begin{matrix}{-\\sqrt{3}}\\\\{\\sqrt{3}}\\end{matrix}\\right)}',
+      ],
+      [
+        '(-1.732051;1.732051)',
+        '{\\left(\\begin{matrix}{-1.732051}\\\\{1.732051}\\end{matrix}\\right)}',
+      ],
+    ],
+    incorrect: [
+      [
+        '(-2,5/2)',
+        '{\\left(\\begin{matrix}{-2}\\\\{{\\frac{5}{2}}}\\end{matrix}\\right)}',
+        ['malformed-input'],
+      ],
+      [
+        '(-1.732051;1.73)',
+        '{\\left(\\begin{matrix}{-1.732051}\\\\{1.73}\\end{matrix}\\right)}',
+        ['still-incorrect-answer'],
+      ],
+      [
+        '(sqrt(3);sqrt(3))',
+        '{\\left(\\begin{matrix}{\\sqrt{3}}\\\\{\\sqrt{3}}\\end{matrix}\\right)}',
+        ['still-incorrect-answer'],
+      ],
+      [
+        '(-sqrt(4);sqrt(3))',
+        '{\\left(\\begin{matrix}{-\\sqrt{4}}\\\\{\\sqrt{3}}\\end{matrix}\\right)}',
+        ['still-incorrect-answer'],
+      ],
+    ],
+    attrs: { precision: '5' },
+  },
+  {
+    solution: '(pi+1,-(7/2))',
+    correct: [
+      [
+        '(pi+1;-(7/2))',
+        '{\\left(\\begin{matrix}{\\pi+1}\\\\{-\\left({\\frac{7}{2}}\\right)}\\end{matrix}\\right)}',
+      ],
+      ['(pi+1;-3.5)', '{\\left(\\begin{matrix}{\\pi+1}\\\\{-3.5}\\end{matrix}\\right)}'],
+    ],
+    incorrect: [],
+    attrs: { precision: '5' },
+  },
+  {
+    solution: '(0.5,2,-2)',
+    correct: [
+      ['(0.5;2;-2)', '{\\left(\\begin{matrix}{0.5}\\\\{2}\\\\{-2}\\end{matrix}\\right)}'],
+      [
+        '(1/2;2;-2)',
+        '{\\left(\\begin{matrix}{{\\frac{1}{2}}}\\\\{2}\\\\{-2}\\end{matrix}\\right)}',
+      ],
+    ],
+    incorrect: [
+      [
+        '(0.5;3;-2)',
+        '{\\left(\\begin{matrix}{0.5}\\\\{3}\\\\{-2}\\end{matrix}\\right)}',
+        ['still-incorrect-answer'],
+      ],
+    ],
+    attrs: { precision: '5' },
+  },
+  {
+    solution: '(1,21*t-6)',
+    correct: [
+      ['(1;21*t-6)', '{\\left(\\begin{matrix}{1}\\\\{21 {\\cdot} t-6}\\end{matrix}\\right)}'],
+    ],
+    incorrect: [],
+    attrs: {
+      'supporting-points': '5',
+      precision: '5',
+      variables: 't',
+    },
+  },
 ])

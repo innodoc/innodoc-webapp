@@ -2,7 +2,14 @@
 
 import RESULT_VALUE from '@innodoc/client-misc/src/resultDef'
 
-import { convertMathInput, mathJS, mathJSFunctions, rawParse, withinDistance } from './util'
+import {
+  convertMathInput,
+  mathJS,
+  mathJSFunctions,
+  notationParserIn,
+  rawParse,
+  withinDistance,
+} from './util'
 
 // taken from jQuery-3.1.1
 const isNumeric = (obj) =>
@@ -20,6 +27,21 @@ function isProperNumber(str) {
     return false
   }
   return isNumeric(str)
+}
+
+// Try to parse point input
+function parseVector(input) {
+  // Check if input matches point format (x,y)
+  if (input.match(/^\s*\(/) && input.match(/\)\s*$/)) {
+    const elems = input
+      .replace(/^\s*\(/, '')
+      .replace(/\)\s*$/, '')
+      .split(',')
+
+    return elems.length > 1 ? elems : null
+  }
+
+  return null
 }
 
 function checkSimplification(simplification, inp) {
@@ -161,54 +183,7 @@ function checkSimplification(simplification, inp) {
   return msgs
 }
 
-// Input as function expression
-// Comparison at supporting points 1,2,..., number, shifted number/2 to the left
-const func = (input, solution, attrs) => {
-  const messages = []
-  let latexCode
-
-  if (input === '') {
-    messages.push({ msg: 'still-incorrect-answer', type: 'error' })
-    return [RESULT_VALUE.NEUTRAL, messages]
-  }
-
-  // Doing check here, otherwise math.js would choke on '|'
-  if (input.indexOf('|') !== -1) {
-    messages.push({
-      msg: 'simplification.abs',
-      interp: { got: '|…|', need: 'abs(…)' },
-      type: 'warning',
-    })
-    return [RESULT_VALUE.INCORRECT, messages]
-  }
-
-  const varia = attrs.variables.split(',')
-  const { precision, 'supporting-points': spoints } = attrs
-  const simplification =
-    typeof attrs.simplification === 'string' ? attrs.simplification.split(',') : []
-
-  let ok = RESULT_VALUE.CORRECT
-
-  let rt
-  let solcode
-  try {
-    rt = convertMathInput(solution)
-    solcode = mathJS.compile(rt.mathjs)
-  } catch (e) {
-    throw new Error(`Solution could not be parsed: ${solution}`)
-  }
-
-  let inputRt
-  let valcode
-  try {
-    inputRt = convertMathInput(input)
-    latexCode = inputRt.latex
-    valcode = mathJS.compile(inputRt.mathjs)
-  } catch (e) {
-    messages.push({ msg: 'malformed-input', type: 'error' })
-    return [RESULT_VALUE.INCORRECT, messages]
-  }
-
+function evalSupportingPoints(simplification, spoints, precision, varia, valcode, solcode) {
   let c1
   let c2
 
@@ -240,6 +215,8 @@ const func = (input, solution, attrs) => {
     vv[vj] = first
   }
 
+  let iterations = 0
+
   try {
     let fini = false
 
@@ -262,9 +239,8 @@ const func = (input, solution, attrs) => {
       const ed = rawParse(pd)
 
       if (!withinDistance(ed, 0, precision)) {
-        ok = RESULT_VALUE.INCORRECT
         fini = true
-        messages.push({ msg: 'still-incorrect-answer', type: 'error' })
+        return 'still-incorrect-answer'
       }
 
       // Increment array of support points
@@ -284,26 +260,148 @@ const func = (input, solution, attrs) => {
           inc = false
         }
       }
-    }
 
-    if (ok === RESULT_VALUE.CORRECT) {
-      messages.push({ msg: 'correct-answer', type: 'success' })
+      iterations += 1
+      if (iterations > 50) {
+        break
+      }
     }
   } catch (e) {
-    ok = RESULT_VALUE.INCORRECT
-    messages.push({ msg: 'malformed-input', type: 'error' })
+    return 'malformed-input'
   }
 
-  checkSimplification(simplification, input).forEach((message) => {
-    const msg = { msg: `simplification.${message.msg}`, type: message.type }
-    if (message.interp) {
-      msg.interp = message.interp
+  return undefined
+}
+
+// Input as function expression
+// Comparison at supporting points 1,2,..., number, shifted number/2 to the left
+const func = (input, solution, attrs) => {
+  const messages = []
+
+  const addMessage = (msg) => {
+    if (!messages.some((m) => m.msg === msg.msg && m.type === msg.type)) {
+      messages.push(msg)
     }
-    messages.push(msg)
-    if (['error', 'warning'].includes(message.type)) {
+  }
+
+  if (input === '') {
+    messages.push({ msg: 'still-incorrect-answer', type: 'error' })
+    return [RESULT_VALUE.NEUTRAL, messages]
+  }
+
+  // Doing check here, otherwise math.js would choke on '|'
+  if (input.indexOf('|') !== -1) {
+    messages.push({
+      msg: 'simplification.abs',
+      interp: { got: '|…|', need: 'abs(…)' },
+      type: 'warning',
+    })
+    return [RESULT_VALUE.INCORRECT, messages]
+  }
+
+  let latexCode
+  let ok = RESULT_VALUE.CORRECT
+  let isVector = false
+
+  // Attributes
+  const varia = typeof attrs.variables === 'string' ? attrs.variables.split(',') : []
+  let spoints =
+    typeof attrs['supporting-points'] === 'string' ? Number(attrs['supporting-points']) : 5
+  spoints = Math.min(15, spoints)
+  const precision = typeof attrs.precision === 'string' ? Number(attrs.precision) : 5
+  const simplification =
+    typeof attrs.simplification === 'string' ? attrs.simplification.split(',') : []
+
+  // Try to parse as vector
+  const inputParsed = notationParserIn(input)
+  let inputVec = parseVector(inputParsed)
+  let solVec = parseVector(solution)
+
+  // Vector validation
+  if (inputVec !== null && solVec !== null) {
+    isVector = true
+    if (inputVec.length !== solVec.length) {
+      messages.push({ msg: 'still-incorrect-answer', type: 'error' })
+      return [RESULT_VALUE.INCORRECT, messages]
+    }
+
+    const inputRt = convertMathInput(inputParsed)
+    // return [ok, messages, inputRt.latex]
+    latexCode = inputRt.latex
+  }
+
+  // Single expression
+  else {
+    inputVec = [input]
+    solVec = [solution]
+  }
+
+  // Sanity checks
+  if (inputVec.length !== solVec.length || inputVec.length > 10) {
+    messages.push({ msg: 'still-incorrect-answer', type: 'error' })
+    return [RESULT_VALUE.INCORRECT, messages]
+  }
+
+  let allSupportingPointsOk = true
+
+  // Validate supporting points for each expression
+  for (let i = 0; i < inputVec.length; i += 1) {
+    const sol = solVec[i]
+    const inp = inputVec[i]
+
+    let rt
+    let solcode
+    try {
+      rt = convertMathInput(sol)
+      solcode = mathJS.compile(rt.mathjs)
+    } catch (e) {
+      throw new Error(
+        `Solution could not be parsed: sol='${sol}' rt='${rt}' solcode='${solcode}': ${e}`
+      )
+    }
+
+    let inputRt
+    let valcode
+    try {
+      inputRt = convertMathInput(inp)
+      if (!isVector) {
+        latexCode = inputRt.latex
+      }
+      valcode = mathJS.compile(inputRt.mathjs)
+    } catch (e) {
+      messages.push({ msg: 'malformed-input', type: 'error' })
+      return [RESULT_VALUE.INCORRECT, messages]
+    }
+
+    const result = evalSupportingPoints(simplification, spoints, precision, varia, valcode, solcode)
+    if (typeof result === 'string') {
       ok = RESULT_VALUE.INCORRECT
+      allSupportingPointsOk = false
+      addMessage({ msg: result, type: 'error' })
     }
-  })
+
+    // Check simplifications
+    const simplMessages = checkSimplification(simplification, inp)
+    for (let j = 0; j < simplMessages.length; j += 1) {
+      const message = simplMessages[j]
+      const msg = { msg: `simplification.${message.msg}`, type: message.type }
+      if (message.interp) {
+        msg.interp = message.interp
+      }
+      messages.push(msg)
+      if (['error', 'warning'].includes(message.type)) {
+        ok = RESULT_VALUE.INCORRECT
+      }
+    }
+
+    if (ok !== RESULT_VALUE.CORRECT) {
+      break
+    }
+  }
+
+  if (allSupportingPointsOk) {
+    addMessage({ msg: 'correct-answer', type: 'success' })
+  }
 
   return [ok, messages, latexCode]
 }
