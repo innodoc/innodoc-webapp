@@ -312,8 +312,9 @@ const func = (input, solution, attrs) => {
   const simplification =
     typeof attrs.simplification === 'string' ? attrs.simplification.split(',') : []
 
-  // Try to parse as vector
   const inputParsed = notationParserIn(input)
+
+  // Try to parse as vector
   let inputVec = parseVector(inputParsed)
   let solVec = parseVector(solution)
 
@@ -332,7 +333,7 @@ const func = (input, solution, attrs) => {
 
   // Single expression
   else {
-    inputVec = [input]
+    inputVec = [inputParsed]
     solVec = [solution]
   }
 

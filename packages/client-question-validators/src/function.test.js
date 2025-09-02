@@ -15,7 +15,7 @@ createTests('function', func, [
     ],
     incorrect: [
       ['alpha^2', '{\\alpha^{2}}', ['still-incorrect-answer']],
-      ['alpha^', undefined, ['malformed-input']],
+      ['alpha^', '\\alpha', ['still-incorrect-answer']],
       ['2alpha^2', '2{\\alpha^{2}}', ['correct-answer', 'simplification.product-form']],
     ],
     attrs: { 'supporting-points': '5', variables: 'alpha', precision: '5' },
@@ -165,25 +165,66 @@ createTests('function', func, [
     solution: 'if(x>=4,2*(x-4),-2*(x-4))',
     correct: [
       [
-        'if(x>=4,2*x-8,-2*x+8)',
+        'if(x>=4;2*x-8;-2*x+8)',
         '{\\left\\lbrace\\begin{matrix}{2 {\\cdot} x-8}&{\\mbox{falls}\\;{x{\\geq}4}}\\\\{-2 {\\cdot} x+8}&\\mbox{sonst}\\end{matrix}\\right.}',
       ],
       [
-        'falls(x>=4,2*x-8,-2*x+8)',
+        'falls(x>=4;2*x-8;-2*x+8)',
         '{\\left\\lbrace\\begin{matrix}{2 {\\cdot} x-8}&{\\mbox{falls}\\;{x{\\geq}4}}\\\\{-2 {\\cdot} x+8}&\\mbox{sonst}\\end{matrix}\\right.}',
       ],
       [
-        'if(x<4,-2*x+8,2*x-8)',
+        'if(x<4;-2*x+8;2*x-8)',
         '{\\left\\lbrace\\begin{matrix}{-2 {\\cdot} x+8}&{\\mbox{falls}\\;{x<4}}\\\\{2 {\\cdot} x-8}&\\mbox{sonst}\\end{matrix}\\right.}',
+      ],
+      [
+        'if(x<4; -2*x+8; 2*x-8)',
+        '{\\left\\lbrace\\begin{matrix}{ -2 {\\cdot} x+8}&{\\mbox{falls}\\;{x<4}}\\\\{ 2 {\\cdot} x-8}&\\mbox{sonst}\\end{matrix}\\right.}',
       ],
     ],
     incorrect: [
+      [
+        'falls(abs(x-4);2*x-8;-2*x+8)',
+        '{\\left\\lbrace\\begin{matrix}{2 {\\cdot} x-8}&{\\mbox{falls}\\;{\\left|x-4\\right|}}\\\\{-2 {\\cdot} x+8}&\\mbox{sonst}\\end{matrix}\\right.}',
+        ['still-incorrect-answer', 'simplification.case-differentiation-required'],
+      ],
       [
         'abs(x-4)',
         '\\left|x-4\\right|',
         ['still-incorrect-answer', 'simplification.case-differentiation-required'],
       ],
       ['|x-4|', undefined, ['simplification.abs']],
+    ],
+    attrs: {
+      'supporting-points': '8',
+      variables: 'x',
+      precision: '3',
+      simplification: 'no-abs',
+    },
+  },
+  {
+    solution: 'falls(x>=-2,6+3*x,-6-3*x)',
+    correct: [
+      [
+        'falls(x>=-2;6+3*x;-6-3*x)',
+        '{\\left\\lbrace\\begin{matrix}{6+3 {\\cdot} x}&{\\mbox{falls}\\;{x{\\geq}-2}}\\\\{-6-3 {\\cdot} x}&\\mbox{sonst}\\end{matrix}\\right.}',
+      ],
+      [
+        'falls(x<-2;-6-3*x;6+3*x)',
+        '{\\left\\lbrace\\begin{matrix}{-6-3 {\\cdot} x}&{\\mbox{falls}\\;{x<-2}}\\\\{6+3 {\\cdot} x}&\\mbox{sonst}\\end{matrix}\\right.}',
+      ],
+    ],
+    incorrect: [
+      [
+        'falls(x<-2;-6-3*x;6*x)',
+        '{\\left\\lbrace\\begin{matrix}{-6-3 {\\cdot} x}&{\\mbox{falls}\\;{x<-2}}\\\\{6 {\\cdot} x}&\\mbox{sonst}\\end{matrix}\\right.}',
+        ['still-incorrect-answer'],
+      ],
+      [
+        '(x>=-2;6+3*x;-6-3*x)',
+        '{\\left(\\begin{matrix}{x{\\geq}-2}\\\\{6+3 {\\cdot} x}\\\\{-6-3 {\\cdot} x}\\end{matrix}\\right)}',
+        ['malformed-input'],
+      ],
+      ['x>=-2;6+3*x;-6-3*x', undefined, ['malformed-input']],
     ],
     attrs: {
       'supporting-points': '8',
@@ -326,7 +367,7 @@ createTests('function', func, [
       ['(-4/2;1.0)', '{\\left(\\begin{matrix}{-{\\frac{4}{2}}}\\\\{1.0}\\end{matrix}\\right)}'],
     ],
     incorrect: [
-      ['(-2,1)', '{\\left(\\begin{matrix}{-2}\\\\{1}\\end{matrix}\\right)}', ['malformed-input']],
+      ['(-2,1)', '\\left(-2.1\\right)', ['malformed-input']],
       [
         '(-2;2)',
         '{\\left(\\begin{matrix}{-2}\\\\{2}\\end{matrix}\\right)}',
@@ -343,11 +384,7 @@ createTests('function', func, [
       ['(-2;2,5)', '{\\left(\\begin{matrix}{-2}\\\\{2.5}\\end{matrix}\\right)}'],
     ],
     incorrect: [
-      [
-        '(-2,5/2)',
-        '{\\left(\\begin{matrix}{-2}\\\\{{\\frac{5}{2}}}\\end{matrix}\\right)}',
-        ['malformed-input'],
-      ],
+      ['(-2,5/2)', '\\left(-{\\frac{2.5}{2}}\\right)', ['malformed-input']],
       [
         '(-2;2)',
         '{\\left(\\begin{matrix}{-2}\\\\{2}\\end{matrix}\\right)}',
@@ -369,11 +406,7 @@ createTests('function', func, [
       ],
     ],
     incorrect: [
-      [
-        '(-2,5/2)',
-        '{\\left(\\begin{matrix}{-2}\\\\{{\\frac{5}{2}}}\\end{matrix}\\right)}',
-        ['malformed-input'],
-      ],
+      ['(-2,5/2)', '\\left(-{\\frac{2.5}{2}}\\right)', ['malformed-input']],
       [
         '(-1.732051;1.73)',
         '{\\left(\\begin{matrix}{-1.732051}\\\\{1.73}\\end{matrix}\\right)}',
