@@ -15,6 +15,7 @@
   "content": {
     "example": "Beispiel",
     "exercise": {
+      "markAsSolved": "Als bearbeitet markieren",
       "notFound": "Aufgabe nicht gefunden!",
       "reset": "Reset",
       "title": "Aufgabe",

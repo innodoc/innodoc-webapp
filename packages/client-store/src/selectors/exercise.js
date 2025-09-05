@@ -16,6 +16,7 @@ const getExercise = createSelector(orm, selectId, (session, id) => {
     isAnswered,
     isCorrect: isAnswered && answeredQuestions.every((q) => q.result === RESULT_VALUE.CORRECT),
     isTouched: questions.some((q) => q.result !== RESULT_VALUE.NEUTRAL),
+    questionCount: exercise.questionCount,
   }
 })
 

@@ -15,6 +15,7 @@
   "content": {
     "example": "Example",
     "exercise": {
+      "markAsSolved": "Mark as solved",
       "notFound": "Exercise not found!",
       "reset": "Reset",
       "title": "Exercise",

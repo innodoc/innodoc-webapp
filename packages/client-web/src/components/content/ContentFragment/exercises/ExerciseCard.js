@@ -53,7 +53,7 @@ const ExerciseCard = ({ attributes, content, extra, id: exId }) => {
             icon={<CheckOutlined />}
             key="verify"
             onClick={() => setShowResult(true)}
-            title={t('content.exercise.verify')}
+            title={t(`content.exercise.${exercise.questionCount > 0 ? 'verify' : 'markAsSolved'}`)}
           />,
           <Action
             disabled={!exercise.isTouched}

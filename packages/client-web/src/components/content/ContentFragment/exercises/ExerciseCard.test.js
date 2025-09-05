@@ -50,7 +50,7 @@ describe('<ExerciseCard />', () => {
     jest.clearAllMocks()
     mockIsMounted = true
     mockSectionType = 'regular'
-    mockExercise = { isAnswered: false, isCorrect: false, isTouched: false }
+    mockExercise = { isAnswered: false, isCorrect: false, isTouched: false, questionCount: 2 }
     mockIsSubmitted = undefined
   })
 
@@ -69,7 +69,7 @@ describe('<ExerciseCard />', () => {
   })
 
   it('should show result if initially rendered with answered question', () => {
-    mockExercise = { isAnswered: true, isCorrect: false, isTouched: false }
+    mockExercise = { isAnswered: true, isCorrect: false, isTouched: false, questionCount: 2 }
     const wrapper = mount(<ExerciseCard attributes={attrs} content={content} />)
     expect(wrapper.find(ExerciseProvider).prop('showResult')).toBe(true)
   })
@@ -83,7 +83,7 @@ describe('<ExerciseCard />', () => {
   it.each([true, false])(
     'should show title and <FeedbackIcon /> in title with showResult=true (isCorrect=%s)',
     (isCorrect) => {
-      mockExercise = { isAnswered: true, isCorrect, isTouched: true }
+      mockExercise = { isAnswered: true, isCorrect, isTouched: true, questionCount: 2 }
       const wrapper = shallow(<ExerciseCard attributes={attrs} content={content} />)
       const VerifyAction = () => wrapper.find(Card).prop('actions')[0]
       const verifyAction = shallow(<VerifyAction />)
@@ -118,8 +118,18 @@ describe('<ExerciseCard />', () => {
       expect(resetIcon.exists(UndoOutlined)).toBe(true)
     })
 
+    it('should render markAsSolved button w/o questions', () => {
+      mockExercise = { isAnswered: true, isCorrect: false, isTouched: false, questionCount: 0 }
+      const wrapper = shallow(<ExerciseCard attributes={attrs} content={content} />)
+      const actions = wrapper.find(Card).prop('actions')
+      const MarkAsSolvedAction = () => actions[0]
+      const action = shallow(<MarkAsSolvedAction />)
+      expect(action.prop('disabled')).toBe(false)
+      expect(action.prop('title')).toBe('content.exercise.markAsSolved')
+    })
+
     it('should enable verify with anwered exercise', () => {
-      mockExercise = { isAnswered: true, isCorrect: false, isTouched: false }
+      mockExercise = { isAnswered: true, isCorrect: false, isTouched: false, questionCount: 2 }
       const wrapper = shallow(<ExerciseCard attributes={attrs} content={content} />)
       const VerifyAction = () => wrapper.find(Card).prop('actions')[0]
       const verifyAction = shallow(<VerifyAction />)
@@ -127,7 +137,7 @@ describe('<ExerciseCard />', () => {
     })
 
     it('should disable verify with anwered exercise after verify clicked', () => {
-      mockExercise = { isAnswered: true, isCorrect: false, isTouched: false }
+      mockExercise = { isAnswered: true, isCorrect: false, isTouched: false, questionCount: 2 }
       const wrapper = shallow(<ExerciseCard attributes={attrs} content={content} />)
       const VerifyAction = () => wrapper.find(Card).prop('actions')[0]
       let verifyAction = shallow(<VerifyAction />)
@@ -137,7 +147,7 @@ describe('<ExerciseCard />', () => {
     })
 
     it('should enable reset with touched exercised', () => {
-      mockExercise = { isAnswered: false, isCorrect: false, isTouched: true }
+      mockExercise = { isAnswered: false, isCorrect: false, isTouched: true, questionCount: 2 }
       const wrapper = shallow(<ExerciseCard attributes={attrs} content={content} />)
       const ResetAction = () => wrapper.find(Card).prop('actions')[1]
       const resetAction = shallow(<ResetAction />)
@@ -145,7 +155,7 @@ describe('<ExerciseCard />', () => {
     })
 
     it('should set showResult=false and dispatch resetExercise after reset clicked', () => {
-      mockExercise = { isAnswered: false, isCorrect: false, isTouched: true }
+      mockExercise = { isAnswered: false, isCorrect: false, isTouched: true, questionCount: 2 }
       const wrapper = shallow(<ExerciseCard attributes={attrs} content={content} id="EX01" />)
       const ResetAction = () => wrapper.find(Card).prop('actions')[1]
       const resetAction = shallow(<ResetAction />)
