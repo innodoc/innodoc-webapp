@@ -23,7 +23,7 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.4.1",
+    "@faker-js/faker": "catalog:",
     "@innodoc/config": "workspace:*",
     "@innodoc/constants": "workspace:*",
     "@innodoc/eslint-config": "workspace:*",
@@ -38,7 +38,7 @@
     "@types/node": "catalog:",
     "eslint-plugin-playwright": "catalog:",
     "iso-639-1": "catalog:",
-    "msw": "^2.2.9",
+    "msw": "catalog:",
     "remark-stringify": "catalog:",
     "type-fest": "catalog:",
     "unified": "catalog:"

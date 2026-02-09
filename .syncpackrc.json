@@ -84,6 +84,13 @@
       ],
       "dependencyTypes": ["prod"],
       "isBanned": true
+    },
+    {
+      "label": "External deps must use catalog:",
+      "packages": ["**"],
+      "dependencies": ["*"],
+      "dependencyTypes": ["prod", "dev"],
+      "pinVersion": "catalog:"
     }
   ]
 }

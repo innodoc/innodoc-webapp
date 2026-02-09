@@ -44,10 +44,10 @@
     "@innodoc/routes": "workspace:*",
     "@innodoc/typeguards": "workspace:*",
     "@reduxjs/toolkit": "catalog:",
-    "crc": "4.3.2",
+    "crc": "catalog:",
     "i18next": "catalog:",
     "react-redux": "catalog:",
-    "svg-parser": "2.0.4"
+    "svg-parser": "catalog:"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:*",
@@ -59,8 +59,8 @@
     "@types/react-redux": "catalog:",
     "@types/svg-parser": "catalog:",
     "iso-639-1": "catalog:",
-    "redux": "^5.0.1",
-    "redux-thunk": "^3.1.0"
+    "redux": "catalog:",
+    "redux-thunk": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"
 }

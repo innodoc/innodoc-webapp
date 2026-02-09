@@ -17,7 +17,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "pino": "8.19.0",
+    "pino": "catalog:",
     "pino-pretty": "catalog:"
   },
   "devDependencies": {

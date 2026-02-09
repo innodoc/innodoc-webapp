@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@innodoc/container": "workspace:*",
-    "chalk": "^5.3.0"
+    "chalk": "catalog:"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:*",

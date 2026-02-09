@@ -41,7 +41,7 @@
     "@innodoc/store": "workspace:*",
     "@mui/lab": "catalog:",
     "@mui/material": "catalog:",
-    "@mui/x-tree-view": "^6.17.0",
+    "@mui/x-tree-view": "catalog:",
     "clsx": "catalog:",
     "react": "catalog:",
     "react-i18next": "catalog:"

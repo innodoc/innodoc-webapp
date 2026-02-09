@@ -18,7 +18,7 @@
     "@innodoc/database": "workspace:*",
     "camelcase-keys": "catalog:",
     "knex": "catalog:",
-    "yaml": "^2.4.0"
+    "yaml": "catalog:"
   },
   "devDependencies": {
     "@innodoc/schema": "workspace:*",

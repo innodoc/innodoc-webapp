@@ -15,17 +15,17 @@
   },
   "dependencies": {
     "@commander-js/extra-typings": "catalog:",
-    "@iconify-json/mdi": "1.1.64",
-    "@iconify/utils": "^2.1.22",
+    "@iconify-json/mdi": "catalog:",
+    "@iconify/utils": "catalog:",
     "@innodoc/config": "workspace:*",
     "eslint": "catalog:",
     "hast-util-is-element": "catalog:",
-    "rehype-parse": "^9.0.0",
+    "rehype-parse": "catalog:",
     "unified": "catalog:",
-    "unist-util-remove-position": "^5.0.0"
+    "unist-util-remove-position": "catalog:"
   },
   "devDependencies": {
-    "@iconify/types": "^2.0.0",
+    "@iconify/types": "catalog:",
     "@innodoc/eslint-config": "workspace:*",
     "@innodoc/prettier-config": "workspace:*",
     "@innodoc/ts-config": "workspace:*",

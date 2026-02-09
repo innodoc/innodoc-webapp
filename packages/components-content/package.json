@@ -40,7 +40,7 @@
     "camelcase-keys": "catalog:",
     "react": "catalog:",
     "react-i18next": "catalog:",
-    "rehype-react": "8.0.0",
+    "rehype-react": "catalog:",
     "unified": "catalog:"
   },
   "devDependencies": {
@@ -54,7 +54,7 @@
     "@types/hast": "catalog:",
     "@types/innodoc-vite-env": "workspace:*",
     "@types/react": "catalog:",
-    "hast-util-to-jsx-runtime": "^2.3.0",
+    "hast-util-to-jsx-runtime": "catalog:",
     "vitest": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"

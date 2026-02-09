@@ -26,8 +26,8 @@
     "@innodoc/schema": "workspace:*",
     "iso-639-1": "catalog:",
     "knex": "catalog:",
-    "pg": "8.11.3",
-    "pg-protocol": "1.6.0"
+    "pg": "catalog:",
+    "pg-protocol": "catalog:"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:*",

@@ -30,7 +30,7 @@
   "dependencies": {
     "@innodoc/constants": "workspace:*",
     "@innodoc/typeguards": "workspace:*",
-    "path-to-regexp": "6.2.1"
+    "path-to-regexp": "catalog:"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:*",

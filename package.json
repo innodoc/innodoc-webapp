@@ -45,18 +45,18 @@
     "type-check": "turbo run type-check"
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.4.1",
-    "@commitlint/config-conventional": "^20.4.1",
+    "@commitlint/cli": "catalog:",
+    "@commitlint/config-conventional": "catalog:",
     "@innodoc/command-icon-bundle": "workspace:*",
     "@innodoc/eslint-config": "workspace:*",
     "@innodoc/prettier-config": "workspace:*",
-    "commit-and-tag-version": "12.6.1",
-    "dependency-cruiser": "^17.3.8",
+    "commit-and-tag-version": "catalog:",
+    "dependency-cruiser": "catalog:",
     "eslint": "catalog:",
-    "knip": "^5.83.1",
+    "knip": "catalog:",
     "prettier": "catalog:",
     "syncpack": "catalog:",
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   },
   "engines": {
     "node": ">=22",
