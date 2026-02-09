@@ -22,7 +22,7 @@
     }
   ],
   "editor.formatOnSave": true,
-  "eslint.experimental.useFlatConfig": true,
+  "eslint.useFlatConfig": true,
   "eslint.workingDirectories": [{ "pattern": "./packages/*/*" }],
   "search.exclude": {
     "**/dist": true
