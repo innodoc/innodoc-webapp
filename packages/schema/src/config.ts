@@ -17,7 +17,6 @@ const configSchema = z
 
     // App configuration
     appRoot: z
-      .string()
       .url()
       .default('http://localhost/')
       .describe('Application base URL (URL the app will be available from the outside'),
@@ -28,7 +27,6 @@ const configSchema = z
     sectionPathPrefix: slugSchema.default(DEFAULT_SECTION_PATH_PREFIX).describe('URL path component for sections'),
     jwtSecret: z.string().describe("JWT secret (generate with `openssl rand -base64 256 | tr -d '\n'`"),
     dbConnectionString: z
-      .string()
       .url()
       .startsWith('postgresql://', 'Not a valid PostgreSQL connection string')
       .describe('Database connection string (only PostgreSQL supported)'),
@@ -48,7 +46,7 @@ const configSchema = z
     smtpSender: z.string().email().describe('SMTP password'),
 
     // Discourse integration
-    discourseUrl: z.string().url().nullable().describe('Discourse URL'),
+    discourseUrl: z.url().nullable().describe('Discourse URL'),
     discourseSsoSecret: z.string().nullable().describe('Discourse SSO secret'),
 
     // Development options
