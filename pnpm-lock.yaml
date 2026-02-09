@@ -217,6 +217,9 @@ importers:
       '@fastify/static':
         specifier: 7.0.1
         version: 7.0.1
+      '@innodoc/config':
+        specifier: workspace:*
+        version: link:../../packages/config
       '@innodoc/constants':
         specifier: workspace:*
         version: link:../../packages/constants

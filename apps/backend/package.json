@@ -34,6 +34,7 @@
     "@fastify/accepts": "4.3.0",
     "@fastify/autoload": "5.8.0",
     "@fastify/static": "7.0.1",
+    "@innodoc/config": "workspace:*",
     "@innodoc/constants": "workspace:*",
     "@innodoc/container": "workspace:*",
     "@innodoc/database": "workspace:*",
