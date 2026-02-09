@@ -2,8 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import config from '@innodoc/config'
-import getRouteManager from '@innodoc/routes/node/getRouteManager'
+import container from '@innodoc/container'
 import { isArbitraryObject } from '@innodoc/typeguards/common'
 import type { ApiRouteName } from '@innodoc/routes/types/routeNames'
 
@@ -20,7 +19,8 @@ function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
  * @throws if unknown route name was given
  */
 function getRoutePath(name: ApiRouteName, removePrefix?: string) {
-  const apiRoutes = getRouteManager(config).getApiRoutes()
+  const routeManager = container.resolve('routeManager')
+  const apiRoutes = routeManager.getApiRoutes()
 
   const pattern = apiRoutes[name]
   if (pattern === undefined) {

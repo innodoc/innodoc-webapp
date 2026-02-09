@@ -2,12 +2,10 @@
 
 import chalk from 'chalk'
 
-import config from '@innodoc/config'
-import getRouteManager from '@innodoc/routes/node/getRouteManager'
+import container from '@innodoc/container'
 
 function printRoutes() {
-  const routeManager = getRouteManager(config)
-  const routes = routeManager.getAllRoutes()
+  const routes = container.resolve('routeManager').getAllRoutes()
 
   const maxRouteNameLength = Math.max(...Object.keys(routes).map((routeName) => routeName.length))
 

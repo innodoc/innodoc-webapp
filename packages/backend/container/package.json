@@ -1,14 +1,12 @@
 {
-  "name": "@innodoc/config",
+  "name": "@innodoc/container",
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "sideEffects": false,
-  "exports": "./dist/parseConfig.js",
+  "exports": "./dist/container.js",
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "dev": "tsc --project tsconfig.build.json --watch",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
     "lint": "eslint .",
@@ -17,18 +15,20 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@innodoc/constants": "workspace:*",
-    "@innodoc/schema": "workspace:*",
-    "@innodoc/typeguards": "workspace:*",
-    "vite": "5.1.5",
-    "zod-validation-error": "^3.0.3"
+    "@commander-js/extra-typings": "^12.0.1",
+    "@innodoc/config": "workspace:*",
+    "@innodoc/routes": "workspace:*"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:*",
     "@innodoc/prettier-config": "workspace:*",
+    "@innodoc/schema": "workspace:*",
     "@innodoc/ts-config": "workspace:*",
-    "globals": "^14.0.0",
-    "typescript-eslint": "^7.2.0"
+    "@types/node": "^20.11.28",
+    "awilix": "^10.0.1"
+  },
+  "peerDependencies": {
+    "commander": "^12.0.0"
   },
   "prettier": "@innodoc/prettier-config"
 }

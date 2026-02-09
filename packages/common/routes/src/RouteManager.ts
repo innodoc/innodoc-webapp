@@ -2,8 +2,8 @@ import { compile, match } from 'path-to-regexp'
 import type { Match, MatchFunction, PathFunction } from 'path-to-regexp'
 
 import { API_COURSE_PREFIX, API_PREFIX } from '@innodoc/constants'
-import { isCourseSlugMode } from '@innodoc/typeguards/common'
 import { isContentType } from '@innodoc/typeguards/content'
+import type { ConfigSchema } from '@innodoc/schema/config'
 import type { CourseSlugMode } from '@innodoc/types/common'
 
 import { apiRoutes, builtinRoutes, courseRoutes, userRoutes } from './routes/routes.js'
@@ -20,9 +20,11 @@ type Matchers = {
   [key in RouteName]: MatchFunction<RouteParams<key>>
 }
 
-class RouteManager {
-  private static instance: RouteManager | null
+interface RouteManagerOptions {
+  config: Pick<ConfigSchema, 'courseSlugMode' | 'pagePathPrefix' | 'sectionPathPrefix'>
+}
 
+class RouteManager {
   private readonly routes = {
     ...apiRoutes,
     ...builtinRoutes,
@@ -43,24 +45,12 @@ class RouteManager {
     strict: true,
   }
 
-  constructor(courseSlugMode: CourseSlugMode, pagePathPrefix: string, sectionPathPrefix: string) {
+  constructor({ config: { courseSlugMode, pagePathPrefix, sectionPathPrefix } }: RouteManagerOptions) {
     this.courseSlugMode = courseSlugMode
     this.routeFuncArgs = { pagePathPrefix, sectionPathPrefix }
     const { pathFunctions, matchers } = this.buildRoutes()
     this.pathFunctions = pathFunctions
     this.matchers = matchers
-  }
-
-  /** Get singleton */
-  public static getInstance(courseSlugMode: string, pagePathPrefix: string, sectionPathPrefix: string): RouteManager {
-    if (!RouteManager.instance) {
-      if (!isCourseSlugMode(courseSlugMode)) {
-        throw new TypeError(`Invalid course slug mode '${courseSlugMode}'`)
-      }
-      RouteManager.instance = new RouteManager(courseSlugMode, pagePathPrefix, sectionPathPrefix)
-    }
-
-    return RouteManager.instance
   }
 
   /**

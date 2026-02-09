@@ -2,7 +2,7 @@ import fastifyStatic from '@fastify/static'
 import fastifyPlugin from 'fastify-plugin'
 import type { FastifyPluginAsync } from 'fastify'
 
-import config from '@innodoc/config'
+import container from '@innodoc/container'
 
 const options = () =>
   Promise.resolve({
@@ -11,6 +11,8 @@ const options = () =>
   })
 
 const prodPlugin: FastifyPluginAsync = async function (app) {
+  const config = container.resolve('config')
+
   // In production, we need to serve our static assets ourselves.
   await app.register(fastifyStatic, {
     root: config.distDir,

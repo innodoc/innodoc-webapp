@@ -10,7 +10,7 @@ import { isZodError } from '@innodoc/typeguards/errors'
 /**
  * Construct config object from env variables.
  *
- * Prints errors and exits program if configuration could not be parsed.
+ * Throws error and if configuration could not be parsed.
  *
  * @returns Config object
  */
@@ -60,4 +60,4 @@ function parseConfig() {
   }
 }
 
-export default parseConfig()
+export default parseConfig

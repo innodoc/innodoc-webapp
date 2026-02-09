@@ -3,11 +3,13 @@ import path from 'node:path'
 import autoLoad from '@fastify/autoload'
 import fastify from 'fastify'
 
-import config from '@innodoc/config'
+import container from '@innodoc/container'
 
 import { getRootDirPath } from '#utils'
 
 async function setupApp() {
+  const config = container.resolve('config')
+
   // Initialize fastify in env
   const env = await (config.isProduction ? import('./prod.js') : import('./dev.js'))
   const app = fastify(await env.options())

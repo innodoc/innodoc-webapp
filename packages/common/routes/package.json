@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./node/getRouteManager": "./dist/getRouteManagerNode.js",
+    ".": "./dist/RouteManager.js",
     "./vite/getRouteManager": "./dist/getRouteManagerVite.js",
     "./types": "./dist/types/common.js",
     "./types/routeInfos": "./dist/types/routeInfos.js",

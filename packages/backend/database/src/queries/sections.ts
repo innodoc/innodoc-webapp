@@ -1,7 +1,8 @@
 import type { LanguageCode } from 'iso-639-1'
 
-import type Database from '@innodoc/database'
 import type { CourseSchema, QuerySectionSchema, SectionSchema } from '@innodoc/schema/types'
+
+import type Database from '#database'
 
 import { unpackId, unpackValue } from './utils.js'
 import type { IdResult, ValueResult } from './types.js'

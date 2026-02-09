@@ -1,5 +1,6 @@
-import type Database from '@innodoc/database'
 import type { CourseSchema } from '@innodoc/schema/types'
+
+import type Database from '#database'
 
 /**
  * Get course by slug.

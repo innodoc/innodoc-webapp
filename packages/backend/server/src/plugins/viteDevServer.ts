@@ -4,14 +4,14 @@ import fastifyPlugin from 'fastify-plugin'
 import { createServer as viteCreateServer } from 'vite'
 import type { FastifyPluginAsync } from 'fastify'
 
-import config from '@innodoc/config'
+import container from '@innodoc/container'
 
 import { devCerts } from '#utils'
 
 // Taken from: github.com/royalswe/vike-fastify-boilerplate/blob/main/server/index.ts
 const viteDevServerPlugin: FastifyPluginAsync = async function (app) {
   const viteServer = await viteCreateServer({
-    root: path.join(config.rootDir, 'packages', 'ui', 'frontend'),
+    root: path.join(container.resolve('config').rootDir, 'packages', 'ui', 'frontend'),
     server: {
       ...(await devCerts()),
       middlewareMode: true,

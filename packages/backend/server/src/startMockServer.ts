@@ -1,4 +1,4 @@
-import config from '@innodoc/config'
+// import config from '@innodoc/config'
 
 // import { makeServer } from '../../tests/mocks/node' // eslint-disable-line @typescript-eslint/no-restricted-imports
 // import setupApp from './app/setupApp.js'

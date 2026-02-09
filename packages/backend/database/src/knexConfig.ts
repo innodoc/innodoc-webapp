@@ -3,9 +3,11 @@ import { fileURLToPath } from 'node:url'
 
 import type { Knex } from 'knex'
 
-import config from '@innodoc/config'
+import container from '@innodoc/container'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
+
+const config = container.resolve('config')
 
 const knexConfig: Knex.Config = {
   asyncStackTraces: !config.isProduction,

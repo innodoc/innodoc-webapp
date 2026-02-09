@@ -1,7 +1,7 @@
 import fastifyPlugin from 'fastify-plugin'
 import type { FastifyInstance, FastifyPluginCallback } from 'fastify'
 
-import config from '@innodoc/config'
+import container from '@innodoc/container'
 
 const VITE_PATHS = ['/@fs/', '/@id/', '/@react-refresh', '/@vite/', '/node_modules/', '/src/']
 
@@ -17,7 +17,7 @@ function requestLogging(app: FastifyInstance) {
 }
 
 const loggingPlugin: FastifyPluginCallback = function (app, opts, done) {
-  if (!config.isProduction) {
+  if (!container.resolve('config').isProduction) {
     requestLogging(app)
   }
   done()
