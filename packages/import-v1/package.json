@@ -1,0 +1,31 @@
+{
+  "name": "@innodoc/command-import-v1",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "main": "node dist/main.js",
+    "test:unit": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@innodoc/database": "workspace:*",
+    "camelcase-keys": "catalog:",
+    "knex": "catalog:",
+    "yaml": "^2.4.0"
+  },
+  "devDependencies": {
+    "@innodoc/schema": "workspace:*",
+    "@innodoc/ts-config": "workspace:*",
+    "@innodoc/types": "workspace:*",
+    "@types/eslint": "catalog:",
+    "@types/node": "catalog:"
+  },
+  "prettier": "@innodoc/prettier-config"
+}

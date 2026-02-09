@@ -1,0 +1,71 @@
+{
+  "name": "@innodoc/backend",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./config": "./dist/config.js"
+  },
+  "imports": {
+    "#api/errors": "./dist/services/api/errors.js",
+    "#config": "./dist/config.js",
+    "#plugins/apiReference": "./dist/plugins/apiReference.js",
+    "#plugins/db": "./dist/plugins/db/db.js",
+    "#plugins/logging": "./dist/plugins/logging.js",
+    "#plugins/viteDevServer": "./dist/plugins/viteDevServer.js",
+    "#services/api/types": "./dist/services/api/types.js",
+    "#utils": "./dist/utils.js"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "dev": "nodemon --ext ts --watch ./src --exec 'turbo run dev:start --filter=server --log-prefix=none'",
+    "dev:mkcert": "mkcert -install && mkdir -p cert && mkcert -key-file cert/key.pem -cert-file cert/cert.pem innodoc.dev '*.innodoc.dev' localhost 127.0.0.1 ::1",
+    "dev:start": "NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" tsx ./src/start.ts",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "start": "NODE_ENV=production node ./dist/start.js",
+    "test:unit": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fastify/accepts": "4.3.0",
+    "@fastify/autoload": "5.8.0",
+    "@fastify/static": "7.0.1",
+    "@innodoc/constants": "workspace:*",
+    "@innodoc/container": "workspace:*",
+    "@innodoc/database": "workspace:*",
+    "@innodoc/routes": "workspace:*",
+    "@innodoc/schema": "workspace:*",
+    "@innodoc/typeguards": "workspace:*",
+    "camelcase-keys": "catalog:",
+    "fastify": "^5.0.0",
+    "fastify-plugin": "4.5.1",
+    "fastify-type-provider-zod": "6.0.0",
+    "i18next-http-middleware": "3.5.0",
+    "validator": "catalog:",
+    "vike": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@fastify/swagger": "9.5.1",
+    "@fastify/vite": "6.0.6",
+    "@innodoc/eslint-config": "workspace:*",
+    "@innodoc/prettier-config": "workspace:*",
+    "@innodoc/store": "workspace:*",
+    "@innodoc/ts-config": "workspace:*",
+    "@innodoc/types": "workspace:*",
+    "@reduxjs/toolkit": "catalog:",
+    "@scalar/fastify-api-reference": "^1.44.0",
+    "@types/node": "catalog:",
+    "@types/validator": "catalog:",
+    "fastify-print-routes": "3.1.1",
+    "nodemon": "^3.1.0",
+    "pino-pretty": "catalog:",
+    "tsx": "catalog:",
+    "vite": "catalog:"
+  },
+  "prettier": "@innodoc/prettier-config"
+}

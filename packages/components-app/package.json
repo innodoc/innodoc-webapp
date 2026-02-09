@@ -1,0 +1,56 @@
+{
+  "name": "@innodoc/components-app",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/renderPage.js"
+  },
+  "imports": {
+    "#layout": "./dist/Layout/Layout.js"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "dev": "tsc --project tsconfig.build.json --watch",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@emotion/react": "catalog:",
+    "@innodoc/components-common": "workspace:*",
+    "@innodoc/components-content": "workspace:*",
+    "@innodoc/components-pages": "workspace:*",
+    "@innodoc/constants": "workspace:*",
+    "@innodoc/contexts": "workspace:*",
+    "@innodoc/hooks": "workspace:*",
+    "@innodoc/routes": "workspace:*",
+    "@innodoc/store": "workspace:*",
+    "@innodoc/theme": "workspace:*",
+    "@innodoc/typeguards": "workspace:*",
+    "@mui/material": "catalog:",
+    "react-helmet-async": "catalog:",
+    "react-i18next": "catalog:",
+    "react-redux": "catalog:",
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@innodoc/eslint-config": "workspace:*",
+    "@innodoc/prettier-config": "workspace:*",
+    "@innodoc/rtl": "workspace:*",
+    "@innodoc/ts-config": "workspace:*",
+    "@innodoc/vitest-config": "workspace:*",
+    "@testing-library/jest-dom": "catalog:",
+    "@types/innodoc-vite-env": "workspace:*",
+    "@types/react": "catalog:",
+    "i18next": "catalog:",
+    "vike": "catalog:",
+    "vitest": "catalog:"
+  },
+  "prettier": "@innodoc/prettier-config"
+}

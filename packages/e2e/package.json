@@ -1,0 +1,25 @@
+{
+  "name": "@innodoc/e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test": "playwright test",
+    "playwright:install": "playwright install chromium --with-deps",
+    "playwright:show-report": "playwright show-report",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@innodoc/eslint-config": "workspace:*",
+    "@innodoc/prettier-config": "workspace:*",
+    "@innodoc/ts-config": "workspace:*",
+    "@playwright/test": "catalog:",
+    "@types/node": "catalog:",
+    "eslint-plugin-playwright": "catalog:"
+  },
+  "prettier": "@innodoc/prettier-config"
+}

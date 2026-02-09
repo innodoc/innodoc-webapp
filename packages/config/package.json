@@ -1,0 +1,34 @@
+{
+  "name": "@innodoc/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": "./dist/parseConfig.js",
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "dev": "tsc --project tsconfig.build.json --watch",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test:unit": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@innodoc/constants": "workspace:*",
+    "@innodoc/schema": "workspace:*",
+    "@innodoc/typeguards": "workspace:*",
+    "vite": "catalog:",
+    "zod-validation-error": "catalog:"
+  },
+  "devDependencies": {
+    "@innodoc/eslint-config": "workspace:*",
+    "@innodoc/prettier-config": "workspace:*",
+    "@innodoc/ts-config": "workspace:*",
+    "globals": "catalog:",
+    "typescript-eslint": "catalog:"
+  },
+  "prettier": "@innodoc/prettier-config"
+}

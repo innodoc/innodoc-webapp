@@ -1,0 +1,32 @@
+{
+  "name": "@innodoc/contexts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/contexts.js"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "dev": "tsc --project tsconfig.build.json --watch",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test:unit": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@innodoc/eslint-config": "workspace:*",
+    "@innodoc/prettier-config": "workspace:*",
+    "@innodoc/ts-config": "workspace:*",
+    "@types/react": "catalog:",
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "vike": "catalog:"
+  },
+  "prettier": "@innodoc/prettier-config"
+}

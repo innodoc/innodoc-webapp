@@ -1,0 +1,43 @@
+{
+  "name": "@innodoc/command-icon-bundle",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test:unit": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@commander-js/extra-typings": "catalog:",
+    "@iconify-json/mdi": "1.1.64",
+    "@iconify/utils": "^2.1.22",
+    "@innodoc/config": "workspace:*",
+    "eslint": "catalog:",
+    "hast-util-is-element": "catalog:",
+    "rehype-parse": "^9.0.0",
+    "unified": "catalog:",
+    "unist-util-remove-position": "^5.0.0"
+  },
+  "devDependencies": {
+    "@iconify/types": "^2.0.0",
+    "@innodoc/eslint-config": "workspace:*",
+    "@innodoc/prettier-config": "workspace:*",
+    "@innodoc/ts-config": "workspace:*",
+    "@types/eslint": "catalog:",
+    "@types/node": "catalog:",
+    "commander": "catalog:"
+  },
+  "peerDependencies": {
+    "commander": "catalog:"
+  },
+  "bin": {
+    "innodoc-icon-bundle": "./dist/main.js"
+  },
+  "prettier": "@innodoc/prettier-config"
+}

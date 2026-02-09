@@ -1,0 +1,46 @@
+{
+  "name": "@innodoc/mock-content",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./msw/browser": "./dist/msw/makeBrowserServer.js",
+    "./msw/node": "./dist/msw/makeNodeServer.js"
+  },
+  "imports": {
+    "#courses": "./dist/data/makeCourses.js",
+    "#types": "./dist/data/types.js"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "dev": "tsc --project tsconfig.build.json --watch",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@innodoc/config": "workspace:*",
+    "@innodoc/constants": "workspace:*",
+    "@innodoc/eslint-config": "workspace:*",
+    "@innodoc/markdown": "workspace:*",
+    "@innodoc/prettier-config": "workspace:*",
+    "@innodoc/routes": "workspace:*",
+    "@innodoc/schema": "workspace:*",
+    "@innodoc/ts-config": "workspace:*",
+    "@innodoc/typeguards": "workspace:*",
+    "@playwright/test": "catalog:",
+    "@types/mdast": "catalog:",
+    "@types/node": "catalog:",
+    "eslint-plugin-playwright": "catalog:",
+    "iso-639-1": "catalog:",
+    "msw": "^2.2.9",
+    "remark-stringify": "catalog:",
+    "type-fest": "catalog:",
+    "unified": "catalog:"
+  }
+}

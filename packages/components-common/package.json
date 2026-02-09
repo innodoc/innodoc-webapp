@@ -1,0 +1,65 @@
+{
+  "name": "@innodoc/components-common",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./buttons": "./dist/buttons/buttons.js",
+    "./errors": "./dist/errors/errors.js",
+    "./links": "./dist/links/links.js",
+    "./misc": "./dist/misc/misc.js",
+    "./pageLinks": "./dist/pageLinks.js",
+    "./toc": "./dist/toc/toc.js",
+    "./utils": "./dist/utils.js"
+  },
+  "imports": {
+    "#errors": "./dist/errors/errors.js",
+    "#iconBundle": "./dist/iconBundle.json",
+    "#links": "./dist/links/links.js",
+    "#misc": "./dist/misc/misc.js",
+    "#pageLinks": "./dist/pageLinks.js",
+    "#toc": "./dist/toc/toc.js",
+    "#types": "./src/types/types.ts",
+    "#utils": "./dist/utils.js"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "dev": "tsc --project tsconfig.build.json --watch",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@innodoc/hooks": "workspace:*",
+    "@innodoc/routes": "workspace:*",
+    "@innodoc/schema": "workspace:*",
+    "@innodoc/store": "workspace:*",
+    "@mui/lab": "catalog:",
+    "@mui/material": "catalog:",
+    "@mui/x-tree-view": "^6.17.0",
+    "clsx": "catalog:",
+    "react": "catalog:",
+    "react-i18next": "catalog:"
+  },
+  "devDependencies": {
+    "@emotion/styled": "catalog:",
+    "@innodoc/eslint-config": "workspace:*",
+    "@innodoc/prettier-config": "workspace:*",
+    "@innodoc/rtl": "workspace:*",
+    "@innodoc/theme": "workspace:*",
+    "@innodoc/ts-config": "workspace:*",
+    "@innodoc/types": "workspace:*",
+    "@innodoc/vitest-config": "workspace:*",
+    "@mui/system": "catalog:",
+    "@testing-library/jest-dom": "catalog:",
+    "@types/react": "catalog:",
+    "@types/svg-parser": "catalog:",
+    "vitest": "catalog:"
+  },
+  "prettier": "@innodoc/prettier-config"
+}

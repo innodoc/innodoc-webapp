@@ -1,0 +1,29 @@
+{
+  "name": "@innodoc/vitest-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./dist/vitest.config.unit.js",
+    "./react": "./dist/vitest.config.react.js",
+    "./rtl-utils": "./dist/rtl-utils.js"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "dev": "tsc --project tsconfig.build.json --watch",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@innodoc/eslint-config": "workspace:*",
+    "@innodoc/prettier-config": "workspace:*",
+    "@innodoc/ts-config": "workspace:*",
+    "typescript-eslint": "catalog:",
+    "vitest": "catalog:"
+  },
+  "prettier": "@innodoc/prettier-config"
+}
