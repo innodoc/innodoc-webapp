@@ -51,8 +51,8 @@
     "@innodoc/types": "workspace:*",
     "@innodoc/vitest-config": "workspace:*",
     "@testing-library/jest-dom": "catalog:",
-    "@types/innodoc-vite-env": "workspace:*",
     "@types/hast": "catalog:",
+    "@types/innodoc-vite-env": "workspace:*",
     "@types/react": "catalog:",
     "hast-util-to-jsx-runtime": "^2.3.0",
     "vitest": "catalog:"

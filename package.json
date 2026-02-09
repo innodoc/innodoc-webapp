@@ -54,8 +54,8 @@
     "dependency-cruiser": "^17.3.8",
     "eslint": "catalog:",
     "knip": "^5.83.1",
-    "prettier": "^3.8.1",
-    "syncpack": "13.0.4",
+    "prettier": "catalog:",
+    "syncpack": "catalog:",
     "typescript": "^5.9.3"
   },
   "engines": {

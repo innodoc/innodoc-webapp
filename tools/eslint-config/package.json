@@ -39,7 +39,6 @@
     "eslint-plugin-vitest": "^0.3.26",
     "eslint-plugin-vitest-globals": "^1.4.0",
     "globals": "catalog:",
-    "prettier": "^3.2.5",
     "typescript-eslint": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"

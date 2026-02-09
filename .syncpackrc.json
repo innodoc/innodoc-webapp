@@ -36,7 +36,14 @@
     {
       "label": "Internal dev packages are pinned to workspace:*",
       "packages": ["**"],
-      "dependencies": ["@innodoc/command-*", "@innodoc/*-config", "@innodoc/rtl", "@innodoc/types", "@types/innodoc-*"],
+      "dependencies": [
+        "@innodoc/command-*",
+        "@innodoc/*-config",
+        "@innodoc/mock-content",
+        "@innodoc/rtl",
+        "@innodoc/types",
+        "@types/innodoc-*"
+      ],
       "dependencyTypes": ["dev"],
       "pinVersion": "workspace:*"
     },
@@ -48,6 +55,7 @@
         "@innodoc/components-*",
         "@innodoc/config",
         "@innodoc/constants",
+        "@innodoc/container",
         "@innodoc/contexts",
         "@innodoc/database",
         "@innodoc/hooks",
@@ -57,6 +65,7 @@
         "@innodoc/routes",
         "@innodoc/schema",
         "@innodoc/store",
+        "@innodoc/theme",
         "@innodoc/typeguards"
       ],
       "dependencyTypes": ["prod", "dev"],
@@ -65,14 +74,16 @@
     {
       "label": "Types and internal dev packages are banned from dependencies (only allowed in devDependencies)",
       "packages": ["**"],
-      "dependencies": ["@innodoc/command-*", "@innodoc/*-config", "@innodoc/rtl", "@types/*", "*/types"],
+      "dependencies": [
+        "@innodoc/*-config",
+        "@innodoc/command-*",
+        "@innodoc/mock-content",
+        "@innodoc/rtl",
+        "@types/*",
+        "*/types"
+      ],
       "dependencyTypes": ["prod"],
       "isBanned": true
-    },
-    {
-      "label": "Pin @emotion/react (required by @mui/material)",
-      "dependencies": ["@emotion/react"],
-      "pinVersion": "11.11.1"
     }
   ]
 }

@@ -15,10 +15,10 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "awilix": "catalog:",
     "@commander-js/extra-typings": "catalog:",
     "@innodoc/config": "workspace:*",
-    "@innodoc/routes": "workspace:*"
+    "@innodoc/routes": "workspace:*",
+    "awilix": "catalog:"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:*",

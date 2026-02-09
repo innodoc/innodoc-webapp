@@ -19,13 +19,13 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "react": "catalog:"
+  },
+  "devDependencies": {
     "@innodoc/eslint-config": "workspace:*",
     "@innodoc/prettier-config": "workspace:*",
     "@innodoc/ts-config": "workspace:*",
     "@types/react": "catalog:",
-    "react": "catalog:"
-  },
-  "devDependencies": {
     "vike": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"

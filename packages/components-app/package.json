@@ -34,10 +34,10 @@
     "@innodoc/theme": "workspace:*",
     "@innodoc/typeguards": "workspace:*",
     "@mui/material": "catalog:",
+    "react": "catalog:",
     "react-helmet-async": "catalog:",
     "react-i18next": "catalog:",
-    "react-redux": "catalog:",
-    "react": "catalog:"
+    "react-redux": "catalog:"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:*",
