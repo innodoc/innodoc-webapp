@@ -18,7 +18,7 @@
     "depcruise:generate:full": "mkdir -p reports/depcruise && pnpm exec depcruise packages --config --output-type dot | dot -T svg | pnpm exec depcruise-wrap-stream-in-html > reports/depcruise/dependency-graph.html",
     "depcruise:generate:high-level": "mkdir -p reports/depcruise && pnpm exec depcruise packages --config --output-type archi | dot -T svg | pnpm exec depcruise-wrap-stream-in-html > reports/depcruise/dependency-graph-high-level.html",
     "depcruise:generate:violation-report": "mkdir -p reports/depcruise && pnpm exec depcruise packages --config --output-type err-html --output-to reports/depcruise/dependency-violation-report.html",
-    "depcruise:serve": "http-server -p 8001 reports/depcruise",
+    "depcruise:serve": "pnpm dlx http-server -p 8001 reports/depcruise",
     "depcruise:validate": "pnpm exec depcruise --config -- packages",
     "========= Development": "",
     "dev": "turbo run dev --concurrency=25 --log-prefix=none --output-logs=new-only",
