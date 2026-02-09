@@ -10,9 +10,6 @@
     },
     "./errors": {
       "types": "./dist/errors.d.ts"
-    },
-    "./ServerConfig": {
-      "types": "./dist/ServerConfig.d.ts"
     }
   },
   "imports": {
