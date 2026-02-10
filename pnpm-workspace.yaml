@@ -31,6 +31,7 @@ catalog:
   '@scalar/fastify-api-reference': ^1.44.0
   '@testing-library/jest-dom': ^6.4.2
   '@testing-library/react': ^14.2.2
+  '@typescript-eslint/utils': ^8.55.0
   '@types/eslint': ^8.56.0
   '@types/eslint__js': ^8.42.3
   '@types/hast': ^3.0.4

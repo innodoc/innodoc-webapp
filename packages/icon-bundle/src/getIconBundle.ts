@@ -38,7 +38,7 @@ async function getIconBundle(paths: string[]) {
   const scannedIconName = await scanIconNames(paths)
 
   // Read all icons
-  const iconifyJsonAll = await import('@iconify-json/mdi/icons.json', { assert: { type: 'json' } })
+  const iconifyJsonAll = await import('@iconify-json/mdi/icons.json', { with: { type: 'json' } })
 
   // Create icon subset
   const mdiIconNames = filterBySet('mdi', [...scannedIconName, ...STATIC_ICONS])
