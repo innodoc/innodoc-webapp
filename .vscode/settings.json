@@ -27,7 +27,8 @@
   "eslint.useFlatConfig": true,
   "eslint.workingDirectories": [{ "pattern": "./packages/*/*" }],
   "search.exclude": {
-    "**/dist": true
+    "**/dist": true,
+    "pnpm-lock.yaml": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
