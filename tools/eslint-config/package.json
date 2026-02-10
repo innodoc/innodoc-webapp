@@ -4,41 +4,38 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./eslint.config.js"
+    ".": "./index.js"
   },
   "scripts": {
     "format": "prettier --check .",
     "format:write": "prettier --write .",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@eslint-react/eslint-plugin": "catalog:",
     "@eslint/js": "catalog:",
     "@innodoc/prettier-config": "workspace:*",
     "@innodoc/ts-config": "workspace:*",
     "@types/eslint": "catalog:",
-    "@types/eslint__js": "catalog:",
     "@types/node": "catalog:",
+    "@vitest/eslint-plugin": "catalog:",
     "eslint": "catalog:",
     "eslint-config-prettier": "catalog:",
     "eslint-import-resolver-typescript": "catalog:",
-    "eslint-plugin-deprecation": "catalog:",
-    "eslint-plugin-filenames": "catalog:",
-    "eslint-plugin-import": "catalog:",
+    "eslint-plugin-import-x": "catalog:",
     "eslint-plugin-jest-dom": "catalog:",
     "eslint-plugin-jsx-a11y": "catalog:",
     "eslint-plugin-prettier": "catalog:",
     "eslint-plugin-promise": "catalog:",
-    "eslint-plugin-react": "catalog:",
     "eslint-plugin-react-hooks": "catalog:",
-    "eslint-plugin-react-redux": "catalog:",
     "eslint-plugin-regexp": "catalog:",
     "eslint-plugin-simple-import-sort": "catalog:",
     "eslint-plugin-testing-library": "catalog:",
     "eslint-plugin-unicorn": "catalog:",
-    "eslint-plugin-vitest": "catalog:",
-    "eslint-plugin-vitest-globals": "catalog:",
     "globals": "catalog:",
+    "typescript": "catalog:",
     "typescript-eslint": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"
