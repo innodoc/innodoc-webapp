@@ -1,9 +1,10 @@
 {
-  "globalDependencies": [".env"],
-  "globalDotEnv": [".env", ".env.development.local"],
-  "pipeline": {
+  "globalDependencies": [".env*"],
+  "ui": "tui",
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**"]
     },
     "dev": {
@@ -37,7 +38,7 @@
     },
     "test": {
       "dependsOn": ["build"],
-      "dotEnv": [".env", ".env.test", ".env.test.local"],
+      // "dotEnv": [".env", ".env.test", ".env.test.local"],
       "inputs": ["src/**/*.tsx", "src/**/*.ts", "tests/**/*.ts", "tests/**/*.tsx"]
     },
     "type-check": {},

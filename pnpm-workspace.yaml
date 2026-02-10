@@ -125,6 +125,7 @@ catalog:
   svg-parser: ^2.0.4
   syncpack: 14.0.0-alpha.41
   tsx: ^4.7.1
+  turbo: ^2.8.3
   type-fest: ^4.11.1
   typescript: ^5.9.3
   typescript-eslint: ^7.2.0

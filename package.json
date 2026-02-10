@@ -7,7 +7,7 @@
     "========= Build": "",
     "build": "turbo run build",
     "build:icon-bundle": "turbo run _build:icon-bundle",
-    "_build:icon-bundle": "innodoc-icon-bundle --force --output packages/ui/components-common/dist/iconBundle.json packages/ui/components-*/src",
+    "_build:icon-bundle": "innodoc-icon-bundle --force --output packages/components-common/dist/iconBundle.json packages/components-*/src",
     "clean": "turbo run clean",
     "========= Commands": "",
     "import-v1": "turbo run --filter=@innodoc/command-import-v1 main",
@@ -56,12 +56,14 @@
     "knip": "catalog:",
     "prettier": "catalog:",
     "syncpack": "catalog:",
+    "turbo": "catalog:",
     "typescript": "catalog:"
   },
   "engines": {
     "node": ">=22",
     "pnpm": ">=10"
   },
+  "packageManager": "pnpm@10.29.2",
   "pnpm": {
     "patchedDependencies": {
       "decode-named-character-reference@1.3.0": "patches/decode-named-character-reference@1.3.0.patch",
