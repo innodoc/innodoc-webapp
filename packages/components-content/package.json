@@ -24,7 +24,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "vitest",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@innodoc/components-common": "workspace:*",
@@ -55,6 +55,7 @@
     "@types/innodoc-vite-env": "workspace:*",
     "@types/react": "catalog:",
     "hast-util-to-jsx-runtime": "catalog:",
+    "typescript": "catalog:",
     "vitest": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"

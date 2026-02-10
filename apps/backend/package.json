@@ -28,7 +28,7 @@
     "lint:fix": "eslint --fix .",
     "start": "NODE_ENV=production node ./dist/start.js",
     "test:unit": "vitest",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@fastify/accepts": "catalog:",
@@ -66,6 +66,7 @@
     "nodemon": "catalog:",
     "pino-pretty": "catalog:",
     "tsx": "catalog:",
+    "typescript": "catalog:",
     "vite": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"

@@ -14,7 +14,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "pino": "catalog:",
@@ -23,7 +23,8 @@
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:*",
     "@innodoc/prettier-config": "workspace:*",
-    "@innodoc/ts-config": "workspace:*"
+    "@innodoc/ts-config": "workspace:*",
+    "typescript": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"
 }

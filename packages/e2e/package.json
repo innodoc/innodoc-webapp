@@ -11,7 +11,7 @@
     "test": "playwright test",
     "playwright:install": "playwright install chromium --with-deps",
     "playwright:show-report": "playwright show-report",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@innodoc/eslint-config": "workspace:*",
@@ -19,7 +19,7 @@
     "@innodoc/ts-config": "workspace:*",
     "@playwright/test": "catalog:",
     "@types/node": "catalog:",
-    "eslint-plugin-playwright": "catalog:"
+    "typescript": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"
 }

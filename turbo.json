@@ -38,10 +38,11 @@
     },
     "test": {
       "dependsOn": ["build"],
-      // "dotEnv": [".env", ".env.test", ".env.test.local"],
-      "inputs": ["src/**/*.tsx", "src/**/*.ts", "tests/**/*.ts", "tests/**/*.tsx"]
+      "inputs": ["$TURBO_DEFAULT$", ".env", ".env.test*", "src/**/*.tsx", "src/**/*.ts"]
     },
-    "type-check": {},
+    "typecheck": {
+      "inputs": ["tsconfig*.json"]
+    },
     "//#_build:icon-bundle": {
       "dependsOn": ["@innodoc/command-icon-bundle#build"],
       "outputs": ["packages/ui/components-common/dist/iconBundle.json"],

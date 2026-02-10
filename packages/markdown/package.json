@@ -24,7 +24,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@innodoc/constants": "workspace:*",
@@ -58,7 +58,8 @@
     "@types/hast": "catalog:",
     "@types/mdast": "catalog:",
     "@types/unist": "catalog:",
-    "hast-util-sanitize": "catalog:"
+    "hast-util-sanitize": "catalog:",
+    "typescript": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"
 }

@@ -3,5 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "exports": "./prettierrc.json"
+  "exports": "./prettierrc.json",
+  "devDependencies": {
+    "typescript": "catalog:"
+  }
 }

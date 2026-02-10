@@ -24,7 +24,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@innodoc/constants": "workspace:*"
@@ -37,7 +37,8 @@
     "@types/hast": "catalog:",
     "@types/svg-parser": "catalog:",
     "iso-639-1": "catalog:",
-    "react": "catalog:"
+    "react": "catalog:",
+    "typescript": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"
 }

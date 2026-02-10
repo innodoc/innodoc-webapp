@@ -16,7 +16,7 @@
     "format:write": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@innodoc/constants": "workspace:*",
@@ -30,7 +30,8 @@
     "@innodoc/ts-config": "workspace:*",
     "@innodoc/types": "workspace:*",
     "@mui/lab": "catalog:",
-    "@types/react": "catalog:"
+    "@types/react": "catalog:",
+    "typescript": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"
 }

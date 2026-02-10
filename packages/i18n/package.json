@@ -13,7 +13,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@innodoc/store": "workspace:*",
@@ -30,7 +30,8 @@
     "@types/svg-parser": "catalog:",
     "i18next-fs-backend": "catalog:",
     "iso-639-1": "catalog:",
-    "type-fest": "catalog:"
+    "type-fest": "catalog:",
+    "typescript": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"
 }

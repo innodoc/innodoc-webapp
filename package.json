@@ -22,7 +22,7 @@
     "depcruise:validate": "pnpm exec depcruise --config -- packages",
     "========= Development": "",
     "dev": "turbo run dev --concurrency=25 --log-prefix=none --output-logs=new-only",
-    "dev:checks": "pnpm run lint && pnpm run format && pnpm run type-check && pnpm run syncpack lint && pnpm run depcruise:validate && pnpm run test && pnpm run test:e2e",
+    "dev:checks": "pnpm run lint && pnpm run format && pnpm run typecheck && pnpm run syncpack lint && pnpm run depcruise:validate && pnpm run test && pnpm run test:e2e",
     "dev:mock": "#TODO INNODOC_API_MOCK=true INNODOC_DEFAULT_COURSE_SLUG=testcourse INNODOC_COURSE_SLUG_MODE=SINGLE nodemon --ext ts --watch ./src/server --exec tsx ./src/server/startMockServer.ts",
     "========= Format": "",
     "format": "turbo run format",
@@ -41,8 +41,8 @@
     "knip": "knip",
     "syncpack": "pnpm exec syncpack",
     "visualize-bundle": "VISUALIZE_BUNDLE=true pnpm run build",
-    "========= Type-check": "",
-    "type-check": "turbo run type-check"
+    "========= Typecheck": "",
+    "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
     "@commitlint/cli": "catalog:",

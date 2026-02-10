@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@commander-js/extra-typings": "catalog:",
@@ -25,7 +25,8 @@
     "@innodoc/prettier-config": "workspace:*",
     "@innodoc/schema": "workspace:*",
     "@innodoc/ts-config": "workspace:*",
-    "@types/node": "catalog:"
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "commander": "catalog:"

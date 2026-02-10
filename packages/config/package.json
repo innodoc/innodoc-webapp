@@ -14,7 +14,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@innodoc/constants": "workspace:*",
@@ -28,6 +28,7 @@
     "@innodoc/prettier-config": "workspace:*",
     "@innodoc/ts-config": "workspace:*",
     "globals": "catalog:",
+    "typescript": "catalog:",
     "typescript-eslint": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"

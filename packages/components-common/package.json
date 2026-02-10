@@ -32,7 +32,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "vitest",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@innodoc/hooks": "workspace:*",
@@ -59,6 +59,7 @@
     "@testing-library/jest-dom": "catalog:",
     "@types/react": "catalog:",
     "@types/svg-parser": "catalog:",
+    "typescript": "catalog:",
     "vitest": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"
