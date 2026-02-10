@@ -19,6 +19,7 @@
     "@innodoc/ts-config": "workspace:*",
     "@playwright/test": "catalog:",
     "@types/node": "catalog:",
+    "playwright": "catalog:",
     "typescript": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"
