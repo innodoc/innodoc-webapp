@@ -1,6 +1,6 @@
 import * as awilix from 'awilix'
 
-import parseConfig from '../../../../packages/config/src/parseConfig.js'
+import parseConfig from '@innodoc/config'
 import RouteManager from '@innodoc/routes'
 
 import type { ContainerModules } from './types.js'
