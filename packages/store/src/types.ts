@@ -1,19 +1,14 @@
-import type {
-  configureStore,
-  ListenerEffectAPI,
-  StateFromReducersMapObject,
-  TypedStartListening,
-} from '@reduxjs/toolkit'
+import type { configureStore, ListenerEffectAPI, TypedStartListening } from '@reduxjs/toolkit'
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react'
 
 import type makeStore from './makeStore.js'
-import type reducer from './reducer.js'
+import type { rootReducer } from './makeStore.js'
 
 /** Store type */
 type Store = ReturnType<typeof makeStore>
 
 /** Root state */
-type RootState = StateFromReducersMapObject<typeof reducer>
+type RootState = ReturnType<typeof rootReducer>
 
 /** Dispatch type */
 type AppDispatch = Store['dispatch']

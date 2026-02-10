@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import type { PayloadAction, Slice } from '@reduxjs/toolkit'
 
 import { DEFAULT_LOCALES, DEFAULT_ROUTE_NAME } from '@innodoc/constants'
 import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
@@ -23,7 +23,7 @@ const initialState: AppSliceState = {
   routeTransitionInfo: null,
 }
 
-const appSlice = createSlice({
+const appSlice: Slice<AppSliceState> = createSlice({
   name: 'app',
   initialState,
 
