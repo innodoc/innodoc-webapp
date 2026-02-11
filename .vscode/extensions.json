@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "webpro.vscode-knip",
+    "editorconfig.editorconfig",
+    "dbaeumer.vscode-eslint",
+    "unifiedjs.vscode-mdx",
+    "esbenp.prettier-vscode",
+    "vitest.explorer"
+  ]
+}
