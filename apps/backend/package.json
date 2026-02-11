@@ -3,16 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "exports": {
-    "./config": "./dist/config.js"
+  "bin": {
+    "innodoc-webapp": "./dist/main.js"
   },
   "imports": {
     "#api/errors": "./dist/services/api/errors.js",
-    "#config": "./dist/config.js",
-    "#plugins/apiReference": "./dist/plugins/apiReference.js",
+    "#plugins/api-reference": "./dist/plugins/api-reference.js",
     "#plugins/db": "./dist/plugins/db/db.js",
     "#plugins/logging": "./dist/plugins/logging.js",
-    "#plugins/viteDevServer": "./dist/plugins/viteDevServer.js",
+    "#plugins/vite-dev-server": "./dist/plugins/vite-dev-server.js",
     "#services/api/types": "./dist/services/api/types.js",
     "#utils": "./dist/utils.js"
   },
@@ -21,12 +20,12 @@
     "clean": "rm -rf dist",
     "dev": "nodemon --ext ts --watch ./src --exec 'turbo run dev:start --filter=server --log-prefix=none'",
     "dev:mkcert": "mkcert -install && mkdir -p cert && mkcert -key-file cert/key.pem -cert-file cert/cert.pem innodoc.dev '*.innodoc.dev' localhost 127.0.0.1 ::1",
-    "dev:start": "NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" tsx ./src/start.ts",
+    "dev:start": "NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" tsx ./src/main.ts",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "start": "NODE_ENV=production node ./dist/start.js",
+    "start": "NODE_ENV=production node ./dist/main.js",
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit"
   },
@@ -34,7 +33,6 @@
     "@fastify/accepts": "catalog:",
     "@fastify/autoload": "catalog:",
     "@fastify/static": "catalog:",
-    "@innodoc/config": "workspace:*",
     "@innodoc/constants": "workspace:*",
     "@innodoc/container": "workspace:*",
     "@innodoc/database": "workspace:*",
@@ -67,7 +65,8 @@
     "pino-pretty": "catalog:",
     "tsx": "catalog:",
     "typescript": "catalog:",
-    "vite": "catalog:"
+    "vite": "catalog:",
+    "vitest": "catalog:"
   },
   "prettier": "@innodoc/prettier-config"
 }

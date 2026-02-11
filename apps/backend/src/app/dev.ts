@@ -29,7 +29,7 @@ const devPlugin: FastifyPluginAsync = async function (app) {
   await app.register(import('fastify-print-routes'))
 
   // Print routes on start-up
-  await app.register(import('#plugins/viteDevServer'))
+  await app.register(import('#plugins/vite-dev-server'))
 }
 
 const dev = fastifyPlugin(devPlugin, { name: 'dev' })

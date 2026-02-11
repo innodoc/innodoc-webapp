@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
-import config from '@innodoc/config'
+import container from '@innodoc/container'
 
-import setupApp from './app/setupApp.js'
+import setupApp from './app/setup-app.js'
+
+const config = container.resolve('config')
 
 try {
   const app = await setupApp()

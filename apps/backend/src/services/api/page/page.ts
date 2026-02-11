@@ -3,8 +3,8 @@ import type { ApiRouteName } from '@innodoc/routes/types/routeNames'
 import { getRoutePath } from '#utils'
 import type { FastifyZodPluginCallback } from '#services/api/types'
 
-import getPageContent from './getPageContent.js'
-import getPages from './getPages.js'
+import getPageContent from './page-content-handler.js'
+import getPages from './pages-handler.js'
 
 const page: FastifyZodPluginCallback = function (app, opts, done) {
   const p = (name: ApiRouteName) => getRoutePath(name, app.prefix)

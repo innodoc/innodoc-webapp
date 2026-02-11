@@ -1,7 +1,7 @@
 import fastifyAccepts from '@fastify/accepts'
 import type { FastifyPluginAsync } from 'fastify'
 
-import frontendHandler from './frontendHandler.js'
+import frontendHandler from './frontend-handler.js'
 
 const autoPrefix = '/'
 

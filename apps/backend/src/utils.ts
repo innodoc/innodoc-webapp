@@ -27,7 +27,9 @@ function getRoutePath(name: ApiRouteName, removePrefix?: string) {
     throw new Error(`Unknown route requested: ${name}`)
   }
 
-  return removePrefix === undefined ? pattern : pattern.replace(new RegExp(`^${removePrefix.replace('/', '\\/')}`), '')
+  return removePrefix === undefined
+    ? pattern
+    : pattern.replace(new RegExp(`^${removePrefix.replace('/', String.raw`\/`)}`), '')
 }
 
 /**

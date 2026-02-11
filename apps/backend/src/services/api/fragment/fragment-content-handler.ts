@@ -1,11 +1,11 @@
 import z from 'zod'
+import type { LanguageCode } from 'iso-639-1'
 
 import { fragmentTypeSchema } from '@innodoc/schema'
 import { localeSchema, slugSchema } from '@innodoc/schema/common'
 
 import { errorResponseSchema } from '#api/errors'
 import type { ApiRouteHandlerMethod } from '#services/api/types'
-import type { LanguageCode } from 'iso-639-1'
 
 const schema = {
   params: z.object({

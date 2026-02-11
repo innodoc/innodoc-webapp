@@ -1,5 +1,5 @@
 import camelcaseKeys from 'camelcase-keys'
-import { ResponseValidationError } from 'fastify-type-provider-zod'
+import { ResponseSerializationError } from 'fastify-type-provider-zod'
 import type { FastifySerializerCompiler } from 'fastify/types/schema'
 import type { ZodAny } from 'zod'
 
@@ -21,6 +21,8 @@ function isWrappedSchema(maybeSchema: unknown): maybeSchema is { properties: Zod
  */
 const camelcaseSerializerCompiler: FastifySerializerCompiler<ZodAny | { properties: ZodAny }> = function ({
   schema: maybeSchema,
+  method,
+  url,
 }) {
   let schema: ZodAny
   if (isSchema(maybeSchema)) {
@@ -37,7 +39,7 @@ const camelcaseSerializerCompiler: FastifySerializerCompiler<ZodAny | { properti
       return JSON.stringify(camelcaseKeys(result.data))
     }
 
-    throw new ResponseValidationError(result)
+    throw new ResponseSerializationError(method, url, { cause: result.error })
   }
 }
 
