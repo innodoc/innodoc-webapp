@@ -576,6 +576,30 @@ importers:
         specifier: 'catalog:'
         version: 1.6.1(@types/node@20.19.33)(jsdom@28.0.0)
 
+  apps/e2e:
+    devDependencies:
+      '@innodoc/eslint-config':
+        specifier: workspace:*
+        version: link:../../tools/eslint-config
+      '@innodoc/prettier-config':
+        specifier: workspace:*
+        version: link:../../tools/prettier-config
+      '@innodoc/ts-config':
+        specifier: workspace:*
+        version: link:../../tools/ts-config
+      '@playwright/test':
+        specifier: 'catalog:'
+        version: 1.58.2
+      '@types/node':
+        specifier: 'catalog:'
+        version: 20.19.33
+      playwright:
+        specifier: 'catalog:'
+        version: 1.58.2
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+
   apps/frontend:
     dependencies:
       '@emotion/cache':
@@ -699,30 +723,6 @@ importers:
       vitest:
         specifier: 'catalog:'
         version: 1.6.1(@types/node@20.19.33)(jsdom@28.0.0)
-
-  e2e:
-    devDependencies:
-      '@innodoc/eslint-config':
-        specifier: workspace:*
-        version: link:../tools/eslint-config
-      '@innodoc/prettier-config':
-        specifier: workspace:*
-        version: link:../tools/prettier-config
-      '@innodoc/ts-config':
-        specifier: workspace:*
-        version: link:../tools/ts-config
-      '@playwright/test':
-        specifier: 'catalog:'
-        version: 1.58.2
-      '@types/node':
-        specifier: 'catalog:'
-        version: 20.19.33
-      playwright:
-        specifier: 'catalog:'
-        version: 1.58.2
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
 
   packages/components-app:
     dependencies:
