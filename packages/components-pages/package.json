@@ -42,6 +42,7 @@
     "@innodoc/vitest-config": "workspace:*",
     "@testing-library/jest-dom": "catalog:",
     "@types/react": "catalog:",
+    "jsdom": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },

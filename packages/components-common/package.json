@@ -59,6 +59,7 @@
     "@testing-library/jest-dom": "catalog:",
     "@types/react": "catalog:",
     "@types/svg-parser": "catalog:",
+    "jsdom": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },

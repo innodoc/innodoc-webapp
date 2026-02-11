@@ -7,7 +7,10 @@ const config = defineConfig({
   extends: [configs.strictTypeChecked, configs.stylisticTypeChecked],
   languageOptions: {
     parser,
-    parserOptions: { projectService: true },
+    parserOptions: {
+      projectService: true,
+      tsconfigRootDir: import.meta.dirname,
+    },
   },
   rules: {
     // Prefer interfaces for type definitions

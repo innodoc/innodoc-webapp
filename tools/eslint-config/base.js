@@ -1,5 +1,3 @@
-import path from 'node:path'
-
 import js from '@eslint/js'
 import { defineConfig } from 'eslint/config'
 import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript'
@@ -11,8 +9,6 @@ import unicorn from 'eslint-plugin-unicorn'
 import globals from 'globals'
 
 const groupWithTypes = (/** @type {string} */ re) => [re, String.raw`${re}.*\u0000$`]
-
-const rootDirectory = path.resolve(import.meta.dirname, '..', '..')
 
 const config = defineConfig([
   {
@@ -99,12 +95,6 @@ const config = defineConfig([
         createTypeScriptImportResolver({
           alwaysTryTypes: true,
           noWarnOnMultipleProjects: true,
-          // FIXME: This needed??
-          project: [
-            path.join(rootDirectory, 'apps', '*', 'tsconfig.json'),
-            path.join(rootDirectory, 'packages', '*', 'tsconfig.json'),
-            path.join(rootDirectory, 'tools', '*', 'tsconfig.json'),
-          ],
         }),
         createNodeResolver(),
       ],

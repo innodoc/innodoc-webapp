@@ -49,6 +49,7 @@
     "@types/innodoc-vite-env": "workspace:*",
     "@types/react": "catalog:",
     "i18next": "catalog:",
+    "jsdom": "catalog:",
     "typescript": "catalog:",
     "vike": "catalog:",
     "vitest": "catalog:"

@@ -55,6 +55,7 @@
     "@types/innodoc-vite-env": "workspace:*",
     "@types/react": "catalog:",
     "hast-util-to-jsx-runtime": "catalog:",
+    "jsdom": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
