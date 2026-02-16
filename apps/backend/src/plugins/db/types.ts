@@ -1,4 +1,4 @@
-import type Database from '@innodoc/database'
+import type Database from '@innodoc/server-db'
 
 declare module 'fastify' {
   interface FastifyInstance {

@@ -14,13 +14,11 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@innodoc/eslint-config": "workspace:*",
-    "@innodoc/prettier-config": "workspace:*",
-    "@innodoc/ts-config": "workspace:*",
+    "@innodoc/configs": "workspace:*",
     "@playwright/test": "catalog:",
     "@types/node": "catalog:",
     "playwright": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@innodoc/prettier-config"
+  "prettier": "@innodoc/configs/prettierrc.json"
 }

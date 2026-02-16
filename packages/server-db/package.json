@@ -1,0 +1,38 @@
+{
+  "name": "@innodoc/server-db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": "./dist/Database.js",
+  "imports": {
+    "#database": "./src/Database.js"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "dev": "tsc --project tsconfig.build.json --watch",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "knex": "NODE_OPTIONS='--import tsx' knex --knexfile src/knexConfig.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test:unit": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@innodoc/shared-core": "workspace:*",
+    "iso-639-1": "catalog:",
+    "knex": "catalog:",
+    "pg": "catalog:",
+    "pg-protocol": "catalog:"
+  },
+  "devDependencies": {
+    "@innodoc/configs": "workspace:*",
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:"
+  },
+  "prettier": "@innodoc/configs/prettierrc.json"
+}

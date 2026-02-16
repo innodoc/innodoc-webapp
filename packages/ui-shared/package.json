@@ -1,0 +1,40 @@
+{
+  "name": "@innodoc/ui-shared",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./contexts": "./dist/contexts/contexts.js",
+    "./hooks": "./dist/hooks/hooks.js"
+  },
+  "imports": {
+    "#contexts": "./dist/contexts/contexts.js"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "dev": "tsc --project tsconfig.build.json --watch",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@innodoc/shared-core": "workspace:*",
+    "@innodoc/ui-store": "workspace:*",
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@innodoc/configs": "workspace:*",
+    "@testing-library/jest-dom": "catalog:",
+    "@types/react": "catalog:",
+    "jsdom": "catalog:",
+    "typescript": "catalog:",
+    "vike": "catalog:",
+    "vitest": "catalog:"
+  },
+  "prettier": "@innodoc/configs/prettierrc.json"
+}

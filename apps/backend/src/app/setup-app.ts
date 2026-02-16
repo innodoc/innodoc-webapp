@@ -3,8 +3,7 @@ import path from 'node:path'
 import autoLoad from '@fastify/autoload'
 import fastify from 'fastify'
 
-import container from '@innodoc/container'
-
+import container from '#container'
 import { getRootDirPath } from '#utils'
 
 async function setupApp() {

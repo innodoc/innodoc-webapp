@@ -18,8 +18,12 @@
     },
     "format": {},
     "format:write": {},
-    "lint": {},
+    "knex": {
+      "cache": false,
+      "persistent": true
+    },
     "lint:fix": {},
+    "lint": {},
     "main": {
       "cache": false,
       "dependsOn": ["build"]
@@ -44,9 +48,13 @@
       "inputs": ["tsconfig*.json"]
     },
     "//#_build:icon-bundle": {
-      "dependsOn": ["@innodoc/command-icon-bundle#build"],
-      "outputs": ["packages/ui/components-common/dist/iconBundle.json"],
-      "inputs": ["packages/ui/components-*/src/**"]
+      "dependsOn": ["@innodoc/commands#build"],
+      "outputs": ["packages/ui-design-system/dist/icon-bundle.json"],
+      "inputs": [
+        "packages/ui-content/src/**/*.tsx",
+        "packages/ui-design-system/src/**/*.tsx",
+        "packages/ui-features/src/**/*.tsx"
+      ]
     }
   }
 }

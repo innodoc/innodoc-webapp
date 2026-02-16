@@ -1,1 +1,1 @@
-export { LoginPage as Page } from '@innodoc/components-pages'
+export { LoginPage as Page } from '@innodoc/ui-features/pages'

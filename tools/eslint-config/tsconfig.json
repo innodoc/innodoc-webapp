@@ -1,9 +1,0 @@
-{
-  "extends": "@innodoc/ts-config/base.json",
-  "include": ["*.js", "*.d.ts"],
-  "exclude": ["node_modules"],
-  "compilerOptions": {
-    "rootDir": ".",
-    "types": ["node"]
-  }
-}

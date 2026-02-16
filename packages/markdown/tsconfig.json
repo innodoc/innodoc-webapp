@@ -1,8 +1,0 @@
-{
-  "extends": "@innodoc/ts-config/base.json",
-  "include": ["eslint.config.js", "vitest.config.ts", "src/**/*.ts"],
-  "exclude": ["dist", "node_modules"],
-  "compilerOptions": {
-    "rootDir": "."
-  }
-}

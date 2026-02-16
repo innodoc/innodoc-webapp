@@ -1,8 +1,0 @@
-{
-  "extends": "@innodoc/ts-config/base.json",
-  "include": ["eslint.config.js", "src/**/*.ts"],
-  "exclude": ["node_modules"],
-  "compilerOptions": {
-    "rootDir": "."
-  }
-}

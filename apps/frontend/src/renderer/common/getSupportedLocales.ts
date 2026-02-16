@@ -1,11 +1,11 @@
 import type { LanguageCode } from 'iso-639-1'
 
-import { DEFAULT_LOCALES } from '@innodoc/constants'
-import { isCourseRouteInfo } from '@innodoc/routes/typeguards'
-import courses from '@innodoc/store/slices/content/courses'
-import { isLocale } from '@innodoc/typeguards/common'
-import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
-import type { Store } from '@innodoc/store/types'
+import { DEFAULT_LOCALES } from '@innodoc/shared-core/constants'
+import { isCourseRouteInfo } from '@innodoc/shared-core/routes/typeguards'
+import courses from '@innodoc/ui-store/slices/content/courses'
+import { isLocale } from '@innodoc/shared-core/typeguards'
+import type { AppRouteInfo } from '@innodoc/shared-core/routes'
+import type { Store } from '@innodoc/ui-store/types'
 
 /**
  * Get supported locales.

@@ -1,0 +1,42 @@
+{
+  "name": "@innodoc/shared-fixtures",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./msw/browser": "./dist/msw/make-browser-server.js",
+    "./msw/node": "./dist/msw/make-node-server.js"
+  },
+  "imports": {
+    "#courses": "./dist/data/make-courses.js",
+    "#types": "./dist/data/types.js"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "dev": "tsc --project tsconfig.build.json --watch",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "catalog:",
+    "@innodoc/configs": "workspace:*",
+    "@innodoc/content-parser": "workspace:*",
+    "@innodoc/server-env": "workspace:*",
+    "@innodoc/shared-core": "workspace:*",
+    "@playwright/test": "catalog:",
+    "@types/mdast": "catalog:",
+    "@types/node": "catalog:",
+    "eslint-plugin-playwright": "catalog:",
+    "iso-639-1": "catalog:",
+    "msw": "catalog:",
+    "remark-stringify": "catalog:",
+    "type-fest": "catalog:",
+    "typescript": "catalog:",
+    "unified": "catalog:"
+  }
+}

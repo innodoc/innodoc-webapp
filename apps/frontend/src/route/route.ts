@@ -1,7 +1,7 @@
 import type { PageContextServer } from 'vike/types'
 
-import getRouteManager from '@innodoc/routes/vite/getRouteManager'
-import type { AppRouteName } from '@innodoc/routes/types/routeNames'
+import getRouteManager from '@innodoc/shared-core/routes/manager'
+import type { AppRouteName } from '@innodoc/shared-core/routes'
 
 const routeManager = getRouteManager()
 

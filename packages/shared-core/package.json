@@ -1,0 +1,87 @@
+{
+  "name": "@innodoc/shared-core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./constants": "./dist/constants.js",
+    "./i18n": "./dist/i18n.js",
+    "./routes": "./dist/routes/routes.js",
+    "./routes/manager": {
+      "types": "./dist/routes/manager/RouteManager.d.ts",
+      "vite": "./dist/routes/manager/get-route-manager.vite.js",
+      "default": "./dist/routes/manager/RouteManager.js"
+    },
+    "./routes/typeguards": "./dist/routes/typeguards.js",
+    "./schemas/entities": "./dist/schemas/entities.js",
+    "./schemas/common": "./dist/schemas/common.js",
+    "./schemas/config": "./dist/schemas/config.js",
+    "./schemas/types": {
+      "types": "./dist/schemas/types.d.ts"
+    },
+    "./types": {
+      "types": "./dist/types/types.d.ts"
+    },
+    "./typeguards": "./dist/typeguards/typeguards.js"
+  },
+  "imports": {
+    "#constants": {
+      "types": "./src/constants.ts",
+      "default": "./dist/constants.js"
+    },
+    "#routes": {
+      "types": "./src/routes/routes.ts",
+      "default": "./dist/routes/routes.js"
+    },
+    "#schemas/common": {
+      "types": "./src/schemas/common.ts",
+      "default": "./dist/schemas/common.ts"
+    },
+    "#schemas/config": {
+      "types": "./src/schemas/config.ts",
+      "default": "./dist/schemas/config.ts"
+    },
+    "#schemas/types": {
+      "types": "./src/schemas/types.ts"
+    },
+    "#typeguards": {
+      "types": "./src/typesguards/typeguards.ts",
+      "default": "./dist/typeguards/typeguards.js"
+    },
+    "#types": {
+      "types": "./src/types/types.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "dev": "tsc --project tsconfig.build.json --watch",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test:unit": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "i18next": "catalog:",
+    "i18next-http-backend": "catalog:",
+    "path-to-regexp": "catalog:",
+    "react-i18next": "catalog:",
+    "validator": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@innodoc/configs": "workspace:*",
+    "@types/hast": "catalog:",
+    "@types/node": "catalog:",
+    "@types/validator": "catalog:",
+    "iso-639-1": "catalog:",
+    "type-fest": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  },
+  "prettier": "@innodoc/configs/prettierrc.json"
+}

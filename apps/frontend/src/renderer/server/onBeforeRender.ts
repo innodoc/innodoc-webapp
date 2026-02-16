@@ -2,13 +2,11 @@ import { isPromise } from 'node:util/types'
 
 import type { Config, OnBeforeRenderAsync, PageContextServer } from 'vike/types'
 
-import { isAppRouteInfo, isAppRouteName, isCourseRouteInfo } from '@innodoc/routes/typeguards'
-import makeStore from '@innodoc/store'
-import { changeRouteInfo } from '@innodoc/store/slices/app'
-import { isCallable } from '@innodoc/typeguards/common'
-import type { RouteParams } from '@innodoc/routes/types'
-import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
-import type { AppRouteName } from '@innodoc/routes/types/routeNames'
+import { isAppRouteInfo, isAppRouteName, isCourseRouteInfo } from '@innodoc/shared-core/routes/typeguards'
+import makeStore from '@innodoc/ui-store'
+import { changeRouteInfo } from '@innodoc/ui-store/slices/app'
+import { isCallable } from '@innodoc/shared-core/typeguards'
+import type { AppRouteInfo, AppRouteName, RouteParams } from '@innodoc/shared-core/routes'
 
 import populateStore from './populateStore.js'
 

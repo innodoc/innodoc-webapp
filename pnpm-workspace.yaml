@@ -1,7 +1,7 @@
 packages:
   - apps/*
   - packages/*
-  - tools/*
+  - tooling/*
 
 catalog:
   '@commander-js/extra-typings': ^12.0.0
@@ -16,6 +16,7 @@ catalog:
   '@faker-js/faker': ^8.4.1
   '@fastify/accepts': ^4.3.0
   '@fastify/autoload': ^5.8.0
+  '@fastify/awilix': ^8.2.0
   '@fastify/static': ^7.0.1
   '@fastify/swagger': ^9.5.1
   '@fastify/vite': ^6.0.6
@@ -36,14 +37,14 @@ catalog:
   '@types/eslint-plugin-jsx-a11y': ^6.10.1
   '@types/hast': ^3.0.4
   '@types/mdast': ^4.0.3
-  '@types/node': ^20.11.28
-  '@types/react': ^18.2.0
+  '@types/node': ^20.19.33
+  '@types/react': ^18.2.63
   '@types/react-dom': ^18.2.0
   '@types/react-redux': ^7.1.33
   '@types/svg-parser': ^2.0.6
   '@types/unist': ^3.0.2
   '@types/validator': ^13.11.0
-  '@typescript-eslint/utils': ^8.55.0
+  '@typescript-eslint/typescript-estree': ^8.56.1
   '@vitejs/plugin-react-swc': ^3.6.0
   '@vitest/eslint-plugin': ^1.6.7
   awilix: ^10.0.1
@@ -54,7 +55,7 @@ catalog:
   commit-and-tag-version: ^12.6.1
   crc: ^4.3.2
   dependency-cruiser: ^17.3.8
-  eslint: ^9.39.0
+  eslint: ^9.39.2
   eslint-config-prettier: ^10.1.0
   eslint-import-resolver-typescript: ^4.4.0
   eslint-plugin-import-x: ^4.16.1

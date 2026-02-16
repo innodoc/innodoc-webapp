@@ -7,9 +7,9 @@ import I18NextFsBackend, { type FsBackendOptions } from 'i18next-fs-backend'
 import { renderToStaticMarkup } from 'react-dom/server'
 import type { EmotionCache } from '@emotion/cache'
 
-import getI18n from '@innodoc/i18n'
-import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
-import type { Store } from '@innodoc/store/types'
+import getI18n from '@innodoc/shared-core/i18n'
+import type { AppRouteInfo } from '@innodoc/shared-core/routes'
+import type { Store } from '@innodoc/ui-store/types'
 
 import { getSupportedLocales } from '#renderer/common'
 

@@ -1,8 +1,7 @@
 import { validatorCompiler } from 'fastify-type-provider-zod'
 import type { FastifyPluginAsync } from 'fastify'
 
-import container from '@innodoc/container'
-
+import container from '#container'
 import dbPlugin from '#plugins/db'
 
 import camelcaseSerializerCompiler from './camelcase.js'

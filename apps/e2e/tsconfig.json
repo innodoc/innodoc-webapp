@@ -1,5 +1,5 @@
 {
-  "extends": "@innodoc/ts-config/node.json",
+  "extends": "@innodoc/configs/tsconfig/node.json",
   "include": ["eslint.config.js", "playwright.config.ts"],
   "exclude": ["node_modules"],
   "compilerOptions": {

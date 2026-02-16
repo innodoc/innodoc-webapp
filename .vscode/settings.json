@@ -14,11 +14,11 @@
     },
     {
       "fileMatch": [
-        "/tools/ts-config/*.json",
-        "!/tools/ts-config/package.json",
+        "/tooling/ts-config/*.json",
+        "!/tooling/ts-config/package.json",
         "/apps/*/tsconfig*.json",
         "/packages/*/tsconfig*.json",
-        "/tools/*/tsconfig*.json"
+        "/tooling/*/tsconfig*.json"
       ],
       "url": "http://json.schemastore.org/tsconfig"
     }

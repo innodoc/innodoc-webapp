@@ -1,0 +1,55 @@
+{
+  "name": "@innodoc/ui-content",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/hast/hast.js"
+  },
+  "imports": {
+    "#cards": "./dist/cards/cards.js",
+    "#exercises": "./dist/exercises/exercises.js",
+    "#hast": "./dist/hast/hast.js",
+    "#hast/components": "./dist/hast/components-map.js",
+    "#tabs": "./dist/tabs/tabs.js",
+    "#types": "./src/types.ts"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "dev": "tsc --project tsconfig.build.json --watch",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@innodoc/content-parser": "workspace:*",
+    "@innodoc/shared-core": "workspace:*",
+    "@innodoc/ui-design-system": "workspace:*",
+    "@innodoc/ui-shared": "workspace:*",
+    "@innodoc/ui-store": "workspace:*",
+    "@mui/lab": "catalog:",
+    "@mui/material": "catalog:",
+    "camelcase-keys": "catalog:",
+    "react": "catalog:",
+    "react-i18next": "catalog:",
+    "rehype-react": "catalog:",
+    "unified": "catalog:"
+  },
+  "devDependencies": {
+    "@innodoc/configs": "workspace:*",
+    "@innodoc/ui-test-utils": "workspace:*",
+    "@testing-library/jest-dom": "catalog:",
+    "@types/hast": "catalog:",
+    "@types/react": "catalog:",
+    "hast-util-to-jsx-runtime": "catalog:",
+    "jsdom": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "prettier": "@innodoc/configs/prettierrc.json"
+}

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
-import type { AppRouteInfo } from '@innodoc/routes/types/routeInfos'
-import type { RootState, Store } from '@innodoc/store/types'
+import type { AppRouteInfo } from '@innodoc/shared-core/routes'
+import type { RootState, Store } from '@innodoc/ui-store/types'
 
 declare global {
   namespace Vike {

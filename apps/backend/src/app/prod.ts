@@ -2,7 +2,7 @@ import fastifyStatic from '@fastify/static'
 import fastifyPlugin from 'fastify-plugin'
 import type { FastifyPluginAsync } from 'fastify'
 
-import container from '@innodoc/container'
+import container from '#container'
 
 const options = () =>
   Promise.resolve({

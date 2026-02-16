@@ -1,0 +1,50 @@
+{
+  "name": "@innodoc/commands",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test:unit": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@commander-js/extra-typings": "catalog:",
+    "@iconify-json/mdi": "catalog:",
+    "@iconify/utils": "catalog:",
+    "@innodoc/server-db": "workspace:*",
+    "@innodoc/server-env": "workspace:*",
+    "@typescript-eslint/utils": "catalog:",
+    "camelcase-keys": "catalog:",
+    "chalk": "catalog:",
+    "eslint": "catalog:",
+    "hast-util-is-element": "catalog:",
+    "rehype-parse": "catalog:",
+    "unified": "catalog:",
+    "unist-util-remove-position": "catalog:",
+    "yaml": "catalog:"
+  },
+  "devDependencies": {
+    "@iconify/types": "catalog:",
+    "@innodoc/configs": "workspace:*",
+    "@types/eslint": "catalog:",
+    "@types/node": "catalog:",
+    "commander": "catalog:",
+    "knex": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "commander": "catalog:"
+  },
+  "bin": {
+    "innodoc-icon-bundle": "./dist/icon-bundle/main.js",
+    "innodoc-import-v1": "./dist/import-v1/main.js",
+    "innodoc-print-routes": "./dist/print-routes/main.js"
+  },
+  "prettier": "@innodoc/configs/prettierrc.json"
+}

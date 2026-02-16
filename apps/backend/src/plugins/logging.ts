@@ -1,7 +1,7 @@
 import fastifyPlugin from 'fastify-plugin'
 import type { FastifyInstance, FastifyPluginCallback } from 'fastify'
 
-import container from '@innodoc/container'
+import container from '#container'
 
 const VITE_PATHS = ['/@fs/', '/@id/', '/@react-refresh', '/@vite/', '/node_modules/', '/src/']
 

@@ -1,0 +1,15 @@
+{
+  "extends": "@innodoc/configs/tsconfig/react.json",
+  "include": ["eslint.config.js", "vitest.config.ts", "src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    "rootDir": ".",
+    "types": [
+      "vite/client",
+      "@innodoc/configs/vite-env",
+      "@innodoc/design-system/types/mui",
+      "@mui/material/themeCssVarsAugmentation",
+      "@testing-library/jest-dom/vitest"
+    ]
+  }
+}

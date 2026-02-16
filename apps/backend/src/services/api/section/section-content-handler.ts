@@ -1,7 +1,7 @@
 import z from 'zod'
 import type { LanguageCode } from 'iso-639-1'
 
-import { localeSchema, sectionPathSchema, slugSchema } from '@innodoc/schema/common'
+import { localeSchema, sectionPathSchema, slugSchema } from '@innodoc/shared-core/schemas/common'
 
 import { errorResponseSchema } from '#api/errors'
 import type { ApiRouteHandlerMethod } from '#services/api/types'

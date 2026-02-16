@@ -1,6 +1,6 @@
 import type { Config } from 'vike/types'
 
-import { PASS_TO_CLIENT_PROPS } from '@innodoc/constants'
+import { PASS_TO_CLIENT_PROPS } from '@innodoc/shared-core/constants'
 
 export default {
   clientRouting: true,

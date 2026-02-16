@@ -3,11 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "bin": {
-    "innodoc-webapp": "./dist/main.js"
-  },
   "imports": {
     "#api/errors": "./dist/services/api/errors.js",
+    "#container": "./dist/container/container.js",
     "#plugins/api-reference": "./dist/plugins/api-reference.js",
     "#plugins/db": "./dist/plugins/db/db.js",
     "#plugins/logging": "./dist/plugins/logging.js",
@@ -33,17 +31,17 @@
     "@fastify/accepts": "catalog:",
     "@fastify/autoload": "catalog:",
     "@fastify/static": "catalog:",
-    "@innodoc/constants": "workspace:*",
-    "@innodoc/container": "workspace:*",
-    "@innodoc/database": "workspace:*",
-    "@innodoc/routes": "workspace:*",
-    "@innodoc/schema": "workspace:*",
-    "@innodoc/typeguards": "workspace:*",
+    "@innodoc/server-db": "workspace:*",
+    "@innodoc/server-env": "workspace:*",
+    "@innodoc/shared-core": "workspace:*",
+    "awilix": "catalog:",
     "camelcase-keys": "catalog:",
     "fastify": "catalog:",
     "fastify-plugin": "catalog:",
     "fastify-type-provider-zod": "catalog:",
     "i18next-http-middleware": "catalog:",
+    "pino": "catalog:",
+    "pino-pretty": "catalog:",
     "validator": "catalog:",
     "vike": "catalog:",
     "zod": "catalog:"
@@ -51,11 +49,7 @@
   "devDependencies": {
     "@fastify/swagger": "catalog:",
     "@fastify/vite": "catalog:",
-    "@innodoc/eslint-config": "workspace:*",
-    "@innodoc/prettier-config": "workspace:*",
-    "@innodoc/store": "workspace:*",
-    "@innodoc/ts-config": "workspace:*",
-    "@innodoc/types": "workspace:*",
+    "@innodoc/configs": "workspace:*",
     "@reduxjs/toolkit": "catalog:",
     "@scalar/fastify-api-reference": "catalog:",
     "@types/node": "catalog:",
@@ -68,5 +62,8 @@
     "vite": "catalog:",
     "vitest": "catalog:"
   },
-  "prettier": "@innodoc/prettier-config"
+  "bin": {
+    "innodoc-webapp": "./dist/main.js"
+  },
+  "prettier": "@innodoc/configs/prettierrc.json"
 }

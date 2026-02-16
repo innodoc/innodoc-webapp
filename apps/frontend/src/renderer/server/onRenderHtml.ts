@@ -5,9 +5,9 @@ import { dangerouslySkipEscape, escapeInject } from 'vike/server'
 import type { HelmetServerState } from 'react-helmet-async'
 import type { PageContextServer } from 'vike/types'
 
-import renderPage from '@innodoc/components-app'
-import { EMOTION_STYLE_KEY } from '@innodoc/constants'
-import makeStore from '@innodoc/store'
+import renderPage from '@innodoc/ui-features/renderPage'
+import { EMOTION_STYLE_KEY } from '@innodoc/shared-core/constants'
+import makeStore from '@innodoc/ui-store'
 
 import { emotionStyleTags, initColorSchemeScript, initI18n } from './utils.js'
 

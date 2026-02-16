@@ -4,7 +4,7 @@ import fastifyPlugin from 'fastify-plugin'
 import { createServer as viteCreateServer } from 'vite'
 import type { FastifyPluginAsync } from 'fastify'
 
-import container from '@innodoc/container'
+import container from '#container'
 
 import { devCerts } from '#utils'
 

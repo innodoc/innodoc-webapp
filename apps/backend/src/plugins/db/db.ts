@@ -1,7 +1,7 @@
 import fastifyPlugin from 'fastify-plugin'
 import type { FastifyPluginCallback } from 'fastify'
 
-import Database from '@innodoc/database'
+import Database from '@innodoc/server-db'
 
 import type { KnexPluginOptions } from './types.js'
 

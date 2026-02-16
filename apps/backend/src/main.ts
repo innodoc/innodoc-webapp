@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-import container from '@innodoc/container'
-
 import setupApp from './app/setup-app.js'
+import container from './container'
 
 const config = container.resolve('config')
 

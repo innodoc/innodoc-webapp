@@ -1,12 +1,12 @@
 import { render } from 'vike/abort'
 import type { PageContextServer } from 'vike/types'
 
-import markdownToHast from '@innodoc/markdown'
-import { serializeParserError } from '@innodoc/markdown/utils'
-import { addHastResult } from '@innodoc/store/slices/hast'
-import { fetchContent } from '@innodoc/store/utils'
-import { isParserError } from '@innodoc/typeguards/errors'
-import type { ContentType } from '@innodoc/types/common'
+import markdownToHast from '@innodoc/content-parser'
+import { serializeParserError } from '@innodoc/content-parser/utils'
+import { addHastResult } from '@innodoc/ui-store/slices/hast'
+import { fetchContent } from '@innodoc/ui-store/utils'
+import { isParserError } from '@innodoc/shared-core/typeguards/errors'
+import type { ContentType } from '@innodoc/shared-core/types'
 
 /**
  * Factory function for `onInit` hook for content pages.

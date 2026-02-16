@@ -2,9 +2,9 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import container from '@innodoc/container'
-import { isArbitraryObject } from '@innodoc/typeguards/common'
-import type { ApiRouteName } from '@innodoc/routes/types/routeNames'
+import container from './container'
+import { isArbitraryObject } from '@innodoc/shared-core/typeguards'
+import type { ApiRouteName } from '@innodoc/shared-core/routes'
 
 function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
   return isArbitraryObject(error) && error instanceof Error && typeof error.code === 'string'

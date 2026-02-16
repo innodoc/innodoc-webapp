@@ -1,4 +1,5 @@
 {
+  "$schema": "./node_modules/syncpack/schema.json",
   "sortAz": [
     "bin",
     "contributors",
@@ -36,14 +37,7 @@
     {
       "label": "Internal dev packages are pinned to workspace:*",
       "packages": ["**"],
-      "dependencies": [
-        "@innodoc/command-*",
-        "@innodoc/*-config",
-        "@innodoc/mock-content",
-        "@innodoc/rtl",
-        "@innodoc/types",
-        "@types/innodoc-*"
-      ],
+      "dependencies": ["@innodoc/commands", "@innodoc/configs", "@innodoc/shared-fixtures", "@innodoc/ui-test-utils"],
       "dependencyTypes": ["dev"],
       "pinVersion": "workspace:*"
     },
@@ -52,21 +46,16 @@
       "packages": ["**"],
       "dependencies": [
         "@innodoc/backend",
-        "@innodoc/components-*",
-        "@innodoc/config",
-        "@innodoc/constants",
-        "@innodoc/container",
-        "@innodoc/contexts",
-        "@innodoc/database",
-        "@innodoc/hooks",
-        "@innodoc/i18n",
-        "@innodoc/logging",
-        "@innodoc/markdown",
-        "@innodoc/routes",
-        "@innodoc/schema",
-        "@innodoc/store",
-        "@innodoc/theme",
-        "@innodoc/typeguards"
+        "@innodoc/frontend",
+        "@innodoc/shared-core",
+        "@innodoc/ui-content",
+        "@innodoc/ui-design-system",
+        "@innodoc/ui-features",
+        "@innodoc/ui-shared",
+        "@innodoc/ui-store",
+        "@innodoc/server-env",
+        "@innodoc/server-db",
+        "@innodoc/content-parser"
       ],
       "dependencyTypes": ["prod", "dev"],
       "pinVersion": "workspace:*"
@@ -75,10 +64,10 @@
       "label": "Types and internal dev packages are banned from dependencies (only allowed in devDependencies)",
       "packages": ["**"],
       "dependencies": [
-        "@innodoc/*-config",
-        "@innodoc/command-*",
-        "@innodoc/mock-content",
-        "@innodoc/rtl",
+        "@innodoc/configs",
+        "@innodoc/commands",
+        "@innodoc/shared-fixtures",
+        "@innodoc/ui-test-utils",
         "@types/*",
         "*/types"
       ],

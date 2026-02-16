@@ -1,0 +1,42 @@
+{
+  "name": "@innodoc/ui-test-utils",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./dist/rtl-utils.js",
+    "./setup": "./dist/rtl-setup.js"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "dev": "tsc --project tsconfig.build.json --watch",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@innodoc/configs": "workspace:*",
+    "@innodoc/server-env": "workspace:*",
+    "@innodoc/shared-core": "workspace:*",
+    "@innodoc/shared-fixtures": "workspace:*",
+    "@innodoc/ui-shared": "workspace:*",
+    "@innodoc/ui-store": "workspace:*",
+    "@mui/material": "catalog:",
+    "@testing-library/jest-dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-redux": "catalog:",
+    "i18next": "catalog:",
+    "react": "catalog:",
+    "react-i18next": "catalog:",
+    "react-redux": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vike": "catalog:",
+    "vitest": "catalog:"
+  },
+  "prettier": "@innodoc/configs/prettierrc.json"
+}
