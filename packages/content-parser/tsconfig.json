@@ -1,5 +1,5 @@
 {
-  "extends": "@innodoc/configs/tsconfig/base.json",
+  "extends": "@innodoc/configs/tsconfig/node.json",
   "include": ["eslint.config.js", "vitest.config.ts", "src/**/*.ts"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {

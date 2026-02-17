@@ -1,4 +1,4 @@
-import type { ParserError } from '@innodoc/shared-core/types/errors'
+import type { ParserError } from '@innodoc/shared-core/types'
 
 /** Serialize Markdown parser error */
 function serializeParserError(error: ParserError) {

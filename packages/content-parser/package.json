@@ -12,8 +12,13 @@
     "./utils": "./dist/utils.js"
   },
   "imports": {
-    "#typeguards": "./dist/typeguards/typeguards.js",
-    "#types": "./dist/types.js"
+    "#typeguards": {
+      "types": "./src/typeguards/typeguards.ts",
+      "default": "./dist/typeguards/typeguards.js"
+    },
+    "#types": {
+      "types": "./src/types.ts"
+    }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
@@ -53,6 +58,7 @@
     "@innodoc/configs": "workspace:*",
     "@types/hast": "catalog:",
     "@types/mdast": "catalog:",
+    "@types/node": "catalog:",
     "@types/unist": "catalog:",
     "hast-util-sanitize": "catalog:",
     "typescript": "catalog:"

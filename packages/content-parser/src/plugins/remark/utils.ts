@@ -1,10 +1,13 @@
-function addExtension<T>(data: Record<string, unknown>, field: string, extension: T) {
-  let list: T[]
+function addExtension(data: Record<string, unknown>, field: string, extension: unknown) {
+  let list: unknown[]
+
   if (Array.isArray(data[field])) {
-    list = data[field] as T[]
+    list = data[field] as unknown[]
   } else {
-    data[field] = list = []
+    list = []
+    data[field] = list
   }
+
   list.push(extension)
 }
 

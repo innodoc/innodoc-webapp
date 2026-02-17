@@ -2,10 +2,9 @@ import { gfmStrikethroughFromMarkdown } from 'mdast-util-gfm-strikethrough'
 import { gfmTableFromMarkdown } from 'mdast-util-gfm-table'
 import { gfmStrikethrough } from 'micromark-extension-gfm-strikethrough'
 import { gfmTable } from 'micromark-extension-gfm-table'
+import type { Processor } from 'unified'
 
 import { addExtension } from './utils.js'
-
-import type { Processor } from 'unified'
 
 /** Selectively choose features from mdast-util-gfm */
 function remarkGfm(this: Processor) {
