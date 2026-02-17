@@ -1,11 +1,14 @@
+import { apiRoutes, builtinRoutes, courseContentRoutes, courseRoutes, userRoutes } from '#routes'
 import { isArbitraryObject } from '#typeguards'
-
-import apiRoutes from './api-routes.js'
-import builtinRoutes from './builtin-routes.js'
-import courseRoutes, { courseContentRoutes } from './course-routes.js'
-import userRoutes from './user-routes.js'
-import type { AppRouteInfo, CoursePageRouteInfo, CourseRouteInfo, CourseSectionRouteInfo } from './manager/types/route-infos.js'
-import type { AppRouteName, CourseContentRouteName, RouteName } from './manager/types/route-names.js'
+import type {
+  AppRouteInfo,
+  AppRouteName,
+  CourseContentRouteName,
+  CoursePageRouteInfo,
+  CourseRouteInfo,
+  CourseSectionRouteInfo,
+  RouteName,
+} from '#types'
 
 const apiRouteNames = Object.keys(apiRoutes)
 const appRouteNames = Object.keys({ ...builtinRoutes, ...courseRoutes, ...userRoutes })

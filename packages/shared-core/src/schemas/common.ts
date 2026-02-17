@@ -25,7 +25,7 @@ const hostnameSchema = z.string().refine(isHostname, { message: 'Invalid hostnam
 const portSchema = z.coerce
   .number()
   .int()
-  .refine((val) => isPort(`${val}`), { message: 'Invalid port' })
+  .refine((val) => isPort(String(val)), { message: 'Invalid port' })
 
 const translatableString = z
   .record(localeSchema, z.string())

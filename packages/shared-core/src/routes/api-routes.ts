@@ -1,6 +1,6 @@
 import type { LanguageCode } from 'iso-639-1'
 
-import type { ApiCourse, ApiPage, ApiSection, FragmentTypeSchema } from '#schemas/types'
+import type { ApiCourse, ApiPage, ApiSection, FragmentTypeSchema } from '#types'
 
 const apiRoutes = {
   // Course

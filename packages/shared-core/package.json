@@ -8,18 +8,8 @@
     "./constants": "./dist/constants.js",
     "./i18n": "./dist/i18n.js",
     "./routes": "./dist/routes/routes.js",
-    "./routes/manager": {
-      "types": "./dist/routes/manager/RouteManager.d.ts",
-      "vite": "./dist/routes/manager/get-route-manager.vite.js",
-      "default": "./dist/routes/manager/RouteManager.js"
-    },
-    "./routes/typeguards": "./dist/routes/typeguards.js",
-    "./schemas/entities": "./dist/schemas/entities.js",
-    "./schemas/common": "./dist/schemas/common.js",
-    "./schemas/config": "./dist/schemas/config.js",
-    "./schemas/types": {
-      "types": "./dist/schemas/types.d.ts"
-    },
+    "./routes/manager/vite": "./dist/routes/manager/get-route-manager.vite.js",
+    "./schemas": "./dist/schemas/schemas.js",
     "./types": {
       "types": "./dist/types/types.d.ts"
     },
@@ -34,19 +24,22 @@
       "types": "./src/routes/routes.ts",
       "default": "./dist/routes/routes.js"
     },
+    "#routes/api-routes": {
+      "types": "./src/routes/api-routes.ts"
+    },
+    "#routes/course-routes": {
+      "types": "./src/routes/course-routes.ts"
+    },
+    "#schemas": {
+      "types": "./src/schemas/schemas.ts",
+      "default": "./dist/schemas/schemas.js"
+    },
     "#schemas/common": {
       "types": "./src/schemas/common.ts",
-      "default": "./dist/schemas/common.ts"
-    },
-    "#schemas/config": {
-      "types": "./src/schemas/config.ts",
-      "default": "./dist/schemas/config.ts"
-    },
-    "#schemas/types": {
-      "types": "./src/schemas/types.ts"
+      "default": "./dist/schemas/common.js"
     },
     "#typeguards": {
-      "types": "./src/typesguards/typeguards.ts",
+      "types": "./src/typeguards/typeguards.ts",
       "default": "./dist/typeguards/typeguards.js"
     },
     "#types": {
@@ -77,6 +70,7 @@
     "@types/hast": "catalog:",
     "@types/node": "catalog:",
     "@types/validator": "catalog:",
+    "i18next-fs-backend": "catalog:",
     "iso-639-1": "catalog:",
     "type-fest": "catalog:",
     "typescript": "catalog:",

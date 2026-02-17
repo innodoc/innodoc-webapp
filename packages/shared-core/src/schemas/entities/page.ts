@@ -1,7 +1,7 @@
 import z from 'zod'
 
 import { PAGE_LINK_LOCACTIONS } from '#constants'
-import { dbKeySchema, iconNameSchema, slugSchema, translatableString } from '#common'
+import { dbKeySchema, iconNameSchema, slugSchema, translatableString } from '#schemas/common'
 
 import { baseEntity } from './base.js'
 

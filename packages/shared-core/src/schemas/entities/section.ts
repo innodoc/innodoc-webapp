@@ -1,7 +1,7 @@
 import z from 'zod'
 
 import { SECTION_TYPES } from '#constants'
-import { dbKeySchema, orderNumber, sectionPathSchema, translatableString } from '#common'
+import { dbKeySchema, orderNumber, sectionPathSchema, translatableString } from '#schemas/common'
 
 import { baseEntity } from './base.js'
 

@@ -4,7 +4,8 @@ import type { FsBackendOptions } from 'i18next-fs-backend'
 import type { HttpBackendOptions } from 'i18next-http-backend'
 import type { LanguageCode } from 'iso-639-1'
 
-const isBrowser = typeof window !== 'undefined'
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+const isBrowser = globalThis.window !== undefined
 
 const NAMESPACE = 'common'
 

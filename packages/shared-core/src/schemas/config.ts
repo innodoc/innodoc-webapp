@@ -5,7 +5,7 @@ import {
   DEFAULT_COURSE_SLUG_MODE,
   DEFAULT_PAGE_PATH_PREFIX,
   DEFAULT_SECTION_PATH_PREFIX,
-} from '../constants.js'
+} from '#constants'
 
 import { hostnameSchema, portSchema, slugSchema } from './common.js'
 
@@ -43,7 +43,7 @@ const configSchema = z
     smtpPort: portSchema.describe('SMTP port'),
     smtpUser: z.string().describe('SMTP username'),
     smtpPassword: z.string().describe('SMTP password'),
-    smtpSender: z.string().email().describe('SMTP password'),
+    smtpSender: z.email().describe('SMTP password'),
 
     // Discourse integration
     discourseUrl: z.url().nullable().describe('Discourse URL'),
@@ -59,7 +59,4 @@ const configSchema = z
   })
   .describe('innoDoc application configuration')
 
-type ConfigSchema = z.infer<typeof configSchema>
-
-export type { ConfigSchema }
 export { configSchema }

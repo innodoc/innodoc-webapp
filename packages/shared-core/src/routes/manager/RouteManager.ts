@@ -2,17 +2,21 @@ import { compile, match } from 'path-to-regexp'
 import type { Match, MatchFunction, PathFunction } from 'path-to-regexp'
 
 import { API_COURSE_PREFIX, API_PREFIX } from '#constants'
-import { isContentType } from '#typeguards'
-import type { ConfigSchema } from '#schemas/config'
-import type { CourseSlugMode } from '#types'
-
 import { apiRoutes, builtinRoutes, courseRoutes, userRoutes } from '#routes'
-import type { ApiRouteParams } from '#routes'
-import { isAppRouteInfo, isAppRouteName, isCourseContentRouteName } from '#routes/typeguards'
-
-import type { ParamsForGenerator, RouteDef, RouteFuncArgs, RouteParams } from './types/common.js'
-import type { CourseContentRouteInfo } from './types/route-infos.js'
-import type { ApiRouteName, AppRouteName, RouteName } from './types/route-names.js'
+import { isAppRouteInfo, isAppRouteName, isContentType, isCourseContentRouteName } from '#typeguards'
+import type {
+  ApiRouteName,
+  ApiRouteParams,
+  AppRouteName,
+  ConfigSchema,
+  CourseContentRouteInfo,
+  CourseSlugMode,
+  ParamsForGenerator,
+  RouteDef,
+  RouteFuncArgs,
+  RouteName,
+  RouteParams,
+} from '#types'
 
 type PathFunctions = {
   [key in RouteName]: PathFunction<RouteParams<key>>
@@ -92,14 +96,14 @@ class RouteManager {
     const [routeName, arg] = specifier.split('|')
 
     if (!isAppRouteName(routeName)) {
-      throw new TypeError(`Unknown route name: ${routeName}`)
+      throw new TypeError(`Unknown route name: ${routeName ?? 'undefined'}`)
     }
 
     if (isCourseContentRouteName(routeName)) {
       const contentType = routeName.split(':').pop()
       if (isContentType(contentType)) {
         if (!arg) {
-          throw new TypeError(`Not a valid argument: ${arg}`)
+          throw new TypeError(`Not a valid argument: ${arg ?? 'undefined'}`)
         }
 
         if (contentType === 'page') {

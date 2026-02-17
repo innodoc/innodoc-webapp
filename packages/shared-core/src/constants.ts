@@ -43,7 +43,7 @@ const DEFAULT_MIN_SCORE = 90
 const SLUG_RE = '[a-z0-9]+(-[a-z0-9]+)*'
 
 /** Section path regex */
-const PATH_RE = '[a-z0-9]+(?:-[a-z0-9]+)*(?:\\/[a-z0-9]+(?:-[a-z0-9]+)*){0,10}'
+const PATH_RE = String.raw`[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*){0,10}`
 
 /** Extract course slug from subdomain/url */
 const COURSE_SLUG_MODES = ['SUBDOMAIN', 'URL', 'SINGLE'] as const

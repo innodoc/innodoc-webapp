@@ -1,7 +1,6 @@
 import { CONTENT_TYPES } from '#constants'
 import { validateTranslatableString } from '#schemas/common'
-import type { ApiPage, TranslatableString } from '#schemas/types'
-import type { ContentType, ContentWithHash, WithContentHash } from '#types'
+import type { ApiPage, ContentType, ContentWithHash, TranslatableString, WithContentHash } from '#types'
 
 import { isArbitraryObject } from './common.js'
 

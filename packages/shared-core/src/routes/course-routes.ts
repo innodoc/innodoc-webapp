@@ -1,6 +1,4 @@
-import type { ApiPage, ApiSection } from '#schemas/types'
-
-import type { RouteFuncArgs } from '#types'
+import type { ApiPage, ApiSection, RouteFuncArgs } from '#types'
 
 const courseMiscRoutes = {
   // Course home

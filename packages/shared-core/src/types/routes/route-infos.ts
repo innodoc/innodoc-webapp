@@ -1,6 +1,6 @@
 import type { LanguageCode } from 'iso-639-1'
 
-import type { ApiCourse } from '#schemas/types'
+import type { ApiCourse } from '#types'
 
 import type { RouteParams } from './common.js'
 import type {

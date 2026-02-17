@@ -1,6 +1,6 @@
 import z from 'zod'
 
-import { localeSchema, slugSchema, translatableString } from '#common'
+import { localeSchema, slugSchema, translatableString } from '#schemas/common'
 
 import { baseEntity } from './base.js'
 

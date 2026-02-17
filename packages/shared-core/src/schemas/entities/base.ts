@@ -1,6 +1,6 @@
 import z from 'zod'
 
-import { dbKeySchema } from '#common'
+import { dbKeySchema } from '#schemas/common'
 
 const baseEntity = z.object({
   id: dbKeySchema.describe('Primary key'),

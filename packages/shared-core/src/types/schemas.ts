@@ -1,8 +1,17 @@
 import type { CamelCasedProperties } from 'type-fest'
 import type z from 'zod'
 
-import type { courseSchema, fragmentTypeSchema, pageSchema, querySectionSchema, sectionSchema } from './entities.js'
-import type { baseEntity } from './entities/base.js'
+import type {
+  baseEntity,
+  configSchema,
+  courseSchema,
+  fragmentTypeSchema,
+  pageSchema,
+  querySectionSchema,
+  sectionSchema,
+} from '#schemas'
+
+type ConfigSchema = z.infer<typeof configSchema>
 
 type BaseEntitySchema = z.infer<typeof baseEntity>
 type CourseSchema = z.infer<typeof courseSchema>
@@ -46,6 +55,7 @@ export type {
   ApiPage,
   ApiSection,
   BaseEntitySchema,
+  ConfigSchema,
   CourseSchema,
   FragmentTypeSchema,
   PageSchema,

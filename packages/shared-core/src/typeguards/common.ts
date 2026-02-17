@@ -10,8 +10,8 @@ function isArbitraryObject(object: unknown): object is ArbitraryObject {
 }
 
 /** Type guard for callable */
-function isCallable<T extends (...arguments_: unknown[]) => unknown>(object: unknown): object is T {
-  return (isArbitraryObject(object) && object instanceof Function) || typeof object === 'function'
+function isCallable(object: unknown): object is (...args: unknown[]) => unknown {
+  return typeof object === 'function'
 }
 
 /** Type guard for `Locale` */
@@ -24,4 +24,10 @@ function isCourseSlugMode(thing: unknown): thing is CourseSlugMode {
   return typeof thing === 'string' && COURSE_SLUG_MODES.includes(thing as CourseSlugMode)
 }
 
-export { isArbitraryObject, isCallable, isCourseSlugMode, isLocale }
+/** Utility function to be used as exhaustion check. */
+function assertNever(value: never): never {
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  throw new Error(`This code should never be reached. Value='${value}'`)
+}
+
+export { assertNever, isArbitraryObject, isCallable, isCourseSlugMode, isLocale }
