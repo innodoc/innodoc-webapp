@@ -9,8 +9,10 @@
     "./msw/node": "./dist/msw/make-node-server.js"
   },
   "imports": {
-    "#courses": "./dist/data/make-courses.js",
-    "#types": "./dist/data/types.js"
+    "#courses": {
+      "types": "./src/data/make-courses.ts",
+      "default": "./dist/data/make-courses.js"
+    }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",

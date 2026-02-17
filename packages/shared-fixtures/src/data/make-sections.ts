@@ -1,4 +1,4 @@
-import type { ApiSection } from '@innodoc/shared-core/schemas/types'
+import type { ApiSection } from '@innodoc/shared-core/types'
 
 import makeContent from './make-content.js'
 import { getDates, getTitlesPath, range, seed } from './utils.js'
@@ -13,7 +13,7 @@ const makeSection = (
   courseId: number,
   fakers: Fakers,
 ): FakerSection => {
-  seed(`section-${courseId}-${seedVal}`, fakers)
+  seed(`section-${String(courseId)}-${String(seedVal)}`, fakers)
   const section: ApiSection = {
     id: seedVal++,
     courseId,

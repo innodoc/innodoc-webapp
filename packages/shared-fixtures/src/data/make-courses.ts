@@ -1,7 +1,7 @@
 import { fakerDE, fakerEN } from '@faker-js/faker'
 
 import { FRAGMENT_TYPES } from '@innodoc/shared-core/constants'
-import type { ApiCourse } from '@innodoc/shared-core/schemas/types'
+import type { ApiCourse } from '@innodoc/shared-core/types'
 
 import makeContent from './make-content.js'
 import makePages from './make-pages.js'
@@ -38,7 +38,7 @@ const makeFragmentContent = (fakers: Fakers, seed: string) =>
   makeContent(fakers, { headerDepth: 4, nodeCount: 2, seed })
 
 function makeCourse(courseId: number, fakers: Fakers): FakerCourse {
-  seed(`course-${courseId}`, fakers)
+  seed(`course-${String(courseId)}`, fakers)
   return {
     data: makeCourseData(courseId, fakers),
     fragments: makeFragments(fakers),

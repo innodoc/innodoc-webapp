@@ -1,7 +1,6 @@
-// eslint-disable-next-line import/no-unresolved
-import { setupWorker } from 'msw/browser' // https://github.com/mswjs/msw/issues/1877
+import { setupWorker } from 'msw/browser'
 
-import getRouteManager from 'innodoc/shared-core/routes/manager'
+import getRouteManager from '@innodoc/shared-core/routes/manager/vite'
 
 import getHandlers from './get-handlers'
 

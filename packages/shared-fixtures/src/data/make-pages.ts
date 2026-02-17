@@ -3,7 +3,7 @@ import { getDates, getTitlesSlug, range, seed } from './utils.js'
 import type { FakerPage, Fakers } from './types.js'
 
 const makePage = (id: number, courseId: number, fakers: Fakers): FakerPage => {
-  seed(`page-${courseId}-${id}`, fakers)
+  seed(`page-${String(courseId)}-${String(id)}`, fakers)
   return {
     data: {
       id,

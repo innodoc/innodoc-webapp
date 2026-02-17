@@ -21,8 +21,8 @@ function isFaker(thing: unknown): thing is Faker {
 
 function stringToNumber(str: string): number {
   let num = 0
-  for (const codePointValue of [...str].map((c) => c.codePointAt(0))) {
-    num += codePointValue ?? 0
+  for (const char of str) {
+    num += char.codePointAt(0) ?? 0
   }
   return num
 }

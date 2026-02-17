@@ -13,7 +13,7 @@ import type {
 
 const heading = (depth: number, children: PhrasingContent[]): Heading => {
   if (depth < 1 || depth > 6) {
-    throw new Error(`Invalid depth: ${depth}`)
+    throw new Error(`Invalid depth: ${String(depth)}`)
   }
   return {
     children,
