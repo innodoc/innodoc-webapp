@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction, Slice } from '@reduxjs/toolkit'
 
-import type { HastResult, HastResultWithHash } from '@innodoc/shared-core/types/common'
+import type { HastResult, HastResultWithHash } from '@innodoc/shared-core/types'
 
 import { selectHast, selectHastResultByHash, selectIsProcessing } from './selectors.js'
 

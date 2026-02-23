@@ -1,11 +1,12 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit'
+/* eslint-disable unicorn/prefer-spread */
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
-import type { RootState } from './types.js'
 import hastListenerMiddleware from './middlewares/hast-listener-middleware/hast-listener-middleware.js'
 import localeListenerMiddleware from './middlewares/locale-listener-middleware.js'
-import contentApi from './slices/content/content-api.js'
 import appSlice from './slices/app/app-slice.js'
+import contentApi from './slices/content/content-api.js'
 import hastSlice from './slices/hast/hast-slice.js'
+import type { RootState } from './types.js'
 
 const rootReducer = combineReducers({
   [contentApi.reducerPath]: contentApi.reducer,

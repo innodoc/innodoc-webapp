@@ -1,6 +1,6 @@
-import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/schemas/types'
+import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/types'
 
-import makeUseSelectContentUnit from './makeUseSelectContentUnit.js'
+import makeUseSelectContentUnit from './make-use-select-content-unit.js'
 
 type UseSelectSection = (sectionSlug?: ApiSection['path']) => { section?: TranslatedSection }
 

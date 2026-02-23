@@ -2,14 +2,12 @@ import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
 import type { LanguageCode } from 'iso-639-1'
 
-import { isCourseRouteInfo } from '@innodoc/shared-core/routes/typeguards'
-import { isApiPage } from '@innodoc/shared-core/typeguards'
-import type { ApiPage, ApiSection, TranslatedPage, TranslatedSection } from '@innodoc/shared-core/schemas/types'
-import type { ContentType } from '@innodoc/shared-core/types'
+import { isApiPage, isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
+import type { ApiPage, ApiSection, ContentType, TranslatedPage, TranslatedSection } from '@innodoc/shared-core/types'
 
+import { selectRouteInfo } from '#slices/app'
 import { useGetCoursePagesQuery } from '#slices/content/pages'
 import { useGetCourseSectionsQuery } from '#slices/content/sections'
-import { selectRouteInfo } from '#slices/app'
 
 import { useSelector } from './redux.js'
 import { translateEntity } from './utils.js'

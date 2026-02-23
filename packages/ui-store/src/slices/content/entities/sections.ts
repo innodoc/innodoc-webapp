@@ -1,9 +1,7 @@
 import type { TypedUseQuery } from '@reduxjs/toolkit/query/react'
 
-import getRouteManager from '@innodoc/shared-core/routes/manager'
-import type { ApiRouteParams } from '@innodoc/shared-core/routes/types'
-import type { ApiSection } from '@innodoc/shared-core/schemas/types'
-import type { ContentWithHash } from '@innodoc/shared-core/types/common'
+import getRouteManager from '@innodoc/shared-core/routes/manager/vite'
+import type { ApiRouteParams, ApiSection, ContentWithHash } from '@innodoc/shared-core/types'
 
 import contentApi, { hashContentResponse } from '#slices/content'
 import type { BaseQuery } from '#types'

@@ -1,6 +1,6 @@
-import type { ApiPage, TranslatedPage } from '@innodoc/shared-core/schemas/types'
+import type { ApiPage, TranslatedPage } from '@innodoc/shared-core/types'
 
-import makeUseSelectContentUnit from './makeUseSelectContentUnit.js'
+import makeUseSelectContentUnit from './make-use-select-content-unit.js'
 
 type UseSelectPage = (pageSlug?: ApiPage['slug']) => { page?: TranslatedPage }
 

@@ -1,5 +1,6 @@
 import type { LanguageCode } from 'iso-639-1'
 
+import { assertNever } from '@innodoc/shared-core/typeguards'
 import type { ContentType } from '@innodoc/shared-core/types'
 
 import pages from '#slices/content/pages'
@@ -14,24 +15,31 @@ function fetchContent(
   contentIdValue: string,
   dispatch: AppDispatch,
 ) {
-  if (contentType === 'page') {
-    return dispatch(
-      pages.endpoints.getPageContent.initiate({
-        courseSlug,
-        locale,
-        pageSlug: contentIdValue,
-      }),
-    )
-  }
+  switch (contentType) {
+    case 'page': {
+      return dispatch(
+        pages.endpoints.getPageContent.initiate({
+          courseSlug,
+          locale,
+          pageSlug: contentIdValue,
+        }),
+      )
+    }
 
-  // section
-  return dispatch(
-    sections.endpoints.getSectionContent.initiate({
-      courseSlug,
-      locale,
-      sectionPath: contentIdValue,
-    }),
-  )
+    case 'section': {
+      return dispatch(
+        sections.endpoints.getSectionContent.initiate({
+          courseSlug,
+          locale,
+          sectionPath: contentIdValue,
+        }),
+      )
+    }
+
+    default: {
+      assertNever(contentType)
+    }
+  }
 }
 
 export { fetchContent }

@@ -2,11 +2,11 @@ import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
 import type { LanguageCode } from 'iso-639-1'
 
-import { isCourseRouteInfo } from '@innodoc/shared-core/routes/typeguards'
-import type { ApiCourse, TranslatedCourse } from '@innodoc/shared-core/schemas/types'
+import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
+import type { ApiCourse, TranslatedCourse } from '@innodoc/shared-core/types'
 
-import { useGetCourseQuery } from '#slices/content/courses'
 import { selectRouteInfo } from '#slices/app'
+import { useGetCourseQuery } from '#slices/content/courses'
 
 import { useSelector } from './redux.js'
 import { translateEntity } from './utils.js'

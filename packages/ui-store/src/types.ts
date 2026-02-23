@@ -1,4 +1,4 @@
-import type { configureStore, ListenerEffectAPI, TypedStartListening } from '@reduxjs/toolkit'
+import type { ListenerEffectAPI, TypedStartListening } from '@reduxjs/toolkit'
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react'
 
 import type makeStore from './make-store.js'
@@ -22,8 +22,4 @@ type AppStartListening = TypedStartListening<RootState, AppDispatch>
 /** Middleware listener effect API */
 type AppListenerEffectAPI = ListenerEffectAPI<RootState, AppDispatch>
 
-// Infer type of RTK's `getDefaultMiddleware`
-type MiddlewareOption = NonNullable<Parameters<typeof configureStore<RootState>>[0]['middleware']>
-type GetDefaultMiddleware = Parameters<MiddlewareOption>[0]
-
-export type { AppDispatch, AppListenerEffectAPI, AppStartListening, BaseQuery, GetDefaultMiddleware, RootState, Store }
+export type { AppDispatch, AppListenerEffectAPI, AppStartListening, BaseQuery, RootState, Store }

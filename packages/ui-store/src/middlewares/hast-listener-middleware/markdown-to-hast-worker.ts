@@ -2,18 +2,16 @@ import markdownToHast from '@innodoc/content-parser'
 import { serializeParserError } from '@innodoc/content-parser/utils'
 import { isContentWithHash, isParserError } from '@innodoc/shared-core/typeguards'
 
-// TODO: put into separate package with own tsconfig.json, lib: ["webworker"]
-
-self.onmessage = ({ data }: MessageEvent<unknown>) => {
+function handleMessage({ data }: MessageEvent<unknown>) {
   if (isContentWithHash(data)) {
     const { content, hash } = data
 
-    void markdownToHast(content)
+    markdownToHast(content)
       .then((root) => {
         self.postMessage({ hash, root })
         return
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         if (isParserError(error)) {
           self.postMessage({ hash, error: serializeParserError(error) })
         } else {
@@ -22,3 +20,5 @@ self.onmessage = ({ data }: MessageEvent<unknown>) => {
       })
   }
 }
+
+globalThis.addEventListener('message', handleMessage)

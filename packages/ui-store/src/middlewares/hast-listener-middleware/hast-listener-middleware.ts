@@ -3,8 +3,7 @@ import type { PayloadAction, UnknownAction } from '@reduxjs/toolkit'
 
 import { isHastRootDivElement } from '@innodoc/content-parser/typeguards'
 import { isParserError, isWithContentHash } from '@innodoc/shared-core/typeguards'
-import type { CourseContentRouteInfo } from '@innodoc/shared-core/routes/types'
-import type { ContentWithHash, HastResultWithHash } from '@innodoc/shared-core/types/common'
+import type { ContentWithHash, CourseContentRouteInfo, HastResultWithHash } from '@innodoc/shared-core/types'
 
 import { changeRouteTransitionInfo } from '#slices/app'
 import { addHastResult, changeIsProcessing, selectHastResultByHash } from '#slices/hast'
