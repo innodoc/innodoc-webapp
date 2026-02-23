@@ -1,27 +1,26 @@
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 
 import type { Knex } from 'knex'
 
-// TODO: how to pass config?
-import container from '../../../apps/backend/src/container'
+import getConfig from '@innodoc/server-env'
+import type { ConfigSchema } from '@innodoc/shared-core/types'
 
-const dirname = path.dirname(fileURLToPath(import.meta.url))
+function makeKnexConfig(configIn?: ConfigSchema) {
+  const config = configIn ?? getConfig()
 
-const config = container.resolve('config')
-
-const knexConfig: Knex.Config = {
-  asyncStackTraces: !config.isProduction,
-  client: 'pg',
-  connection: config.dbConnectionString,
-  debug: config.dbDebug,
-  pool: { min: 0, max: 7 },
-  migrations: {
-    extension: 'ts',
-    directory: path.join(dirname, 'migrations'),
-    loadExtensions: ['.ts'],
-    tableName: 'migrations',
-  },
+  return {
+    asyncStackTraces: !config.isProduction,
+    client: 'pg',
+    connection: config.dbConnectionString,
+    debug: config.dbDebug,
+    pool: { min: 0, max: 7 },
+    migrations: {
+      extension: 'ts',
+      directory: path.join(import.meta.dirname, 'migrations'),
+      loadExtensions: ['.ts'],
+      tableName: 'migrations',
+    },
+  } satisfies Knex.Config
 }
 
-export default knexConfig
+export default makeKnexConfig

@@ -1,27 +1,24 @@
-import type { CourseSchema } from '@innodoc/shared-core/schemas/types'
+import type { Knex } from 'knex'
 
-import type Database from '#database'
+import type { CourseSchema } from '@innodoc/shared-core/types'
 
 /**
  * Get course by slug.
  *
+ * @param knex Knex instance
  * @param courseSlug Course slug
  * @returns Course object
  */
-function getCourse(this: Database, courseSlug: CourseSchema['slug']): Promise<CourseSchema | undefined> {
-  if (!this._knex) {
-    throw new Error('Database not initialized')
-  }
-
+function getCourse(knex: Knex, courseSlug: CourseSchema['slug']): Promise<CourseSchema | undefined> {
   const columns = [
     'c.*',
-    this._knex.raw('array_to_json(c.locales) as locales'),
-    this._knex.raw('json_object_agg(t.locale, t.value) filter (where t.locale is not null) as title'),
-    this._knex.raw('json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title'),
-    this._knex.raw('json_object_agg(d.locale, d.value) filter (where d.locale is not null) as description'),
+    knex.raw('array_to_json(c.locales) as locales'),
+    knex.raw('json_object_agg(t.locale, t.value) filter (where t.locale is not null) as title'),
+    knex.raw('json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title'),
+    knex.raw('json_object_agg(d.locale, d.value) filter (where d.locale is not null) as description'),
   ]
 
-  return this._knex
+  return knex
     .first<CourseSchema | undefined>(...columns)
     .from('courses as c')
     .leftOuterJoin('courses_title_trans as t', 'c.id', 't.course_id')

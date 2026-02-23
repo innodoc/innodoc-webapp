@@ -1,6 +1,16 @@
-import knex, { type Knex } from 'knex'
+import knex from 'knex'
+import type { LanguageCode } from 'iso-639-1'
+import type { Knex } from 'knex'
 
-import defaultKnexConfig from './knex-config.js'
+import type {
+  ConfigSchema,
+  CourseSchema,
+  FragmentTypeSchema,
+  PageSchema,
+  SectionSchema,
+} from '@innodoc/shared-core/types'
+
+import makeKnexConfig from './knex-config.js'
 import { getCourse } from './queries/courses.js'
 import { getFragmentContent } from './queries/fragments.js'
 import { getCoursePages, getPageContent } from './queries/pages.js'
@@ -10,44 +20,48 @@ import { getCourseSections, getSectionContent, getSectionIdByPath } from './quer
  * Database class providing high-level access to entities.
  */
 class Database {
-  protected _knex?: Knex
+  #knex?: Knex
 
-  constructor(knexConfig?: Knex.Config) {
-    const config = knexConfig ? { ...defaultKnexConfig, ...knexConfig } : defaultKnexConfig
-    this._knex = knex(config)
+  constructor(config: ConfigSchema, knexConfig?: Knex.Config) {
+    const defaultKnexConfig = makeKnexConfig(config)
+    const resultingKnexConfig = knexConfig ? { ...defaultKnexConfig, ...knexConfig } : defaultKnexConfig
+    this.#knex = knex(resultingKnexConfig)
   }
 
   public get knex() {
-    if (!this._knex) {
+    if (!this.#knex) {
       throw new Error('Database not initialized')
     }
-    return this._knex
+    return this.#knex
   }
 
   /**
    * Destroy database instance.
    */
   async destroy() {
-    if (this._knex !== undefined) {
-      await this._knex.destroy()
+    if (this.#knex !== undefined) {
+      await this.#knex.destroy()
     }
-    this._knex = undefined
+    this.#knex = undefined
   }
 
-  /**
-   * Get default knex configuration.
-   */
-  static getDefaultConfig() {
-    return defaultKnexConfig
-  }
+  getCourse = (courseSlug: CourseSchema['slug']) => getCourse(this.knex, courseSlug)
 
-  getCourse = getCourse
-  getFragmentContent = getFragmentContent
-  getCoursePages = getCoursePages
-  getPageContent = getPageContent
-  getCourseSections = getCourseSections
-  getSectionIdByPath = getSectionIdByPath
-  getSectionContent = getSectionContent
+  getFragmentContent = (courseSlug: CourseSchema['slug'], locale: LanguageCode, fragmentType: FragmentTypeSchema) =>
+    getFragmentContent(this.knex, courseSlug, locale, fragmentType)
+
+  getCoursePages = (courseSlug: CourseSchema['slug']) => getCoursePages(this.knex, courseSlug)
+
+  getPageContent = (courseSlug: CourseSchema['slug'], locale: LanguageCode, pageSlug: PageSchema['slug']) =>
+    getPageContent(this.knex, courseSlug, locale, pageSlug)
+
+  getCourseSections = (courseSlug: CourseSchema['slug']) => getCourseSections(this.knex, courseSlug)
+
+  getSectionIdByPath = (courseSlug: CourseSchema['slug'], sectionPath: SectionSchema['path']) =>
+    getSectionIdByPath(this.knex, courseSlug, sectionPath)
+
+  getSectionContent = (courseSlug: CourseSchema['slug'], locale: LanguageCode, sectionId: SectionSchema['id']) =>
+    getSectionContent(this.knex, courseSlug, locale, sectionId)
 }
 
 export default Database

@@ -1,8 +1,7 @@
 import type { LanguageCode } from 'iso-639-1'
+import type { Knex } from 'knex'
 
-import type { CourseSchema, PageSchema } from '@innodoc/shared-core/schemas/types'
-
-import type Database from '#database'
+import type { CourseSchema, PageSchema } from '@innodoc/shared-core/types'
 
 import { unpackValue } from './utils.js'
 import type { ValueResult } from './types.js'
@@ -10,21 +9,18 @@ import type { ValueResult } from './types.js'
 /**
  * Get course pages.
  *
+ * @param knex Knex instance
  * @param courseSlug Course slug
  * @returns Array of page objects
  */
-export function getCoursePages(this: Database, courseSlug: CourseSchema['slug']): Promise<PageSchema[]> {
-  if (!this._knex) {
-    throw new Error('Database not initialized')
-  }
-
+export function getCoursePages(knex: Knex, courseSlug: CourseSchema['slug']): Promise<PageSchema[]> {
   const columns = [
     'p.*',
-    this._knex.raw('array_to_json(p.linked) as linked'),
-    this._knex.raw('json_object_agg(t.locale, t.value) as title'),
-    this._knex.raw('json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title'),
+    knex.raw('array_to_json(p.linked) as linked'),
+    knex.raw('json_object_agg(t.locale, t.value) as title'),
+    knex.raw('json_object_agg(st.locale, st.value) filter (where st.locale is not null) as short_title'),
   ]
-  return this._knex
+  return knex
     .select<PageSchema[]>(...columns)
     .from('pages as p')
     .join('courses as c', 'p.course_id', 'c.id')
@@ -37,22 +33,19 @@ export function getCoursePages(this: Database, courseSlug: CourseSchema['slug'])
 /**
  * Get localized page content.
  *
+ * @param knex Knex instance
  * @param courseSlug Course slug
  * @param locale Content locale
  * @param pageSlug Page slug
  * @returns Localized page content
  */
 export async function getPageContent(
-  this: Database,
+  knex: Knex,
   courseSlug: CourseSchema['slug'],
   locale: LanguageCode,
   pageSlug: PageSchema['slug'],
 ): Promise<string | undefined> {
-  if (!this._knex) {
-    throw new Error('Database not initialized')
-  }
-
-  const result = await this._knex
+  const result = await knex
     .first<ValueResult<string>>('ct.value')
     .from('pages as p')
     .join('courses as c', 'p.course_id', 'c.id')

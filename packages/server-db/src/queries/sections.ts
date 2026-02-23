@@ -1,8 +1,7 @@
 import type { LanguageCode } from 'iso-639-1'
+import type { Knex } from 'knex'
 
-import type { CourseSchema, QuerySectionSchema, SectionSchema } from '@innodoc/shared-core/schemas/types'
-
-import type Database from '#database'
+import type { CourseSchema, QuerySectionSchema, SectionSchema } from '@innodoc/shared-core/types'
 
 import { unpackId, unpackValue } from './utils.js'
 import type { IdResult, ValueResult } from './types.js'
@@ -10,15 +9,11 @@ import type { IdResult, ValueResult } from './types.js'
 /**
  * Get course sections by course ID.
  *
+ * @param knex Knex instance
  * @param courseSlug Course slug
  * @returns Array of course sections
  */
-export function getCourseSections(this: Database, courseSlug: CourseSchema['slug']): Promise<QuerySectionSchema[]> {
-  if (!this._knex) {
-    throw new Error('Database not initialized')
-  }
-  const { _knex: knex } = this
-
+export function getCourseSections(knex: Knex, courseSlug: CourseSchema['slug']): Promise<QuerySectionSchema[]> {
   return knex
     .withRecursive(
       'cte',
@@ -93,20 +88,16 @@ export function getCourseSections(this: Database, courseSlug: CourseSchema['slug
 /**
  * Get section ID by path.
  *
+ * @param knex Knex instance
  * @param courseSlug Course slug
  * @param sectionPath Section path
  * @returns Section ID
  */
 export async function getSectionIdByPath(
-  this: Database,
+  knex: Knex,
   courseSlug: CourseSchema['slug'],
   sectionPath: SectionSchema['path'],
 ) {
-  if (!this._knex) {
-    throw new Error('Database not initialized')
-  }
-  const { _knex: knex } = this
-
   const pathParts = sectionPath.split('/')
   const rootSlug = pathParts.shift()
 
@@ -145,22 +136,19 @@ export async function getSectionIdByPath(
 /**
  * Get localized section content.
  *
+ * @param knex Knex instance
  * @param courseSlug Course slug
  * @param locale Content locale
  * @param sectionId Section ID
  * @returns Localized section content
  */
 export async function getSectionContent(
-  this: Database,
+  knex: Knex,
   courseSlug: CourseSchema['slug'],
   locale: LanguageCode,
   sectionId: SectionSchema['id'],
 ): Promise<string | undefined> {
-  if (!this._knex) {
-    throw new Error('Database not initialized')
-  }
-
-  const result = await this._knex
+  const result = await knex
     .first<ValueResult<string>>('ct.value')
     .from('sections as s')
     .join('courses as c', 's.course_id', 'c.id')

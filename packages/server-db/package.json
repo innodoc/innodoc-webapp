@@ -6,7 +6,10 @@
   "sideEffects": false,
   "exports": "./dist/Database.js",
   "imports": {
-    "#database": "./src/Database.js"
+    "#database": {
+      "types": "./src/Database.ts",
+      "default": "./dist/Database.js"
+    }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
@@ -14,13 +17,14 @@
     "dev": "tsc --project tsconfig.build.json --watch",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
-    "knex": "NODE_OPTIONS='--import tsx' knex --knexfile src/knexConfig.ts",
+    "knex": "NODE_OPTIONS='--import tsx/esm' knex --knexfile src/knex-config.ts",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@innodoc/server-env": "workspace:*",
     "@innodoc/shared-core": "workspace:*",
     "iso-639-1": "catalog:",
     "knex": "catalog:",

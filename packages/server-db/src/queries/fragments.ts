@@ -1,8 +1,7 @@
 import type { LanguageCode } from 'iso-639-1'
+import type { Knex } from 'knex'
 
-import type { CourseSchema, FragmentTypeSchema } from '@innodoc/shared-core/schemas/types'
-
-import type Database from '#database'
+import type { CourseSchema, FragmentTypeSchema } from '@innodoc/shared-core/types'
 
 import { unpackValue } from './utils.js'
 import type { ValueResult } from './types.js'
@@ -10,22 +9,19 @@ import type { ValueResult } from './types.js'
 /**
  * Get localized fragment content.
  *
+ * @param knex Knex instance
  * @param courseSlug Course slug
  * @param locale Content locale
  * @param fragmentType Fragment type
  * @returns Localized fragment content
  */
 async function getFragmentContent(
-  this: Database,
+  knex: Knex,
   courseSlug: CourseSchema['slug'],
   locale: LanguageCode,
   fragmentType: FragmentTypeSchema,
 ): Promise<string | undefined> {
-  if (!this._knex) {
-    throw new Error('Database not initialized')
-  }
-
-  const result = await this._knex
+  const result = await knex
     .first<ValueResult<string> | undefined>('ct.value')
     .from('fragments as f')
     .join('courses as c', 'f.course_id', 'c.id')
