@@ -1,6 +1,6 @@
 import { styled } from '@mui/material'
-import { Children, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { ReactNode } from 'react'
 
 import type { VIDEO_PROPERTIES } from '@innodoc/content-parser/properties'
 
@@ -15,11 +15,10 @@ function Video({ children, id, nodeProps }: VideoProps) {
   const { t } = useTranslation()
 
   let title: string | undefined
-  const childrenArr = Children.toArray(children)
-  if (childrenArr.length > 0) {
-    const child = childrenArr[0]
-    if (typeof child === 'string') {
-      title = child
+  if (Array.isArray(children) && children.length > 0) {
+    const firstChild = children[0] as unknown
+    if (typeof firstChild === 'string') {
+      title = firstChild
     }
   }
 

@@ -1,5 +1,5 @@
 import { Box, styled } from '@mui/material'
-import { Children, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 import { useSelector } from '@innodoc/ui-shared/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
@@ -28,11 +28,10 @@ function YouTubeVideo({ children, id, nodeProps }: YouTubeVideoProps) {
   const { locale } = useSelector(selectRouteInfo)
 
   let title: string | undefined
-  const childrenArr = Children.toArray(children)
-  if (childrenArr.length > 0) {
-    const child = childrenArr[0]
-    if (typeof child === 'string') {
-      title = child
+  if (Array.isArray(children) && children.length > 0) {
+    const firstChild = children[0] as unknown
+    if (typeof firstChild === 'string') {
+      title = firstChild
     }
   }
 

@@ -24,21 +24,21 @@ const StyledDiv = styled('div')(({ theme }) => ({
 }))
 
 function Tabs({ children, nodeProps: { labels: labelsProp } }: TabsProps) {
-  const labels = Array.isArray(labelsProp) && labelsProp.every((l) => typeof l === 'string') ? labelsProp : []
+  const labels: string[] = Array.isArray(labelsProp) && labelsProp.every((l) => typeof l === 'string') ? labelsProp : []
   const [value, setValue] = useState('0')
 
-  const panelWrapper = useRef<HTMLDivElement>(null)
+  const panelWrapperRef = useRef<HTMLDivElement>(null)
   const [heights, setHeights] = useState<(number | null)[]>(labels.map(() => null))
   const panelIdx = Number.parseInt(value)
   const height = heights[panelIdx]
 
   useEffect(() => {
-    if (panelWrapper.current) {
-      const children = [...panelWrapper.current.children]
+    if (panelWrapperRef.current) {
+      const children = [...panelWrapperRef.current.children]
       const observer = new ResizeObserver((entries) => {
         for (const entry of entries) {
           const idx = children.indexOf(entry.target)
-          if (idx >= 0 && idx < labels.length) {
+          if (idx !== -1 && idx < labels.length) {
             setHeights((prevHeights) => {
               const newHeights = [...prevHeights]
               newHeights[idx] = entry.borderBoxSize[0]?.blockSize ?? 0
@@ -48,7 +48,7 @@ function Tabs({ children, nodeProps: { labels: labelsProp } }: TabsProps) {
         }
       })
 
-      for (const panel of panelWrapper.current.children) {
+      for (const panel of panelWrapperRef.current.children) {
         observer.observe(panel)
       }
 
@@ -72,7 +72,7 @@ function Tabs({ children, nodeProps: { labels: labelsProp } }: TabsProps) {
     <StyledPaper>
       <TabContext value={value}>
         <StyledTabList onChange={handleChange}>{tabs}</StyledTabList>
-        <StyledDiv ref={panelWrapper} style={{ height: height === null ? 'auto' : `${height}px` }}>
+        <StyledDiv ref={panelWrapperRef} style={{ height: Number.isFinite(height) ? `${String(height)}px` : 'auto' }}>
           {children}
         </StyledDiv>
       </TabContext>

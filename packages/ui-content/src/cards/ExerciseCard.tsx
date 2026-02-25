@@ -1,12 +1,16 @@
 import { Button } from '@mui/material'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ExerciseContext } from '@innodoc/ui-shared/contexts'
-
 import { Icon } from '@innodoc/ui-design-system/misc'
+import { ExerciseContext } from '@innodoc/ui-shared/contexts'
 
 import Card from './Card.js'
 import type { ContentCardProps } from './types.js'
+
+const handleClick = () => {
+  console.log('CHECK')
+}
 
 function ExerciseCard({ children, id }: ContentCardProps) {
   const { t } = useTranslation()
@@ -15,10 +19,6 @@ function ExerciseCard({ children, id }: ContentCardProps) {
 
   // TODO title
 
-  const handleClick = () => {
-    console.log('CHECK')
-  }
-
   const action = (
     <Button color="primary" onClick={handleClick} size="small" startIcon={<Icon name="mdi:check" />}>
       {t('content.exercise.verifyInput')}
@@ -26,7 +26,7 @@ function ExerciseCard({ children, id }: ContentCardProps) {
   )
 
   return (
-    <ExerciseContext.Provider value={{}}>
+    <ExerciseContext.Provider value={useMemo(() => ({}), [])}>
       <Card actions={action} cardType="exercise" iconName="mdi:application-edit-outline" id={id} title={title}>
         {children}
       </Card>

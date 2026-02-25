@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/no-empty-file */
+
 // // TODO delete
 
 // import type { Element as HastElement } from 'hast'

@@ -8,12 +8,29 @@
     ".": "./dist/hast/hast.js"
   },
   "imports": {
-    "#cards": "./dist/cards/cards.js",
-    "#exercises": "./dist/exercises/exercises.js",
-    "#hast": "./dist/hast/hast.js",
-    "#hast/components": "./dist/hast/components-map.js",
-    "#tabs": "./dist/tabs/tabs.js",
-    "#types": "./src/types.ts"
+    "#cards": {
+      "types": "./src/cards/cards.ts",
+      "default": "./dist/cards/cards.js"
+    },
+    "#exercises": {
+      "types": "./src/exercises/exercises.ts",
+      "default": "./dist/exercises/exercises.js"
+    },
+    "#hast": {
+      "types": "./src/hast/hast.ts",
+      "default": "./dist/hast/hast.js"
+    },
+    "#hast/components": {
+      "types": "./src/hast/components-map.ts",
+      "default": "./dist/hast/components-map.js"
+    },
+    "#tabs": {
+      "types": "./src/tabs/tabs.ts",
+      "default": "./dist/tabs/tabs.js"
+    },
+    "#types": {
+      "types": "./src/types.ts"
+    }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
@@ -49,6 +66,7 @@
     "hast-util-to-jsx-runtime": "catalog:",
     "jsdom": "catalog:",
     "typescript": "catalog:",
+    "vite": "catalog:",
     "vitest": "catalog:"
   },
   "prettier": "@innodoc/configs/prettierrc.json"

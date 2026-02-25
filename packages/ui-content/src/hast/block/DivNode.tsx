@@ -47,9 +47,6 @@ function DivNode({ children, id, node }: HastComponentProps<'div'>) {
 
   if (isHastMdxJsxFlowDivElement(node)) {
     const Component = flowDivComponentMap[node.properties.name]
-    if (!Component) {
-      return null
-    }
 
     return (
       <Component id={id} nodeProps={node.properties}>

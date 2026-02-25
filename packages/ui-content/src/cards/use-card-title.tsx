@@ -1,8 +1,8 @@
 import { createContext, type ReactNode, useContext, useEffect, useMemo, useRef } from 'react'
 
+import { isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
 import { getSectionNumberFromOrder } from '@innodoc/ui-design-system/utils'
 import { useSelector, useSelectSection } from '@innodoc/ui-shared/hooks'
-import { isCourseSectionRouteInfo } from '@innodoc/shared-core/routes'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 
 /** Provide consistent auto-incrementing numbering for cards within a document */
@@ -11,7 +11,7 @@ const CardTitleContext = createContext((id: string | undefined, title: string) =
 type Titles = Record<string, string>
 
 function CardTitleProvider({ children }: NumberingProviderProperties) {
-  const titles = useRef<Titles>({})
+  const titlesRef = useRef<Titles>({})
   const routeInfo = useSelector(selectRouteInfo)
   const sectionPath = isCourseSectionRouteInfo(routeInfo) ? routeInfo.sectionPath : undefined
   const { section } = useSelectSection(sectionPath)
@@ -19,7 +19,7 @@ function CardTitleProvider({ children }: NumberingProviderProperties) {
 
   // Reset number on each render
   useEffect(() => {
-    titles.current = {}
+    titlesRef.current = {}
   }, [children])
 
   // TODO: format number x.y.z
@@ -31,13 +31,13 @@ function CardTitleProvider({ children }: NumberingProviderProperties) {
       if (id === undefined) {
         return title
       }
-      const ids = Object.keys(titles.current)
+      const ids = Object.keys(titlesRef.current)
       if (!ids.includes(id)) {
-        const cardTitle = `${title} ${sectionNumber}.${ids.length + 1}`
-        titles.current[id] = cardTitle
+        const cardTitle = `${title} ${String(sectionNumber)}.${String(ids.length + 1)}`
+        titlesRef.current[id] = cardTitle
       }
 
-      return titles.current[id] ?? ''
+      return titlesRef.current[id] ?? ''
     },
     [sectionNumber],
   )

@@ -21,10 +21,12 @@ const flowSpanComponentMap: Record<HastMdxJsxTextSpanElement['properties']['name
 
 function SpanNode({ children, id, node, ...other }: HastComponentProps<'span'>) {
   if (isHastMdxJsxTextSpanElement(node)) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const Component = flowSpanComponentMap[node.properties.name]
-    if (!Component) {
-      return null
-    }
+
+    // TODO: fix span node
+
+    return null
 
     // return (
     //   <Component id={id} nodeProps={node.properties}>

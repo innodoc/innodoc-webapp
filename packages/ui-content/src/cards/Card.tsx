@@ -25,8 +25,8 @@ interface ExpandIconProps extends Omit<IconProps, 'name'> {
 const StyledCardHeader = styled(CardHeader, {
   shouldForwardProp: (prop) => !['cardType', 'collapsible', 'dense'].includes(prop.toString()),
 })<StyledCardHeaderProps>(({ cardType, collapsible, dense, theme }) => ({
-  backgroundColor: theme.vars.palette.Card[cardType]?.header,
-  color: theme.vars.palette.Card[cardType]?.color,
+  backgroundColor: theme.vars.palette.Card[cardType].header,
+  color: theme.vars.palette.Card[cardType].color,
   cursor: collapsible ? 'pointer' : 'inherit',
   paddingBottom: dense ? theme.spacing(1) : undefined,
   paddingTop: dense ? theme.spacing(1) : undefined,
@@ -93,7 +93,7 @@ function Card({
       elevation={elevation}
       id={id}
       sx={{
-        backgroundColor: (theme) => theme.vars.palette.Card[cardType]?.bg,
+        backgroundColor: (theme) => theme.vars.palette.Card[cardType].bg,
         my: 2,
       }}
     >
