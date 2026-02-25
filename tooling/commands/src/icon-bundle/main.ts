@@ -46,7 +46,8 @@ async function buildIconBundle(srcDirs: string[], { force, output: outFile }: { 
     await checkSrcDir(srcDir)
   }
   await checkOutFile(outFile, force)
-  await writeFile(outFile, JSON.stringify(await getIconBundle(srcDirs)))
+  const iconBundle = await getIconBundle(srcDirs)
+  await writeFile(outFile, JSON.stringify(iconBundle))
 }
 
 program

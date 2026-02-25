@@ -1,5 +1,4 @@
-import type { CourseSchema, PageSchema, TranslatableString } from '@innodoc/shared-core/schemas/types'
-import type { PageLinkLocation } from '@innodoc/shared-core/types'
+import type { CourseSchema, PageLinkLocation, PageSchema, TranslatableString } from '@innodoc/shared-core/types'
 
 interface Manifest extends Omit<CourseSchema, 'locales' | 'title' | 'short_title'> {
   pages: ManifestPage[]

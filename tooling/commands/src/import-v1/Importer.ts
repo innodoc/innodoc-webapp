@@ -6,7 +6,8 @@ import { parse as yamlParse } from 'yaml'
 import type { Knex } from 'knex'
 
 import Database from '@innodoc/server-db'
-import type { CourseSchema, SectionSchema } from '@innodoc/shared-core/schemas/types'
+import parseConfig from '@innodoc/server-env'
+import type { CourseSchema, SectionSchema } from '@innodoc/shared-core/types'
 
 import type { InsertResult, Manifest, ManifestPage } from './types.js'
 
@@ -29,7 +30,8 @@ class Importer {
   public async import(importFolder: string, courseSlug: string) {
     this.importFolder = importFolder
     this.courseSlug = courseSlug
-    const db = new Database()
+    const config = parseConfig()
+    const db = new Database(config)
     this.knex = db.knex
     this.trx = await this.knex.transaction()
     await this.readManifest()
@@ -169,7 +171,7 @@ class Importer {
     const findSectionPaths = async (dirpath: string, parentId: SectionSchema['parent_id']) => {
       const entries = await fs.readdir(dirpath)
       let order = 0
-      for (const entry of entries.sort()) {
+      for (const entry of entries.toSorted()) {
         if (!entry.startsWith('_')) {
           const entrypath = path.join(dirpath, entry)
           const stats = await fs.stat(entrypath)
@@ -252,7 +254,7 @@ class Importer {
   /** Convert Pandoc syntax to remark-compatible generic directives */
   protected static convertPandocSyntax(content: string) {
     // Extract meta data
-    const matches = content.match(/---\s([\S\s]*?)---[\S\s]{2}([\S\s]+)/)
+    const matches = /---\s([\s\S]*?)---[\s\S]{2}([\s\S]+)/.exec(content)
     if (!matches) {
       throw new Error('Could not extract YAML frontmatter')
     }
@@ -272,19 +274,19 @@ class Importer {
     const processed_source = source
 
       // cards
-      .replaceAll(/(:{3,}) ?{.hint-text}/g, '$1input-hint')
-      .replaceAll(/\[([^\]]+)]{\.hint-text}/g, ':::input-hint\n$1\n:::\n')
-      .replaceAll(/(:{3,}) ?{.hint}/g, '$1hint')
-      .replaceAll(/(:{3,}) ?{.hint caption="(?:Lösung|Solution)"}/g, '$1solution')
-      .replaceAll(/(:{3,}) ?{\.(example|exercise|figure|info) (#[^}]+)}/g, '$1$2{$3}')
-      .replaceAll(/(:{3,}) ?{\.(example|exercise|figure|info)}/g, '$1$2')
+      .replaceAll(/(:{3,}) ?\{.hint-text\}/g, '$1input-hint')
+      .replaceAll(/\[([^\]]+)\]\{\.hint-text\}/g, ':::input-hint\n$1\n:::\n')
+      .replaceAll(/(:{3,}) ?\{.hint\}/g, '$1hint')
+      .replaceAll(/(:{3,}) ?\{.hint caption="(?:Lösung|Solution)"\}/g, '$1solution')
+      .replaceAll(/(:{3,}) ?\{\.(example|exercise|figure|info) (#[^}]+)\}/g, '$1$2{$3}')
+      .replaceAll(/(:{3,}) ?\{\.(example|exercise|figure|info)\}/g, '$1$2')
 
       // exercises
-      .replaceAll(/:{3,} ?{\.verify-input-button}\n(.+)\n:{3,}\n/g, '::verify-button[$1]\n')
-      .replaceAll(/\[]{\.question \.(text|checkbox) ([^}]+)}/g, ':question-$1{$2}')
+      .replaceAll(/:{3,} ?\{\.verify-input-button\}\n(.+)\n:{3,}\n/g, '::verify-button[$1]\n')
+      .replaceAll(/\[\]\{\.question \.(text|checkbox) ([^}]+)\}/g, ':question-$1{$2}')
 
       // links
-      .replaceAll(/\[([^\]]*)]\(\/(section|page)\/([^)]+)\)/g, '[$1](app:$2|$3)')
+      .replaceAll(/\[([^\]]*)\]\(\/(section|page)\/([^)]+)\)/g, '[$1](app:$2|$3)')
 
     return { frontmatter, source: processed_source }
   }

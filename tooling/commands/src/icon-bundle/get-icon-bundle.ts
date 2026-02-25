@@ -11,7 +11,7 @@ function parse({ icons, prefix, width = 24, height = 24 }: IconifyJSON) {
   const parsedIcons: Record<string, string> = {}
 
   for (const [name, { body }] of Object.entries(icons)) {
-    parsedIcons[`${prefix}:${name}`] = parseSvg(`<svg viewBox='0 0 ${width} ${height}'>${body}</svg>`)
+    parsedIcons[`${prefix}:${name}`] = parseSvg(`<svg viewBox='0 0 ${String(width)} ${String(height)}'>${body}</svg>`)
   }
 
   return parsedIcons
@@ -30,9 +30,7 @@ function filterBySet(setName: string, iconNames: string[]) {
   return [...filteredIconNames]
 }
 
-/**
- * Create icon bundle from manifest pages and static info from source code.
- */
+/** Create icon bundle from manifest pages and static info from source code. */
 async function getIconBundle(paths: string[]) {
   // Icon names from source code
   const scannedIconName = await scanIconNames(paths)

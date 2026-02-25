@@ -26,7 +26,7 @@ async function importFromV1() {
       throw new Error('courseId is null')
     }
 
-    console.log(`Imported course ID=${courseId}`)
+    console.log(`Imported course ID=${String(courseId)}`)
   } catch (error) {
     console.error(error)
     process.exit(-1)
