@@ -18,7 +18,7 @@ import { changeRouteInfo } from '@innodoc/ui-store/slices/app'
 import courses from '@innodoc/ui-store/slices/content/courses'
 import pages from '@innodoc/ui-store/slices/content/pages'
 import sections from '@innodoc/ui-store/slices/content/sections'
-import type { CourseRouteInfo } from '@innodoc/shared-core/routes/manager/types'
+import type { CourseRouteInfo } from '@innodoc/shared-core/types'
 
 const theme = extendTheme(undefined, createTheme())
 
@@ -89,5 +89,7 @@ async function populateStore() {
   // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_B }))
 }
 
+// eslint-disable-next-line import-x/export
 export * from '@testing-library/react'
+// eslint-disable-next-line import-x/export
 export { populateStore, customRender as render }

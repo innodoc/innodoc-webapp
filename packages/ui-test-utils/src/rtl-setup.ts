@@ -8,7 +8,7 @@ import parseConfig from '@innodoc/server-env'
 import makeServer from '@innodoc/shared-fixtures/msw/node'
 
 const config = parseConfig()
-const server = makeServer(config.appRoot)
+const server = makeServer(config)
 
 beforeAll(() => {
   server.listen({ onUnhandledRequest: 'error' })

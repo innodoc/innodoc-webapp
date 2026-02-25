@@ -2,10 +2,6 @@ import { vi } from 'vitest'
 
 // https://github.com/vitest-dev/vitest/issues/4043#issuecomment-1905172846
 class ESBuildAndJSDOMCompatibleTextEncoder extends TextEncoder {
-  constructor() {
-    super()
-  }
-
   encode(input: string) {
     if (typeof input !== 'string') {
       throw new TypeError('`input` must be a string')
@@ -13,9 +9,10 @@ class ESBuildAndJSDOMCompatibleTextEncoder extends TextEncoder {
 
     const decodedURI = decodeURIComponent(encodeURIComponent(input))
     const arr = new Uint8Array(decodedURI.length)
-    const chars = decodedURI.split('')
+    // eslint-disable-next-line @typescript-eslint/no-misused-spread
+    const chars = [...decodedURI]
     for (let i = 0; i < chars.length; i++) {
-      arr[i] = decodedURI[i]?.charCodeAt(0) ?? 0
+      arr[i] = decodedURI[i]?.codePointAt(0) ?? 0
     }
     return arr
   }
