@@ -1,4 +1,4 @@
-// TODO: delete, and handle SVG with hastToReact?
+// TODO: use hast-util-from-html/hast-util-to-jsx-runtime
 
 import type { ElementNode } from 'svg-parser'
 
@@ -491,24 +491,33 @@ const ATTRIBUTE_MAPPING = {
 
 /** Transform style string to React style object */
 function stringToObjectStyle(stringStyles: string | undefined) {
-  return typeof stringStyles === 'string'
-    ? stringStyles.split(';').reduce((accumulator, style) => {
-        const colonPosition = style.indexOf(':')
+  if (typeof stringStyles !== 'string') {
+    return {}
+  }
 
-        if (colonPosition === -1) {
-          return accumulator
-        }
+  const styles = stringStyles.split(';')
+  const result: Record<string, string> = {}
 
-        const camelCaseProperty = style
-            .slice(0, Math.max(0, colonPosition))
-            .trim()
-            .replace(/^-ms-/, 'ms-')
-            .replaceAll(/-./g, (c) => c.slice(1).toUpperCase()),
-          value = style.slice(Math.max(0, colonPosition + 1)).trim()
+  for (const style of styles) {
+    const colonPosition = style.indexOf(':')
 
-        return value ? { ...accumulator, [camelCaseProperty]: value } : accumulator
-      }, {})
-    : {}
+    if (colonPosition === -1) {
+      continue
+    }
+
+    const camelCaseProperty = style
+      .slice(0, Math.max(0, colonPosition))
+      .trim()
+      .replace(/^-ms-/, 'ms-')
+      .replaceAll(/-./g, (c) => c.slice(1).toUpperCase())
+    const value = style.slice(Math.max(0, colonPosition + 1)).trim()
+
+    if (value) {
+      result[camelCaseProperty] = value
+    }
+  }
+
+  return result
 }
 
 /** Convert HTML attribute key to React props key */
@@ -522,7 +531,9 @@ function getPropertiesKey(key: string) {
 
   if (kebabKey.startsWith('aria-')) {
     const [aria, ...parts] = kebabKey.split('-')
-    return `${aria}-${parts.join('').toLowerCase()}`
+    if (aria) {
+      return `${aria}-${parts.join('').toLowerCase()}`
+    }
   }
 
   if (kebabKey.startsWith('data-')) {

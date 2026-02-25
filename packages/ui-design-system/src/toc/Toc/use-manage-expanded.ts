@@ -1,7 +1,7 @@
 import { type SyntheticEvent, useEffect, useRef, useState } from 'react'
 
+import { isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
 import { useSelector } from '@innodoc/ui-store/hooks'
-import { isCourseSectionRouteInfo } from '@innodoc/shared-core/routes/typeguards'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 
 /** Return array of expanded section paths/node IDs (including parents) */
@@ -34,12 +34,17 @@ function useManageExpanded() {
     if (currentSectionPath && currentSectionPath !== prevSectionPath.current) {
       prevSectionPath.current = currentSectionPath
 
-      setExpanded((prevExpanded) =>
-        expandedWithParents.reduce(
-          (acc, sectionPath) => (acc.includes(sectionPath) ? acc : [...acc, sectionPath]),
-          prevExpanded,
-        ),
-      )
+      setExpanded((prevExpanded) => {
+        const newExpanded: string[] = [...prevExpanded]
+
+        for (const sectionPath of expandedWithParents) {
+          if (!newExpanded.includes(sectionPath)) {
+            newExpanded.push(sectionPath)
+          }
+        }
+
+        return newExpanded
+      })
     }
   }, [currentSectionPath, expanded, expandedWithParents, setExpanded])
 

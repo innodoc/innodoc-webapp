@@ -2,7 +2,7 @@ import { styled } from '@mui/material'
 import { TreeItem, type TreeItemProps } from '@mui/x-tree-view'
 
 import { useSelectSectionChildren } from '@innodoc/ui-store/hooks'
-import type { TranslatedSection } from '@innodoc/shared-core/schema/types'
+import type { TranslatedSection } from '@innodoc/shared-core/types'
 
 import TocTreeItemContent from './TocTreeItemContent.js'
 

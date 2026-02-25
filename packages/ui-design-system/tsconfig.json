@@ -4,6 +4,6 @@
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "rootDir": ".",
-    "types": ["@mui/material/themeCssVarsAugmentation", "@testing-library/jest-dom/vitest"]
+    "types": ["@mui/material/themeCssVarsAugmentation", "@testing-library/jest-dom/vitest", "vite/client"]
   }
 }

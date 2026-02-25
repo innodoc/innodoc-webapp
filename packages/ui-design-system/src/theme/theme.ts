@@ -1,5 +1,4 @@
 import { experimental_extendTheme as extendTheme, responsiveFontSizes, type ThemeOptions } from '@mui/material'
-import type {} from '@mui/lab/themeAugmentation'
 import type { CssVarsThemeOptions, DefaultColorScheme } from '@mui/material/styles/experimental_extendTheme'
 
 import { CARD_TYPES } from '@innodoc/shared-core/constants'

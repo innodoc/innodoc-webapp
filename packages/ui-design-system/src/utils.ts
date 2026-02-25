@@ -1,5 +1,4 @@
-import type { TranslatedSection } from '@innodoc/shared-core/schema/types'
-import type { ContentType } from '@innodoc/shared-core/types'
+import type { ContentType, TranslatedSection } from '@innodoc/shared-core/types'
 
 /** Format section title */
 function formatSectionTitle(section: TranslatedSection, preferShort = false) {

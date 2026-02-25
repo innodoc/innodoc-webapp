@@ -1,17 +1,25 @@
-import { Box, type BoxProps, IconButton, SwipeableDrawer, type SwipeableDrawerProps, Tooltip } from '@mui/material'
-import { type ReactNode, useState } from 'react'
+import { Box, IconButton, SwipeableDrawer, Tooltip } from '@mui/material'
+import { useState } from 'react'
+import type { BoxProps, SwipeableDrawerProps } from '@mui/material'
+import type { ReactNode } from 'react'
 
-import { Icon, type IconProps } from '#misc'
+import { Icon } from '#misc'
+import type { IconProps } from '#misc'
+
+const defaultBoxProps = { sx: {} }
+const defaultDrawerProps = {}
 
 function DrawerButton({
   anchor,
-  boxProps = { sx: {} },
+  boxProps = defaultBoxProps,
   children,
-  drawerProps = {},
+  drawerProps = defaultDrawerProps,
   iconName,
   id,
   title,
 }: DrawerButtonProps) {
+  const { sx: boxSx, ...restBoxProps } = boxProps
+
   const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
   const onClick = () => {
@@ -25,7 +33,7 @@ function DrawerButton({
   }
 
   return (
-    <Box sx={{ flexGrow: 0, ...boxProps.sx }} {...boxProps}>
+    <Box {...restBoxProps} flexGrow={0} sx={boxSx}>
       <Tooltip arrow title={title}>
         <IconButton aria-controls={id} aria-label={title} color="inherit" onClick={onClick}>
           <Icon name={iconName} />

@@ -1,7 +1,6 @@
 import type { ReactElement } from 'react'
 
-import type { AppRouteName } from '@innodoc/shared-core/routes'
-import type { PageLinkLocation } from '@innodoc/shared-core/types'
+import type { AppRouteName, PageLinkLocation } from '@innodoc/shared-core/types'
 
 import { Icon } from '#misc'
 

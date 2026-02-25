@@ -1,9 +1,9 @@
-import { Children, forwardRef } from 'react'
+import { forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 
-import { useSelectSection } from '@innodoc/ui-store/hooks'
 import { useRouteManager } from '@innodoc/ui-shared/hooks'
-import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/schema/types'
+import { useSelectSection } from '@innodoc/ui-store/hooks'
+import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/types'
 
 import { InlineError } from '#errors'
 import { Code } from '#misc'
@@ -49,7 +49,7 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProperties>(functio
 
   return (
     <BaseLink to={url({ name: 'app:course:section', sectionPath: section.path })} ref={reference} {...other}>
-      {Children.count(children) ? children : <>{formatSectionTitle(section, preferShortTitle)}</>}
+      {children ?? <>{formatSectionTitle(section, preferShortTitle)}</>}
     </BaseLink>
   )
 })

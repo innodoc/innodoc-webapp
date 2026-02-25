@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { type ForwardedRef, forwardRef, type MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import type { TranslatedSection } from '@innodoc/shared-core/schema/types'
+import type { TranslatedSection } from '@innodoc/shared-core/types'
 
 import { SectionLink } from '#links'
 import { formatSectionTitle } from '#utils'
@@ -24,7 +24,7 @@ const TocTreeItemContent = forwardRef(function TocTreeItemContent(
 ) {
   const { t } = useTranslation()
   const { expanded, handleExpansion, disabled, focused, selected } = useTreeItem(nodeId)
-  const iconNode = iconProperty || expansionIcon || displayIcon
+  const iconNode = iconProperty ?? expansionIcon ?? displayIcon
 
   // Allow node toggle without triggering navigation
   const onNodeToggle = (event: MouseEvent<HTMLDivElement>) => {

@@ -1,10 +1,11 @@
-import { Children, forwardRef, type ReactNode } from 'react'
+import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { ReactNode } from 'react'
 
+import { isAppRouteInfo, isCoursePageRouteInfo, isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
 import { useRouteManager } from '@innodoc/ui-shared/hooks'
-import { isAppRouteInfo, isCoursePageRouteInfo, isCourseSectionRouteInfo } from '@innodoc/shared-core/routes/typeguards'
 
-import pageLinks from '#pageLinks'
+import pageLinks from '#page-links'
 
 import BaseLink from './BaseLink.js'
 import CourseHomeLink from './CourseHomeLink.js'
@@ -23,7 +24,7 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink({ c
 
   // Determine content
   let content: ReactNode = children
-  if (Children.count(children) === 0) {
+  if (!children) {
     const page = pageLinks.find((page) => page.routeName === routeInfo.name)
     if (page?.title) {
       content = t(page.title)

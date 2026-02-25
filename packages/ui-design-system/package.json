@@ -9,7 +9,7 @@
     "./errors": "./dist/errors/errors.js",
     "./links": "./dist/links/links.js",
     "./misc": "./dist/misc/misc.js",
-    "./pageLinks": "./dist/pageLinks.js",
+    "./page-links": "./dist/page-links.js",
     "./theme": "./dist/theme/theme.js",
     "./toc": "./dist/toc/toc.js",
     "./types/mui": {
@@ -18,15 +18,37 @@
     "./utils": "./dist/utils.js"
   },
   "imports": {
-    "#errors": "./dist/errors/errors.js",
-    "#iconBundle": "./dist/iconBundle.json",
-    "#links": "./dist/links/links.js",
-    "#misc": "./dist/misc/misc.js",
-    "#pageLinks": "./dist/pageLinks.js",
-    "#theme": "./dist/theme.js",
-    "#toc": "./dist/toc/toc.js",
-    "#types": "./src/types/types.ts",
-    "#utils": "./dist/utils.js"
+    "#errors": {
+      "types": "./src/errors/errors.ts",
+      "default": "./dist/errors/errors.js"
+    },
+    "#icon-bundle": {
+      "default": "./dist/icon-bundle.json"
+    },
+    "#links": {
+      "types": "./src/links/links.ts",
+      "default": "./dist/links/links.js"
+    },
+    "#misc": {
+      "types": "./src/misc/misc.ts",
+      "default": "./dist/misc/misc.js"
+    },
+    "#page-links": {
+      "types": "./src/page-links.tsx",
+      "default": "./dist/page-links.js"
+    },
+    "#theme": {
+      "types": "./src/theme/theme.ts",
+      "default": "./dist/theme/theme.js"
+    },
+    "#toc": {
+      "types": "./src/toc/toc.ts",
+      "default": "./dist/toc/toc.js"
+    },
+    "#utils": {
+      "types": "./src/utils.ts",
+      "default": "./dist/utils.js"
+    }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
@@ -40,6 +62,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@innodoc/shared-core": "workspace:*",
     "@innodoc/ui-shared": "workspace:*",
     "@innodoc/ui-store": "workspace:*",
     "@mui/lab": "catalog:",
@@ -59,6 +82,7 @@
     "@types/svg-parser": "catalog:",
     "jsdom": "catalog:",
     "typescript": "catalog:",
+    "vite": "catalog:",
     "vitest": "catalog:"
   },
   "prettier": "@innodoc/configs/prettierrc.json"

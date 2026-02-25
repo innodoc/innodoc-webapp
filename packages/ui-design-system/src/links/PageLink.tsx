@@ -1,9 +1,9 @@
-import { Children, forwardRef } from 'react'
+import { forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 
-import { useSelectPage } from '@innodoc/ui-store/hooks'
 import { useRouteManager } from '@innodoc/ui-shared/hooks'
-import type { ApiPage, TranslatedPage } from '@innodoc/shared-core/schema/types'
+import { useSelectPage } from '@innodoc/ui-store/hooks'
+import type { ApiPage, TranslatedPage } from '@innodoc/shared-core/types'
 
 import { InlineError } from '#errors'
 import { Code, Icon } from '#misc'
@@ -45,9 +45,7 @@ const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
 
   return (
     <BaseLink to={url({ name: 'app:course:page', pageSlug: slug })} ref={ref} {...other}>
-      {Children.count(children) ? (
-        children
-      ) : (
+      {children ?? (
         <>
           {showIcon && icon ? <Icon name={icon} /> : null}
           {(preferShortTitle && shortTitle ? shortTitle : title) ?? null}

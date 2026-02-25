@@ -1,5 +1,5 @@
 import { styled } from '@mui/material'
-import { Children, forwardRef } from 'react'
+import { forwardRef } from 'react'
 
 import { Icon } from '#misc'
 
@@ -31,11 +31,10 @@ const ContentLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLin
   if (to.startsWith('app://')) {
     const linkSpecifier = `app:${decodeURIComponent(to.slice(6))}`
     let specChildren = children
-    const childrenArr = Children.toArray(children)
 
     // <app:...> style links: They have the URL itself as content. We remove
     // the content, so it gets replaced with the title.
-    if (childrenArr.length === 1 && childrenArr[0] === linkSpecifier) {
+    if (Array.isArray(children) && children.length === 1 && children[0] === linkSpecifier) {
       specChildren = null
     }
 
