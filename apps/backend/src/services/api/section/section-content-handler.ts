@@ -1,7 +1,7 @@
 import z from 'zod'
 import type { LanguageCode } from 'iso-639-1'
 
-import { localeSchema, sectionPathSchema, slugSchema } from '@innodoc/shared-core/schemas/common'
+import { localeSchema, sectionPathSchema, slugSchema } from '@innodoc/shared-core/schemas'
 
 import { errorResponseSchema } from '#api/errors'
 import type { ApiRouteHandlerMethod } from '#services/api/types'
@@ -21,14 +21,15 @@ const schema = {
 
 const handler: ApiRouteHandlerMethod<typeof schema> = async function (req, reply) {
   const { courseSlug, locale, sectionPath } = req.params
+  const db = req.diScope.resolve('database')
 
-  const sectionId = await this.db.getSectionIdByPath(courseSlug, sectionPath)
+  const sectionId = await db.getSectionIdByPath(courseSlug, sectionPath)
   if (!sectionId) {
     reply.callNotFound()
     return
   }
 
-  const content = await this.db.getSectionContent(courseSlug, locale as LanguageCode, sectionId)
+  const content = await db.getSectionContent(courseSlug, locale as LanguageCode, sectionId)
   if (!content) {
     reply.callNotFound()
     return

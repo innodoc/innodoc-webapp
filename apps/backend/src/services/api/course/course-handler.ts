@@ -1,7 +1,6 @@
 import z from 'zod'
 
-import { courseSchema } from '@innodoc/shared-core/schemas/entities'
-import { slugSchema } from '@innodoc/shared-core/schemas/common'
+import { courseSchema, slugSchema } from '@innodoc/shared-core/schemas'
 
 import { errorResponseSchema } from '#api/errors'
 import type { ApiRouteHandlerMethod } from '#services/api/types'
@@ -18,9 +17,10 @@ const schema = {
 }
 
 const handler: ApiRouteHandlerMethod<typeof schema> = async function (req, reply) {
+  const db = req.diScope.resolve('database')
   const { courseSlug } = req.params
 
-  const course = await this.db.getCourse(courseSlug)
+  const course = await db.getCourse(courseSlug)
   if (!course) {
     reply.callNotFound()
     return

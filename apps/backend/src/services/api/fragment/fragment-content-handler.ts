@@ -1,8 +1,7 @@
 import z from 'zod'
 import type { LanguageCode } from 'iso-639-1'
 
-import { fragmentTypeSchema } from '@innodoc/shared-core/schemas/entities'
-import { localeSchema, slugSchema } from '@innodoc/shared-core/schemas/common'
+import { fragmentTypeSchema, localeSchema, slugSchema } from '@innodoc/shared-core/schemas'
 
 import { errorResponseSchema } from '#api/errors'
 import type { ApiRouteHandlerMethod } from '#services/api/types'
@@ -22,8 +21,9 @@ const schema = {
 
 const handler: ApiRouteHandlerMethod<typeof schema> = async function (req, reply) {
   const { courseSlug, locale, fragmentType } = req.params
+  const db = req.diScope.resolve('database')
 
-  const content = await this.db.getFragmentContent(courseSlug, locale as LanguageCode, fragmentType)
+  const content = await db.getFragmentContent(courseSlug, locale as LanguageCode, fragmentType)
 
   if (!content) {
     reply.callNotFound()

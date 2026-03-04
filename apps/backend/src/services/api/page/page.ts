@@ -1,13 +1,10 @@
-import type { ApiRouteName } from '@innodoc/shared-core/routes'
-
-import { getRoutePath } from '#utils'
 import type { FastifyZodPluginCallback } from '#services/api/types'
 
 import getPageContent from './page-content-handler.js'
 import getPages from './pages-handler.js'
 
 const page: FastifyZodPluginCallback = function (app, opts, done) {
-  const p = (name: ApiRouteName) => getRoutePath(name, app.prefix)
+  const p = app.diContainer.resolve('makePathFunc')(app.prefix)
 
   app.get(p('api:course:pages'), { schema: getPages.schema }, getPages.handler)
   app.get(p('api:course:page:content'), { schema: getPageContent.schema }, getPageContent.handler)

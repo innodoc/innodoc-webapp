@@ -2,8 +2,6 @@ import fastifyStatic from '@fastify/static'
 import fastifyPlugin from 'fastify-plugin'
 import type { FastifyPluginAsync } from 'fastify'
 
-import container from '#container'
-
 const options = () =>
   Promise.resolve({
     http2: true,
@@ -11,7 +9,7 @@ const options = () =>
   })
 
 const prodPlugin: FastifyPluginAsync = async function (app) {
-  const config = container.resolve('config')
+  const config = app.diContainer.resolve('config')
 
   // In production, we need to serve our static assets ourselves.
   await app.register(fastifyStatic, {

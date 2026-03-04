@@ -2,9 +2,9 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import container from './container'
 import { isArbitraryObject } from '@innodoc/shared-core/typeguards'
-import type { ApiRouteName } from '@innodoc/shared-core/routes'
+import type { RouteManager } from '@innodoc/shared-core/routes'
+import type { ApiRouteName } from '@innodoc/shared-core/types'
 
 function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
   return isArbitraryObject(error) && error instanceof Error && typeof error.code === 'string'
@@ -13,13 +13,13 @@ function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
 /**
  * Get URL path for API route handler.
  *
+ * @param routeManager RouteManager instance
  * @param name Name of the API route
  * @param removePrefix Optional route path prefix to strip
  * @returns Route path
  * @throws if unknown route name was given
  */
-function getRoutePath(name: ApiRouteName, removePrefix?: string) {
-  const routeManager = container.resolve('routeManager')
+function getRoutePath(routeManager: RouteManager, name: ApiRouteName, removePrefix?: string) {
   const apiRoutes = routeManager.getApiRoutes()
 
   const pattern = apiRoutes[name]

@@ -1,12 +1,9 @@
-import type { ApiRouteName } from '@innodoc/shared-core/routes'
-
-import { getRoutePath } from '#utils'
 import type { FastifyZodPluginCallback } from '#services/api/types'
 
 import getFragmentContent from './fragment-content-handler.js'
 
 const fragment: FastifyZodPluginCallback = function (app, opts, done) {
-  const p = (name: ApiRouteName) => getRoutePath(name, app.prefix)
+  const p = app.diContainer.resolve('makePathFunc')(app.prefix)
 
   app.get(p('api:course:fragment:content'), { schema: getFragmentContent.schema }, getFragmentContent.handler)
 

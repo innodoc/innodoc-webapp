@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
-import setupApp from './app/setup-app.js'
-import container from './container'
+import parseConfig from '@innodoc/server-env'
 
-const config = container.resolve('config')
+import setupApp from './app/setup-app.js'
 
 try {
-  const app = await setupApp()
+  const config = parseConfig()
+  const app = await setupApp(config)
   await app.listen({ host: config.host, port: config.port })
 } catch (error) {
   console.error(error)

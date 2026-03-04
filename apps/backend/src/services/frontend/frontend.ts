@@ -6,7 +6,7 @@ import frontendHandler from './frontend-handler.js'
 const autoPrefix = '/'
 
 const frontend: FastifyPluginAsync = async function (app) {
-  await app.register(fastifyAccepts)
+  await app.register(fastifyAccepts, { decorateReply: false })
   app.get('*', frontendHandler)
 }
 

@@ -4,14 +4,34 @@
   "private": true,
   "type": "module",
   "imports": {
-    "#api/errors": "./dist/services/api/errors.js",
-    "#container": "./dist/container/container.js",
-    "#plugins/api-reference": "./dist/plugins/api-reference.js",
-    "#plugins/db": "./dist/plugins/db/db.js",
-    "#plugins/logging": "./dist/plugins/logging.js",
-    "#plugins/vite-dev-server": "./dist/plugins/vite-dev-server.js",
-    "#services/api/types": "./dist/services/api/types.js",
-    "#utils": "./dist/utils.js"
+    "#api/errors": {
+      "types": "./src/services/api/errors.ts",
+      "default": "./dist/services/api/errors.js"
+    },
+    "#plugins/api-reference": {
+      "types": "./src/plugins/api-reference.ts",
+      "default": "./dist/plugins/api-reference.js"
+    },
+    "#plugins/di-container": {
+      "types": "./src/plugins/di-container/di-container.ts",
+      "default": "./dist/plugins/di-container/di-container.js"
+    },
+    "#plugins/logging": {
+      "types": "./src/plugins/logging.ts",
+      "default": "./dist/plugins/logging.js"
+    },
+    "#plugins/vite-dev-server": {
+      "types": "./src/plugins/vite-dev-server.ts",
+      "default": "./dist/plugins/vite-dev-server.js"
+    },
+    "#services/api/types": {
+      "types": "./src/services/api/types.ts",
+      "default": "./dist/services/api/types.js"
+    },
+    "#utils": {
+      "types": "./src/utils.ts",
+      "default": "./dist/utils.js"
+    }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
@@ -30,7 +50,9 @@
   "dependencies": {
     "@fastify/accepts": "catalog:",
     "@fastify/autoload": "catalog:",
+    "@fastify/awilix": "catalog:",
     "@fastify/static": "catalog:",
+    "@innodoc/frontend": "workspace:*",
     "@innodoc/server-db": "workspace:*",
     "@innodoc/server-env": "workspace:*",
     "@innodoc/shared-core": "workspace:*",

@@ -1,8 +1,6 @@
 import fastifyPlugin from 'fastify-plugin'
 import type { FastifyInstance, FastifyPluginCallback } from 'fastify'
 
-import container from '#container'
-
 const VITE_PATHS = ['/@fs/', '/@id/', '/@react-refresh', '/@vite/', '/node_modules/', '/src/']
 
 const isViteDevRequest = (url: string) => VITE_PATHS.some((path) => url.startsWith(path))
@@ -17,9 +15,12 @@ function requestLogging(app: FastifyInstance) {
 }
 
 const loggingPlugin: FastifyPluginCallback = function (app, opts, done) {
-  if (!container.resolve('config').isProduction) {
+  const config = app.diContainer.resolve('config')
+
+  if (!config.isProduction) {
     requestLogging(app)
   }
+
   done()
 }
 

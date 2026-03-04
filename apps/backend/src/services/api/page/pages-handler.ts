@@ -1,7 +1,6 @@
 import z from 'zod'
 
-import { pageSchema } from '@innodoc/shared-core/schemas/entities'
-import { slugSchema } from '@innodoc/shared-core/schemas/common'
+import { pageSchema, slugSchema } from '@innodoc/shared-core/schemas'
 
 import { errorResponseSchema } from '#api/errors'
 import type { ApiRouteHandlerMethod } from '#services/api/types'
@@ -17,7 +16,9 @@ const schema = {
 }
 
 const handler: ApiRouteHandlerMethod<typeof schema> = async function (req, reply) {
-  const pages = await this.db.getCoursePages(req.params.courseSlug)
+  const db = req.diScope.resolve('database')
+
+  const pages = await db.getCoursePages(req.params.courseSlug)
   await reply.send(pages)
 }
 
