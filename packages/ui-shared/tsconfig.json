@@ -5,11 +5,10 @@
   "compilerOptions": {
     "rootDir": ".",
     "types": [
-      "vite/client",
       "@innodoc/configs/vite-env",
-      "@innodoc/design-system/types/mui",
       "@mui/material/themeCssVarsAugmentation",
-      "@testing-library/jest-dom/vitest"
+      "@testing-library/jest-dom/vitest",
+      "vite/client"
     ]
   }
 }

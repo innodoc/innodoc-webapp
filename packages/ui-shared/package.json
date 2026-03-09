@@ -9,7 +9,10 @@
     "./hooks": "./dist/hooks/hooks.js"
   },
   "imports": {
-    "#contexts": "./dist/contexts/contexts.js"
+    "#contexts": {
+      "types": "./src/contexts/contexts.ts",
+      "default": "./dist/contexts/contexts.js"
+    }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
@@ -34,6 +37,7 @@
     "jsdom": "catalog:",
     "typescript": "catalog:",
     "vike": "catalog:",
+    "vite": "catalog:",
     "vitest": "catalog:"
   },
   "prettier": "@innodoc/configs/prettierrc.json"
