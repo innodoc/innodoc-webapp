@@ -4,13 +4,10 @@
   "private": true,
   "type": "module",
   "imports": {
-    "#pages/course/content/onInit": "./src/pages/course/content/onInitContent.ts",
+    "#pages/course/content/on-init": "./src/pages/course/content/on-init-content.ts",
     "#renderer/common": "./src/renderer/common/common.ts",
-    "#renderer/route/makeRouteFunc": "./src/renderer/route/makeRouteFunc.ts",
-    "#renderer/server/makeOnBeforeRenderContent": "./src/renderer/server/makeOnBeforeRenderContent.ts",
-    "#renderer/server/onBeforeRenderDefault": "./src/renderer/server/onBeforeRenderDefault.ts",
     "#route": "./src/route/route.ts",
-    "#route/onBeforeRoute": "./src/route/onBeforeRoute.ts"
+    "#route/on-before-route": "./src/route/on-before-route.ts"
   },
   "scripts": {
     "build": "vite build --mode production",

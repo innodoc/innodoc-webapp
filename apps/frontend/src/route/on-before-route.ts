@@ -1,13 +1,12 @@
 import { redirect } from 'vike/abort'
-import type { LanguageCode } from 'iso-639-1'
 import type { OnBeforeRouteSync } from 'vike/types'
 
 import { DEFAULT_ROUTE_NAME } from '@innodoc/shared-core/constants'
 import { isLocale } from '@innodoc/shared-core/typeguards'
-import type { AppRouteInfo } from '@innodoc/shared-core/routes'
+import type { AppRouteInfo } from '@innodoc/shared-core/types'
 
 import { ExtractionError } from './errors.js'
-import { extractLocale } from './extractInfo.js'
+import { extractLocale } from './extract-info.js'
 
 interface OnBeforeRouteReturnType {
   pageContext: { routeInfo: AppRouteInfo }
@@ -33,7 +32,7 @@ const onBeforeRoute: OnBeforeRouteSync = function (pageContext): OnBeforeRouteRe
   }
 
   if (isLocale(requestLocales?.[0])) {
-    routeInfo.locale = requestLocales[0] as LanguageCode // fallback to browser locale
+    routeInfo.locale = requestLocales[0] // fallback to browser locale
   }
 
   // Extract locale

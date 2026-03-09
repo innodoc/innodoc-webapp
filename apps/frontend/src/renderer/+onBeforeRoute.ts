@@ -1,1 +1,1 @@
-export { default as onBeforeRoute } from '#route/onBeforeRoute'
+export { default as onBeforeRoute } from '#route/on-before-route'

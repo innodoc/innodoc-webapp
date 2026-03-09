@@ -1,9 +1,7 @@
 import type { PageContextServer } from 'vike/types'
 
-import getRouteManager from '@innodoc/shared-core/routes/manager'
-import type { AppRouteName } from '@innodoc/shared-core/routes'
-
-const routeManager = getRouteManager()
+import getRouteManager from '@innodoc/shared-core/routes/manager/vite'
+import type { AppRouteName } from '@innodoc/shared-core/types'
 
 /**
  * Factory for route function for all pages
@@ -12,6 +10,8 @@ const routeManager = getRouteManager()
  */
 function route(routeName: AppRouteName) {
   const routeFunc = ({ urlOriginal }: PageContextServer) => {
+    const routeManager = getRouteManager()
+
     // Routes also need to match pageContext.json files used in client navigation
     let url = urlOriginal
     if (import.meta.env.SSR) {

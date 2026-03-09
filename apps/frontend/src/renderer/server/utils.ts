@@ -8,7 +8,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import type { EmotionCache } from '@emotion/cache'
 
 import getI18n from '@innodoc/shared-core/i18n'
-import type { AppRouteInfo } from '@innodoc/shared-core/routes'
+import type { AppRouteInfo } from '@innodoc/shared-core/types'
 import type { Store } from '@innodoc/ui-store/types'
 
 import { getSupportedLocales } from '#renderer/common'

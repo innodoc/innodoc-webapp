@@ -6,6 +6,6 @@ import '@fontsource/lato/700.css'
 // KaTeX CSS
 import 'katex/dist/katex.css'
 
-import onRenderHtml from './server/onRenderHtml.js'
+import onRenderHtml from './server/on-render-html.js'
 
 export { onRenderHtml }

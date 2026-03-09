@@ -1,1 +1,1 @@
-export { default as onBeforeRender } from './server/onBeforeRender.js'
+export { default as onBeforeRender } from './server/on-before-render.js'

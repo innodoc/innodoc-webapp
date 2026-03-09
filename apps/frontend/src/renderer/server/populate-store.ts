@@ -1,13 +1,12 @@
 import { redirect, render } from 'vike/abort'
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
-import getRouteManager from '@innodoc/shared-core/routes/manager'
+import getRouteManager from '@innodoc/shared-core/routes/manager/vite'
+import { isArbitraryObject, isErrorWithMessage } from '@innodoc/shared-core/typeguards'
 import courses from '@innodoc/ui-store/slices/content/courses'
 import pages from '@innodoc/ui-store/slices/content/pages'
 import sections from '@innodoc/ui-store/slices/content/sections'
-import { isArbitraryObject, isErrorWithMessage } from '@innodoc/shared-core/typeguards'
-import type { CourseRouteInfo } from '@innodoc/shared-core/routes'
-import type { ApiCourse } from '@innodoc/shared-core/schemas/types'
+import type { ApiCourse, CourseRouteInfo } from '@innodoc/shared-core/types'
 import type { Store } from '@innodoc/ui-store/types'
 
 const routeManager = getRouteManager()

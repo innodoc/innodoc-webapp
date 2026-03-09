@@ -1,3 +1,3 @@
-import getSupportedLocales from './getSupportedLocales.js'
+import getSupportedLocales from './supported-locales.js'
 
 export { getSupportedLocales }

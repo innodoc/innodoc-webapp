@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react'
+import type { ComponentType } from 'react'
 
-import type { AppRouteInfo } from '@innodoc/shared-core/routes'
+import type { AppRouteInfo } from '@innodoc/shared-core/types'
 import type { RootState, Store } from '@innodoc/ui-store/types'
 
 declare global {
@@ -12,7 +12,7 @@ declare global {
 
     interface PageContext {
       // Refine type of pageContext.Page (it's `unknown` by default)
-      Page?: () => ReactNode
+      Page?: ComponentType
 
       /** Request host */
       host?: string
@@ -31,5 +31,3 @@ declare global {
     }
   }
 }
-
-export {}

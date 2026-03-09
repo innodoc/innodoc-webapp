@@ -42,10 +42,6 @@ function config() {
       // exclude local monorepo deps
       exclude: Object.keys(packageJson.dependencies).filter((dep) => dep.startsWith('@innodoc/')),
     },
-    resolve: {
-      // use "vite" key in exports before "node"
-      conditions: ['vite'],
-    },
     ssr: {
       noExternal: [
         '@reduxjs/toolkit', // otherwise can't be loaded on prerendering

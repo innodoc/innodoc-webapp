@@ -2,13 +2,12 @@ import { isPromise } from 'node:util/types'
 
 import type { Config, OnBeforeRenderAsync, PageContextServer } from 'vike/types'
 
-import { isAppRouteInfo, isAppRouteName, isCourseRouteInfo } from '@innodoc/shared-core/routes/typeguards'
+import { isAppRouteInfo, isAppRouteName, isCallable, isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
 import makeStore from '@innodoc/ui-store'
 import { changeRouteInfo } from '@innodoc/ui-store/slices/app'
-import { isCallable } from '@innodoc/shared-core/typeguards'
-import type { AppRouteInfo, AppRouteName, RouteParams } from '@innodoc/shared-core/routes'
+import type { AppRouteInfo, AppRouteName, RouteParams } from '@innodoc/shared-core/types'
 
-import populateStore from './populateStore.js'
+import populateStore from './populate-store.js'
 
 function isRouteParams<R extends AppRouteName>(params: PageContextServer['routeParams']): params is RouteParams<R> {
   return isAppRouteName(params.name)

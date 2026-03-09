@@ -2,8 +2,8 @@ import { redirect, render } from 'vike/abort'
 import type { PageContextServer } from 'vike/types'
 
 import { DEFAULT_ROUTE_NAME } from '@innodoc/shared-core/constants'
-import { isCourseRouteInfo } from '@innodoc/shared-core/routes/typeguards'
-import getRouteManager from '@innodoc/shared-core/routes/manager'
+import getRouteManager from '@innodoc/shared-core/routes/manager/vite'
+import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
 import courses from '@innodoc/ui-store/slices/content/courses'
 
 const routeManager = getRouteManager()
