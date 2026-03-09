@@ -2,12 +2,11 @@ import { ListItemText, MenuItem } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import type { ComponentProps } from 'react'
 
+import { AppLink } from '@innodoc/ui-design-system/links'
 import { useSelectCurrentCourse, useSelector } from '@innodoc/ui-shared/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 
-import { AppLink } from '@innodoc/ui-design-system/links'
-
-function MenuItemsLanguages({ closeMenu = () => {}, inset }: MenuItemsLanguagesProps) {
+function MenuItemsLanguages({ closeMenu, inset }: MenuItemsLanguagesProps) {
   const { t } = useTranslation()
 
   const { course } = useSelectCurrentCourse()
@@ -18,7 +17,9 @@ function MenuItemsLanguages({ closeMenu = () => {}, inset }: MenuItemsLanguagesP
   }
 
   const handleClick = () => {
-    closeMenu()
+    if (closeMenu) {
+      closeMenu()
+    }
   }
 
   return (

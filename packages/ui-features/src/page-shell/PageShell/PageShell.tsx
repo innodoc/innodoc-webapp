@@ -9,8 +9,8 @@ import type { ReactNode } from 'react'
 import type { HelmetServerState } from 'react-helmet-async'
 import type { PageContext } from 'vike/types'
 
-import { VikePageContextProvider } from '@innodoc/ui-shared/contexts'
 import theme from '@innodoc/ui-design-system/theme'
+import { VikePageContextProvider } from '@innodoc/ui-shared/contexts'
 import type { Store } from '@innodoc/ui-store/types'
 
 import Layout from '#layout'

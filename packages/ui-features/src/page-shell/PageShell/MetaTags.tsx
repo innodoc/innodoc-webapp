@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async'
 
 import { EMOTION_STYLE_INSERTION_POINT_NAME } from '@innodoc/shared-core/constants'
+import { isLocale } from '@innodoc/shared-core/typeguards'
 import { useRouteManager, useSelectCurrentCourse, useSelector } from '@innodoc/ui-shared/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
-import { isLocale } from '@innodoc/shared-core/typeguards'
 
 function MetaTags() {
   const { url } = useRouteManager()
@@ -11,14 +11,14 @@ function MetaTags() {
   const { locale: currentLocale } = useSelector(selectRouteInfo)
 
   const languageLinks = (course?.locales ?? [])
-    .filter(isLocale)
+    .filter((l) => isLocale(l))
     .map((locale) => <link href={url({ locale })} hrefLang={locale} key={locale} rel="alternate" />)
 
   return (
     <Helmet>
       <html lang={currentLocale} />
       <title>{course?.title ?? ''}</title>
-      <meta charSet="UTF-8" />
+      <meta charSet="utf-8" />
       <meta name="description" content={course?.description ?? ''} />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="canonical" href={import.meta.env.INNODOC_APP_ROOT} />

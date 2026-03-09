@@ -1,11 +1,10 @@
 import { Card, CardContent, CardHeader, List, ListItem, ListItemText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import { useSelectSectionChildren } from '@innodoc/ui-shared/hooks'
-import type { TranslatedSection } from '@innodoc/shared-core/schemas/types'
-
 import { SectionLink } from '@innodoc/ui-design-system/links'
 import { Icon } from '@innodoc/ui-design-system/misc'
+import { useSelectSectionChildren } from '@innodoc/ui-shared/hooks'
+import type { TranslatedSection } from '@innodoc/shared-core/types'
 
 function SubsectionList({ sectionId }: SubsectionListProps) {
   const { t } = useTranslation()

@@ -4,11 +4,13 @@ import { useTranslation } from 'react-i18next'
 import { AppLink } from '@innodoc/ui-design-system/links'
 import { PageHeader } from '@innodoc/ui-design-system/misc'
 
+// TODO
+const onSubmit = () => {
+  // pass
+}
+
 function LoginPage() {
   const { t } = useTranslation()
-
-  // TODO
-  const onSubmit = () => {}
 
   return (
     <>

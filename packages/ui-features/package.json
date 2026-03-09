@@ -6,10 +6,21 @@
   "sideEffects": false,
   "exports": {
     "./pages": "./dist/pages/pages.js",
-    "./renderPage": "./dist/page-shell/renderPage.js"
+    "./render-page": "./dist/page-shell/render-page.js"
   },
   "imports": {
-    "#layout": "./dist/Layout/Layout.js"
+    "#pages/course/content": {
+      "types": "./src/pages/course/ContentPage.tsx",
+      "default": "./dist/pages/course/ContentPage.js"
+    },
+    "#pages/error": {
+      "types": "./src/pages/ErrorPage.tsx",
+      "default": "./dist/pages/ErrorPage.js"
+    },
+    "#layout": {
+      "types": "./src/page-shell/Layout/Layout.tsx",
+      "default": "./dist/page-shell/Layout/Layout.js"
+    }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
@@ -44,6 +55,7 @@
     "jsdom": "catalog:",
     "typescript": "catalog:",
     "vike": "catalog:",
+    "vite": "catalog:",
     "vitest": "catalog:"
   },
   "prettier": "@innodoc/configs/prettierrc.json"

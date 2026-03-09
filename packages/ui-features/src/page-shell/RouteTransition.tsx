@@ -1,10 +1,12 @@
 import { Fade } from '@mui/material'
-import { forwardRef, useEffect, useState } from 'react'
+import { forwardRef, useEffect, useReducer } from 'react'
 import type { ComponentType, ForwardedRef, ReactElement, ReactNode } from 'react'
 
+import { assertNever } from '@innodoc/shared-core/typeguards'
 import { useDispatch, useSelector } from '@innodoc/ui-shared/hooks'
 import { changeRouteInfo, selectRouteTransitionInfo } from '@innodoc/ui-store/slices/app'
 import { selectIsProcessing } from '@innodoc/ui-store/slices/hast'
+import type { AppRouteInfo } from '@innodoc/shared-core/types'
 
 const TransitionChild = forwardRef(function TransitionChild(
   { children, ...props }: TransitionChildProps,
@@ -23,65 +25,108 @@ interface TransitionChildProps {
 
 /** Scroll to hash */
 function scrollToHash() {
-  let { hash } = window.location
+  let { hash } = globalThis.location
   hash = hash.slice(1)
   if (!hash) {
     return
   }
 
-  const el: HTMLElement | null = document.getElementById(hash)
+  const el: HTMLElement | null = document.querySelector(`#${hash}`)
   if (!el) {
     return
   }
 
-  // If we call scrollIntoView() in here without a setTimeout it won't
-  // scroll properly.
-  window.setTimeout(() => {
+  globalThis.queueMicrotask(() => {
     el.scrollIntoView()
-  }, 0)
+  })
 }
 
-function RouteTransition({ children, pagePrev: PagePrev = () => null }: RouteTransitionProps) {
+const DEFAULT_PAGE_PREV = () => null
+
+type Phase = 'idle' | 'fadeOut' | 'waiting' | 'fadeIn'
+
+interface State {
+  phase: Phase
+  routeInfo: AppRouteInfo | null
+}
+
+const NAVIGATE = Symbol('NAVIGATE')
+const EXITED = Symbol('EXITED')
+const PROCESSING_DONE = Symbol('PROCESSING_DONE')
+const ENTERING = Symbol('ENTERING')
+
+type Action =
+  | { type: typeof NAVIGATE; routeInfo: AppRouteInfo }
+  | { type: typeof EXITED }
+  | { type: typeof PROCESSING_DONE }
+  | { type: typeof ENTERING }
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case NAVIGATE: {
+      return { phase: 'fadeOut', routeInfo: action.routeInfo }
+    }
+    case EXITED: {
+      // Only transition if we're fading out
+      return state.phase === 'fadeOut' ? { ...state, phase: 'waiting' } : state
+    }
+    case PROCESSING_DONE: {
+      // Only transition if we're waiting and have route info
+      return state.phase === 'waiting' && state.routeInfo ? { ...state, phase: 'fadeIn' } : state
+    }
+    case ENTERING: {
+      return { phase: 'idle', routeInfo: null }
+    }
+    default: {
+      assertNever(action)
+    }
+  }
+}
+
+function RouteTransition({ children, pagePrev: PagePrev = DEFAULT_PAGE_PREV }: RouteTransitionProps) {
   const dispatch = useDispatch()
   const routeTransitionInfo = useSelector(selectRouteTransitionInfo)
   const isProcessing = useSelector(selectIsProcessing)
 
-  const [fadeIn, setFadeIn] = useState(true)
-  const [isExited, setIsExited] = useState(false)
+  const [state, dispatchLocal] = useReducer(reducer, { phase: 'idle', routeInfo: null })
 
-  // Fade-out on user navigation
+  // Navigation initiated
   useEffect(() => {
     if (routeTransitionInfo !== null) {
-      setFadeIn(false)
+      dispatchLocal({ type: NAVIGATE, routeInfo: routeTransitionInfo })
     }
-  }, [PagePrev, dispatch, routeTransitionInfo])
+  }, [routeTransitionInfo])
 
-  // Trigger fade-in and route change when fade-out and Markdown processing completed
+  // Processing completed
   useEffect(() => {
-    if (!isProcessing && !fadeIn && isExited && routeTransitionInfo !== null) {
-      setFadeIn(true)
-      dispatch(changeRouteInfo(routeTransitionInfo)) // Do actual route change
+    if (!isProcessing && state.phase === 'waiting' && state.routeInfo) {
+      dispatchLocal({ type: PROCESSING_DONE })
     }
-  }, [children, dispatch, fadeIn, isExited, isProcessing, routeTransitionInfo])
+  }, [isProcessing, state.phase, state.routeInfo])
 
-  const onEntering = () => {
-    setIsExited(false)
-    scrollToHash()
-  }
+  // Sync: dispatch route change when entering fadeIn phase
+  useEffect(() => {
+    if (state.phase === 'fadeIn' && state.routeInfo) {
+      dispatch(changeRouteInfo(state.routeInfo))
+    }
+  }, [state.phase, state.routeInfo, dispatch])
 
-  // Render old page on fade-out
-  const content = fadeIn ? children : <PagePrev />
+  const fadeIn = state.phase === 'idle' || state.phase === 'fadeIn'
+  const showPrev = state.phase === 'fadeOut' || state.phase === 'waiting'
 
   return (
     <Fade
       appear={false}
       in={fadeIn}
-      onEntering={onEntering}
+      onEntering={() => {
+        dispatchLocal({ type: ENTERING })
+        scrollToHash()
+      }}
       onExited={() => {
-        setIsExited(true)
+        dispatchLocal({ type: EXITED })
       }}
     >
-      <TransitionChild>{content}</TransitionChild>
+      <TransitionChild>{showPrev ? <PagePrev /> : children}</TransitionChild>
     </Fade>
   )
 }

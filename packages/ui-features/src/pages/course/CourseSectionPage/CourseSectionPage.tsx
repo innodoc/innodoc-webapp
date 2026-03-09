@@ -1,11 +1,11 @@
+import { isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
 import { PageHeader } from '@innodoc/ui-design-system/misc'
 import { formatSectionTitle } from '@innodoc/ui-design-system/utils'
 import { useSelector, useSelectSection } from '@innodoc/ui-shared/hooks'
-import { isCourseSectionRouteInfo } from '@innodoc/shared-core/routes/typeguards'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 import { useGetSectionContentQuery } from '@innodoc/ui-store/slices/content/sections'
 
-import ContentPage from '#content'
+import ContentPage from '#pages/course/content'
 
 import Breadcrumbs from './Breadcrumbs.js'
 import SubsectionList from './SubsectionList.js'

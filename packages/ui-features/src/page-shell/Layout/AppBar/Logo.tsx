@@ -1,8 +1,7 @@
 import { Typography } from '@mui/material'
 
-import { useSelectCurrentCourse } from '@innodoc/ui-shared/hooks'
-
 import { AppLink, CourseHomeLink } from '@innodoc/ui-design-system/links'
+import { useSelectCurrentCourse } from '@innodoc/ui-shared/hooks'
 
 // TODO: save logo in database?
 

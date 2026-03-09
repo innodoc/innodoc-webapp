@@ -1,12 +1,12 @@
 import { Box, Container, Grid, Link, Stack, styled, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import { AppLink, PageLink } from '@innodoc/ui-design-system/links'
-import pageLinks from '@innodoc/ui-design-system/pageLinks'
-import HastNode from '@innodoc/ui-content'
 import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '@innodoc/shared-core/constants'
+import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
+import HastNode from '@innodoc/ui-content'
+import { AppLink, PageLink } from '@innodoc/ui-design-system/links'
+import pageLinks from '@innodoc/ui-design-system/page-links'
 import { useSelectCurrentCourse, useSelectLinkedPages, useSelector } from '@innodoc/ui-shared/hooks'
-import { isCourseRouteInfo } from '@innodoc/shared-core/routes/typeguards'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 import { useGetFragmentContentQuery } from '@innodoc/ui-store/slices/content/fragments'
 
@@ -33,7 +33,7 @@ function Footer() {
       locale,
       fragmentType: FRAGMENT_TYPE_FOOTER_A,
     },
-    { skip: courseSlug === null },
+    { skip: courseSlug === undefined },
   )
   const { data: dataB } = useGetFragmentContentQuery(
     {
@@ -41,7 +41,7 @@ function Footer() {
       locale,
       fragmentType: FRAGMENT_TYPE_FOOTER_B,
     },
-    { skip: courseSlug === null },
+    { skip: courseSlug === undefined },
   )
 
   if (course === undefined) {
@@ -49,7 +49,7 @@ function Footer() {
   }
 
   const linkList = [
-    ...coursePages.map((page) => <FooterLink component={PageLink} key={`page-${page.id}`} page={page} />),
+    ...coursePages.map((page) => <FooterLink component={PageLink} key={`page-${String(page.id)}`} page={page} />),
     ...pageLinksFooter.map(({ icon, routeName, title }) => (
       <FooterLink component={AppLink} key={routeName} routeInfo={{ name: routeName }}>
         {icon}

@@ -1,6 +1,6 @@
+import { isCoursePageRouteInfo } from '@innodoc/shared-core/typeguards'
 import { PageHeader } from '@innodoc/ui-design-system/misc'
 import { useSelector, useSelectPage } from '@innodoc/ui-shared/hooks'
-import { isCoursePageRouteInfo } from '@innodoc/shared-core/routes/typeguards'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 import { useGetPageContentQuery } from '@innodoc/ui-store/slices/content/pages'
 

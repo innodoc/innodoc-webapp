@@ -16,7 +16,7 @@ function ErrorPage({ errorMsg, is404: is404Prop }: ErrorPageProps) {
     captionText = '404 Page Not Found'
     subtitle = 'This page could not be found.'
   } else if (typeof abortStatusCode === 'number') {
-    captionText = `Error: ${abortStatusCode}`
+    captionText = `Error: ${String(abortStatusCode)}`
   }
 
   if (typeof abortReason === 'string') {
