@@ -1,5 +1,5 @@
 import { redirect } from 'vike/abort'
-import type { OnBeforeRouteSync } from 'vike/types'
+import type { PageContextServer } from 'vike/types'
 
 import { DEFAULT_ROUTE_NAME } from '@innodoc/shared-core/constants'
 import { isLocale } from '@innodoc/shared-core/typeguards'
@@ -7,10 +7,6 @@ import type { AppRouteInfo } from '@innodoc/shared-core/types'
 
 import { ExtractionError } from './errors.js'
 import { extractLocale } from './extract-info.js'
-
-interface OnBeforeRouteReturnType {
-  pageContext: { routeInfo: AppRouteInfo }
-}
 
 /**
  * Prepare app routing.
@@ -23,7 +19,7 @@ interface OnBeforeRouteReturnType {
  * @param pageContext current page context
  * @returns updated page context
  **/
-const onBeforeRoute: OnBeforeRouteSync = function (pageContext): OnBeforeRouteReturnType {
+function onBeforeRoute(pageContext: PageContextServer) {
   const { requestLocales } = pageContext
 
   const routeInfo: AppRouteInfo = {

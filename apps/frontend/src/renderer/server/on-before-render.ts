@@ -1,6 +1,6 @@
 import { isPromise } from 'node:util/types'
 
-import type { Config, OnBeforeRenderAsync, PageContextServer } from 'vike/types'
+import type { PageContextServer } from 'vike/types'
 
 import { isAppRouteInfo, isAppRouteName, isCallable, isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
 import makeStore from '@innodoc/ui-store'
@@ -30,12 +30,12 @@ function mergeRouteInfo(routeInfo: AppRouteInfo, params: PageContextServer['rout
   return routeInfo
 }
 
-const onBeforeRender: OnBeforeRenderAsync = async function ({
+async function onBeforeRender({
   isClientSideNavigation,
   routeInfo: routeInfoInput,
   routeParams,
-  config,
-}) {
+  config: { onInit },
+}: PageContextServer) {
   const routeInfo = mergeRouteInfo(routeInfoInput, routeParams)
 
   // Initialize store
@@ -56,7 +56,6 @@ const onBeforeRender: OnBeforeRenderAsync = async function ({
   // }
 
   // onInit hook
-  const { onInit } = config as Config // TODO: once vikejs/vike#1532 is released
   if (isCallable(onInit)) {
     const ret = onInit({ isClientSideNavigation, routeInfo, store })
     if (isPromise(ret)) {

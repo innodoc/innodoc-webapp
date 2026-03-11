@@ -4,8 +4,8 @@ import { fileURLToPath } from 'node:url'
 import react from '@vitejs/plugin-react-swc'
 import { visualizer } from 'rollup-plugin-visualizer'
 import ssr from 'vike/plugin'
-import type { InlineConfig as VitestInlineConfig } from 'vitest'
-import type { UserConfigExport } from 'vitest/config'
+import { defineConfig } from 'vitest/config'
+import type { UserConfig } from 'vite'
 
 import packageJson from './package.json' with { type: 'json' }
 
@@ -14,7 +14,7 @@ const rootDir = path.resolve(dirname, '..', '..')
 
 /* Configure tests */
 function testConfig(testMode: string) {
-  const config: VitestInlineConfig = {
+  const config: UserConfig['test'] = {
     globals: true,
     include: [`tests/${testMode}/**/*.test.{ts,tsx}`],
     sequence: { hooks: 'stack' },
@@ -30,18 +30,15 @@ function testConfig(testMode: string) {
   return config
 }
 
-/* vite configuration */
-function config() {
-  const testMode = process.env.VITEST_MODE
+function baseConfig(): UserConfig {
+  // exclude local monorepo deps
+  const localDeps = Object.keys(packageJson.dependencies).filter((dep) => dep.startsWith('@innodoc/'))
 
-  const config: UserConfigExport = {
+  return {
     envDir: rootDir,
     envPrefix: 'INNODOC_', // Exposed to client
     plugins: [react(), ssr({ prerender: false })],
-    optimizeDeps: {
-      // exclude local monorepo deps
-      exclude: Object.keys(packageJson.dependencies).filter((dep) => dep.startsWith('@innodoc/')),
-    },
+    optimizeDeps: { exclude: localDeps },
     ssr: {
       noExternal: [
         '@reduxjs/toolkit', // otherwise can't be loaded on prerendering
@@ -49,13 +46,20 @@ function config() {
       ],
     },
   }
+}
+
+/* vite configuration */
+const config = defineConfig(() => {
+  const testMode = process.env.VITEST_MODE
+
+  const viteConfig = baseConfig()
 
   if (testMode && ['integration', 'unit'].includes(testMode)) {
-    config.test = testConfig(testMode)
+    viteConfig.test = testConfig(testMode)
   }
 
   if (process.env.VISUALIZE_BUNDLE === 'true') {
-    config.plugins?.push(
+    viteConfig.plugins?.push(
       visualizer({
         gzipSize: true,
         projectRoot: dirname,
@@ -63,7 +67,7 @@ function config() {
     )
   }
 
-  return config
-}
+  return viteConfig
+})
 
 export default config

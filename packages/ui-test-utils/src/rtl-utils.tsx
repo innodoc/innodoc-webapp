@@ -31,37 +31,50 @@ await i18n.use(initReactI18next).init({
 
 const store = makeStore()
 
-const TestPageShell = ({ children }: { children: React.ReactNode }) => {
-  const pageContext = {
-    Page: () => null,
-    exports: {},
-    exportsAll: {},
-    routeParams: {},
-    data: undefined,
-    config: {},
-    configEntries: {},
-    urlOriginal: '',
-    urlPathname: '',
-    urlParsed: {
-      origin: null,
-      pathname: '',
-      pathnameOriginal: '',
-      search: {},
-      searchAll: {},
-      searchOriginal: null,
-      searchString: null,
-      hash: '',
-      hashOriginal: null,
-      hashString: null,
-    },
-    is404: false,
-    isClientSideNavigation: false,
-    url: '',
-    pageExports: {},
-  } satisfies PageContext
+const pageContext = {
+  Page: () => null,
+  exports: {},
+  exportsAll: {},
+  routeParams: {},
+  data: undefined,
+  config: {},
+  configEntries: {},
+  urlOriginal: '',
+  urlPathname: '',
+  urlParsed: {
+    href: '',
+    protocol: 'https',
+    hostname: 'localhost',
+    port: 8080,
+    origin: null,
+    pathname: '',
+    pathnameOriginal: '',
+    search: {},
+    searchAll: {},
+    searchOriginal: null,
+    searchString: null,
+    hash: '',
+    hashOriginal: null,
+    hashString: null,
+  },
+  is404: false,
+  isClientSideNavigation: false,
+  url: '',
+  pageExports: {},
+  // source: {},
+  // sources: {},
+  // from: {
+  //   configsStandard: {},
+  //   configsCumulative: {},
+  //   configsComputed: {},
+  // },
+  // } satisfies PageContext
+}
 
+const TestPageShell = ({ children }: { children: React.ReactNode }) => {
+  // FIXME: properly create PageContext?
   return (
-    <VikePageContextProvider pageContext={pageContext}>
+    <VikePageContextProvider pageContext={pageContext as PageContext}>
       <ReduxProvider store={store}>
         <I18nextProvider i18n={i18n}>
           <CssVarsProvider theme={theme}>{children}</CssVarsProvider>

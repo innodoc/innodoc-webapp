@@ -28,17 +28,18 @@ const frontendHandler: RouteHandlerMethod = async (req, reply) => {
 
   // Don't throw if there is a pageContext.httpResponse, otherwise
   // the error page won't be rendered.
-  if (!pageContext.httpResponse && isNativeError(pageContext.errorWhileRendering)) {
+  if (isNativeError(pageContext.errorWhileRendering)) {
     throw pageContext.errorWhileRendering
   }
 
+  // FIXME: how to do that?
   // pageContext.httpResponse is missing if:
   //  - There is an error, but no error page.
   //  - Error page has a bug and couldn't be rendered.
-  if (!pageContext.httpResponse) {
-    reply.callNotFound()
-    return
-  }
+  // if (!pageContext.httpResponse) {
+  //   reply.callNotFound()
+  //   return
+  // }
 
   // Send result
   const { statusCode, headers } = pageContext.httpResponse
