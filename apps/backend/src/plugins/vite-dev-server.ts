@@ -10,10 +10,13 @@ import { devCerts } from '#utils'
 const viteDevServerPlugin: FastifyPluginAsync = async function (app) {
   const config = app.diContainer.resolve('config')
 
+  const frontendRoot = path.join(config.rootDir, 'apps', 'frontend')
+  const devCertsOptions = await devCerts()
+
   const viteServer = await viteCreateServer({
-    root: path.join(config.rootDir, 'packages', 'ui', 'frontend'),
+    root: frontendRoot,
     server: {
-      ...(await devCerts()),
+      ...devCertsOptions,
       middlewareMode: true,
       hmr: {
         protocol: 'wss',

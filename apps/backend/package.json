@@ -36,7 +36,7 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "dev": "nodemon --ext ts --watch ./src --exec 'turbo run dev:start --filter=server --log-prefix=none'",
+    "dev": "nodemon --ext ts --watch ./src --exec 'pnpm run dev:start --log-prefix=none'",
     "dev:mkcert": "mkcert -install && mkdir -p cert && mkcert -key-file cert/key.pem -cert-file cert/cert.pem innodoc.dev '*.innodoc.dev' localhost 127.0.0.1 ::1",
     "dev:start": "NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" tsx ./src/main.ts",
     "format": "prettier --check .",

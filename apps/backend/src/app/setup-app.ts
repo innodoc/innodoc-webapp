@@ -9,13 +9,17 @@ import diContainerPlugin from '#plugins/di-container'
 import { getRootDirPath } from '#utils'
 
 async function setupApp(config: ConfigSchema) {
-  // Initialize fastify in env
-  const env = await (config.isProduction ? import('./prod.js') : import('./dev.js'))
-  const app = fastify(await env.options())
-  await app.register(env.default)
+  // Env plugin
+  const envPlugin = await (config.isProduction ? import('./prod.js') : import('./dev.js'))
+
+  // Instantiate Fastify app
+  const app = fastify(await envPlugin.options())
 
   // Register DI container
   await app.register(diContainerPlugin, { config })
+
+  // Register environment plugin
+  await app.register(envPlugin.default)
 
   // Register services
   await app.register(autoLoad, {
