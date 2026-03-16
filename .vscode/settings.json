@@ -26,13 +26,13 @@
   "editor.formatOnSave": true,
   "eslint.useFlatConfig": true,
   "eslint.workingDirectories": [{ "pattern": "./packages/*/*" }],
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+  "js/ts.preferences.preferTypeOnlyAutoImports": true,
+  "js/ts.preferences.importModuleSpecifier": "project-relative",
+  "js/ts.preferences.importModuleSpecifierEnding": "js",
   "search.exclude": {
     "**/dist": true,
     "pnpm-lock.yaml": true
-  },
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.preferences.preferTypeOnlyAutoImports": true,
-  "typescript.preferences.importModuleSpecifier": "project-relative",
-  "typescript.preferences.importModuleSpecifierEnding": "js"
+  }
 }
