@@ -3,7 +3,7 @@ import { Breadcrumbs as MuiBreadcrumbs, styled, Typography } from '@mui/material
 import { CourseHomeLink, SectionLink } from '@innodoc/ui-design-system/links'
 import { Icon } from '@innodoc/ui-design-system/misc'
 import { formatSectionTitle } from '@innodoc/ui-design-system/utils'
-import { useSelectBreadcrumbSections } from '@innodoc/ui-shared/hooks'
+import { useSelectBreadcrumbSections } from '@innodoc/ui-store/hooks'
 
 const StyledBreadcrumbs = styled(MuiBreadcrumbs)(({ theme }) => ({
   marginBottom: theme.spacing(1),

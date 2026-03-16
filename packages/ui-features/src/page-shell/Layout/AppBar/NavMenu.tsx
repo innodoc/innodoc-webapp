@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { AppLink, PageLink } from '@innodoc/ui-design-system/links'
 import { Icon } from '@innodoc/ui-design-system/misc'
 import pageLinks from '@innodoc/ui-design-system/page-links'
-import { useRouteManager, useSelectLinkedPages } from '@innodoc/ui-shared/hooks'
+import { useRouteManager } from '@innodoc/ui-shared/hooks'
+import { useSelectLinkedPages } from '@innodoc/ui-store/hooks'
 
 const pageLinksNav = pageLinks.filter((page) => page.linked?.includes('nav'))
 

@@ -1,7 +1,7 @@
 import { Box, styled } from '@mui/material'
 import type { ReactNode } from 'react'
 
-import { useSelector } from '@innodoc/ui-shared/hooks'
+import { useSelector } from '@innodoc/ui-store/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 import type { YOUTUBE_VIDEO_PROPERTIES } from '@innodoc/content-parser/properties'
 

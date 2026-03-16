@@ -2,7 +2,8 @@ import { Helmet } from 'react-helmet-async'
 
 import { EMOTION_STYLE_INSERTION_POINT_NAME } from '@innodoc/shared-core/constants'
 import { isLocale } from '@innodoc/shared-core/typeguards'
-import { useRouteManager, useSelectCurrentCourse, useSelector } from '@innodoc/ui-shared/hooks'
+import { useRouteManager } from '@innodoc/ui-shared/hooks'
+import { useSelectCurrentCourse, useSelector } from '@innodoc/ui-store/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 
 function MetaTags() {

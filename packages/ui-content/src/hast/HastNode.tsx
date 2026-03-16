@@ -1,4 +1,4 @@
-import { useSelector } from '@innodoc/ui-shared/hooks'
+import { useSelector } from '@innodoc/ui-store/hooks'
 import { selectHastResultByHash } from '@innodoc/ui-store/slices/hast'
 import type { RootState } from '@innodoc/ui-store/types'
 

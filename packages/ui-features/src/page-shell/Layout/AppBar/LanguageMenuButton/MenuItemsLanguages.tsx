@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import type { ComponentProps } from 'react'
 
 import { AppLink } from '@innodoc/ui-design-system/links'
-import { useSelectCurrentCourse, useSelector } from '@innodoc/ui-shared/hooks'
+import { useSelectCurrentCourse, useSelector } from '@innodoc/ui-store/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 
 function MenuItemsLanguages({ closeMenu, inset }: MenuItemsLanguagesProps) {

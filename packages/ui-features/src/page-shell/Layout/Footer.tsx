@@ -6,7 +6,7 @@ import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
 import HastNode from '@innodoc/ui-content'
 import { AppLink, PageLink } from '@innodoc/ui-design-system/links'
 import pageLinks from '@innodoc/ui-design-system/page-links'
-import { useSelectCurrentCourse, useSelectLinkedPages, useSelector } from '@innodoc/ui-shared/hooks'
+import { useSelectCurrentCourse, useSelectLinkedPages, useSelector } from '@innodoc/ui-store/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 import { useGetFragmentContentQuery } from '@innodoc/ui-store/slices/content/fragments'
 

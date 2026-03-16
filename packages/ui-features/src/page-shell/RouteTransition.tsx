@@ -3,7 +3,7 @@ import { forwardRef, useEffect, useReducer } from 'react'
 import type { ComponentType, ForwardedRef, ReactElement, ReactNode } from 'react'
 
 import { assertNever } from '@innodoc/shared-core/typeguards'
-import { useDispatch, useSelector } from '@innodoc/ui-shared/hooks'
+import { useDispatch, useSelector } from '@innodoc/ui-store/hooks'
 import { changeRouteInfo, selectRouteTransitionInfo } from '@innodoc/ui-store/slices/app'
 import { selectIsProcessing } from '@innodoc/ui-store/slices/hast'
 import type { AppRouteInfo } from '@innodoc/shared-core/types'

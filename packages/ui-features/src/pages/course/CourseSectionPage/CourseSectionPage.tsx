@@ -1,7 +1,7 @@
 import { isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
 import { PageHeader } from '@innodoc/ui-design-system/misc'
 import { formatSectionTitle } from '@innodoc/ui-design-system/utils'
-import { useSelector, useSelectSection } from '@innodoc/ui-shared/hooks'
+import { useSelector, useSelectSection } from '@innodoc/ui-store/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 import { useGetSectionContentQuery } from '@innodoc/ui-store/slices/content/sections'
 
