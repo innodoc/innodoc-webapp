@@ -27,14 +27,14 @@ function useManageExpanded() {
   // Expand current and parents
   const expandedWithParents = getExpandedWithParents(currentSectionPath)
 
-  const [expanded, setExpanded] = useState<string[]>(expandedWithParents)
+  const [expandedItems, setExpandedItems] = useState<string[]>(expandedWithParents)
 
   // Expand parents on section change
   useEffect(() => {
     if (currentSectionPath && currentSectionPath !== prevSectionPath.current) {
       prevSectionPath.current = currentSectionPath
 
-      setExpanded((prevExpanded) => {
+      setExpandedItems((prevExpanded) => {
         const newExpanded: string[] = [...prevExpanded]
 
         for (const sectionPath of expandedWithParents) {
@@ -46,17 +46,23 @@ function useManageExpanded() {
         return newExpanded
       })
     }
-  }, [currentSectionPath, expanded, expandedWithParents, setExpanded])
+  }, [currentSectionPath, expandedItems, expandedWithParents, setExpandedItems])
 
   // Called when tree item expand button is clicked
-  const onNodeToggle = (ev: SyntheticEvent, nodeIds: string[]) => {
-    setExpanded([...nodeIds])
+  const onItemExpansionToggle = (ev: SyntheticEvent | null, itemId: string, isExpanded: boolean) => {
+    setExpandedItems((prev) => {
+      if (isExpanded) {
+        const pos = prev.indexOf(itemId)
+        return pos === -1 ? [...prev, itemId] : prev
+      }
+      return prev.filter((id) => id !== itemId)
+    })
   }
 
   // Currently selected nodes
-  const selected = currentSectionPath === undefined ? emptySelected : [currentSectionPath]
+  const selectedItems = currentSectionPath === undefined ? emptySelected : [currentSectionPath]
 
-  return { expanded, onNodeToggle, selected }
+  return { expandedItems, onItemExpansionToggle, selectedItems }
 }
 
 export default useManageExpanded

@@ -27,7 +27,7 @@ catalog:
   '@mui/lab': 5.0.0-alpha.167
   '@mui/material': ^5.15.0
   '@mui/system': ^5.15.12
-  '@mui/x-tree-view': ^6.17.0
+  '@mui/x-tree-view': ^8.27.2
   '@playwright/test': ^1.42.1
   '@reduxjs/toolkit': ^2.11.2
   '@scalar/fastify-api-reference': ^1.44.0
