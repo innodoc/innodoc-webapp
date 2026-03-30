@@ -5,21 +5,55 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    "./buttons": "./dist/buttons/buttons.js",
-    "./errors": "./dist/errors/errors.js",
-    "./links": "./dist/links/links.js",
-    "./misc": "./dist/misc/misc.js",
-    "./page-links": "./dist/page-links.js",
-    "./theme": "./dist/theme/theme.js",
-    "./toc": "./dist/toc/toc.js",
-    "./types/mui": {
-      "types": "./src/theme/mui.d.ts"
+    "./buttons": {
+      "types": "./src/buttons/buttons.ts",
+      "development": "./src/buttons/buttons.ts",
+      "default": "./dist/buttons/buttons.js"
     },
-    "./utils": "./dist/utils.js"
+    "./errors": {
+      "types": "./src/errors/errors.ts",
+      "development": "./src/errors/errors.ts",
+      "default": "./dist/errors/errors.js"
+    },
+    "./links": {
+      "types": "./src/links/links.ts",
+      "development": "./src/links/links.ts",
+      "default": "./dist/links/links.js"
+    },
+    "./misc": {
+      "types": "./src/misc/misc.ts",
+      "development": "./src/misc/misc.ts",
+      "default": "./dist/misc/misc.js"
+    },
+    "./page-links": {
+      "types": "./src/page-links.tsx",
+      "development": "./src/page-links.tsx",
+      "default": "./dist/page-links.js"
+    },
+    "./theme": {
+      "types": "./src/theme/theme.ts",
+      "development": "./src/theme/theme.ts",
+      "default": "./dist/theme/theme.js"
+    },
+    "./toc": {
+      "types": "./src/toc/toc.ts",
+      "development": "./src/toc/toc.ts",
+      "default": "./dist/toc/toc.js"
+    },
+    "./types/mui": {
+      "types": "./src/theme/mui.d.ts",
+      "development": "./src/theme/mui.d.ts"
+    },
+    "./utils": {
+      "types": "./src/utils.ts",
+      "development": "./src/utils.ts",
+      "default": "./dist/utils.js"
+    }
   },
   "imports": {
     "#errors": {
       "types": "./src/errors/errors.ts",
+      "development": "./src/errors/errors.ts",
       "default": "./dist/errors/errors.js"
     },
     "#icon-bundle": {
@@ -27,35 +61,40 @@
     },
     "#links": {
       "types": "./src/links/links.ts",
+      "development": "./src/links/links.ts",
       "default": "./dist/links/links.js"
     },
     "#misc": {
       "types": "./src/misc/misc.ts",
+      "development": "./src/misc/misc.ts",
       "default": "./dist/misc/misc.js"
     },
     "#page-links": {
       "types": "./src/page-links.tsx",
+      "development": "./src/page-links.tsx",
       "default": "./dist/page-links.js"
     },
     "#theme": {
       "types": "./src/theme/theme.ts",
+      "development": "./src/theme/theme.ts",
       "default": "./dist/theme/theme.js"
     },
     "#toc": {
       "types": "./src/toc/toc.ts",
+      "development": "./src/toc/toc.ts",
       "default": "./dist/toc/toc.js"
     },
     "#utils": {
       "types": "./src/utils.ts",
+      "development": "./src/utils.ts",
       "default": "./dist/utils.js"
     }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "dev": "tsc --project tsconfig.build.json --watch",
-    "format": "prettier --check .",
-    "format:write": "prettier --write .",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "vitest",

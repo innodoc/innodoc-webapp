@@ -1,13 +1,13 @@
 import type { ReactElement } from 'react'
 
-import type { AppRouteName, PageLinkLocation } from '@innodoc/shared-core/types'
+import type { FrontendRouteName, PageLinkLocation } from '@innodoc/shared-core/types'
 
 import { Icon } from '#misc'
 
 /** Page link definition */
 interface PageLinkDefinition {
   /** URL path */
-  routeName: AppRouteName
+  routeName: FrontendRouteName
 
   /** Page title i18n key */
   title?: string

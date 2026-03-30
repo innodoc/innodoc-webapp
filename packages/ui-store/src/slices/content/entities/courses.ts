@@ -1,24 +1,25 @@
-import type { TypedUseQuery } from '@reduxjs/toolkit/query/react'
-
-import getRouteManager from '@innodoc/shared-core/routes/manager/vite'
+import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { ApiCourse, ApiRouteParams } from '@innodoc/shared-core/types'
 
 import contentApi from '#slices/content'
-import type { BaseQuery } from '#types'
 
-const routeManager = getRouteManager()
+let coursesApi: ReturnType<typeof makeCoursesApi> | null = null
 
-const courses = contentApi.injectEndpoints({
-  endpoints: (builder) => ({
-    /** Fetch course */
-    getCourse: builder.query<ApiCourse, ApiRouteParams['api:course']>({
-      query: (args) => routeManager.generateApiUrlPath('api:course', args),
+function makeCoursesApi(routeManager: RouteManager) {
+  return contentApi.injectEndpoints({
+    endpoints: (builder) => ({
+      /** Fetch course */
+      getCourse: builder.query<ApiCourse, ApiRouteParams['api:course']>({
+        query: (args) => routeManager.generateApiUrlPath('api:course', args),
+      }),
     }),
-  }),
-})
+  })
+}
 
-type UseGetCourseQuery = TypedUseQuery<ApiCourse, ApiRouteParams['api:course'], BaseQuery>
-const useGetCourseQuery = courses.useGetCourseQuery as UseGetCourseQuery
+function getCachedCoursesApi(routeManager: RouteManager) {
+  coursesApi ??= makeCoursesApi(routeManager)
 
-export { useGetCourseQuery }
-export default courses
+  return coursesApi
+}
+
+export default getCachedCoursesApi

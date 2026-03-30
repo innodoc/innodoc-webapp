@@ -1,7 +1,6 @@
-import { forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 
-import { useRouteManager } from '@innodoc/ui-shared/hooks'
+import { useRouteManager } from '@innodoc/ui-store/hooks'
 
 import { InlineError } from '#errors'
 import { Code } from '#misc'
@@ -10,7 +9,7 @@ import AppLink from './AppLink.js'
 import type { LinkProps } from './types.js'
 
 /** Link from specifier */
-const SpecLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLink({ to, ...other }, ref) {
+function SpecLink({ ref, to, ...other }: LinkProps) {
   const { parseLinkSpecifier } = useRouteManager()
   let routeInfo: ReturnType<typeof parseLinkSpecifier>
 
@@ -27,6 +26,6 @@ const SpecLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLink({
   }
 
   return <AppLink routeInfo={routeInfo} ref={ref} {...other} />
-})
+}
 
 export default SpecLink

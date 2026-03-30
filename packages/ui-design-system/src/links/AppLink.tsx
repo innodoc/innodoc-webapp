@@ -1,9 +1,8 @@
-import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ReactNode } from 'react'
 
-import { isAppRouteInfo, isCoursePageRouteInfo, isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
-import { useRouteManager } from '@innodoc/ui-shared/hooks'
+import { isFrontendRouteInfo, isCoursePageRouteInfo, isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
+import { useRouteManager } from '@innodoc/ui-store/hooks'
 
 import pageLinks from '#page-links'
 
@@ -14,11 +13,11 @@ import { SectionLinkFromPath } from './SectionLink.js'
 import type { LinkProps } from './types.js'
 
 /** App-internal link */
-const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink({ children, routeInfo, ...other }, ref) {
+function AppLink({ ref, children, routeInfo, ...other }: AppLinkProps) {
   const { t } = useTranslation()
   const { url } = useRouteManager()
 
-  if (!isAppRouteInfo(routeInfo)) {
+  if (!isFrontendRouteInfo(routeInfo)) {
     return null
   }
 
@@ -64,7 +63,7 @@ const AppLink = forwardRef<HTMLAnchorElement, AppLinkProps>(function AppLink({ c
       {content}
     </BaseLink>
   )
-})
+}
 
 interface AppLinkProps extends Omit<LinkProps, 'to'> {
   routeInfo: unknown

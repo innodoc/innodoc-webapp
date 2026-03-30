@@ -5,63 +5,91 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    "./constants": "./dist/constants.js",
-    "./i18n": "./dist/i18n.js",
-    "./routes": "./dist/routes/routes.js",
-    "./routes/manager/vite": "./dist/routes/manager/get-route-manager.vite.js",
-    "./schemas": "./dist/schemas/schemas.js",
-    "./types": {
-      "types": "./dist/types/types.d.ts"
+    "./constants": {
+      "types": "./src/constants.ts",
+      "development": "./src/constants.ts",
+      "default": "./dist/constants.js"
     },
-    "./typeguards": "./dist/typeguards/typeguards.js"
+    "./i18n": {
+      "types": "./src/i18n.ts",
+      "development": "./src/i18n.ts",
+      "default": "./dist/i18n.js"
+    },
+    "./routes": {
+      "types": "./src/routes/routes.ts",
+      "development": "./src/routes/routes.ts",
+      "default": "./dist/routes/routes.js"
+    },
+    "./schemas": {
+      "types": "./src/schemas/schemas.ts",
+      "development": "./src/schemas/schemas.ts",
+      "default": "./dist/schemas/schemas.js"
+    },
+    "./types": {
+      "types": "./src/types/types.ts",
+      "development": "./src/types/types.ts"
+    },
+    "./typeguards": {
+      "types": "./src/typeguards/typeguards.ts",
+      "development": "./src/typeguards/typeguards.ts",
+      "default": "./dist/typeguards/typeguards.js"
+    }
   },
   "imports": {
     "#constants": {
       "types": "./src/constants.ts",
+      "development": "./src/constants.ts",
       "default": "./dist/constants.js"
     },
     "#routes": {
       "types": "./src/routes/routes.ts",
+      "development": "./src/routes/routes.ts",
       "default": "./dist/routes/routes.js"
     },
     "#routes/api-routes": {
-      "types": "./src/routes/api-routes.ts"
+      "types": "./src/routes/api-routes.ts",
+      "development": "./src/routes/api-routes.ts",
+      "default": "./dist/routes/api-routes.js"
     },
     "#routes/course-routes": {
-      "types": "./src/routes/course-routes.ts"
+      "types": "./src/routes/course-routes.ts",
+      "development": "./src/routes/course-routes.ts",
+      "default": "./dist/routes/course-routes.js"
     },
     "#schemas": {
       "types": "./src/schemas/schemas.ts",
+      "development": "./src/schemas/schemas.ts",
       "default": "./dist/schemas/schemas.js"
     },
     "#schemas/common": {
       "types": "./src/schemas/common.ts",
+      "development": "./src/schemas/common.ts",
       "default": "./dist/schemas/common.js"
+    },
+    "#types": {
+      "types": "./src/types/types.ts",
+      "development": "./src/types/types.ts"
     },
     "#typeguards": {
       "types": "./src/typeguards/typeguards.ts",
+      "development": "./src/typeguards/typeguards.ts",
       "default": "./dist/typeguards/typeguards.js"
-    },
-    "#types": {
-      "types": "./src/types/types.ts"
     }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "dev": "tsc --project tsconfig.build.json --watch",
-    "format": "prettier --check .",
-    "format:write": "prettier --write .",
+    "fmt:check": "prettier --check .",
     "lint": "eslint .",
+    "fmt": "prettier --write .",
     "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "i18next": "catalog:",
-    "i18next-http-backend": "catalog:",
-    "path-to-regexp": "catalog:",
     "react-i18next": "catalog:",
+    "regexparam": "catalog:",
     "validator": "catalog:",
     "zod": "catalog:"
   },
@@ -70,7 +98,6 @@
     "@types/hast": "catalog:",
     "@types/node": "catalog:",
     "@types/validator": "catalog:",
-    "i18next-fs-backend": "catalog:",
     "iso-639-1": "catalog:",
     "type-fest": "catalog:",
     "typescript": "catalog:",

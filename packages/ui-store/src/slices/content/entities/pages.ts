@@ -1,36 +1,34 @@
-import type { TypedUseQuery } from '@reduxjs/toolkit/query/react'
-
-import getRouteManager from '@innodoc/shared-core/routes/manager/vite'
+import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { ApiPage, ApiRouteParams, ContentWithHash } from '@innodoc/shared-core/types'
 
 import contentApi, { hashContentResponse } from '#slices/content'
-import type { BaseQuery } from '#types'
 
-const routeManager = getRouteManager()
+let pagesApi: ReturnType<typeof makePagesApi> | null = null
 
-const pages = contentApi.injectEndpoints({
-  endpoints: (builder) => ({
-    /** Fetch course pages */
-    getCoursePages: builder.query<ApiPage[], ApiRouteParams['api:course:pages']>({
-      query: (args) => routeManager.generateApiUrlPath('api:course:pages', args),
-    }),
-
-    /** Fetch content for a page */
-    getPageContent: builder.query<ContentWithHash, ApiRouteParams['api:course:page:content']>({
-      query: (args) => ({
-        responseHandler: 'text',
-        url: routeManager.generateApiUrlPath('api:course:page:content', args),
+function makePagesApi(routeManager: RouteManager) {
+  return contentApi.injectEndpoints({
+    endpoints: (builder) => ({
+      /** Fetch course pages */
+      getCoursePages: builder.query<ApiPage[], ApiRouteParams['api:course:pages']>({
+        query: (args) => routeManager.generateApiUrlPath('api:course:pages', args),
       }),
-      transformResponse: hashContentResponse,
+
+      /** Fetch content for a page */
+      getPageContent: builder.query<ContentWithHash, ApiRouteParams['api:course:page:content']>({
+        query: (args) => ({
+          responseHandler: 'text',
+          url: routeManager.generateApiUrlPath('api:course:page:content', args),
+        }),
+        transformResponse: hashContentResponse,
+      }),
     }),
-  }),
-})
+  })
+}
 
-type UseGetCoursePagesQuery = TypedUseQuery<ApiPage[], ApiRouteParams['api:course:pages'], BaseQuery>
-const useGetCoursePagesQuery = pages.useGetCoursePagesQuery as UseGetCoursePagesQuery
+function getCachedPagesApi(routeManager: RouteManager) {
+  pagesApi ??= makePagesApi(routeManager)
 
-type UseGetPageContentQuery = TypedUseQuery<ContentWithHash, ApiRouteParams['api:course:page:content'], BaseQuery>
-const useGetPageContentQuery = pages.useGetPageContentQuery as UseGetPageContentQuery
+  return pagesApi
+}
 
-export { useGetCoursePagesQuery, useGetPageContentQuery }
-export default pages
+export default getCachedPagesApi

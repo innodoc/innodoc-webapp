@@ -1,6 +1,6 @@
 {
-  "extends": "@innodoc/configs/tsconfig/base.json",
-  "include": ["eslint.config.js", "vite.config.ts", "src/**/*.ts"],
+  "extends": "@innodoc/configs/tsconfig/react.json",
+  "include": ["eslint.config.js", "vite.config.ts", "src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["dist", "node_modules", "public"],
   "compilerOptions": {
     "esModuleInterop": true,

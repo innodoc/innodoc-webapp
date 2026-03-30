@@ -9,11 +9,11 @@ export {
 } from './content.js'
 export { isErrorWithMessage, isParserError, isZodError } from './errors.js'
 export {
-  isAppRouteInfo,
-  isAppRouteName,
   isCourseContentRouteName,
   isCoursePageRouteInfo,
   isCourseRouteInfo,
   isCourseSectionRouteInfo,
+  isFrontendRouteInfo,
+  isFrontendRouteName,
   isRouteName,
 } from './routes.js'

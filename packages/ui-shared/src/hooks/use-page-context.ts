@@ -1,9 +1,9 @@
-import { useContext } from 'react'
+import { use } from 'react'
 
-import { VikePageContext } from '#contexts'
+import { PageContextContext } from '#contexts'
 
 function usePageContext() {
-  return useContext(VikePageContext)
+  return use(PageContextContext)
 }
 
 export default usePageContext

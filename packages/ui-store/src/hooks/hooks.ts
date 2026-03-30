@@ -1,4 +1,5 @@
 export { useDispatch, useSelector } from './redux.js'
+export { default as useRouteManager } from './use-route-manager.js'
 export { default as useSelectBreadcrumbSections } from './use-select-breadcrumb-sections.js'
 export { default as useSelectCurrentCourse } from './use-select-current-course.js'
 export { default as useSelectLinkedPages } from './use-select-linked-pages.js'

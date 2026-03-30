@@ -1,14 +1,5 @@
-import fs from 'node:fs/promises'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-
-import { isArbitraryObject } from '@innodoc/shared-core/typeguards'
 import type { RouteManager } from '@innodoc/shared-core/routes'
-import type { ApiRouteName } from '@innodoc/shared-core/types'
-
-function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
-  return isArbitraryObject(error) && error instanceof Error && typeof error.code === 'string'
-}
+import type { FrontendRouteName } from '@innodoc/shared-core/types'
 
 /**
  * Get URL path for API route handler.
@@ -19,10 +10,10 @@ function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
  * @returns Route path
  * @throws if unknown route name was given
  */
-function getRoutePath(routeManager: RouteManager, name: ApiRouteName, removePrefix?: string) {
-  const apiRoutes = routeManager.getApiRoutes()
+function getRoutePath(routeManager: RouteManager, name: FrontendRouteName, removePrefix?: string) {
+  const frontendRoutes = routeManager.getFrontendRoutes()
 
-  const pattern = apiRoutes[name]
+  const pattern = frontendRoutes[name]
   if (pattern === undefined) {
     throw new Error(`Unknown route requested: ${name}`)
   }
@@ -32,29 +23,4 @@ function getRoutePath(routeManager: RouteManager, name: ApiRouteName, removePref
     : pattern.replace(new RegExp(`^${removePrefix.replace('/', String.raw`\/`)}`), '')
 }
 
-/**
- * Get server package `rootDir` path.
- *
- * @returns path to server package source
- */
-function getRootDirPath() {
-  return path.dirname(fileURLToPath(import.meta.url))
-}
-
-/**
- * Get dev server certificates.
- *
- * @returns object containing certificates
- */
-async function devCerts() {
-  const certPath = path.resolve(getRootDirPath(), '..', 'cert')
-  return {
-    https: {
-      allowHTTP1: true,
-      key: await fs.readFile(path.join(certPath, 'key.pem')),
-      cert: await fs.readFile(path.join(certPath, 'cert.pem')),
-    },
-  }
-}
-
-export { devCerts, getRootDirPath, getRoutePath, isErrnoException }
+export { getRoutePath }

@@ -1,12 +1,10 @@
-import { forwardRef } from 'react'
-
 import { useSelectCurrentCourse } from '@innodoc/ui-store/hooks'
 
 import SpecLink from './SpecLink.js'
 import type { LinkProps } from './types.js'
 
 /** Link to home as specified in course */
-const CourseHomeLink = forwardRef<HTMLAnchorElement, HomeLinkProps>(function HomeLink({ children, ...props }, ref) {
+function CourseHomeLink({ ref, children, ...props }: HomeLinkProps) {
   const { course } = useSelectCurrentCourse()
 
   if (!course) {
@@ -21,7 +19,7 @@ const CourseHomeLink = forwardRef<HTMLAnchorElement, HomeLinkProps>(function Hom
       {content}
     </SpecLink>
   )
-})
+}
 
 type HomeLinkProps = Omit<LinkProps, 'to'>
 

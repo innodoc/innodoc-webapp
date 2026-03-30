@@ -5,62 +5,114 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./dist/make-store.js",
-    "./hooks": "./dist/hooks/hooks.js",
-    "./slices/app": "./dist/slices/app/app-slice.js",
-    "./slices/content": "./dist/slices/content/content-api.js",
-    "./slices/content/courses": "./dist/slices/content/entities/courses.js",
-    "./slices/content/fragments": "./dist/slices/content/entities/fragments.js",
-    "./slices/content/pages": "./dist/slices/content/entities/pages.js",
-    "./slices/content/sections": "./dist/slices/content/entities/sections.js",
-    "./slices/hast": "./dist/slices/hast/hast-slice.js",
-    "./types": "./dist/types.js",
-    "./utils": "./dist/utils.js"
+    ".": {
+      "types": "./src/make-store.ts",
+      "development": "./src/make-store.ts",
+      "default": "./dist/make-store.js"
+    },
+    "./hooks": {
+      "types": "./src/hooks/hooks.ts",
+      "development": "./src/hooks/hooks.ts",
+      "default": "./dist/hooks/hooks.js"
+    },
+    "./slices/app": {
+      "types": "./src/slices/app/app-slice.ts",
+      "development": "./src/slices/app/app-slice.ts",
+      "default": "./dist/slices/app/app-slice.js"
+    },
+    "./slices/content": {
+      "types": "./src/slices/content/content-api.ts",
+      "development": "./src/slices/content/content-api.ts",
+      "default": "./dist/slices/content/content-api.js"
+    },
+    "./slices/content/courses": {
+      "types": "./src/slices/content/entities/courses.ts",
+      "development": "./src/slices/content/entities/courses.ts",
+      "default": "./dist/slices/content/entities/courses.js"
+    },
+    "./slices/content/fragments": {
+      "types": "./src/slices/content/entities/fragments.ts",
+      "development": "./src/slices/content/entities/fragments.ts",
+      "default": "./dist/slices/content/entities/fragments.js"
+    },
+    "./slices/content/pages": {
+      "types": "./src/slices/content/entities/pages.ts",
+      "development": "./src/slices/content/entities/pages.ts",
+      "default": "./dist/slices/content/entities/pages.js"
+    },
+    "./slices/content/sections": {
+      "types": "./src/slices/content/entities/sections.ts",
+      "development": "./src/slices/content/entities/sections.ts",
+      "default": "./dist/slices/content/entities/sections.js"
+    },
+    "./slices/hast": {
+      "types": "./src/slices/hast/hast-slice.ts",
+      "development": "./src/slices/hast/hast-slice.ts",
+      "default": "./dist/slices/hast/hast-slice.js"
+    },
+    "./types": {
+      "types": "./src/types.ts",
+      "development": "./src/types.ts",
+      "default": "./dist/types.js"
+    },
+    "./utils": {
+      "types": "./src/utils.ts",
+      "development": "./src/utils.ts",
+      "default": "./dist/utils.js"
+    }
   },
   "imports": {
     "#slices/app": {
       "types": "./src/slices/app/app-slice.ts",
+      "development": "./src/slices/app/app-slice.ts",
       "default": "./dist/slices/app/app-slice.js"
     },
     "#slices/content": {
       "types": "./src/slices/content/content-api.ts",
+      "development": "./src/slices/content/content-api.ts",
       "default": "./dist/slices/content/content-api.js"
     },
     "#slices/content/courses": {
       "types": "./src/slices/content/entities/courses.ts",
+      "development": "./src/slices/content/entities/courses.ts",
       "default": "./dist/slices/content/entities/courses.js"
     },
     "#slices/content/fragments": {
       "types": "./src/slices/content/entities/fragments.ts",
+      "development": "./src/slices/content/entities/fragments.ts",
       "default": "./dist/slices/content/entities/fragments.js"
     },
     "#slices/content/pages": {
       "types": "./src/slices/content/entities/pages.ts",
+      "development": "./src/slices/content/entities/pages.ts",
       "default": "./dist/slices/content/entities/pages.js"
     },
     "#slices/content/sections": {
       "types": "./src/slices/content/entities/sections.ts",
+      "development": "./src/slices/content/entities/sections.ts",
       "default": "./dist/slices/content/entities/sections.js"
     },
     "#slices/hast": {
       "types": "./src/slices/hast/hast-slice.ts",
+      "development": "./src/slices/hast/hast-slice.ts",
       "default": "./dist/slices/hast/hast-slice.js"
     },
     "#types": {
       "types": "./src/types.ts",
+      "development": "./src/types.ts",
       "default": "./dist/types.js"
     },
     "#utils": {
       "types": "./src/utils.ts",
+      "development": "./src/utils.ts",
       "default": "./dist/utils.js"
     }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "dev": "tsc --project tsconfig.build.json --watch",
-    "format": "prettier --check .",
-    "format:write": "prettier --write .",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
@@ -69,6 +121,7 @@
   "dependencies": {
     "@innodoc/content-parser": "workspace:*",
     "@innodoc/shared-core": "workspace:*",
+    "@innodoc/ui-shared": "workspace:*",
     "@reduxjs/toolkit": "catalog:",
     "crc": "catalog:",
     "i18next": "catalog:",

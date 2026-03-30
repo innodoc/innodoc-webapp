@@ -1,4 +1,5 @@
 import { Box, Container, Grid, Link, Stack, styled, Typography } from '@mui/material'
+import { use } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '@innodoc/shared-core/constants'
@@ -6,9 +7,10 @@ import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
 import HastNode from '@innodoc/ui-content'
 import { AppLink, PageLink } from '@innodoc/ui-design-system/links'
 import pageLinks from '@innodoc/ui-design-system/page-links'
+import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
 import { useSelectCurrentCourse, useSelectLinkedPages, useSelector } from '@innodoc/ui-store/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
-import { useGetFragmentContentQuery } from '@innodoc/ui-store/slices/content/fragments'
+import getFragmentsApi from '@innodoc/ui-store/slices/content/fragments'
 
 const pageLinksFooter = pageLinks.filter((page) => page.linked?.includes('footer'))
 
@@ -26,8 +28,10 @@ function Footer() {
   const routeInfo = useSelector(selectRouteInfo)
   const { locale } = routeInfo
   const courseSlug = isCourseRouteInfo(routeInfo) ? routeInfo.courseSlug : undefined
+  const routeManager = use(RouteManagerContext)
+  const fragments = getFragmentsApi(routeManager)
 
-  const { data: dataA } = useGetFragmentContentQuery(
+  const { data: dataA } = fragments.useGetFragmentContentQuery(
     {
       courseSlug: courseSlug ?? '',
       locale,
@@ -35,7 +39,7 @@ function Footer() {
     },
     { skip: courseSlug === undefined },
   )
-  const { data: dataB } = useGetFragmentContentQuery(
+  const { data: dataB } = fragments.useGetFragmentContentQuery(
     {
       courseSlug: courseSlug ?? '',
       locale,

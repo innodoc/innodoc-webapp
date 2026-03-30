@@ -1,9 +1,12 @@
+import { use } from 'react'
+
 import { isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
 import { PageHeader } from '@innodoc/ui-design-system/misc'
 import { formatSectionTitle } from '@innodoc/ui-design-system/utils'
+import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
 import { useSelector, useSelectSection } from '@innodoc/ui-store/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
-import { useGetSectionContentQuery } from '@innodoc/ui-store/slices/content/sections'
+import getSectionsApi from '@innodoc/ui-store/slices/content/sections'
 
 import ContentPage from '#pages/course/content'
 
@@ -18,7 +21,9 @@ function CourseSectionPage() {
     : { courseSlug: undefined, sectionPath: undefined }
   const { section } = useSelectSection(sectionPath)
 
-  const { data, isError, isLoading } = useGetSectionContentQuery(
+  const routeManager = use(RouteManagerContext)
+  const sections = getSectionsApi(routeManager)
+  const { data, isError, isLoading } = sections.useGetSectionContentQuery(
     {
       courseSlug: courseSlug ?? '',
       locale,

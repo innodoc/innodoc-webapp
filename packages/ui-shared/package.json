@@ -5,21 +5,29 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    "./contexts": "./dist/contexts/contexts.js",
-    "./hooks": "./dist/hooks/hooks.js"
+    "./contexts": {
+      "types": "./src/contexts/contexts.ts",
+      "development": "./src/contexts/contexts.ts",
+      "default": "./dist/contexts/contexts.js"
+    },
+    "./hooks": {
+      "types": "./src/hooks/hooks.ts",
+      "development": "./src/hooks/hooks.ts",
+      "default": "./dist/hooks/hooks.js"
+    }
   },
   "imports": {
     "#contexts": {
       "types": "./src/contexts/contexts.ts",
+      "development": "./src/contexts/contexts.ts",
       "default": "./dist/contexts/contexts.js"
     }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "dev": "tsc --project tsconfig.build.json --watch",
-    "format": "prettier --check .",
-    "format:write": "prettier --write .",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "vitest",
@@ -27,7 +35,6 @@
   },
   "dependencies": {
     "@innodoc/shared-core": "workspace:*",
-    "@innodoc/ui-store": "workspace:*",
     "react": "catalog:"
   },
   "devDependencies": {
@@ -36,7 +43,6 @@
     "@types/react": "catalog:",
     "jsdom": "catalog:",
     "typescript": "catalog:",
-    "vike": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"
   },

@@ -15,18 +15,18 @@ type CourseContentRouteName = keyof typeof courseContentRoutes
 /** User page route name */
 type UserRouteName = keyof typeof userRoutes
 
-/** App route name */
-type AppRouteName = BuiltinRouteName | CourseRouteName | UserRouteName
+/** Frontend route name */
+type FrontendRouteName = BuiltinRouteName | CourseRouteName | UserRouteName
 
 /** Route name */
-type RouteName = ApiRouteName | AppRouteName
+type RouteName = ApiRouteName | FrontendRouteName
 
 export type {
   ApiRouteName,
-  AppRouteName,
   BuiltinRouteName,
   CourseContentRouteName,
   CourseRouteName,
+  FrontendRouteName,
   RouteName,
   UserRouteName,
 }

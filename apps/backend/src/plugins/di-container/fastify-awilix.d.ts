@@ -1,8 +1,9 @@
 import type Database from '@innodoc/server-db'
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { ConfigSchema } from '@innodoc/shared-core/types'
+import type { Store } from '@innodoc/ui-store/types'
 
-import type { makePathFunc } from './di-container.js'
+import type { makePathFunc } from './di-container-plugin.js'
 
 declare module '@fastify/awilix' {
   interface Cradle {
@@ -10,5 +11,9 @@ declare module '@fastify/awilix' {
     database: Database
     routeManager: RouteManager
     makePathFunc: ReturnType<typeof makePathFunc>
+  }
+
+  interface RequestCradle {
+    store: Promise<Store>
   }
 }

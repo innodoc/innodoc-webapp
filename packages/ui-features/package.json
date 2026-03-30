@@ -5,29 +5,34 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    "./pages": "./dist/pages/pages.js",
-    "./render-page": "./dist/page-shell/render-page.js"
+    "./page-shell": {
+      "types": "./src/page-shell/PageShell/PageShell.tsx",
+      "development": "./src/page-shell/PageShell/PageShell.tsx",
+      "default": "./dist/page-shell/PageShell/PageShell.js"
+    }
   },
   "imports": {
+    "#layout": {
+      "types": "./src/page-shell/Layout/Layout.tsx",
+      "development": "./src/page-shell/Layout/Layout.tsx",
+      "default": "./dist/page-shell/Layout/Layout.js"
+    },
     "#pages/course/content": {
       "types": "./src/pages/course/ContentPage.tsx",
+      "development": "./src/pages/course/ContentPage.tsx",
       "default": "./dist/pages/course/ContentPage.js"
     },
     "#pages/error": {
       "types": "./src/pages/ErrorPage.tsx",
+      "development": "./src/pages/ErrorPage.tsx",
       "default": "./dist/pages/ErrorPage.js"
-    },
-    "#layout": {
-      "types": "./src/page-shell/Layout/Layout.tsx",
-      "default": "./dist/page-shell/Layout/Layout.js"
     }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "dev": "tsc --project tsconfig.build.json --watch",
-    "format": "prettier --check .",
-    "format:write": "prettier --write .",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "vitest",
@@ -42,19 +47,15 @@
     "@innodoc/ui-store": "workspace:*",
     "@mui/material": "catalog:",
     "react": "catalog:",
-    "react-helmet-async": "catalog:",
-    "react-i18next": "catalog:",
-    "react-redux": "catalog:"
+    "react-i18next": "catalog:"
   },
   "devDependencies": {
     "@innodoc/configs": "workspace:*",
     "@innodoc/ui-test-utils": "workspace:*",
     "@testing-library/jest-dom": "catalog:",
     "@types/react": "catalog:",
-    "i18next": "catalog:",
     "jsdom": "catalog:",
     "typescript": "catalog:",
-    "vike": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"
   },

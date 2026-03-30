@@ -5,7 +5,7 @@ import type makeStore from './make-store.js'
 import type { rootReducer } from './make-store.js'
 
 /** Store type */
-type Store = ReturnType<typeof makeStore>
+type Store = Awaited<ReturnType<typeof makeStore>>
 
 /** Root state */
 type RootState = ReturnType<typeof rootReducer>

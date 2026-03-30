@@ -4,43 +4,27 @@
   "private": true,
   "type": "module",
   "imports": {
-    "#api/errors": {
-      "types": "./src/services/api/errors.ts",
-      "default": "./dist/services/api/errors.js"
+    "#constants": {
+      "types": "./src/constants.ts",
+      "development": "./src/constants.ts",
+      "default": "./dist/constants.js"
     },
-    "#plugins/api-reference": {
-      "types": "./src/plugins/api-reference.ts",
-      "default": "./dist/plugins/api-reference.js"
-    },
-    "#plugins/di-container": {
-      "types": "./src/plugins/di-container/di-container.ts",
-      "default": "./dist/plugins/di-container/di-container.js"
-    },
-    "#plugins/logging": {
-      "types": "./src/plugins/logging.ts",
-      "default": "./dist/plugins/logging.js"
-    },
-    "#plugins/vite-dev-server": {
-      "types": "./src/plugins/vite-dev-server.ts",
-      "default": "./dist/plugins/vite-dev-server.js"
-    },
-    "#services/api/types": {
-      "types": "./src/services/api/types.ts",
-      "default": "./dist/services/api/types.js"
+    "#plugins/types": {
+      "types": "./src/plugins/types.ts"
     },
     "#utils": {
       "types": "./src/utils.ts",
+      "development": "./src/utils.ts",
       "default": "./dist/utils.js"
     }
   },
   "scripts": {
-    "build": "tsc --project tsconfig.build.json",
+    "build": "",
     "clean": "rm -rf dist",
-    "dev": "nodemon --ext ts --watch ./src --exec 'pnpm run dev:start --log-prefix=none'",
+    "dev": "tsx watch --conditions=development --include='../../packages/**/*' --exclude='./../frontend/**/*' --exclude='../../packages/*/node_modules' --clear-screen=false src/main.ts",
     "dev:mkcert": "mkcert -install && mkdir -p cert && mkcert -key-file cert/key.pem -cert-file cert/cert.pem innodoc.dev '*.innodoc.dev' localhost 127.0.0.1 ::1",
-    "dev:start": "NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" tsx ./src/main.ts",
-    "format": "prettier --check .",
-    "format:write": "prettier --write .",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "start": "NODE_ENV=production node ./dist/main.js",
@@ -48,41 +32,29 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@fastify/accepts": "catalog:",
-    "@fastify/autoload": "catalog:",
     "@fastify/awilix": "catalog:",
     "@fastify/static": "catalog:",
     "@innodoc/frontend": "workspace:*",
     "@innodoc/server-db": "workspace:*",
     "@innodoc/server-env": "workspace:*",
     "@innodoc/shared-core": "workspace:*",
+    "@innodoc/ui-store": "workspace:*",
+    "@unhead/react": "catalog:",
     "awilix": "catalog:",
-    "camelcase-keys": "catalog:",
     "fastify": "catalog:",
     "fastify-plugin": "catalog:",
-    "fastify-type-provider-zod": "catalog:",
+    "i18next-fs-backend": "catalog:",
     "i18next-http-middleware": "catalog:",
-    "pino": "catalog:",
-    "pino-pretty": "catalog:",
-    "validator": "catalog:",
-    "vike": "catalog:",
-    "zod": "catalog:"
+    "pino-pretty": "catalog:"
   },
   "devDependencies": {
-    "@fastify/swagger": "catalog:",
-    "@fastify/vite": "catalog:",
-    "@innodoc/configs": "workspace:*",
-    "@reduxjs/toolkit": "catalog:",
-    "@scalar/fastify-api-reference": "catalog:",
+    "@fastify/middie": "catalog:",
     "@types/node": "catalog:",
-    "@types/validator": "catalog:",
-    "fastify-print-routes": "catalog:",
-    "nodemon": "catalog:",
-    "pino-pretty": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "i18next": "catalog:",
     "tsx": "catalog:",
-    "typescript": "catalog:",
-    "vite": "catalog:",
-    "vitest": "catalog:"
+    "vite": "catalog:"
   },
   "bin": {
     "innodoc-webapp": "./dist/main.js"

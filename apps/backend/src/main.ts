@@ -2,12 +2,17 @@
 
 import parseConfig from '@innodoc/server-env'
 
-import setupApp from './app/setup-app.js'
+import setupServer from './server.js'
 
 try {
   const config = parseConfig()
-  const app = await setupApp(config)
-  await app.listen({ host: config.host, port: config.port })
+  const server = await setupServer(config)
+  server.listen({ host: config.host, port: config.port }, (err, address) => {
+    if (err) {
+      throw err
+    }
+    console.log(`Listening ${address}`)
+  })
 } catch (error) {
   console.error(error)
   process.exit(-1)

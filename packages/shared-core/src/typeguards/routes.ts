@@ -1,43 +1,63 @@
 import { apiRoutes, builtinRoutes, courseContentRoutes, courseRoutes, userRoutes } from '#routes'
 import { isArbitraryObject } from '#typeguards'
 import type {
-  AppRouteInfo,
-  AppRouteName,
   CourseContentRouteName,
   CoursePageRouteInfo,
   CourseRouteInfo,
   CourseSectionRouteInfo,
+  FrontendRouteInfo,
+  FrontendRouteName,
   RouteName,
 } from '#types'
 
-const apiRouteNames = Object.keys(apiRoutes)
-const appRouteNames = Object.keys({ ...builtinRoutes, ...courseRoutes, ...userRoutes })
-const courseContentRoutenames = Object.keys(courseContentRoutes)
-const allRouteNames = new Set([...apiRouteNames, ...appRouteNames])
+let apiRouteNames: Set<string> | null = null
+let courseContentRouteNames: Set<string> | null = null
+let appRouteNames: Set<string> | null = null
+let allRouteNames: Set<string> | null = null
+
+function getApiRouteNames() {
+  apiRouteNames ??= new Set(Object.keys(apiRoutes))
+  return apiRouteNames
+}
+
+function getCourseContentRouteNames() {
+  courseContentRouteNames ??= new Set(Object.keys(courseContentRoutes))
+  return courseContentRouteNames
+}
+
+function getAppRouteNames() {
+  appRouteNames ??= new Set(Object.keys({ ...builtinRoutes, ...courseRoutes, ...userRoutes }))
+  return appRouteNames
+}
+
+function getAllRouteNames() {
+  allRouteNames ??= new Set([...getApiRouteNames(), ...getAppRouteNames()])
+  return allRouteNames
+}
 
 /** Type guard for `RouteName` */
 function isRouteName(routeName: unknown): routeName is RouteName {
-  return typeof routeName === 'string' && allRouteNames.has(routeName)
+  return typeof routeName === 'string' && getAllRouteNames().has(routeName)
 }
 
-/** Type guard for `AppRouteName` */
-function isAppRouteName(routeName: unknown): routeName is AppRouteName {
-  return typeof routeName === 'string' && appRouteNames.includes(routeName)
+/** Type guard for `FrontendRouteName` */
+function isFrontendRouteName(routeName: unknown): routeName is FrontendRouteName {
+  return typeof routeName === 'string' && getAppRouteNames().has(routeName)
 }
 
 /** Type guard for `CourseContentRouteName` */
 function isCourseContentRouteName(routeName: unknown): routeName is CourseContentRouteName {
-  return typeof routeName === 'string' && courseContentRoutenames.includes(routeName)
+  return typeof routeName === 'string' && getCourseContentRouteNames().has(routeName)
 }
 
-/** Type guard for `AppRouteInfo` */
-function isAppRouteInfo(routeInfo: unknown): routeInfo is AppRouteInfo {
-  return isArbitraryObject(routeInfo) && isAppRouteName(routeInfo.name)
+/** Type guard for `FrontendRouteInfo` */
+function isFrontendRouteInfo(routeInfo: unknown): routeInfo is FrontendRouteInfo {
+  return isArbitraryObject(routeInfo) && isFrontendRouteName(routeInfo.name)
 }
 
 /** Type guard for `CourseRouteInfo` */
 function isCourseRouteInfo(routeInfo: unknown): routeInfo is CourseRouteInfo {
-  return isAppRouteInfo(routeInfo) && typeof (routeInfo as CourseRouteInfo).courseSlug === 'string'
+  return isFrontendRouteInfo(routeInfo) && typeof (routeInfo as CourseRouteInfo).courseSlug === 'string'
 }
 
 /** Type guard for `CourseSectionRouteInfo` */
@@ -59,11 +79,11 @@ function isCoursePageRouteInfo(routeInfo: unknown): routeInfo is CoursePageRoute
 }
 
 export {
-  isAppRouteInfo,
-  isAppRouteName,
   isCourseContentRouteName,
   isCoursePageRouteInfo,
   isCourseRouteInfo,
   isCourseSectionRouteInfo,
+  isFrontendRouteInfo,
+  isFrontendRouteName,
   isRouteName,
 }

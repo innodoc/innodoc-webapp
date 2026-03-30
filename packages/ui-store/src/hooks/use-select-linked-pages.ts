@@ -1,12 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit'
-import { useMemo } from 'react'
+import { use, useMemo } from 'react'
 import type { LanguageCode } from 'iso-639-1'
 
 import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
+import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
 import type { ApiPage, PageLinkLocation, TranslatedPage } from '@innodoc/shared-core/types'
 
 import { selectRouteInfo } from '#slices/app'
-import { useGetCoursePagesQuery } from '#slices/content/pages'
+import getPagesApi from '#slices/content/pages'
 
 import { useSelector } from './redux.js'
 import { translateEntityArray } from './utils.js'
@@ -20,6 +21,8 @@ import { translateEntityArray } from './utils.js'
 function useSelectLinkedPages(linkLocation: PageLinkLocation): { pages: TranslatedPage[] } {
   const routeInfo = useSelector(selectRouteInfo)
   const courseSlug = isCourseRouteInfo(routeInfo) ? routeInfo.courseSlug : undefined
+  const routeManager = use(RouteManagerContext)
+  const pages = getPagesApi(routeManager)
 
   const selectNavPages = useMemo(() => {
     const emptyArray: TranslatedPage[] = []
@@ -36,7 +39,7 @@ function useSelectLinkedPages(linkLocation: PageLinkLocation): { pages: Translat
     )
   }, [linkLocation])
 
-  return useGetCoursePagesQuery(
+  return pages.useGetCoursePagesQuery(
     { courseSlug: courseSlug ?? '' },
     {
       selectFromResult: (result) => ({ pages: selectNavPages(result, routeInfo.locale) }),

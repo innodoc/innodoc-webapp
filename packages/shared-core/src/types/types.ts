@@ -20,20 +20,20 @@ export type {
   RouteParams,
 } from './routes/common.js'
 export type {
-  AppRouteInfo,
   BuiltinRouteInfo,
   CourseContentRouteInfo,
   CoursePageRouteInfo,
   CourseRouteInfo,
   CourseSectionRouteInfo,
+  FrontendRouteInfo,
   UserRouteInfo,
 } from './routes/route-infos.js'
 export type {
   ApiRouteName,
-  AppRouteName,
   BuiltinRouteName,
   CourseContentRouteName,
   CourseRouteName,
+  FrontendRouteName,
   RouteName,
   UserRouteName,
 } from './routes/route-names.js'

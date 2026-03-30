@@ -4,11 +4,6 @@
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "rootDir": ".",
-    "types": [
-      "@innodoc/ui-design-system/types/mui",
-      "@mui/material/themeCssVarsAugmentation",
-      "@testing-library/jest-dom/vitest",
-      "vite/client"
-    ]
+    "types": ["@innodoc/ui-design-system/types/mui", "@testing-library/jest-dom/vitest", "vite/client"]
   }
 }

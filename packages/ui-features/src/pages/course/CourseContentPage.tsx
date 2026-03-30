@@ -1,12 +1,18 @@
+import { use } from 'react'
+
 import { isCoursePageRouteInfo } from '@innodoc/shared-core/typeguards'
 import { PageHeader } from '@innodoc/ui-design-system/misc'
+import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
 import { useSelector, useSelectPage } from '@innodoc/ui-store/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
-import { useGetPageContentQuery } from '@innodoc/ui-store/slices/content/pages'
+import getPagesApi from '@innodoc/ui-store/slices/content/pages'
 
 import ContentPage from './ContentPage.js'
 
 function CourseContentPage() {
+  const routeManager = use(RouteManagerContext)
+  const pages = getPagesApi(routeManager)
+
   const routeInfo = useSelector(selectRouteInfo)
   const { locale } = routeInfo
   const { courseSlug, pageSlug } = isCoursePageRouteInfo(routeInfo)
@@ -14,7 +20,7 @@ function CourseContentPage() {
     : { courseSlug: undefined, pageSlug: undefined }
   const { page } = useSelectPage(pageSlug)
 
-  const { data, isError, isLoading } = useGetPageContentQuery(
+  const { data, isError, isLoading } = pages.useGetPageContentQuery(
     {
       courseSlug: courseSlug ?? '',
       locale,

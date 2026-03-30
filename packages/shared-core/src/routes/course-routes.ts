@@ -19,8 +19,7 @@ const courseContentRoutes = {
   'app:course:page': ({ pagePathPrefix }: RouteFuncArgs) => `/:courseSlug/${pagePathPrefix}/:pageSlug`,
 
   // Section
-  'app:course:section': ({ sectionPathPrefix }: RouteFuncArgs) =>
-    `/:courseSlug/${sectionPathPrefix}/:sectionPath([a-z0-9-/]*)`,
+  'app:course:section': ({ sectionPathPrefix }: RouteFuncArgs) => `/:courseSlug/${sectionPathPrefix}/*`,
 }
 
 const courseRoutes = { ...courseMiscRoutes, ...courseContentRoutes }

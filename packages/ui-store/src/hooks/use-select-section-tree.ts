@@ -1,12 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit'
-import { useMemo } from 'react'
+import { use, useMemo } from 'react'
 import type { LanguageCode } from 'iso-639-1'
 
 import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
+import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
 import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/types'
 
 import { selectRouteInfo } from '#slices/app'
-import { useGetCourseSectionsQuery } from '#slices/content/sections'
+import getSectionsApi from '#slices/content/sections'
 
 import { useSelector } from './redux.js'
 import { translateEntityArray } from './utils.js'
@@ -25,6 +26,8 @@ type NestedTranslatedSection = TranslatedSection & {
 function useSelectSectionTree(parentId: ApiSection['parentId']): NestedTranslatedSection[] {
   const routeInfo = useSelector(selectRouteInfo)
   const courseSlug = isCourseRouteInfo(routeInfo) ? routeInfo.courseSlug : undefined
+  const routeManager = use(RouteManagerContext)
+  const sections = getSectionsApi(routeManager)
 
   const selectSectionTree = useMemo(() => {
     const emptyArray: NestedTranslatedSection[] = []
@@ -89,13 +92,15 @@ function useSelectSectionTree(parentId: ApiSection['parentId']): NestedTranslate
     )
   }, [])
 
-  return useGetCourseSectionsQuery(
+  const result = sections.useGetCourseSectionsQuery(
     { courseSlug: courseSlug ?? '' },
     {
       selectFromResult: (result) => selectSectionTree(result, parentId, routeInfo.locale),
       skip: !courseSlug,
     },
   )
+
+  return Array.isArray(result) ? result : []
 }
 
 export default useSelectSectionTree

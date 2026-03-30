@@ -4,19 +4,25 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
-  "exports": "./dist/Database.js",
+  "exports": {
+    ".": {
+      "types": "./src/Database.ts",
+      "development": "./src/Database.ts",
+      "default": "./dist/Database.js"
+    }
+  },
   "imports": {
     "#database": {
       "types": "./src/Database.ts",
+      "development": "./src/Database.ts",
       "default": "./dist/Database.js"
     }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "dev": "tsc --project tsconfig.build.json --watch",
-    "format": "prettier --check .",
-    "format:write": "prettier --write .",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
     "knex": "NODE_OPTIONS='--import tsx/esm' knex --knexfile src/knex-config.ts",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",

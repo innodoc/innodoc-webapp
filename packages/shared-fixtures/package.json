@@ -5,21 +5,29 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    "./msw/browser": "./dist/msw/make-browser-server.js",
-    "./msw/node": "./dist/msw/make-node-server.js"
+    "./browser": {
+      "types": "./src/make-browser-server.ts",
+      "development": "./src/make-browser-server.ts",
+      "default": "./dist/make-browser-server.js"
+    },
+    "./node": {
+      "types": "./src/make-node-server.ts",
+      "development": "./src/make-node-server.ts",
+      "default": "./dist/make-node-server.js"
+    }
   },
   "imports": {
     "#courses": {
       "types": "./src/data/make-courses.ts",
+      "development": "./src/data/make-courses.ts",
       "default": "./dist/data/make-courses.js"
     }
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "dev": "tsc --project tsconfig.build.json --watch",
-    "format": "prettier --check .",
-    "format:write": "prettier --write .",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "typecheck": "tsc --noEmit"

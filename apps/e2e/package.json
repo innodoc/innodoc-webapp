@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "format": "prettier --check .",
-    "format:write": "prettier --write .",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "playwright test",

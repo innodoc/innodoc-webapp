@@ -1,8 +1,6 @@
-import { forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 
-import { useRouteManager } from '@innodoc/ui-shared/hooks'
-import { useSelectSection } from '@innodoc/ui-store/hooks'
+import { useRouteManager, useSelectSection } from '@innodoc/ui-store/hooks'
 import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/types'
 
 import { InlineError } from '#errors'
@@ -13,10 +11,7 @@ import BaseLink from './BaseLink.js'
 import type { LinkProps as LinkProperties } from './types.js'
 
 /** Link to a section using `sectionPath` */
-const SectionLinkFromPath = forwardRef<HTMLAnchorElement, SectionLinkFromPathProperties>(function SectionLinkFromPath(
-  { sectionPath, ...other },
-  reference,
-) {
+function SectionLinkFromPath({ ref: reference, sectionPath, ...other }: SectionLinkFromPathProperties) {
   const { section } = useSelectSection(sectionPath)
 
   if (section === undefined) {
@@ -34,17 +29,14 @@ const SectionLinkFromPath = forwardRef<HTMLAnchorElement, SectionLinkFromPathPro
   }
 
   return <SectionLink ref={reference} section={section} {...other} />
-})
+}
 
 interface SectionLinkFromPathProperties extends Omit<SectionLinkProperties, 'section'> {
   sectionPath: ApiSection['path']
 }
 
 /** Link to a section */
-const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProperties>(function SectionLink(
-  { children, preferShortTitle = false, section, ...other },
-  reference,
-) {
+function SectionLink({ ref: reference, children, preferShortTitle = false, section, ...other }: SectionLinkProperties) {
   const { url } = useRouteManager()
 
   return (
@@ -52,7 +44,7 @@ const SectionLink = forwardRef<HTMLAnchorElement, SectionLinkProperties>(functio
       {children ?? <>{formatSectionTitle(section, preferShortTitle)}</>}
     </BaseLink>
   )
-})
+}
 
 interface SectionLinkProperties extends Omit<LinkProperties, 'to'> {
   preferShortTitle?: boolean

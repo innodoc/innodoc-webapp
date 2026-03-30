@@ -6,7 +6,7 @@ test('RouteManager.generateAppUrlPath returns `app:index` path (URL mode)', () =
   const config = { courseSlugMode: 'URL', pagePathPrefix: 'page', sectionPathPrefix: 'section' } as const
   const routeManager = new RouteManager({ config })
   expect(
-    routeManager.generateAppUrlPath({
+    routeManager.generateFrontendUrlPath({
       name: 'app:index',
       locale: 'en',
     }),
@@ -17,7 +17,7 @@ test('RouteManager.generateAppUrlPath returns `app:course:index` path (URL mode)
   const config = { courseSlugMode: 'URL', pagePathPrefix: 'page', sectionPathPrefix: 'section' } as const
   const routeManager = new RouteManager({ config })
   expect(
-    routeManager.generateAppUrlPath({
+    routeManager.generateFrontendUrlPath({
       name: 'app:course:index',
       courseSlug: 'awesome-course',
       locale: 'en',
@@ -29,13 +29,13 @@ test('RouteManager.generateAppUrlPath throws with invalid route info (URL mode)'
   const config = { courseSlugMode: 'URL', pagePathPrefix: 'page', sectionPathPrefix: 'section' } as const
   const routeManager = new RouteManager({ config })
   expect(() => {
-    routeManager.generateAppUrlPath({})
+    routeManager.generateFrontendUrlPath({})
   }).toThrow(TypeError)
   expect(() => {
-    routeManager.generateAppUrlPath({ name: 'app:index' })
+    routeManager.generateFrontendUrlPath({ name: 'app:index' })
   }).toThrow(/Expected.+locale/)
   expect(() => {
-    routeManager.generateAppUrlPath({ name: 'app:course:index', locale: 'en' })
+    routeManager.generateFrontendUrlPath({ name: 'app:course:index', locale: 'en' })
   }).toThrow(/Expected.+courseSlug/)
 })
 
@@ -43,7 +43,7 @@ test('RouteManager.generateAppUrlPath returns `app:index` path (SINGLE mode)', (
   const config = { courseSlugMode: 'SINGLE', pagePathPrefix: 'page', sectionPathPrefix: 'section' } as const
   const routeManager = new RouteManager({ config })
   expect(
-    routeManager.generateAppUrlPath({
+    routeManager.generateFrontendUrlPath({
       name: 'app:index',
       locale: 'en',
     }),
@@ -54,7 +54,7 @@ test('RouteManager.generateAppUrlPath returns `app:course:index` path (SINGLE mo
   const config = { courseSlugMode: 'SINGLE', pagePathPrefix: 'page', sectionPathPrefix: 'section' } as const
   const routeManager = new RouteManager({ config })
   expect(
-    routeManager.generateAppUrlPath({
+    routeManager.generateFrontendUrlPath({
       name: 'app:course:index',
       locale: 'en',
     }),
@@ -65,10 +65,10 @@ test('RouteManager.generateAppUrlPath throws with invalid route info (SINGLE mod
   const config = { courseSlugMode: 'SINGLE', pagePathPrefix: 'page', sectionPathPrefix: 'section' } as const
   const routeManager = new RouteManager({ config })
   expect(() => {
-    routeManager.generateAppUrlPath({})
+    routeManager.generateFrontendUrlPath({})
   }).toThrow(TypeError)
   expect(() => {
-    routeManager.generateAppUrlPath({ name: 'app:index' })
+    routeManager.generateFrontendUrlPath({ name: 'app:index' })
   }).toThrow(/Expected.+locale/)
 })
 

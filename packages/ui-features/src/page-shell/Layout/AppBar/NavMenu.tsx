@@ -1,18 +1,17 @@
-import { Button, type ButtonProps, Stack, styled } from '@mui/material'
-import { forwardRef } from 'react'
+import { Button, Stack, styled } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import type { ButtonProps } from '@mui/material'
 
 import { AppLink, PageLink } from '@innodoc/ui-design-system/links'
 import { Icon } from '@innodoc/ui-design-system/misc'
 import pageLinks from '@innodoc/ui-design-system/page-links'
-import { useRouteManager } from '@innodoc/ui-shared/hooks'
-import { useSelectLinkedPages } from '@innodoc/ui-store/hooks'
+import { useRouteManager, useSelectLinkedPages } from '@innodoc/ui-store/hooks'
 
 const pageLinksNav = pageLinks.filter((page) => page.linked?.includes('nav'))
 
-const NavButton = forwardRef<HTMLButtonElement | null, ButtonProps>(function NavButton(props, ref) {
+function NavButton({ ref, ...props }: ButtonProps) {
   return <Button color="inherit" ref={ref} size="small" {...props} />
-})
+}
 
 const StyledNavButton = styled(NavButton)(({ theme }) => ({
   lineHeight: theme.spacing(2),

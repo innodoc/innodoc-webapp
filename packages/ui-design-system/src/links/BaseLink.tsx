@@ -1,19 +1,15 @@
 import { Link } from '@mui/material'
-import { forwardRef } from 'react'
 
 import type { LinkProps } from './types.js'
 
 /** Link that handles `hash` */
-const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function BaseLink(
-  { children, hash, to = '', ...other },
-  ref,
-) {
+function BaseLink({ ref, children, hash, to = '', ...other }: BaseLinkProps) {
   return (
     <Link href={hash ? `${to}#${hash}` : to} keep-scroll-position="true" ref={ref} {...other}>
       {children}
     </Link>
   )
-})
+}
 
 interface BaseLinkProps extends Omit<LinkProps, 'to'> {
   /** Optional hash */

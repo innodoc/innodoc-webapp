@@ -1,8 +1,6 @@
-import { forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 
-import { useRouteManager } from '@innodoc/ui-shared/hooks'
-import { useSelectPage } from '@innodoc/ui-store/hooks'
+import { useRouteManager, useSelectPage } from '@innodoc/ui-store/hooks'
 import type { ApiPage, TranslatedPage } from '@innodoc/shared-core/types'
 
 import { InlineError } from '#errors'
@@ -12,10 +10,7 @@ import BaseLink from './BaseLink.js'
 import type { LinkProps } from './types.js'
 
 /** Link to a page using `pageSlug` */
-const PageLinkFromSlug = forwardRef<HTMLAnchorElement, PageLinkFromSlugProps>(function PageLinkFromSlug(
-  { pageSlug, ...other },
-  ref,
-) {
+function PageLinkFromSlug({ ref, pageSlug, ...other }: PageLinkFromSlugProps) {
   const { page } = useSelectPage(pageSlug)
 
   if (page === undefined) {
@@ -29,17 +24,14 @@ const PageLinkFromSlug = forwardRef<HTMLAnchorElement, PageLinkFromSlugProps>(fu
   }
 
   return <PageLink ref={ref} page={page} {...other} />
-})
+}
 
 interface PageLinkFromSlugProps extends Omit<PageLinkProps, 'page'> {
   pageSlug: ApiPage['slug']
 }
 
 /** Link to a page */
-const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
-  { children, page, preferShortTitle = false, showIcon = true, ...other },
-  ref,
-) {
+function PageLink({ ref, children, page, preferShortTitle = false, showIcon = true, ...other }: PageLinkProps) {
   const { url } = useRouteManager()
   const { slug, icon, shortTitle, title } = page
 
@@ -53,7 +45,7 @@ const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(function PageLink(
       )}
     </BaseLink>
   )
-})
+}
 
 interface PageLinkProps extends Omit<LinkProps, 'to'> {
   page: TranslatedPage

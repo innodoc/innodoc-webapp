@@ -1,13 +1,14 @@
 import { createSelector } from '@reduxjs/toolkit'
-import { useMemo } from 'react'
+import { use, useMemo } from 'react'
 import type { LanguageCode } from 'iso-639-1'
 
 import { isApiPage, isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
+import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
 import type { ApiPage, ApiSection, ContentType, TranslatedPage, TranslatedSection } from '@innodoc/shared-core/types'
 
 import { selectRouteInfo } from '#slices/app'
-import { useGetCoursePagesQuery } from '#slices/content/pages'
-import { useGetCourseSectionsQuery } from '#slices/content/sections'
+import getPagesApi from '#slices/content/pages'
+import getSectionsApi from '#slices/content/sections'
 
 import { useSelector } from './redux.js'
 import { translateEntity } from './utils.js'
@@ -25,9 +26,13 @@ type UseSelectReturnType<C extends ContentUnit> = C extends ApiPage
  * @returns hook that selects a page/section
  */
 function makeUseSelectContentUnit<C extends ContentUnit>(contentType: ContentType) {
-  const useGetContentUnitsQuery = contentType === 'page' ? useGetCoursePagesQuery : useGetCourseSectionsQuery
-
   return (contentId: ContentIdField<C> | undefined): UseSelectReturnType<C> => {
+    const routeManager = use(RouteManagerContext)
+    const useGetContentUnitsQuery =
+      contentType === 'page'
+        ? getPagesApi(routeManager).useGetCoursePagesQuery
+        : getSectionsApi(routeManager).useGetCourseSectionsQuery
+
     const routeInfo = useSelector(selectRouteInfo)
     const courseSlug = isCourseRouteInfo(routeInfo) ? routeInfo.courseSlug : undefined
 

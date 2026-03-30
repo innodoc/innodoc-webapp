@@ -1,5 +1,4 @@
 import { styled } from '@mui/material'
-import { forwardRef } from 'react'
 
 import { Icon } from '#misc'
 
@@ -14,10 +13,7 @@ const StyledIcon = styled(Icon)({ fontSize: '1em' })
  *
  * Supports all types of links, e.g. internal link specifier and external URL.
  */
-const ContentLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLink(
-  { children, hash, to, ...other },
-  ref,
-) {
+function ContentLink({ ref, children, hash, to, ...other }: LinkProps) {
   // Link to anchor on same page
   if (to === '' && hash) {
     return (
@@ -52,6 +48,6 @@ const ContentLink = forwardRef<HTMLAnchorElement, LinkProps>(function ContentLin
       <StyledIcon name="mdi:open-in-new" />
     </BaseLink>
   )
-})
+}
 
 export default ContentLink

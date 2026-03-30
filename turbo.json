@@ -7,17 +7,8 @@
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**"]
     },
-    "dev": {
-      "cache": false,
-      "persistent": true
-    },
-    "dev:start": {
-      "cache": false,
-      "dependsOn": ["build"],
-      "persistent": true
-    },
-    "format": {},
-    "format:write": {},
+    "fmt:check": {},
+    "fmt": {},
     "knex": {
       "cache": false,
       "persistent": true

@@ -5,7 +5,7 @@ import { cleanup as rtlCleanup } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll, vi } from 'vitest'
 
 import parseConfig from '@innodoc/server-env'
-import makeServer from '@innodoc/shared-fixtures/msw/node'
+import makeServer from '@innodoc/shared-fixtures/node'
 
 const config = parseConfig()
 const server = makeServer(config)

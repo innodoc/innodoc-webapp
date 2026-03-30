@@ -10,15 +10,15 @@ import { Provider as ReduxProvider } from 'react-redux'
 import type { RenderOptions, RenderResult } from '@testing-library/react'
 import type { ReactElement } from 'react'
 import type React from 'react'
-import type { PageContext } from 'vike/types'
 
-import { VikePageContextProvider } from '@innodoc/ui-shared/contexts'
+import { PageContextProvider } from '@innodoc/ui-shared/contexts'
 import makeStore from '@innodoc/ui-store'
 import { changeRouteInfo } from '@innodoc/ui-store/slices/app'
 import courses from '@innodoc/ui-store/slices/content/courses'
 import pages from '@innodoc/ui-store/slices/content/pages'
 import sections from '@innodoc/ui-store/slices/content/sections'
 import type { CourseRouteInfo } from '@innodoc/shared-core/types'
+import type { PageContext } from '@innodoc/ui-shared/contexts'
 
 const theme = extendTheme(undefined, createTheme())
 
@@ -74,13 +74,13 @@ const pageContext = {
 const TestPageShell = ({ children }: { children: React.ReactNode }) => {
   // FIXME: properly create PageContext?
   return (
-    <VikePageContextProvider pageContext={pageContext as PageContext}>
+    <PageContextProvider pageContext={pageContext as PageContext}>
       <ReduxProvider store={store}>
         <I18nextProvider i18n={i18n}>
           <CssVarsProvider theme={theme}>{children}</CssVarsProvider>
         </I18nextProvider>
       </ReduxProvider>
-    </VikePageContextProvider>
+    </PageContextProvider>
   )
 }
 

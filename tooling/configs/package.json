@@ -15,8 +15,8 @@
     "./vitest/react": "./vitest/vitest.config.react.ts"
   },
   "scripts": {
-    "format": "prettier --check .",
-    "format:write": "prettier --write .",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "typecheck": "tsc --noEmit"

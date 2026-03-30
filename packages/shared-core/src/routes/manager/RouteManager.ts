@@ -1,16 +1,17 @@
-import { compile, match } from 'path-to-regexp'
-import type { Match, MatchFunction, PathFunction } from 'path-to-regexp'
+// import { compile, match } from 'path-to-regexp'
+// import type { Match, MatchFunction, PathFunction } from 'path-to-regexp'
+import { inject, parse } from 'regexparam'
 
 import { API_COURSE_PREFIX, API_PREFIX } from '#constants'
 import { apiRoutes, builtinRoutes, courseRoutes, userRoutes } from '#routes'
-import { isAppRouteInfo, isAppRouteName, isContentType, isCourseContentRouteName } from '#typeguards'
+import { isContentType, isCourseContentRouteName, isFrontendRouteInfo, isFrontendRouteName } from '#typeguards'
 import type {
   ApiRouteName,
   ApiRouteParams,
-  AppRouteName,
   ConfigSchema,
   CourseContentRouteInfo,
   CourseSlugMode,
+  FrontendRouteName,
   ParamsForGenerator,
   RouteDef,
   RouteFuncArgs,
@@ -18,32 +19,39 @@ import type {
   RouteParams,
 } from '#types'
 
-type PathFunctions = {
-  [key in RouteName]: PathFunction<RouteParams<key>>
-}
-type Matchers = {
-  [key in RouteName]: MatchFunction<RouteParams<key>>
-}
+// type PathFunctions = {
+//   [key in RouteName]: PathFunction<RouteParams<key>>
+// }
+// type Matchers = {
+//   [key in RouteName]: MatchFunction<RouteParams<key>>
+// }
 
 interface RouteManagerOptions {
   config: Pick<ConfigSchema, 'courseSlugMode' | 'pagePathPrefix' | 'sectionPathPrefix'>
 }
 
 class RouteManager {
-  private readonly routes = {
-    ...apiRoutes,
+  private readonly frontendRoutes = {
     ...builtinRoutes,
     ...courseRoutes,
     ...userRoutes,
   }
 
+  // private readonly routes = {
+  //   ...apiRoutes,
+  //   ...this.appRoutes,
+  // }
+
   private readonly courseSlugMode: CourseSlugMode
 
   private routeFuncArgs: RouteFuncArgs
 
-  private pathFunctions: PathFunctions
+  // private pathFunctions: PathFunctions
 
-  private matchers: Matchers
+  // private matchers: Matchers
+
+  private apiPatterns: [ApiRouteName, string][]
+  private frontendPatterns: [FrontendRouteName, string][]
 
   private readonly parseOptions = {
     sensitive: true,
@@ -53,9 +61,11 @@ class RouteManager {
   constructor({ config: { courseSlugMode, pagePathPrefix, sectionPathPrefix } }: RouteManagerOptions) {
     this.courseSlugMode = courseSlugMode
     this.routeFuncArgs = { pagePathPrefix, sectionPathPrefix }
-    const { pathFunctions, matchers } = this.buildRoutes()
-    this.pathFunctions = pathFunctions
-    this.matchers = matchers
+    this.apiPatterns = this.buildPatterns(apiRoutes)
+    this.frontendPatterns = this.buildPatterns(this.frontendRoutes)
+    // const { pathFunctions, matchers } = this.buildRoutes()
+    // this.pathFunctions = pathFunctions
+    // this.matchers = matchers
   }
 
   /**
@@ -64,10 +74,16 @@ class RouteManager {
    * @param routeInfo route info object
    * @returns URL
    */
-  public generateAppUrlPath(routeInfo: Record<string, unknown>): string {
-    if (isAppRouteInfo(routeInfo)) {
+  public generateFrontendUrlPath(routeInfo: Record<string, unknown>): string {
+    if (isFrontendRouteInfo(routeInfo)) {
       const { name, ...params } = routeInfo
-      return this.pathFunctions[name](params as ParamsForGenerator<typeof name>)
+
+      const route = this.frontendPatterns.find(([n]) => n === name)
+      if (route) {
+        return inject(route[1], params)
+      }
+
+      // return this.pathFunctions[name](params as ParamsForGenerator<typeof name>)
     }
     throw new TypeError('Unable to parse routeInfo object')
   }
@@ -79,7 +95,13 @@ class RouteManager {
    * @returns URL
    */
   public generateApiUrlPath<R extends ApiRouteName>(name: R, params: ApiRouteParams[R]): string {
-    return this.pathFunctions[name](params as ParamsForGenerator<R>)
+    const route = this.apiPatterns.find(([n]) => n === name)
+    if (route) {
+      return inject(route[1], params)
+    }
+
+    throw new TypeError(`API route not found: '${name}'`)
+    // return this.pathFunctions[name](params as ParamsForGenerator<R>)
   }
 
   /**
@@ -90,12 +112,12 @@ class RouteManager {
    * `app:section:page|about`).
    *
    * @params specifier Link specifier
-   * @returns `AppRouteInfo` object
+   * @returns `FrontendRouteInfo` object
    */
   public parseLinkSpecifier(specifier: string) {
     const [routeName, arg] = specifier.split('|')
 
-    if (!isAppRouteName(routeName)) {
+    if (!isFrontendRouteName(routeName)) {
       throw new TypeError(`Unknown route name: ${routeName ?? 'undefined'}`)
     }
 
@@ -116,44 +138,57 @@ class RouteManager {
     return { name: routeName }
   }
 
-  /** Match URL path */
-  public match<R extends AppRouteName>(routeName: R, path: string): Match<RouteParams<R>> {
-    return this.matchers[routeName](path)
-  }
+  /** Match URL path. */
+  // public match<R extends FrontendRouteName>(routeName: R, path: string): Match<RouteParams<R>> {
+  //   return this.matchers[routeName](path)
+  // }
 
-  /** Get all routes */
+  /** Get all routes. */
   public getAllRoutes() {
-    return Object.fromEntries(this.buildPatterns(this.routes)) as Partial<Record<RouteName, string>>
+    return { ...this.getApiRoutes(), ...this.getFrontendRoutes() }
   }
 
-  /** Get API routes */
+  /** Get API routes. */
   public getApiRoutes() {
     return Object.fromEntries(this.buildPatterns(apiRoutes)) as Partial<Record<ApiRouteName, string>>
   }
 
-  private buildRoutes() {
-    // Build full patterns
-    const patterns = this.buildPatterns(this.routes)
-
-    // Build path functions
-    const pathFunctions = Object.fromEntries(
-      patterns.map(([routeName, pattern]) => [routeName, compile(pattern, this.parseOptions)]),
-    ) as PathFunctions
-
-    // Build matchers
-    const matchers = Object.fromEntries(
-      patterns.map(([routeName, pattern]) => [routeName, match(pattern, this.parseOptions)]),
-    ) as Matchers
-
-    return { pathFunctions, matchers }
+  /** Get frontend routes. */
+  public getFrontendRoutes() {
+    return Object.fromEntries(this.buildPatterns(this.frontendRoutes)) as Partial<Record<FrontendRouteName, string>>
   }
 
-  private buildPatterns(routes: Partial<Record<RouteName, RouteDef>>) {
-    return Object.entries(routes).map(([routeName, routeDef]) => {
+  // private buildRoutes() {
+  //   // Build full patterns
+  //   const patterns = this.buildPatterns(this.routes)
+
+  //   // Build path functions
+  //   const pathFunctions = Object.fromEntries(
+  //     patterns.map(([routeName, pattern]) => [routeName, parse(pattern).pattern]),
+  //   ) as PathFunctions
+  //   // const pathFunctions = Object.fromEntries(
+  //   //   patterns.map(([routeName, pattern]) => [routeName, compile(pattern, this.parseOptions)]),
+  //   // ) as PathFunctions
+
+  //   return pathFunctions
+
+  //   // Build matchers
+  //   // const matchers = Object.fromEntries(
+  //   //   patterns.map(([routeName, pattern]) => [routeName, match(pattern, this.parseOptions)]),
+  //   // ) as Matchers
+
+  //   // return { pathFunctions, matchers }
+  // }
+
+  private buildPatterns<T extends RouteName>(routes: Partial<Record<T, RouteDef>>): [T, string][] {
+    const entries = Object.entries(routes) as [T, RouteDef][]
+
+    return entries.map(([routeName, routeDef]) => {
       const pattern = typeof routeDef === 'string' ? routeDef : routeDef(this.routeFuncArgs)
       const fullPattern = routeName.startsWith('app') ? this.makeAppPattern(pattern) : this.makeApiPattern(pattern)
+
       return [routeName, fullPattern]
-    }) as [RouteName, string][]
+    })
   }
 
   private makeAppPattern(pattern: string) {

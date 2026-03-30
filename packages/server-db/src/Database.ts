@@ -16,33 +16,36 @@ import { getFragmentContent } from './queries/fragments.js'
 import { getCoursePages, getPageContent } from './queries/pages.js'
 import { getCourseSections, getSectionContent, getSectionIdByPath } from './queries/sections.js'
 
+interface DatabaseOptions {
+  config: ConfigSchema
+}
+
 /**
  * Database class providing high-level access to entities.
  */
 class Database {
-  #knex?: Knex
+  private knexInstance?: Knex
 
-  constructor(config: ConfigSchema, knexConfig?: Knex.Config) {
-    const defaultKnexConfig = makeKnexConfig(config)
-    const resultingKnexConfig = knexConfig ? { ...defaultKnexConfig, ...knexConfig } : defaultKnexConfig
-    this.#knex = knex(resultingKnexConfig)
+  constructor({ config }: DatabaseOptions) {
+    const knexConfig = makeKnexConfig(config)
+    this.knexInstance = knex(knexConfig)
   }
 
   public get knex() {
-    if (!this.#knex) {
+    if (!this.knexInstance) {
       throw new Error('Database not initialized')
     }
-    return this.#knex
+    return this.knexInstance
   }
 
   /**
    * Destroy database instance.
    */
   async destroy() {
-    if (this.#knex !== undefined) {
-      await this.#knex.destroy()
+    if (this.knexInstance !== undefined) {
+      await this.knexInstance.destroy()
     }
-    this.#knex = undefined
+    this.knexInstance = undefined
   }
 
   getCourse = (courseSlug: CourseSchema['slug']) => getCourse(this.knex, courseSlug)

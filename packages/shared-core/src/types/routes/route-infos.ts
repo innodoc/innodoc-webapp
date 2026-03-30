@@ -4,10 +4,10 @@ import type { ApiCourse } from '#types'
 
 import type { RouteParams } from './common.js'
 import type {
-  AppRouteName,
   BuiltinRouteName,
   CourseContentRouteName,
   CourseRouteName,
+  FrontendRouteName,
   RouteName,
   UserRouteName,
 } from './route-names.js'
@@ -42,18 +42,18 @@ type CoursePageRouteInfo = CourseContentRouteInfo<'app:course:page'>
 /** User page route info */
 type UserRouteInfo<R extends UserRouteName = UserRouteName> = BaseRouteInfo<R>
 
-/** App route info */
-type AppRouteInfo<R extends AppRouteName = AppRouteName> =
+/** Frontend route info */
+type FrontendRouteInfo<R extends FrontendRouteName = FrontendRouteName> =
   | (R extends BuiltinRouteName ? BuiltinRouteInfo<R> : never)
   | (R extends CourseRouteName ? CourseRouteInfo<R> : never)
   | (R extends UserRouteName ? UserRouteInfo<R> : never)
 
 export type {
-  AppRouteInfo,
   BuiltinRouteInfo,
   CourseContentRouteInfo,
   CoursePageRouteInfo,
   CourseRouteInfo,
   CourseSectionRouteInfo,
+  FrontendRouteInfo,
   UserRouteInfo,
 }

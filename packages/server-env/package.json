@@ -4,13 +4,18 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
-  "exports": "./dist/parse-config.js",
+  "exports": {
+    ".": {
+      "types": "./src/parse-config.ts",
+      "development": "./src/parse-config.ts",
+      "default": "./dist/parse-config.js"
+    }
+  },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "dev": "tsc --project tsconfig.build.json --watch",
-    "format": "prettier --check .",
-    "format:write": "prettier --write .",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
