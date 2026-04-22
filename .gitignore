@@ -1,7 +1,6 @@
 .DS_Store
 *~
 /coverage
-/_*.txt
 node_modules
 .turbo
 dist

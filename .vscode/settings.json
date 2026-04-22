@@ -32,6 +32,7 @@
   "js/ts.preferences.importModuleSpecifier": "project-relative",
   "js/ts.preferences.importModuleSpecifierEnding": "js",
   "search.exclude": {
+    "**/.turbo": true,
     "**/dist": true,
     "pnpm-lock.yaml": true
   }
