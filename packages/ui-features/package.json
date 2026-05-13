@@ -9,6 +9,11 @@
       "types": "./src/page-shell/PageShell/PageShell.tsx",
       "development": "./src/page-shell/PageShell/PageShell.tsx",
       "default": "./dist/page-shell/PageShell/PageShell.js"
+    },
+    "./routes-switch": {
+      "types": "./src/pages/RoutesSwitch.tsx",
+      "development": "./src/pages/RoutesSwitch.tsx",
+      "default": "./dist/pages/RoutesSwitch.js"
     }
   },
   "imports": {
@@ -47,7 +52,8 @@
     "@innodoc/ui-store": "workspace:*",
     "@mui/material": "catalog:",
     "react": "catalog:",
-    "react-i18next": "catalog:"
+    "react-i18next": "catalog:",
+    "wouter": "catalog:"
   },
   "devDependencies": {
     "@innodoc/configs": "workspace:*",

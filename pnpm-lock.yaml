@@ -999,6 +999,9 @@ importers:
       react-i18next:
         specifier: 'catalog:'
         version: 17.0.4(i18next@26.0.6(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
+      wouter:
+        specifier: 'catalog:'
+        version: 3.9.0(react@19.2.4)
     devDependencies:
       '@innodoc/configs':
         specifier: workspace:*
