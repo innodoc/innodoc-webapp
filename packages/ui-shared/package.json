@@ -9,11 +9,6 @@
       "types": "./src/contexts/contexts.ts",
       "development": "./src/contexts/contexts.ts",
       "default": "./dist/contexts/contexts.js"
-    },
-    "./hooks": {
-      "types": "./src/hooks/hooks.ts",
-      "development": "./src/hooks/hooks.ts",
-      "default": "./dist/hooks/hooks.js"
     }
   },
   "imports": {
