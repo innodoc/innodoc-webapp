@@ -1,10 +1,9 @@
-import rehypeReact from 'rehype-react'
-import { unified } from 'unified'
 import type { Root } from 'hast'
 import type { Options } from 'rehype-react'
-
-import rehypeReactOptions from './rehype-react-options.js'
+import rehypeReact from 'rehype-react'
+import { unified } from 'unified'
 import rehypeReactOptionsDev from './rehype-react-options-dev.js'
+import rehypeReactOptions from './rehype-react-options.js'
 
 let options: Options = rehypeReactOptions
 

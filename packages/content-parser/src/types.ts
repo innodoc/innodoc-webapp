@@ -1,7 +1,6 @@
 import type { Element, Properties, Root as HastRoot } from 'hast'
 import type { Root as MdastRoot } from 'mdast'
 import type { Processor } from 'unified'
-
 import type {
   HAST_MDX_JSX_FLOW_DIV_ELEMENT_NAME,
   HAST_MDX_JSX_TEXT_SPAN_ELEMENT_NAME,

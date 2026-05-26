@@ -1,6 +1,5 @@
-import { Box, Container, styled } from '@mui/material'
 import type { ReactNode } from 'react'
-
+import { Box, Container, styled } from '@mui/material'
 import AppBar from './AppBar/AppBar.js'
 import Footer from './Footer.js'
 

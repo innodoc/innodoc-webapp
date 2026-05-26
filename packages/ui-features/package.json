@@ -4,18 +4,6 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
-  "exports": {
-    "./page-shell": {
-      "types": "./src/page-shell/PageShell/PageShell.tsx",
-      "development": "./src/page-shell/PageShell/PageShell.tsx",
-      "default": "./dist/page-shell/PageShell/PageShell.js"
-    },
-    "./routes-switch": {
-      "types": "./src/pages/RoutesSwitch.tsx",
-      "development": "./src/pages/RoutesSwitch.tsx",
-      "default": "./dist/pages/RoutesSwitch.js"
-    }
-  },
   "imports": {
     "#layout": {
       "types": "./src/page-shell/Layout/Layout.tsx",
@@ -31,6 +19,18 @@
       "types": "./src/pages/ErrorPage.tsx",
       "development": "./src/pages/ErrorPage.tsx",
       "default": "./dist/pages/ErrorPage.js"
+    }
+  },
+  "exports": {
+    "./page-shell": {
+      "types": "./src/page-shell/PageShell/PageShell.tsx",
+      "development": "./src/page-shell/PageShell/PageShell.tsx",
+      "default": "./dist/page-shell/PageShell/PageShell.js"
+    },
+    "./routes-switch": {
+      "types": "./src/pages/RoutesSwitch.tsx",
+      "development": "./src/pages/RoutesSwitch.tsx",
+      "default": "./dist/pages/RoutesSwitch.js"
     }
   },
   "scripts": {

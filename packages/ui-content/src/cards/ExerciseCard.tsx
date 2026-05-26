@@ -1,12 +1,10 @@
+import type { ContentCardProps } from './types.js'
 import { Button } from '@mui/material'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { Icon } from '@innodoc/ui-design-system/misc'
 import { ExerciseContext } from '@innodoc/ui-shared/contexts'
-
 import Card from './Card.js'
-import type { ContentCardProps } from './types.js'
 
 const handleClick = () => {
   console.log('CHECK')

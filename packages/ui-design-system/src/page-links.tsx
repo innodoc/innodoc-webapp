@@ -1,7 +1,5 @@
 import type { ReactElement } from 'react'
-
 import type { FrontendRouteName, PageLinkLocation } from '@innodoc/shared-core/types'
-
 import { Icon } from '#misc'
 
 /** Page link definition */

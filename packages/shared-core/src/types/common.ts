@@ -1,8 +1,6 @@
-import type { Root } from 'hast'
-
-import type { CARD_TYPES, CONTENT_TYPES, COURSE_SLUG_MODES, PAGE_LINK_LOCACTIONS, SECTION_TYPES } from '#constants'
-
 import type { ParserError } from './errors.js'
+import type { Root } from 'hast'
+import type { CARD_TYPES, CONTENT_TYPES, COURSE_SLUG_MODES, PAGE_LINK_LOCACTIONS, SECTION_TYPES } from '#constants'
 
 /** Arbitrary object */
 type ArbitraryObject = Record<string, unknown>

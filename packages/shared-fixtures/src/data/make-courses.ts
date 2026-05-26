@@ -1,13 +1,11 @@
+import type { FakerCourse, FakerFragments, Fakers } from './types.js'
 import { fakerDE, fakerEN } from '@faker-js/faker'
-
 import { FRAGMENT_TYPES } from '@innodoc/shared-core/constants'
 import type { ApiCourse } from '@innodoc/shared-core/types'
-
 import makeContent from './make-content.js'
 import makePages from './make-pages.js'
 import makeSections from './make-sections.js'
 import { getDates, getLocales, seed } from './utils.js'
-import type { FakerCourse, FakerFragments, Fakers } from './types.js'
 
 const makeCourseData = (courseId: number, fakers: Fakers): ApiCourse => ({
   id: courseId,

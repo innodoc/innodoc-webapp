@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "imports": {},
   "exports": {
     ".": {
       "types": "./src/types.ts",
       "default": "./dist/server/index.js"
     }
   },
-  "imports": {},
   "scripts": {
     "build": "vite build --mode production",
     "clean": "rm -rf dist",

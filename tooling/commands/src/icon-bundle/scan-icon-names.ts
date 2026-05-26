@@ -1,7 +1,6 @@
+import { AST_NODE_TYPES, parse, simpleTraverse } from '@typescript-eslint/typescript-estree'
 import { readdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
-
-import { AST_NODE_TYPES, parse, simpleTraverse } from '@typescript-eslint/typescript-estree'
 
 async function findTsxFiles(dir: string): Promise<string[]> {
   const files: string[] = []

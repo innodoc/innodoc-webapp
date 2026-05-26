@@ -1,6 +1,5 @@
 import { Box, IconButton, Tooltip, useColorScheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-
 import { Icon } from '@innodoc/ui-design-system/misc'
 
 function PaletteModeMenuButton() {

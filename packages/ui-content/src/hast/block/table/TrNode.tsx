@@ -1,5 +1,4 @@
 import { styled, TableRow } from '@mui/material'
-
 import type { HastComponentProps } from '#hast'
 
 const StyledTableRow = styled(TableRow)({

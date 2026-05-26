@@ -1,7 +1,5 @@
 import { assert, expect, test } from 'vitest'
-
 import { populateStore, render, screen, within } from '@innodoc/ui-test-utils'
-
 import { StaticToc } from '#toc'
 
 test('renders StaticToc', async () => {

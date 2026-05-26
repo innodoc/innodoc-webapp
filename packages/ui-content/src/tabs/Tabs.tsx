@@ -1,9 +1,7 @@
 import { TabContext, TabList } from '@mui/lab'
 import { Paper, styled, Tab } from '@mui/material'
 import { type ReactNode, type SyntheticEvent, useEffect, useRef, useState } from 'react'
-
 import type { TABS_PROPERTIES } from '@innodoc/content-parser/properties'
-
 import type { NodeProps } from '#types'
 
 const StyledPaper = styled(Paper)(({ theme }) => ({

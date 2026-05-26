@@ -1,5 +1,4 @@
 import type { Knex } from 'knex'
-
 import { FRAGMENT_TYPES } from '@innodoc/shared-core/constants'
 
 export async function up(knex: Knex) {

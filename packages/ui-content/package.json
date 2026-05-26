@@ -4,13 +4,6 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
-  "exports": {
-    ".": {
-      "types": "./src/hast/hast.ts",
-      "development": "./src/hast/hast.ts",
-      "default": "./dist/hast/hast.js"
-    }
-  },
   "imports": {
     "#cards": {
       "types": "./src/cards/cards.ts",
@@ -40,6 +33,13 @@
     "#types": {
       "types": "./src/types.ts",
       "development": "./src/types.ts"
+    }
+  },
+  "exports": {
+    ".": {
+      "types": "./src/hast/hast.ts",
+      "development": "./src/hast/hast.ts",
+      "default": "./dist/hast/hast.js"
     }
   },
   "scripts": {

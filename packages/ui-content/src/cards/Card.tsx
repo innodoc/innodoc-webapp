@@ -1,12 +1,10 @@
-import { Card as MuiCard, CardActionArea, CardActions, CardContent, CardHeader, Collapse, styled } from '@mui/material'
-import { useState } from 'react'
+import type { ContentCardProps } from './types.js'
 import type { CardHeaderProps } from '@mui/material'
 import type { ComponentProps, ReactNode } from 'react'
-
-import { Icon, type IconProps } from '@innodoc/ui-design-system/misc'
+import { Card as MuiCard, CardActionArea, CardActions, CardContent, CardHeader, Collapse, styled } from '@mui/material'
+import { useState } from 'react'
 import type { CardType } from '@innodoc/shared-core/types'
-
-import type { ContentCardProps } from './types.js'
+import { Icon, type IconProps } from '@innodoc/ui-design-system/misc'
 
 const ExpandIcon = styled(Icon, {
   shouldForwardProp: (prop) => prop !== 'expand',

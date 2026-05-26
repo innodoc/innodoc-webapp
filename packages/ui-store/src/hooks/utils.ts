@@ -1,5 +1,4 @@
 import type { LanguageCode } from 'iso-639-1'
-
 import { isTranslatableString } from '@innodoc/shared-core/typeguards'
 import type { ApiBaseEntity, TranslatableString, TranslatedEntity } from '@innodoc/shared-core/types'
 

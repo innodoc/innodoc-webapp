@@ -1,10 +1,9 @@
 import { use } from 'react'
-
+import type { RouteManager } from '@innodoc/shared-core/routes'
+import type { FrontendRouteInfo } from '@innodoc/shared-core/types'
 import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
 import { useSelector } from '@innodoc/ui-store/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
-import type { RouteManager } from '@innodoc/shared-core/routes'
-import type { FrontendRouteInfo } from '@innodoc/shared-core/types'
 
 interface UseRouteManagerReturn {
   url: (partialRouteInfo: Partial<FrontendRouteInfo>) => string

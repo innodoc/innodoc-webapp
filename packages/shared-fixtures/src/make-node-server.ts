@@ -1,8 +1,6 @@
 import { setupServer } from 'msw/node'
-
 import { RouteManager } from '@innodoc/shared-core/routes'
 import type { ConfigSchema } from '@innodoc/shared-core/types'
-
 import getHandlers from './get-handlers'
 
 const makeNodeServer = (config: ConfigSchema) => {

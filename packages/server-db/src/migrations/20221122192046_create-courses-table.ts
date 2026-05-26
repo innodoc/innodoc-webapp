@@ -1,5 +1,4 @@
 import type { Knex } from 'knex'
-
 import { DEFAULT_MIN_SCORE, SLUG_RE } from '@innodoc/shared-core/constants'
 
 export async function up(knex: Knex) {

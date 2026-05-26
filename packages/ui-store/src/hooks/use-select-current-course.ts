@@ -1,14 +1,11 @@
+import type { LanguageCode } from 'iso-639-1'
 import { createSelector } from '@reduxjs/toolkit'
 import { use, useMemo } from 'react'
-import type { LanguageCode } from 'iso-639-1'
-
 import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
-import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
 import type { ApiCourse, TranslatedCourse } from '@innodoc/shared-core/types'
-
+import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
 import { selectRouteInfo } from '#slices/app'
 import getCoursesApi from '#slices/content/courses'
-
 import { useSelector } from './redux.js'
 import { translateEntity } from './utils.js'
 

@@ -1,7 +1,6 @@
-import { useSelectCurrentCourse } from '@innodoc/ui-store/hooks'
-
-import SpecLink from './SpecLink.js'
 import type { LinkProps } from './types.js'
+import { useSelectCurrentCourse } from '@innodoc/ui-store/hooks'
+import SpecLink from './SpecLink.js'
 
 /** Link to home as specified in course */
 function CourseHomeLink({ ref, children, ...props }: HomeLinkProps) {

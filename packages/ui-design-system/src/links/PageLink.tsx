@@ -1,13 +1,10 @@
+import type { LinkProps } from './types.js'
 import { Trans } from 'react-i18next'
-
-import { useRouteManager, useSelectPage } from '@innodoc/ui-store/hooks'
 import type { ApiPage, TranslatedPage } from '@innodoc/shared-core/types'
-
+import { useRouteManager, useSelectPage } from '@innodoc/ui-store/hooks'
 import { InlineError } from '#errors'
 import { Code, Icon } from '#misc'
-
 import BaseLink from './BaseLink.js'
-import type { LinkProps } from './types.js'
 
 /** Link to a page using `pageSlug` */
 function PageLinkFromSlug({ ref, pageSlug, ...other }: PageLinkFromSlugProps) {

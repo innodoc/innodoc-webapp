@@ -1,7 +1,5 @@
 import type { ZodError } from 'zod'
-
 import type { ParserError } from '#types'
-
 import { isArbitraryObject } from './common.js'
 
 /** Type guard for error object */

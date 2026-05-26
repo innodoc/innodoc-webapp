@@ -1,6 +1,5 @@
-import { getIcons } from '@iconify/utils/lib/icon-set/get-icons'
 import type { IconifyJSON } from '@iconify/types'
-
+import { getIcons } from '@iconify/utils/lib/icon-set/get-icons'
 import parseSvg from './parse-svg.js'
 import scanIconNames from './scan-icon-names.js'
 

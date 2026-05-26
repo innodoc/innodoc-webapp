@@ -1,12 +1,10 @@
 // TODO: use hast-util-from-html/hast-util-to-jsx-runtime
 
-import { createElement } from 'react'
-import { useTranslation } from 'react-i18next'
 import type { ComponentType, SVGProps } from 'react'
 import type { ElementNode, RootNode } from 'svg-parser'
-
+import { createElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { InlineError } from '#errors'
-
 import attributesToProps from './attributes-to-props.js'
 
 function generateNodeKey(node: ElementNode, index: number): string {

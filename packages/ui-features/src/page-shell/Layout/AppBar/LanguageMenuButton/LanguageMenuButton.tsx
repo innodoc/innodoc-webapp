@@ -1,7 +1,5 @@
 import { useTranslation } from 'react-i18next'
-
 import { MenuButton } from '@innodoc/ui-design-system/buttons'
-
 import MenuItemsLanguages from './MenuItemsLanguages.js'
 
 function LanguageMenuButton() {

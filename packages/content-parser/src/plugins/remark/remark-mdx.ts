@@ -1,8 +1,7 @@
+import type { Processor } from 'unified'
 import { mdxJsxFromMarkdown } from 'mdast-util-mdx-jsx'
 import { mdxJsx } from 'micromark-extension-mdx-jsx'
 import { mdxMd } from 'micromark-extension-mdx-md'
-import type { Processor } from 'unified'
-
 import { addExtension } from './utils.js'
 
 /** Selectively choose features from MDX */

@@ -1,8 +1,6 @@
 import type { ComponentType, ReactNode } from 'react'
-
 import { isHastMdxJsxTextSpanElement } from '@innodoc/content-parser/typeguards'
 import type { HastMdxJsxTextSpanElement } from '@innodoc/content-parser/types'
-
 import { TextQuestion } from '#exercises'
 import type { HastComponentProps } from '#hast'
 

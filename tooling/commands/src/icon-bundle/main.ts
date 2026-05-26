@@ -1,9 +1,7 @@
 #!/usr/bin/env node
 
-import { lstat, writeFile } from 'node:fs/promises'
-
 import { InvalidArgumentError, program } from '@commander-js/extra-typings'
-
+import { lstat, writeFile } from 'node:fs/promises'
 import getIconBundle from './get-icon-bundle.js'
 
 interface SystemError extends Error {

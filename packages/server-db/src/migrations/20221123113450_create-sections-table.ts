@@ -1,5 +1,4 @@
 import type { Knex } from 'knex'
-
 import { SECTION_TYPES, SLUG_RE } from '@innodoc/shared-core/constants'
 
 export async function up(knex: Knex) {

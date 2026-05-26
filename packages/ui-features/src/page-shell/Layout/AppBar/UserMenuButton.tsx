@@ -1,10 +1,8 @@
 import { Box, Divider, ListItemIcon, ListItemText, MenuItem, useColorScheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-
 import { MenuButton } from '@innodoc/ui-design-system/buttons'
 import { AppLink } from '@innodoc/ui-design-system/links'
 import { Icon, MenuItemCaption } from '@innodoc/ui-design-system/misc'
-
 import MenuItemsLanguages from './LanguageMenuButton/MenuItemsLanguages.js'
 
 function UserMenuItems() {

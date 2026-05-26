@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import parseConfig from '@innodoc/server-env'
-
 import setupServer from './server.js'
 
 try {

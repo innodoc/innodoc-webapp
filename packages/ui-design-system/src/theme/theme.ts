@@ -1,10 +1,8 @@
-import { experimental_extendTheme as extendTheme, responsiveFontSizes, type ThemeOptions } from '@mui/material'
+import type { PaletteCard } from './types'
 import type { CssVarsThemeOptions, DefaultColorScheme } from '@mui/material/styles/experimental_extendTheme'
-
+import { experimental_extendTheme as extendTheme, responsiveFontSizes, type ThemeOptions } from '@mui/material'
 import { CARD_TYPES } from '@innodoc/shared-core/constants'
 import type { CardType } from '@innodoc/shared-core/types'
-
-import type { PaletteCard } from './types'
 
 // Use custom Lato font instead of MUI default font
 const fontFamily = ['Lato', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(',')

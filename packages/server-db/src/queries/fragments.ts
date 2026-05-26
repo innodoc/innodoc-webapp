@@ -1,10 +1,8 @@
+import type { ValueResult } from './types.js'
 import type { LanguageCode } from 'iso-639-1'
 import type { Knex } from 'knex'
-
 import type { CourseSchema, FragmentTypeSchema } from '@innodoc/shared-core/types'
-
 import { unpackValue } from './utils.js'
-import type { ValueResult } from './types.js'
 
 /**
  * Get localized fragment content.

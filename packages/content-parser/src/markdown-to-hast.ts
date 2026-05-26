@@ -7,7 +7,6 @@ import remarkMath from 'remark-math'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import { unified } from 'unified'
-
 import rehypeInnodoc from './plugins/rehype-innodoc/rehype-innodoc.js'
 import remarkGfm from './plugins/remark/remark-gfm.js'
 import remarkInnodoc from './plugins/remark/remark-innodoc/remark-innodoc.js'

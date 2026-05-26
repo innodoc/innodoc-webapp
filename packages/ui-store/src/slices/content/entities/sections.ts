@@ -1,6 +1,5 @@
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { ApiRouteParams, ApiSection, ContentWithHash } from '@innodoc/shared-core/types'
-
 import contentApi, { hashContentResponse } from '#slices/content'
 
 let sectionsApi: ReturnType<typeof makeSectionsApi> | null = null

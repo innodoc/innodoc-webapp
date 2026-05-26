@@ -1,6 +1,5 @@
-import { jsxDEV } from 'react/jsx-dev-runtime'
 import type { Options } from 'rehype-react'
-
+import { jsxDEV } from 'react/jsx-dev-runtime'
 import rehypeReactOptions from './rehype-react-options.js'
 
 const rehypeReactOptionsDev = {

@@ -1,9 +1,8 @@
-import path from 'node:path'
-
+import type { UserConfig } from 'vite'
 import { Unhead } from '@unhead/react/bundler'
 import viteReact from '@vitejs/plugin-react'
+import path from 'node:path'
 import { defineConfig } from 'vite'
-import type { UserConfig } from 'vite'
 
 const rootDir = path.resolve(import.meta.dirname, '..', '..')
 const srcDir = path.resolve(import.meta.dirname, 'src')

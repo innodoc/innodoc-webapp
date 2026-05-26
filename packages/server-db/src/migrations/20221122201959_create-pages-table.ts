@@ -1,5 +1,4 @@
 import type { Knex } from 'knex'
-
 import { PAGE_LINK_LOCACTIONS, SLUG_RE } from '@innodoc/shared-core/constants'
 
 export async function up(knex: Knex) {

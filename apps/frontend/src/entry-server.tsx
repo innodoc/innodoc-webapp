@@ -1,11 +1,9 @@
-import { PassThrough } from 'node:stream'
-
+import type { RenderFunction } from './types.js'
 import createCache from '@emotion/cache'
 import { createStreamableHead, prepareStreamingTemplate, UnheadProvider } from '@unhead/react/stream/server'
+import { PassThrough } from 'node:stream'
 import { renderToPipeableStream } from 'react-dom/server'
-
 import App from './App.js'
-import type { RenderFunction } from './types.js'
 
 const render: RenderFunction = function render({ htmlTemplate, store, ...otherProps }) {
   const emotionCache = createCache({ key: 'emotion-style' })

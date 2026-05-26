@@ -1,11 +1,9 @@
-import { Trans } from 'react-i18next'
 import type { ReactNode } from 'react'
-
+import { Trans } from 'react-i18next'
+import type { ContentType, TranslatedPage, TranslatedSection } from '@innodoc/shared-core/types'
 import HastNode from '@innodoc/ui-content'
 import { Code } from '@innodoc/ui-design-system/misc'
 import { getContentIdField } from '@innodoc/ui-design-system/utils'
-import type { ContentType, TranslatedPage, TranslatedSection } from '@innodoc/shared-core/types'
-
 import ErrorPage from '#pages/error'
 
 function ContentError({ contentType, contentIdValue }: ErrorProperties) {

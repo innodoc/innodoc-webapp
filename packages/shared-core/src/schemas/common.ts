@@ -4,7 +4,6 @@ import isLocale from 'validator/lib/isLocale.js'
 import isPort from 'validator/lib/isPort.js'
 import isSlug from 'validator/lib/isSlug.js'
 import z from 'zod'
-
 import { PATH_RE } from '#constants'
 
 // split off, so we don't create a circular typing on `translatableString` schema

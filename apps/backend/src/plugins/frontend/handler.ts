@@ -1,5 +1,4 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
-
 import type { RenderFunction } from '@innodoc/frontend'
 
 // Signature of the HTML function returned by createHtmlFunction

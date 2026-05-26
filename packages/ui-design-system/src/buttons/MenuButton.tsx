@@ -1,6 +1,5 @@
 import { Box, IconButton, Menu, Tooltip } from '@mui/material'
 import { type MouseEvent, type ReactNode, useState } from 'react'
-
 import { Icon, type IconProps } from '#misc'
 
 function MenuButton({ children, iconName, id, title }: MenuButtonProps) {

@@ -1,13 +1,12 @@
+import type { EmotionCache } from '@emotion/react'
+import type I18n from 'i18next'
 import { I18nextProvider } from 'react-i18next'
 import { Provider as ReduxProvider } from 'react-redux'
 import { Router } from 'wouter'
-import type { EmotionCache } from '@emotion/react'
-import type I18n from 'i18next'
-
+import type { RouteManager } from '@innodoc/shared-core/routes'
 import PageShell from '@innodoc/ui-features/page-shell'
 import RoutesSwitch from '@innodoc/ui-features/routes-switch'
 import { RouteManagerProvider } from '@innodoc/ui-shared/contexts'
-import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { Store } from '@innodoc/ui-store/types'
 
 interface AppProps {

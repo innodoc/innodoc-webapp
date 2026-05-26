@@ -1,8 +1,7 @@
+import type { FastifyPluginAsync } from 'fastify'
+import fastifyPlugin from 'fastify-plugin'
 import fs from 'node:fs/promises'
 import path from 'node:path'
-
-import fastifyPlugin from 'fastify-plugin'
-import type { FastifyPluginAsync } from 'fastify'
 
 /**
  * Get dev server certificates if available.

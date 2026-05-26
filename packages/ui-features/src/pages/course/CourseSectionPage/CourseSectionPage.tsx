@@ -1,5 +1,4 @@
 import { use } from 'react'
-
 import { isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
 import { PageHeader } from '@innodoc/ui-design-system/misc'
 import { formatSectionTitle } from '@innodoc/ui-design-system/utils'
@@ -7,9 +6,7 @@ import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
 import { useSelector, useSelectSection } from '@innodoc/ui-store/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 import getSectionsApi from '@innodoc/ui-store/slices/content/sections'
-
 import ContentPage from '#pages/course/content'
-
 import Breadcrumbs from './Breadcrumbs.js'
 import SubsectionList from './SubsectionList.js'
 

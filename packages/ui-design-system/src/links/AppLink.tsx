@@ -1,16 +1,13 @@
-import { useTranslation } from 'react-i18next'
+import type { LinkProps } from './types.js'
 import type { ReactNode } from 'react'
-
+import { useTranslation } from 'react-i18next'
 import { isFrontendRouteInfo, isCoursePageRouteInfo, isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
 import { useRouteManager } from '@innodoc/ui-store/hooks'
-
 import pageLinks from '#page-links'
-
 import BaseLink from './BaseLink.js'
 import CourseHomeLink from './CourseHomeLink.js'
 import { PageLinkFromSlug } from './PageLink.js'
 import { SectionLinkFromPath } from './SectionLink.js'
-import type { LinkProps } from './types.js'
 
 /** App-internal link */
 function AppLink({ ref, children, routeInfo, ...other }: AppLinkProps) {

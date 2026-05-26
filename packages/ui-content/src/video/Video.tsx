@@ -1,9 +1,7 @@
+import type { ReactNode } from 'react'
 import { styled } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import type { ReactNode } from 'react'
-
 import type { VIDEO_PROPERTIES } from '@innodoc/content-parser/properties'
-
 import type { NodeProps } from '#types'
 
 const StyledVideo = styled('video')(({ theme }) => ({

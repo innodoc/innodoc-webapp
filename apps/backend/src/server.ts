@@ -1,7 +1,5 @@
 import Fastify from 'fastify'
-
 import type { ConfigSchema } from '@innodoc/shared-core/types'
-
 import { diContainerPlugin, frontendPlugin, i18nPlugin, makeEnvPlugin } from './plugins/plugins.js'
 
 /**

@@ -1,7 +1,6 @@
-import knex from 'knex'
 import type { LanguageCode } from 'iso-639-1'
 import type { Knex } from 'knex'
-
+import knex from 'knex'
 import type {
   ConfigSchema,
   CourseSchema,
@@ -9,7 +8,6 @@ import type {
   PageSchema,
   SectionSchema,
 } from '@innodoc/shared-core/types'
-
 import makeKnexConfig from './knex-config.js'
 import { getCourse } from './queries/courses.js'
 import { getFragmentContent } from './queries/fragments.js'

@@ -1,7 +1,6 @@
+import type { RouteName } from './route-names.js'
 import type { ApiRouteParams } from '#routes/api-routes'
 import type { CourseContentRouteParams } from '#routes/course-routes'
-
-import type { RouteName } from './route-names.js'
 
 type CombinedRouteParams = ApiRouteParams & CourseContentRouteParams
 type RouteParams<R> = R extends keyof CombinedRouteParams ? CombinedRouteParams[R] : Record<string, string>

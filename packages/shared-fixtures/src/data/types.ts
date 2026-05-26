@@ -1,7 +1,6 @@
 import type { Faker } from '@faker-js/faker'
 import type { LanguageCode } from 'iso-639-1'
 import type { RootContent } from 'mdast'
-
 import type { ApiCourse, ApiPage, ApiSection, FragmentTypeSchema } from '@innodoc/shared-core/types'
 
 interface BaseOptions {

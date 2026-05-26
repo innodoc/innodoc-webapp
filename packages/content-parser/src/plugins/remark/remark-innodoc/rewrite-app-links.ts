@@ -1,5 +1,4 @@
 import type { Node } from 'unist'
-
 import { isMdastLink } from '#typeguards'
 
 /**

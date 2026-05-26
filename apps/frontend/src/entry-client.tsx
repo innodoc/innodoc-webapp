@@ -3,12 +3,10 @@ import { createStreamableHead, UnheadProvider } from '@unhead/react/stream/clien
 import I18NextHttpBackend from 'i18next-http-backend'
 import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
-
 import initI18n from '@innodoc/shared-core/i18n'
 import { RouteManager } from '@innodoc/shared-core/routes'
 import { isCourseSlugMode } from '@innodoc/shared-core/typeguards'
 import makeStore from '@innodoc/ui-store'
-
 import App from './App.js'
 
 async function makeProps() {

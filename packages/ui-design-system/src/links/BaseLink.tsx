@@ -1,6 +1,5 @@
-import { Link } from '@mui/material'
-
 import type { LinkProps } from './types.js'
+import { Link } from '@mui/material'
 
 /** Link that handles `hash` */
 function BaseLink({ ref, children, hash, to = '', ...other }: BaseLinkProps) {

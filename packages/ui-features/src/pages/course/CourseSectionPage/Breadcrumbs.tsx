@@ -1,5 +1,4 @@
 import { Breadcrumbs as MuiBreadcrumbs, styled, Typography } from '@mui/material'
-
 import { CourseHomeLink, SectionLink } from '@innodoc/ui-design-system/links'
 import { Icon } from '@innodoc/ui-design-system/misc'
 import { formatSectionTitle } from '@innodoc/ui-design-system/utils'

@@ -1,6 +1,5 @@
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-
 import { DrawerButton } from '@innodoc/ui-design-system/buttons'
 import { Icon } from '@innodoc/ui-design-system/misc'
 import { Toc } from '@innodoc/ui-design-system/toc'

@@ -1,7 +1,6 @@
 // import { compile, match } from 'path-to-regexp'
 // import type { Match, MatchFunction, PathFunction } from 'path-to-regexp'
 import { inject, parse } from 'regexparam'
-
 import { API_COURSE_PREFIX, API_PREFIX } from '#constants'
 import { apiRoutes, builtinRoutes, courseRoutes, userRoutes } from '#routes'
 import { isContentType, isCourseContentRouteName, isFrontendRouteInfo, isFrontendRouteName } from '#typeguards'

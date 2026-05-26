@@ -1,7 +1,5 @@
-import path from 'node:path'
-
 import type { Knex } from 'knex'
-
+import path from 'node:path'
 import getConfig from '@innodoc/server-env'
 import type { ConfigSchema } from '@innodoc/shared-core/types'
 

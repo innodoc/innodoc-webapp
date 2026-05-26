@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import chalk from 'chalk'
-
 import parseConfig from '@innodoc/server-env'
 import { RouteManager } from '@innodoc/shared-core/routes'
 

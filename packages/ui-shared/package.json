@@ -4,15 +4,15 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
-  "exports": {
-    "./contexts": {
+  "imports": {
+    "#contexts": {
       "types": "./src/contexts/contexts.ts",
       "development": "./src/contexts/contexts.ts",
       "default": "./dist/contexts/contexts.js"
     }
   },
-  "imports": {
-    "#contexts": {
+  "exports": {
+    "./contexts": {
       "types": "./src/contexts/contexts.ts",
       "development": "./src/contexts/contexts.ts",
       "default": "./dist/contexts/contexts.js"

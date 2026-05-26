@@ -1,9 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-
+import { createSlice } from '@reduxjs/toolkit'
 import { DEFAULT_LOCALES, DEFAULT_ROUTE_NAME } from '@innodoc/shared-core/constants'
 import type { FrontendRouteInfo } from '@innodoc/shared-core/types'
-
 import { selectRouteInfo, selectRouteTransitionInfo } from './selectors.js'
 
 interface AppSliceState {

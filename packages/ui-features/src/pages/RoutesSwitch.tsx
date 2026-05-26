@@ -1,9 +1,7 @@
-import { Route, Switch } from 'wouter'
 import type { ComponentType } from 'react'
-
+import { Route, Switch } from 'wouter'
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { FrontendRouteName } from '@innodoc/shared-core/types'
-
 import CourseContentPage from './course/CourseContentPage.js'
 import CourseProgressPage from './course/CourseProgressPage.js'
 import CourseSectionPage from './course/CourseSectionPage/CourseSectionPage.js'

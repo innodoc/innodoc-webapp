@@ -1,8 +1,7 @@
-import type { ListenerEffectAPI, TypedStartListening } from '@reduxjs/toolkit'
-import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react'
-
 import type makeStore from './make-store.js'
 import type { rootReducer } from './make-store.js'
+import type { ListenerEffectAPI, TypedStartListening } from '@reduxjs/toolkit'
+import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react'
 
 /** Store type */
 type Store = Awaited<ReturnType<typeof makeStore>>

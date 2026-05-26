@@ -1,8 +1,7 @@
-import { Box, IconButton, SwipeableDrawer, Tooltip } from '@mui/material'
-import { useState } from 'react'
 import type { BoxProps, SwipeableDrawerProps } from '@mui/material'
 import type { ReactNode } from 'react'
-
+import { Box, IconButton, SwipeableDrawer, Tooltip } from '@mui/material'
+import { useState } from 'react'
 import { Icon } from '#misc'
 import type { IconProps } from '#misc'
 

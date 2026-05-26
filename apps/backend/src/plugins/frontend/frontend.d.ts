@@ -1,5 +1,4 @@
 import type { ViteDevServer } from 'vite'
-
 import type { FrontendRouteInfo } from '@innodoc/shared-core/types'
 
 module 'fastify' {

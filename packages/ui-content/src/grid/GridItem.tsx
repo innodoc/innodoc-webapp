@@ -1,10 +1,8 @@
+import type { ReactNode } from 'react'
 import { styled } from '@mui/material'
 import MuiGrid from '@mui/material/Unstable_Grid2'
 import camelcaseKeys from 'camelcase-keys'
-import type { ReactNode } from 'react'
-
 import { GRID_ITEM_PROPERTIES } from '@innodoc/content-parser/properties'
-
 import type { NodeProps } from '#types'
 
 const StyledGrid = styled(MuiGrid)({

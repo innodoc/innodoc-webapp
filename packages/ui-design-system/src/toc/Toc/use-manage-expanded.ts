@@ -1,5 +1,4 @@
 import { type SyntheticEvent, useEffect, useRef, useState } from 'react'
-
 import { isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
 import { useSelector } from '@innodoc/ui-store/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'

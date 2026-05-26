@@ -1,5 +1,4 @@
 import type { HastResult } from '@innodoc/shared-core/types'
-
 import type { RootState } from '#types'
 
 /** Select hast slice */

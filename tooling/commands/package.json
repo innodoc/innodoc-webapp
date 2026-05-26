@@ -2,6 +2,11 @@
   "name": "@innodoc/commands",
   "version": "0.0.0",
   "private": true,
+  "bin": {
+    "innodoc-icon-bundle": "./dist/icon-bundle/main.js",
+    "innodoc-import-v1": "./dist/import-v1/main.js",
+    "innodoc-print-routes": "./dist/print-routes/main.js"
+  },
   "type": "module",
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
@@ -34,10 +39,5 @@
   },
   "peerDependencies": {
     "commander": "catalog:"
-  },
-  "bin": {
-    "innodoc-icon-bundle": "./dist/icon-bundle/main.js",
-    "innodoc-import-v1": "./dist/import-v1/main.js",
-    "innodoc-print-routes": "./dist/print-routes/main.js"
   }
 }

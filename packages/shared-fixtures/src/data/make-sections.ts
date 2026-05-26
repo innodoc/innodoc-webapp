@@ -1,8 +1,7 @@
+import type { Fakers, FakerSection, SectionDef } from './types.js'
 import type { ApiSection } from '@innodoc/shared-core/types'
-
 import makeContent from './make-content.js'
 import { getDates, getTitlesPath, range, seed } from './utils.js'
-import type { Fakers, FakerSection, SectionDef } from './types.js'
 
 let seedVal = 0
 

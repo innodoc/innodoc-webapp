@@ -1,12 +1,10 @@
 import z from 'zod'
-
 import {
   COURSE_SLUG_MODES,
   DEFAULT_COURSE_SLUG_MODE,
   DEFAULT_PAGE_PATH_PREFIX,
   DEFAULT_SECTION_PATH_PREFIX,
 } from '#constants'
-
 import { hostnameSchema, portSchema, slugSchema } from './common.js'
 
 const configSchema = z

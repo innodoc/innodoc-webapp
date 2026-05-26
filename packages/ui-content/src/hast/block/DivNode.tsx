@@ -1,13 +1,11 @@
 import type { ComponentType, ReactNode } from 'react'
-
 import { isHastMdxJsxFlowDivElement, isHastRootDivElement } from '@innodoc/content-parser/typeguards'
 import type { HastMdxJsxFlowDivElement } from '@innodoc/content-parser/types'
-
 import { ExampleCard, ExerciseCard, HintCard, InfoCard, InputHintCard, SolutionCard } from '#cards'
-// import { TableContainer } from '#content/misc'
-import { TabItem, Tabs } from '#tabs'
 // import { Grid, GridItem } from '#content/grid'
 import type { HastComponentProps } from '#hast'
+// import { TableContainer } from '#content/misc'
+import { TabItem, Tabs } from '#tabs'
 
 interface DivComponentProps {
   children: ReactNode

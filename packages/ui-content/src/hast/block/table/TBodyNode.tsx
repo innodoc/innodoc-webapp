@@ -1,5 +1,4 @@
 import { TableBody } from '@mui/material'
-
 import type { HastComponentProps } from '#hast'
 
 function TBodyNode({ children }: HastComponentProps<'tbody'>) {

@@ -1,7 +1,6 @@
 import { Box, Container, Grid, Link, Stack, styled, Typography } from '@mui/material'
 import { use } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '@innodoc/shared-core/constants'
 import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
 import HastNode from '@innodoc/ui-content'

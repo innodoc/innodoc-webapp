@@ -1,13 +1,11 @@
-import stringify from 'remark-stringify'
-import { unified } from 'unified'
+import type { ContentOptions, Fakers, LocalizedContent, NodeFactory } from './types.js'
 import type { Faker } from '@faker-js/faker'
 import type { RootContent } from 'mdast'
-
+import stringify from 'remark-stringify'
+import { unified } from 'unified'
 import { isMdastRoot } from '@innodoc/content-parser/typeguards'
-
 import { code, heading, list, listItem, paragraph, root, text } from './mdast-builder.js'
 import { capitalize, range, seed } from './utils.js'
-import type { ContentOptions, Fakers, LocalizedContent, NodeFactory } from './types.js'
 
 let _nodeFactories: NodeFactory[] = []
 let _weights: number[]

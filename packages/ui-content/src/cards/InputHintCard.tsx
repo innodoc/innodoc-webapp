@@ -1,9 +1,7 @@
+import type { ContentCardProps } from './types.js'
 import { Alert, AlertTitle, styled } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-
 import { Icon } from '@innodoc/ui-design-system/misc'
-
-import type { ContentCardProps } from './types.js'
 
 const StyledAlert = styled(Alert)({
   paddingBottom: 0,

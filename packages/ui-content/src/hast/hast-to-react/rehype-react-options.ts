@@ -1,6 +1,5 @@
-import { Fragment, jsx, jsxs } from 'react/jsx-runtime'
 import type { Options } from 'rehype-react'
-
+import { Fragment, jsx, jsxs } from 'react/jsx-runtime'
 import components from '#hast/components'
 
 const rehypeReactOptions = {

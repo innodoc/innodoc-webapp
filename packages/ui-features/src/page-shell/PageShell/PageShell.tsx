@@ -1,10 +1,8 @@
-import { CacheProvider } from '@emotion/react'
-import { CssBaseline, Experimental_CssVarsProvider as CssVarsProvider, GlobalStyles } from '@mui/material'
 import type { EmotionCache } from '@emotion/react'
 import type { PropsWithChildren } from 'react'
-
+import { CacheProvider } from '@emotion/react'
+import { CssBaseline, Experimental_CssVarsProvider as CssVarsProvider, GlobalStyles } from '@mui/material'
 import theme from '@innodoc/ui-design-system/theme'
-
 import Layout from '#layout'
 
 // import MetaTags from './MetaTags.js'

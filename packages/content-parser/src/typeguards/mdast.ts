@@ -1,6 +1,5 @@
 import type { Link, Root } from 'mdast'
 import type { MdxJsxAttribute, MdxJsxFlowElement, MdxJsxTextElement } from 'mdast-util-mdx-jsx'
-
 import { isArbitraryObject } from '@innodoc/shared-core/typeguards'
 
 function isMdastRoot(node: unknown): node is Root {

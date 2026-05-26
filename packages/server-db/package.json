@@ -4,15 +4,15 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
-  "exports": {
-    ".": {
+  "imports": {
+    "#database": {
       "types": "./src/Database.ts",
       "development": "./src/Database.ts",
       "default": "./dist/Database.js"
     }
   },
-  "imports": {
-    "#database": {
+  "exports": {
+    ".": {
       "types": "./src/Database.ts",
       "development": "./src/Database.ts",
       "default": "./dist/Database.js"

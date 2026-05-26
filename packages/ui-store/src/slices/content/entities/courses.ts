@@ -1,6 +1,5 @@
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { ApiCourse, ApiRouteParams } from '@innodoc/shared-core/types'
-
 import contentApi from '#slices/content'
 
 let coursesApi: ReturnType<typeof makeCoursesApi> | null = null

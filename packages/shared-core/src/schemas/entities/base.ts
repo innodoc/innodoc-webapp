@@ -1,5 +1,4 @@
 import z from 'zod'
-
 import { dbKeySchema } from '#schemas/common'
 
 const baseEntity = z.object({

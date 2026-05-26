@@ -1,6 +1,6 @@
+import type { FakerPage, Fakers } from './types.js'
 import makeContent from './make-content.js'
 import { getDates, getTitlesSlug, range, seed } from './utils.js'
-import type { FakerPage, Fakers } from './types.js'
 
 const makePage = (id: number, courseId: number, fakers: Fakers): FakerPage => {
   seed(`page-${String(courseId)}-${String(id)}`, fakers)

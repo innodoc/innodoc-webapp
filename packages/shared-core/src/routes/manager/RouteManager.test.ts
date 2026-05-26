@@ -1,5 +1,4 @@
 import { expect, test } from 'vitest'
-
 import RouteManager from './RouteManager.js'
 
 test('RouteManager.generateAppUrlPath returns `app:index` path (URL mode)', () => {

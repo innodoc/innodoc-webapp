@@ -1,5 +1,4 @@
 import { AppBar as MuiAppBar, Box, Container, Toolbar } from '@mui/material'
-
 import LanguageMenuButton from './LanguageMenuButton/LanguageMenuButton.js'
 import Logo from './Logo.js'
 import MobileNavButton from './MobileNavButton.js'

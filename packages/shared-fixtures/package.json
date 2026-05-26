@@ -4,6 +4,13 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
+  "imports": {
+    "#courses": {
+      "types": "./src/data/make-courses.ts",
+      "development": "./src/data/make-courses.ts",
+      "default": "./dist/data/make-courses.js"
+    }
+  },
   "exports": {
     "./browser": {
       "types": "./src/make-browser-server.ts",
@@ -14,13 +21,6 @@
       "types": "./src/make-node-server.ts",
       "development": "./src/make-node-server.ts",
       "default": "./dist/make-node-server.js"
-    }
-  },
-  "imports": {
-    "#courses": {
-      "types": "./src/data/make-courses.ts",
-      "development": "./src/data/make-courses.ts",
-      "default": "./dist/data/make-courses.js"
     }
   },
   "scripts": {

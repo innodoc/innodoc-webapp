@@ -1,5 +1,4 @@
 import { TableCell } from '@mui/material'
-
 import type { HastComponentProps } from '#hast'
 
 function TdNode({ children, style }: HastComponentProps<'td'>) {

@@ -1,7 +1,6 @@
+import type { ButtonProps } from '@mui/material'
 import { Button, Stack, styled } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import type { ButtonProps } from '@mui/material'
-
 import { AppLink, PageLink } from '@innodoc/ui-design-system/links'
 import { Icon } from '@innodoc/ui-design-system/misc'
 import pageLinks from '@innodoc/ui-design-system/page-links'

@@ -1,5 +1,4 @@
 import { ListItemIcon, ListItemText, MenuItem, styled } from '@mui/material'
-
 import Icon from './Icon.js'
 
 const StyledMenuItem = styled(MenuItem)({

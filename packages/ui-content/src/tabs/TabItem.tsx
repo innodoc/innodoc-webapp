@@ -1,9 +1,7 @@
 import { TabPanel } from '@mui/lab'
 import { styled } from '@mui/material'
 import { type ReactNode } from 'react'
-
 import type { TAB_ITEM_PROPERTIES } from '@innodoc/content-parser/properties'
-
 import type { NodeProps } from '#types'
 
 const StyleTabPanel = styled(TabPanel)(({ theme }) => ({

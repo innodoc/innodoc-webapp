@@ -1,5 +1,4 @@
 import { Table, TableContainer } from '@mui/material'
-
 import type { HastComponentProps } from '#hast'
 
 function TableNode({ children }: HastComponentProps<'table'>) {

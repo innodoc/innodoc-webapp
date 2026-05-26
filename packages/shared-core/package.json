@@ -4,37 +4,6 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
-  "exports": {
-    "./constants": {
-      "types": "./src/constants.ts",
-      "development": "./src/constants.ts",
-      "default": "./dist/constants.js"
-    },
-    "./i18n": {
-      "types": "./src/i18n.ts",
-      "development": "./src/i18n.ts",
-      "default": "./dist/i18n.js"
-    },
-    "./routes": {
-      "types": "./src/routes/routes.ts",
-      "development": "./src/routes/routes.ts",
-      "default": "./dist/routes/routes.js"
-    },
-    "./schemas": {
-      "types": "./src/schemas/schemas.ts",
-      "development": "./src/schemas/schemas.ts",
-      "default": "./dist/schemas/schemas.js"
-    },
-    "./types": {
-      "types": "./src/types/types.ts",
-      "development": "./src/types/types.ts"
-    },
-    "./typeguards": {
-      "types": "./src/typeguards/typeguards.ts",
-      "development": "./src/typeguards/typeguards.ts",
-      "default": "./dist/typeguards/typeguards.js"
-    }
-  },
   "imports": {
     "#constants": {
       "types": "./src/constants.ts",
@@ -71,6 +40,37 @@
       "development": "./src/types/types.ts"
     },
     "#typeguards": {
+      "types": "./src/typeguards/typeguards.ts",
+      "development": "./src/typeguards/typeguards.ts",
+      "default": "./dist/typeguards/typeguards.js"
+    }
+  },
+  "exports": {
+    "./constants": {
+      "types": "./src/constants.ts",
+      "development": "./src/constants.ts",
+      "default": "./dist/constants.js"
+    },
+    "./i18n": {
+      "types": "./src/i18n.ts",
+      "development": "./src/i18n.ts",
+      "default": "./dist/i18n.js"
+    },
+    "./routes": {
+      "types": "./src/routes/routes.ts",
+      "development": "./src/routes/routes.ts",
+      "default": "./dist/routes/routes.js"
+    },
+    "./schemas": {
+      "types": "./src/schemas/schemas.ts",
+      "development": "./src/schemas/schemas.ts",
+      "default": "./dist/schemas/schemas.js"
+    },
+    "./types": {
+      "types": "./src/types/types.ts",
+      "development": "./src/types/types.ts"
+    },
+    "./typeguards": {
       "types": "./src/typeguards/typeguards.ts",
       "development": "./src/typeguards/typeguards.ts",
       "default": "./dist/typeguards/typeguards.js"

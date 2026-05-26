@@ -1,6 +1,5 @@
-import isLocaleValidator from 'validator/lib/isLocale.js'
 import type { LanguageCode } from 'iso-639-1'
-
+import isLocaleValidator from 'validator/lib/isLocale.js'
 import { COURSE_SLUG_MODES } from '#constants'
 import type { ArbitraryObject, CourseSlugMode } from '#types'
 

@@ -1,9 +1,8 @@
 import { Typography } from '@mui/material'
 import { Trans, useTranslation } from 'react-i18next'
-
+import type { ParserError } from '@innodoc/shared-core/types'
 import { BlockError } from '@innodoc/ui-design-system/errors'
 import { CodeBlock } from '@innodoc/ui-design-system/misc'
-import type { ParserError } from '@innodoc/shared-core/types'
 
 function MarkdownParserError({ error }: MarkdownParserErrorProps) {
   const { t } = useTranslation()

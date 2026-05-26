@@ -1,6 +1,5 @@
 import type { CamelCasedProperties } from 'type-fest'
 import type z from 'zod'
-
 import type {
   baseEntity,
   configSchema,

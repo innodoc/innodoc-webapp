@@ -1,13 +1,10 @@
-import path from 'node:path'
-
+import type { FastifyPluginAsync } from 'fastify'
+import type { FsBackendOptions } from 'i18next-fs-backend'
 import fastifyPlugin from 'fastify-plugin'
 import I18NextFsBackend from 'i18next-fs-backend'
 import { LanguageDetector, plugin as i18nextPlugin } from 'i18next-http-middleware'
-import type { FastifyPluginAsync } from 'fastify'
-import type { FsBackendOptions } from 'i18next-fs-backend'
-
+import path from 'node:path'
 import initI18n from '@innodoc/shared-core/i18n'
-
 import { FRONTEND_PATH } from '#constants'
 import type { PluginOpts } from '#plugins/types'
 

@@ -1,14 +1,12 @@
-import { createListenerMiddleware } from '@reduxjs/toolkit'
 import type { PayloadAction, UnknownAction } from '@reduxjs/toolkit'
-
+import { createListenerMiddleware } from '@reduxjs/toolkit'
 import { isHastRootDivElement } from '@innodoc/content-parser/typeguards'
 import { isParserError, isWithContentHash } from '@innodoc/shared-core/typeguards'
 import type { ContentWithHash, CourseContentRouteInfo, HastResultWithHash } from '@innodoc/shared-core/types'
-
 import { changeRouteTransitionInfo } from '#slices/app'
 import { addHastResult, changeIsProcessing, selectHastResultByHash } from '#slices/hast'
-import { fetchContent } from '#utils'
 import type { AppListenerEffectAPI, AppStartListening } from '#types'
+import { fetchContent } from '#utils'
 
 /** Type guard for `HastResultWithHash` */
 function isHastResultWithHash(obj: unknown): obj is HastResultWithHash {

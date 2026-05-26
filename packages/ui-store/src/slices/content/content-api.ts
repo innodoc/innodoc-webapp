@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import crc32 from 'crc/crc32'
-
 import { MAX_KEEP_UNUSED_DATA_FOR_MAX } from '@innodoc/shared-core/constants'
 
 function hashContentResponse(content: string) {

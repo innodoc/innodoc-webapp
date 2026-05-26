@@ -1,5 +1,4 @@
 import { styled, Typography } from '@mui/material'
-
 import type { HastComponentProps } from '#hast'
 
 const StyledTypography = styled(Typography)(({ theme }) => ({

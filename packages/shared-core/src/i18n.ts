@@ -1,6 +1,6 @@
+import type { i18n, InitOptions } from 'i18next'
 import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import type { i18n, InitOptions } from 'i18next'
 // import type { LanguageCode } from 'iso-639-1'
 
 // const isBrowser = globalThis.window !== undefined

@@ -1,8 +1,8 @@
-import { defineConfig } from "oxfmt"
+import { defineConfig } from 'oxfmt'
 
 export default defineConfig({
-  arrowParens: "always",
-  endOfLine: "lf",
+  arrowParens: 'always',
+  endOfLine: 'lf',
   printWidth: 120,
   semi: false,
   singleQuote: true,
@@ -13,23 +13,23 @@ export default defineConfig({
 
     customGroups: [
       {
-        groupName: "innodoc",
-        elementNamePattern: ["@innodoc/**"],
+        groupName: 'innodoc',
+        elementNamePattern: ['@innodoc/**'],
       },
       {
-        groupName: "subpath",
-        elementNamePattern: ["#/**"],
+        groupName: 'subpath',
+        elementNamePattern: ['#/**'],
       },
     ],
 
     groups: [
-      "type-import",
-      ["value-builtin", "value-external"],
-      ["type-internal", "value-internal", "innodoc"],
-      ["subpath", "value-parent", "value-sibling", "value-index"],
-      "unknown",
+      'type-import',
+      ['value-builtin', 'value-external'],
+      ['type-internal', 'value-internal', 'innodoc'],
+      ['subpath', 'value-parent', 'value-sibling', 'value-index'],
+      'unknown',
     ],
   },
 
-  ignorePatterns: ["dist/**"],
+  ignorePatterns: ['dist/**'],
 })

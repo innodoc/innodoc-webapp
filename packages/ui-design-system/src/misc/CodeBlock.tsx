@@ -1,5 +1,5 @@
-import { Paper, styled } from '@mui/material'
 import type { ReactNode } from 'react'
+import { Paper, styled } from '@mui/material'
 
 const StyledPre = styled('pre', { shouldForwardProp: (prop) => prop !== 'wrap' })<StyledPreProps>(
   ({ theme, wrap }) => ({

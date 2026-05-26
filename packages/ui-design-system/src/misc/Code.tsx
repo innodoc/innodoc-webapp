@@ -1,8 +1,7 @@
-import { styled } from '@mui/material'
 import type { CreateStyledComponent } from '@emotion/styled'
 import type { MUIStyledCommonProps } from '@mui/system'
 import type { DetailedHTMLProps, HTMLAttributes } from 'react'
-
+import { styled } from '@mui/material'
 import type { Theme } from '#theme'
 
 type CreateStyled = CreateStyledComponent<

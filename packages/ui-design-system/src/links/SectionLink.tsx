@@ -1,14 +1,11 @@
+import type { LinkProps as LinkProperties } from './types.js'
 import { Trans } from 'react-i18next'
-
-import { useRouteManager, useSelectSection } from '@innodoc/ui-store/hooks'
 import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/types'
-
+import { useRouteManager, useSelectSection } from '@innodoc/ui-store/hooks'
 import { InlineError } from '#errors'
 import { Code } from '#misc'
 import { formatSectionTitle } from '#utils'
-
 import BaseLink from './BaseLink.js'
-import type { LinkProps as LinkProperties } from './types.js'
 
 /** Link to a section using `sectionPath` */
 function SectionLinkFromPath({ ref: reference, sectionPath, ...other }: SectionLinkFromPathProperties) {

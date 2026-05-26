@@ -1,6 +1,5 @@
-import { createContext } from 'react'
 import type { PropsWithChildren } from 'react'
-
+import { createContext } from 'react'
 import type { RouteManager } from '@innodoc/shared-core/routes'
 
 const RouteManagerContext = createContext<RouteManager | undefined>(undefined)

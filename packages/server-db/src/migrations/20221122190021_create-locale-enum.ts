@@ -1,5 +1,5 @@
-import ISO6391 from 'iso-639-1'
 import type { Knex } from 'knex'
+import ISO6391 from 'iso-639-1'
 
 export async function up(knex: Knex) {
   const values = ISO6391.getAllCodes().join("', '")

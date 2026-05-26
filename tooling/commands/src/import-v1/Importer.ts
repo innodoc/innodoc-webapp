@@ -1,15 +1,12 @@
+import type { InsertResult, Manifest, ManifestPage } from './types.js'
+import type { Knex } from 'knex'
+import camelcaseKeys from 'camelcase-keys'
 import fs from 'node:fs/promises'
 import path from 'node:path'
-
-import camelcaseKeys from 'camelcase-keys'
 import { parse as yamlParse } from 'yaml'
-import type { Knex } from 'knex'
-
 import Database from '@innodoc/server-db'
 import parseConfig from '@innodoc/server-env'
 import type { CourseSchema, SectionSchema } from '@innodoc/shared-core/types'
-
-import type { InsertResult, Manifest, ManifestPage } from './types.js'
 
 interface Frontmatter {
   title: string

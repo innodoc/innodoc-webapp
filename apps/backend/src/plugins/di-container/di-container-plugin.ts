@@ -1,14 +1,12 @@
+import type { FastifyPluginCallback } from 'fastify'
 import { diContainer, fastifyAwilixPlugin } from '@fastify/awilix'
 import { asClass, asFunction, asValue } from 'awilix'
 import fastifyPlugin from 'fastify-plugin'
-import type { FastifyPluginCallback } from 'fastify'
-
 import Database from '@innodoc/server-db'
 import { RouteManager } from '@innodoc/shared-core/routes'
 import type { ConfigSchema, FrontendRouteName } from '@innodoc/shared-core/types'
-
-import { getRoutePath } from '#utils'
 import type { PluginOpts } from '#plugins/types'
+import { getRoutePath } from '#utils'
 
 const diContainerPluginCb: FastifyPluginCallback<PluginOpts> = (server, { config }) => {
   server.register(fastifyAwilixPlugin, { enableDebugLogging: !config.isProduction })

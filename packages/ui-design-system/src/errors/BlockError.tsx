@@ -1,6 +1,6 @@
+import type { ReactNode } from 'react'
 import { Alert, AlertTitle } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import type { ReactNode } from 'react'
 
 function BlockError({ action, children, title = null }: BlockErrorProps) {
   const { t } = useTranslation()

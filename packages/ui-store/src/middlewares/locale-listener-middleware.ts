@@ -1,6 +1,5 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
 import i18next from 'i18next'
-
 import { changeRouteInfo } from '#slices/app'
 import type { AppStartListening } from '#types'
 

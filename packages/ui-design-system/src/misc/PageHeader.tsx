@@ -1,6 +1,5 @@
-import { Typography } from '@mui/material'
 import type { ReactNode } from 'react'
-
+import { Typography } from '@mui/material'
 import Icon from './Icon.js'
 
 function PageHeader({ children, iconName }: PageHeaderProps) {

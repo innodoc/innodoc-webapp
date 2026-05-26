@@ -1,10 +1,8 @@
+import type { IdResult, ValueResult } from './types.js'
 import type { LanguageCode } from 'iso-639-1'
 import type { Knex } from 'knex'
-
 import type { CourseSchema, QuerySectionSchema, SectionSchema } from '@innodoc/shared-core/types'
-
 import { unpackId, unpackValue } from './utils.js'
-import type { IdResult, ValueResult } from './types.js'
 
 /**
  * Get course sections by course ID.

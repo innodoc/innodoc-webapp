@@ -1,7 +1,3 @@
-import type { LanguageCode } from 'iso-639-1'
-
-import type { ApiCourse } from '#types'
-
 import type { RouteParams } from './common.js'
 import type {
   BuiltinRouteName,
@@ -11,6 +7,8 @@ import type {
   RouteName,
   UserRouteName,
 } from './route-names.js'
+import type { LanguageCode } from 'iso-639-1'
+import type { ApiCourse } from '#types'
 
 interface BaseRouteInfo<R extends RouteName = RouteName> {
   /** Route name */

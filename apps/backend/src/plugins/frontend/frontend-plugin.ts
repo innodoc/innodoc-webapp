@@ -1,14 +1,11 @@
-import fs from 'node:fs/promises'
-import path from 'node:path'
-
+import type { FastifyPluginAsync, RouteHandlerMethod } from 'fastify'
 import fastifyStatic from '@fastify/static'
 import { asFunction } from 'awilix'
 import fastifyPlugin from 'fastify-plugin'
-import type { FastifyPluginAsync, RouteHandlerMethod } from 'fastify'
-
-import makeStore from '@innodoc/ui-store'
+import fs from 'node:fs/promises'
+import path from 'node:path'
 import type { RenderFunction, ServerEntryModule } from '@innodoc/frontend'
-
+import makeStore from '@innodoc/ui-store'
 import { FRONTEND_PATH } from '#constants'
 import type { PluginOpts } from '#plugins/types'
 

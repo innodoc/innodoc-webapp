@@ -1,5 +1,4 @@
 import type { Components } from 'hast-util-to-jsx-runtime'
-
 import BlockquoteNode from './block/BlockquoteNode.js'
 import DivNode from './block/DivNode.js'
 import HeadingNode from './block/HeadingNode.js'

@@ -1,8 +1,6 @@
-import type { CSSProperties } from 'react'
-
-import type { CardType } from '@innodoc/shared-core/types'
-
 import type { PaletteCard, PaletteCode, PaletteFooter, PaletteTransparentPaper } from './types.js'
+import type { CSSProperties } from 'react'
+import type { CardType } from '@innodoc/shared-core/types'
 
 declare module '@mui/material/styles/experimental_extendTheme' {
   interface CssVarsPalette {

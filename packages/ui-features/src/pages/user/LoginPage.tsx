@@ -1,6 +1,5 @@
 import { Box, Button, Checkbox, FormControlLabel, Grid, TextField } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-
 import { AppLink } from '@innodoc/ui-design-system/links'
 import { PageHeader } from '@innodoc/ui-design-system/misc'
 

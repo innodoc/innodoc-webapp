@@ -1,6 +1,5 @@
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { ApiPage, ApiRouteParams, ContentWithHash } from '@innodoc/shared-core/types'
-
 import contentApi, { hashContentResponse } from '#slices/content'
 
 let pagesApi: ReturnType<typeof makePagesApi> | null = null

@@ -1,5 +1,4 @@
 import type { Knex } from 'knex'
-
 import type { CourseSchema } from '@innodoc/shared-core/types'
 
 /**

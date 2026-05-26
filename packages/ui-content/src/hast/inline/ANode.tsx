@@ -1,5 +1,4 @@
 import { ContentLink } from '@innodoc/ui-design-system/links'
-
 import type { HastComponentProps } from '#hast'
 
 function ANode({ href, children, title }: HastComponentProps<'a'>) {

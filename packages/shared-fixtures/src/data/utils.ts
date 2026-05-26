@@ -1,10 +1,8 @@
-import { faker } from '@faker-js/faker'
+import type { Fakers, LocalizedContent } from './types'
 import type { Faker } from '@faker-js/faker'
 import type { LanguageCode } from 'iso-639-1'
-
+import { faker } from '@faker-js/faker'
 import { isArbitraryObject } from '@innodoc/shared-core/typeguards'
-
-import type { Fakers, LocalizedContent } from './types'
 
 const makeSlug = (words: string) => faker.helpers.slugify(words).toLocaleLowerCase()
 

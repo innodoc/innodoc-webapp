@@ -1,5 +1,4 @@
 import { styled } from '@mui/material'
-
 import type { HastComponentProps } from '#hast'
 
 const StyledUl = styled('ol')(({ theme }) => ({ paddingLeft: theme.spacing(4) }))

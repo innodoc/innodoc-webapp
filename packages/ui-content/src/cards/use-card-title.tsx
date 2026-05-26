@@ -1,5 +1,4 @@
 import { createContext, type ReactNode, useContext, useEffect, useMemo, useRef } from 'react'
-
 import { isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
 import { getSectionNumberFromOrder } from '@innodoc/ui-design-system/utils'
 import { useSelector, useSelectSection } from '@innodoc/ui-store/hooks'

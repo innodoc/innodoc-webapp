@@ -1,5 +1,4 @@
 import { convertElement } from 'hast-util-is-element'
-
 import type {
   HastMdxJsxFlowDivElement,
   HastMdxJsxFlowDivElementTabItem,

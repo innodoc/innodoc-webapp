@@ -1,7 +1,6 @@
-import { useTranslation } from 'react-i18next'
-
-import Card from './Card.js'
 import type { ContentCardProps } from './types.js'
+import { useTranslation } from 'react-i18next'
+import Card from './Card.js'
 
 function HintCard({ children, id }: ContentCardProps) {
   const { t } = useTranslation()

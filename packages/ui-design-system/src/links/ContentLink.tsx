@@ -1,10 +1,8 @@
+import type { LinkProps } from './types.js'
 import { styled } from '@mui/material'
-
 import { Icon } from '#misc'
-
 import BaseLink from './BaseLink.js'
 import SpecLink from './SpecLink.js'
-import type { LinkProps } from './types.js'
 
 const StyledIcon = styled(Icon)({ fontSize: '1em' })
 

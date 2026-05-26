@@ -1,5 +1,4 @@
 import { styled } from '@mui/material'
-
 import type { HastComponentProps } from '#hast'
 
 const StyledBlockquote = styled('blockquote')(({ theme }) => ({

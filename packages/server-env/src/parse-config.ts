@@ -1,9 +1,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-
 import { loadEnv } from 'vite'
 import { fromZodError } from 'zod-validation-error'
-
 import { configSchema } from '@innodoc/shared-core/schemas'
 import { isZodError } from '@innodoc/shared-core/typeguards'
 
