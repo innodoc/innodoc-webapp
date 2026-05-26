@@ -21,11 +21,7 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "fmt": "prettier --write .",
-    "fmt:check": "prettier --check .",
     "knex": "NODE_OPTIONS='--import tsx/esm' knex --knexfile src/knex-config.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit"
   },
@@ -38,11 +34,8 @@
     "pg-protocol": "catalog:"
   },
   "devDependencies": {
-    "@innodoc/configs": "workspace:*",
     "@types/node": "catalog:",
     "tsx": "catalog:",
-    "typescript": "catalog:",
-    "typescript-eslint": "catalog:"
-  },
-  "prettier": "@innodoc/configs/prettierrc.json"
+    "typescript": "catalog:"
+  }
 }

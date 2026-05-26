@@ -10,15 +10,10 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "fmt": "prettier --write .",
-    "fmt:check": "prettier --check .",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@innodoc/configs": "workspace:*",
-    "@innodoc/server-env": "workspace:*",
+    "@innodoc/server-env": "workspace:",
     "@innodoc/shared-core": "workspace:*",
     "@innodoc/shared-fixtures": "workspace:*",
     "@innodoc/ui-shared": "workspace:*",
@@ -34,9 +29,7 @@
     "react-i18next": "catalog:",
     "react-redux": "catalog:",
     "typescript": "catalog:",
-    "typescript-eslint": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"
-  },
-  "prettier": "@innodoc/configs/prettierrc.json"
+  }
 }

@@ -7,14 +7,14 @@
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**"]
     },
-    "fmt:check": {},
-    "fmt": {},
+    "//#fmt:check": {},
+    "//#fmt": {},
     "knex": {
       "cache": false,
       "persistent": true
     },
-    "lint:fix": {},
-    "lint": {},
+    "//#lint:fix": { "cache": false },
+    "//#lint": {},
     "main": {
       "cache": false,
       "dependsOn": ["build"]

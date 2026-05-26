@@ -111,10 +111,6 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "fmt": "prettier --write .",
-    "fmt:check": "prettier --check .",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit"
   },
@@ -130,7 +126,6 @@
     "svg-parser": "catalog:"
   },
   "devDependencies": {
-    "@innodoc/configs": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-redux": "catalog:",
     "@types/svg-parser": "catalog:",
@@ -139,6 +134,5 @@
     "redux-thunk": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:"
-  },
-  "prettier": "@innodoc/configs/prettierrc.json"
+  }
 }

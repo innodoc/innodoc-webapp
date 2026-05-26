@@ -4,8 +4,6 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./eslint": "./eslint/index.js",
-    "./prettierrc.json": "./prettierrc.json",
     "./tsconfig/base.json": "./tsconfig/base.json",
     "./tsconfig/build.json": "./tsconfig/build.json",
     "./tsconfig/node.json": "./tsconfig/node.json",
@@ -15,35 +13,11 @@
     "./vitest/react": "./vitest/vitest.config.react.ts"
   },
   "scripts": {
-    "fmt": "prettier --write .",
-    "fmt:check": "prettier --check .",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@eslint-react/eslint-plugin": "catalog:",
-    "@eslint/js": "catalog:",
-    "@types/eslint": "catalog:",
     "@types/node": "catalog:",
-    "@vitest/eslint-plugin": "catalog:",
-    "eslint": "catalog:",
-    "eslint-config-prettier": "catalog:",
-    "eslint-import-resolver-typescript": "catalog:",
-    "eslint-plugin-import-x": "catalog:",
-    "eslint-plugin-jest-dom": "catalog:",
-    "eslint-plugin-jsx-a11y": "catalog:",
-    "eslint-plugin-playwright": "catalog:",
-    "eslint-plugin-prettier": "catalog:",
-    "eslint-plugin-promise": "catalog:",
-    "eslint-plugin-react-hooks": "catalog:",
-    "eslint-plugin-regexp": "catalog:",
-    "eslint-plugin-simple-import-sort": "catalog:",
-    "eslint-plugin-testing-library": "catalog:",
-    "eslint-plugin-unicorn": "catalog:",
-    "globals": "catalog:",
     "typescript": "catalog:",
-    "typescript-eslint": "catalog:",
     "vitest": "catalog:"
   }
 }

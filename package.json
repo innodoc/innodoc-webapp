@@ -25,11 +25,11 @@
     "dev:checks": "pnpm run lint && pnpm run fmt:check && pnpm run typecheck && pnpm run syncpack lint && pnpm run depcruise:validate && pnpm run test && pnpm run test:e2e",
     "dev:mock": "#TODO INNODOC_API_MOCK=true INNODOC_DEFAULT_COURSE_SLUG=testcourse INNODOC_COURSE_SLUG_MODE=SINGLE nodemon --ext ts --watch ./src/server --exec tsx ./src/server/startMockServer.ts",
     "========= Format": "",
-    "fmt": "turbo run fmt",
-    "fmt:check": "turbo run fmt:check",
+    "fmt": "oxfmt .",
+    "fmt:check": "oxfmt --check",
     "========= Lint": "",
-    "lint": "turbo run lint",
-    "lint:fix": "turbo run lint:fix",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
     "========= Production": "",
     "start": "NODE_ENV=production turbo run --filter=@innodoc/backend start",
     "========= Test": "",
@@ -49,12 +49,12 @@
     "@commitlint/config-conventional": "catalog:",
     "@innodoc/commands": "workspace:*",
     "@innodoc/configs": "workspace:*",
-    "@types/eslint-plugin-jsx-a11y": "catalog:",
     "commit-and-tag-version": "catalog:",
     "dependency-cruiser": "catalog:",
-    "eslint": "catalog:",
     "knip": "catalog:",
-    "prettier": "catalog:",
+    "oxfmt": "catalog:",
+    "oxlint": "catalog:",
+    "oxlint-tsgolint": "catalog:",
     "syncpack": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:"
@@ -77,6 +77,5 @@
       "@commitlint/config-conventional"
     ]
   },
-  "packageManager": "pnpm@10.33.0",
-  "prettier": "@innodoc/configs/prettierrc.json"
+  "packageManager": "pnpm@10.33.0"
 }

@@ -1,0 +1,128 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "options": {
+    "typeAware": true
+  },
+  "plugins": [
+    "eslint",
+    "typescript",
+    "unicorn",
+    "import",
+    "promise",
+    "react",
+    "jsx-a11y",
+    "vitest",
+    "jest"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2021": true
+  },
+  "rules": {
+    // Core rules
+    "curly": "error",
+    "no-restricted-imports": "off",
+    "no-dupe-class-members": "off",
+    "no-undef": "off",
+    // Import rules (validation only - sorting handled by oxfmt)
+    "import/no-dynamic-require": "warn",
+    "import/named": "off",
+    "import/namespace": "off",
+    "import/default": "off",
+    "import/no-named-as-default-member": "off",
+    "import/no-named-as-default": "off",
+    "import/extensions": "off",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    // Unicorn
+    "unicorn/no-null": "off",
+    "unicorn/filename-case": [
+      "error",
+      {
+        "cases": {
+          "kebabCase": true,
+          "pascalCase": true
+        }
+      }
+    ],
+    // TypeScript
+    "typescript/consistent-type-definitions": [
+      "error",
+      "interface"
+    ],
+    "typescript/consistent-type-imports": [
+      "error",
+      {
+        "disallowTypeAnnotations": false
+      }
+    ],
+    "typescript/no-invalid-void-type": [
+      "error",
+      {
+        "allowAsThisParameter": true
+      }
+    ],
+    "typescript/no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": [
+              "../*"
+            ],
+            "message": "Usage of relative parent imports is not allowed. Use `#` subpath aliases instead."
+          }
+        ],
+        "paths": [
+          {
+            "name": "react-redux",
+            "importNames": [
+              "useSelector",
+              "useDispatch"
+            ],
+            "message": "Use typed hooks from `@innodoc/ui-store` instead."
+          },
+          {
+            "name": "@mui/material",
+            "importNames": [
+              "Icon"
+            ],
+            "message": "Use `#ui/components/common/Icon` instead."
+          }
+        ]
+      }
+    ],
+    "typescript/no-unused-vars": [
+      "error",
+      {
+        "ignoreRestSiblings": true
+      }
+    ],
+    // Vitest
+    "vitest/max-nested-describe": [
+      "error",
+      {
+        "max": 0
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "packages/server-db/src/migrations/*.ts"
+      ],
+      "rules": {
+        "unicorn/filename-case": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    ".cache/*",
+    "dist/*",
+    "coverage/*",
+    "node_modules/*",
+    ".turbo/*"
+  ]
+}

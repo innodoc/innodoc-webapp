@@ -21,10 +21,6 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "fmt": "prettier --write .",
-    "fmt:check": "prettier --check .",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
@@ -33,13 +29,11 @@
     "react": "catalog:"
   },
   "devDependencies": {
-    "@innodoc/configs": "workspace:*",
     "@testing-library/jest-dom": "catalog:",
     "@types/react": "catalog:",
     "jsdom": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"
-  },
-  "prettier": "@innodoc/configs/prettierrc.json"
+  }
 }

@@ -14,10 +14,6 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "fmt": "prettier --write .",
-    "fmt:check": "prettier --check .",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit"
   },
@@ -27,10 +23,6 @@
     "zod-validation-error": "catalog:"
   },
   "devDependencies": {
-    "@innodoc/configs": "workspace:*",
-    "globals": "catalog:",
-    "typescript": "catalog:",
-    "typescript-eslint": "catalog:"
-  },
-  "prettier": "@innodoc/configs/prettierrc.json"
+    "typescript": "catalog:"
+  }
 }

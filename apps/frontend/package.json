@@ -13,10 +13,6 @@
   "scripts": {
     "build": "vite build --mode production",
     "clean": "rm -rf dist",
-    "fmt": "prettier --write .",
-    "fmt:check": "prettier --check .",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit"
   },
@@ -44,8 +40,6 @@
     "@vitejs/plugin-react": "catalog:",
     "i18next": "catalog:",
     "typescript": "catalog:",
-    "typescript-eslint": "catalog:",
     "vitest": "catalog:"
-  },
-  "prettier": "@innodoc/configs/prettierrc.json"
+  }
 }

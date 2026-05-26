@@ -79,10 +79,6 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "fmt:check": "prettier --check .",
-    "lint": "eslint .",
-    "fmt": "prettier --write .",
-    "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit"
   },
@@ -94,7 +90,6 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@innodoc/configs": "workspace:*",
     "@types/hast": "catalog:",
     "@types/node": "catalog:",
     "@types/validator": "catalog:",
@@ -103,6 +98,5 @@
     "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"
-  },
-  "prettier": "@innodoc/configs/prettierrc.json"
+  }
 }

@@ -44,10 +44,6 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "fmt": "prettier --write .",
-    "fmt:check": "prettier --check .",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit"
   },
@@ -75,13 +71,11 @@
     "unist-util-visit": "catalog:"
   },
   "devDependencies": {
-    "@innodoc/configs": "workspace:*",
     "@types/hast": "catalog:",
     "@types/mdast": "catalog:",
     "@types/node": "catalog:",
     "@types/unist": "catalog:",
     "hast-util-sanitize": "catalog:",
     "typescript": "catalog:"
-  },
-  "prettier": "@innodoc/configs/prettierrc.json"
+  }
 }

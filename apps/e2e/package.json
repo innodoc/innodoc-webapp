@@ -4,21 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "fmt": "prettier --write .",
-    "fmt:check": "prettier --check .",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
     "test": "playwright test",
     "playwright:install": "playwright install chromium --with-deps",
     "playwright:show-report": "playwright show-report",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@innodoc/configs": "workspace:*",
     "@playwright/test": "catalog:",
     "@types/node": "catalog:",
     "playwright": "catalog:",
     "typescript": "catalog:"
-  },
-  "prettier": "@innodoc/configs/prettierrc.json"
+  }
 }
