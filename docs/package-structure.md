@@ -22,7 +22,7 @@ packages
   ui-test-utils: rtl
 
 tooling
-  configs (eslint,tsconfig,vitest,vite-env,prettier)
+  configs (tsconfig,vitest,vite-env)
   commands (icon-bundle, import-v1, print-routes)
 ```
 
@@ -58,7 +58,7 @@ Strict dependency flow (prevents circular deps):
   - → `shared`, `content`
   - React-only
 
-Enforce using ESLint plugin: https://www.jsboundaries.dev/
+Enforce using tooling?
 
 ### Never
 

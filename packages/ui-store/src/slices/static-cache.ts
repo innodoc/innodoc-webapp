@@ -1,4 +1,4 @@
-/* eslint-disable unicorn/no-empty-file */
+/* oxlint-disable unicorn/no-empty-file */
 // TODO: how to handle SVG with mdast?
 
 // import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'

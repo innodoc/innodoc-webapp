@@ -101,7 +101,7 @@ async function populateStore() {
   // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_B }))
 }
 
-// eslint-disable-next-line import-x/export
+// oxlint-disable-next-line import-x/export
 export * from '@testing-library/react'
-// eslint-disable-next-line import-x/export
+// oxlint-disable-next-line import-x/export
 export { populateStore, customRender as render }

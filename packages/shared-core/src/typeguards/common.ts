@@ -25,7 +25,7 @@ function isCourseSlugMode(thing: unknown): thing is CourseSlugMode {
 
 /** Utility function to be used as exhaustion check. */
 function assertNever(value: never): never {
-  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  // oxlint-disable-next-line @typescript-eslint/restrict-template-expressions
   throw new Error(`This code should never be reached. Value='${value}'`)
 }
 

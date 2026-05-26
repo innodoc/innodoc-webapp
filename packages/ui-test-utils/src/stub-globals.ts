@@ -9,7 +9,7 @@ class ESBuildAndJSDOMCompatibleTextEncoder extends TextEncoder {
 
     const decodedURI = decodeURIComponent(encodeURIComponent(input))
     const arr = new Uint8Array(decodedURI.length)
-    // eslint-disable-next-line @typescript-eslint/no-misused-spread
+    // oxlint-disable-next-line @typescript-eslint/no-misused-spread
     const chars = [...decodedURI]
     for (let i = 0; i < chars.length; i++) {
       arr[i] = decodedURI[i]?.codePointAt(0) ?? 0

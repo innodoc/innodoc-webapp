@@ -1,5 +1,5 @@
 import type { RootState } from './types.js'
-/* eslint-disable unicorn/prefer-spread */
+/* oxlint-disable unicorn/prefer-spread */
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import appSlice from './slices/app/app-slice.js'
 import contentApi from './slices/content/content-api.js'

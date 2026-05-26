@@ -11,7 +11,7 @@
 
 // TODO: fix SvgImage
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// oxlint-disable-next-line @typescript-eslint/no-unused-vars
 function SvgImage({ id }: SvgImageProps) {
   // const { t } = useTranslation()
   // const { data: rootNode, isError } = useGetSvgQuery({ id })

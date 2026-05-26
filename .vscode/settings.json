@@ -1,15 +1,19 @@
 {
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
+    "source.fixAll.oxc": "explicit",
     "source.organizeImports": "never"
   },
   "json.schemas": [
     {
-      "fileMatch": ["**/turbo.json"],
+      "fileMatch": [
+        "**/turbo.json"
+      ],
       "url": "https://turbo.build/schema.json"
     },
     {
-      "fileMatch": ["/.syncpackrc.json"],
+      "fileMatch": [
+        "/.syncpackrc.json"
+      ],
       "url": "./node_modules/syncpack/dist/schema.json"
     },
     {
@@ -24,8 +28,6 @@
     }
   ],
   "editor.formatOnSave": true,
-  "eslint.useFlatConfig": true,
-  "eslint.workingDirectories": [{ "pattern": "./packages/*/*" }],
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "js/ts.tsdk.promptToUseWorkspaceVersion": true,
   "js/ts.preferences.preferTypeOnlyAutoImports": true,

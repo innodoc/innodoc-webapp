@@ -1,7 +1,12 @@
 {
   "extends": "@innodoc/configs/tsconfig/node.json",
-  "include": ["eslint.config.js", "playwright.config.ts", "tests/**/*.ts"],
-  "exclude": ["node_modules"],
+  "include": [
+    "playwright.config.ts",
+    "tests/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
   "compilerOptions": {
     "rootDir": "."
   }

@@ -188,10 +188,6 @@ $ pnpm test:e2e:content
 
 ### Linting
 
-Based on [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript).
-Most notable difference: No [semicolon](https://eslint.org/docs/rules/semi) at
-the end of a statement.
-
 ```sh
 $ pnpm lint
 ```

@@ -1,9 +1,18 @@
 {
   "extends": "@innodoc/configs/tsconfig/react.json",
-  "include": ["eslint.config.js", "src/**/*.ts", "src/**/*.tsx", "../../test/mock-content/src/msw.ts"],
-  "exclude": ["dist", "node_modules"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "../../test/mock-content/src/msw.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ],
   "compilerOptions": {
     "rootDir": ".",
-    "types": ["vite/client"]
+    "types": [
+      "vite/client"
+    ]
   }
 }

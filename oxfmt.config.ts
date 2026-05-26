@@ -7,7 +7,6 @@ export default defineConfig({
   semi: false,
   singleQuote: true,
 
-  // Import sorting (replaces eslint-plugin-simple-import-sort)
   sortImports: {
     newlinesBetween: false,
 
