@@ -9,7 +9,7 @@ import { useRouteManager, useSelectLinkedPages } from '@innodoc/ui-store/hooks'
 const pageLinksNav = pageLinks.filter((page) => page.linked?.includes('nav'))
 
 function NavButton({ ref, ...props }: ButtonProps) {
-  return <Button color="inherit" ref={ref} size="small" {...props} />
+  return <Button color="inherit" nativeButton={false} ref={ref} size="small" {...props} />
 }
 
 const StyledNavButton = styled(NavButton)(({ theme }) => ({

@@ -26,7 +26,7 @@ function MenuButton({ children, iconName, id, title }: MenuButtonProps) {
         }}
         id={id}
         keepMounted
-        MenuListProps={{ dense: true }}
+        slotProps={{ list: { dense: true } }}
         open={Boolean(anchorEl)}
         onClose={handleClose}
         sx={{ mt: (theme) => theme.spacing(5) }}

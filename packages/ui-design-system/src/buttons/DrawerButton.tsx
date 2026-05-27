@@ -18,6 +18,7 @@ function DrawerButton({
   title,
 }: DrawerButtonProps) {
   const { sx: boxSx, ...restBoxProps } = boxProps
+  const { slotProps: drawerSlotProps, ...restDrawerProps } = drawerProps
 
   const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
@@ -44,8 +45,14 @@ function DrawerButton({
         onClose={close}
         onOpen={open}
         open={menuOpen}
-        PaperProps={{ sx: { width: 300 } }}
-        {...drawerProps}
+        slotProps={{
+          ...drawerSlotProps,
+          paper: {
+            sx: { width: 300 },
+            ...drawerSlotProps?.paper,
+          },
+        }}
+        {...restDrawerProps}
       >
         {children(close)}
       </SwipeableDrawer>
