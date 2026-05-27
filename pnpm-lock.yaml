@@ -445,6 +445,9 @@ importers:
       '@fastify/swagger':
         specifier: 'catalog:'
         version: 9.7.0
+      '@innodoc/shared-fixtures':
+        specifier: workspace:*
+        version: link:../../packages/shared-fixtures
       '@scalar/fastify-api-reference':
         specifier: 'catalog:'
         version: 1.57.5

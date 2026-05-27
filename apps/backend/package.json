@@ -14,6 +14,10 @@
       "development": "./src/plugins/api/types.ts",
       "default": "./dist/plugins/api/types.js"
     },
+    "#plugins/api/mock-database": {
+      "types": "./src/plugins/api/mock-database.ts",
+      "development": "./src/plugins/api/mock-database.ts"
+    },
     "#constants": {
       "types": "./src/constants.ts",
       "development": "./src/constants.ts",
@@ -57,6 +61,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@innodoc/shared-fixtures": "workspace:*",
     "@fastify/middie": "catalog:",
     "@fastify/swagger": "catalog:",
     "@scalar/fastify-api-reference": "catalog:",

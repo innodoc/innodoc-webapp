@@ -1,4 +1,4 @@
-import type { FastifyPluginCallback } from 'fastify'
+import type { FastifyPluginAsync } from 'fastify'
 import { diContainer, fastifyAwilixPlugin } from '@fastify/awilix'
 import { asClass, asFunction, asValue } from 'awilix'
 import fastifyPlugin from 'fastify-plugin'
@@ -8,9 +8,9 @@ import type { ConfigSchema, RouteName } from '@innodoc/shared-core/types'
 import type { PluginOpts } from '#plugins/types'
 import { getRoutePath } from '#utils'
 
-const diContainerPluginCb: FastifyPluginCallback<PluginOpts> = (server, { config }) => {
+const diContainerPluginCb: FastifyPluginAsync<PluginOpts> = async (server, { config }) => {
   server.register(fastifyAwilixPlugin, { enableDebugLogging: !config.isProduction })
-  setupDiContainer(config)
+  await setupDiContainer(config)
 }
 
 const diContainerPlugin = fastifyPlugin(diContainerPluginCb, { name: 'di-container' })
@@ -24,11 +24,13 @@ function makePathFunc({ routeManager }: MakePathFuncParams) {
   return (removePrefix?: string) => (name: RouteName) => getRoutePath(routeManager, name, removePrefix)
 }
 
-function setupDiContainer(config: ConfigSchema) {
+async function setupDiContainer(config: ConfigSchema) {
+  const DatabaseClass = config.enableMockApi ? (await import('#plugins/api/mock-database')).default : Database
+
   diContainer.register({
     config: asValue(config),
 
-    database: asClass(Database)
+    database: asFunction(() => new DatabaseClass({ config }))
       .singleton()
       .disposer((db) => db.destroy()),
 

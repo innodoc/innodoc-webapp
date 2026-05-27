@@ -14,6 +14,16 @@
       "types": "./src/make-node-server.ts",
       "development": "./src/make-node-server.ts",
       "default": "./dist/make-node-server.js"
+    },
+    "./courses": {
+      "types": "./src/data/make-courses.ts",
+      "development": "./src/data/make-courses.ts",
+      "default": "./dist/data/make-courses.js"
+    },
+    "./types": {
+      "types": "./src/data/types.ts",
+      "development": "./src/data/types.ts",
+      "default": "./dist/data/types.js"
     }
   },
   "imports": {
