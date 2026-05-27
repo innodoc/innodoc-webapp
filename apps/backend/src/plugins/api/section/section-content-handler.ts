@@ -1,0 +1,39 @@
+import type { LanguageCode } from 'iso-639-1'
+import z from 'zod'
+import { localeSchema, sectionPathSchema, slugSchema } from '@innodoc/shared-core/schemas'
+import { errorResponseSchema } from '#api/errors'
+import type { ApiRouteHandlerMethod } from '#api/types'
+
+const schema = {
+  params: z.object({
+    courseSlug: slugSchema.describe('Course slug'),
+    locale: localeSchema.describe('Locale'),
+    sectionPath: sectionPathSchema.describe('Section path'),
+  }),
+  response: {
+    200: z.string().describe('Success'),
+    400: errorResponseSchema(400, 'Bad Request'),
+    404: errorResponseSchema(404, 'Section not found'),
+  },
+}
+
+const handler: ApiRouteHandlerMethod<typeof schema> = async function (req, reply) {
+  const { courseSlug, locale, sectionPath } = req.params
+  const db = req.diScope.resolve('database')
+
+  const sectionId = await db.getSectionIdByPath(courseSlug, sectionPath)
+  if (!sectionId) {
+    reply.callNotFound()
+    return
+  }
+
+  const content = await db.getSectionContent(courseSlug, locale as LanguageCode, sectionId)
+  if (!content) {
+    reply.callNotFound()
+    return
+  }
+
+  return content
+}
+
+export default { schema, handler }

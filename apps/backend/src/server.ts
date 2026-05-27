@@ -1,5 +1,6 @@
 import Fastify from 'fastify'
 import type { ConfigSchema } from '@innodoc/shared-core/types'
+import apiPlugin from './plugins/api/api-plugin.js'
 import { diContainerPlugin, frontendPlugin, i18nPlugin, makeEnvPlugin } from './plugins/plugins.js'
 
 /**
@@ -19,6 +20,9 @@ async function makeServer(config: ConfigSchema) {
 
   // Register i18n
   await server.register(i18nPlugin, { config })
+
+  // Register API
+  await server.register(apiPlugin)
 
   // Register frontend
   await server.register(frontendPlugin, { config })

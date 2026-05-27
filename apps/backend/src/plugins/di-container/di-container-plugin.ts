@@ -4,7 +4,7 @@ import { asClass, asFunction, asValue } from 'awilix'
 import fastifyPlugin from 'fastify-plugin'
 import Database from '@innodoc/server-db'
 import { RouteManager } from '@innodoc/shared-core/routes'
-import type { ConfigSchema, FrontendRouteName } from '@innodoc/shared-core/types'
+import type { ConfigSchema, RouteName } from '@innodoc/shared-core/types'
 import type { PluginOpts } from '#plugins/types'
 import { getRoutePath } from '#utils'
 
@@ -21,7 +21,7 @@ interface MakePathFuncParams {
 
 /** Make a path function for plugins. */
 function makePathFunc({ routeManager }: MakePathFuncParams) {
-  return (removePrefix?: string) => (name: FrontendRouteName) => getRoutePath(routeManager, name, removePrefix)
+  return (removePrefix?: string) => (name: RouteName) => getRoutePath(routeManager, name, removePrefix)
 }
 
 function setupDiContainer(config: ConfigSchema) {

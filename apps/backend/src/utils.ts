@@ -1,26 +1,33 @@
 import type { RouteManager } from '@innodoc/shared-core/routes'
-import type { FrontendRouteName } from '@innodoc/shared-core/types'
+import type { ApiRouteName, FrontendRouteName, RouteName } from '@innodoc/shared-core/types'
 
 /**
- * Get URL path for API route handler.
+ * Get URL path for a route handler.
  *
  * @param routeManager RouteManager instance
- * @param name Name of the API route
+ * @param name Name of the route
  * @param removePrefix Optional route path prefix to strip
  * @returns Route path
  * @throws if unknown route name was given
  */
-function getRoutePath(routeManager: RouteManager, name: FrontendRouteName, removePrefix?: string) {
-  const frontendRoutes = routeManager.getFrontendRoutes()
-
-  const pattern = frontendRoutes[name]
-  if (pattern === undefined) {
-    throw new Error(`Unknown route requested: ${name}`)
+function getRoutePath(routeManager: RouteManager, name: RouteName, removePrefix?: string) {
+  const apiRoutes = routeManager.getApiRoutes()
+  const pattern = apiRoutes[name as ApiRouteName]
+  if (pattern !== undefined) {
+    return removePrefix === undefined
+      ? pattern
+      : pattern.replace(new RegExp(`^${removePrefix.replace('/', String.raw`\/`)}`), '')
   }
 
-  return removePrefix === undefined
-    ? pattern
-    : pattern.replace(new RegExp(`^${removePrefix.replace('/', String.raw`\/`)}`), '')
+  const frontendRoutes = routeManager.getFrontendRoutes()
+  const frontendPattern = frontendRoutes[name as FrontendRouteName]
+  if (frontendPattern !== undefined) {
+    return removePrefix === undefined
+      ? frontendPattern
+      : frontendPattern.replace(new RegExp(`^${removePrefix.replace('/', String.raw`\/`)}`), '')
+  }
+
+  throw new Error(`Unknown route requested: ${name}`)
 }
 
 export { getRoutePath }
