@@ -1,11 +1,7 @@
 import type { RenderOptions, RenderResult } from '@testing-library/react'
 import type { ReactElement } from 'react'
 import type React from 'react'
-import {
-  createTheme,
-  Experimental_CssVarsProvider as CssVarsProvider,
-  experimental_extendTheme as extendTheme,
-} from '@mui/material'
+import { createTheme, ThemeProvider as CssVarsProvider, extendTheme } from '@mui/material/styles'
 import { render } from '@testing-library/react'
 import i18n from 'i18next'
 import { I18nextProvider, initReactI18next } from 'react-i18next'
