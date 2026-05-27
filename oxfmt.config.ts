@@ -7,6 +7,9 @@ export default defineConfig({
   semi: false,
   singleQuote: true,
 
+  // Responsibility of syncpack --format
+  sortPackageJson: false,
+
   sortImports: {
     newlinesBetween: false,
 
