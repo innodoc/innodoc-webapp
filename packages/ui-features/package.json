@@ -47,6 +47,7 @@
     "@innodoc/ui-shared": "workspace:*",
     "@innodoc/ui-store": "workspace:*",
     "@mui/material": "catalog:",
+    "i18next": "catalog:",
     "react": "catalog:",
     "react-i18next": "catalog:",
     "wouter": "catalog:"

@@ -104,6 +104,7 @@
     "@mui/material": "catalog:",
     "@mui/x-tree-view": "catalog:",
     "clsx": "catalog:",
+    "i18next": "catalog:",
     "react": "catalog:",
     "react-i18next": "catalog:"
   },

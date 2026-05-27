@@ -57,6 +57,7 @@
     "@mui/lab": "catalog:",
     "@mui/material": "catalog:",
     "camelcase-keys": "catalog:",
+    "i18next": "catalog:",
     "react": "catalog:",
     "react-i18next": "catalog:",
     "rehype-react": "catalog:",
