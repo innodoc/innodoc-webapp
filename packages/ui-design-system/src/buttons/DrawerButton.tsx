@@ -32,7 +32,7 @@ function DrawerButton({
   }
 
   return (
-    <Box {...restBoxProps} flexGrow={0} sx={boxSx}>
+    <Box {...restBoxProps} sx={{ flexGrow: 0, ...boxSx }}>
       <Tooltip arrow title={title}>
         <IconButton aria-controls={id} aria-label={title} color="inherit" onClick={onClick}>
           <Icon name={iconName} />
