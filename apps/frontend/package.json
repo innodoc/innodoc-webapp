@@ -25,6 +25,7 @@
     "@innodoc/ui-shared": "workspace:*",
     "@innodoc/ui-store": "workspace:*",
     "@unhead/react": "catalog:",
+    "buffer": "catalog:",
     "i18next-http-backend": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
