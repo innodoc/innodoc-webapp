@@ -3,17 +3,7 @@
   "options": {
     "typeAware": true
   },
-  "plugins": [
-    "eslint",
-    "typescript",
-    "unicorn",
-    "import",
-    "promise",
-    "react",
-    "jsx-a11y",
-    "vitest",
-    "jest"
-  ],
+  "plugins": ["eslint", "typescript", "unicorn", "import", "promise", "react", "jsx-a11y", "vitest", "jest"],
   "env": {
     "browser": true,
     "node": true,
@@ -48,10 +38,7 @@
       }
     ],
     // TypeScript
-    "typescript/consistent-type-definitions": [
-      "error",
-      "interface"
-    ],
+    "typescript/consistent-type-definitions": ["error", "interface"],
     "typescript/consistent-type-imports": [
       "error",
       {
@@ -69,26 +56,19 @@
       {
         "patterns": [
           {
-            "group": [
-              "../*"
-            ],
+            "group": ["../*"],
             "message": "Usage of relative parent imports is not allowed. Use `#` subpath aliases instead."
           }
         ],
         "paths": [
           {
             "name": "react-redux",
-            "importNames": [
-              "useSelector",
-              "useDispatch"
-            ],
+            "importNames": ["useSelector", "useDispatch"],
             "message": "Use typed hooks from `@innodoc/ui-store` instead."
           },
           {
             "name": "@mui/material",
-            "importNames": [
-              "Icon"
-            ],
+            "importNames": ["Icon"],
             "message": "Use `#ui/components/common/Icon` instead."
           }
         ]
@@ -110,19 +90,11 @@
   },
   "overrides": [
     {
-      "files": [
-        "packages/server-db/src/migrations/*.ts"
-      ],
+      "files": ["packages/server-db/src/migrations/*.ts"],
       "rules": {
         "unicorn/filename-case": "off"
       }
     }
   ],
-  "ignorePatterns": [
-    ".cache/*",
-    "dist/*",
-    "coverage/*",
-    "node_modules/*",
-    ".turbo/*"
-  ]
+  "ignorePatterns": [".cache/*", "dist/*", "coverage/*", "node_modules/*", ".turbo/*"]
 }

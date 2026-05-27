@@ -59,17 +59,17 @@
     "turbo": "catalog:",
     "typescript": "catalog:"
   },
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=10"
+  },
+  "commit-and-tag-version": {
+    "header": "# Changelog\n\nAll notable changes to this project will be documented in this file.\n"
+  },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
     ]
   },
-  "engines": {
-    "node": ">=22",
-    "pnpm": ">=10"
-  },
-  "packageManager": "pnpm@11.3.0",
-  "commit-and-tag-version": {
-    "header": "# Changelog\n\nAll notable changes to this project will be documented in this file.\n"
-  }
+  "packageManager": "pnpm@11.3.0"
 }

@@ -5,15 +5,11 @@
   },
   "json.schemas": [
     {
-      "fileMatch": [
-        "**/turbo.json"
-      ],
+      "fileMatch": ["**/turbo.json"],
       "url": "https://turbo.build/schema.json"
     },
     {
-      "fileMatch": [
-        "/.syncpackrc.json"
-      ],
+      "fileMatch": ["/.syncpackrc.json"],
       "url": "./node_modules/syncpack/dist/schema.json"
     },
     {

@@ -2,9 +2,6 @@
   "name": "@innodoc/backend",
   "version": "0.0.0",
   "private": true,
-  "bin": {
-    "innodoc-webapp": "./dist/main.js"
-  },
   "type": "module",
   "imports": {
     "#constants": {
@@ -54,5 +51,8 @@
     "i18next": "catalog:",
     "tsx": "catalog:",
     "vite": "catalog:"
+  },
+  "bin": {
+    "innodoc-webapp": "./dist/main.js"
   }
 }

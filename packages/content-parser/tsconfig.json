@@ -1,13 +1,7 @@
 {
   "extends": "@innodoc/configs/tsconfig/node.json",
-  "include": [
-    "vitest.config.ts",
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules"
-  ],
+  "include": ["vitest.config.ts", "src/**/*.ts"],
+  "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "rootDir": "."
   }

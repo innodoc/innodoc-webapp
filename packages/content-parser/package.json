@@ -4,17 +4,6 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
-  "imports": {
-    "#typeguards": {
-      "types": "./src/typeguards/typeguards.ts",
-      "development": "./src/typeguards/typeguards.ts",
-      "default": "./dist/typeguards/typeguards.js"
-    },
-    "#types": {
-      "types": "./src/types.ts",
-      "development": "./src/types.ts"
-    }
-  },
   "exports": {
     ".": {
       "types": "./src/markdown-to-hast.ts",
@@ -39,6 +28,17 @@
       "types": "./src/utils.ts",
       "development": "./src/utils.ts",
       "default": "./dist/utils.js"
+    }
+  },
+  "imports": {
+    "#typeguards": {
+      "types": "./src/typeguards/typeguards.ts",
+      "development": "./src/typeguards/typeguards.ts",
+      "default": "./dist/typeguards/typeguards.js"
+    },
+    "#types": {
+      "types": "./src/types.ts",
+      "development": "./src/types.ts"
     }
   },
   "scripts": {
