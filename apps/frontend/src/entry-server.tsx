@@ -6,7 +6,12 @@ import { renderToPipeableStream } from 'react-dom/server'
 import App from './App.js'
 
 const render: RenderFunction = function render({ htmlTemplate, store, ...otherProps }) {
-  const emotionCache = createCache({ key: 'emotion-style' })
+  // Use 'css' key to match @emotion/react's default SSR cache.
+  // The SSR build of @emotion/react falls back to a default cache with key 'css'
+  // when CacheProvider context isn't resolved (which happens for some MUI v9
+  // styled components during streaming SSR). Using the same key ensures
+  // server and client generate matching class names.
+  const emotionCache = createCache({ key: 'css' })
   const { head } = createStreamableHead()
   const state = {
     preloadedState: store.getState(),

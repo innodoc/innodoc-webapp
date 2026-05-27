@@ -54,12 +54,6 @@ const DEFAULT_COURSE_SLUG_MODE = 'SINGLE'
 /** Props to be passed to client */
 const PASS_TO_CLIENT_PROPS = ['is404', 'preloadedState', 'routeInfo', 'routeParams'] as const
 
-/** Emotion style cache key */
-const EMOTION_STYLE_KEY = 'emotion-style'
-
-/** Emotion style insertion point meta name */
-const EMOTION_STYLE_INSERTION_POINT_NAME = 'emotion-insertion-point'
-
 /** API path prefix */
 const API_PREFIX = '/api'
 
@@ -96,8 +90,6 @@ export {
   DEFAULT_PAGE_PATH_PREFIX,
   DEFAULT_ROUTE_NAME,
   DEFAULT_SECTION_PATH_PREFIX,
-  EMOTION_STYLE_INSERTION_POINT_NAME,
-  EMOTION_STYLE_KEY,
   FRAGMENT_TYPE_FOOTER_A,
   FRAGMENT_TYPE_FOOTER_B,
   FRAGMENT_TYPES,

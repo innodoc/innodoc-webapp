@@ -22,7 +22,7 @@ async function makeProps() {
     },
   })
 
-  const emotionCache = createCache({ key: 'emotion-style' })
+  const emotionCache = createCache({ key: 'css' })
   const head = createStreamableHead()
   if (!head) {
     throw new Error('Expected head')
