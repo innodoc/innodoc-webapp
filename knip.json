@@ -1,0 +1,72 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "workspaces": {
+    ".": {
+      "ignoreBinaries": ["dot"],
+      "ignoreDependencies": ["@commitlint/cli", "commit-and-tag-version"]
+    },
+    "apps/backend": {
+      "project": ["src/**/*.ts"],
+      "ignoreBinaries": ["mkcert", "vitest"],
+      "ignoreDependencies": ["pino-pretty", "@unhead/react"],
+      "ignoreUnresolved": ["#constants", "#plugins/types", "#utils"]
+    },
+    "apps/frontend": {
+      "entry": ["src/entry-client.tsx", "src/entry-server.tsx"],
+      "project": ["src/**/*.{ts,tsx}"],
+      "ignoreDependencies": ["@emotion/server", "buffer"]
+    },
+    "apps/e2e": {
+      "entry": [],
+      "project": ["tests/**/*.ts"]
+    },
+    "packages/content-parser": {
+      "project": ["src/**/*.{ts,tsx}"],
+      "ignoreBinaries": ["vitest"],
+      "ignoreUnresolved": ["#types"],
+      "ignoreDependencies": ["remark-stringify"]
+    },
+    "packages/server-db": {
+      "entry": ["src/migrations/*.ts"],
+      "project": ["src/**/*.ts"],
+      "ignoreBinaries": ["vitest"],
+      "ignoreDependencies": ["pg", "pg-protocol"]
+    },
+    "packages/server-env": {
+      "project": ["src/**/*.ts"],
+      "ignoreBinaries": ["vitest"]
+    },
+    "packages/shared-core": {
+      "project": ["src/**/*.{ts,tsx}", "!src/**/*.test.ts"],
+      "ignoreUnresolved": ["#types"]
+    },
+    "packages/shared-fixtures": {
+      "project": ["src/**/*.{ts,tsx}"],
+      "ignoreDependencies": ["@innodoc/server-env", "@playwright/test", "type-fest"]
+    },
+    "packages/ui-content": {
+      "project": ["src/**/*.{ts,tsx}"],
+      "ignoreUnresolved": ["#types"],
+      "ignoreDependencies": ["camelcase-keys"]
+    },
+    "packages/ui-design-system": {
+      "project": ["src/**/*.{ts,tsx}", "!src/**/*.test.tsx"],
+      "ignoreDependencies": ["@innodoc/ui-shared", "@mui/lab", "clsx"]
+    },
+    "packages/ui-store": {
+      "entry": ["src/middlewares/hast-listener-middleware/markdown-to-hast-worker.ts"],
+      "project": ["src/**/*.{ts,tsx}"],
+      "ignoreBinaries": ["vitest"],
+      "ignoreDependencies": ["svg-parser"]
+    },
+    "packages/ui-test-utils": {
+      "entry": ["src/rtl-utils.tsx", "src/rtl-setup.ts", "src/stub-globals.ts"],
+      "project": ["src/**/*.{ts,tsx}"]
+    },
+    "tooling/commands": {
+      "entry": ["src/icon-bundle/main.ts", "src/import-v1/main.ts", "src/print-routes/main.ts"],
+      "project": ["src/**/*.ts"],
+      "ignoreBinaries": ["vitest"]
+    }
+  }
+}
