@@ -39,7 +39,9 @@
     "========= Tools": "",
     "knex": "turbo run knex",
     "knip": "knip",
-    "syncpack": "pnpm exec syncpack",
+    "syncpack": "pnpm run syncpack:fmt:check && pnpm run syncpack:lint",
+    "syncpack:fmt:check": "pnpm exec syncpack format --check",
+    "syncpack:lint": "pnpm exec syncpack lint",
     "visualize-bundle": "VISUALIZE_BUNDLE=true pnpm run build",
     "========= Typecheck": "",
     "typecheck": "turbo run typecheck"
