@@ -53,7 +53,7 @@
     "wouter": "catalog:"
   },
   "devDependencies": {
-    "@innodoc/ui-test-utils": "workspace:",
+    "@innodoc/ui-test-utils": "workspace:*",
     "@testing-library/jest-dom": "catalog:",
     "@types/react": "catalog:",
     "jsdom": "catalog:",

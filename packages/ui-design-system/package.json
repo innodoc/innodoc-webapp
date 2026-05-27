@@ -110,7 +110,7 @@
   },
   "devDependencies": {
     "@emotion/styled": "catalog:",
-    "@innodoc/ui-test-utils": "workspace:",
+    "@innodoc/ui-test-utils": "workspace:*",
     "@mui/system": "catalog:",
     "@testing-library/jest-dom": "catalog:",
     "@types/react": "catalog:",

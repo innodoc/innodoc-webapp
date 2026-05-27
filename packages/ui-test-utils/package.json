@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@innodoc/server-env": "workspace:",
+    "@innodoc/server-env": "workspace:*",
     "@innodoc/shared-core": "workspace:*",
     "@innodoc/shared-fixtures": "workspace:*",
     "@innodoc/ui-shared": "workspace:*",

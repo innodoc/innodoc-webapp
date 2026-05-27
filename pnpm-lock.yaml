@@ -791,7 +791,7 @@ importers:
         version: 11.0.5
     devDependencies:
       '@innodoc/ui-test-utils':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../ui-test-utils
       '@testing-library/jest-dom':
         specifier: 'catalog:'
@@ -855,7 +855,7 @@ importers:
         specifier: 'catalog:'
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.15)(react@19.2.6))(@types/react@19.2.15)(react@19.2.6)
       '@innodoc/ui-test-utils':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../ui-test-utils
       '@mui/system':
         specifier: 'catalog:'
@@ -919,7 +919,7 @@ importers:
         version: 3.10.0(react@19.2.6)
     devDependencies:
       '@innodoc/ui-test-utils':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../ui-test-utils
       '@testing-library/jest-dom':
         specifier: 'catalog:'
@@ -1026,7 +1026,7 @@ importers:
   packages/ui-test-utils:
     devDependencies:
       '@innodoc/server-env':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../server-env
       '@innodoc/shared-core':
         specifier: workspace:*
