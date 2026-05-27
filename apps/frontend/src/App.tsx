@@ -22,11 +22,11 @@ function App({ emotionCache, i18n, url, routeManager, store }: AppProps) {
     <ReduxProvider store={store}>
       <I18nextProvider i18n={i18n}>
         <RouteManagerProvider routeManager={routeManager}>
-          <PageShell emotionCache={emotionCache}>
-            <Router ssrPath={url}>
+          <Router ssrPath={url}>
+            <PageShell emotionCache={emotionCache}>
               <RoutesSwitch routeManager={routeManager} />
-            </Router>
-          </PageShell>
+            </PageShell>
+          </Router>
         </RouteManagerProvider>
       </I18nextProvider>
     </ReduxProvider>

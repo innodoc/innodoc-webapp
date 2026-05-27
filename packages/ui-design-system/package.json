@@ -106,7 +106,8 @@
     "clsx": "catalog:",
     "i18next": "catalog:",
     "react": "catalog:",
-    "react-i18next": "catalog:"
+    "react-i18next": "catalog:",
+    "wouter": "catalog:"
   },
   "devDependencies": {
     "@emotion/styled": "catalog:",

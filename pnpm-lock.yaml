@@ -850,6 +850,9 @@ importers:
       react-i18next:
         specifier: 'catalog:'
         version: 17.0.8(i18next@26.2.0(typescript@6.0.3))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@6.0.3)
+      wouter:
+        specifier: 'catalog:'
+        version: 3.10.0(react@19.2.6)
     devDependencies:
       '@emotion/styled':
         specifier: 'catalog:'

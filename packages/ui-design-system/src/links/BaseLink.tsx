@@ -1,11 +1,16 @@
 import type { LinkProps } from './types.js'
-import { Link } from '@mui/material'
+import { Link as MuiLink } from '@mui/material'
+import { Link } from 'wouter'
 
-/** Link that handles `hash` */
+/** Link that handles `hash` and client-side navigation via wouter */
 function BaseLink({ ref, children, hash, to = '', ...other }: BaseLinkProps) {
+  const href = hash ? `${to}#${hash}` : to
+
   return (
-    <Link href={hash ? `${to}#${hash}` : to} keep-scroll-position="true" ref={ref} {...other}>
-      {children}
+    <Link href={href} asChild>
+      <MuiLink ref={ref} keep-scroll-position="true" {...other}>
+        {children}
+      </MuiLink>
     </Link>
   )
 }
