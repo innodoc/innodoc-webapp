@@ -1,6 +1,7 @@
 /** @type {import('dependency-cruiser').IConfiguration} */
 module.exports = {
   forbidden: [
+    // === General rules ===
     {
       name: 'no-circular',
       severity: 'warn',
@@ -52,14 +53,6 @@ module.exports = {
           '^(v8/tools/splaytree)$',
           '^(v8/tools/tickprocessor-driver)$',
           '^(v8/tools/tickprocessor)$',
-          '^(node-inspect/lib/_inspect)$',
-          '^(node-inspect/lib/internal/inspect_client)$',
-          '^(node-inspect/lib/internal/inspect_repl)$',
-          '^(async_hooks)$',
-          '^(punycode)$',
-          '^(domain)$',
-          '^(constants)$',
-          '^(sys)$',
           '^(_linklist)$',
           '^(_stream_wrap)$',
         ],
@@ -116,9 +109,6 @@ module.exports = {
         dependencyTypesNot: ['type-only'],
       },
     },
-
-    /* rules you might want to tweak for your specific situation: */
-
     {
       name: 'not-to-spec',
       comment:
@@ -141,7 +131,7 @@ module.exports = {
         'section of your package.json. If this module is development only - add it to the ' +
         'from.pathNot re of the not-to-dev-dep rule in the dependency-cruiser configuration',
       from: {
-        path: '^(packages)',
+        path: '^(packages|apps)',
         pathNot: '.(spec|test).(js|mjs|cjs|ts|ls|coffee|litcoffee|coffee.md)$',
       },
       to: {
@@ -155,7 +145,7 @@ module.exports = {
         'This module depends on an npm package that is declared as an optional dependency ' +
         "in your package.json. As this makes sense in limited situations only, it's flagged here. " +
         "If you're using an optional dependency here by design - add an exception to your" +
-        'dependency-cruiser configuration.',
+        ' dependency-cruiser configuration.',
       from: {},
       to: {
         dependencyTypes: ['npm-optional'],
@@ -174,6 +164,89 @@ module.exports = {
         dependencyTypes: ['npm-peer'],
       },
     },
+
+    // === Package boundary rules (docs/package-structure.md) ===
+    // shared-* → ❌ nothing (leaf nodes)
+    {
+      name: 'shared-no-content-deps',
+      severity: 'error',
+      comment:
+        'shared-* packages must not depend on content-* packages. ' +
+        'shared packages are leaf nodes with no internal dependencies.',
+      from: { path: '^packages/shared-' },
+      to: { path: '^packages/content-' },
+    },
+    {
+      name: 'shared-no-server-deps',
+      severity: 'error',
+      comment:
+        'shared-* packages must not depend on server-* packages. ' +
+        'shared packages are leaf nodes with no internal dependencies.',
+      from: { path: '^packages/shared-' },
+      to: { path: '^packages/server-' },
+    },
+    {
+      name: 'shared-no-ui-deps',
+      severity: 'error',
+      comment:
+        'shared-* packages must not depend on ui-* packages. ' +
+        'shared packages are leaf nodes with no internal dependencies.',
+      from: { path: '^packages/shared-' },
+      to: { path: '^packages/ui-' },
+    },
+
+    // content-* → shared only
+    {
+      name: 'content-no-ui-deps',
+      severity: 'error',
+      comment:
+        'content-* packages must not depend on ui-* packages. ' +
+        'content packages may only depend on shared packages.',
+      from: { path: '^packages/content-' },
+      to: { path: '^packages/ui-' },
+    },
+    {
+      name: 'content-no-server-deps',
+      severity: 'error',
+      comment:
+        'content-* packages must not depend on server-* packages. ' +
+        'content packages may only depend on shared packages.',
+      from: { path: '^packages/content-' },
+      to: { path: '^packages/server-' },
+    },
+
+    // server-* → shared, content (NOT ui)
+    {
+      name: 'server-no-ui-deps',
+      severity: 'error',
+      comment:
+        'server-* packages must not depend on ui-* packages. ' +
+        'server packages may only depend on shared and content packages.',
+      from: { path: '^packages/server-' },
+      to: { path: '^packages/ui-' },
+    },
+
+    // ui-* → shared, content (NOT server)
+    {
+      name: 'ui-no-server-deps',
+      severity: 'error',
+      comment:
+        'ui-* packages must not depend on server-* packages. ' +
+        'ui packages may only depend on shared and content packages.',
+      from: { path: '^packages/ui-' },
+      to: { path: '^packages/server-' },
+    },
+
+    // apps/backend is a server-tier app — same constraints as server-* packages
+    {
+      name: 'backend-no-ui-deps',
+      severity: 'error',
+      comment:
+        'The backend app must not depend on ui-* packages. ' +
+        'As a server-tier app it may only depend on shared, content, and server packages.',
+      from: { path: '^apps/backend/' },
+      to: { path: '^packages/ui-' },
+    },
   ],
   options: {
     doNotFollow: {
@@ -186,13 +259,13 @@ module.exports = {
 
     combinedDependencies: false,
 
-    includeOnly: '^packages/',
+    includeOnly: '^(packages|apps)/',
 
     moduleSystems: ['es6'],
 
     enhancedResolveOptions: {
       exportsFields: ['exports'],
-      conditionNames: ['import', 'require', 'node', 'default'],
+      conditionNames: ['import', 'require', 'node', 'development', 'default'],
       extensions: ['.ts', '.tsx', '.d.ts'],
       mainFields: ['main', 'types'],
     },
@@ -203,7 +276,7 @@ module.exports = {
         // don't use splines: 'ortho' here as this takes a long time
       },
       archi: {
-        collapsePattern: '^(packages)/[^/]+/[^/]+|node_modules/[^/]+',
+        collapsePattern: '^(packages|apps)/[^/]+/[^/]+|node_modules/[^/]+',
         theme: {
           graph: { splines: 'ortho' },
         },
