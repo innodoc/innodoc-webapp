@@ -1,7 +1,9 @@
 import { setupWorker } from 'msw/browser'
-import getRouteManager from '@innodoc/shared-core/routes/manager/vite'
 import getHandlers from './get-handlers'
+import type { RouteManager } from '@innodoc/shared-core/routes'
 
-const makeBrowserServer = (baseUrl: string) => setupWorker(...getHandlers(baseUrl, getRouteManager()))
+// TODO: How to get config here?
+// const makeBrowserServer = (baseUrl: string) => setupWorker(...getHandlers(baseUrl, new RouteManager()))
+const makeBrowserServer = (baseUrl: string) => setupWorker(...getHandlers(baseUrl, undefined as unknown as RouteManager))
 
 export default makeBrowserServer
