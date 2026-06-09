@@ -28,7 +28,7 @@ class Importer {
     this.importFolder = importFolder
     this.courseSlug = courseSlug
     const config = parseConfig()
-    const db = new Database(config)
+    const db = new Database({ config })
     this.knex = db.knex
     this.trx = await this.knex.transaction()
     await this.readManifest()
