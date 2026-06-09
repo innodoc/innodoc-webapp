@@ -1,18 +1,17 @@
-import { use } from 'react'
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { FrontendRouteInfo } from '@innodoc/shared-core/types'
-import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
+import { useRouteManager } from '@innodoc/ui-shared/hooks'
 import { useSelector } from '@innodoc/ui-store/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 
-interface UseRouteManagerReturn {
+interface UseRoutesReturn {
   url: (partialRouteInfo: Partial<FrontendRouteInfo>) => string
   isActiveRoute: (partialRouteInfo?: Record<string, unknown>) => boolean
   parseLinkSpecifier: RouteManager['parseLinkSpecifier']
 }
 
-function useRouteManager(): UseRouteManagerReturn {
-  const routeManager = use(RouteManagerContext)
+function useRoutes(): UseRoutesReturn {
+  const routeManager = useRouteManager()
   const currentRouteInfo = useSelector(selectRouteInfo)
 
   return {
@@ -49,4 +48,4 @@ function useRouteManager(): UseRouteManagerReturn {
   }
 }
 
-export default useRouteManager
+export default useRoutes

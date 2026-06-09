@@ -1,9 +1,9 @@
 import type { LanguageCode } from 'iso-639-1'
 import { createSelector } from '@reduxjs/toolkit'
-import { use, useMemo } from 'react'
+import { useMemo } from 'react'
 import { isApiPage, isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
 import type { ApiPage, ApiSection, ContentType, TranslatedPage, TranslatedSection } from '@innodoc/shared-core/types'
-import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
+import { useRouteManager } from '@innodoc/ui-shared/hooks'
 import { selectRouteInfo } from '#slices/app'
 import getPagesApi from '#slices/content/pages'
 import getSectionsApi from '#slices/content/sections'
@@ -24,7 +24,8 @@ type UseSelectReturnType<C extends ContentUnit> = C extends ApiPage
  */
 function makeUseSelectContentUnit<C extends ContentUnit>(contentType: ContentType) {
   return (contentId: ContentIdField<C> | undefined): UseSelectReturnType<C> => {
-    const routeManager = use(RouteManagerContext)
+    const routeManager = useRouteManager()
+
     const useGetContentUnitsQuery =
       contentType === 'page'
         ? getPagesApi(routeManager).useGetCoursePagesQuery

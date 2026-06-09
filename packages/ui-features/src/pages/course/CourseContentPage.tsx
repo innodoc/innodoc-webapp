@@ -1,14 +1,13 @@
-import { use } from 'react'
 import { isCoursePageRouteInfo } from '@innodoc/shared-core/typeguards'
 import { PageHeader } from '@innodoc/ui-design-system/misc'
-import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
+import { useRouteManager } from '@innodoc/ui-shared/hooks'
 import { useSelector, useSelectPage } from '@innodoc/ui-store/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 import getPagesApi from '@innodoc/ui-store/slices/content/pages'
 import ContentPage from './ContentPage.js'
 
 function CourseContentPage() {
-  const routeManager = use(RouteManagerContext)
+  const routeManager = useRouteManager()
   const pages = getPagesApi(routeManager)
 
   const routeInfo = useSelector(selectRouteInfo)

@@ -4,12 +4,12 @@ import { DrawerButton } from '@innodoc/ui-design-system/buttons'
 import { AppLink, PageLink } from '@innodoc/ui-design-system/links'
 import { Icon } from '@innodoc/ui-design-system/misc'
 import pageLinks from '@innodoc/ui-design-system/page-links'
-import { useRouteManager, useSelectLinkedPages } from '@innodoc/ui-store/hooks'
+import { useRoutes, useSelectLinkedPages } from '@innodoc/ui-store/hooks'
 
 const pageLinksNav = pageLinks.filter((page) => page.linked?.includes('nav'))
 
 function MobileNavButton() {
-  const { isActiveRoute } = useRouteManager()
+  const { isActiveRoute } = useRoutes()
   const { t } = useTranslation()
 
   const { pages } = useSelectLinkedPages('nav')

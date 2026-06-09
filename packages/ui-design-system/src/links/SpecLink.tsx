@@ -1,13 +1,13 @@
 import type { LinkProps } from './types.js'
 import { Trans } from 'react-i18next'
-import { useRouteManager } from '@innodoc/ui-store/hooks'
+import { useRoutes } from '@innodoc/ui-store/hooks'
 import { InlineError } from '#errors'
 import { Code } from '#misc'
 import AppLink from './AppLink.js'
 
 /** Link from specifier */
 function SpecLink({ ref, to, ...other }: LinkProps) {
-  const { parseLinkSpecifier } = useRouteManager()
+  const { parseLinkSpecifier } = useRoutes()
   let routeInfo: ReturnType<typeof parseLinkSpecifier>
 
   try {

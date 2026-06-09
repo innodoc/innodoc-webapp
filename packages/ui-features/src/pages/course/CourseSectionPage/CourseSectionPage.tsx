@@ -1,8 +1,7 @@
-import { use } from 'react'
 import { isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
 import { PageHeader } from '@innodoc/ui-design-system/misc'
 import { formatSectionTitle } from '@innodoc/ui-design-system/utils'
-import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
+import { useRouteManager } from '@innodoc/ui-shared/hooks'
 import { useSelector, useSelectSection } from '@innodoc/ui-store/hooks'
 import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
 import getSectionsApi from '@innodoc/ui-store/slices/content/sections'
@@ -18,7 +17,7 @@ function CourseSectionPage() {
     : { courseSlug: undefined, sectionPath: undefined }
   const { section } = useSelectSection(sectionPath)
 
-  const routeManager = use(RouteManagerContext)
+  const routeManager = useRouteManager()
   const sections = getSectionsApi(routeManager)
   const { data, isError, isLoading } = sections.useGetSectionContentQuery(
     {

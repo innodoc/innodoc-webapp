@@ -1,9 +1,9 @@
 import type { LanguageCode } from 'iso-639-1'
 import { createSelector } from '@reduxjs/toolkit'
-import { use, useMemo } from 'react'
+import { useMemo } from 'react'
 import { isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
 import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/types'
-import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
+import { useRouteManager } from '@innodoc/ui-shared/hooks'
 import { selectRouteInfo } from '#slices/app'
 import getSectionsApi from '#slices/content/sections'
 import { useSelector } from './redux.js'
@@ -26,7 +26,7 @@ function useSelectBreadcrumbSections(): { sections: TranslatedSection[] } {
   const { courseSlug, sectionPath } = isCourseSectionRouteInfo(routeInfo)
     ? routeInfo
     : { courseSlug: undefined, sectionPath: undefined }
-  const routeManager = use(RouteManagerContext)
+  const routeManager = useRouteManager()
   const sections = getSectionsApi(routeManager)
 
   const selectBreadcrumbSections = useMemo(() => {

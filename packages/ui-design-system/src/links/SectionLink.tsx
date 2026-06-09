@@ -1,7 +1,7 @@
 import type { LinkProps as LinkProperties } from './types.js'
 import { Trans } from 'react-i18next'
 import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/types'
-import { useRouteManager, useSelectSection } from '@innodoc/ui-store/hooks'
+import { useRoutes, useSelectSection } from '@innodoc/ui-store/hooks'
 import { InlineError } from '#errors'
 import { Code } from '#misc'
 import { formatSectionTitle } from '#utils'
@@ -34,7 +34,7 @@ interface SectionLinkFromPathProperties extends Omit<SectionLinkProperties, 'sec
 
 /** Link to a section */
 function SectionLink({ ref: reference, children, preferShortTitle = false, section, ...other }: SectionLinkProperties) {
-  const { url } = useRouteManager()
+  const { url } = useRoutes()
 
   return (
     <BaseLink to={url({ name: 'app:course:section', sectionPath: section.path })} ref={reference} {...other}>

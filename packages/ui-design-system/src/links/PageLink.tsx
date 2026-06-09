@@ -1,7 +1,7 @@
 import type { LinkProps } from './types.js'
 import { Trans } from 'react-i18next'
 import type { ApiPage, TranslatedPage } from '@innodoc/shared-core/types'
-import { useRouteManager, useSelectPage } from '@innodoc/ui-store/hooks'
+import { useRoutes, useSelectPage } from '@innodoc/ui-store/hooks'
 import { InlineError } from '#errors'
 import { Code, Icon } from '#misc'
 import BaseLink from './BaseLink.js'
@@ -29,7 +29,7 @@ interface PageLinkFromSlugProps extends Omit<PageLinkProps, 'page'> {
 
 /** Link to a page */
 function PageLink({ ref, children, page, preferShortTitle = false, showIcon = true, ...other }: PageLinkProps) {
-  const { url } = useRouteManager()
+  const { url } = useRoutes()
   const { slug, icon, shortTitle, title } = page
 
   return (

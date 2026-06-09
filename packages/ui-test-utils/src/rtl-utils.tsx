@@ -6,14 +6,13 @@ import { render } from '@testing-library/react'
 import i18n from 'i18next'
 import { I18nextProvider, initReactI18next } from 'react-i18next'
 import { Provider as ReduxProvider } from 'react-redux'
+import { RouteManager } from '@innodoc/shared-core/routes'
 import type { CourseRouteInfo } from '@innodoc/shared-core/types'
-import { PageContextProvider } from '@innodoc/ui-shared/contexts'
-import type { PageContext } from '@innodoc/ui-shared/contexts'
 import makeStore from '@innodoc/ui-store'
 import { changeRouteInfo } from '@innodoc/ui-store/slices/app'
-import courses from '@innodoc/ui-store/slices/content/courses'
-import pages from '@innodoc/ui-store/slices/content/pages'
-import sections from '@innodoc/ui-store/slices/content/sections'
+import getCoursesApi from '@innodoc/ui-store/slices/content/courses'
+import getPagesApi from '@innodoc/ui-store/slices/content/pages'
+import getSectionsApi from '@innodoc/ui-store/slices/content/sections'
 
 const theme = extendTheme(undefined, createTheme())
 
@@ -24,58 +23,23 @@ await i18n.use(initReactI18next).init({
   },
 })
 
-const store = makeStore()
-
-const pageContext = {
-  Page: () => null,
-  exports: {},
-  exportsAll: {},
-  routeParams: {},
-  data: undefined,
-  config: {},
-  configEntries: {},
-  urlOriginal: '',
-  urlPathname: '',
-  urlParsed: {
-    href: '',
-    protocol: 'https',
-    hostname: 'localhost',
-    port: 8080,
-    origin: null,
-    pathname: '',
-    pathnameOriginal: '',
-    search: {},
-    searchAll: {},
-    searchOriginal: null,
-    searchString: null,
-    hash: '',
-    hashOriginal: null,
-    hashString: null,
+const routeManager = new RouteManager({
+  config: {
+    courseSlugMode: 'SINGLE',
+    pagePathPrefix: 'page',
+    sectionPathPrefix: 'section',
   },
-  is404: false,
-  isClientSideNavigation: false,
-  url: '',
-  pageExports: {},
-  // source: {},
-  // sources: {},
-  // from: {
-  //   configsStandard: {},
-  //   configsCumulative: {},
-  //   configsComputed: {},
-  // },
-  // } satisfies PageContext
-}
+})
+
+const store = await makeStore()
 
 const TestPageShell = ({ children }: { children: React.ReactNode }) => {
-  // FIXME: properly create PageContext?
   return (
-    <PageContextProvider pageContext={pageContext as PageContext}>
-      <ReduxProvider store={store}>
-        <I18nextProvider i18n={i18n}>
-          <CssVarsProvider theme={theme}>{children}</CssVarsProvider>
-        </I18nextProvider>
-      </ReduxProvider>
-    </PageContextProvider>
+    <ReduxProvider store={store}>
+      <I18nextProvider i18n={i18n}>
+        <CssVarsProvider theme={theme}>{children}</CssVarsProvider>
+      </I18nextProvider>
+    </ReduxProvider>
   )
 }
 
@@ -90,14 +54,15 @@ async function populateStore() {
     locale: 'en',
   } satisfies CourseRouteInfo<'app:course:index'>
   store.dispatch(changeRouteInfo(routeInfo))
-  await store.dispatch(courses.endpoints.getCourse.initiate({ courseSlug }))
-  await store.dispatch(pages.endpoints.getCoursePages.initiate({ courseSlug }))
-  await store.dispatch(sections.endpoints.getCourseSections.initiate({ courseSlug }))
+  const coursesApi = getCoursesApi(routeManager)
+  const pagesApi = getPagesApi(routeManager)
+  const sectionsApi = getSectionsApi(routeManager)
+  await store.dispatch(coursesApi.endpoints.getCourse.initiate({ courseSlug }))
+  await store.dispatch(pagesApi.endpoints.getCoursePages.initiate({ courseSlug }))
+  await store.dispatch(sectionsApi.endpoints.getCourseSections.initiate({ courseSlug }))
   // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_A }))
   // await fetchContent(store, getContent({ locale, path: FRAGMENT_TYPE_FOOTER_B }))
 }
 
-// oxlint-disable-next-line import-x/export
 export * from '@testing-library/react'
-// oxlint-disable-next-line import-x/export
 export { populateStore, customRender as render }
