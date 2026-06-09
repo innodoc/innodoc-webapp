@@ -74,6 +74,7 @@
     "@types/hast": "catalog:",
     "@types/mdast": "catalog:",
     "@types/node": "catalog:",
+    "@types/remark-heading-id": "catalog:",
     "@types/unist": "catalog:",
     "hast-util-sanitize": "catalog:",
     "typescript": "catalog:"
