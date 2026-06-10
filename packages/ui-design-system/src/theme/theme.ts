@@ -1,3 +1,4 @@
+import type {} from './mui.js'
 import type { PaletteCard } from './types'
 import type { CssVarsThemeOptions, ThemeOptions } from '@mui/material/styles'
 import { extendTheme, responsiveFontSizes } from '@mui/material/styles'

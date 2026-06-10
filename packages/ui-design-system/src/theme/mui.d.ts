@@ -2,6 +2,8 @@ import type { PaletteCard, PaletteCode, PaletteFooter, PaletteTransparentPaper }
 import type { CSSProperties } from 'react'
 import type { CardType } from '@innodoc/shared-core/types'
 
+export {}
+
 declare module '@mui/material/styles' {
   interface CssVarsPalette {
     Footer: PaletteFooter
@@ -13,10 +15,7 @@ declare module '@mui/material/styles' {
   interface ThemeVars {
     shadowFooter: string
   }
-}
 
-// Add custom code font variant
-declare module '@mui/material/styles' {
   // Enable CSS theme variables
   interface CssThemeVariables {
     enabled: true
@@ -26,7 +25,7 @@ declare module '@mui/material/styles' {
     code: CSSProperties
   }
 
-  // allow configuration using `createTheme`
+  // allow configuration using `extendTheme`
   interface TypographyVariantsOptions {
     code?: CSSProperties
   }
