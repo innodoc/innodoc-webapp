@@ -2,7 +2,6 @@ import type { GridOffset, GridSize } from '@mui/material/Grid'
 import type { ReactNode } from 'react'
 import { styled } from '@mui/material'
 import MuiGrid from '@mui/material/Grid'
-import camelcaseKeys from 'camelcase-keys'
 import { GRID_ITEM_PROPERTIES } from '@innodoc/content-parser/properties'
 import type { NodeProps } from '#types'
 
@@ -15,6 +14,10 @@ function parseValue(value: string): GridSize | GridOffset {
   return value === 'auto' ? 'auto' : Number.parseInt(value)
 }
 
+function toCamelCase(str: string): string {
+  return str.replace(/-([a-z])/g, (_match, char) => char.toUpperCase())
+}
+
 function nodeToGridProps(nodeProps: GridItemProps['nodeProps']) {
   const size: Record<string, GridSize | undefined> = {}
   const offset: Record<string, GridOffset | undefined> = {}
@@ -25,7 +28,7 @@ function nodeToGridProps(nodeProps: GridItemProps['nodeProps']) {
       continue
     }
 
-    const camelName = camelcaseKeys({ [name]: true })[name]
+    const camelName = toCamelCase(name)
     if (name.endsWith('-offset')) {
       offset[camelName] = parseValue(propVal) as GridOffset
     } else {
