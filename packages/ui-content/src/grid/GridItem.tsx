@@ -1,3 +1,4 @@
+import type { GridOffset, GridSize } from '@mui/material/Grid'
 import type { ReactNode } from 'react'
 import { styled } from '@mui/material'
 import MuiGrid from '@mui/material/Grid'
@@ -10,17 +11,37 @@ const StyledGrid = styled(MuiGrid)({
   '& > :last-child': { marginBottom: 0 },
 })
 
+function parseValue(value: string): GridSize | GridOffset {
+  return value === 'auto' ? 'auto' : Number.parseInt(value)
+}
+
 function nodeToGridProps(nodeProps: GridItemProps['nodeProps']) {
-  const props: Record<string, number | string> = {}
+  const size: Record<string, GridSize | undefined> = {}
+  const offset: Record<string, GridOffset | undefined> = {}
 
   for (const name of GRID_ITEM_PROPERTIES) {
     const propVal = nodeProps[name]
-    if (propVal) {
-      props[name] = propVal === 'auto' ? propVal : Number.parseInt(propVal)
+    if (!propVal) {
+      continue
+    }
+
+    const camelName = camelcaseKeys({ [name]: true })[name]
+    if (name.endsWith('-offset')) {
+      offset[camelName] = parseValue(propVal) as GridOffset
+    } else {
+      size[camelName] = parseValue(propVal) as GridSize
     }
   }
 
-  return camelcaseKeys(props)
+  const result: Record<string, unknown> = {}
+  if (Object.values(size).some(Boolean)) {
+    result.size = size
+  }
+  if (Object.values(offset).some(Boolean)) {
+    result.offset = offset
+  }
+
+  return result
 }
 
 function GridItem({ children, nodeProps }: GridItemProps) {

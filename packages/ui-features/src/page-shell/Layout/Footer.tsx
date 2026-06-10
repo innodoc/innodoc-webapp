@@ -73,16 +73,16 @@ function Footer() {
     >
       <Container maxWidth="lg">
         <Grid container spacing={4}>
-          <Grid item xs={12} md={3}>
+          <Grid size={{ xs: 12, md: 3 }}>
             <Typography variant="h4" sx={{ mb: 3 }}>
               {course.title}
             </Typography>
             <Stack spacing={1}>{linkList}</Stack>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <HastNode hash={dataA?.hash} />
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid size={{ xs: 12, md: 3 }}>
             <HastNode hash={dataB?.hash} />
           </Grid>
         </Grid>
