@@ -18,12 +18,12 @@ function SubsectionList({ sectionId }: SubsectionListProps) {
       <CardHeader
         avatar={<Icon name="mdi:list-box-outline" />}
         title={t('content.subsections')}
-        titleTypographyProps={{ variant: 'h4' }}
+        slotProps={{ title: { variant: 'h4' } }}
       />
       <CardContent sx={{ '&:last-child': { py: 1 } }}>
-        <List dense sx={{ py: 0 }}>
+        <List sx={{ py: 0, '& .MuiListItem-root': { minHeight: 36 } }}>
           {children.map((section) => (
-            <ListItem key={section.id} sx={{ p: 0 }}>
+            <ListItem key={section.id} disablePadding>
               <ListItemText primary={<SectionLink section={section} sx={{ typography: 'subtitle1' }} />} />
             </ListItem>
           ))}

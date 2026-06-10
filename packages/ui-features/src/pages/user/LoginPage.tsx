@@ -21,7 +21,7 @@ function LoginPage() {
             fullWidth
             id="login-email"
             label={t('pages.user.login.email')}
-            margin="normal"
+            sx={{ mb: 2 }}
             name="login-email"
             required
           />
@@ -30,7 +30,7 @@ function LoginPage() {
             fullWidth
             id="login-password"
             label={t('pages.user.login.password')}
-            margin="normal"
+            sx={{ mb: 2 }}
             name="login-password"
             required
             type="password"
