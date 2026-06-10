@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react'
-import { Box, Container, styled } from '@mui/material'
+import { Container, styled } from '@mui/material'
 import AppBar from './AppBar/AppBar.js'
 import Footer from './Footer.js'
 
-const Wrapper = styled(Box)({
+const Wrapper = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   minHeight: '100vh',
