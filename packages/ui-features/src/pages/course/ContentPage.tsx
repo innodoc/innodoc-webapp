@@ -11,7 +11,7 @@ function ContentError({ contentType, contentIdValue }: ErrorProperties) {
 
   return (
     <ErrorPage
-      errorMsg={
+      errorMessage={
         <Trans
           components={{ 1: <Code /> }}
           i18nKey={`error.failedToLoad${contentType === 'page' ? 'Page' : 'Section'}`}

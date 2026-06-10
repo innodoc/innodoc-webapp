@@ -1,7 +1,12 @@
+import type { ReactElement } from 'react'
 import { Alert, AlertTitle } from '@mui/material'
 
-// function ErrorPage({ errorMsg, is404: is404Prop }: ErrorPageProps) {
-function ErrorPage() {
+interface ErrorPageProps {
+  errorMessage?: ReactElement
+  is404?: boolean
+}
+
+function ErrorPage({ errorMessage }: ErrorPageProps) {
   // const pageContext = usePageContext()
   // const { abortReason } = pageContext
   // const abortStatusCode = pageContext.abortStatusCode as unknown
@@ -33,7 +38,7 @@ function ErrorPage() {
   return (
     <Alert variant="outlined" severity="error">
       <AlertTitle>TODO</AlertTitle>
-      TODO
+      {errorMessage}
     </Alert>
   )
 }
