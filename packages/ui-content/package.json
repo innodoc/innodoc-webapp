@@ -53,7 +53,7 @@
     "@innodoc/shared-core": "workspace:*",
     "@innodoc/ui-design-system": "workspace:*",
     "@innodoc/ui-shared": "workspace:*",
-    "@innodoc/ui-store": "workspace:*",
+    "@innodoc/shared-store": "workspace:*",
     "@mui/lab": "catalog:",
     "@mui/material": "catalog:",
     "camelcase-keys": "catalog:",

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import type { TranslatedSection } from '@innodoc/shared-core/types'
 import { SectionLink } from '@innodoc/ui-design-system/links'
 import { Icon } from '@innodoc/ui-design-system/misc'
-import { useSelectSectionChildren } from '@innodoc/ui-store/hooks'
+import { useSelectSectionChildren } from '@innodoc/ui-shared/store-hooks'
 
 function SubsectionList({ sectionId }: SubsectionListProps) {
   const { t } = useTranslation()

@@ -23,7 +23,7 @@
     "@innodoc/shared-core": "workspace:*",
     "@innodoc/ui-features": "workspace:*",
     "@innodoc/ui-shared": "workspace:*",
-    "@innodoc/ui-store": "workspace:*",
+    "@innodoc/shared-store": "workspace:*",
     "@unhead/react": "catalog:",
     "buffer": "catalog:",
     "i18next-http-backend": "catalog:",

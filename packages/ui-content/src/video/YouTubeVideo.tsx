@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
 import { Box, styled } from '@mui/material'
 import type { YOUTUBE_VIDEO_PROPERTIES } from '@innodoc/content-parser/properties'
-import { useSelector } from '@innodoc/ui-store/hooks'
-import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
+import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
+import { useSelector } from '@innodoc/ui-shared/store-hooks'
 import type { NodeProps } from '#types'
 
 const Wrapper = styled(Box)(({ theme }) => ({

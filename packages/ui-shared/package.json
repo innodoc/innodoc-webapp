@@ -14,6 +14,11 @@
       "types": "./src/hooks/hooks.ts",
       "development": "./src/hooks/hooks.ts",
       "default": "./dist/hooks/hooks.js"
+    },
+    "./store-hooks": {
+      "types": "./src/store-hooks/hooks.ts",
+      "development": "./src/store-hooks/hooks.ts",
+      "default": "./dist/store-hooks/hooks.js"
     }
   },
   "imports": {
@@ -31,7 +36,10 @@
   },
   "dependencies": {
     "@innodoc/shared-core": "workspace:*",
-    "react": "catalog:"
+    "@innodoc/shared-store": "workspace:*",
+    "@reduxjs/toolkit": "catalog:",
+    "react": "catalog:",
+    "react-redux": "catalog:"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "catalog:",

@@ -48,11 +48,11 @@
         "@innodoc/backend",
         "@innodoc/frontend",
         "@innodoc/shared-core",
+        "@innodoc/shared-store",
         "@innodoc/ui-content",
         "@innodoc/ui-design-system",
         "@innodoc/ui-features",
         "@innodoc/ui-shared",
-        "@innodoc/ui-store",
         "@innodoc/server-env",
         "@innodoc/server-db",
         "@innodoc/content-parser"

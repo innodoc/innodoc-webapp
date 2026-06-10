@@ -2,13 +2,13 @@ import { Box, Container, Grid, Link, Stack, styled, Typography } from '@mui/mate
 import { useTranslation } from 'react-i18next'
 import { FRAGMENT_TYPE_FOOTER_A, FRAGMENT_TYPE_FOOTER_B } from '@innodoc/shared-core/constants'
 import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
+import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
+import getFragmentsApi from '@innodoc/shared-store/slices/content/fragments'
 import HastNode from '@innodoc/ui-content'
 import { AppLink, PageLink } from '@innodoc/ui-design-system/links'
 import pageLinks from '@innodoc/ui-design-system/page-links'
 import { useRouteManager } from '@innodoc/ui-shared/hooks'
-import { useSelectCurrentCourse, useSelectLinkedPages, useSelector } from '@innodoc/ui-store/hooks'
-import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
-import getFragmentsApi from '@innodoc/ui-store/slices/content/fragments'
+import { useSelectCurrentCourse, useSelectLinkedPages, useSelector } from '@innodoc/ui-shared/store-hooks'
 
 const pageLinksFooter = pageLinks.filter((page) => page.linked?.includes('footer'))
 

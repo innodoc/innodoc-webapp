@@ -1,6 +1,6 @@
 import type { LinkProps } from './types.js'
 import { Trans } from 'react-i18next'
-import { useRoutes } from '@innodoc/ui-store/hooks'
+import { useRoutes } from '@innodoc/ui-shared/store-hooks'
 import { InlineError } from '#errors'
 import { Code } from '#misc'
 import AppLink from './AppLink.js'

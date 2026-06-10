@@ -1,16 +1,23 @@
-import type makeStore from './make-store.js'
-import type { rootReducer } from './make-store.js'
-import type { ListenerEffectAPI, TypedStartListening } from '@reduxjs/toolkit'
+import type rootReducer from './reducer.js'
+import type {
+  EnhancedStore,
+  ListenerEffectAPI,
+  ThunkDispatch,
+  TypedStartListening,
+  UnknownAction,
+} from '@reduxjs/toolkit'
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react'
-
-/** Store type */
-type Store = Awaited<ReturnType<typeof makeStore>>
 
 /** Root state */
 type RootState = ReturnType<typeof rootReducer>
 
-/** Dispatch type */
-type AppDispatch = Store['dispatch']
+/** App dispatch */
+type AppDispatch = ThunkDispatch<RootState, unknown, UnknownAction>
+
+/** Client store */
+type Store = Omit<EnhancedStore<RootState, UnknownAction>, 'dispatch'> & {
+  dispatch: AppDispatch
+}
 
 /** BaseQuery type */
 type BaseQuery = BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>

@@ -1,7 +1,7 @@
 import { type SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
-import { useSelector } from '@innodoc/ui-store/hooks'
-import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
+import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
+import { useSelector } from '@innodoc/ui-shared/store-hooks'
 
 /** Return array of expanded section paths/node IDs (including parents) */
 function getExpandedWithParents(sectionPath?: string) {

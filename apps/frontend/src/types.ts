@@ -1,7 +1,7 @@
 import type { i18n } from 'i18next'
 import type { Readable } from 'node:stream'
 import type { RouteManager } from '@innodoc/shared-core/routes'
-import type { RootState, Store } from '@innodoc/ui-store/types'
+import type { RootState, Store } from '@innodoc/shared-store/types'
 
 interface RenderContext {
   htmlTemplate: string

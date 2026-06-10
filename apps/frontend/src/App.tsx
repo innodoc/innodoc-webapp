@@ -4,10 +4,10 @@ import { I18nextProvider } from 'react-i18next'
 import { Provider as ReduxProvider } from 'react-redux'
 import { Router } from 'wouter'
 import type { RouteManager } from '@innodoc/shared-core/routes'
+import type { Store } from '@innodoc/shared-store/types'
 import PageShell from '@innodoc/ui-features/page-shell'
 import RoutesSwitch from '@innodoc/ui-features/routes-switch'
 import { RouteManagerProvider } from '@innodoc/ui-shared/contexts'
-import type { Store } from '@innodoc/ui-store/types'
 
 interface AppProps {
   emotionCache: EmotionCache

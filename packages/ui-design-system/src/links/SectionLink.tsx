@@ -1,7 +1,7 @@
 import type { LinkProps as LinkProperties } from './types.js'
 import { Trans } from 'react-i18next'
 import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/types'
-import { useRoutes, useSelectSection } from '@innodoc/ui-store/hooks'
+import { useRoutes, useSelectSection } from '@innodoc/ui-shared/store-hooks'
 import { InlineError } from '#errors'
 import { Code } from '#misc'
 import { formatSectionTitle } from '#utils'

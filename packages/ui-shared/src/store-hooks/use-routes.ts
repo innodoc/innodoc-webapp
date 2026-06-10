@@ -1,8 +1,8 @@
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { FrontendRouteInfo } from '@innodoc/shared-core/types'
+import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
 import { useRouteManager } from '@innodoc/ui-shared/hooks'
-import { useSelector } from '@innodoc/ui-store/hooks'
-import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
+import { useSelector } from './redux.js'
 
 interface UseRoutesReturn {
   url: (partialRouteInfo: Partial<FrontendRouteInfo>) => string

@@ -1,19 +1,19 @@
 {
-  "name": "@innodoc/ui-store",
+  "name": "@innodoc/shared-store",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./src/make-store.ts",
-      "development": "./src/make-store.ts",
-      "default": "./dist/make-store.js"
+      "types": "./src/make-store-client.ts",
+      "development": "./src/make-store-client.ts",
+      "default": "./dist/make-store-client.js"
     },
-    "./hooks": {
-      "types": "./src/hooks/hooks.ts",
-      "development": "./src/hooks/hooks.ts",
-      "default": "./dist/hooks/hooks.js"
+    "./ssr": {
+      "types": "./src/make-store-ssr.ts",
+      "development": "./src/make-store-ssr.ts",
+      "default": "./dist/make-store-ssr.js"
     },
     "./slices/app": {
       "types": "./src/slices/app/app-slice.ts",
@@ -117,17 +117,14 @@
   "dependencies": {
     "@innodoc/content-parser": "workspace:*",
     "@innodoc/shared-core": "workspace:*",
-    "@innodoc/ui-shared": "workspace:*",
     "@reduxjs/toolkit": "catalog:",
     "crc": "catalog:",
     "i18next": "catalog:",
     "react": "catalog:",
-    "react-redux": "catalog:",
     "svg-parser": "catalog:"
   },
   "devDependencies": {
     "@types/react": "catalog:",
-    "@types/react-redux": "catalog:",
     "@types/svg-parser": "catalog:",
     "iso-639-1": "catalog:",
     "redux": "catalog:",

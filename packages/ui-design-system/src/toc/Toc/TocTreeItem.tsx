@@ -12,7 +12,7 @@ export default TocTreeItem
 // import { styled } from '@mui/material'
 // import { TreeItem, type TreeItemProps } from '@mui/x-tree-view'
 
-// import { useSelectSectionChildren } from '@innodoc/ui-store/hooks'
+// import { useSelectSectionChildren } from '@innodoc/shared-store/hooks'
 // import type { TranslatedSection } from '@innodoc/shared-core/types'
 
 // import TocTreeItemContent from './TocTreeItemContent.tsx_OLD'

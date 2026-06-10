@@ -1,9 +1,9 @@
 import { isCoursePageRouteInfo } from '@innodoc/shared-core/typeguards'
+import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
+import getPagesApi from '@innodoc/shared-store/slices/content/pages'
 import { PageHeader } from '@innodoc/ui-design-system/misc'
 import { useRouteManager } from '@innodoc/ui-shared/hooks'
-import { useSelector, useSelectPage } from '@innodoc/ui-store/hooks'
-import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
-import getPagesApi from '@innodoc/ui-store/slices/content/pages'
+import { useSelector, useSelectPage } from '@innodoc/ui-shared/store-hooks'
 import ContentPage from './ContentPage.js'
 
 function CourseContentPage() {

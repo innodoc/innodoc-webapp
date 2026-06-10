@@ -99,7 +99,7 @@
   "dependencies": {
     "@innodoc/shared-core": "workspace:*",
     "@innodoc/ui-shared": "workspace:*",
-    "@innodoc/ui-store": "workspace:*",
+    "@innodoc/shared-store": "workspace:*",
     "@mui/lab": "catalog:",
     "@mui/material": "catalog:",
     "@mui/x-tree-view": "catalog:",

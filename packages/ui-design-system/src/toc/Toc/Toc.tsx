@@ -1,7 +1,7 @@
 import { styled } from '@mui/material'
 import { RichTreeView } from '@mui/x-tree-view'
 import { memo } from 'react'
-import { useSelectSectionTree } from '@innodoc/ui-store/hooks'
+import { useSelectSectionTree } from '@innodoc/ui-shared/store-hooks'
 import { Icon } from '#misc'
 import TocTreeItem from './TocTreeItem.js'
 import useManageExpanded from './use-manage-expanded.js'

@@ -1,6 +1,6 @@
-import { useSelector } from '@innodoc/ui-store/hooks'
-import { selectHastResultByHash } from '@innodoc/ui-store/slices/hast'
-import type { RootState } from '@innodoc/ui-store/types'
+import { selectHastResultByHash } from '@innodoc/shared-store/slices/hast'
+import type { RootState } from '@innodoc/shared-store/types'
+import { useSelector } from '@innodoc/ui-shared/store-hooks'
 import hastToReact from './hast-to-react/hast-to-react.js'
 import MarkdownParserError from './MarkdownParserError.js'
 

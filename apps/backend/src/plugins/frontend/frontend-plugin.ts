@@ -5,7 +5,7 @@ import fastifyPlugin from 'fastify-plugin'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import type { RenderFunction, ServerEntryModule } from '@innodoc/frontend'
-import makeStore from '@innodoc/ui-store'
+import makeStore from '@innodoc/shared-store/ssr'
 import { FRONTEND_PATH } from '#constants'
 import type { PluginOpts } from '#plugins/types'
 
@@ -18,7 +18,7 @@ import type { PluginOpts } from '#plugins/types'
 function makeFrontendHandler(render: RenderFunction, htmlTemplate: string): RouteHandlerMethod {
   return async ({ diScope, i18n, url }, reply) => {
     const routeManager = diScope.resolve('routeManager')
-    const store = await diScope.resolve('store')
+    const store = diScope.resolve('store')
 
     const stream = render({ htmlTemplate, i18n, routeManager, store, url })
     reply.type('text/html')
@@ -29,16 +29,7 @@ function makeFrontendHandler(render: RenderFunction, htmlTemplate: string): Rout
 const frontendPluginCb: FastifyPluginAsync<PluginOpts> = async (server, { config }) => {
   // Register per-request DI scope for Redux store
   server.addHook('onRequest', (request, reply, done) => {
-    request.diScope.register({
-      store: asFunction(makeStore)
-        .inject(() => ({
-          devTools: !config.isProduction,
-          isSsr: true,
-          preloadedState: undefined,
-        }))
-        .scoped(),
-    })
-
+    request.diScope.register({ store: asFunction(makeStore).scoped() })
     done()
   })
 

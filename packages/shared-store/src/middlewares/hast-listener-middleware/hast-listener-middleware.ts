@@ -1,6 +1,7 @@
 import type { PayloadAction, UnknownAction } from '@reduxjs/toolkit'
 import { createListenerMiddleware } from '@reduxjs/toolkit'
 import { isHastRootDivElement } from '@innodoc/content-parser/typeguards'
+import type { RouteManager } from '@innodoc/shared-core/routes'
 import { isParserError, isWithContentHash } from '@innodoc/shared-core/typeguards'
 import type { ContentWithHash, CourseContentRouteInfo, HastResultWithHash } from '@innodoc/shared-core/types'
 import { changeRouteTransitionInfo } from '#slices/app'
@@ -16,8 +17,13 @@ function isHastResultWithHash(obj: unknown): obj is HastResultWithHash {
 
 const hastListenerMiddleware = createListenerMiddleware()
 
-// Client-only, on server this happens in onBeforeRender hook
-if (!import.meta.env.SSR) {
+/** Set up client-side listeners for the hast middleware. Must be called once after store creation. */
+function setupHastListeners(routeManager: RouteManager) {
+  // Client-only, on server this happens in onBeforeRender hook
+  if (import.meta.env.SSR) {
+    return
+  }
+
   const startListening = hastListenerMiddleware.startListening as AppStartListening
 
   // Markdown->hast worker
@@ -57,7 +63,7 @@ if (!import.meta.env.SSR) {
     listenerApi: AppListenerEffectAPI,
   ) => {
     if (pageSlug) {
-      const result = await fetchContent('page', courseSlug, locale, pageSlug, listenerApi.dispatch)
+      const result = await fetchContent(routeManager, 'page', courseSlug, locale, pageSlug, listenerApi.dispatch)
       if (result.isSuccess) {
         await processMarkdown(result.data, listenerApi)
       }
@@ -69,7 +75,7 @@ if (!import.meta.env.SSR) {
     { payload: { courseSlug, locale, sectionPath } }: PayloadAction<CourseContentRouteInfo<'app:course:section'>>,
     listenerApi: AppListenerEffectAPI,
   ) => {
-    const result = await fetchContent('section', courseSlug, locale, sectionPath, listenerApi.dispatch)
+    const result = await fetchContent(routeManager, 'section', courseSlug, locale, sectionPath, listenerApi.dispatch)
     if (result.isSuccess) {
       await processMarkdown(result.data, listenerApi)
     }
@@ -90,5 +96,5 @@ if (!import.meta.env.SSR) {
   })
 }
 
-export { isHastResultWithHash }
+export { isHastResultWithHash, setupHastListeners }
 export default hastListenerMiddleware

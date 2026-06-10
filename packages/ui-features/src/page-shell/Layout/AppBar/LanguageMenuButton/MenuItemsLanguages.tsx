@@ -1,9 +1,9 @@
 import type { ComponentProps } from 'react'
 import { ListItemText, MenuItem } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
 import { AppLink } from '@innodoc/ui-design-system/links'
-import { useSelectCurrentCourse, useSelector } from '@innodoc/ui-store/hooks'
-import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
+import { useSelectCurrentCourse, useSelector } from '@innodoc/ui-shared/store-hooks'
 
 function MenuItemsLanguages({ closeMenu, inset }: MenuItemsLanguagesProps) {
   const { t } = useTranslation()

@@ -64,7 +64,7 @@
           {
             "name": "react-redux",
             "importNames": ["useSelector", "useDispatch"],
-            "message": "Use typed hooks from `@innodoc/ui-store` instead."
+            "message": "Use typed hooks from `@innodoc/shared-store` instead."
           },
           {
             "name": "@mui/material",

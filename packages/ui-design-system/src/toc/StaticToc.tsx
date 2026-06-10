@@ -1,6 +1,6 @@
 import { styled } from '@mui/material'
 import type { TranslatedSection } from '@innodoc/shared-core/types'
-import { useSelectSectionChildren } from '@innodoc/ui-store/hooks'
+import { useSelectSectionChildren } from '@innodoc/ui-shared/store-hooks'
 import { SectionLink } from '#links'
 
 const StyledUl = styled('ul')(({ theme }) => ({

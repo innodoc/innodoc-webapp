@@ -8,11 +8,11 @@ import { I18nextProvider, initReactI18next } from 'react-i18next'
 import { Provider as ReduxProvider } from 'react-redux'
 import { RouteManager } from '@innodoc/shared-core/routes'
 import type { CourseRouteInfo } from '@innodoc/shared-core/types'
-import makeStore from '@innodoc/ui-store'
-import { changeRouteInfo } from '@innodoc/ui-store/slices/app'
-import getCoursesApi from '@innodoc/ui-store/slices/content/courses'
-import getPagesApi from '@innodoc/ui-store/slices/content/pages'
-import getSectionsApi from '@innodoc/ui-store/slices/content/sections'
+import makeStore from '@innodoc/shared-store'
+import { changeRouteInfo } from '@innodoc/shared-store/slices/app'
+import getCoursesApi from '@innodoc/shared-store/slices/content/courses'
+import getPagesApi from '@innodoc/shared-store/slices/content/pages'
+import getSectionsApi from '@innodoc/shared-store/slices/content/sections'
 
 const theme = extendTheme(undefined, createTheme())
 
@@ -31,7 +31,7 @@ const routeManager = new RouteManager({
   },
 })
 
-const store = await makeStore()
+const store = makeStore({ routeManager })
 
 const TestPageShell = ({ children }: { children: React.ReactNode }) => {
   return (

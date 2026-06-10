@@ -1,5 +1,5 @@
 import type { LinkProps } from './types.js'
-import { useSelectCurrentCourse } from '@innodoc/ui-store/hooks'
+import { useSelectCurrentCourse } from '@innodoc/ui-shared/store-hooks'
 import SpecLink from './SpecLink.js'
 
 /** Link to home as specified in course */
