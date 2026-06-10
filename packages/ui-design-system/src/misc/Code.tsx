@@ -1,15 +1,6 @@
-import type { CreateStyledComponent } from '@emotion/styled'
-import type { MUIStyledCommonProps } from '@mui/system'
-import type { DetailedHTMLProps, HTMLAttributes } from 'react'
 import { styled } from '@mui/material'
-import type { Theme } from '#theme'
 
-type CreateStyled = CreateStyledComponent<
-  MUIStyledCommonProps<Theme>,
-  DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
->
-
-const Code: ReturnType<CreateStyled> = styled('code')(({ theme }) => ({
+const Code = styled('code')(({ theme }) => ({
   backgroundColor: theme.vars.palette.Code.bg,
   borderColor: theme.vars.palette.Code.border,
   borderRadius: theme.shape.borderRadius,

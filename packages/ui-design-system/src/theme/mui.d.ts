@@ -17,6 +17,11 @@ declare module '@mui/material/styles' {
 
 // Add custom code font variant
 declare module '@mui/material/styles' {
+  // Enable CSS theme variables
+  interface CssThemeVariables {
+    enabled: true
+  }
+
   interface TypographyVariants {
     code: CSSProperties
   }

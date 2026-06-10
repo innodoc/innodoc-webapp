@@ -1,4 +1,4 @@
-import type { Variant } from '@mui/material/styles/createTypography'
+import type { TypographyVariant } from '@mui/material/styles'
 import { styled, Typography } from '@mui/material'
 import type { HastComponentProps } from '#hast'
 
@@ -9,7 +9,7 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 
 function HeadingNode({ children, id, node: { tagName } }: HastComponentProps<'h1'>) {
   return (
-    <StyledTypography id={id} variant={tagName as Variant}>
+    <StyledTypography id={id} variant={tagName as TypographyVariant}>
       {children}
     </StyledTypography>
   )

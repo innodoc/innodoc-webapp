@@ -1,11 +1,11 @@
 import type { PaletteCard } from './types'
-import type { CssVarsThemeOptions } from '@mui/material/styles'
-import { extendTheme, responsiveFontSizes, type ThemeOptions } from '@mui/material/styles'
+import type { CssVarsThemeOptions, ThemeOptions } from '@mui/material/styles'
+import { extendTheme, responsiveFontSizes } from '@mui/material/styles'
+import { CARD_TYPES } from '@innodoc/shared-core/constants'
+import type { CardType } from '@innodoc/shared-core/types'
 
 /** Color scheme used by MUI (light/dark) */
 type DefaultColorScheme = 'light' | 'dark'
-import { CARD_TYPES } from '@innodoc/shared-core/constants'
-import type { CardType } from '@innodoc/shared-core/types'
 
 // Use custom Lato font instead of MUI default font
 const fontFamily = ['Lato', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(',')
@@ -132,6 +132,9 @@ const baseThemeOpts: ThemeOptions = {
       fontFamily: fontFamilyMonospace,
       padding: '0.1rem 0.2rem',
     },
+  },
+  cssVariables: {
+    nativeColor: true,
   },
 }
 

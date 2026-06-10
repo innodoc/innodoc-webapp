@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import MuiGrid from '@mui/material/Unstable_Grid2'
+import MuiGrid from '@mui/material/Grid'
 
 function Grid({ children }: GridProps) {
   return (

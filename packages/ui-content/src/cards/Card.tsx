@@ -66,7 +66,7 @@ function Card({
       collapsible={collapsible}
       dense={dense}
       title={title}
-      titleTypographyProps={{ variant: 'h4' }}
+      slotProps={{ title: { variant: 'h4' } }}
     />
   )
 

@@ -7,11 +7,7 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 }))
 
 function PNode({ children }: HastComponentProps<'p'>) {
-  return (
-    <StyledTypography paragraph variant="body1">
-      {children}
-    </StyledTypography>
-  )
+  return <StyledTypography variant="body1">{children}</StyledTypography>
 }
 
 export default PNode

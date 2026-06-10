@@ -19,7 +19,7 @@ function MenuItemCaption({ iconName, text }: MenuItemCaptionProps) {
   return (
     <StyledMenuItem disableRipple>
       {listItemIcon}
-      <ListItemText primary={text} slotProps={{ primary: { fontWeight: 'bold', variant: 'caption' } }} />
+      <ListItemText primary={text} slotProps={{ primary: { sx: { fontWeight: 'bold' }, variant: 'caption' } }} />
     </StyledMenuItem>
   )
 }
