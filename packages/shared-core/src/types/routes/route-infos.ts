@@ -46,12 +46,4 @@ type FrontendRouteInfo<R extends FrontendRouteName = FrontendRouteName> =
   | (R extends CourseRouteName ? CourseRouteInfo<R> : never)
   | (R extends UserRouteName ? UserRouteInfo<R> : never)
 
-export type {
-  BuiltinRouteInfo,
-  CourseContentRouteInfo,
-  CoursePageRouteInfo,
-  CourseRouteInfo,
-  CourseSectionRouteInfo,
-  FrontendRouteInfo,
-  UserRouteInfo,
-}
+export type { CourseContentRouteInfo, CoursePageRouteInfo, CourseRouteInfo, CourseSectionRouteInfo, FrontendRouteInfo }

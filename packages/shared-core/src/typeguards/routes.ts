@@ -1,4 +1,4 @@
-import { apiRoutes, builtinRoutes, courseContentRoutes, courseRoutes, userRoutes } from '#routes'
+import { builtinRoutes, courseContentRoutes, courseRoutes, userRoutes } from '#routes'
 import { isArbitraryObject } from '#typeguards'
 import type {
   CourseContentRouteName,
@@ -7,18 +7,10 @@ import type {
   CourseSectionRouteInfo,
   FrontendRouteInfo,
   FrontendRouteName,
-  RouteName,
 } from '#types'
 
-let apiRouteNames: Set<string> | null = null
 let courseContentRouteNames: Set<string> | null = null
 let appRouteNames: Set<string> | null = null
-let allRouteNames: Set<string> | null = null
-
-function getApiRouteNames() {
-  apiRouteNames ??= new Set(Object.keys(apiRoutes))
-  return apiRouteNames
-}
 
 function getCourseContentRouteNames() {
   courseContentRouteNames ??= new Set(Object.keys(courseContentRoutes))
@@ -28,16 +20,6 @@ function getCourseContentRouteNames() {
 function getAppRouteNames() {
   appRouteNames ??= new Set(Object.keys({ ...builtinRoutes, ...courseRoutes, ...userRoutes }))
   return appRouteNames
-}
-
-function getAllRouteNames() {
-  allRouteNames ??= new Set([...getApiRouteNames(), ...getAppRouteNames()])
-  return allRouteNames
-}
-
-/** Type guard for `RouteName` */
-function isRouteName(routeName: unknown): routeName is RouteName {
-  return typeof routeName === 'string' && getAllRouteNames().has(routeName)
 }
 
 /** Type guard for `FrontendRouteName` */
@@ -85,5 +67,4 @@ export {
   isCourseSectionRouteInfo,
   isFrontendRouteInfo,
   isFrontendRouteName,
-  isRouteName,
 }

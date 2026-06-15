@@ -1,4 +1,4 @@
-export { assertNever, isArbitraryObject, isCallable, isCourseSlugMode, isLocale } from './common.js'
+export { assertNever, isArbitraryObject, isCourseSlugMode } from './common.js'
 export {
   isApiPage,
   isContentType,
@@ -15,5 +15,4 @@ export {
   isCourseSectionRouteInfo,
   isFrontendRouteInfo,
   isFrontendRouteName,
-  isRouteName,
 } from './routes.js'
