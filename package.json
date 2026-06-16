@@ -53,6 +53,7 @@
     "@innodoc/configs": "workspace:*",
     "commit-and-tag-version": "catalog:",
     "dependency-cruiser": "catalog:",
+    "eslint-plugin-perfectionist": "catalog:",
     "knip": "catalog:",
     "oxfmt": "catalog:",
     "oxlint": "catalog:",

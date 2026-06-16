@@ -4,6 +4,7 @@
     "typeAware": true
   },
   "plugins": ["eslint", "typescript", "unicorn", "import", "promise", "react", "jsx-a11y", "vitest", "jest"],
+  "jsPlugins": ["eslint-plugin-perfectionist"],
   "env": {
     "browser": true,
     "node": true,
@@ -26,6 +27,10 @@
     "import/first": "error",
     "import/newline-after-import": "error",
     "import/no-duplicates": "error",
+    // eslint-plugin-perfectionist for export sorting
+    // https://github.com/oxc-project/oxc/issues/13610
+    "perfectionist/sort-exports": "error",
+    "perfectionist/sort-named-exports": "error",
     // Unicorn
     "unicorn/no-null": "off",
     "unicorn/filename-case": [

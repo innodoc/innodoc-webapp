@@ -119,6 +119,7 @@ catalog:
   zod: ^4.4.3
   zod-validation-error: ^5.0.0
   '@types/remark-heading-id': ^1.0.0
+  eslint-plugin-perfectionist: ^5.9.0
 
 catalogMode: strict
 
