@@ -1,12 +1,13 @@
+// TODO: re-enable or remove RouteTransition
+
+import type { ComponentType, ForwardedRef, PropsWithChildren, ReactElement } from 'react'
 import { Fade } from '@mui/material'
 import { useEffect, useReducer } from 'react'
-import type { ComponentType, ForwardedRef, PropsWithChildren, ReactElement } from 'react'
-
 import { assertNever } from '@innodoc/shared-core/typeguards'
-import { useDispatch, useSelector } from '@innodoc/ui-store/hooks'
-import { changeRouteInfo, selectRouteTransitionInfo } from '@innodoc/ui-store/slices/app'
-import { selectIsProcessing } from '@innodoc/ui-store/slices/hast'
 import type { FrontendRouteInfo } from '@innodoc/shared-core/types'
+import { changeRouteInfo, selectRouteTransitionInfo } from '@innodoc/shared-store/slices/app'
+import { selectIsProcessing } from '@innodoc/shared-store/slices/hast'
+import { useDispatch, useSelector } from '@innodoc/ui-shared/store-hooks'
 
 const TransitionChild = function TransitionChild({ ref, children, ...props }: TransitionChildProps) {
   return (

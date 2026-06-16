@@ -96,5 +96,5 @@ function setupHastListeners(routeManager: RouteManager) {
   })
 }
 
-export { isHastResultWithHash, setupHastListeners }
+export { setupHastListeners }
 export default hastListenerMiddleware

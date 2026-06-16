@@ -38,41 +38,49 @@
   "imports": {
     "#constants": {
       "types": "./src/constants.ts",
+      "import": "./src/constants.ts",
       "development": "./src/constants.ts",
       "default": "./dist/constants.js"
     },
     "#routes": {
       "types": "./src/routes/routes.ts",
+      "import": "./src/routes/routes.ts",
       "development": "./src/routes/routes.ts",
       "default": "./dist/routes/routes.js"
     },
     "#routes/api-routes": {
       "types": "./src/routes/api-routes.ts",
+      "import": "./src/routes/api-routes.ts",
       "development": "./src/routes/api-routes.ts",
       "default": "./dist/routes/api-routes.js"
     },
     "#routes/course-routes": {
       "types": "./src/routes/course-routes.ts",
+      "import": "./src/routes/course-routes.ts",
       "development": "./src/routes/course-routes.ts",
       "default": "./dist/routes/course-routes.js"
     },
     "#schemas": {
       "types": "./src/schemas/schemas.ts",
+      "import": "./src/schemas/schemas.ts",
       "development": "./src/schemas/schemas.ts",
       "default": "./dist/schemas/schemas.js"
     },
     "#schemas/common": {
       "types": "./src/schemas/common.ts",
+      "import": "./src/schemas/common.ts",
       "development": "./src/schemas/common.ts",
       "default": "./dist/schemas/common.js"
     },
     "#typeguards": {
       "types": "./src/typeguards/typeguards.ts",
+      "import": "./src/typeguards/typeguards.ts",
       "development": "./src/typeguards/typeguards.ts",
       "default": "./dist/typeguards/typeguards.js"
     },
     "#types": {
       "types": "./src/types/types.ts",
+      "import": "./src/types/types.ts",
       "development": "./src/types/types.ts"
     }
   },

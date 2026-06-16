@@ -29,6 +29,7 @@
   "imports": {
     "#courses": {
       "types": "./src/data/make-courses.ts",
+      "import": "./src/data/make-courses.ts",
       "development": "./src/data/make-courses.ts",
       "default": "./dist/data/make-courses.js"
     }

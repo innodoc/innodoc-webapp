@@ -1,7 +1,0 @@
-export { default as CourseContentPage } from './course/CourseContentPage.js'
-export { default as CourseProgressPage } from './course/CourseProgressPage.js'
-export { default as CourseSectionPage } from './course/CourseSectionPage/CourseSectionPage.js'
-export { default as CourseTocPage } from './course/CourseTocPage.js'
-export { default as ErrorPage } from './ErrorPage.js'
-export { default as IndexPage } from './IndexPage.js'
-export { default as LoginPage } from './user/LoginPage.js'

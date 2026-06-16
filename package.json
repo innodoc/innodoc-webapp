@@ -63,7 +63,7 @@
     "typescript": "catalog:"
   },
   "engines": {
-    "node": ">=22",
+    "node": ">=25.4",
     "pnpm": ">=10"
   },
   "commit-and-tag-version": {

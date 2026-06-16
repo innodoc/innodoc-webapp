@@ -8,12 +8,11 @@
     "apps/backend": {
       "project": ["src/**/*.ts"],
       "ignoreBinaries": ["mkcert", "vitest"],
-      "ignoreDependencies": ["pino-pretty", "@unhead/react"],
-      "ignoreUnresolved": ["#constants", "#plugins/types", "#utils"]
+      "ignoreDependencies": ["pino-pretty"]
     },
     "apps/frontend": {
       "entry": ["src/entry-client.tsx", "src/entry-server.tsx"],
-      "project": ["src/**/*.{ts,tsx}"],
+      "project": ["src/**/*.ts?(x)"],
       "ignoreDependencies": ["@emotion/server", "buffer"]
     },
     "apps/e2e": {
@@ -21,10 +20,8 @@
       "project": ["tests/**/*.ts"]
     },
     "packages/content-parser": {
-      "project": ["src/**/*.{ts,tsx}"],
-      "ignoreBinaries": ["vitest"],
-      "ignoreUnresolved": ["#types"],
-      "ignoreDependencies": ["remark-stringify"]
+      "project": ["src/**/*.ts?(x)"],
+      "ignoreBinaries": ["vitest"]
     },
     "packages/server-db": {
       "entry": ["src/migrations/*.ts"],
@@ -37,31 +34,29 @@
       "ignoreBinaries": ["vitest"]
     },
     "packages/shared-core": {
-      "project": ["src/**/*.{ts,tsx}", "!src/**/*.test.ts"],
-      "ignoreUnresolved": ["#types"]
+      "project": ["src/**/*.ts?(x)"]
     },
     "packages/shared-fixtures": {
-      "project": ["src/**/*.{ts,tsx}"],
+      "project": ["src/**/*.ts?(x)"],
       "ignoreDependencies": ["@innodoc/server-env", "@playwright/test", "type-fest"]
     },
     "packages/ui-content": {
-      "project": ["src/**/*.{ts,tsx}"],
-      "ignoreUnresolved": ["#types"],
-      "ignoreDependencies": ["camelcase-keys"]
+      "project": ["src/**/*.ts?(x)"]
     },
     "packages/ui-design-system": {
-      "project": ["src/**/*.{ts,tsx}", "!src/**/*.test.tsx"],
-      "ignoreDependencies": ["@innodoc/ui-shared", "@mui/lab", "clsx"]
+      "project": ["src/**/*.ts?(x)"],
+      "vitest": {
+        "entry": ["src/**/*.test.ts?(x)"]
+      }
     },
-    "packages/ui-store": {
+    "packages/shared-store": {
       "entry": ["src/middlewares/hast-listener-middleware/markdown-to-hast-worker.ts"],
-      "project": ["src/**/*.{ts,tsx}"],
-      "ignoreBinaries": ["vitest"],
-      "ignoreDependencies": ["svg-parser"]
+      "project": ["src/**/*.ts?(x)"],
+      "ignoreBinaries": ["vitest"]
     },
     "packages/ui-test-utils": {
       "entry": ["src/rtl-utils.tsx", "src/rtl-setup.ts", "src/stub-globals.ts"],
-      "project": ["src/**/*.{ts,tsx}"]
+      "project": ["src/**/*.ts?(x)"]
     },
     "tooling/commands": {
       "entry": ["src/icon-bundle/main.ts", "src/import-v1/main.ts", "src/print-routes/main.ts"],

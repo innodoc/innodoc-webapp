@@ -33,11 +33,13 @@
   "imports": {
     "#typeguards": {
       "types": "./src/typeguards/typeguards.ts",
+      "import": "./src/typeguards/typeguards.ts",
       "development": "./src/typeguards/typeguards.ts",
       "default": "./dist/typeguards/typeguards.js"
     },
     "#types": {
       "types": "./src/types.ts",
+      "import": "./src/types.ts",
       "development": "./src/types.ts"
     }
   },
@@ -66,7 +68,6 @@
     "remark-math": "catalog:",
     "remark-parse": "catalog:",
     "remark-rehype": "catalog:",
-    "remark-stringify": "catalog:",
     "unified": "catalog:",
     "unist-util-visit": "catalog:"
   },

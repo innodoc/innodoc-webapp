@@ -6,28 +6,34 @@
   "imports": {
     "#api/errors": {
       "types": "./src/plugins/api/errors.ts",
+      "import": "./src/plugins/api/errors.ts",
       "development": "./src/plugins/api/errors.ts",
       "default": "./dist/plugins/api/errors.js"
     },
     "#api/types": {
       "types": "./src/plugins/api/types.ts",
+      "import": "./src/plugins/api/types.ts",
       "development": "./src/plugins/api/types.ts",
       "default": "./dist/plugins/api/types.js"
     },
     "#constants": {
       "types": "./src/constants.ts",
+      "import": "./src/constants.ts",
       "development": "./src/constants.ts",
       "default": "./dist/constants.js"
     },
     "#plugins/api/mock-database": {
       "types": "./src/plugins/api/mock-database.ts",
+      "import": "./src/plugins/api/mock-database.ts",
       "development": "./src/plugins/api/mock-database.ts"
     },
     "#plugins/types": {
-      "types": "./src/plugins/types.ts"
+      "types": "./src/plugins/types.ts",
+      "import": "./src/plugins/types.ts"
     },
     "#utils": {
       "types": "./src/utils.ts",
+      "import": "./src/utils.ts",
       "development": "./src/utils.ts",
       "default": "./dist/utils.js"
     }
@@ -49,8 +55,6 @@
     "@innodoc/server-env": "workspace:*",
     "@innodoc/shared-core": "workspace:*",
     "@innodoc/shared-store": "workspace:*",
-    "@reduxjs/toolkit": "catalog:",
-    "@unhead/react": "catalog:",
     "awilix": "catalog:",
     "camelcase-keys": "catalog:",
     "fastify": "catalog:",
@@ -67,9 +71,7 @@
     "@innodoc/shared-fixtures": "workspace:*",
     "@scalar/fastify-api-reference": "catalog:",
     "@types/node": "catalog:",
-    "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "i18next": "catalog:",
+    "iso-639-1": "catalog:",
     "tsx": "catalog:",
     "vite": "catalog:"
   },

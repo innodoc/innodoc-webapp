@@ -570,5 +570,4 @@ function attributesToProps(attributes: ElementNode['properties']) {
   return properties
 }
 
-export { ATTRIBUTE_MAPPING }
 export default attributesToProps
