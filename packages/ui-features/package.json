@@ -42,10 +42,10 @@
   "dependencies": {
     "@emotion/react": "catalog:",
     "@innodoc/shared-core": "workspace:*",
+    "@innodoc/shared-store": "workspace:*",
     "@innodoc/ui-content": "workspace:*",
     "@innodoc/ui-design-system": "workspace:*",
     "@innodoc/ui-shared": "workspace:*",
-    "@innodoc/shared-store": "workspace:*",
     "@mui/material": "catalog:",
     "i18next": "catalog:",
     "react": "catalog:",

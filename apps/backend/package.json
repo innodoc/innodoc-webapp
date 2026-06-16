@@ -62,9 +62,9 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@innodoc/shared-fixtures": "workspace:*",
     "@fastify/middie": "catalog:",
     "@fastify/swagger": "catalog:",
+    "@innodoc/shared-fixtures": "workspace:*",
     "@scalar/fastify-api-reference": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",

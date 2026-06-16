@@ -51,9 +51,9 @@
   "dependencies": {
     "@innodoc/content-parser": "workspace:*",
     "@innodoc/shared-core": "workspace:*",
+    "@innodoc/shared-store": "workspace:*",
     "@innodoc/ui-design-system": "workspace:*",
     "@innodoc/ui-shared": "workspace:*",
-    "@innodoc/shared-store": "workspace:*",
     "@mui/lab": "catalog:",
     "@mui/material": "catalog:",
     "camelcase-keys": "catalog:",
