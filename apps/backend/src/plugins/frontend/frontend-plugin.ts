@@ -1,30 +1,14 @@
-import type { FastifyPluginAsync, RouteHandlerMethod } from 'fastify'
+import type { FastifyPluginAsync } from 'fastify'
 import fastifyStatic from '@fastify/static'
 import { asFunction } from 'awilix'
 import fastifyPlugin from 'fastify-plugin'
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import type { RenderFunction, ServerEntryModule } from '@innodoc/frontend'
+import type { ServerEntryModule } from '@innodoc/frontend'
 import makeStore from '@innodoc/shared-store/ssr'
 import { FRONTEND_PATH } from '#constants'
 import type { PluginOpts } from '#plugins/types'
-
-/**
- * Create the SSR route handler.
- *
- * @param render - SSR render function (from frontend server entry)
- * @param htmlTemplate - HTML template
- */
-function makeFrontendHandler(render: RenderFunction, htmlTemplate: string): RouteHandlerMethod {
-  return async ({ diScope, i18n, url }, reply) => {
-    const routeManager = diScope.resolve('routeManager')
-    const store = diScope.resolve('store')
-
-    const stream = render({ htmlTemplate, i18n, routeManager, store, url })
-    reply.type('text/html')
-    reply.send(stream)
-  }
-}
+import makeFrontendHandler from './handler.js'
 
 const frontendPluginCb: FastifyPluginAsync<PluginOpts> = async (server, { config }) => {
   // Register per-request DI scope for Redux store
