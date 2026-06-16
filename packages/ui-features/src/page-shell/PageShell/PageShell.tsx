@@ -2,7 +2,7 @@ import type { EmotionCache } from '@emotion/react'
 import type { PropsWithChildren } from 'react'
 import { CacheProvider } from '@emotion/react'
 import { CssBaseline, GlobalStyles } from '@mui/material'
-import { ThemeProvider as CssVarsProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import theme from '@innodoc/ui-design-system/theme'
 import Layout from '#layout'
 
@@ -16,11 +16,11 @@ function PageShell({ children, emotionCache }: PageShellProps) {
   return (
     <CacheProvider value={emotionCache}>
       <GlobalStyles styles={globalStyles} />
-      <CssVarsProvider theme={theme}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         {/* <MetaTags /> */}
         <Layout>{children}</Layout>
-      </CssVarsProvider>
+      </ThemeProvider>
     </CacheProvider>
   )
 }

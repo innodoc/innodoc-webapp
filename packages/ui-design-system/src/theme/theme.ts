@@ -1,7 +1,7 @@
 import type {} from './mui.js'
 import type { PaletteCard } from './types'
-import type { CssVarsThemeOptions, ThemeOptions } from '@mui/material/styles'
-import { extendTheme, responsiveFontSizes } from '@mui/material/styles'
+import type { ThemeOptions } from '@mui/material/styles'
+import { createTheme, responsiveFontSizes } from '@mui/material/styles'
 import { CARD_TYPES } from '@innodoc/shared-core/constants'
 import type { CardType } from '@innodoc/shared-core/types'
 
@@ -59,10 +59,18 @@ function getCardColors(palette: DefaultColorScheme, cardType: CardType): Palette
       }
 }
 
-const cssVarsOpts = {
+const options = {
+  cssVariables: true,
+  nativeColor: true,
   colorSchemes: {
     light: {
       palette: {
+        primary: { main: 'rgb(15, 112, 172)' },
+        secondary: { main: 'rgb(197, 14, 31)' },
+        error: { main: 'rgb(238, 88, 47)' },
+        warning: { main: 'rgb(253, 176, 43)' },
+        info: { main: 'rgb(22, 165, 196)' },
+        success: { main: 'rgb(14, 196, 180)' },
         background: {
           default: '#eee', // grey[200]
         },
@@ -83,6 +91,12 @@ const cssVarsOpts = {
     },
     dark: {
       palette: {
+        primary: { main: 'rgb(15, 112, 172)' },
+        secondary: { main: 'rgb(197, 14, 31)' },
+        error: { main: 'rgb(238, 88, 47)' },
+        warning: { main: 'rgb(253, 176, 43)' },
+        info: { main: 'rgb(22, 165, 196)' },
+        success: { main: 'rgb(14, 196, 180)' },
         Card: Object.fromEntries(CARD_TYPES.map((cardType) => [cardType, getCardColors('dark', cardType)])),
         Code: {
           bg: 'rgba(255, 255, 255, 0.2)',
@@ -98,17 +112,6 @@ const cssVarsOpts = {
       },
       shadowFooter: 'inset 0 1rem 0.4rem -0.5rem rgba(0 0 0 / 5%)',
     },
-  },
-} as CssVarsThemeOptions // Can't augment `ColorSystemOptions['palette']`...
-
-const baseThemeOpts: ThemeOptions = {
-  palette: {
-    primary: { main: 'rgb(15, 112, 172)' },
-    secondary: { main: 'rgb(197, 14, 31)' },
-    error: { main: 'rgb(238, 88, 47)' },
-    warning: { main: 'rgb(253, 176, 43)' },
-    info: { main: 'rgb(22, 165, 196)' },
-    success: { main: 'rgb(14, 196, 180)' },
   },
   typography: {
     // Custom font
@@ -134,14 +137,8 @@ const baseThemeOpts: ThemeOptions = {
       padding: '0.1rem 0.2rem',
     },
   },
-  cssVariables: {
-    nativeColor: true,
-  },
-}
+} as ThemeOptions
 
-const theme = responsiveFontSizes(extendTheme(cssVarsOpts, baseThemeOpts))
+const theme = responsiveFontSizes(createTheme(options))
 
-type Theme = typeof theme
-
-export type { Theme }
 export default theme
