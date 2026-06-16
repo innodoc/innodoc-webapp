@@ -5,21 +5,15 @@ import { useState } from 'react'
 import { Icon } from '#misc'
 import type { IconProps } from '#misc'
 
-const defaultBoxProps = { sx: {} }
-const defaultDrawerProps = {}
-
 function DrawerButton({
   anchor,
-  boxProps = defaultBoxProps,
+  boxProps = { sx: {} },
   children,
-  drawerProps = defaultDrawerProps,
+  drawerProps = {},
   iconName,
   id,
   title,
 }: DrawerButtonProps) {
-  const { sx: boxSx, ...restBoxProps } = boxProps
-  const { slotProps: drawerSlotProps, ...restDrawerProps } = drawerProps
-
   const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
   const onClick = () => {
@@ -32,8 +26,10 @@ function DrawerButton({
     setMenuOpen(false)
   }
 
+  const paperSx = typeof drawerProps?.slotProps?.paper === 'function' ? undefined : drawerProps?.slotProps?.paper?.sx
+
   return (
-    <Box {...restBoxProps} sx={{ flexGrow: 0, ...boxSx }}>
+    <Box {...boxProps} sx={[{ flexGrow: 0 }, ...(Array.isArray(boxProps?.sx) ? boxProps.sx : [boxProps?.sx])]}>
       <Tooltip arrow title={title}>
         <IconButton aria-controls={id} aria-label={title} color="inherit" onClick={onClick}>
           <Icon name={iconName} />
@@ -45,14 +41,13 @@ function DrawerButton({
         onClose={close}
         onOpen={open}
         open={menuOpen}
+        {...drawerProps}
         slotProps={{
-          ...drawerSlotProps,
+          ...drawerProps?.slotProps,
           paper: {
-            sx: { width: 300 },
-            ...drawerSlotProps?.paper,
+            sx: [{ width: 300 }, ...(Array.isArray(paperSx) ? paperSx : [paperSx])],
           },
         }}
-        {...restDrawerProps}
       >
         {children(close)}
       </SwipeableDrawer>

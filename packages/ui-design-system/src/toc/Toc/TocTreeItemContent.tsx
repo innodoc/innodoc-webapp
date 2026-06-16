@@ -61,4 +61,8 @@
 //   section: TranslatedSection
 // }
 
-// export default TocTreeItemContent
+function TocTreeItemContent() {
+  return null
+}
+
+export default TocTreeItemContent

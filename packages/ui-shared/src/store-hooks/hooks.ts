@@ -4,6 +4,6 @@ export { default as useSelectBreadcrumbSections } from './use-select-breadcrumb-
 export { default as useSelectCurrentCourse } from './use-select-current-course.js'
 export { default as useSelectLinkedPages } from './use-select-linked-pages.js'
 export { default as useSelectPage } from './use-select-page.js'
-export { default as useSelectSection } from './use-select-section.js'
 export { default as useSelectSectionChildren } from './use-select-section-children.js'
 export { default as useSelectSectionTree } from './use-select-section-tree.js'
+export { default as useSelectSection } from './use-select-section.js'

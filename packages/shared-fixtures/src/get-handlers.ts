@@ -1,5 +1,5 @@
-import { http } from 'msw'
-import { type HttpHandler, HttpResponse } from 'msw'
+import type { HttpHandler } from 'msw'
+import { http, HttpResponse } from 'msw'
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { ApiRouteName, RouteParams } from '@innodoc/shared-core/types'
 import makeCourses from '#courses'
