@@ -123,3 +123,4 @@ cleanupUnusedCatalogs: true
 patchedDependencies:
   decode-named-character-reference@1.3.0: patches/decode-named-character-reference@1.3.0.patch
   hast-util-from-html-isomorphic@2.0.0: patches/hast-util-from-html-isomorphic@2.0.0.patch
+  react-transition-group@4.4.5: patches/react-transition-group@4.4.5.patch

@@ -8,3 +8,10 @@ Solutions that didn't work:
 - using `alias` works in dev, but breaks in prod (as
   `require.resolve` is not available)
 Hack for now: Just patch both packages to use Node version.
+
+---
+
+Patch react-transition-group to add an `exports` field so Node.js ESM can
+resolve subpath imports like `react-transition-group/TransitionGroupContext`
+(needed by @mui/material@9.1.1+).
+https://github.com/mui/material-ui/issues/48644
