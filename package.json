@@ -37,6 +37,7 @@
     "test:e2e": "turbo run test --filter=@innodoc/e2e",
     "test:e2e:show-report": "turbo run playwright:show-report --log-prefix=none --filter=@innodoc/e2e",
     "========= Tools": "",
+    "deps:upgrade": "taze major --interactive",
     "knex": "turbo run knex",
     "knip": "knip",
     "syncpack": "pnpm run syncpack:fmt:check && pnpm run syncpack:lint",
@@ -59,6 +60,7 @@
     "oxlint": "catalog:",
     "oxlint-tsgolint": "catalog:",
     "syncpack": "catalog:",
+    "taze": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:"
   },
