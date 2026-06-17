@@ -26,6 +26,7 @@ await i18n.use(initReactI18next).init({
 const routeManager = new RouteManager({
   config: {
     courseSlugMode: 'SINGLE',
+    defaultCourseSlug: 'test-course',
     pagePathPrefix: 'page',
     sectionPathPrefix: 'section',
   },

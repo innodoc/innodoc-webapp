@@ -1,3 +1,4 @@
+import type { LanguageCode } from 'iso-639-1'
 import { inject, parse } from 'regexparam'
 import { API_COURSE_PREFIX, API_PREFIX } from '#constants'
 import { apiRoutes, builtinRoutes, courseRoutes, userRoutes } from '#routes'
@@ -8,6 +9,7 @@ import type {
   ConfigSchema,
   CourseContentRouteInfo,
   CourseSlugMode,
+  FrontendRouteInfo,
   FrontendRouteName,
   RouteDef,
   RouteFuncArgs,
@@ -15,7 +17,7 @@ import type {
 } from '#types'
 
 interface RouteManagerOptions {
-  config: Pick<ConfigSchema, 'courseSlugMode' | 'pagePathPrefix' | 'sectionPathPrefix'>
+  config: Pick<ConfigSchema, 'courseSlugMode' | 'defaultCourseSlug' | 'pagePathPrefix' | 'sectionPathPrefix'>
 }
 
 class RouteManager {
@@ -26,22 +28,21 @@ class RouteManager {
   }
 
   private readonly courseSlugMode: CourseSlugMode
+  private readonly defaultCourseSlug: string | null
 
   private routeFuncArgs: RouteFuncArgs
 
   private apiPatterns: [ApiRouteName, string][]
   private frontendPatterns: [FrontendRouteName, string][]
+  private frontendMatchers: [FrontendRouteName, string[], RegExp][]
 
-  private readonly parseOptions = {
-    sensitive: true,
-    strict: true,
-  }
-
-  constructor({ config: { courseSlugMode, pagePathPrefix, sectionPathPrefix } }: RouteManagerOptions) {
-    this.courseSlugMode = courseSlugMode
-    this.routeFuncArgs = { pagePathPrefix, sectionPathPrefix }
+  constructor({ config }: RouteManagerOptions) {
+    this.courseSlugMode = config.courseSlugMode
+    this.defaultCourseSlug = config.defaultCourseSlug
+    this.routeFuncArgs = { pagePathPrefix: config.pagePathPrefix, sectionPathPrefix: config.sectionPathPrefix }
     this.apiPatterns = this.buildPatterns(apiRoutes)
     this.frontendPatterns = this.buildPatterns(this.frontendRoutes)
+    this.frontendMatchers = this.buildFrontendMatchers()
   }
 
   /**
@@ -62,6 +63,10 @@ class RouteManager {
           if (!(key in params)) {
             throw new TypeError(`Expected parameter '${key}' to be present`)
           }
+        }
+        // Map sectionPath → '*' for regexparam.inject (wildcard parameter)
+        if ('sectionPath' in params) {
+          params['*'] = params.sectionPath
         }
         return inject(pattern, params)
       }
@@ -139,6 +144,72 @@ class RouteManager {
   /** Get frontend routes. */
   public getFrontendRoutes() {
     return Object.fromEntries(this.buildPatterns(this.frontendRoutes)) as Partial<Record<FrontendRouteName, string>>
+  }
+
+  /**
+   * Parse a URL path and return the matching route info.
+   *
+   * Matches the URL against all known frontend route patterns (in order of definition) and
+   * extracts the route name, locale, and any dynamic parameters (courseSlug, pageSlug, sectionPath).
+   *
+   * @param url - The URL path to parse (e.g., "/en/my-course/section/intro")
+   * @returns `FrontendRouteInfo` if a route matches, `null` otherwise
+   */
+  public parseRouteFromUrl(url: string): FrontendRouteInfo | null {
+    for (const [name, keys, pattern] of this.frontendMatchers) {
+      const result = pattern.exec(url)
+      if (!result) {
+        continue
+      }
+
+      const [, ...matches] = result
+      const params: Record<string, string> = {}
+
+      for (const [i, key] of keys.entries()) {
+        const value = matches[i]
+        if (value === undefined) {
+          continue
+        }
+        // regexparam uses '*' for wildcards; map it to 'sectionPath' for the section route
+        params[key === '*' ? 'sectionPath' : key] = value
+      }
+
+      // locale is always the first required param - if missing, skip this match
+      if (!params.locale) {
+        continue
+      }
+
+      // Only course routes (app:course:*) have courseSlug
+      const isCourseRoute = name.startsWith('app:course:')
+
+      // Determine courseSlug based on mode - only for course routes
+      const courseSlug = isCourseRoute
+        ? this.courseSlugMode === 'URL'
+          ? params.courseSlug
+          : this.defaultCourseSlug
+        : undefined
+
+      // Build typed route info
+      // Note: FrontendRouteInfo is a discriminated union that can't be narrowed from
+      // a dynamic route name, so we use a type assertion (same pattern as parseLinkSpecifier)
+      return {
+        name,
+        locale: params.locale as LanguageCode,
+        ...(courseSlug ? { courseSlug } : {}),
+        // Spread remaining params (pageSlug, sectionPath) - only present on content routes
+        ...(params.pageSlug ? { pageSlug: params.pageSlug } : {}),
+        ...(params.sectionPath ? { sectionPath: params.sectionPath } : {}),
+      } as FrontendRouteInfo
+    }
+
+    return null
+  }
+
+  private buildFrontendMatchers(): [FrontendRouteName, string[], RegExp][] {
+    return this.frontendPatterns.map(([name, pattern]) => {
+      const { keys, pattern: regex } = parse(pattern)
+      return [name, keys as string[], regex]
+    })
   }
 
   private buildPatterns<T extends RouteName>(routes: Partial<Record<T, RouteDef>>): [T, string][] {
