@@ -1,4 +1,4 @@
-import { inject } from 'regexparam'
+import { inject, parse } from 'regexparam'
 import { API_COURSE_PREFIX, API_PREFIX } from '#constants'
 import { apiRoutes, builtinRoutes, courseRoutes, userRoutes } from '#routes'
 import { isContentType, isCourseContentRouteName, isFrontendRouteInfo, isFrontendRouteName } from '#typeguards'
@@ -56,10 +56,25 @@ class RouteManager {
 
       const route = this.frontendPatterns.find(([n]) => n === name)
       if (route) {
-        return inject(route[1], params)
+        const pattern = route[1]
+        const requiredKeys = this.extractRequiredKeys(pattern)
+        for (const key of requiredKeys) {
+          if (!(key in params)) {
+            throw new TypeError(`Expected parameter '${key}' to be present`)
+          }
+        }
+        return inject(pattern, params)
       }
     }
     throw new TypeError('Unable to parse routeInfo object')
+  }
+
+  private extractRequiredKeys(pattern: string): string[] {
+    const { keys } = parse(pattern)
+    if (!keys) {
+      return []
+    }
+    return keys.filter((key) => key !== '*' && !pattern.includes(`:${key}?`))
   }
 
   /**
