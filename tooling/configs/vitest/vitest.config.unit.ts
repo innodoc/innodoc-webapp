@@ -1,5 +1,5 @@
 import { defineConfig, mergeConfig } from 'vitest/config'
-import configBase from './vitest.config.base'
+import configBase from './vitest.config.base.ts'
 
 export default mergeConfig(
   configBase,

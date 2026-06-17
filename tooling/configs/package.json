@@ -8,6 +8,7 @@
     "./tsconfig/build.json": "./tsconfig/build.json",
     "./tsconfig/node.json": "./tsconfig/node.json",
     "./tsconfig/react.json": "./tsconfig/react.json",
+    "./tsconfig/tooling.json": "./tsconfig/tooling.json",
     "./vite-env": "./vite-env.d.ts",
     "./vitest": "./vitest/vitest.config.unit.ts",
     "./vitest/react": "./vitest/vitest.config.react.ts"

@@ -1,9 +1,8 @@
 {
-  "extends": "./tsconfig/base.json",
+  "extends": "./tsconfig/tooling.json",
   "include": ["vitest/*.ts"],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "rootDir": ".",
-    "types": ["node", "./vite-env.d.ts"]
+    "rootDir": "."
   }
 }
