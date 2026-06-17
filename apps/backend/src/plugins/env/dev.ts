@@ -39,7 +39,7 @@ const options = async () => ({
 
 // Development plugin - static file serving is handled by Vite dev server middleware
 const devPlugin: FastifyPluginAsync = async () => {
-  // No-op — Vite handles static files in dev mode
+  // No-op - Vite handles static files in dev mode
 }
 
 const plugin = fastifyPlugin(devPlugin, { name: 'dev' })

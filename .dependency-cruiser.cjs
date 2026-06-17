@@ -237,7 +237,7 @@ module.exports = {
       to: { path: '^packages/server-' },
     },
 
-    // apps/backend is a server-tier app — same constraints as server-* packages
+    // apps/backend is a server-tier app - same constraints as server-* packages
     {
       name: 'backend-no-ui-deps',
       severity: 'error',
