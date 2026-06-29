@@ -20,7 +20,7 @@ const routeRegistry: RouteRegistry = {
   'app:index': { component: IndexPage },
   'app:course:index': { component: CourseContentPage },
   'app:course:glossary': { component: () => null }, // TODO
-  'app:course:page': { component: CourseSectionPage },
+  'app:course:page': { component: CourseContentPage },
   'app:course:progress': { component: CourseProgressPage },
   'app:course:section': { component: CourseSectionPage },
   'app:course:toc': { component: CourseTocPage },
