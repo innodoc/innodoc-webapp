@@ -10,7 +10,7 @@ import { getDates, getLocales, seed } from './utils.js'
 const makeCourseData = (courseId: number, fakers: Fakers): ApiCourse => ({
   id: courseId,
   slug: 'test-course',
-  homeLink: 'app:page|home',
+  homeLink: 'app:course:page|home',
   locales: getLocales(fakers),
   title: {
     de: 'Kurs zum Testen',
