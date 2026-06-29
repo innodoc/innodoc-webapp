@@ -7,6 +7,10 @@
     ".": {
       "types": "./src/types.ts",
       "default": "./dist/server/index.js"
+    },
+    "./populate-store": {
+      "types": "./src/populate-store.ts",
+      "default": "./src/populate-store.ts"
     }
   },
   "imports": {},
@@ -20,11 +24,14 @@
     "@emotion/cache": "catalog:",
     "@emotion/react": "catalog:",
     "@emotion/server": "catalog:",
+    "@innodoc/content-parser": "workspace:*",
     "@innodoc/shared-core": "workspace:*",
     "@innodoc/shared-store": "workspace:*",
     "@innodoc/ui-features": "workspace:*",
     "@innodoc/ui-shared": "workspace:*",
     "@unhead/react": "catalog:",
+    "camelcase-keys": "catalog:",
+    "crc": "catalog:",
     "buffer": "catalog:",
     "i18next-http-backend": "catalog:",
     "react": "catalog:",

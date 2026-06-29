@@ -332,15 +332,9 @@ catalogs:
       version: 5.0.0
 
 patchedDependencies:
-  decode-named-character-reference@1.3.0:
-    hash: 57711bc39bf7593a7c8ce912d550c765f4243361fd719469c4dd63de352d9de3
-    path: patches/decode-named-character-reference@1.3.0.patch
-  hast-util-from-html-isomorphic@2.0.0:
-    hash: 1a5617e81abfa3a842a6ee13c6ca1efc1f5be4efc994e0b037f5f4d4081988ca
-    path: patches/hast-util-from-html-isomorphic@2.0.0.patch
-  react-transition-group@4.4.5:
-    hash: c9725e0e803bf1803ea90d2c7eb794407dc4c5ecc1cef29afb6a5dd23df757e5
-    path: patches/react-transition-group@4.4.5.patch
+  decode-named-character-reference@1.3.0: 57711bc39bf7593a7c8ce912d550c765f4243361fd719469c4dd63de352d9de3
+  hast-util-from-html-isomorphic@2.0.0: 1a5617e81abfa3a842a6ee13c6ca1efc1f5be4efc994e0b037f5f4d4081988ca
+  react-transition-group@4.4.5: c9725e0e803bf1803ea90d2c7eb794407dc4c5ecc1cef29afb6a5dd23df757e5
 
 importers:
 
@@ -494,6 +488,9 @@ importers:
       '@emotion/server':
         specifier: 'catalog:'
         version: 11.11.0
+      '@innodoc/content-parser':
+        specifier: workspace:*
+        version: link:../../packages/content-parser
       '@innodoc/shared-core':
         specifier: workspace:*
         version: link:../../packages/shared-core
@@ -512,6 +509,12 @@ importers:
       buffer:
         specifier: 'catalog:'
         version: 6.0.3
+      camelcase-keys:
+        specifier: 'catalog:'
+        version: 10.0.2
+      crc:
+        specifier: 'catalog:'
+        version: 4.3.2(buffer@6.0.3)
       i18next-http-backend:
         specifier: 'catalog:'
         version: 4.0.0

@@ -14,7 +14,7 @@ type RootState = ReturnType<typeof rootReducer>
 /** App dispatch */
 type AppDispatch = ThunkDispatch<RootState, unknown, UnknownAction>
 
-/** Client store */
+/** Store (used for both client and SSR) */
 type Store = Omit<EnhancedStore<RootState, UnknownAction>, 'dispatch'> & {
   dispatch: AppDispatch
 }

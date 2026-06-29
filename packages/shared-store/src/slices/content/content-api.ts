@@ -12,7 +12,6 @@ function hashContentResponse(content: string) {
 const contentApi = createApi({
   reducerPath: 'contentApi',
   keepUnusedDataFor: MAX_KEEP_UNUSED_DATA_FOR_MAX,
-  // baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.INNODOC_APP_ROOT }),
   baseQuery: fetchBaseQuery(),
   endpoints: () => ({}),
 })
