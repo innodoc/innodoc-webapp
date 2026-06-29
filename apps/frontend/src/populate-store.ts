@@ -132,7 +132,7 @@ export async function populateStoreForSSR({
     // Convert to API format (camelCase) and upsert into RTK Query cache
     const apiCourse = serializeDates(camelcaseKeys(course)) as ApiCourse
     const coursesApi = getCachedCoursesApi(routeManager)
-    void store.dispatch(coursesApi.util.upsertQueryData('getCourse', { courseSlug: routeInfo.courseSlug }, apiCourse))
+    await store.dispatch(coursesApi.util.upsertQueryData('getCourse', { courseSlug: routeInfo.courseSlug }, apiCourse))
 
     // Step 3: Validate locale
     if (!course.locales.includes(routeInfo.locale)) {
@@ -163,10 +163,12 @@ export async function populateStoreForSSR({
     const apiPages = pages.map((page) => serializeDates(camelcaseKeys(page)) as ApiPage)
     const apiSections = sections.map((section) => serializeDates(camelcaseKeys(section)) as ApiSection)
 
-    void store.dispatch(pagesApi.util.upsertQueryData('getCoursePages', { courseSlug: routeInfo.courseSlug }, apiPages))
-    void store.dispatch(
-      sectionsApi.util.upsertQueryData('getCourseSections', { courseSlug: routeInfo.courseSlug }, apiSections),
-    )
+    await Promise.all([
+      store.dispatch(pagesApi.util.upsertQueryData('getCoursePages', { courseSlug: routeInfo.courseSlug }, apiPages)),
+      store.dispatch(
+        sectionsApi.util.upsertQueryData('getCourseSections', { courseSlug: routeInfo.courseSlug }, apiSections),
+      ),
+    ])
 
     // Step 5: Fetch content (for content routes)
     if (isCoursePageRouteInfo(routeInfo)) {
@@ -184,7 +186,7 @@ export async function populateStoreForSSR({
 
       // Hash content and upsert into RTK Query cache
       const contentWithHash = hashContent(content)
-      void store.dispatch(
+      await store.dispatch(
         pagesApi.util.upsertQueryData(
           'getPageContent',
           { courseSlug: routeInfo.courseSlug, locale: routeInfo.locale, pageSlug: routeInfo.pageSlug },
@@ -223,7 +225,7 @@ export async function populateStoreForSSR({
 
       // Hash content and upsert into RTK Query cache
       const contentWithHash = hashContent(content)
-      void store.dispatch(
+      await store.dispatch(
         sectionsApi.util.upsertQueryData(
           'getSectionContent',
           { courseSlug: routeInfo.courseSlug, locale: routeInfo.locale, sectionPath: routeInfo.sectionPath },
