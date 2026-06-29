@@ -54,6 +54,34 @@ function hashContent(content: string): ContentWithHash {
 }
 
 /**
+ * Recursively convert all Date objects to ISO strings.
+ *
+ * The database returns `Date` objects for timestamp columns, but Redux
+ * requires all state values to be JSON-serializable. The HTTP API layer
+ * handles this automatically via Fastify's JSON serialization — the SSR
+ * direct-DB path must do it manually.
+ */
+function serializeDates<T>(value: T): T {
+  if (value instanceof Date) {
+    return value.toISOString() as never
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(serializeDates) as never
+  }
+
+  if (value != null && typeof value === 'object') {
+    const result: Record<string, unknown> = {}
+    for (const [key, val] of Object.entries(value)) {
+      result[key] = serializeDates(val)
+    }
+    return result as never
+  }
+
+  return value
+}
+
+/**
  * Populate the Redux store with data for the current route (SSR).
  *
  * Uses direct database calls instead of RTK Query endpoints to avoid
@@ -102,7 +130,7 @@ export async function populateStoreForSSR({
     }
 
     // Convert to API format (camelCase) and upsert into RTK Query cache
-    const apiCourse = camelcaseKeys(course) as ApiCourse
+    const apiCourse = serializeDates(camelcaseKeys(course)) as ApiCourse
     const coursesApi = getCachedCoursesApi(routeManager)
     void store.dispatch(coursesApi.util.upsertQueryData('getCourse', { courseSlug: routeInfo.courseSlug }, apiCourse))
 
@@ -132,8 +160,8 @@ export async function populateStoreForSSR({
     const sectionsApi = getCachedSectionsApi(routeManager)
 
     // Convert to API format (camelCase) and upsert into RTK Query cache
-    const apiPages = pages.map((page) => camelcaseKeys(page) as ApiPage)
-    const apiSections = sections.map((section) => camelcaseKeys(section) as ApiSection)
+    const apiPages = pages.map((page) => serializeDates(camelcaseKeys(page)) as ApiPage)
+    const apiSections = sections.map((section) => serializeDates(camelcaseKeys(section)) as ApiSection)
 
     void store.dispatch(pagesApi.util.upsertQueryData('getCoursePages', { courseSlug: routeInfo.courseSlug }, apiPages))
     void store.dispatch(
