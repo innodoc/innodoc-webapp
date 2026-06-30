@@ -54,6 +54,7 @@ catalog:
   crc: ^4.3.2
   dependency-cruiser: ^17.4.3
   eslint-plugin-perfectionist: ^5.9.1
+  eslint-plugin-react-hooks: ^7.0.0
   fastify: ^5.8.5
   fastify-plugin: ^6.0.0
   fastify-type-provider-zod: ^6.1.0
@@ -79,6 +80,7 @@ catalog:
   msw: ^2.14.6
   oxfmt: ^0.55.0
   oxlint: ^1.70.0
+  oxlint-config-presets: ^0.1.0
   oxlint-tsgolint: ^0.23.0
   pg: ^8.21.0
   pg-protocol: ^1.14.0
@@ -116,6 +118,7 @@ catalog:
   yaml: ^2.9.0
   zod: ^4.4.3
   zod-validation-error: ^5.0.0
+  '@eslint-react/eslint-plugin': ^2.13.0
 
 catalogMode: strict
 

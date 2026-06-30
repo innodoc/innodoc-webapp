@@ -1,10 +1,32 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "extends": [
+    "./node_modules/oxlint-config-presets/@eslint/recommended.json",
+    "./node_modules/oxlint-config-presets/@typescript-eslint/strict-type-checked.json",
+    "./node_modules/oxlint-config-presets/@typescript-eslint/stylistic-type-checked.json",
+    "./node_modules/oxlint-config-presets/import-x/recommended.json",
+    "./node_modules/oxlint-config-presets/import-x/typescript.json",
+    "./node_modules/oxlint-config-presets/promise/recommended.json",
+    "./node_modules/oxlint-config-presets/unicorn/recommended.json",
+    "./node_modules/oxlint-config-presets/react/recommended.json",
+    "./node_modules/oxlint-config-presets/react-hooks/recommended.json",
+    "./node_modules/oxlint-config-presets/@vitest/recommended.json"
+  ],
   "options": {
     "typeAware": true
   },
   "plugins": ["eslint", "typescript", "unicorn", "import", "promise", "react", "jsx-a11y", "vitest", "jest"],
-  "jsPlugins": ["eslint-plugin-perfectionist"],
+  "jsPlugins": [
+    "eslint-plugin-perfectionist",
+    {
+      "name": "react-hooks-js",
+      "specifier": "eslint-plugin-react-hooks"
+    },
+    {
+      "name": "eslint-react",
+      "specifier": "@eslint-react/eslint-plugin"
+    }
+  ],
   "env": {
     "browser": true,
     "node": true,
@@ -13,16 +35,24 @@
   "rules": {
     // Core rules
     "curly": "error",
-    "no-restricted-imports": "off",
+    // Regexp (oxlint native - eslint-plugin-regexp not available)
+    "no-invalid-regexp": "error",
+    "require-unicode-regexp": "error",
+    // Checked by TypeScript
     "no-dupe-class-members": "off",
+    // https://typescript-eslint.io/troubleshooting/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
     "no-undef": "off",
     // Import rules (validation only - sorting handled by oxfmt)
     "import/no-dynamic-require": "warn",
+    // TypeScript provides the same checks
+    // https://typescript-eslint.io/linting/troubleshooting/performance-troubleshooting#eslint-plugin-import
     "import/named": "off",
     "import/namespace": "off",
     "import/default": "off",
-    "import/no-named-as-default-member": "off",
+    // Conflicts with popular library patterns (zod, fastify, etc.)
     "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    // Doesn't work well with subpath imports
     "import/extensions": "off",
     "import/first": "error",
     "import/newline-after-import": "error",
@@ -91,7 +121,25 @@
       {
         "max": 0
       }
-    ]
+    ],
+    // React - obsolete with modern JSX transform
+    "react/react-in-jsx-scope": "off",
+    // React Compiler
+    "react/react-compiler": "error",
+    "react-hooks-js/set-state-in-render": "error",
+    // @eslint-react strict-type-checked (non-type-aware rules only)
+    "eslint-react/no-forward-ref": "warn",
+    "eslint-react/no-class-component": "error",
+    "eslint-react/no-nested-component-definitions": "error",
+    "eslint-react/no-nested-lazy-component-declarations": "error",
+    "eslint-react/no-clone-element": "warn",
+    "eslint-react/jsx-key-before-spread": "warn",
+    "eslint-react/jsx-no-iife": "error",
+    "eslint-react/no-misused-capture-owner-stack": "error",
+    "eslint-react/no-unnecessary-use-callback": "warn",
+    "eslint-react/no-unnecessary-use-memo": "warn",
+    "eslint-react/no-useless-fragment": "warn",
+    "eslint-react/prefer-destructuring-assignment": "warn"
   },
   "overrides": [
     {
