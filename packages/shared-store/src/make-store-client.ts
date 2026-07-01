@@ -16,6 +16,7 @@ function makeStore(options: StoreOptions) {
   const store = configureStore({
     devTools: options.devTools ?? false,
     middleware: (getDefaultMiddleware) =>
+      // oxlint-disable-next-line unicorn/prefer-spread
       getDefaultMiddleware()
         .concat(contentApi.middleware)
         .prepend(localeListenerMiddleware.middleware)

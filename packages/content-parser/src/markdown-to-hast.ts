@@ -1,3 +1,6 @@
+import type { Root as HastRoot } from 'hast'
+import type { Root as MdastRoot } from 'mdast'
+import type { Processor } from 'unified'
 import rehypeKatex from 'rehype-katex'
 import rehypeSanitize from 'rehype-sanitize'
 import rehypeSlug from 'rehype-slug'
@@ -31,10 +34,10 @@ const processor = unified()
   .use(rehypeSlug)
   .use(rehypeInnodoc)
   .use(rehypeSanitize, sanitizationConfig)
-  .use(rehypeKatex, { output: 'html' })
+  .use(rehypeKatex, { output: 'html' }) as Processor<MdastRoot, MdastRoot, HastRoot>
 
 /** Transform Markdown code to hast. */
-async function markdownToHast(markdownCode: string) {
+function markdownToHast(markdownCode: string) {
   return processor.run(processor.parse(markdownCode))
 }
 

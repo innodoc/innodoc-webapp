@@ -1,7 +1,6 @@
-import type { PayloadAction, Slice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 import type { HastResult, HastResultWithHash } from '@innodoc/shared-core/types'
-import { selectHast, selectHastResultByHash, selectIsProcessing } from './selectors.js'
 
 interface HastSliceState {
   /** Current content hast */
@@ -10,16 +9,6 @@ interface HastSliceState {
   /** Processing Markdown */
   isProcessing: boolean
 }
-
-// Explicit type (otherwise TS gives 'exceeds the maximum length')
-type HastSlice = Slice<
-  HastSliceState,
-  {
-    addHastResult: (state: HastSliceState, action: PayloadAction<HastResultWithHash>) => void
-    changeIsProcessing: (state: HastSliceState, action: PayloadAction<boolean>) => void
-  },
-  'hast'
->
 
 const initialState: HastSliceState = {
   content: {},
@@ -32,18 +21,18 @@ const hastSlice = createSlice({
 
   reducers: {
     /** Add hast result */
-    addHastResult(state, { payload: { hash, ...result } }) {
+    addHastResult(state: HastSliceState, { payload: { hash, ...result } }: PayloadAction<HastResultWithHash>) {
       state.content[hash] = result
     },
 
     /** Change processing state */
-    changeIsProcessing(state, action) {
+    changeIsProcessing(state: HastSliceState, action: PayloadAction<boolean>) {
       state.isProcessing = action.payload
     },
   },
-}) as HastSlice
+})
 
 export type { HastSliceState }
-export { selectHast, selectHastResultByHash, selectIsProcessing }
+export { selectHast, selectHastResultByHash, selectIsProcessing } from './selectors.js'
 export const { addHastResult, changeIsProcessing } = hastSlice.actions
 export default hastSlice

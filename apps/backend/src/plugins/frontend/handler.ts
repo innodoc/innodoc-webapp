@@ -44,7 +44,8 @@ function makeFrontendHandler(render: RenderFunction, htmlTemplate: string): Rout
     // Handle error
     if (!populateResult.success) {
       reply.status(404).type('text/html')
-      reply.send(`<h1>404 - ${populateResult.error?.message}</h1>`)
+      const message = populateResult.error?.message ?? 'Not found'
+      reply.send(`<h1>404 - ${message}</h1>`)
       return
     }
 

@@ -2,8 +2,6 @@ import type { PaletteCard, PaletteCode, PaletteFooter, PaletteTransparentPaper }
 import type { CSSProperties } from 'react'
 import type { CardType } from '@innodoc/shared-core/types'
 
-export {}
-
 declare module '@mui/material/styles' {
   interface CssVarsPalette {
     Footer: PaletteFooter

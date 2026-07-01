@@ -17,6 +17,7 @@ function CourseContentPage() {
     : { courseSlug: undefined, pageSlug: undefined }
   const { page } = useSelectPage(pageSlug)
 
+  // oxlint-disable-next-line react/react-compiler -- `pages` is cached via `??=` in `getPagesApi`, hook ref is stable
   const { data, isError, isLoading } = pages.useGetPageContentQuery(
     {
       courseSlug: courseSlug ?? '',

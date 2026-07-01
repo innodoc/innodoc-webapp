@@ -36,6 +36,7 @@ function useSelectLinkedPages(linkLocation: PageLinkLocation): { pages: Translat
     )
   }, [linkLocation])
 
+  // oxlint-disable-next-line react/react-compiler -- `pages` is cached via `??=` in `getPagesApi`, hook ref is stable
   return pages.useGetCoursePagesQuery(
     { courseSlug: courseSlug ?? '' },
     {

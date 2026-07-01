@@ -1,6 +1,5 @@
 import type { LanguageCode } from 'iso-639-1'
 import { createSelector } from '@reduxjs/toolkit'
-import { useMemo } from 'react'
 import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
 import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/types'
 import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
@@ -21,25 +20,24 @@ function useSelectSectionChildren(parentId: ApiSection['parentId']): { sections:
   const routeManager = useRouteManager()
   const sections = getSectionsApi(routeManager)
 
-  const selectSectionChildren = useMemo(() => {
-    const emptyArray: TranslatedSection[] = []
+  const emptyArray: TranslatedSection[] = []
 
-    return createSelector(
-      [
-        (result: { data: ApiSection[] | undefined }) => result.data,
-        (result, _parentId: ApiSection['parentId']) => _parentId,
-        (result, _parentId, _locale: LanguageCode) => _locale,
-      ],
-      (sections, _parentId, _locale) => {
-        if (sections === undefined) {
-          return emptyArray
-        }
-        const children = sections.filter((s) => s.parentId === _parentId)
-        return translateEntityArray(children, _locale)
-      },
-    )
-  }, [])
+  const selectSectionChildren = createSelector(
+    [
+      (result: { data: ApiSection[] | undefined }) => result.data,
+      (result, _parentId: ApiSection['parentId']) => _parentId,
+      (result, _parentId, _locale: LanguageCode) => _locale,
+    ],
+    (sections, _parentId, _locale) => {
+      if (sections === undefined) {
+        return emptyArray
+      }
+      const children = sections.filter((s) => s.parentId === _parentId)
+      return translateEntityArray(children, _locale)
+    },
+  )
 
+  // oxlint-disable-next-line react/react-compiler -- `sections` is cached via `??=` in `getSectionsApi`, hook ref is stable
   return sections.useGetCourseSectionsQuery(
     { courseSlug: courseSlug ?? '' },
     {

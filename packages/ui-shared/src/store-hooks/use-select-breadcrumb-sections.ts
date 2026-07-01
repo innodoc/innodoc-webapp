@@ -1,6 +1,5 @@
 import type { LanguageCode } from 'iso-639-1'
 import { createSelector } from '@reduxjs/toolkit'
-import { useMemo } from 'react'
 import { isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
 import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/types'
 import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
@@ -29,41 +28,40 @@ function useSelectBreadcrumbSections(): { sections: TranslatedSection[] } {
   const routeManager = useRouteManager()
   const sections = getSectionsApi(routeManager)
 
-  const selectBreadcrumbSections = useMemo(() => {
-    const emptyArray: TranslatedSection[] = []
+  const emptyArray: TranslatedSection[] = []
 
-    return createSelector(
-      [
-        (result: { data: ApiSection[] | undefined }) => result.data,
-        (result, _sectionPath: string | null) => _sectionPath,
-        (result, _sectionPath, locale: LanguageCode) => locale,
-      ],
-      (sections, _sectionPath, locale) => {
-        if (sections === undefined || _sectionPath === null) {
-          return emptyArray
+  const selectBreadcrumbSections = createSelector(
+    [
+      (result: { data: ApiSection[] | undefined }) => result.data,
+      (result, _sectionPath: string | null) => _sectionPath,
+      (result, _sectionPath, locale: LanguageCode) => locale,
+    ],
+    (sections, _sectionPath, locale) => {
+      if (sections === undefined || _sectionPath === null) {
+        return emptyArray
+      }
+
+      const section = sections.find((s) => s.path === _sectionPath)
+      if (section === undefined) {
+        return emptyArray
+      }
+
+      const parts = section.path.split('/')
+      const bcSections = []
+
+      for (let idx = 0; idx < parts.length; ++idx) {
+        const _path = parts.slice(0, idx + 1).join('/')
+        const sec = sections.find((s) => s.path === _path)
+        if (sec) {
+          bcSections.push(sec)
         }
+      }
 
-        const section = sections.find((s) => s.path === _sectionPath)
-        if (section === undefined) {
-          return emptyArray
-        }
+      return translateEntityArray(bcSections, locale)
+    },
+  )
 
-        const parts = section.path.split('/')
-        const bcSections = []
-
-        for (let idx = 0; idx < parts.length; ++idx) {
-          const _path = parts.slice(0, idx + 1).join('/')
-          const sec = sections.find((s) => s.path === _path)
-          if (sec) {
-            bcSections.push(sec)
-          }
-        }
-
-        return translateEntityArray(bcSections, locale)
-      },
-    )
-  }, [])
-
+  // oxlint-disable-next-line react/react-compiler -- `sections` is cached via `??=` in `getSectionsApi`, hook ref is stable
   return sections.useGetCourseSectionsQuery(
     { courseSlug: courseSlug ?? '' },
     {

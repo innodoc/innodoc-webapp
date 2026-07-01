@@ -29,6 +29,7 @@ function Footer() {
   const routeManager = useRouteManager()
   const fragments = getFragmentsApi(routeManager)
 
+  // oxlint-disable-next-line react/react-compiler -- `fragments` is cached via `??=` in `getFragmentsApi`, hook ref is stable
   const { data: dataA } = fragments.useGetFragmentContentQuery(
     {
       courseSlug: courseSlug ?? '',
@@ -37,6 +38,7 @@ function Footer() {
     },
     { skip: courseSlug === undefined },
   )
+  // oxlint-disable-next-line react/react-compiler -- `fragments` is cached via `??=` in `getFragmentsApi`, hook ref is stable
   const { data: dataB } = fragments.useGetFragmentContentQuery(
     {
       courseSlug: courseSlug ?? '',

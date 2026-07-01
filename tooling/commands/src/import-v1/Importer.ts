@@ -251,7 +251,7 @@ class Importer {
   /** Convert Pandoc syntax to remark-compatible generic directives */
   protected static convertPandocSyntax(content: string) {
     // Extract meta data
-    const matches = /---\s([\s\S]*?)---[\s\S]{2}([\s\S]+)/.exec(content)
+    const matches = /---\s([\s\S]*?)---[\s\S]{2}([\s\S]+)/u.exec(content)
     if (!matches) {
       throw new Error('Could not extract YAML frontmatter')
     }
@@ -271,26 +271,26 @@ class Importer {
     const processed_source = source
 
       // cards
-      .replaceAll(/(:{3,}) ?\{.hint-text\}/g, '$1input-hint')
-      .replaceAll(/\[([^\]]+)\]\{\.hint-text\}/g, ':::input-hint\n$1\n:::\n')
-      .replaceAll(/(:{3,}) ?\{.hint\}/g, '$1hint')
-      .replaceAll(/(:{3,}) ?\{.hint caption="(?:Lösung|Solution)"\}/g, '$1solution')
-      .replaceAll(/(:{3,}) ?\{\.(example|exercise|figure|info) (#[^}]+)\}/g, '$1$2{$3}')
-      .replaceAll(/(:{3,}) ?\{\.(example|exercise|figure|info)\}/g, '$1$2')
+      .replaceAll(/(:{3,}) ?\{.hint-text\}/gu, '$1input-hint')
+      .replaceAll(/\[([^\]]+)\]\{\.hint-text\}/gu, ':::input-hint\n$1\n:::\n')
+      .replaceAll(/(:{3,}) ?\{.hint\}/gu, '$1hint')
+      .replaceAll(/(:{3,}) ?\{.hint caption="(?:Lösung|Solution)"\}/gu, '$1solution')
+      .replaceAll(/(:{3,}) ?\{\.(example|exercise|figure|info) (#[^}]+)\}/gu, '$1$2{$3}')
+      .replaceAll(/(:{3,}) ?\{\.(example|exercise|figure|info)\}/gu, '$1$2')
 
       // exercises
-      .replaceAll(/:{3,} ?\{\.verify-input-button\}\n(.+)\n:{3,}\n/g, '::verify-button[$1]\n')
-      .replaceAll(/\[\]\{\.question \.(text|checkbox) ([^}]+)\}/g, ':question-$1{$2}')
+      .replaceAll(/:{3,} ?\{\.verify-input-button\}\n(.+)\n:{3,}\n/gu, '::verify-button[$1]\n')
+      .replaceAll(/\[\]\{\.question \.(text|checkbox) ([^}]+)\}/gu, ':question-$1{$2}')
 
       // links
-      .replaceAll(/\[([^\]]*)\]\(\/(section|page)\/([^)]+)\)/g, '[$1](app:$2|$3)')
+      .replaceAll(/\[([^\]]*)\]\(\/(section|page)\/([^)]+)\)/gu, '[$1](app:$2|$3)')
 
     return { frontmatter, source: processed_source }
   }
 
   /** Transform link to specififer syntax */
   protected static transformLink(href: string) {
-    return href.replace(/^\/page\//, 'app:course:page|').replace(/^\/section\//, 'app:course:section|')
+    return href.replace(/^\/page\//u, 'app:course:page|').replace(/^\/section\//u, 'app:course:section|')
   }
 }
 

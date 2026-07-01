@@ -13,7 +13,7 @@ const makePath = (baseUrl: string, routes: Partial<Record<ApiRouteName, string>>
   }
 
   // Special case: MSW supports wildcard but no regex params
-  pattern = pattern.replace(/:sectionPath\(.+\)/, '*')
+  pattern = pattern.replace(/:sectionPath\(.+\)/u, '*')
 
   return `${baseUrl}${pattern}`
 }

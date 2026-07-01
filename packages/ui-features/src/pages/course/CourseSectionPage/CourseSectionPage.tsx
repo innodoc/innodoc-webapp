@@ -19,6 +19,7 @@ function CourseSectionPage() {
 
   const routeManager = useRouteManager()
   const sections = getSectionsApi(routeManager)
+  // oxlint-disable-next-line react/react-compiler -- `sections` is cached via `??=` in `getSectionsApi`, hook ref is stable
   const { data, isError, isLoading } = sections.useGetSectionContentQuery(
     {
       courseSlug: courseSlug ?? '',

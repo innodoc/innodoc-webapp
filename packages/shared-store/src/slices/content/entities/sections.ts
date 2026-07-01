@@ -30,10 +30,4 @@ function getCachedSectionsApi(routeManager: RouteManager) {
   return sectionsApi
 }
 
-// type UseGetCourseSectionsQuery = TypedUseQuery<ApiSection[], ApiRouteParams['api:course:sections'], BaseQuery>
-// const useGetCourseSectionsQuery = sections.useGetCourseSectionsQuery as UseGetCourseSectionsQuery
-
-// type UseGetSectionContentQuery = TypedUseQuery<ContentWithHash, ApiRouteParams['api:course:section:content'], BaseQuery>
-// const useGetSectionContentQuery = sections.useGetSectionContentQuery as UseGetSectionContentQuery
-
 export default getCachedSectionsApi

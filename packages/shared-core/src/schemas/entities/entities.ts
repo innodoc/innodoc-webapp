@@ -1,7 +1,5 @@
-import { baseEntity } from './base.js'
-import { courseSchema } from './course.js'
-import { fragmentTypeSchema } from './fragment.js'
-import { pageSchema } from './page.js'
-import { querySectionSchema, sectionSchema } from './section.js'
-
-export { baseEntity, courseSchema, fragmentTypeSchema, pageSchema, querySectionSchema, sectionSchema }
+export { baseEntity } from './base.js'
+export { courseSchema } from './course.js'
+export { fragmentTypeSchema } from './fragment.js'
+export { pageSchema } from './page.js'
+export { querySectionSchema, sectionSchema } from './section.js'

@@ -52,7 +52,7 @@ function parseConfig() {
     })
   } catch (error) {
     if (isZodError(error)) {
-      throw new Error(`Invalid configuration: ${fromZodError(error)}`)
+      throw new Error(`Invalid configuration: ${fromZodError(error)}`, { cause: error })
     }
     throw error
   }

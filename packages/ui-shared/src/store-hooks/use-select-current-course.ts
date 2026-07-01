@@ -25,6 +25,7 @@ function useSelectCurrentCourse(): { course?: TranslatedCourse } {
     [],
   )
 
+  // oxlint-disable-next-line react/react-compiler -- `courses` is cached via `??=` in `getCoursesApi`, hook ref is stable
   return courses.useGetCourseQuery(
     { courseSlug: courseSlug ?? '' },
     {

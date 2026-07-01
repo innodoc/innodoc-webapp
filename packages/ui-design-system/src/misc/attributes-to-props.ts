@@ -508,8 +508,8 @@ function stringToObjectStyle(stringStyles: string | undefined) {
     const camelCaseProperty = style
       .slice(0, Math.max(0, colonPosition))
       .trim()
-      .replace(/^-ms-/, 'ms-')
-      .replaceAll(/-./g, (c) => c.slice(1).toUpperCase())
+      .replace(/^-ms-/u, 'ms-')
+      .replaceAll(/-./gu, (c) => c.slice(1).toUpperCase())
     const value = style.slice(Math.max(0, colonPosition + 1)).trim()
 
     if (value) {
@@ -527,7 +527,7 @@ function getPropertiesKey(key: string) {
     return ATTRIBUTE_MAPPING[lowerCaseKey as keyof typeof ATTRIBUTE_MAPPING]
   }
 
-  const kebabKey = key.replaceAll(/[A-Z\u00C0-\u00D6\u00D8-\u00DE]/g, (match) => `-${match.toLowerCase()}`)
+  const kebabKey = key.replaceAll(/[A-Z\u00C0-\u00D6\u00D8-\u00DE]/gu, (match) => `-${match.toLowerCase()}`)
 
   if (kebabKey.startsWith('aria-')) {
     const [aria, ...parts] = kebabKey.split('-')

@@ -17,7 +17,7 @@ async function makeProps() {
   const routeManager = new RouteManager({
     config: {
       courseSlugMode: import.meta.env.INNODOC_COURSE_SLUG_MODE,
-      defaultCourseSlug: import.meta.env.INNODOC_DEFAULT_COURSE_SLUG ?? null,
+      defaultCourseSlug: import.meta.env.INNODOC_DEFAULT_COURSE_SLUG,
       pagePathPrefix: import.meta.env.INNODOC_PAGE_PATH_PREFIX,
       sectionPathPrefix: import.meta.env.INNODOC_SECTION_PATH_PREFIX,
     },

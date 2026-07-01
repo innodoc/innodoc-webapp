@@ -1,3 +1,4 @@
+// oxlint-disable-next-line unicorn/require-module-specifiers -- side-effect import for MUI type augmentations
 import type {} from './mui.js'
 import type { PaletteCard } from './types'
 import type { ThemeOptions } from '@mui/material/styles'

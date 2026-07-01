@@ -16,7 +16,7 @@ const configFn = defineConfig(({ command, isSsrBuild }) => {
     plugins: [viteReact(), unhead()],
     root: srcDir,
     ssr: {
-      noExternal: [/^@innodoc\//],
+      noExternal: [/^@innodoc\//u],
     },
   }
 

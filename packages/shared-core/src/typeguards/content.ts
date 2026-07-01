@@ -1,4 +1,5 @@
 import { CONTENT_TYPES } from '#constants'
+// oxlint-disable-next-line unicorn/prefer-export-from -- used locally and re-exported
 import { validateTranslatableString } from '#schemas/common'
 import type { ApiPage, ContentType, ContentWithHash, TranslatableString, WithContentHash } from '#types'
 import { isArbitraryObject } from './common.js'

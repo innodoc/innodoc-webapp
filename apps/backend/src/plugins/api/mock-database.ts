@@ -33,21 +33,21 @@ class MockDatabase {
 
   getCourse = (courseSlug: CourseSchema['slug']): Promise<CourseSchema | undefined> => {
     const course = getCourseBySlug(this.courses, courseSlug)
-    if (!course) {
-      return Promise.resolve(undefined)
-    }
-    const { id, slug, title, shortTitle, description, homeLink, locales, createdAt, updatedAt } = course.data
-    return Promise.resolve({
-      id: id + 1,
-      slug,
-      title,
-      short_title: shortTitle ?? null,
-      description: description ?? null,
-      home_link: homeLink,
-      locales,
-      created_at: createdAt,
-      updated_at: updatedAt,
-    } satisfies CourseSchema)
+    return Promise.resolve(
+      course
+        ? ({
+            id: course.data.id + 1,
+            slug: course.data.slug,
+            title: course.data.title,
+            short_title: course.data.shortTitle ?? null,
+            description: course.data.description ?? null,
+            home_link: course.data.homeLink,
+            locales: course.data.locales,
+            created_at: course.data.createdAt,
+            updated_at: course.data.updatedAt,
+          } satisfies CourseSchema)
+        : undefined,
+    )
   }
 
   getFragmentContent = (
@@ -109,7 +109,7 @@ class MockDatabase {
         type,
         order,
         course_id: courseId + 1,
-        parent_id: parentId != null ? parentId + 1 : null,
+        parent_id: parentId == null ? null : parentId + 1,
         created_at: createdAt,
         updated_at: updatedAt,
       } satisfies QuerySectionSchema

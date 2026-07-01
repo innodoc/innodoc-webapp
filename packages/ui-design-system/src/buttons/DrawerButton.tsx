@@ -1,4 +1,4 @@
-import type { BoxProps, SwipeableDrawerProps } from '@mui/material'
+import type { BoxProps, SwipeableDrawerProps, SxProps, Theme } from '@mui/material'
 import type { ReactNode } from 'react'
 import { Box, IconButton, SwipeableDrawer, Tooltip } from '@mui/material'
 import { useState } from 'react'
@@ -26,10 +26,14 @@ function DrawerButton({
     setMenuOpen(false)
   }
 
-  const paperSx = typeof drawerProps?.slotProps?.paper === 'function' ? undefined : drawerProps?.slotProps?.paper?.sx
+  const paperSx = typeof drawerProps.slotProps?.paper === 'function' ? undefined : drawerProps.slotProps?.paper?.sx
+  const paperSxArr: SxProps<Theme> = Array.isArray(paperSx) ? paperSx : [paperSx]
+
+  const boxSx = boxProps.sx ?? []
+  const boxSxArr: SxProps<Theme> = Array.isArray(boxSx) ? boxSx : [boxSx]
 
   return (
-    <Box {...boxProps} sx={[{ flexGrow: 0 }, ...(Array.isArray(boxProps?.sx) ? boxProps.sx : [boxProps?.sx])]}>
+    <Box {...boxProps} sx={[{ flexGrow: 0 }, ...boxSxArr]}>
       <Tooltip arrow title={title}>
         <IconButton aria-controls={id} aria-label={title} color="inherit" onClick={onClick}>
           <Icon name={iconName} />
@@ -43,9 +47,9 @@ function DrawerButton({
         open={menuOpen}
         {...drawerProps}
         slotProps={{
-          ...drawerProps?.slotProps,
+          ...drawerProps.slotProps,
           paper: {
-            sx: [{ width: 300 }, ...(Array.isArray(paperSx) ? paperSx : [paperSx])],
+            sx: [{ width: 300 }, ...paperSxArr],
           },
         }}
       >

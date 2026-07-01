@@ -25,7 +25,8 @@ function makePathFunc({ routeManager }: MakePathFuncParams) {
 }
 
 async function setupDiContainer(config: ConfigSchema) {
-  const DatabaseClass = config.enableMockApi ? (await import('#plugins/api/mock-database')).default : Database
+  const mockDatabaseModule = await import('#plugins/api/mock-database')
+  const DatabaseClass = config.enableMockApi ? mockDatabaseModule.default : Database
 
   diContainer.register({
     config: asValue(config),

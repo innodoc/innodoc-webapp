@@ -38,10 +38,10 @@ test('RouteManager.generateFrontendUrlPath throws with invalid route info (URL m
   }).toThrow(TypeError)
   expect(() => {
     routeManager.generateFrontendUrlPath({ name: 'app:index' })
-  }).toThrow(/Expected.+locale/)
+  }).toThrow(/Expected.+locale/u)
   expect(() => {
     routeManager.generateFrontendUrlPath({ name: 'app:course:index', locale: 'en' })
-  }).toThrow(/Expected.+courseSlug/)
+  }).toThrow(/Expected.+courseSlug/u)
 })
 
 // SINGLE mode config
@@ -80,7 +80,7 @@ test('RouteManager.generateFrontendUrlPath throws with invalid route info (SINGL
   }).toThrow(TypeError)
   expect(() => {
     routeManager.generateFrontendUrlPath({ name: 'app:index' })
-  }).toThrow(/Expected.+locale/)
+  }).toThrow(/Expected.+locale/u)
 })
 
 // parseLinkSpecifier tests
@@ -108,13 +108,13 @@ test('RouteManager.parseLinkSpecifier parses route w/o argument', () => {
 
 test('RouteManager.parseLinkSpecifier throws with unknown route name', () => {
   const routeManager = new RouteManager({ config: urlConfig })
-  expect(() => routeManager.parseLinkSpecifier('app:course:secti0n|foo/bar/baz')).toThrowError(TypeError)
+  expect(() => routeManager.parseLinkSpecifier('app:course:secti0n|foo/bar/baz')).toThrow(TypeError)
 })
 
 test('RouteManager.parseLinkSpecifier throws with missing arg', () => {
   const routeManager = new RouteManager({ config: urlConfig })
-  expect(() => routeManager.parseLinkSpecifier('app:course:section|')).toThrowError(TypeError)
-  expect(() => routeManager.parseLinkSpecifier('app:course:section')).toThrowError(TypeError)
+  expect(() => routeManager.parseLinkSpecifier('app:course:section|')).toThrow(TypeError)
+  expect(() => routeManager.parseLinkSpecifier('app:course:section')).toThrow(TypeError)
 })
 
 // parseRouteFromUrl tests (URL mode)

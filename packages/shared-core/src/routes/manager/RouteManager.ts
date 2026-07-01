@@ -76,9 +76,6 @@ class RouteManager {
 
   private extractRequiredKeys(pattern: string): string[] {
     const { keys } = parse(pattern)
-    if (!keys) {
-      return []
-    }
     return keys.filter((key) => key !== '*' && !pattern.includes(`:${key}?`))
   }
 
@@ -183,11 +180,8 @@ class RouteManager {
       const isCourseRoute = name.startsWith('app:course:')
 
       // Determine courseSlug based on mode - only for course routes
-      const courseSlug = isCourseRoute
-        ? this.courseSlugMode === 'URL'
-          ? params.courseSlug
-          : this.defaultCourseSlug
-        : undefined
+      const courseSlugValue = this.courseSlugMode === 'URL' ? params.courseSlug : this.defaultCourseSlug
+      const courseSlug = isCourseRoute ? courseSlugValue : undefined
 
       // Build typed route info
       // Note: FrontendRouteInfo is a discriminated union that can't be narrowed from
@@ -208,7 +202,7 @@ class RouteManager {
   private buildFrontendMatchers(): [FrontendRouteName, string[], RegExp][] {
     return this.frontendPatterns.map(([name, pattern]) => {
       const { keys, pattern: regex } = parse(pattern)
-      return [name, keys as string[], regex]
+      return [name, keys, regex]
     })
   }
 
@@ -225,7 +219,7 @@ class RouteManager {
 
   private makeAppPattern(pattern: string) {
     // Remove course slug parameter from URL pattern if we use single course or sub-domain mode
-    return this.courseSlugMode === 'URL' ? `/:locale${pattern}` : `/:locale${pattern.replace(/\/:courseSlug/, '')}`
+    return this.courseSlugMode === 'URL' ? `/:locale${pattern}` : `/:locale${pattern.replace(/\/:courseSlug/u, '')}`
   }
 
   private makeApiPattern(pattern: string) {

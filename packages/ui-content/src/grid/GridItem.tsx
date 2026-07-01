@@ -15,7 +15,7 @@ function parseValue(value: string): GridSize | GridOffset {
 }
 
 function toCamelCase(str: string): string {
-  return str.replace(/-([a-z])/g, (_match, char) => char.toUpperCase())
+  return str.replaceAll(/-([a-z])/gu, (_match, char: string) => char.toUpperCase())
 }
 
 function nodeToGridProps(nodeProps: GridItemProps['nodeProps']) {

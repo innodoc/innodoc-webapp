@@ -5,7 +5,7 @@ function useRouteManager() {
   const routeManager = use(RouteManagerContext)
 
   if (!routeManager) {
-    throw TypeError('Expected routeManager')
+    throw new TypeError('Expected routeManager')
   }
 
   return routeManager

@@ -2,7 +2,6 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 import { DEFAULT_LOCALES, DEFAULT_ROUTE_NAME } from '@innodoc/shared-core/constants'
 import type { FrontendRouteInfo } from '@innodoc/shared-core/types'
-import { selectRouteInfo, selectRouteTransitionInfo } from './selectors.js'
 
 interface AppSliceState {
   /** Current route info */
@@ -39,6 +38,6 @@ const appSlice = createSlice({
 })
 
 export type { AppSliceState }
-export { selectRouteInfo, selectRouteTransitionInfo }
+export { selectRouteInfo, selectRouteTransitionInfo } from './selectors.js'
 export const { changeRouteInfo, changeRouteTransitionInfo } = appSlice.actions
 export default appSlice

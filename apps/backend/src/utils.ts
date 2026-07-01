@@ -16,7 +16,7 @@ function getRoutePath(routeManager: RouteManager, name: RouteName, removePrefix?
   if (pattern !== undefined) {
     return removePrefix === undefined
       ? pattern
-      : pattern.replace(new RegExp(`^${removePrefix.replace('/', String.raw`\/`)}`), '')
+      : pattern.replace(new RegExp(`^${removePrefix.replace('/', String.raw`\/`)}`, 'u'), '')
   }
 
   const frontendRoutes = routeManager.getFrontendRoutes()
@@ -24,7 +24,7 @@ function getRoutePath(routeManager: RouteManager, name: RouteName, removePrefix?
   if (frontendPattern !== undefined) {
     return removePrefix === undefined
       ? frontendPattern
-      : frontendPattern.replace(new RegExp(`^${removePrefix.replace('/', String.raw`\/`)}`), '')
+      : frontendPattern.replace(new RegExp(`^${removePrefix.replace('/', String.raw`\/`)}`, 'u'), '')
   }
 
   throw new Error(`Unknown route requested: ${name}`)

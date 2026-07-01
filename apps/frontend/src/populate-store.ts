@@ -63,11 +63,11 @@ function hashContent(content: string): ContentWithHash {
  */
 function serializeDates<T>(value: T): T {
   if (value instanceof Date) {
-    return value.toISOString() as never
+    return value.toISOString() as T
   }
 
   if (Array.isArray(value)) {
-    return value.map(serializeDates) as never
+    return value.map((v) => serializeDates(v as T)) as T
   }
 
   if (value != null && typeof value === 'object') {
@@ -75,7 +75,7 @@ function serializeDates<T>(value: T): T {
     for (const [key, val] of Object.entries(value)) {
       result[key] = serializeDates(val)
     }
-    return result as never
+    return result as T
   }
 
   return value

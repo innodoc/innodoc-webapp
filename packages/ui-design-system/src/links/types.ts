@@ -1,5 +1,5 @@
 import type { Link } from '@mui/material'
-import type { ComponentProps } from 'react'
+import type { ComponentProps, Ref } from 'react'
 
 /** General link props */
 interface LinkProps extends Omit<ComponentProps<typeof Link>, 'href'> {
@@ -9,7 +9,7 @@ interface LinkProps extends Omit<ComponentProps<typeof Link>, 'href'> {
   /** Target (`href` or link specifier) */
   to: string
 
-  ref?: React.RefObject<HTMLAnchorElement | null>
+  ref?: Ref<HTMLAnchorElement | null>
 }
 
 export type { LinkProps }

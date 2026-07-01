@@ -11,7 +11,7 @@ function validateTranslatableString(obj: object) {
   return Object.entries(obj).every(([k, v]) => isLocale(k) && typeof v === 'string')
 }
 
-const sectionPathRegex = new RegExp(`^${PATH_RE}$`)
+const sectionPathRegex = new RegExp(`^${PATH_RE}$`, 'u')
 const isHostname = (val: string) => isIP(val) || isFQDN(val, { require_tld: false })
 function isSectionPath(value: string) {
   return sectionPathRegex.test(value)
