@@ -96,7 +96,13 @@ function useSelectSectionTree(parentId: ApiSection['parentId']): NestedTranslate
     },
   )
 
-  return Array.isArray(result) ? result : []
+  // RTK Query spreads extra properties (refetch, etc.) onto selectFromResult's return value.
+  // When it returns an array, the result becomes {0: ..., 1: ..., refetch: ...} - not a real array.
+  // Filter to only numeric keys to get back a proper array.
+  return Object.entries(result)
+    .filter(([key]) => Number.isInteger(Number(key)))
+    .toSorted(([a], [b]) => Number(a) - Number(b))
+    .map(([, value]) => value)
 }
 
 export default useSelectSectionTree
