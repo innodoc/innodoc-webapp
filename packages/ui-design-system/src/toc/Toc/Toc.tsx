@@ -1,53 +1,37 @@
+import type { MouseEvent } from 'react'
 import { RichTreeView } from '@mui/x-tree-view'
 import { memo } from 'react'
-import type { TranslatedSection } from '@innodoc/shared-core/types'
-import { useSelectSectionTree } from '@innodoc/ui-shared/store-hooks'
-import { Icon } from '#misc'
+import { useLocation } from 'wouter'
+import type { SectionWithChildren } from '@innodoc/shared-core/types'
+import { useRoutes, useSelectSectionTree } from '@innodoc/ui-shared/store-hooks'
 import { formatSectionTitle } from '#utils'
 import TocTreeItem from './TocTreeItem.js'
 import useManageExpanded from './use-manage-expanded.js'
 
-interface TocSection extends TranslatedSection {
-  children?: TocSection[]
-}
-
-function CollapseIcon() {
-  return <Icon name="mdi:chevron-down" />
-}
-
-function ExpandIcon() {
-  return <Icon name="mdi:chevron-right" />
-}
-
 function Toc() {
+  const { url } = useRoutes()
+  const [, navigate] = useLocation()
   const sections = useSelectSectionTree(null)
   const { expandedItems, onItemExpansionToggle, selectedItems } = useManageExpanded()
 
+  const onItemClick = (ev: MouseEvent, sectionPath: string) => {
+    navigate(url({ name: 'app:course:section', sectionPath }))
+  }
+
   return (
-    <RichTreeView<TocSection, boolean>
+    <RichTreeView<SectionWithChildren, boolean>
       data-testid="sidebar-toc"
-      slots={{
-        collapseIcon: CollapseIcon,
-        expandIcon: ExpandIcon,
-        item: TocTreeItem,
-      }}
-      items={sections}
-      getItemId={(item) => item.path}
-      getItemLabel={(item) => formatSectionTitle(item, true)}
-      getItemChildren={(item) => item.children}
       disableSelection
       expandedItems={expandedItems}
+      expansionTrigger="iconContainer"
+      getItemId={(item) => item.path}
+      getItemLabel={(item) => formatSectionTitle(item, true)}
+      items={sections}
+      onItemClick={onItemClick}
       onItemExpansionToggle={onItemExpansionToggle}
       selectedItems={selectedItems}
-      sx={(theme) => ({
-        width: '100%',
-        '& .MuiTreeItem-group': {
-          marginInlineStart: 0,
-        },
-        '& .MuiTreeItem-content': {
-          padding: theme.spacing(1, 2),
-        },
-      })}
+      slots={{ item: TocTreeItem }}
+      sx={{ width: '100%' }}
     />
   )
 }

@@ -1,20 +1,15 @@
 import type { LanguageCode } from 'iso-639-1'
 import { createSelector } from '@reduxjs/toolkit'
 import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
-import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/types'
+import type { ApiSection, SectionWithChildren } from '@innodoc/shared-core/types'
 import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
 import getSectionsApi from '@innodoc/shared-store/slices/content/sections'
 import { useRouteManager } from '@innodoc/ui-shared/hooks'
 import { useSelector } from './redux.js'
 import { translateEntityArray } from './utils.js'
 
-/** TranslatedSection with recursive children */
-type NestedTranslatedSection = TranslatedSection & {
-  children?: NestedTranslatedSection[]
-}
-
 /** Clean up empty children arrays so MUI TreeView knows they are leaf nodes */
-function cleanEmptyChildren(nodes: NestedTranslatedSection[]) {
+function cleanEmptyChildren(nodes: SectionWithChildren[]) {
   for (const node of nodes) {
     if (node.children?.length === 0) {
       delete node.children
@@ -30,13 +25,13 @@ function cleanEmptyChildren(nodes: NestedTranslatedSection[]) {
  * @param parentId parent's ID (acts as the root of the tree)
  * @returns nested array of sections
  */
-function useSelectSectionTree(parentId: ApiSection['parentId']): NestedTranslatedSection[] {
+function useSelectSectionTree(parentId: ApiSection['parentId']): SectionWithChildren[] {
   const routeInfo = useSelector(selectRouteInfo)
   const courseSlug = isCourseRouteInfo(routeInfo) ? routeInfo.courseSlug : undefined
   const routeManager = useRouteManager()
   const sections = getSectionsApi(routeManager)
 
-  const emptyArray: NestedTranslatedSection[] = []
+  const emptyArray: SectionWithChildren[] = []
 
   const selectSectionTree = createSelector(
     [
@@ -53,12 +48,12 @@ function useSelectSectionTree(parentId: ApiSection['parentId']): NestedTranslate
       const translatedSections = translateEntityArray(sections, _locale)
 
       // Build a map for efficient O(N) tree construction
-      const sectionMap = new Map<number, NestedTranslatedSection>()
+      const sectionMap = new Map<number, SectionWithChildren>()
       for (const section of translatedSections) {
         sectionMap.set(section.id, { ...section, children: [] })
       }
 
-      const tree: NestedTranslatedSection[] = []
+      const tree: SectionWithChildren[] = []
 
       // Assemble the tree
       for (const section of translatedSections) {

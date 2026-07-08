@@ -32,6 +32,7 @@ export type {
   PageSchema,
   QuerySectionSchema,
   SectionSchema,
+  SectionWithChildren,
   TranslatableString,
   TranslatedCourse,
   TranslatedEntity,

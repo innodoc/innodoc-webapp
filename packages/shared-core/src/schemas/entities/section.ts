@@ -21,10 +21,4 @@ const querySectionSchema = sectionSchema.extend({
   order: z.array(orderNumber).describe('Array of section orders from the root section up to this section'),
 })
 
-// TODO: fix this
-// /** Section tree with chldren (used by Toc components) */
-// interface SectionWithChildren extends TranslatedSection {
-//   children: SectionWithChildren[]
-// }
-
 export { querySectionSchema, sectionSchema }

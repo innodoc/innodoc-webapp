@@ -48,6 +48,11 @@ type ApiSection = CamelCasedProperties<QuerySectionSchema>
 /** Section with translated fields */
 type TranslatedSection = TranslatedEntity<ApiSection>
 
+/** Section tree with chldren (used by Toc components) */
+interface SectionWithChildren extends TranslatedSection {
+  children?: SectionWithChildren[]
+}
+
 export type {
   ApiBaseEntity,
   ApiCourse,
@@ -60,6 +65,7 @@ export type {
   PageSchema,
   QuerySectionSchema,
   SectionSchema,
+  SectionWithChildren,
   TranslatableString,
   TranslatedCourse,
   TranslatedEntity,

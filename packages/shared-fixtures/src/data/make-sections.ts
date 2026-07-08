@@ -13,12 +13,13 @@ const makeSection = (
   fakers: Fakers,
 ): FakerSection => {
   seed(`section-${String(courseId)}-${String(seedVal)}`, fakers)
+  const order = [...(parent?.order ?? []), idx]
   const section: ApiSection = {
     id: seedVal++,
     courseId,
     parentId: parent?.id ?? null,
-    type: 'regular',
-    order: [...(parent?.order ?? []), idx],
+    type: order[0] === 1 && order[1] === 3 ? 'test' : 'regular',
+    order,
     ...getTitlesPath(fakers, parentPath),
     ...getDates(fakers),
   }
@@ -60,9 +61,11 @@ const sectionDef: SectionDef[] = [
 
 const makeSections = (courseId: number, fakers: Fakers) => {
   const sections: FakerSection[] = []
+
   for (const [idx, def] of sectionDef.entries()) {
     sections.push(...mapSectionDef(def, idx, null, [], courseId, fakers))
   }
+
   return sections
 }
 
