@@ -30,11 +30,6 @@ const builtInPageLinks: PageLinkDefinition[] = [
 /** Course pages */
 const coursePageLinks: PageLinkDefinition[] = [
   {
-    icon: <Icon name="mdi:home" />,
-    linked: ['footer', 'nav'],
-    routeName: 'app:course:index',
-  },
-  {
     icon: <Icon name="mdi:chart-line" />,
     linked: ['footer', 'nav'],
     title: 'pages.course.progress.title',

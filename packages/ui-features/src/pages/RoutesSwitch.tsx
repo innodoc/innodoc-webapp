@@ -17,8 +17,8 @@ interface RouteEntry<C extends ComponentType = ComponentType> {
 type RouteRegistry = Record<FrontendRouteName, RouteEntry>
 
 const routeRegistry: RouteRegistry = {
-  'app:index': { component: IndexPage },
   'app:course:index': { component: CourseContentPage },
+  'app:index': { component: IndexPage },
   'app:course:glossary': { component: () => null }, // TODO
   'app:course:page': { component: CourseContentPage },
   'app:course:progress': { component: CourseProgressPage },

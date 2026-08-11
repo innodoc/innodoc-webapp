@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next'
 import { AppLink, PageLink } from '@innodoc/ui-design-system/links'
 import { Icon } from '@innodoc/ui-design-system/misc'
 import pageLinks from '@innodoc/ui-design-system/page-links'
-import { useRoutes, useSelectLinkedPages } from '@innodoc/ui-shared/store-hooks'
+import { useRoutes, useSelectCurrentCourse, useSelectLinkedPages } from '@innodoc/ui-shared/store-hooks'
 
-const pageLinksNav = pageLinks.filter((page) => page.linked?.includes('nav'))
+const pageLinksNavBase = pageLinks.filter((page) => page.linked?.includes('nav'))
 
 function NavButton({ ref, ...props }: ButtonProps) {
   return <Button color="inherit" nativeButton={false} ref={ref} size="small" {...props} />
@@ -29,6 +29,9 @@ function NavMenu() {
   const { isActiveRoute } = useRoutes()
   const { t } = useTranslation()
   const { pages } = useSelectLinkedPages('nav')
+  const { course } = useSelectCurrentCourse()
+
+  const pageLinksNav = pageLinksNavBase.filter((page) => (page.routeName === 'app:index' && course ? false : true))
 
   return (
     <Stack

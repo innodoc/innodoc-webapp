@@ -10,7 +10,7 @@ import pageLinks from '@innodoc/ui-design-system/page-links'
 import { useRouteManager } from '@innodoc/ui-shared/hooks'
 import { useSelectCurrentCourse, useSelectLinkedPages, useSelector } from '@innodoc/ui-shared/store-hooks'
 
-const pageLinksFooter = pageLinks.filter((page) => page.linked?.includes('footer'))
+const pageLinksFooterBase = pageLinks.filter((page) => page.linked?.includes('footer'))
 
 const FooterLink = styled(Link)(({ theme }) => ({
   alignItems: 'center',
@@ -25,6 +25,10 @@ function Footer() {
   const { course } = useSelectCurrentCourse()
   const routeInfo = useSelector(selectRouteInfo)
   const { locale } = routeInfo
+
+  const pageLinksFooter = pageLinksFooterBase.filter((page) =>
+    page.routeName === 'app:index' && course ? false : true,
+  )
   const courseSlug = isCourseRouteInfo(routeInfo) ? routeInfo.courseSlug : undefined
   const routeManager = useRouteManager()
   const fragments = getFragmentsApi(routeManager)
