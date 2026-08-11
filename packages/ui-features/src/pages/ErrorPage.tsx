@@ -6,7 +6,7 @@ interface ErrorPageProps {
   is404?: boolean
 }
 
-function ErrorPage({ errorMessage }: ErrorPageProps) {
+function ErrorPage({ errorMessage, is404 }: ErrorPageProps) {
   // const pageContext = usePageContext()
   // const { abortReason } = pageContext
   // const abortStatusCode = pageContext.abortStatusCode as unknown
@@ -35,9 +35,14 @@ function ErrorPage({ errorMessage }: ErrorPageProps) {
   //   </Alert>
   // )
 
+  let captionText = 'Error'
+  if (is404) {
+    captionText = '404 Page Not Found'
+  }
+
   return (
     <Alert variant="outlined" severity="error">
-      <AlertTitle>TODO</AlertTitle>
+      <AlertTitle>{captionText}</AlertTitle>
       {errorMessage}
     </Alert>
   )

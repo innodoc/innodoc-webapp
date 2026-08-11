@@ -23,7 +23,17 @@ function useRoutes(): UseRoutesReturn {
      */
     url: (partialRouteInfo) => {
       const routeInfo = { ...currentRouteInfo, ...partialRouteInfo }
-      return routeManager.generateFrontendUrlPath(routeInfo)
+      try {
+        return routeManager.generateFrontendUrlPath(routeInfo)
+      } catch (error) {
+        console.error('[useRoutes] URL generation error:', {
+          error,
+          currentRouteInfo,
+          partialRouteInfo,
+          combinedRouteInfo: routeInfo,
+        })
+        throw error
+      }
     },
 
     /**

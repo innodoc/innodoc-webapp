@@ -9,13 +9,21 @@ import TocTreeItem from './TocTreeItem.js'
 import useManageExpanded from './use-manage-expanded.js'
 
 function Toc() {
-  const { url } = useRoutes()
+  const routes = useRoutes()
+  const { url } = routes
   const [, navigate] = useLocation()
   const sections = useSelectSectionTree(null)
   const { expandedItems, onItemExpansionToggle, selectedItems } = useManageExpanded()
 
   const onItemClick = (ev: MouseEvent, sectionPath: string) => {
-    navigate(url({ name: 'app:course:section', sectionPath }))
+    try {
+      navigate(url({ name: 'app:course:section', sectionPath }))
+    } catch (error) {
+      console.error('[Toc] Navigation error:', {
+        error,
+        sectionPath,
+      })
+    }
   }
 
   return (
