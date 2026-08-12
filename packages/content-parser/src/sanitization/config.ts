@@ -17,6 +17,7 @@ const sanitizationConfig: Schema = {
     div: [
       ...(defaultSchema.attributes?.div ?? []),
       ['className', 'math', 'math-display'], // rehype-katex
+      ['root'], // Mark root element for React rendering
       ...GRID_ITEM_PROPERTIES,
       ...TABS_PROPERTIES,
       ...TAB_ITEM_PROPERTIES,
