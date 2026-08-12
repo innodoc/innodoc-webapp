@@ -8,7 +8,7 @@ const schema = {
   params: z.object({
     courseSlug: slugSchema.describe('Course slug'),
     locale: localeSchema.describe('Locale'),
-    sectionPath: sectionPathSchema.describe('Section path'),
+    '*': sectionPathSchema.describe('Section path'),
   }),
   response: {
     200: z.string().describe('Success'),
@@ -18,7 +18,7 @@ const schema = {
 }
 
 const handler: ApiRouteHandlerMethod<typeof schema> = async function (req, reply) {
-  const { courseSlug, locale, sectionPath } = req.params
+  const { courseSlug, locale, '*': sectionPath } = req.params
   const db = req.diScope.resolve('database')
 
   const sectionId = await db.getSectionIdByPath(courseSlug, sectionPath)
