@@ -4,6 +4,7 @@ import { CacheProvider } from '@emotion/react'
 import { CssBaseline, GlobalStyles } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import theme from '@innodoc/ui-design-system/theme'
+import { useRouteSync } from '@innodoc/ui-shared/hooks'
 import Layout from '#layout'
 
 // import MetaTags from './MetaTags.js'
@@ -13,6 +14,8 @@ const globalStyles = {
 } as const
 
 function PageShell({ children, emotionCache }: PageShellProps) {
+  useRouteSync()
+
   return (
     <CacheProvider value={emotionCache}>
       <GlobalStyles styles={globalStyles} />

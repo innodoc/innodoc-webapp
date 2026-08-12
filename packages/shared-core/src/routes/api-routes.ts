@@ -11,7 +11,7 @@ const apiRoutes = {
 
   // Section
   'api:course:sections': '/:courseSlug/sections',
-  'api:course:section:content': '/:courseSlug/sections/:locale/:sectionPath([a-z0-9-/]*)',
+  'api:course:section:content': '/:courseSlug/sections/:locale/*',
 
   // Fragment
   'api:course:fragment:content': '/:courseSlug/fragments/:locale/:fragmentType',

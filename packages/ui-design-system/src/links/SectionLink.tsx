@@ -36,30 +36,8 @@ interface SectionLinkFromPathProperties extends Omit<SectionLinkProperties, 'sec
 function SectionLink({ ref: reference, children, preferShortTitle = false, section, ...other }: SectionLinkProperties) {
   const { url } = useRoutes()
 
-  let href: string
-  try {
-    href = url({ name: 'app:course:section', sectionPath: section.path })
-  } catch (error) {
-    console.error('[SectionLink] Failed to generate URL:', {
-      error,
-      sectionPath: section.path,
-      section,
-    })
-    return (
-      <InlineError>
-        <Trans
-          i18nKey="error.sectionLinkUrlGeneration"
-          components={{ 0: <Code /> }}
-          values={{ sectionPath: section.path }}
-        >
-          {`<0>SectionLink</0>: Failed to generate URL for <2>{{sectionPath}}</2>`}
-        </Trans>
-      </InlineError>
-    )
-  }
-
   return (
-    <BaseLink to={href} ref={reference} {...other}>
+    <BaseLink to={url({ name: 'app:course:section', sectionPath: section.path })} ref={reference} {...other}>
       {children ?? <>{formatSectionTitle(section, preferShortTitle)}</>}
     </BaseLink>
   )

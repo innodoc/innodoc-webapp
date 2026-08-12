@@ -40,7 +40,8 @@
     "@innodoc/shared-store": "workspace:*",
     "@reduxjs/toolkit": "catalog:",
     "react": "catalog:",
-    "react-redux": "catalog:"
+    "react-redux": "catalog:",
+    "wouter": "catalog:"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "catalog:",

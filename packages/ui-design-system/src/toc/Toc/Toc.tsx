@@ -16,14 +16,7 @@ function Toc() {
   const { expandedItems, onItemExpansionToggle, selectedItems } = useManageExpanded()
 
   const onItemClick = (ev: MouseEvent, sectionPath: string) => {
-    try {
-      navigate(url({ name: 'app:course:section', sectionPath }))
-    } catch (error) {
-      console.error('[Toc] Navigation error:', {
-        error,
-        sectionPath,
-      })
-    }
+    navigate(url({ name: 'app:course:section', sectionPath }))
   }
 
   return (

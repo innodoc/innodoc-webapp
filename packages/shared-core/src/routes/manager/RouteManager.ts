@@ -88,7 +88,19 @@ class RouteManager {
   public generateApiUrlPath<R extends ApiRouteName>(name: R, params: ApiRouteParams[R]): string {
     const route = this.apiPatterns.find(([n]) => n === name)
     if (route) {
-      return inject(route[1], params)
+      const pattern = route[1]
+      const requiredKeys = this.extractRequiredKeys(pattern)
+      for (const key of requiredKeys) {
+        if (!(key in params)) {
+          throw new TypeError(`Expected parameter '${key}' to be present`)
+        }
+      }
+      // Map sectionPath → '*' for regexparam.inject (wildcard parameter)
+      let injectParams: Record<string, unknown> = params as Record<string, unknown>
+      if ('sectionPath' in params) {
+        injectParams = { ...params, '*': params.sectionPath }
+      }
+      return inject(pattern, injectParams)
     }
 
     throw new TypeError(`API route not found: '${name}'`)
