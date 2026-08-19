@@ -1,12 +1,11 @@
-// TODO: re-enable or remove RouteTransition
-
-import type { ComponentType, ForwardedRef, PropsWithChildren, ReactElement } from 'react'
+import type { ForwardedRef, PropsWithChildren } from 'react'
 import { Fade } from '@mui/material'
 import { useEffect, useReducer } from 'react'
 import { assertNever } from '@innodoc/shared-core/typeguards'
 import type { FrontendRouteInfo } from '@innodoc/shared-core/types'
 import { changeRouteInfo, selectRouteTransitionInfo } from '@innodoc/shared-store/slices/app'
 import { selectIsProcessing } from '@innodoc/shared-store/slices/hast'
+import { usePageTransition } from '@innodoc/ui-shared/hooks'
 import { useDispatch, useSelector } from '@innodoc/ui-shared/store-hooks'
 
 const TransitionChild = function TransitionChild({ ref, children, ...props }: TransitionChildProps) {
@@ -41,10 +40,8 @@ function scrollToHash() {
 
 const DEFAULT_PAGE_PREV = () => null
 
-type Phase = 'idle' | 'fadeOut' | 'waiting' | 'fadeIn'
-
 interface State {
-  phase: Phase
+  phase: 'idle' | 'fadeOut' | 'waiting' | 'fadeIn'
   routeInfo: FrontendRouteInfo | null
 }
 
@@ -81,7 +78,9 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-function RouteTransition({ children, pagePrev: PagePrev = DEFAULT_PAGE_PREV }: RouteTransitionProps) {
+function PageTransition({ children }: PropsWithChildren) {
+  const { pagePrev } = usePageTransition()
+  const PagePrev = pagePrev ?? DEFAULT_PAGE_PREV
   const dispatch = useDispatch()
   const routeTransitionInfo = useSelector(selectRouteTransitionInfo)
   const isProcessing = useSelector(selectIsProcessing)
@@ -129,9 +128,4 @@ function RouteTransition({ children, pagePrev: PagePrev = DEFAULT_PAGE_PREV }: R
   )
 }
 
-interface RouteTransitionProps {
-  children: ReactElement
-  pagePrev?: ComponentType
-}
-
-export default RouteTransition
+export default PageTransition

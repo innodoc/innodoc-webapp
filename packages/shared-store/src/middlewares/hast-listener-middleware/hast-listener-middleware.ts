@@ -4,7 +4,7 @@ import { isHastRootDivElement } from '@innodoc/content-parser/typeguards'
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import { isParserError, isWithContentHash } from '@innodoc/shared-core/typeguards'
 import type { ContentWithHash, CourseContentRouteInfo, HastResultWithHash } from '@innodoc/shared-core/types'
-import { changeRouteInfo, changeRouteTransitionInfo } from '#slices/app'
+import { changeRouteTransitionInfo } from '#slices/app'
 import { addHastResult, changeIsProcessing, selectHastResultByHash } from '#slices/hast'
 import type { AppListenerEffectAPI, AppStartListening } from '#types'
 import { fetchContent } from '#utils'
@@ -92,22 +92,6 @@ function setupHastListeners(routeManager: RouteManager) {
   startListening({
     matcher: (action: UnknownAction): action is PayloadAction<CourseContentRouteInfo<'app:course:section'>> =>
       changeRouteTransitionInfo.match(action) && action.payload?.name === 'app:course:section',
-    effect: sectionRouteTransitionEffect,
-  })
-
-  // Add page route listener (changeRouteInfo - temporary)
-  // TODO: remove once route transition is fixed
-  startListening({
-    matcher: (action: UnknownAction): action is PayloadAction<CourseContentRouteInfo<'app:course:page'>> =>
-      changeRouteInfo.match(action) && action.payload.name === 'app:course:page',
-    effect: pageRouteTransitionEffect,
-  })
-
-  // Add section route listener (changeRouteInfo - temporary)
-  // TODO: remove once route transition is fixed
-  startListening({
-    matcher: (action: UnknownAction): action is PayloadAction<CourseContentRouteInfo<'app:course:section'>> =>
-      changeRouteInfo.match(action) && action.payload.name === 'app:course:section',
     effect: sectionRouteTransitionEffect,
   })
 }

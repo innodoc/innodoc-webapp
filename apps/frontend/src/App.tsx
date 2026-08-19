@@ -6,8 +6,9 @@ import { Router } from 'wouter'
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { Store } from '@innodoc/shared-store/types'
 import PageShell from '@innodoc/ui-features/page-shell'
+import PageTransition from '@innodoc/ui-features/page-transition'
 import RoutesSwitch from '@innodoc/ui-features/routes-switch'
-import { RouteManagerProvider } from '@innodoc/ui-shared/contexts'
+import { RouteManagerProvider, PageTransitionProvider } from '@innodoc/ui-shared/contexts'
 
 interface AppProps {
   emotionCache: EmotionCache
@@ -23,9 +24,13 @@ function App({ emotionCache, i18n, url, routeManager, store }: AppProps) {
       <I18nextProvider i18n={i18n}>
         <RouteManagerProvider routeManager={routeManager}>
           <Router ssrPath={url}>
-            <PageShell emotionCache={emotionCache}>
-              <RoutesSwitch routeManager={routeManager} />
-            </PageShell>
+            <PageTransitionProvider>
+              <PageShell emotionCache={emotionCache}>
+                <PageTransition>
+                  <RoutesSwitch routeManager={routeManager} />
+                </PageTransition>
+              </PageShell>
+            </PageTransitionProvider>
           </Router>
         </RouteManagerProvider>
       </I18nextProvider>

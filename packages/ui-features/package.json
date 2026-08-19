@@ -10,6 +10,11 @@
       "development": "./src/page-shell/PageShell/PageShell.tsx",
       "default": "./dist/page-shell/PageShell/PageShell.js"
     },
+    "./page-transition": {
+      "types": "./src/page-shell/PageTransition.tsx",
+      "development": "./src/page-shell/PageTransition.tsx",
+      "default": "./dist/page-shell/PageTransition.js"
+    },
     "./routes-switch": {
       "types": "./src/pages/RoutesSwitch.tsx",
       "development": "./src/pages/RoutesSwitch.tsx",
