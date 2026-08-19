@@ -81,9 +81,9 @@
       "default": "./dist/types.js"
     },
     "./utils": {
-      "types": "./src/utils.ts",
-      "development": "./src/utils.ts",
-      "default": "./dist/utils.js"
+      "types": "./src/utils/index.ts",
+      "development": "./src/utils/index.ts",
+      "default": "./dist/utils/index.js"
     }
   },
   "imports": {
@@ -136,10 +136,10 @@
       "default": "./dist/types.js"
     },
     "#utils": {
-      "types": "./src/utils.ts",
-      "import": "./src/utils.ts",
-      "development": "./src/utils.ts",
-      "default": "./dist/utils.js"
+      "types": "./src/utils/index.ts",
+      "import": "./src/utils/index.ts",
+      "development": "./src/utils/index.ts",
+      "default": "./dist/utils/index.js"
     }
   },
   "scripts": {
