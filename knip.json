@@ -3,7 +3,7 @@
   "workspaces": {
     ".": {
       "ignoreBinaries": ["dot"],
-      "ignoreDependencies": ["@commitlint/cli", "commit-and-tag-version"]
+      "ignoreDependencies": ["@commitlint/cli", "commit-and-tag-version", "oxlint-config-presets"]
     },
     "apps/backend": {
       "project": ["src/**/*.ts"],
@@ -11,9 +11,9 @@
       "ignoreDependencies": ["pino-pretty"]
     },
     "apps/frontend": {
-      "entry": ["src/entry-client.tsx", "src/entry-server.tsx"],
+      "entry": ["src/entry-client.tsx"],
       "project": ["src/**/*.ts?(x)"],
-      "ignoreDependencies": ["@emotion/server", "buffer"]
+      "ignoreDependencies": ["@emotion/server"]
     },
     "apps/e2e": {
       "entry": [],
@@ -34,7 +34,10 @@
       "ignoreBinaries": ["vitest"]
     },
     "packages/shared-core": {
-      "project": ["src/**/*.ts?(x)"]
+      "project": ["src/**/*.ts?(x)"],
+      "vitest": {
+        "entry": ["src/**/*.test.ts?(x)"]
+      }
     },
     "packages/shared-fixtures": {
       "project": ["src/**/*.ts?(x)"],

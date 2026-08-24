@@ -1,4 +1,3 @@
-import type { LanguageCode } from 'iso-639-1'
 import camelcaseKeys from 'camelcase-keys'
 import crc32 from 'crc/crc32'
 import markdownToHast from '@innodoc/content-parser'
@@ -11,6 +10,7 @@ import type {
   ContentWithHash,
   CourseSchema,
   FrontendRouteInfo,
+  LanguageCode,
   PageSchema,
   QuerySectionSchema,
 } from '@innodoc/shared-core/types'
