@@ -265,13 +265,24 @@ test('parseRouteFromUrl extracts correct locale', () => {
 
 test('parseRouteFromUrl matches app:course:index (SINGLE mode - no courseSlug in URL)', () => {
   const routeManager = new RouteManager({ config: singleConfig })
+  // In SINGLE mode the course index pattern collapses to /:locale (same as
+  // app:index) - course routes take priority, so /en is the course index
   const result = routeManager.parseRouteFromUrl('/en')
-  // /en matches app:index in SINGLE mode because the course slug is stripped
-  // Wait - /en would match app:index (pattern: /:locale) first
-  // For app:course:index in SINGLE mode, the pattern is /:locale (same as app:index)
-  // So /en matches app:index first (it's defined first)
-  expect(result?.name).toBe('app:index')
-  expect(result).not.toHaveProperty('courseSlug')
+  expect(result).toStrictEqual({
+    name: 'app:course:index',
+    locale: 'en',
+    courseSlug: 'default-course',
+  })
+})
+
+test('parseRouteFromUrl matches app:course:index for unknown top-level path (SINGLE mode)', () => {
+  const routeManager = new RouteManager({ config: singleConfig })
+  // Any unknown top-level segment is treated as the course index (default course)
+  expect(routeManager.parseRouteFromUrl('/foo')).toStrictEqual({
+    name: 'app:course:index',
+    locale: 'foo',
+    courseSlug: 'default-course',
+  })
 })
 
 test('parseRouteFromUrl matches app:course:progress (SINGLE mode)', () => {
@@ -362,4 +373,38 @@ test('parseRouteFromUrl is inverse of generateFrontendUrlPath (SINGLE mode)', ()
 
   const parsed = routeManager.parseRouteFromUrl(url)
   expect(parsed).toStrictEqual(routeInfo)
+})
+
+// resolveHomeLinkUrl tests
+
+test('resolveHomeLinkUrl resolves course page home link (URL mode)', () => {
+  const routeManager = new RouteManager({ config: urlConfig })
+  expect(routeManager.resolveHomeLinkUrl('app:course:page|home', { locale: 'en', courseSlug: 'my-course' })).toBe(
+    '/en/my-course/page/home',
+  )
+})
+
+test('resolveHomeLinkUrl resolves course page home link (SINGLE mode)', () => {
+  const routeManager = new RouteManager({ config: singleConfig })
+  expect(routeManager.resolveHomeLinkUrl('app:course:page|home', { locale: 'en', courseSlug: 'default-course' })).toBe(
+    '/en/page/home',
+  )
+})
+
+test('resolveHomeLinkUrl resolves course section home link', () => {
+  const routeManager = new RouteManager({ config: urlConfig })
+  expect(routeManager.resolveHomeLinkUrl('app:course:section|intro/a', { locale: 'de', courseSlug: 'my-course' })).toBe(
+    '/de/my-course/section/intro/a',
+  )
+})
+
+test('resolveHomeLinkUrl returns null for invalid link specifier', () => {
+  const routeManager = new RouteManager({ config: urlConfig })
+  expect(routeManager.resolveHomeLinkUrl('bogus-route', { locale: 'en', courseSlug: 'my-course' })).toBeNull()
+  expect(routeManager.resolveHomeLinkUrl('app:course:page|', { locale: 'en', courseSlug: 'my-course' })).toBeNull()
+})
+
+test('resolveHomeLinkUrl returns null for unresolvable params (URL mode without courseSlug)', () => {
+  const routeManager = new RouteManager({ config: urlConfig })
+  expect(routeManager.resolveHomeLinkUrl('app:course:page|home', { locale: 'en' })).toBeNull()
 })

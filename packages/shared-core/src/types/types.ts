@@ -39,3 +39,4 @@ export type {
   TranslatedPage,
   TranslatedSection,
 } from './schemas.js'
+export type { LanguageCode } from 'iso-639-1'

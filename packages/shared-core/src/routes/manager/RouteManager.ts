@@ -22,9 +22,11 @@ interface RouteManagerOptions {
 
 class RouteManager {
   private readonly frontendRoutes = {
-    ...builtinRoutes,
+    // Course routes must come before builtin routes: in non-URL modes the course
+    // index pattern collapses to `/:locale`, which must win over the builtin index
     ...courseRoutes,
     ...userRoutes,
+    ...builtinRoutes,
   }
 
   private readonly courseSlugMode: CourseSlugMode
@@ -138,6 +140,25 @@ class RouteManager {
     }
 
     return { name: routeName }
+  }
+
+  /**
+   * Resolve a course home link specifier to a frontend URL path.
+   *
+   * A course's `homeLink` (e.g. `app:course:page|home`) points to its home page.
+   * The locale (and course slug, in URL mode) of the passed route info is kept.
+   *
+   * @param homeLink - Course home link specifier
+   * @param routeInfo - Route info providing `locale` (and `courseSlug` in URL mode)
+   * @returns URL path, or `null` if the link specifier cannot be resolved
+   */
+  public resolveHomeLinkUrl(homeLink: string, routeInfo: { locale: LanguageCode; courseSlug?: string }): string | null {
+    try {
+      const target = this.parseLinkSpecifier(homeLink)
+      return this.generateFrontendUrlPath({ ...routeInfo, ...target })
+    } catch {
+      return null
+    }
   }
 
   /** Get all routes. */
