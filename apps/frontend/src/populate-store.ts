@@ -81,6 +81,11 @@ function serializeDates<T>(value: T): T {
   return value
 }
 
+/** Strip trailing slash(es) from a URL path (keeps the root as `/`). */
+function stripTrailingSlashes(path: string): string {
+  return path.length > 1 ? path.replace(/\/+$/u, '') : path
+}
+
 /**
  * Populate the Redux store with data for the current route (SSR).
  *
@@ -91,14 +96,16 @@ function serializeDates<T>(value: T): T {
  * 1. Sets the route info
  * 2. Fetches course metadata (for all course routes)
  * 3. Validates locale
- * 4. Fetches pages and sections lists
- * 5. Fetches content (for content routes) and converts to HAST
+ * 4. Redirects the course index to the course home page (`homeLink`)
+ * 5. Fetches pages and sections lists
+ * 6. Fetches content (for content routes) and converts to HAST
  *
  * @param options - Options object
  * @param options.store - Redux store
  * @param options.routeInfo - Parsed route info from URL
  * @param options.routeManager - Route manager instance
  * @param options.database - Database instance for direct data access
+ * @param options.url - Requested URL path (without query string)
  * @returns Population result with success/error/redirect info
  */
 export async function populateStoreForSSR({
@@ -106,11 +113,13 @@ export async function populateStoreForSSR({
   routeInfo,
   routeManager,
   database,
+  url,
 }: {
   store: Store
   routeInfo: FrontendRouteInfo
   routeManager: RouteManager
   database: SsrDatabase
+  url: string
 }): Promise<PopulateStoreResult> {
   // Step 1: Set route info
   store.dispatch(changeRouteInfo(routeInfo))
@@ -150,7 +159,23 @@ export async function populateStoreForSSR({
       }
     }
 
-    // Step 4: Fetch pages and sections lists
+    // Step 4: The course index has no page of its own - redirect to the
+    // course home page (from the course `homeLink`). Guard against a home
+    // link that points back to the index itself (redirect loop).
+    if (routeInfo.name === 'app:course:index') {
+      const homeUrl = routeManager.resolveHomeLinkUrl(apiCourse.homeLink, routeInfo)
+      if (homeUrl && stripTrailingSlashes(homeUrl) !== stripTrailingSlashes(url)) {
+        return {
+          success: false,
+          redirect: {
+            url: homeUrl,
+            statusCode: 302,
+          },
+        }
+      }
+    }
+
+    // Step 5: Fetch pages and sections lists
     const [pages, sections] = await Promise.all([
       database.getCoursePages(routeInfo.courseSlug),
       database.getCourseSections(routeInfo.courseSlug),
@@ -170,7 +195,7 @@ export async function populateStoreForSSR({
       ),
     ])
 
-    // Step 5: Fetch content (for content routes)
+    // Step 6: Fetch content (for content routes)
     if (isCoursePageRouteInfo(routeInfo)) {
       const content = await database.getPageContent(routeInfo.courseSlug, routeInfo.locale, routeInfo.pageSlug)
 
