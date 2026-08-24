@@ -132,7 +132,13 @@ module.exports = {
         'from.pathNot re of the not-to-dev-dep rule in the dependency-cruiser configuration',
       from: {
         path: '^(packages|apps)',
-        pathNot: '.(spec|test).(js|mjs|cjs|ts|ls|coffee|litcoffee|coffee.md)$',
+        pathNot: [
+          '.(spec|test).(js|mjs|cjs|ts|ls|coffee|litcoffee|coffee.md)$',
+          // ui-test-utils and shared-fixtures are development-only test-support
+          // packages (their dependencies live in devDependencies by design),
+          // so importing devDependencies from their src files is expected.
+          '^packages/(ui-test-utils|shared-fixtures)/',
+        ],
       },
       to: {
         dependencyTypes: ['npm-dev'],
@@ -249,17 +255,31 @@ module.exports = {
     },
   ],
   options: {
+    // Keep the graph small: record npm/core dependencies as leaf edges but never
+    // crawl into node_modules (crawling the full pnpm store OOMs the process).
     doNotFollow: {
       path: 'node_modules',
     },
 
+    // Prune build artifacts, test dirs and tooling configs from the crawl.
+    //
+    // IMPORTANT: `node_modules` must NOT appear in this pattern. depcruise applies
+    // `exclude` to resolved dependency paths as well, so matching node_modules
+    // silently drops every npm/core dependency edge from the graph - which makes
+    // all npm-aware rules (no-non-package-json, not-to-dev-dep, not-to-unresolvable,
+    // not-to-deprecated, no-duplicate-dep-types, ...) permanently dormant.
+    // `doNotFollow` above already prevents crawling INTO node_modules.
     exclude: {
-      path: '(node_modules|tests|dist|eslint.config.js|playwright.config.ts|vite.config.ts|vitest.config.ts)',
+      path: '(tests|dist|eslint.config.js|playwright.config.ts|vite.config.ts|vitest.config.ts)',
     },
 
     combinedDependencies: false,
 
-    includeOnly: '^(packages|apps)/',
+    // NOTE: there used to be `includeOnly: '^(packages|apps)/'` here. It was removed
+    // for the same reason as above: depcruise also filters dependency edges against
+    // `includeOnly`, and npm/core modules all resolve outside that pattern, so every
+    // third-party and node core dependency was dropped from the graph. The crawl is
+    // scoped by the `apps packages` arguments passed to the CLI plus `doNotFollow`.
 
     moduleSystems: ['es6'],
 

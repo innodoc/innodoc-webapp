@@ -6,6 +6,7 @@
   "exports": {
     ".": {
       "types": "./src/types.ts",
+      "development": "./src/entry-server.tsx",
       "default": "./dist/server/index.js"
     },
     "./populate-store": {
