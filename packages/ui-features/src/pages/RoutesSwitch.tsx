@@ -1,8 +1,11 @@
 import type { ComponentType } from 'react'
-import { Route, Switch } from 'wouter'
+import { Redirect, Route, Switch } from 'wouter'
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { FrontendRouteName } from '@innodoc/shared-core/types'
+import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
+import { useSelector } from '@innodoc/ui-shared/store-hooks'
 import CourseContentPage from './course/CourseContentPage.js'
+import CourseHomeRedirect from './course/CourseHomeRedirect.js'
 import CourseProgressPage from './course/CourseProgressPage.js'
 import CourseSectionPage from './course/CourseSectionPage/CourseSectionPage.js'
 import CourseTocPage from './course/CourseTocPage.js'
@@ -17,7 +20,7 @@ interface RouteEntry<C extends ComponentType = ComponentType> {
 type RouteRegistry = Record<FrontendRouteName, RouteEntry>
 
 const routeRegistry: RouteRegistry = {
-  'app:course:index': { component: CourseContentPage },
+  'app:course:index': { component: CourseHomeRedirect },
   'app:index': { component: IndexPage },
   'app:course:glossary': { component: () => null }, // TODO
   'app:course:page': { component: CourseContentPage },
@@ -43,6 +46,16 @@ function PageComponent({ routeName }: PageComponentProps) {
   return <Component />
 }
 
+/**
+ * The root path (`/`) has no locale. Server-side this is handled with a 302;
+ * this covers client-side navigations to `/` by redirecting to the current
+ * locale (which the server/client then route to index or course home).
+ */
+function RootRedirect() {
+  const routeInfo = useSelector(selectRouteInfo)
+  return <Redirect to={`/${routeInfo.locale}`} replace />
+}
+
 function RoutesSwitch({ routeManager }: RoutesSwitchProps) {
   const frontendRoutes = routeManager.getFrontendRoutes()
   const routeEntries = Object.entries(frontendRoutes) as [FrontendRouteName, string][]
@@ -53,7 +66,14 @@ function RoutesSwitch({ routeManager }: RoutesSwitchProps) {
     </Route>
   ))
 
-  return <Switch>{routes}</Switch>
+  return (
+    <Switch>
+      <Route path="/">
+        <RootRedirect />
+      </Route>
+      {routes}
+    </Switch>
+  )
 }
 
 export default RoutesSwitch
