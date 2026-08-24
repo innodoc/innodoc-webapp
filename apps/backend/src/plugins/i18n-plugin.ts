@@ -35,7 +35,6 @@ const i18nPluginCb: FastifyPluginAsync<PluginOpts> = async (server, { config }) 
     fallbackLng: DEFAULT_LOCALES[0],
   })
 
-  // TODO: check early load language 'dev'
   // TODO: attach i18next.cloneInstance to diScope?
 
   await server.register(i18nextPlugin, { i18next })

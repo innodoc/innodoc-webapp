@@ -20,6 +20,7 @@ interface ServerEntryModule {
 interface InitialState {
   locale: string
   preloadedState: RootState
+  supportedLocales: string[]
 }
 
 export type { InitialState, RenderFunction, ServerEntryModule }

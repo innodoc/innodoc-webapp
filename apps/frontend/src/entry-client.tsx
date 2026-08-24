@@ -3,6 +3,7 @@ import { createStreamableHead, UnheadProvider } from '@unhead/react/stream/clien
 import I18NextHttpBackend from 'i18next-http-backend'
 import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
+import { DEFAULT_LOCALES } from '@innodoc/shared-core/constants'
 import initI18n from '@innodoc/shared-core/i18n'
 import { RouteManager } from '@innodoc/shared-core/routes'
 import { isCourseSlugMode } from '@innodoc/shared-core/typeguards'
@@ -29,13 +30,19 @@ async function makeProps() {
     throw new Error('Expected head')
   }
 
-  const { preloadedState, locale } = globalThis.__initial_state__
+  const { preloadedState, locale, supportedLocales } = globalThis.__initial_state__
 
   const i18NextHttpBackendOpts = { loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.json` }
+  // supportedLngs and fallbackLng mirror the server's i18n config so that
+  // i18next's default 'dev' fallback is never loaded (which would cause a
+  // spurious 404 request for a 'dev' locale file) and unknown languages fall
+  // back to the app's default locale.
   const i18n = await initI18n([I18NextHttpBackend], {
     backend: i18NextHttpBackendOpts,
     debug: import.meta.env.DEV,
+    fallbackLng: DEFAULT_LOCALES[0] ?? 'en',
     lng: locale,
+    supportedLngs: supportedLocales,
   })
 
   const store = makeStore({

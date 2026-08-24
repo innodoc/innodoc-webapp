@@ -3,6 +3,7 @@ import createCache from '@emotion/cache'
 import { createStreamableHead, prepareStreamingTemplate, UnheadProvider } from '@unhead/react/stream/server'
 import { PassThrough } from 'node:stream'
 import { renderToPipeableStream } from 'react-dom/server'
+import { DEFAULT_LOCALES } from '@innodoc/shared-core/constants'
 import App from './App.js'
 
 const render: RenderFunction = function render({ htmlTemplate, store, ...otherProps }) {
@@ -13,10 +14,23 @@ const render: RenderFunction = function render({ htmlTemplate, store, ...otherPr
   // server and client generate matching class names.
   const emotionCache = createCache({ key: 'css' })
   const { head } = createStreamableHead()
-  const state = {
-    preloadedState: store.getState(),
-    locale: otherProps.i18n.language,
-  }
+
+  // The client mirrors the server's supported locales so that i18next's default
+  // 'dev' fallback is never added to the list of languages to load (which would
+  // cause a spurious 404 request for a 'dev' locale file).
+  const supportedLocales = Array.isArray(otherProps.i18n.options.supportedLngs)
+    ? otherProps.i18n.options.supportedLngs
+    : []
+
+  // Seed the client i18next with the route's locale (the URL is the source of
+  // truth) instead of the request-detected language, so the client's language
+  // matches the redux app slice. Fall back to the default locale for URLs with
+  // an unsupported locale prefix (e.g., /fr/... when only 'en' and 'de' exist).
+  const preloadedState = store.getState()
+  const routeLocale = preloadedState.app.routeInfo.locale
+  const locale = supportedLocales.includes(routeLocale) ? routeLocale : (DEFAULT_LOCALES[0] ?? 'en')
+
+  const state = { preloadedState, locale, supportedLocales }
   const stream = new PassThrough()
 
   const reactNode = (
