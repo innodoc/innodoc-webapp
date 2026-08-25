@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
+    "print-routes": "tsx --conditions=development src/print-routes/main.ts",
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit"
   },
@@ -30,6 +31,7 @@
     "@types/node": "catalog:",
     "commander": "catalog:",
     "knex": "catalog:",
+    "tsx": "catalog:",
     "typescript": "catalog:"
   },
   "peerDependencies": {

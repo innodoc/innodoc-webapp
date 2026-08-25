@@ -11,7 +11,7 @@
     "clean": "turbo run clean",
     "========= Commands": "",
     "import-v1": "turbo run --filter=@innodoc/command-import-v1 main",
-    "routes": "turbo run --filter=@innodoc/command-print-routes --log-prefix=none --output-logs=new-only main",
+    "routes": "turbo run --filter=@innodoc/commands --log-prefix=none --output-logs=new-only --ui=stream print-routes",
     "========= Depcruise": "",
     "depcruise": "pnpm run depcruise:generate && pnpm run depcruise:serve",
     "depcruise:generate": "pnpm run depcruise:generate:full && pnpm run depcruise:generate:high-level && pnpm run depcruise:generate:violation-report",
