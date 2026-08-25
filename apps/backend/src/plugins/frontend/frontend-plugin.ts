@@ -37,6 +37,7 @@ const frontendPluginCb: FastifyPluginAsync<PluginOpts> = async (server, { config
 
   // Development
   else {
+    // Dev-only: dynamically imported so the devDependencies are never loaded in production
     const viteDevServerModule = await import('./vite-dev-server.js')
     await server.register(viteDevServerModule.default)
     const { viteDevServer } = server
