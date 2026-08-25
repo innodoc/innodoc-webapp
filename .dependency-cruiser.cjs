@@ -1,3 +1,5 @@
+const TEST_FILE_PATTERN = String.raw`\.test\.(ts|tsx)$`
+
 /** @type {import('dependency-cruiser').IConfiguration} */
 module.exports = {
   forbidden: [
@@ -118,7 +120,7 @@ module.exports = {
       severity: 'error',
       from: {},
       to: {
-        path: '.(spec|test).(js|mjs|cjs|ts|ls|coffee|litcoffee|coffee.md)$',
+        path: TEST_FILE_PATTERN,
       },
     },
     {
@@ -133,11 +135,16 @@ module.exports = {
       from: {
         path: '^(packages|apps)',
         pathNot: [
-          '.(spec|test).(js|mjs|cjs|ts|ls|coffee|litcoffee|coffee.md)$',
+          // test files are entry points of test runs - it's fine for
+          // them to import devDependencies
+          TEST_FILE_PATTERN,
           // ui-test-utils and shared-fixtures are development-only test-support
           // packages (their dependencies live in devDependencies by design),
           // so importing devDependencies from their src files is expected.
           '^packages/(ui-test-utils|shared-fixtures)/',
+          // These modules are loaded only when !config.isProduction
+          String.raw`^apps/backend/src/plugins/frontend/vite-dev-server\.ts$`,
+          String.raw`^apps/backend/src/plugins/api/swagger-dev-plugin\.ts$`,
         ],
       },
       to: {
@@ -263,14 +270,23 @@ module.exports = {
 
     // Prune build artifacts, test dirs and tooling configs from the crawl.
     //
-    // IMPORTANT: `node_modules` must NOT appear in this pattern. depcruise applies
-    // `exclude` to resolved dependency paths as well, so matching node_modules
-    // silently drops every npm/core dependency edge from the graph - which makes
-    // all npm-aware rules (no-non-package-json, not-to-dev-dep, not-to-unresolvable,
-    // not-to-deprecated, no-duplicate-dep-types, ...) permanently dormant.
-    // `doNotFollow` above already prevents crawling INTO node_modules.
+    // IMPORTANT: depcruise applies `exclude` to resolved dependency paths as
+    // well, so this pattern must be anchored to the local repo paths (`apps/`,
+    // `packages/`). An unanchored fragment would also prune npm packages: a bare
+    // `dist` (previous version of this pattern) silently dropped every package
+    // whose entry resolves into a `dist/` directory (vite, vitest, i18next,
+    // @testing-library, ...) from the graph - which made all npm-aware rules
+    // (no-non-package-json, not-to-dev-dep, not-to-unresolvable,
+    // not-to-deprecated, no-duplicate-dep-types, ...) permanently dormant for
+    // them. Likewise, `node_modules` here would drop every npm/core edge
+    // entirely - the `doNotFollow` above already prevents crawling INTO
+    // node_modules.
+    //
+    // NOTE: the pattern uses String.raw so that `\.` is a literal escaped dot
+    // in the regex - a bare `.` would match any character (e.g. matching
+    // `tsconfig.json`).
     exclude: {
-      path: '(tests|dist|eslint.config.js|playwright.config.ts|vite.config.ts|vitest.config.ts)',
+      path: String.raw`^((apps|packages)/.*/(tests|dist)/|(apps|packages)/.*\.config\.[a-z]+)`,
     },
 
     combinedDependencies: false,
