@@ -3,7 +3,7 @@ import type { Faker } from '@faker-js/faker'
 import type { RootContent } from 'mdast'
 import stringify from 'remark-stringify'
 import { unified } from 'unified'
-import { isMdastRoot } from '@innodoc/content-parser/typeguards'
+import { isMdastRoot } from '@innodoc/shared-core/typeguards'
 import { code, heading, list, listItem, paragraph, root, text } from './mdast-builder.js'
 import { capitalize, range, seed } from './utils.js'
 

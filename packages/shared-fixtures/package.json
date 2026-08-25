@@ -41,7 +41,6 @@
   },
   "devDependencies": {
     "@faker-js/faker": "catalog:",
-    "@innodoc/content-parser": "workspace:*",
     "@innodoc/server-env": "workspace:*",
     "@innodoc/shared-core": "workspace:*",
     "@playwright/test": "catalog:",

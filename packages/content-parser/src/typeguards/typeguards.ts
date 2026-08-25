@@ -4,5 +4,9 @@ export {
   isHastMdxJsxFlowDivElementTabs,
   isHastMdxJsxTextSpanElement,
   isHastRootDivElement,
-} from './custom-hast.js'
-export { isMdastLink, isMdastRoot, isMdxJsxAttribute, isMdxJsxFlowElement, isMdxJsxTextElement } from './mdast.js'
+  isMdastLink,
+  isMdastRoot,
+  isMdxJsxAttribute,
+  isMdxJsxFlowElement,
+  isMdxJsxTextElement,
+} from '@innodoc/shared-core/typeguards'

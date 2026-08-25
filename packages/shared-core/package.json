@@ -115,6 +115,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "hast-util-is-element": "catalog:",
     "i18next": "catalog:",
     "react-i18next": "catalog:",
     "regexparam": "catalog:",
@@ -123,9 +124,11 @@
   },
   "devDependencies": {
     "@types/hast": "catalog:",
+    "@types/mdast": "catalog:",
     "@types/node": "catalog:",
     "@types/validator": "catalog:",
     "iso-639-1": "catalog:",
+    "mdast-util-mdx-jsx": "catalog:",
     "type-fest": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",

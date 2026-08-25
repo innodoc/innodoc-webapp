@@ -11,6 +11,13 @@ export type {
   WithContentHash,
 } from './common.js'
 export type { ParserError } from './errors.js'
+export type {
+  HastMdxJsxFlowDivElement,
+  HastMdxJsxFlowDivElementTabItem,
+  HastMdxJsxFlowDivElementTabs,
+  HastMdxJsxTextSpanElement,
+  HastRootDivElement,
+} from './hast.js'
 export type { ApiRouteParams, CourseContentRouteParams, RouteDef, RouteFuncArgs, RouteParams } from './routes/common.js'
 export type {
   CourseContentRouteInfo,

@@ -711,6 +711,9 @@ importers:
 
   packages/shared-core:
     dependencies:
+      hast-util-is-element:
+        specifier: 'catalog:'
+        version: 3.0.0
       i18next:
         specifier: 'catalog:'
         version: 26.3.1(typescript@6.0.3)
@@ -730,6 +733,9 @@ importers:
       '@types/hast':
         specifier: 'catalog:'
         version: 3.0.4
+      '@types/mdast':
+        specifier: 'catalog:'
+        version: 4.0.4
       '@types/node':
         specifier: 'catalog:'
         version: 25.9.3
@@ -739,6 +745,9 @@ importers:
       iso-639-1:
         specifier: 'catalog:'
         version: 3.1.5
+      mdast-util-mdx-jsx:
+        specifier: 'catalog:'
+        version: 3.2.0
       type-fest:
         specifier: 'catalog:'
         version: 5.7.0
@@ -757,9 +766,6 @@ importers:
       '@faker-js/faker':
         specifier: 'catalog:'
         version: 10.4.0
-      '@innodoc/content-parser':
-        specifier: workspace:*
-        version: link:../content-parser
       '@innodoc/server-env':
         specifier: workspace:*
         version: link:../server-env
