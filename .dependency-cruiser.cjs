@@ -246,7 +246,11 @@ module.exports = {
       comment:
         'ui-* packages must not depend on server-* packages. ' +
         'ui packages may only depend on shared and content packages.',
-      from: { path: '^packages/ui-' },
+      from: {
+        path: '^packages/ui-',
+        // ui-test-utils is a development-only test-support package
+        pathNot: ['^packages/ui-test-utils/'],
+      },
       to: { path: '^packages/server-' },
     },
 
