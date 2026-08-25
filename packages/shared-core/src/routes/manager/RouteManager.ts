@@ -1,8 +1,12 @@
 import type { LanguageCode } from 'iso-639-1'
 import { inject, parse } from 'regexparam'
 import { API_COURSE_PREFIX, API_PREFIX } from '#constants'
-import { apiRoutes, builtinRoutes, courseRoutes, userRoutes } from '#routes'
-import { isContentType, isCourseContentRouteName, isFrontendRouteInfo, isFrontendRouteName } from '#typeguards'
+import apiRoutes from '#routes/api-routes'
+import builtinRoutes from '#routes/builtin-routes'
+import courseRoutes from '#routes/course-routes'
+import userRoutes from '#routes/user-routes'
+import { isContentType } from '#typeguards/content'
+import { isCourseContentRouteName, isFrontendRouteInfo, isFrontendRouteName } from '#typeguards/routes'
 import type {
   ApiRouteName,
   ApiRouteParams,

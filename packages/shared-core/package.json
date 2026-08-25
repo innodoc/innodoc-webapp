@@ -54,11 +54,23 @@
       "development": "./src/routes/api-routes.ts",
       "default": "./dist/routes/api-routes.js"
     },
+    "#routes/builtin-routes": {
+      "types": "./src/routes/builtin-routes.ts",
+      "import": "./src/routes/builtin-routes.ts",
+      "development": "./src/routes/builtin-routes.ts",
+      "default": "./dist/routes/builtin-routes.js"
+    },
     "#routes/course-routes": {
       "types": "./src/routes/course-routes.ts",
       "import": "./src/routes/course-routes.ts",
       "development": "./src/routes/course-routes.ts",
       "default": "./dist/routes/course-routes.js"
+    },
+    "#routes/user-routes": {
+      "types": "./src/routes/user-routes.ts",
+      "import": "./src/routes/user-routes.ts",
+      "development": "./src/routes/user-routes.ts",
+      "default": "./dist/routes/user-routes.js"
     },
     "#schemas": {
       "types": "./src/schemas/schemas.ts",
@@ -77,6 +89,18 @@
       "import": "./src/typeguards/typeguards.ts",
       "development": "./src/typeguards/typeguards.ts",
       "default": "./dist/typeguards/typeguards.js"
+    },
+    "#typeguards/content": {
+      "types": "./src/typeguards/content.ts",
+      "import": "./src/typeguards/content.ts",
+      "development": "./src/typeguards/content.ts",
+      "default": "./dist/typeguards/content.js"
+    },
+    "#typeguards/routes": {
+      "types": "./src/typeguards/routes.ts",
+      "import": "./src/typeguards/routes.ts",
+      "development": "./src/typeguards/routes.ts",
+      "default": "./dist/typeguards/routes.js"
     },
     "#types": {
       "types": "./src/types/types.ts",

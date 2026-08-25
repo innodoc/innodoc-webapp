@@ -1,5 +1,6 @@
-import { builtinRoutes, courseContentRoutes, courseRoutes, userRoutes } from '#routes'
-import { isArbitraryObject } from '#typeguards'
+import builtinRoutes from '#routes/builtin-routes'
+import courseRoutes, { courseContentRoutes } from '#routes/course-routes'
+import userRoutes from '#routes/user-routes'
 import type {
   CourseContentRouteName,
   CoursePageRouteInfo,
@@ -8,6 +9,7 @@ import type {
   FrontendRouteInfo,
   FrontendRouteName,
 } from '#types'
+import { isArbitraryObject } from './common.js'
 
 let courseContentRouteNames: Set<string> | null = null
 let appRouteNames: Set<string> | null = null
