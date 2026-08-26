@@ -19,19 +19,16 @@
   "imports": {
     "#layout": {
       "types": "./src/page-shell/Layout/Layout.tsx",
-      "import": "./src/page-shell/Layout/Layout.tsx",
       "development": "./src/page-shell/Layout/Layout.tsx",
       "default": "./dist/page-shell/Layout/Layout.js"
     },
     "#pages/course/content": {
       "types": "./src/pages/course/ContentPage.tsx",
-      "import": "./src/pages/course/ContentPage.tsx",
       "development": "./src/pages/course/ContentPage.tsx",
       "default": "./dist/pages/course/ContentPage.js"
     },
     "#pages/error": {
       "types": "./src/pages/ErrorPage.tsx",
-      "import": "./src/pages/ErrorPage.tsx",
       "development": "./src/pages/ErrorPage.tsx",
       "default": "./dist/pages/ErrorPage.js"
     }

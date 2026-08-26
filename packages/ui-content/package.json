@@ -19,37 +19,31 @@
   "imports": {
     "#cards": {
       "types": "./src/cards/cards.ts",
-      "import": "./src/cards/cards.ts",
       "development": "./src/cards/cards.ts",
       "default": "./dist/cards/cards.js"
     },
     "#exercises": {
       "types": "./src/exercises/exercises.ts",
-      "import": "./src/exercises/exercises.ts",
       "development": "./src/exercises/exercises.ts",
       "default": "./dist/exercises/exercises.js"
     },
     "#hast": {
       "types": "./src/hast/hast.ts",
-      "import": "./src/hast/hast.ts",
       "development": "./src/hast/hast.ts",
       "default": "./dist/hast/hast.js"
     },
     "#hast/components": {
       "types": "./src/hast/components-map.ts",
-      "import": "./src/hast/components-map.ts",
       "development": "./src/hast/components-map.ts",
       "default": "./dist/hast/components-map.js"
     },
     "#tabs": {
       "types": "./src/tabs/tabs.ts",
-      "import": "./src/tabs/tabs.ts",
       "development": "./src/tabs/tabs.ts",
       "default": "./dist/tabs/tabs.js"
     },
     "#types": {
       "types": "./src/types.ts",
-      "import": "./src/types.ts",
       "development": "./src/types.ts"
     }
   },

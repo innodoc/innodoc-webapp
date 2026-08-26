@@ -24,7 +24,6 @@
   "imports": {
     "#contexts": {
       "types": "./src/contexts/contexts.ts",
-      "import": "./src/contexts/contexts.ts",
       "development": "./src/contexts/contexts.ts",
       "default": "./dist/contexts/contexts.js"
     }

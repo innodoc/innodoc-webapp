@@ -6,40 +6,35 @@
   "imports": {
     "#api/errors": {
       "types": "./src/plugins/api/errors.ts",
-      "import": "./src/plugins/api/errors.ts",
       "development": "./src/plugins/api/errors.ts",
       "default": "./dist/plugins/api/errors.js"
     },
     "#api/types": {
       "types": "./src/plugins/api/types.ts",
-      "import": "./src/plugins/api/types.ts",
       "development": "./src/plugins/api/types.ts",
       "default": "./dist/plugins/api/types.js"
     },
     "#constants": {
       "types": "./src/constants.ts",
-      "import": "./src/constants.ts",
       "development": "./src/constants.ts",
       "default": "./dist/constants.js"
     },
     "#plugins/api/mock-database": {
       "types": "./src/plugins/api/mock-database.ts",
-      "import": "./src/plugins/api/mock-database.ts",
       "development": "./src/plugins/api/mock-database.ts"
     },
     "#plugins/types": {
       "types": "./src/plugins/types.ts",
-      "import": "./src/plugins/types.ts"
+      "development": "./src/plugins/types.ts"
     },
     "#utils": {
       "types": "./src/utils.ts",
-      "import": "./src/utils.ts",
       "development": "./src/utils.ts",
       "default": "./dist/utils.js"
     }
   },
   "scripts": {
-    "build": "",
+    "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
     "dev": "tsx watch --conditions=development --include='../../packages/**/*' --exclude='./../frontend/**/*' --exclude='../../packages/*/node_modules' --clear-screen=false src/main.ts",
     "dev:mkcert": "mkcert -install && mkdir -p cert && mkcert -key-file cert/key.pem -cert-file cert/cert.pem innodoc.dev '*.innodoc.dev' localhost 127.0.0.1 ::1",
