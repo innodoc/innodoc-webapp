@@ -28,6 +28,7 @@
     "@innodoc/content-parser": "workspace:*",
     "@innodoc/shared-core": "workspace:*",
     "@innodoc/shared-store": "workspace:*",
+    "@innodoc/ui-content": "workspace:*",
     "@innodoc/ui-features": "workspace:*",
     "@innodoc/ui-shared": "workspace:*",
     "@unhead/react": "catalog:",

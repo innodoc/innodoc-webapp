@@ -44,6 +44,7 @@
       "ignoreDependencies": ["@innodoc/server-env", "@playwright/test", "type-fest"]
     },
     "packages/ui-content": {
+      "entry": ["src/hast-listener-middleware/markdown-to-hast-worker.ts"],
       "project": ["src/**/*.ts?(x)"]
     },
     "packages/ui-design-system": {
@@ -53,7 +54,6 @@
       }
     },
     "packages/shared-store": {
-      "entry": ["src/middlewares/hast-listener-middleware/markdown-to-hast-worker.ts"],
       "project": ["src/**/*.ts?(x)"],
       "ignoreBinaries": ["vitest"]
     },

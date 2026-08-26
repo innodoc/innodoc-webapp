@@ -9,6 +9,11 @@
       "types": "./src/hast/hast.ts",
       "development": "./src/hast/hast.ts",
       "default": "./dist/hast/hast.js"
+    },
+    "./hast-listener-middleware": {
+      "types": "./src/hast-listener-middleware/hast-listener-middleware.ts",
+      "development": "./src/hast-listener-middleware/hast-listener-middleware.ts",
+      "default": "./dist/hast-listener-middleware/hast-listener-middleware.js"
     }
   },
   "imports": {
@@ -62,6 +67,7 @@
     "@innodoc/ui-shared": "workspace:*",
     "@mui/lab": "catalog:",
     "@mui/material": "catalog:",
+    "@reduxjs/toolkit": "catalog:",
     "i18next": "catalog:",
     "react": "catalog:",
     "react-i18next": "catalog:",

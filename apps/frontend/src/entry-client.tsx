@@ -8,6 +8,7 @@ import initI18n from '@innodoc/shared-core/i18n'
 import { RouteManager } from '@innodoc/shared-core/routes'
 import { isCourseSlugMode } from '@innodoc/shared-core/typeguards'
 import makeStore from '@innodoc/shared-store'
+import hastListenerMiddleware, { setupHastListeners } from '@innodoc/ui-content/hast-listener-middleware'
 import App from './App.js'
 
 async function makeProps() {
@@ -47,9 +48,11 @@ async function makeProps() {
 
   const store = makeStore({
     devTools: import.meta.env.DEV,
+    extraMiddlewares: [hastListenerMiddleware.middleware],
     preloadedState,
-    routeManager,
   })
+
+  setupHastListeners(routeManager)
 
   return { emotionCache, head, i18n, routeManager, store }
 }

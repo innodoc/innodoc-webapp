@@ -32,7 +32,7 @@ const routeManager = new RouteManager({
   },
 })
 
-const store = makeStore({ routeManager })
+const store = makeStore()
 
 const TestPageShell = ({ children }: { children: React.ReactNode }) => {
   return (

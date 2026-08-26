@@ -3,10 +3,10 @@ import { createListenerMiddleware } from '@reduxjs/toolkit'
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import { isHastRootDivElement, isParserError, isWithContentHash } from '@innodoc/shared-core/typeguards'
 import type { ContentWithHash, CourseContentRouteInfo, HastResultWithHash } from '@innodoc/shared-core/types'
-import { changeRouteTransitionInfo } from '#slices/app'
-import { addHastResult, changeIsProcessing, selectHastResultByHash } from '#slices/hast'
-import type { AppListenerEffectAPI, AppStartListening } from '#types'
-import { fetchContent } from '#utils'
+import { changeRouteTransitionInfo } from '@innodoc/shared-store/slices/app'
+import { addHastResult, changeIsProcessing, selectHastResultByHash } from '@innodoc/shared-store/slices/hast'
+import type { AppListenerEffectAPI, AppStartListening } from '@innodoc/shared-store/types'
+import { fetchContent } from '@innodoc/shared-store/utils'
 
 /** Type guard for `HastResultWithHash` */
 function isHastResultWithHash(obj: unknown): obj is HastResultWithHash {

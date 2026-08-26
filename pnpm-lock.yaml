@@ -515,6 +515,9 @@ importers:
       '@innodoc/shared-store':
         specifier: workspace:*
         version: link:../../packages/shared-store
+      '@innodoc/ui-content':
+        specifier: workspace:*
+        version: link:../../packages/ui-content
       '@innodoc/ui-features':
         specifier: workspace:*
         version: link:../../packages/ui-features
@@ -802,9 +805,6 @@ importers:
 
   packages/shared-store:
     dependencies:
-      '@innodoc/content-parser':
-        specifier: workspace:*
-        version: link:../content-parser
       '@innodoc/shared-core':
         specifier: workspace:*
         version: link:../shared-core
@@ -857,6 +857,9 @@ importers:
       '@mui/material':
         specifier: 'catalog:'
         version: 9.3.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@reduxjs/toolkit':
+        specifier: 'catalog:'
+        version: 2.12.0(react-redux@9.3.0(@types/react@19.2.17)(react@19.2.7)(redux@5.0.1))(react@19.2.7)
       i18next:
         specifier: 'catalog:'
         version: 26.3.1(typescript@6.0.3)
