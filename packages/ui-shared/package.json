@@ -32,7 +32,7 @@
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
     "test": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.tooling.json"
   },
   "dependencies": {
     "@innodoc/shared-core": "workspace:*",
@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "catalog:",
+    "@types/node": "catalog:",
     "@types/react": "catalog:",
     "iso-639-1": "catalog:",
     "jsdom": "catalog:",

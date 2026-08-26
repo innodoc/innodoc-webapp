@@ -37,7 +37,7 @@
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
     "test": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.tooling.json"
   },
   "dependencies": {
     "@emotion/react": "catalog:",
@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "catalog:",
+    "@types/node": "catalog:",
     "@types/react": "catalog:",
     "jsdom": "catalog:",
     "typescript": "catalog:",

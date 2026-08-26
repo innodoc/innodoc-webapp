@@ -51,7 +51,7 @@
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
     "test": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.tooling.json"
   },
   "dependencies": {
     "@innodoc/content-parser": "workspace:*",
@@ -71,6 +71,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "catalog:",
     "@types/hast": "catalog:",
+    "@types/node": "catalog:",
     "@types/react": "catalog:",
     "hast-util-to-jsx-runtime": "catalog:",
     "jsdom": "catalog:",

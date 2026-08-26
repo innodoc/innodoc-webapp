@@ -867,6 +867,9 @@ importers:
       '@types/hast':
         specifier: 'catalog:'
         version: 3.0.4
+      '@types/node':
+        specifier: 'catalog:'
+        version: 25.9.3
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.17
@@ -1010,6 +1013,9 @@ importers:
       '@testing-library/jest-dom':
         specifier: 'catalog:'
         version: 6.9.1
+      '@types/node':
+        specifier: 'catalog:'
+        version: 25.9.3
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.17
@@ -1047,6 +1053,9 @@ importers:
       '@testing-library/jest-dom':
         specifier: 'catalog:'
         version: 6.9.1
+      '@types/node':
+        specifier: 'catalog:'
+        version: 25.9.3
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.17
