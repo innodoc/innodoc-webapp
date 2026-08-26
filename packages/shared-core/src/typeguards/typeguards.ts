@@ -1,4 +1,4 @@
-export { assertNever, isArbitraryObject, isCourseSlugMode } from './common.js'
+export { assertNever, isArbitraryObject, isCourseSlugMode, isLocale } from './common.js'
 export {
   isApiPage,
   isContentType,

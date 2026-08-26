@@ -1,9 +1,15 @@
+import isLocaleValidator from 'validator/lib/isLocale.js'
 import { COURSE_SLUG_MODES } from '#constants'
-import type { ArbitraryObject, CourseSlugMode } from '#types'
+import type { ArbitraryObject, CourseSlugMode, LanguageCode } from '#types'
 
 /** Type guard for arbitrary object */
 function isArbitraryObject(object: unknown): object is ArbitraryObject {
   return typeof object === 'object' && object !== null
+}
+
+/** Type guard for `LanguageCode` */
+function isLocale(thing: unknown): thing is LanguageCode {
+  return typeof thing === 'string' && isLocaleValidator(thing)
 }
 
 /** Type guard for `CourseSlugMode` */
@@ -17,4 +23,4 @@ function assertNever(value: never): never {
   throw new Error(`This code should never be reached. Value='${value}'`)
 }
 
-export { assertNever, isArbitraryObject, isCourseSlugMode }
+export { assertNever, isArbitraryObject, isCourseSlugMode, isLocale }

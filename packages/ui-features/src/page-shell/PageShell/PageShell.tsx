@@ -5,8 +5,7 @@ import { CssBaseline, GlobalStyles } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import theme from '@innodoc/ui-design-system/theme'
 import Layout from '#layout'
-
-// import MetaTags from './MetaTags.js'
+import MetaTags from './MetaTags.js'
 
 // View Transitions API page fade (keep the default crossfade keyframes, only control duration/easing)
 // Theme durations are millisecond numbers; CSS needs a string
@@ -27,7 +26,7 @@ function PageShell({ children, emotionCache }: PageShellProps) {
       <GlobalStyles styles={globalStyles} />
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {/* <MetaTags /> */}
+        <MetaTags />
         <Layout>{children}</Layout>
       </ThemeProvider>
     </CacheProvider>

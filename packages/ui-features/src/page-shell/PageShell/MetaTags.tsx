@@ -1,32 +1,34 @@
-// TODO: Migrate to unhead
-
-// import { Helmet } from 'react-helmet-async'
-
-// import { EMOTION_STYLE_INSERTION_POINT_NAME } from '@innodoc/shared-core/constants'
-// import { isLocale } from '@innodoc/shared-core/typeguards'
-// import { useRoutes, useSelectCurrentCourse, useSelector } from '@innodoc/ui-store/hooks'
-// import { selectRouteInfo } from '@innodoc/ui-store/slices/app'
+import { useHead } from '@unhead/react'
+import { isLocale } from '@innodoc/shared-core/typeguards'
+import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
+import { useRoutes, useSelectCurrentCourse, useSelector } from '@innodoc/ui-shared/store-hooks'
 
 function MetaTags() {
-  // const { url } = useRoutes()
-  // const { course } = useSelectCurrentCourse()
-  // const { locale: currentLocale } = useSelector(selectRouteInfo)
-  // const languageLinks = (course?.locales ?? [])
-  //   .filter((l) => isLocale(l))
-  //   .map((locale) => <link href={url({ locale })} hrefLang={locale} key={locale} rel="alternate" />)
-  // return (
-  //   <Helmet>
-  //     <html lang={currentLocale} />
-  //     <title>{course?.title ?? ''}</title>
-  //     <meta charSet="utf-8" />
-  //     <meta name="description" content={course?.description ?? ''} />
-  //     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  //     <link rel="canonical" href={import.meta.env.INNODOC_APP_ROOT} />
-  //     <link rel="icon" href="" /> {/** TODO add course logo? */}
-  //     {languageLinks}
-  //     <meta name={EMOTION_STYLE_INSERTION_POINT_NAME} content="" />
-  //   </Helmet>
-  // )
+  const { url } = useRoutes()
+  const { course } = useSelectCurrentCourse()
+  const { locale: currentLocale } = useSelector(selectRouteInfo)
+
+  const languageLinks = (course?.locales ?? [])
+    .filter((l) => isLocale(l))
+    .map((locale) => ({ href: url({ locale }), hreflang: locale, rel: 'alternate' as const }))
+
+  useHead({
+    htmlAttrs: { lang: currentLocale },
+    link: [
+      { href: import.meta.env.INNODOC_APP_ROOT, rel: 'canonical' },
+      { href: '', rel: 'icon' }, // TODO: Add course logo?
+      ...languageLinks,
+    ],
+    meta: [
+      // oxlint-disable-next-line unicorn/text-encoding-identifier-case -- HTML spec requires the charset attribute to be `utf-8`
+      { charset: 'utf-8' },
+      { content: course?.description ?? '', name: 'description' },
+      { content: 'width=device-width, initial-scale=1.0', name: 'viewport' },
+    ],
+    title: course?.title ?? '',
+  })
+
+  return null
 }
 
 export default MetaTags

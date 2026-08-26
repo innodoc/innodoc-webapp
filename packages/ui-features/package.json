@@ -47,12 +47,14 @@
     "@innodoc/ui-design-system": "workspace:*",
     "@innodoc/ui-shared": "workspace:*",
     "@mui/material": "catalog:",
+    "@unhead/react": "catalog:",
     "i18next": "catalog:",
     "react": "catalog:",
     "react-i18next": "catalog:",
     "wouter": "catalog:"
   },
   "devDependencies": {
+    "@innodoc/ui-test-utils": "workspace:*",
     "@testing-library/jest-dom": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
