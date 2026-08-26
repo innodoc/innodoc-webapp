@@ -19,7 +19,7 @@
     "build": "vite build --mode production && vite build --mode production --ssr",
     "clean": "rm -rf dist",
     "test:unit": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.tooling.json"
   },
   "dependencies": {
     "@emotion/cache": "catalog:",

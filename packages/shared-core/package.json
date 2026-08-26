@@ -110,7 +110,7 @@
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
     "test:unit": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.tooling.json"
   },
   "dependencies": {
     "hast-util-is-element": "catalog:",

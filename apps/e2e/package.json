@@ -7,7 +7,7 @@
     "test": "playwright test",
     "playwright:install": "playwright install chromium --with-deps",
     "playwright:show-report": "playwright show-report",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.tooling.json"
   },
   "devDependencies": {
     "@playwright/test": "catalog:",
