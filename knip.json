@@ -11,7 +11,6 @@
       "ignoreDependencies": ["pino-pretty"]
     },
     "apps/frontend": {
-      "entry": ["src/entry-client.tsx"],
       "project": ["src/**/*.ts?(x)"],
       "ignoreDependencies": ["@emotion/server"]
     },

@@ -7,7 +7,7 @@
     ".": {
       "types": "./src/types.ts",
       "development": "./src/entry-server.tsx",
-      "default": "./dist/server/index.js"
+      "default": "./dist/server/entry-server.js"
     },
     "./populate-store": {
       "types": "./src/populate-store.ts",
@@ -16,7 +16,7 @@
   },
   "imports": {},
   "scripts": {
-    "build": "vite build --mode production",
+    "build": "vite build --mode production && vite build --mode production --ssr",
     "clean": "rm -rf dist",
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit"

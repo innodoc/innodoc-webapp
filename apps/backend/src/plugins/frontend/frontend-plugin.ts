@@ -21,10 +21,17 @@ const frontendPluginCb: FastifyPluginAsync<PluginOpts> = async (server, { config
   if (config.isProduction) {
     const distPath = path.join(FRONTEND_PATH, 'dist')
 
-    // Serve static assets
+    // Serve static assets. With wildcard: false, @fastify/static registers
+    // explicit routes for the built files only (and no index route, since
+    // index: false), so '/' and all app routes fall through to the
+    // not-found handler below and are SSR'd. The server build output is
+    // ignored so the SSR bundle is never served to browsers.
     await server.register(fastifyStatic, {
       root: distPath,
       prefix: '/',
+      wildcard: false,
+      index: false,
+      globIgnore: ['server/**'],
       decorateReply: false,
     })
 
@@ -32,7 +39,8 @@ const frontendPluginCb: FastifyPluginAsync<PluginOpts> = async (server, { config
     const htmlTemplate = await fs.readFile(path.join(distPath, 'index.html'), 'utf8')
     const handler = makeFrontendHandler(render, htmlTemplate)
 
-    server.get('/*', handler)
+    // App routes (anything that isn't a static file) are server-side rendered
+    server.setNotFoundHandler((request, reply) => handler.call(server, request, reply))
   }
 
   // Development

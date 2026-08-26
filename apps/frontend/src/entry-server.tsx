@@ -42,7 +42,6 @@ const render: RenderFunction = function render({ htmlTemplate, store, ...otherPr
   )
 
   const { pipe, abort } = renderToPipeableStream(reactNode, {
-    bootstrapModules: ['/entry-client.tsx'],
     bootstrapScriptContent: `window.__initial_state__=${JSON.stringify(state)}`,
     onShellReady() {
       try {
