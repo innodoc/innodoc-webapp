@@ -25,7 +25,10 @@ function makePathFunc({ routeManager }: MakePathFuncParams) {
 }
 
 async function setupDiContainer(config: ConfigSchema) {
-  const mockDatabaseModule = config.enableMockApi ? await import('#plugins/api/mock-database') : undefined
+  // Dev-only (INNODOC_API_MOCK=true): dynamically imported so the mock database
+  // and its devDependencies are never loaded in production
+  const useMockDatabase = !config.isProduction && config.enableMockApi
+  const mockDatabaseModule = useMockDatabase ? await import('#plugins/api/mock-database') : undefined
   const DatabaseClass = mockDatabaseModule ? mockDatabaseModule.default : Database
 
   diContainer.register({
