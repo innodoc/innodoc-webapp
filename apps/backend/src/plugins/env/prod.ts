@@ -1,9 +1,9 @@
 import type { FastifyPluginAsync } from 'fastify'
 import fastifyPlugin from 'fastify-plugin'
 
+// Plain HTTP/1.1 as production setups are behind some reverse proxy anyways.
 const options = () =>
   Promise.resolve({
-    http2: true,
     logger: false,
   })
 
