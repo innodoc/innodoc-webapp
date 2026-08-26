@@ -7,7 +7,7 @@
     "========= Build": "",
     "build": "turbo run build",
     "build:icon-bundle": "turbo run _build:icon-bundle",
-    "_build:icon-bundle": "mkdir -p packages/ui-design-system/dist/ && innodoc-icon-bundle --force --output packages/ui-design-system/dist/icon-bundle.json packages/ui-content/src/ packages/ui-design-system/src/ packages/ui-features/src/",
+    "_build:icon-bundle": "mkdir -p packages/ui-design-system/dist/ && innodoc-icon-bundle --force --output packages/ui-design-system/dist/icon-bundle.json",
     "clean": "turbo run clean",
     "========= Commands": "",
     "import-v1": "turbo run --filter=@innodoc/command-import-v1 main",

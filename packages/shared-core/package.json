@@ -10,6 +10,11 @@
       "development": "./src/constants.ts",
       "default": "./dist/constants.js"
     },
+    "./icons": {
+      "types": "./src/icons.ts",
+      "development": "./src/icons.ts",
+      "default": "./dist/icons.js"
+    },
     "./i18n": {
       "types": "./src/i18n.ts",
       "development": "./src/i18n.ts",
@@ -40,6 +45,11 @@
       "types": "./src/constants.ts",
       "development": "./src/constants.ts",
       "default": "./dist/constants.js"
+    },
+    "#icons": {
+      "types": "./src/icons.ts",
+      "development": "./src/icons.ts",
+      "default": "./dist/icons.js"
     },
     "#routes": {
       "types": "./src/routes/routes.ts",

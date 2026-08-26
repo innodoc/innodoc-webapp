@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { Typography } from '@mui/material'
-import Icon from './Icon.js'
+import Icon, { type IconProps } from './Icon.js'
 
 function PageHeader({ children, iconName }: PageHeaderProps) {
   const icon = iconName ? <Icon fontSize="inherit" name={iconName} sx={{ mr: 1 }} /> : null
@@ -15,7 +15,7 @@ function PageHeader({ children, iconName }: PageHeaderProps) {
 
 interface PageHeaderProps {
   children: ReactNode
-  iconName?: string
+  iconName?: IconProps['name']
 }
 
 export default PageHeader

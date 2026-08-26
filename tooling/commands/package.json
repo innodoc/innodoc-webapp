@@ -17,7 +17,6 @@
     "@innodoc/server-db": "workspace:*",
     "@innodoc/server-env": "workspace:*",
     "@innodoc/shared-core": "workspace:*",
-    "@typescript-eslint/typescript-estree": "catalog:",
     "camelcase-keys": "catalog:",
     "chalk": "catalog:",
     "hast-util-is-element": "catalog:",

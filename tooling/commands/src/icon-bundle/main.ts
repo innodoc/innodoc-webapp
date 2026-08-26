@@ -12,20 +12,6 @@ function isSystemError(err: unknown): err is SystemError {
   return err instanceof Error && typeof (err as SystemError).code === 'string'
 }
 
-async function checkSrcDir(srcDir: string) {
-  try {
-    const srcDirStats = await lstat(srcDir)
-    if (!srcDirStats.isDirectory()) {
-      throw new InvalidArgumentError(`${srcDir} is not a valid directory`)
-    }
-  } catch (error) {
-    if (isSystemError(error) && error.code === 'ENOENT') {
-      throw new InvalidArgumentError(`Source directory '${srcDir}' does not exist.`)
-    }
-    throw error
-  }
-}
-
 async function checkOutFile(outFile: string, force: boolean) {
   try {
     const outFileStats = await lstat(outFile)
@@ -39,20 +25,16 @@ async function checkOutFile(outFile: string, force: boolean) {
   }
 }
 
-async function buildIconBundle(srcDirs: string[], { force, output: outFile }: { force: boolean; output: string }) {
-  for (const srcDir of srcDirs) {
-    await checkSrcDir(srcDir)
-  }
+async function buildIconBundle({ force, output: outFile }: { force: boolean; output: string }) {
   await checkOutFile(outFile, force)
-  const iconBundle = await getIconBundle(srcDirs)
+  const iconBundle = await getIconBundle()
   await writeFile(outFile, JSON.stringify(iconBundle))
 }
 
 program
   .name('innodoc-icon-bundle')
-  .description('Scan source tree, extract icon names and build a JSON icon bundle.')
+  .description('Build the icon bundle JSON from the ICON_NAMES manifest in @innodoc/shared-core.')
   .requiredOption('-o, --output <output>', 'Output file')
   .option('-f, --force', 'Overwrite output file', false)
-  .argument('<dirs...>', 'source directories to scan')
   .action(buildIconBundle)
   .parse()

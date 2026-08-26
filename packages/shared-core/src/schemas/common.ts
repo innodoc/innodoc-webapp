@@ -5,6 +5,7 @@ import isPort from 'validator/lib/isPort.js'
 import isSlug from 'validator/lib/isSlug.js'
 import z from 'zod'
 import { PATH_RE } from '#constants'
+import { ICON_NAMES } from '#icons'
 
 // split off, so we don't create a circular typing on `translatableString` schema
 function validateTranslatableString(obj: object) {
@@ -17,7 +18,9 @@ function isSectionPath(value: string) {
   return sectionPathRegex.test(value)
 }
 
-const iconNameSchema = z.string().describe('Icon name')
+const iconNameSchema = z
+  .enum(ICON_NAMES, { message: 'Icon name must be defined in the ICON_NAMES manifest (@innodoc/shared-core/icons)' })
+  .describe('Icon name')
 const slugSchema = z.string().refine(isSlug, { message: 'String must be a slug' })
 const localeSchema = z.string().refine(isLocale, { message: 'String must be a valid locale' })
 const hostnameSchema = z.string().refine(isHostname, { message: 'Invalid hostname' })
