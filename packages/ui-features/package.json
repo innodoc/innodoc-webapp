@@ -56,8 +56,8 @@
     "@testing-library/jest-dom": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
+    "@typescript/native": "catalog:",
     "jsdom": "catalog:",
-    "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"
   }

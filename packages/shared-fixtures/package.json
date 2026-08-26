@@ -45,11 +45,11 @@
     "@playwright/test": "catalog:",
     "@types/mdast": "catalog:",
     "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
     "iso-639-1": "catalog:",
     "msw": "catalog:",
     "remark-stringify": "catalog:",
     "type-fest": "catalog:",
-    "typescript": "catalog:",
     "unified": "catalog:"
   }
 }

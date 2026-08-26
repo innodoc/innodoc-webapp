@@ -73,9 +73,9 @@
     "@types/hast": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
+    "@typescript/native": "catalog:",
     "hast-util-to-jsx-runtime": "catalog:",
     "jsdom": "catalog:",
-    "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"
   }

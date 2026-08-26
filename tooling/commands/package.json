@@ -20,9 +20,9 @@
   },
   "devDependencies": {
     "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
     "knex": "catalog:",
-    "tsx": "catalog:",
-    "typescript": "catalog:"
+    "tsx": "catalog:"
   },
   "bin": {
     "innodoc-import-v1": "./dist/import-v1/main.js",

@@ -50,6 +50,7 @@
     "@commitlint/config-conventional": "catalog:",
     "@eslint-react/eslint-plugin": "catalog:",
     "@innodoc/configs": "workspace:*",
+    "@typescript/native": "catalog:",
     "commit-and-tag-version": "catalog:",
     "dependency-cruiser": "catalog:",
     "eslint-plugin-perfectionist": "catalog:",

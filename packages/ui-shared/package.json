@@ -45,9 +45,9 @@
     "@testing-library/jest-dom": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
+    "@typescript/native": "catalog:",
     "iso-639-1": "catalog:",
     "jsdom": "catalog:",
-    "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"
   }

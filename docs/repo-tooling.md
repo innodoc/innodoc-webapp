@@ -38,3 +38,17 @@ Notes: it only reads `jsPlugins` (not `extends`) from `.oxlintrc.json`, so a con
 | Script      | Description                                                 |
 | ----------- | ----------------------------------------------------------- |
 | `pnpm knip` | Run knip and report unused dependencies, exports, and files |
+
+## TypeScript
+
+**Focus:** Type-checking, builds & editor support.
+
+The repo runs TypeScript 7 (the native Go port) for all `tsc` invocations (`typecheck`, `build`). Since TS 7 ships no JS compiler API, the catalog maps the `typescript` package to the 6.x compatibility package (`npm:@typescript/typescript6`) for tooling that imports the API at runtime (e.g. the eslint chain loaded by oxlint), while `@typescript/native` (`npm:typescript@^7`) provides the native `tsc` binary used by every workspace package. The legacy JS compiler is still available as `tsc6`.
+
+| Binary                  | Compiler          | Used by                                   |
+| ----------------------- | ----------------- | ----------------------------------------- |
+| `tsc`                   | TS 7 (native)     | All `typecheck`/`build` scripts           |
+| `tsc6`                  | TS 6 (JavaScript) | Fallback / manual comparison              |
+| `require('typescript')` | TS 6 (JavaScript) | Tooling needing the compiler API (eslint) |
+
+When a TS-API-consuming tool (typescript-eslint, @eslint-react, ...) adds TS 7 support, remove the `typescript` alias from the catalog and the `@typescript/native` entries, then restore a plain `typescript: ^7` catalog entry.

@@ -12,7 +12,7 @@
   "devDependencies": {
     "@playwright/test": "catalog:",
     "@types/node": "catalog:",
-    "playwright": "catalog:",
-    "typescript": "catalog:"
+    "@typescript/native": "catalog:",
+    "playwright": "catalog:"
   }
 }

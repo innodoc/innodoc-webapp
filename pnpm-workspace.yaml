@@ -40,6 +40,7 @@ catalog:
   '@types/svg-parser': ^2.0.6
   '@types/unist': ^3.0.3
   '@types/validator': ^13.15.10
+  '@typescript/native': npm:typescript@^7.0.2
   '@unhead/react': 3.4.0
   '@vitejs/plugin-react': ^6.0.2
   awilix: ^13.0.5
@@ -103,7 +104,9 @@ catalog:
   tsx: ^4.22.4
   turbo: ^2.9.18
   type-fest: ^5.7.0
-  typescript: ^6.0.3
+  # TS 7 (native Go port) ships no JS compiler API; tooling that imports `typescript` (e.g. the
+  # eslint chain) gets the 6.x compat package instead (side-by-side setup, tsc = native TS 7).
+  typescript: npm:@typescript/typescript6@^6.0.2
   unified: ^11.0.5
   unist-util-remove-position: ^5.0.0
   unist-util-visit: ^5.1.0

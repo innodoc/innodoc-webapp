@@ -23,6 +23,6 @@
     "zod-validation-error": "catalog:"
   },
   "devDependencies": {
-    "typescript": "catalog:"
+    "@typescript/native": "catalog:"
   }
 }
