@@ -9,6 +9,7 @@ import PreNode from './block/PreNode.js'
 import TableNode from './block/table/TableNode.js'
 import TBodyNode from './block/table/TBodyNode.js'
 import TdNode from './block/table/TdNode.js'
+import THeadNode from './block/table/THeadNode.js'
 import ThNode from './block/table/ThNode.js'
 import TrNode from './block/table/TrNode.js'
 import UlNode from './block/UlNode.js'
@@ -41,6 +42,7 @@ const componentsMap = {
   table: TableNode,
   tbody: TBodyNode,
   td: TdNode,
+  thead: THeadNode,
   th: ThNode,
   tr: TrNode,
   ul: UlNode,
