@@ -3,8 +3,6 @@ import { getIcons } from '@iconify/utils/lib/icon-set/get-icons'
 import parseSvg from './parse-svg.js'
 import scanIconNames from './scan-icon-names.js'
 
-const STATIC_ICONS = ['mdi:copyright']
-
 /** Parse SVG sources into HAST */
 function parse({ icons, prefix, width = 24, height = 24 }: IconifyJSON) {
   const parsedIcons: Record<string, string> = {}
@@ -38,7 +36,7 @@ async function getIconBundle(paths: string[]) {
   const iconifyJsonAll = await import('@iconify-json/mdi/icons.json', { with: { type: 'json' } })
 
   // Create icon subset
-  const mdiIconNames = filterBySet('mdi', [...scannedIconName, ...STATIC_ICONS])
+  const mdiIconNames = filterBySet('mdi', scannedIconName)
 
   const iconifyJson = getIcons(iconifyJsonAll.default, mdiIconNames)
   if (iconifyJson === null) {
