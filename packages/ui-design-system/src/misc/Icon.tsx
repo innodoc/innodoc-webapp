@@ -4,7 +4,7 @@ import { type ComponentProps } from 'react'
 import { Trans } from 'react-i18next'
 import type { IconName } from '@innodoc/shared-core/icons'
 import { InlineError } from '#errors'
-import iconBundle from '#icon-bundle' with { type: 'json' }
+import iconBundle from '#icon-bundle'
 import Code from './Code.js'
 
 const iconNames: ReadonlySet<string> = new Set(Object.getOwnPropertyNames(iconBundle))

@@ -61,7 +61,7 @@
       "project": ["src/**/*.ts?(x)"]
     },
     "tooling/commands": {
-      "entry": ["src/icon-bundle/main.ts", "src/import-v1/main.ts"],
+      "entry": ["src/import-v1/main.ts"],
       "project": ["src/**/*.ts"],
       "ignoreBinaries": ["vitest"]
     }

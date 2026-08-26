@@ -8,7 +8,6 @@ allowBuilds:
   msw: true
 
 catalog:
-  '@commander-js/extra-typings': ^15.0.0
   '@commitlint/cli': ^21.0.2
   '@commitlint/config-conventional': ^21.0.2
   '@emotion/cache': ^11.14.0
@@ -23,7 +22,6 @@ catalog:
   '@scalar/fastify-api-reference': ^1.59.3
   '@iconify-json/mdi': ^1.2.3
   '@iconify/types': ^2.0.0
-  '@iconify/utils': ^3.1.3
   '@mui/lab': 9.0.0-beta.8
   '@mui/material': ^9.3.1
   '@mui/system': ^9.3.0
@@ -48,7 +46,6 @@ catalog:
   buffer: ^6.0.3
   camelcase-keys: ^10.0.2
   chalk: ^5.6.2
-  commander: ^15.0.0
   commit-and-tag-version: ^12.7.3
   crc: ^4.3.2
   dependency-cruiser: ^17.4.3

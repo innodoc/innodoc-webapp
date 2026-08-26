@@ -43,17 +43,6 @@
     },
     "typecheck": {
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/tsconfig*.json"]
-    },
-    "//#_build:icon-bundle": {
-      "dependsOn": ["@innodoc/commands#build", "@innodoc/shared-core#build"],
-      "outputs": ["packages/ui-design-system/dist/icon-bundle.json"],
-      "inputs": [
-        "tooling/commands/src/icon-bundle/**/*",
-        "tooling/commands/package.json",
-        "packages/shared-core/src/icons.ts",
-        "pnpm-workspace.yaml",
-        "pnpm-lock.yaml"
-      ]
     }
   }
 }

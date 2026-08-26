@@ -6,9 +6,6 @@ settings:
 
 catalogs:
   default:
-    '@commander-js/extra-typings':
-      specifier: ^15.0.0
-      version: 15.0.0
     '@commitlint/cli':
       specifier: ^21.0.2
       version: 21.0.2
@@ -51,9 +48,6 @@ catalogs:
     '@iconify/types':
       specifier: ^2.0.0
       version: 2.0.0
-    '@iconify/utils':
-      specifier: ^3.1.3
-      version: 3.1.3
     '@mui/lab':
       specifier: 9.0.0-beta.8
       version: 9.0.0-beta.8
@@ -129,9 +123,6 @@ catalogs:
     chalk:
       specifier: ^5.6.2
       version: 5.6.2
-    commander:
-      specifier: ^15.0.0
-      version: 15.0.0
     commit-and-tag-version:
       specifier: ^12.7.3
       version: 12.7.3
@@ -355,9 +346,6 @@ importers:
       '@eslint-react/eslint-plugin':
         specifier: 'catalog:'
         version: 2.13.0(eslint@10.5.0(jiti@2.7.0))(typescript@6.0.3)
-      '@innodoc/commands':
-        specifier: workspace:*
-        version: link:tooling/commands
       '@innodoc/configs':
         specifier: workspace:*
         version: link:tooling/configs
@@ -931,6 +919,12 @@ importers:
       '@emotion/styled':
         specifier: 'catalog:'
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)
+      '@iconify-json/mdi':
+        specifier: 'catalog:'
+        version: 1.2.3
+      '@iconify/types':
+        specifier: 'catalog:'
+        version: 2.0.0
       '@innodoc/ui-test-utils':
         specifier: workspace:*
         version: link:../ui-test-utils
@@ -940,18 +934,36 @@ importers:
       '@testing-library/jest-dom':
         specifier: 'catalog:'
         version: 6.9.1
+      '@types/node':
+        specifier: 'catalog:'
+        version: 25.9.3
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.17
       '@types/svg-parser':
         specifier: 'catalog:'
         version: 2.0.6
+      hast-util-is-element:
+        specifier: 'catalog:'
+        version: 3.0.0
       jsdom:
         specifier: 'catalog:'
         version: 29.1.1
+      rehype-parse:
+        specifier: 'catalog:'
+        version: 9.0.1
+      tsx:
+        specifier: 'catalog:'
+        version: 4.22.4
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
+      unified:
+        specifier: 'catalog:'
+        version: 11.0.5
+      unist-util-remove-position:
+        specifier: 'catalog:'
+        version: 5.0.0
       vite:
         specifier: 'catalog:'
         version: 8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)
@@ -1107,15 +1119,6 @@ importers:
 
   tooling/commands:
     dependencies:
-      '@commander-js/extra-typings':
-        specifier: 'catalog:'
-        version: 15.0.0(commander@15.0.0)
-      '@iconify-json/mdi':
-        specifier: 'catalog:'
-        version: 1.2.3
-      '@iconify/utils':
-        specifier: 'catalog:'
-        version: 3.1.3
       '@innodoc/server-db':
         specifier: workspace:*
         version: link:../../packages/server-db
@@ -1131,31 +1134,13 @@ importers:
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
-      hast-util-is-element:
-        specifier: 'catalog:'
-        version: 3.0.0
-      rehype-parse:
-        specifier: 'catalog:'
-        version: 9.0.1
-      unified:
-        specifier: 'catalog:'
-        version: 11.0.5
-      unist-util-remove-position:
-        specifier: 'catalog:'
-        version: 5.0.0
       yaml:
         specifier: 'catalog:'
         version: 2.9.0
     devDependencies:
-      '@iconify/types':
-        specifier: 'catalog:'
-        version: 2.0.0
       '@types/node':
         specifier: 'catalog:'
         version: 25.9.3
-      commander:
-        specifier: 'catalog:'
-        version: 15.0.0
       knex:
         specifier: 'catalog:'
         version: 3.2.10(pg@8.21.0)
@@ -1182,9 +1167,6 @@ packages:
 
   '@adobe/css-tools@4.5.0':
     resolution: {integrity: sha512-6OzddxPio9UiWTCemp4N8cYLV2ZN1ncRnV1cVGtve7dhPOtRkleRyx32GQCYSwDYgaHU3USMm84tNsvKzRCa1Q==}
-
-  '@antfu/install-pkg@1.1.0':
-    resolution: {integrity: sha512-MGQsmw10ZyI+EJo45CdSER4zEb+p31LpDAFp2Z3gkSd1yqVZGi0Ebx++YTEMonJy4oChEMLsxZ64j8FH6sSqtQ==}
 
   '@antfu/ni@30.1.0':
     resolution: {integrity: sha512-3VuAbPjgY52rQNn4wABaXMhBU2Oq91uy6L8nX49eJ35OLI68CyckGU+HZxcaHix4ymuGM2nFL1D6sLpgODK5xw==}
@@ -1290,11 +1272,6 @@ packages:
   '@bramus/specificity@2.4.2':
     resolution: {integrity: sha512-ctxtJ/eA+t+6q2++vj5j7FYX3nRu311q1wfYH3xjlLOsczhlhxAg2FWNUXhpGvAw3BWo1xBcvOV6/YLc2r5FJw==}
     hasBin: true
-
-  '@commander-js/extra-typings@15.0.0':
-    resolution: {integrity: sha512-yeJlba62xqmkgELUsn7356MEnzLLu/fw2x4lofFqGnXh6YysRdEs2BaLeLtg1+KU0AXvMeqQvTTp+3hBEBK+EA==}
-    peerDependencies:
-      commander: ~15.0.0
 
   '@commitlint/cli@21.0.2':
     resolution: {integrity: sha512-YMmfLbqBg+ZRvvmPhc+cilSQFrh/AgzVgCT1U/OifmUZEwPbvCtA8rN//YNaF9d5eoZphxVMGYtmwA2QgQORgg==}
@@ -1805,9 +1782,6 @@ packages:
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
-
-  '@iconify/utils@3.1.3':
-    resolution: {integrity: sha512-LPKOXPn/zV+zis1oOfGWogaXVpqUybF3ZS6SCZIsz8vg0ivVp9+fVqyYB7xq0aiST/VhUQYGO1qo6uoYSiEJqw==}
 
   '@inquirer/ansi@2.0.5':
     resolution: {integrity: sha512-doc2sWgJpbFQ64UflSVd17ibMGDuxO1yKgOgLMwavzESnXjFWJqUeG8saYosqKpHp4kWiM5x1nXvEjbpx90gzw==}
@@ -3320,10 +3294,6 @@ packages:
     resolution: {integrity: sha512-H+y0Jo/T1RZ9qPP4Eh1pkcQcLRglraJaSLoyOtHxu6AapkjWVCy2Sit1QQ4x3Dng8qDlSsZEet7g5Pq06MvTgw==}
     engines: {node: '>=20'}
 
-  commander@15.0.0:
-    resolution: {integrity: sha512-z67u4ZhzCL/Tydu1lJARtEZYWbWaN7oYLHbsuzocr6y4N6WZAagG3RQ4FW61V1/0+jImpj293XfrcYnd1qxtPg==}
-    engines: {node: '>=22.12.0'}
-
   commander@8.3.0:
     resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
     engines: {node: '>= 12'}
@@ -4131,9 +4101,6 @@ packages:
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
     engines: {node: '>=6'}
-
-  import-meta-resolve@4.2.0:
-    resolution: {integrity: sha512-Iqv2fzaTQN28s/FwZAoFq0ZSs/7hMAHJVX+w8PZl3cY19Pxk6jFFalxQoIfW2826i/fDLXv8IiEZRIT0lDuWcg==}
 
   imurmurhash@0.1.4:
     resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
@@ -6091,11 +6058,6 @@ snapshots:
 
   '@adobe/css-tools@4.5.0': {}
 
-  '@antfu/install-pkg@1.1.0':
-    dependencies:
-      package-manager-detector: 1.6.0
-      tinyexec: 1.2.2
-
   '@antfu/ni@30.1.0':
     dependencies:
       fzf: 0.5.2
@@ -6239,10 +6201,6 @@ snapshots:
   '@bramus/specificity@2.4.2':
     dependencies:
       css-tree: 3.2.1
-
-  '@commander-js/extra-typings@15.0.0(commander@15.0.0)':
-    dependencies:
-      commander: 15.0.0
 
   '@commitlint/cli@21.0.2(@types/node@25.9.3)(conventional-commits-parser@6.4.0)(typescript@6.0.3)':
     dependencies:
@@ -6786,12 +6744,6 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify/types@2.0.0': {}
-
-  '@iconify/utils@3.1.3':
-    dependencies:
-      '@antfu/install-pkg': 1.1.0
-      '@iconify/types': 2.0.0
-      import-meta-resolve: 4.2.0
 
   '@inquirer/ansi@2.0.5': {}
 
@@ -8020,8 +7972,6 @@ snapshots:
 
   commander@14.0.3: {}
 
-  commander@15.0.0: {}
-
   commander@8.3.0: {}
 
   commit-and-tag-version@12.7.3:
@@ -9011,8 +8961,6 @@ snapshots:
     dependencies:
       parent-module: 1.0.1
       resolve-from: 4.0.0
-
-  import-meta-resolve@4.2.0: {}
 
   imurmurhash@0.1.4: {}
 

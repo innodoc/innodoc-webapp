@@ -145,6 +145,12 @@ module.exports = {
           // These modules are loaded only when !config.isProduction
           String.raw`^apps/backend/src/plugins/frontend/vite-dev-server\.ts$`,
           String.raw`^apps/backend/src/plugins/api/swagger-dev-plugin\.ts$`,
+          // The dev icon bundle and its SVG parser are development/build-time only:
+          // `#icon-bundle` resolves to them exclusively under the `development`
+          // condition (production uses the prebuilt dist/icon-bundle.json), so
+          // their devDependencies are expected.
+          String.raw`^packages/ui-design-system/src/icon-bundle\.ts$`,
+          String.raw`^packages/ui-design-system/src/parse-icon-svg\.ts$`,
         ],
       },
       to: {

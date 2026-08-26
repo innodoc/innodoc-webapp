@@ -1,5 +1,5 @@
 {
   "extends": "@innodoc/configs/tsconfig/tooling.json",
-  "include": ["vitest.config.ts"],
+  "include": ["vitest.config.ts", "scripts/*.ts"],
   "exclude": ["dist", "node_modules"]
 }
