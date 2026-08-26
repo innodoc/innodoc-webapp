@@ -67,12 +67,17 @@ const CARD_TYPES = ['example', 'exercise', 'hint', 'info', 'inputHint'] as const
 const HAST_MDX_JSX_FLOW_DIV_ELEMENT_NAME = [
   'Example',
   'Exercise',
+  'Grid',
+  'GridItem',
   'Hint',
   'Info',
   'InputHint',
   'Solution',
+  'Table',
   'Tabs',
   'TabItem',
+  'Video',
+  'YouTube',
 ] as const
 
 /** Possible names for custom hast MDX text element */

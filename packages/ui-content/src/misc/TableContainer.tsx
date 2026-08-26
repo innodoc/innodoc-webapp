@@ -1,13 +1,15 @@
 import type { ReactNode } from 'react'
-import { Paper } from '@mui/material'
+import type { HastMdxJsxFlowDivElement } from '@innodoc/content-parser/types'
 
+// TODO: migrate TableContainer (MUI Paper container with scroll)
 function TableContainer({ children, id }: TableContainerProps) {
-  return <Paper id={id}>{children}</Paper>
+  return <div id={id}>{children}</div>
 }
 
 interface TableContainerProps {
   children: ReactNode
   id?: string
+  nodeProps: HastMdxJsxFlowDivElement['properties']
 }
 
 export default TableContainer

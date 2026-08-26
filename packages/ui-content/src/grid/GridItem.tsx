@@ -1,59 +1,15 @@
-import type { GridOffset, GridSize } from '@mui/material/Grid'
 import type { ReactNode } from 'react'
-import { styled } from '@mui/material'
-import MuiGrid from '@mui/material/Grid'
-import { GRID_ITEM_PROPERTIES } from '@innodoc/content-parser/properties'
-import type { NodeProps } from '#types'
+import type { HastMdxJsxFlowDivElement } from '@innodoc/content-parser/types'
 
-const StyledGrid = styled(MuiGrid)({
-  '& > :first-child': { marginTop: 0 },
-  '& > :last-child': { marginBottom: 0 },
-})
-
-function parseValue(value: string): GridSize | GridOffset {
-  return value === 'auto' ? 'auto' : Number.parseInt(value)
-}
-
-function toCamelCase(str: string): string {
-  return str.replaceAll(/-([a-z])/gu, (_match, char: string) => char.toUpperCase())
-}
-
-function nodeToGridProps(nodeProps: GridItemProps['nodeProps']) {
-  const size: Record<string, GridSize | undefined> = {}
-  const offset: Record<string, GridOffset | undefined> = {}
-
-  for (const name of GRID_ITEM_PROPERTIES) {
-    const propVal = nodeProps[name]
-    if (!propVal) {
-      continue
-    }
-
-    const camelName = toCamelCase(name)
-    if (name.endsWith('-offset')) {
-      offset[camelName] = parseValue(propVal) as GridOffset
-    } else {
-      size[camelName] = parseValue(propVal) as GridSize
-    }
-  }
-
-  const result: Record<string, unknown> = {}
-  if (Object.values(size).some(Boolean)) {
-    result.size = size
-  }
-  if (Object.values(offset).some(Boolean)) {
-    result.offset = offset
-  }
-
-  return result
-}
-
-function GridItem({ children, nodeProps }: GridItemProps) {
-  return <StyledGrid {...nodeToGridProps(nodeProps)}>{children}</StyledGrid>
+// TODO: migrate GridItem (MUI Grid item with size/offset nodeProps)
+function GridItem({ children, id }: GridItemProps) {
+  return <div id={id}>{children}</div>
 }
 
 interface GridItemProps {
   children: ReactNode
-  nodeProps: NodeProps<typeof GRID_ITEM_PROPERTIES>
+  id?: string
+  nodeProps: HastMdxJsxFlowDivElement['properties']
 }
 
 export default GridItem

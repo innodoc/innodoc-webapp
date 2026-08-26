@@ -27,6 +27,11 @@
       "development": "./src/exercises/exercises.ts",
       "default": "./dist/exercises/exercises.js"
     },
+    "#grid": {
+      "types": "./src/grid/grid.ts",
+      "development": "./src/grid/grid.ts",
+      "default": "./dist/grid/grid.js"
+    },
     "#hast": {
       "types": "./src/hast/hast.ts",
       "development": "./src/hast/hast.ts",
@@ -37,6 +42,11 @@
       "development": "./src/hast/components-map.ts",
       "default": "./dist/hast/components-map.js"
     },
+    "#misc": {
+      "types": "./src/misc/misc.ts",
+      "development": "./src/misc/misc.ts",
+      "default": "./dist/misc/misc.js"
+    },
     "#tabs": {
       "types": "./src/tabs/tabs.ts",
       "development": "./src/tabs/tabs.ts",
@@ -45,6 +55,11 @@
     "#types": {
       "types": "./src/types.ts",
       "development": "./src/types.ts"
+    },
+    "#video": {
+      "types": "./src/video/video.ts",
+      "development": "./src/video/video.ts",
+      "default": "./dist/video/video.js"
     }
   },
   "scripts": {

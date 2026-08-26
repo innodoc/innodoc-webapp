@@ -1,16 +1,15 @@
 import type { ReactNode } from 'react'
-import MuiGrid from '@mui/material/Grid'
+import type { HastMdxJsxFlowDivElement } from '@innodoc/content-parser/types'
 
-function Grid({ children }: GridProps) {
-  return (
-    <MuiGrid container spacing={1}>
-      {children}
-    </MuiGrid>
-  )
+// TODO: migrate Grid (MUI Grid container)
+function Grid({ children, id }: GridProps) {
+  return <div id={id}>{children}</div>
 }
 
 interface GridProps {
   children: ReactNode
+  id?: string
+  nodeProps: HastMdxJsxFlowDivElement['properties']
 }
 
 export default Grid

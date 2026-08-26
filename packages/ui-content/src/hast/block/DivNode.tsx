@@ -2,10 +2,11 @@ import type { ComponentType, ReactNode } from 'react'
 import { isHastMdxJsxFlowDivElement, isHastRootDivElement } from '@innodoc/content-parser/typeguards'
 import type { HastMdxJsxFlowDivElement } from '@innodoc/content-parser/types'
 import { ExampleCard, ExerciseCard, HintCard, InfoCard, InputHintCard, SolutionCard } from '#cards'
-// import { Grid, GridItem } from '#content/grid'
+import { Grid, GridItem } from '#grid'
 import type { HastComponentProps } from '#hast'
-// import { TableContainer } from '#content/misc'
+import { TableContainer } from '#misc'
 import { TabItem, Tabs } from '#tabs'
+import { Video, YouTubeVideo } from '#video'
 
 interface DivComponentProps {
   children: ReactNode
@@ -24,16 +25,20 @@ const flowDivComponentMap: Record<HastMdxJsxFlowDivElement['properties']['name']
   InputHint: InputHintCard,
   Solution: SolutionCard,
 
-  // table
-  // Table: TableContainer,
-
   // grid
-  // Grid,
-  // GridItem,
+  Grid,
+  GridItem,
+
+  // table
+  Table: TableContainer,
 
   // tabs
   Tabs,
   TabItem,
+
+  // video
+  Video,
+  YouTube: YouTubeVideo,
 }
 
 function DivNode({ children, id, node }: HastComponentProps<'div'>) {
