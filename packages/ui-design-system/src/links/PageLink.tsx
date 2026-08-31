@@ -5,6 +5,7 @@ import { useRoutes, useSelectPage } from '@innodoc/ui-shared/store-hooks'
 import { InlineError } from '#errors'
 import { Code, Icon } from '#misc'
 import BaseLink from './BaseLink.js'
+import tryGenerateUrl from './try-generate-url.js'
 
 /** Link to a page using `pageSlug` */
 function PageLinkFromSlug({ ref, pageSlug, ...other }: PageLinkFromSlugProps) {
@@ -31,9 +32,14 @@ interface PageLinkFromSlugProps extends Omit<PageLinkProps, 'page'> {
 function PageLink({ ref, children, page, preferShortTitle = false, showIcon = true, ...other }: PageLinkProps) {
   const { url } = useRoutes()
   const { slug, icon, shortTitle, title } = page
+  const href = tryGenerateUrl(url, { name: 'app:course:page', pageSlug: slug })
+
+  if (href === null) {
+    return null
+  }
 
   return (
-    <BaseLink to={url({ name: 'app:course:page', pageSlug: slug })} ref={ref} {...other}>
+    <BaseLink to={href} ref={ref} {...other}>
       {children ?? (
         <>
           {showIcon && icon ? <Icon name={icon} /> : null}

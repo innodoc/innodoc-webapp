@@ -1,18 +1,21 @@
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
+import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
 import { DrawerButton } from '@innodoc/ui-design-system/buttons'
 import { AppLink, PageLink } from '@innodoc/ui-design-system/links'
 import { Icon } from '@innodoc/ui-design-system/misc'
-import pageLinks from '@innodoc/ui-design-system/page-links'
-import { useRoutes, useSelectLinkedPages } from '@innodoc/ui-shared/store-hooks'
-
-const pageLinksNav = pageLinks.filter((page) => page.linked?.includes('nav'))
+import { selectPageLinks } from '@innodoc/ui-design-system/page-links'
+import { useRoutes, useSelector, useSelectLinkedPages } from '@innodoc/ui-shared/store-hooks'
 
 function MobileNavButton() {
   const { isActiveRoute } = useRoutes()
   const { t } = useTranslation()
 
   const { pages } = useSelectLinkedPages('nav')
+  const routeInfo = useSelector(selectRouteInfo)
+
+  const pageLinksNav = selectPageLinks('nav', isCourseRouteInfo(routeInfo))
 
   return (
     <DrawerButton

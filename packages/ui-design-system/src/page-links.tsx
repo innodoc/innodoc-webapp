@@ -51,4 +51,29 @@ const coursePageLinks: PageLinkDefinition[] = [
 
 const pageLinks = [...builtInPageLinks, ...coursePageLinks] as const
 
+/**
+ * Page links to render in a layout slot.
+ *
+ * Visibility depends on the current route, not on the link definition:
+ *
+ * - Course links (`app:course:*`) require a `courseSlug`. Outside a course route the URL cannot be
+ *   generated at all, so the link is not rendered.
+ * - The built-in index link only applies outside a course, where it does not compete with the
+ *   course home link.
+ *
+ * @param location Layout slot of the link list
+ * @param hasCourse Whether the current route belongs to a course
+ * @returns Visible page link definitions
+ */
+function selectPageLinks(location: PageLinkLocation, hasCourse: boolean): PageLinkDefinition[] {
+  return pageLinks.filter((page) => {
+    if (!page.linked?.includes(location)) {
+      return false
+    }
+
+    return page.routeName.startsWith('app:course:') ? hasCourse : !hasCourse
+  })
+}
+
+export { selectPageLinks }
 export default pageLinks

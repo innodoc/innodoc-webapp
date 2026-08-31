@@ -1,5 +1,6 @@
 export { default as AppLink } from './AppLink.js'
 export { default as ContentLink } from './ContentLink.js'
 export { default as CourseHomeLink } from './CourseHomeLink.js'
+export { default as LocaleLink } from './LocaleLink.js'
 export { default as PageLink, PageLinkFromSlug } from './PageLink.js'
 export { default as SectionLink, SectionLinkFromPath } from './SectionLink.js'

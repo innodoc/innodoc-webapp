@@ -8,6 +8,7 @@ import BaseLink from './BaseLink.js'
 import CourseHomeLink from './CourseHomeLink.js'
 import { PageLinkFromSlug } from './PageLink.js'
 import { SectionLinkFromPath } from './SectionLink.js'
+import tryGenerateUrl from './try-generate-url.js'
 
 /** App-internal link */
 function AppLink({ ref, children, routeInfo, ...other }: AppLinkProps) {
@@ -55,8 +56,14 @@ function AppLink({ ref, children, routeInfo, ...other }: AppLinkProps) {
   }
 
   // Other route
+  const href = tryGenerateUrl(url, routeInfo)
+
+  if (href === null) {
+    return null
+  }
+
   return (
-    <BaseLink to={url(routeInfo)} ref={ref} {...other}>
+    <BaseLink to={href} ref={ref} {...other}>
       {content}
     </BaseLink>
   )

@@ -6,6 +6,7 @@ import { InlineError } from '#errors'
 import { Code } from '#misc'
 import { formatSectionTitle } from '#utils'
 import BaseLink from './BaseLink.js'
+import tryGenerateUrl from './try-generate-url.js'
 
 /** Link to a section using `sectionPath` */
 function SectionLinkFromPath({ ref: reference, sectionPath, ...other }: SectionLinkFromPathProperties) {
@@ -35,9 +36,14 @@ interface SectionLinkFromPathProperties extends Omit<SectionLinkProperties, 'sec
 /** Link to a section */
 function SectionLink({ ref: reference, children, preferShortTitle = false, section, ...other }: SectionLinkProperties) {
   const { url } = useRoutes()
+  const href = tryGenerateUrl(url, { name: 'app:course:section', sectionPath: section.path })
+
+  if (href === null) {
+    return null
+  }
 
   return (
-    <BaseLink to={url({ name: 'app:course:section', sectionPath: section.path })} ref={reference} {...other}>
+    <BaseLink to={href} ref={reference} {...other}>
       {children ?? <>{formatSectionTitle(section, preferShortTitle)}</>}
     </BaseLink>
   )

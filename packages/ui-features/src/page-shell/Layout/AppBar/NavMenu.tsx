@@ -1,12 +1,12 @@
 import type { ButtonProps } from '@mui/material'
 import { Button, Stack, styled } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
+import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
 import { AppLink, PageLink } from '@innodoc/ui-design-system/links'
 import { Icon } from '@innodoc/ui-design-system/misc'
-import pageLinks from '@innodoc/ui-design-system/page-links'
-import { useRoutes, useSelectCurrentCourse, useSelectLinkedPages } from '@innodoc/ui-shared/store-hooks'
-
-const pageLinksNavBase = pageLinks.filter((page) => page.linked?.includes('nav'))
+import { selectPageLinks } from '@innodoc/ui-design-system/page-links'
+import { useRoutes, useSelector, useSelectLinkedPages } from '@innodoc/ui-shared/store-hooks'
 
 function NavButton({ ref, ...props }: ButtonProps) {
   return <Button color="inherit" nativeButton={false} ref={ref} size="small" {...props} />
@@ -29,9 +29,9 @@ function NavMenu() {
   const { isActiveRoute } = useRoutes()
   const { t } = useTranslation()
   const { pages } = useSelectLinkedPages('nav')
-  const { course } = useSelectCurrentCourse()
+  const routeInfo = useSelector(selectRouteInfo)
 
-  const pageLinksNav = pageLinksNavBase.filter((page) => (page.routeName === 'app:index' && course ? false : true))
+  const pageLinksNav = selectPageLinks('nav', isCourseRouteInfo(routeInfo))
 
   return (
     <Stack

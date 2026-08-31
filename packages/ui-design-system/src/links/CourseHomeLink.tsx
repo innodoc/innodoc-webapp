@@ -1,6 +1,7 @@
 import type { LinkProps } from './types.js'
 import { useRoutes, useSelectCurrentCourse } from '@innodoc/ui-shared/store-hooks'
 import BaseLink from './BaseLink.js'
+import tryGenerateUrl from './try-generate-url.js'
 
 /** Link to home as specified in course */
 function CourseHomeLink({ ref, children, ...props }: HomeLinkProps) {
@@ -14,9 +15,14 @@ function CourseHomeLink({ ref, children, ...props }: HomeLinkProps) {
   const title = course.shortTitle ?? course.title
   const content = children ?? title
   const routeInfo = parseLinkSpecifier(course.homeLink)
+  const href = tryGenerateUrl(url, routeInfo)
+
+  if (href === null) {
+    return null
+  }
 
   return (
-    <BaseLink to={url(routeInfo)} ref={ref} {...props}>
+    <BaseLink to={href} ref={ref} {...props}>
       {content}
     </BaseLink>
   )

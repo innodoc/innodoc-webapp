@@ -6,11 +6,9 @@ import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
 import getFragmentsApi from '@innodoc/shared-store/slices/content/fragments'
 import HastNode from '@innodoc/ui-content'
 import { AppLink, PageLink } from '@innodoc/ui-design-system/links'
-import pageLinks from '@innodoc/ui-design-system/page-links'
+import { selectPageLinks } from '@innodoc/ui-design-system/page-links'
 import { useRouteManager } from '@innodoc/ui-shared/hooks'
 import { useSelectCurrentCourse, useSelectLinkedPages, useSelector } from '@innodoc/ui-shared/store-hooks'
-
-const pageLinksFooterBase = pageLinks.filter((page) => page.linked?.includes('footer'))
 
 const FooterLink = styled(Link)(({ theme }) => ({
   alignItems: 'center',
@@ -26,9 +24,7 @@ function Footer() {
   const routeInfo = useSelector(selectRouteInfo)
   const { locale } = routeInfo
 
-  const pageLinksFooter = pageLinksFooterBase.filter((page) =>
-    page.routeName === 'app:index' && course ? false : true,
-  )
+  const pageLinksFooter = selectPageLinks('footer', isCourseRouteInfo(routeInfo))
   const courseSlug = isCourseRouteInfo(routeInfo) ? routeInfo.courseSlug : undefined
   const routeManager = useRouteManager()
   const fragments = getFragmentsApi(routeManager)
