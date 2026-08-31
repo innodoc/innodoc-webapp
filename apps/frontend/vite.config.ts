@@ -15,7 +15,10 @@ const configFn = defineConfig(({ command, isSsrBuild }) => {
 
   const config: UserConfig = {
     envDir: rootDir,
-    envPrefix: 'INNODOC_', // Exposed to client
+    // Only `INNODOC_PUBLIC_*` is exposed to the client. Secrets (JWT, DB, SMTP, Discourse) use the
+    // plain `INNODOC_` prefix, so they stay server-side even when a module spreads the whole
+    // `import.meta.env` object. Keep in sync with src/env-exposure.test.ts.
+    envPrefix: 'INNODOC_PUBLIC_',
     plugins: [viteReact(), unhead()],
     root: srcDir,
     publicDir: path.resolve(import.meta.dirname, 'public'),

@@ -12,16 +12,16 @@ import hastListenerMiddleware, { setupHastListeners } from '@innodoc/ui-content/
 import App from './App.js'
 
 async function makeProps() {
-  if (!isCourseSlugMode(import.meta.env.INNODOC_COURSE_SLUG_MODE)) {
-    throw new Error(`Invalid course slug mode: ${import.meta.env.INNODOC_COURSE_SLUG_MODE}`)
+  if (!isCourseSlugMode(import.meta.env.INNODOC_PUBLIC_COURSE_SLUG_MODE)) {
+    throw new Error(`Invalid course slug mode: ${import.meta.env.INNODOC_PUBLIC_COURSE_SLUG_MODE}`)
   }
 
   const routeManager = new RouteManager({
     config: {
-      courseSlugMode: import.meta.env.INNODOC_COURSE_SLUG_MODE,
-      defaultCourseSlug: import.meta.env.INNODOC_DEFAULT_COURSE_SLUG,
-      pagePathPrefix: import.meta.env.INNODOC_PAGE_PATH_PREFIX,
-      sectionPathPrefix: import.meta.env.INNODOC_SECTION_PATH_PREFIX,
+      courseSlugMode: import.meta.env.INNODOC_PUBLIC_COURSE_SLUG_MODE,
+      defaultCourseSlug: import.meta.env.INNODOC_PUBLIC_DEFAULT_COURSE_SLUG,
+      pagePathPrefix: import.meta.env.INNODOC_PUBLIC_PAGE_PATH_PREFIX,
+      sectionPathPrefix: import.meta.env.INNODOC_PUBLIC_SECTION_PATH_PREFIX,
     },
   })
 

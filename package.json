@@ -21,7 +21,7 @@
     "========= Development": "",
     "dev": "pnpm --filter=@innodoc/backend run dev",
     "dev:checks": "pnpm run lint && pnpm run fmt:check && pnpm run typecheck && pnpm run syncpack && pnpm run depcruise:validate && pnpm run knip && pnpm run test && pnpm run test:e2e",
-    "dev:mock": "INNODOC_API_MOCK=true INNODOC_COURSE_SLUG_MODE=${INNODOC_COURSE_SLUG_MODE:-SINGLE} INNODOC_DEFAULT_COURSE_SLUG=test-course pnpm dev",
+    "dev:mock": "INNODOC_API_MOCK=true INNODOC_PUBLIC_COURSE_SLUG_MODE=${INNODOC_PUBLIC_COURSE_SLUG_MODE:-SINGLE} INNODOC_PUBLIC_DEFAULT_COURSE_SLUG=test-course pnpm dev",
     "========= Format": "",
     "fmt": "oxfmt .",
     "fmt:check": "oxfmt --check",

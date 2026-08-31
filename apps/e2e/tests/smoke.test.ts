@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-const courseSlugMode = process.env.INNODOC_COURSE_SLUG_MODE ?? 'SINGLE'
+const courseSlugMode = process.env.INNODOC_PUBLIC_COURSE_SLUG_MODE ?? 'SINGLE'
 
 /** Slug of the course the mock API serves */
 const courseSlug = 'test-course'

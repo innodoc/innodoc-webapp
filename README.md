@@ -48,7 +48,9 @@ $ pnpm install
 
 #### 2. Configuration
 
-Copy the example configuration `.env` to `.env.local` and edit to your liking.
+Copy the example configuration `.env` to `.env.local` and edit to your liking. Variables
+whose names start with `INNODOC_PUBLIC_` are shipped to the browser; the rest stay on the
+server (see [Configuration options](#configuration-options)).
 
 #### 3. Build the application
 
@@ -79,9 +81,21 @@ headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) if needed.
 
 ### Configuration options
 
-Configuration options are set in the `.env.local` file or through environment
-variables. You can use `.env` as a basis. For `docker run` you might want to use
+Configuration options are set in the `.env*` files or through environment
+variables. You can use the committed `.env` as a basis. For `docker run` you might want to use
 `--env` or `--env-file`.
+
+Variables are split into two namespaces:
+
+| Prefix             | Visible to         | Read by                                      | Examples                                      |
+| ------------------ | ------------------ | -------------------------------------------- | --------------------------------------------- |
+| `INNODOC_PUBLIC_*` | browser and server | Vite `envPrefix`, inlined into client bundle | `INNODOC_PUBLIC_APP_ROOT`                     |
+| `INNODOC_*`        | server only        | `@innodoc/server-env` via `loadEnv`          | `INNODOC_JWT_SECRET`, `INNODOC_DB_CONNECTION` |
+
+Anything named `INNODOC_PUBLIC_*` is readable by anyone who opens the browser devtools, so
+never move a secret into that namespace. Note that public variables are baked into the client
+bundle **at build time**: `pnpm build` must see them, and setting them only on `docker run`
+will not affect the already-built frontend.
 
 ## Deployment
 
@@ -160,7 +174,7 @@ The course slug mode changes where a course sits in the URL, so the suite is run
 against each mode:
 
 ```sh
-$ INNODOC_COURSE_SLUG_MODE=URL pnpm test:e2e
+$ INNODOC_PUBLIC_COURSE_SLUG_MODE=URL pnpm test:e2e
 ```
 
 For failed tests a screenshot will be taken automatically and placed into the

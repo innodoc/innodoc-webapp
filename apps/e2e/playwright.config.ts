@@ -8,8 +8,8 @@ const baseURL = `https://localhost:${e2ePort}`
 
 // Which URL scheme the app runs under. The course slug mode changes where a course sits in the URL,
 // which is what the smoke tests assert, so the suite runs against each mode: pass
-// `INNODOC_COURSE_SLUG_MODE=URL` in the environment to run it against URL mode.
-const courseSlugMode = process.env.INNODOC_COURSE_SLUG_MODE ?? 'SINGLE'
+// `INNODOC_PUBLIC_COURSE_SLUG_MODE=URL` in the environment to run it against URL mode.
+const courseSlugMode = process.env.INNODOC_PUBLIC_COURSE_SLUG_MODE ?? 'SINGLE'
 
 /** Slug of the course the mock API serves */
 const courseSlug = 'test-course'
@@ -56,8 +56,8 @@ export default defineConfig({
     env: {
       INNODOC_PORT: e2ePort,
       // Keep the app's self-reported root URL in sync with the server
-      INNODOC_APP_ROOT: `${baseURL}/`,
-      INNODOC_COURSE_SLUG_MODE: courseSlugMode,
+      INNODOC_PUBLIC_APP_ROOT: `${baseURL}/`,
+      INNODOC_PUBLIC_COURSE_SLUG_MODE: courseSlugMode,
     },
     ignoreHTTPSErrors: true,
     reuseExistingServer: !process.env.CI,

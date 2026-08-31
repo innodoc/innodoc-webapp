@@ -16,8 +16,8 @@ function parseConfig() {
   const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..')
   const env = loadEnv(process.env.NODE_ENV ?? 'development', rootDir, '')
 
-  if (env.INNODOC_APP_ROOT === undefined) {
-    throw new Error('You need to set the env variable INNODOC_APP_ROOT.')
+  if (env.INNODOC_PUBLIC_APP_ROOT === undefined) {
+    throw new Error('You need to set the env variable INNODOC_PUBLIC_APP_ROOT.')
   }
 
   try {
@@ -25,17 +25,17 @@ function parseConfig() {
       host: env.INNODOC_HOST,
       port: env.INNODOC_PORT,
 
-      appRoot: env.INNODOC_APP_ROOT,
+      appRoot: env.INNODOC_PUBLIC_APP_ROOT,
       isProduction: env.NODE_ENV === 'production',
       rootDir,
       distDir: path.join(rootDir, 'dist', 'client'),
-      pagePathPrefix: env.INNODOC_PAGE_PATH_PREFIX,
-      sectionPathPrefix: env.INNODOC_SECTION_PATH_PREFIX,
+      pagePathPrefix: env.INNODOC_PUBLIC_PAGE_PATH_PREFIX,
+      sectionPathPrefix: env.INNODOC_PUBLIC_SECTION_PATH_PREFIX,
       jwtSecret: env.INNODOC_JWT_SECRET,
       dbConnectionString: env.INNODOC_DB_CONNECTION,
 
-      courseSlugMode: env.INNODOC_COURSE_SLUG_MODE,
-      defaultCourseSlug: env.INNODOC_DEFAULT_COURSE_SLUG,
+      courseSlugMode: env.INNODOC_PUBLIC_COURSE_SLUG_MODE,
+      defaultCourseSlug: env.INNODOC_PUBLIC_DEFAULT_COURSE_SLUG,
 
       smtpHost: env.INNODOC_SMTP_HOST,
       smtpPort: env.INNODOC_SMTP_PORT,

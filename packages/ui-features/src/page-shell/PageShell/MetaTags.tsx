@@ -15,7 +15,7 @@ function MetaTags() {
   useHead({
     htmlAttrs: { lang: currentLocale },
     link: [
-      { href: import.meta.env.INNODOC_APP_ROOT, rel: 'canonical' },
+      { href: import.meta.env.INNODOC_PUBLIC_APP_ROOT, rel: 'canonical' },
       { href: '', rel: 'icon' }, // TODO: Add course logo?
       ...languageLinks,
     ],

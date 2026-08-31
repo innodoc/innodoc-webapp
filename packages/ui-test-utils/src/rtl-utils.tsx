@@ -39,7 +39,7 @@ await i18n.use(initReactI18next).init({
 
 interface TestHarnessOptions {
   /**
-   * How URLs are built, mirroring the `INNODOC_COURSE_SLUG_MODE` of a deployment.
+   * How URLs are built, mirroring the `INNODOC_PUBLIC_COURSE_SLUG_MODE` of a deployment.
    *
    * `SINGLE` (the default, and what the test environment uses) hides the course in the URL, so every
    * route is generatable from the locale alone. `URL` puts the course slug in the path, which means
