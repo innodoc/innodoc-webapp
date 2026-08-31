@@ -42,6 +42,7 @@
     "react-redux": "catalog:"
   },
   "devDependencies": {
+    "@innodoc/ui-test-utils": "workspace:*",
     "@testing-library/jest-dom": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",

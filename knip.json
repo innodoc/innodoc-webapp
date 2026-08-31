@@ -59,7 +59,16 @@
       }
     },
     "packages/shared-store": {
-      "project": ["src/**/*.ts?(x)"]
+      "project": ["src/**/*.ts?(x)"],
+      "vitest": {
+        "entry": ["src/**/*.test.ts?(x)"]
+      }
+    },
+    "packages/ui-shared": {
+      "project": ["src/**/*.ts?(x)"],
+      "vitest": {
+        "entry": ["src/**/*.test.ts?(x)"]
+      }
     },
     "packages/ui-test-utils": {
       "entry": ["src/rtl-utils.tsx", "src/rtl-setup.ts", "src/stub-globals.ts"],
