@@ -7,30 +7,30 @@
     },
     "apps/backend": {
       "project": ["src/**/*.ts"],
-      "ignoreBinaries": ["mkcert", "vitest"],
+      "ignoreBinaries": ["mkcert"],
       "ignoreDependencies": ["pino-pretty"]
     },
     "apps/frontend": {
       "project": ["src/**/*.ts?(x)"],
-      "ignoreDependencies": ["@emotion/server"]
+      "ignoreDependencies": ["@emotion/server"],
+      "vitest": {
+        "entry": ["src/**/*.test.ts?(x)"]
+      }
     },
     "apps/e2e": {
       "entry": [],
       "project": ["tests/**/*.ts"]
     },
     "packages/content-parser": {
-      "project": ["src/**/*.ts?(x)"],
-      "ignoreBinaries": ["vitest"]
+      "project": ["src/**/*.ts?(x)"]
     },
     "packages/server-db": {
       "entry": ["src/migrations/*.ts"],
       "project": ["src/**/*.ts"],
-      "ignoreBinaries": ["vitest"],
       "ignoreDependencies": ["pg", "pg-protocol"]
     },
     "packages/server-env": {
-      "project": ["src/**/*.ts"],
-      "ignoreBinaries": ["vitest"]
+      "project": ["src/**/*.ts"]
     },
     "packages/shared-core": {
       "project": ["src/**/*.ts?(x)"],
@@ -59,8 +59,7 @@
       }
     },
     "packages/shared-store": {
-      "project": ["src/**/*.ts?(x)"],
-      "ignoreBinaries": ["vitest"]
+      "project": ["src/**/*.ts?(x)"]
     },
     "packages/ui-test-utils": {
       "entry": ["src/rtl-utils.tsx", "src/rtl-setup.ts", "src/stub-globals.ts"],

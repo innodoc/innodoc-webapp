@@ -22,7 +22,6 @@
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
     "knex": "NODE_OPTIONS='--import tsx/esm' knex --knexfile src/knex-config.ts",
-    "test:unit": "vitest",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

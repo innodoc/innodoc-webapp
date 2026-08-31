@@ -18,7 +18,7 @@
   "scripts": {
     "build": "vite build --mode production && vite build --mode production --ssr",
     "clean": "rm -rf dist",
-    "test:unit": "vitest",
+    "test": "vitest",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.tooling.json"
   },
   "dependencies": {
