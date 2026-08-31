@@ -33,6 +33,6 @@ const hastSlice = createSlice({
 })
 
 export type { HastSliceState }
-export { selectHast, selectHastResultByHash, selectIsProcessing } from './selectors.js'
+export { selectHast, selectHastResultByHash } from './selectors.js'
 export const { addHastResult, changeIsProcessing } = hastSlice.actions
 export default hastSlice

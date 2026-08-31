@@ -87,6 +87,11 @@
     }
   },
   "imports": {
+    "#make-store": {
+      "types": "./src/make-store-client.ts",
+      "development": "./src/make-store-client.ts",
+      "default": "./dist/make-store-client.js"
+    },
     "#slices/app": {
       "types": "./src/slices/app/app-slice.ts",
       "development": "./src/slices/app/app-slice.ts",
@@ -136,7 +141,8 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "typecheck": "tsc --noEmit"
+    "test": "vitest",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.tooling.json"
   },
   "dependencies": {
     "@innodoc/shared-core": "workspace:*",
@@ -146,9 +152,11 @@
     "react": "catalog:"
   },
   "devDependencies": {
+    "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@typescript/native": "catalog:",
     "iso-639-1": "catalog:",
-    "vite": "catalog:"
+    "vite": "catalog:",
+    "vitest": "catalog:"
   }
 }

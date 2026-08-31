@@ -1,6 +1,6 @@
 {
   "extends": "@innodoc/configs/tsconfig/react.json",
-  "include": ["vitest.config.ts", "src/**/*.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "lib": ["ESNext", "DOM", "DOM.Iterable"],

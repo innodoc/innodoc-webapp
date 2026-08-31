@@ -8,7 +8,4 @@ const selectHast = (state: RootState) => state.hast
 const selectHastResultByHash = (state: RootState, hash: string): HastResult | undefined =>
   selectHast(state).content[hash]
 
-/** Select processing state */
-const selectIsProcessing = (state: RootState) => selectHast(state).isProcessing
-
-export { selectHast, selectHastResultByHash, selectIsProcessing }
+export { selectHast, selectHastResultByHash }
