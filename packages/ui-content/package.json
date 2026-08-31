@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*-worker.*",
+    "**/*.css"
+  ],
   "exports": {
     ".": {
       "types": "./src/hast/hast.ts",
