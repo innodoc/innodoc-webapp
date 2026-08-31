@@ -58,7 +58,9 @@ const frontendPluginCb: FastifyPluginAsync<PluginOpts> = async (server, { config
       const transformedHtmlTemplate = await viteDevServer.transformIndexHtml(request.url, htmlTemplate)
       const handler = makeFrontendHandler(render, transformedHtmlTemplate)
 
-      await handler.call(server, request, reply)
+      // The result must be returned rather than awaited and discarded: the handler resolves to the
+      // reply it has already sent, which is what tells Fastify not to finalize the response itself.
+      return handler.call(server, request, reply)
     })
   }
 }

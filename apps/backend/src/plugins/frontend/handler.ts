@@ -126,9 +126,24 @@ function makeFrontendHandler(render: RenderFunction, htmlTemplate: string): Rout
     }
 
     // Render with populated store
-    const stream = render({ htmlTemplate, i18n, routeManager, store, url })
-    reply.type('text/html')
+    const { status, stream } = render({ htmlTemplate, i18n, routeManager, store, url })
+
+    // Awaits the app shell, which is the first thing the stream writes anyway, so nothing arrives
+    // later than it would have. It is what lets a failed render answer 500 with an error page
+    // instead of an empty body.
+    const statusCode = await status
+
+    reply.status(statusCode).type('text/html')
+
+    if (statusCode >= 500) {
+      reply.header('cache-control', 'no-store')
+    }
+
     reply.send(stream)
+
+    // An awaited handler must return the reply when the payload is a stream: otherwise the handler
+    // promise settles before the stream is piped and the response goes out with an empty body.
+    return reply
   }
 }
 

@@ -11,7 +11,20 @@ interface RenderContext {
   url: string
 }
 
-type RenderFunction = (ctx: RenderContext) => Readable
+/** Server render outcome: the HTML to send, and the status it must be sent with */
+interface RenderResult {
+  /**
+   * HTTP status of the response, resolved when the app shell is ready (200) or when the render
+   * proved unable to produce one (500, with a minimal error page on {@link RenderResult.stream}).
+   * It always resolves before the first byte is written, so awaiting it costs no time to first
+   * byte and never rejects.
+   */
+  status: Promise<number>
+  /** HTML stream, piped to the response once `status` resolved */
+  stream: Readable
+}
+
+type RenderFunction = (ctx: RenderContext) => RenderResult
 
 interface ServerEntryModule {
   default: RenderFunction
@@ -23,4 +36,4 @@ interface InitialState {
   supportedLocales: string[]
 }
 
-export type { InitialState, RenderFunction, ServerEntryModule }
+export type { InitialState, RenderFunction, RenderResult, ServerEntryModule }
