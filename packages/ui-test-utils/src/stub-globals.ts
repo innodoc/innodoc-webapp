@@ -1,4 +1,5 @@
 import { vi } from 'vitest'
+import parseConfig from '@innodoc/server-env'
 
 // https://github.com/vitest-dev/vitest/issues/4043#issuecomment-1905172846
 class ESBuildAndJSDOMCompatibleTextEncoder extends TextEncoder {
@@ -19,6 +20,22 @@ class ESBuildAndJSDOMCompatibleTextEncoder extends TextEncoder {
 }
 
 vi.stubGlobal('TextEncoder', ESBuildAndJSDOMCompatibleTextEncoder)
+
+// The store asks for API paths relative to the app root, which a browser resolves against the page's
+// own origin. Node has no such context - `new Request('/api/...')` fails there as an invalid URL -
+// so relative request URLs are resolved against the configured root, which is the origin the mock
+// server registers its handlers under.
+const { appRoot } = parseConfig()
+const NodeRequest = globalThis.Request
+
+class TestRequest extends NodeRequest {
+  constructor(input: RequestInfo | URL, init?: RequestInit) {
+    // `new URL` leaves absolute URLs as they are
+    super(typeof input === 'string' ? new URL(input, appRoot).href : input, init)
+  }
+}
+
+vi.stubGlobal('Request', TestRequest)
 
 vi.stubGlobal(
   'Worker',

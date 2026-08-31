@@ -1,43 +1,32 @@
-import type { ReactNode } from 'react'
 import { expect, test } from 'vitest'
-import { RouteManager } from '@innodoc/shared-core/routes'
-import { RouteManagerProvider } from '@innodoc/ui-shared/contexts'
-import { render } from '@innodoc/ui-test-utils'
-import MobileNavButton from './MobileNavButton.js'
+import { createTestHarness, TEST_COURSE_SLUG } from '@innodoc/ui-test-utils'
 import NavMenu from './NavMenu.js'
 
-// URL mode (as in development): course routes need a `courseSlug`, which the store route info of a
-// non-course route does not have. Links to course routes must not be rendered there.
-const urlRouteManager = new RouteManager({
-  config: {
+// URL mode (as in development) is where the two link sets cannot both be rendered: a course link
+// needs a `courseSlug`, which the routes around a course do not have. Asking for that URL throws,
+// and a throw while the app shell renders used to leave the visitor with an empty page.
+
+test('NavMenu links the index and no course route outside a course', () => {
+  const harness = createTestHarness({
     courseSlugMode: 'URL',
-    defaultCourseSlug: null,
-    pagePathPrefix: 'page',
-    sectionPathPrefix: 'section',
-  },
+    routeInfo: { locale: 'en', name: 'app:index' },
+  })
+
+  const { getByText, queryByText } = harness.render(<NavMenu />)
+
+  expect(getByText('pages.builtin.home.title')).toBeTruthy()
+  expect(queryByText('pages.course.progress.title')).toBeNull()
 })
 
-function Wrapper({ children }: { children: ReactNode }) {
-  return <RouteManagerProvider routeManager={urlRouteManager}>{children}</RouteManagerProvider>
-}
+test('NavMenu links the course routes and not the index inside a course', async () => {
+  const harness = createTestHarness({ courseSlugMode: 'URL' })
+  await harness.withCourse()
 
-test('NavMenu renders its links on a route without a course', () => {
-  const { container } = render(
-    <Wrapper>
-      <NavMenu />
-    </Wrapper>,
-  )
+  const { getByText, queryByText } = harness.render(<NavMenu />)
 
-  expect(container.textContent).toContain('pages.builtin.home.title')
-  expect(container.textContent).not.toContain('pages.course.progress.title')
-})
+  expect(getByText('pages.course.progress.title')).toBeTruthy()
+  expect(queryByText('pages.builtin.home.title')).toBeNull()
 
-test('MobileNavButton renders its links on a route without a course', () => {
-  const { container } = render(
-    <Wrapper>
-      <MobileNavButton />
-    </Wrapper>,
-  )
-
-  expect(container.querySelector('button')).not.toBeNull()
+  const progressLink = getByText('pages.course.progress.title').closest('a')
+  expect(progressLink?.getAttribute('href')).toBe(`/en/${TEST_COURSE_SLUG}/progress`)
 })

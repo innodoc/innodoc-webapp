@@ -17,6 +17,7 @@
     "@innodoc/shared-core": "workspace:*",
     "@innodoc/shared-fixtures": "workspace:*",
     "@innodoc/shared-store": "workspace:*",
+    "@innodoc/ui-shared": "workspace:*",
     "@mui/material": "catalog:",
     "@testing-library/dom": "catalog:",
     "@testing-library/jest-dom": "catalog:",

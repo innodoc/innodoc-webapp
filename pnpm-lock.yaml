@@ -1101,6 +1101,9 @@ importers:
       '@innodoc/shared-store':
         specifier: workspace:*
         version: link:../shared-store
+      '@innodoc/ui-shared':
+        specifier: workspace:*
+        version: link:../ui-shared
       '@mui/material':
         specifier: 'catalog:'
         version: 9.3.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
