@@ -1,7 +1,6 @@
 // import { Skeleton, styled } from '@mui/material'
 // import { useTranslation } from 'react-i18next'
 
-// import { useGetSvgQuery } from '@innodoc/store/slices/staticCache'
 // import { InlineError, SvgRootNode } from '#common'
 
 // const StyledSvg = styled('svg')({
