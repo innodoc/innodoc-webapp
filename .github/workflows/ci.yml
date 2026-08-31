@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  checks:
+    name: Checks and tests
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm install -g pnpm && pnpm ci
+
+      - name: Lint and format
+        run: pnpm lint && pnpm fmt:check
+
+      - name: Types
+        run: pnpm typecheck
+
+      - name: Package manifests and dependency boundaries
+        run: pnpm syncpack && pnpm depcruise:validate
+
+      - name: Unused code
+        run: pnpm knip
+
+      - name: Unit and integration tests
+        run: pnpm test
+
+  # The course slug mode decides where a course sits in the URL, and therefore which route
+  # parameters a page needs, so the journeys run once per mode the app can be deployed in.
+  e2e:
+    name: E2E (${{ matrix.course-slug-mode }})
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        course-slug-mode: [SINGLE, URL]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm install -g pnpm && pnpm ci
+
+      - name: Install Playwright Browsers
+        run: pnpm --filter @innodoc/e2e run playwright:install
+
+      - name: Create the certificate the dev server serves
+        # Locally this comes from `pnpm dev:mkcert`; the browser ignores the validity of this one.
+        run: |
+          mkdir -p apps/backend/cert
+          openssl req -x509 -newkey rsa:2048 -sha256 -nodes -days 2 \
+            -keyout apps/backend/cert/key.pem -out apps/backend/cert/cert.pem \
+            -subj "/CN=localhost" -addext "subjectAltName=DNS:localhost,IP:127.0.0.1"
+
+      - name: Run Playwright tests
+        run: pnpm test:e2e
+        env:
+          INNODOC_COURSE_SLUG_MODE: ${{ matrix.course-slug-mode }}
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-${{ matrix.course-slug-mode }}
+          path: apps/e2e/playwright-report/
+          retention-days: 30

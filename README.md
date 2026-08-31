@@ -126,64 +126,48 @@ principle:
 In practice, this means our test suite consists mainly of integration and E2E
 tests while unit tests are used sparingly where appropriate.
 
-[Jest](https://jestjs.io/) is used as a test runner for unit and integration
-tests.
-
-#### Unit tests
+[Vitest](https://vitest.dev/) runs the unit and integration tests of every
+workspace package.
 
 ```sh
-$ pnpm test:unit
+$ pnpm test
 ```
-
-TODO Coverage still needed?
-
-Shows detailed coverage report and also produces `./coverage/lcov-report` that
-can be viewed in a web browser.
-
-```sh
-$ pnpm test:unit:coverage
-```
-
-#### Integration tests
 
 We use [React Testing
 Library](https://testing-library.com/docs/react-testing-library/intro) for
 writing maintainable tests, avoiding testing implentation details of our
-components.
-
-```sh
-$ pnpm test:integration
-```
+components. `createTestHarness()` from `packages/ui-test-utils` wires a store,
+the mock API and a route manager together; pass it a `courseSlugMode` to render
+components under a given URL scheme.
 
 #### E2E tests
 
 [Playwright](https://playwright.dev/) is used for E2E testing.
 
-This will spawn the app and content servers automatically before running E2E
-tests. Afterwards both servers are shut down. Don't forget to build the
-application before as this runs directly on the production build.
+This spawns the app automatically, serves it with the mock API so no database is
+needed, and shuts it down afterwards. As the dev server listens on HTTPS, it
+expects a certificate in `apps/backend/cert`:
+
+```sh
+$ pnpm --filter @innodoc/backend run dev:mkcert
+```
 
 ```sh
 $ pnpm test:e2e
 ```
 
-E2E tests can also be looked at while running.
+The course slug mode changes where a course sits in the URL, so the suite is run
+against each mode:
 
 ```sh
-$ pnpm test:e2e:show
+$ INNODOC_COURSE_SLUG_MODE=URL pnpm test:e2e
 ```
 
 For failed tests a screenshot will be taken automatically and placed into the
-directory `e2e/screenshots`.
-
-#### Serve test content
-
-Serve test content that can be used with [`CONTENT_ROOT`](#content_root). That
-comes in handy for development and testing. For production you should set up a
-proper web server to handle static content.
+directory `e2e/screenshots`. The HTML report lists every run:
 
 ```sh
-$ pnpm test:e2e:content
+$ pnpm test:e2e:show-report
 ```
 
 ### Linting
