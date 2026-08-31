@@ -115,6 +115,7 @@
   "dependencies": {
     "hast-util-is-element": "catalog:",
     "i18next": "catalog:",
+    "react": "catalog:",
     "react-i18next": "catalog:",
     "regexparam": "catalog:",
     "validator": "catalog:",
@@ -124,6 +125,7 @@
     "@types/hast": "catalog:",
     "@types/mdast": "catalog:",
     "@types/node": "catalog:",
+    "@types/react": "catalog:",
     "@types/validator": "catalog:",
     "@typescript/native": "catalog:",
     "iso-639-1": "catalog:",

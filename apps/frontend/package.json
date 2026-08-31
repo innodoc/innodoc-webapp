@@ -30,7 +30,6 @@
     "@innodoc/shared-store": "workspace:*",
     "@innodoc/ui-content": "workspace:*",
     "@innodoc/ui-features": "workspace:*",
-    "@innodoc/ui-shared": "workspace:*",
     "@unhead/react": "catalog:",
     "buffer": "catalog:",
     "camelcase-keys": "catalog:",

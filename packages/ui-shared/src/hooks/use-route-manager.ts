@@ -1,5 +1,5 @@
 import { use } from 'react'
-import { RouteManagerContext } from '@innodoc/ui-shared/contexts'
+import { RouteManagerContext } from '@innodoc/shared-core/routes'
 
 function useRouteManager() {
   const routeManager = use(RouteManagerContext)
