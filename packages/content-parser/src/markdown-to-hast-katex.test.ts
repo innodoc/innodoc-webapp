@@ -50,12 +50,13 @@ function katexSpanIn(node: Element): Element | undefined {
 test('keeps the katex class names on inline math that sanitize would strip', async () => {
   // V3: rehype-katex runs AFTER rehype-sanitize in markdown-to-hast.ts.
   // hast-util-sanitize's defaultSchema has no span attribute entry at all (its `*` list allows
-  // neither className, style, nor ariaHidden), and sanitization/config.ts only adds className
-  // to span restricted to the values 'math'/'math-inline'. So the 'katex'/'katex-html' class
-  // names, the ariaHidden flag, and the inline styles below are only in the output tree because
-  // katex transforms the math nodes after sanitize has run. Swapping those two plugin lines
-  // would strip every class, flag, and style from every formula - a valid-but-different tree,
-  // no error, every formula rendered unstyled (the 886dd19b class of silent breakage).
+  // neither className, style, nor ariaHidden), and sanitization/config.ts allowlists no
+  // className values for span either (the legacy v1 react-katex 'math'/'math-inline' entries
+  // were removed). So the 'katex'/'katex-html' class names, the ariaHidden flag, and the
+  // inline styles below are only in the output tree because katex transforms the math nodes
+  // after sanitize has run. Swapping those two plugin lines would strip every class, flag,
+  // and style from every formula - a valid-but-different tree, no error, every formula
+  // rendered unstyled (the 886dd19b class of silent breakage).
   // Targeted property assertions only: the full ~14-span structure churns on any katex bump.
   const root = await markdownToHast('Inline $x^2$ tail')
 
@@ -90,8 +91,9 @@ test('wraps inline math in the same paragraph as the surrounding text', async ()
 test('puts display math in its own paragraph with the same outer span classes', async () => {
   // Display and inline math differ in block placement only: a display formula gets its own
   // <p>, while the outer katex span's class list is exactly ['katex'] in both modes. No
-  // 'math-display' (or 'math-inline') class is emitted - the math* className entries in
-  // sanitization/config.ts do not match what this katex output shape produces.
+  // 'math-display' (or 'math-inline') class is emitted - rehype-katex (output: 'html') does not
+  // emit the legacy react-katex class names in the first place, and sanitization/config.ts
+  // allowlists no className values that could preserve them.
   const displayMath = String.raw`$$\frac{a}{b}$$`
   const root = await markdownToHast(`Before\n\n${displayMath}\n\nAfter`)
 
@@ -144,9 +146,9 @@ test('renders invalid display LaTeX as an error span in its own paragraph', asyn
 
 test('strips a className written by the author on a span but keeps the allowlisted ones', async () => {
   // Negative control proving the allowlist interplay is real: the same span that keeps the
-  // author's allowlisted 'solution' property has the author's 'className' stripped (only
-  // 'math'/'math-inline' values are allowed on span). katex's class names survive on their
-  // spans purely because katex runs after sanitize - not because the allowlist admits them.
+  // author's allowlisted 'solution' property has the author's 'className' stripped (no
+  // className values are allowlisted on span). katex's class names survive on their spans
+  // purely because katex runs after sanitize - not because the allowlist admits them.
   const root = await markdownToHast('a <TextQuestion solution="42" className="evil">q</TextQuestion> b')
   const spans = allElements(root).filter((el) => el.tagName === 'span' && el.properties.name === 'TextQuestion')
   expect(spans.map((el) => el.properties)).toEqual([{ solution: '42', name: 'TextQuestion' }])
