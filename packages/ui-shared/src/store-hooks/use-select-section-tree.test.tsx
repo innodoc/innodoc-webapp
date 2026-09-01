@@ -11,14 +11,14 @@ import useSelectSectionTree from './use-select-section-tree.js'
 // releases, and the tree shape (7 top-level sections, nested up to several levels deep) is fixed
 // only in structure by shared-fixtures make-sections.ts.
 
-const seen: SectionWithChildren[][] = []
+const seen: (readonly SectionWithChildren[])[] = []
 
 function Probe({ parentId }: { parentId: ApiSection['parentId'] }) {
   seen.push(useSelectSectionTree(parentId))
   return null
 }
 
-function flatten(nodes: SectionWithChildren[]): SectionWithChildren[] {
+function flatten(nodes: readonly SectionWithChildren[]): SectionWithChildren[] {
   return nodes.flatMap((n) => [n, ...(n.children ? flatten(n.children) : [])])
 }
 
@@ -130,11 +130,10 @@ test('useSelectSectionTree returns an empty array outside a course', () => {
   expect(seen.at(-1)).toEqual([]) // the query is skipped -> the selector's empty-array branch
 })
 
-// Regression gate: the selector is created inside the hook body (no cross-render memoisation) and
-// the result is rebuilt with Object.entries() on every render. Marked `fails` on purpose - the
-// modifier must be removed when the selector is hoisted and stabilised. Reference identity is the
-// point; do not weaken it.
-test.fails('useSelectSectionTree keeps the tree reference stable across re-renders', async () => {
+// Regression gate: the selector used to be created inside the hook body (no cross-render
+// memoisation) and the result was rebuilt with Object.entries() on every render. Reference
+// identity is the point; do not weaken it.
+test('useSelectSectionTree keeps the tree reference stable across re-renders', async () => {
   const harness = createTestHarness()
   await harness.withCourse()
 
