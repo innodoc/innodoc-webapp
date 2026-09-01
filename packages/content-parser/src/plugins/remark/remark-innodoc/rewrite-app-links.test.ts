@@ -58,15 +58,16 @@ test('ignores nodes that are not links', () => {
   expect(root.url).toBe('app:should-not-change')
 })
 
-test('is not idempotent: a second rewrite re-prefixes an already-rewritten url', () => {
-  // `app://...` also matches `startsWith('app:')`, so `slice(4)` keeps the
-  // existing `//` and the rewrite prefixes another `//` — the slashes double.
-  // In practice `remarkInnodoc` visits each node exactly once per parse, so
-  // the double rewrite never happens — this pins that the protection is the
-  // visit contract, not the function.
+test('is idempotent: a second pass leaves an already-rewritten url untouched', () => {
+  // `app://...` used to also match `startsWith('app:')`, so a second visit
+  // re-prefixed it to `app:////course:page`. The guard now skips urls that
+  // already carry the `app://` form, so re-applying the transform over an
+  // already-transformed tree (a re-visited or re-parsed link) is a no-op.
   const link = makeLink('app://course:page')
   rewriteAppLinks(link)
-  expect(link.url).toBe('app:////course:page')
+  expect(link.url).toBe('app://course:page')
+  rewriteAppLinks(link)
+  expect(link.url).toBe('app://course:page')
 })
 
 test('rewrites app: specifiers with the | separator encoded as %7C', async () => {
