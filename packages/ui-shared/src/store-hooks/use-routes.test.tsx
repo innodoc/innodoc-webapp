@@ -1,7 +1,10 @@
 /* oxlint-disable react/react-compiler -- the probe writes the hook result to a module variable during
 render; a test-only capture pattern, the component never renders UI */
+import { memo } from 'react'
 import { expect, test } from 'vitest'
-import { createTestHarness, TEST_COURSE_SLUG } from '@innodoc/ui-test-utils'
+import { changeIsProcessing } from '@innodoc/shared-store/slices/hast'
+import { act, createTestHarness, TEST_COURSE_SLUG } from '@innodoc/ui-test-utils'
+import { useSelector } from './redux.js'
 import useRoutes from './use-routes.js'
 
 // The expected URL shapes are cross-checked against the RouteManager unit tests in shared-core:
@@ -14,6 +17,23 @@ const seen: ReturnType<typeof useRoutes>[] = []
 function Probe() {
   seen.push(useRoutes())
   return null
+}
+
+// The probe for the memo-bailout test: subscribes to the hast slice so an unrelated dispatch
+// re-renders it, while `url` comes from `useRoutes()`
+const urlRenders: ReturnType<typeof useRoutes>['url'][] = []
+
+function UrlProbe({ url }: { url: ReturnType<typeof useRoutes>['url'] }) {
+  urlRenders.push(url)
+  return null
+}
+
+const MemoizedUrlProbe = memo(UrlProbe)
+
+function MemoChildProbe() {
+  useSelector((state) => state.hast.isProcessing)
+  const { url } = useRoutes()
+  return <MemoizedUrlProbe url={url} />
 }
 
 test('useRoutes.url generates the URL of the current route', () => {
@@ -90,4 +110,52 @@ test('useRoutes.parseLinkSpecifier resolves link specifiers', () => {
     sectionPath: 'intro/a',
   })
   expect(seen.at(-1)?.parseLinkSpecifier('app:index')).toStrictEqual({ name: 'app:index' })
+})
+
+test('useRoutes returns the same object and url function across re-renders without navigation', () => {
+  const harness = createTestHarness()
+  const stable: ReturnType<typeof useRoutes>[] = []
+
+  function StableProbe() {
+    stable.push(useRoutes())
+    return null
+  }
+
+  const { rerender } = harness.render(<StableProbe />)
+  rerender(<StableProbe />)
+
+  expect(stable).toHaveLength(2)
+  expect(stable.at(1)).toBe(stable.at(0))
+  expect(stable.at(1)?.url).toBe(stable.at(0)?.url)
+  expect(stable.at(1)?.isActiveRoute).toBe(stable.at(0)?.isActiveRoute)
+  expect(stable.at(1)?.parseLinkSpecifier).toBe(stable.at(0)?.parseLinkSpecifier)
+})
+
+test('useRoutes returns a new object after navigation', () => {
+  const harness = createTestHarness()
+  const stable: ReturnType<typeof useRoutes>[] = []
+
+  function StableProbe() {
+    stable.push(useRoutes())
+    return null
+  }
+
+  const { rerender } = harness.render(<StableProbe />)
+  harness.setRoute({ courseSlug: TEST_COURSE_SLUG, locale: 'en', name: 'app:course:progress' })
+  rerender(<StableProbe />)
+
+  expect(stable.at(1)).not.toBe(stable.at(0))
+})
+
+test('a memoised link child bails out on unrelated store changes', () => {
+  const harness = createTestHarness()
+  const rendersBefore = urlRenders.length
+
+  harness.render(<MemoChildProbe />)
+  act(() => {
+    harness.store.dispatch(changeIsProcessing(true))
+  })
+
+  // MemoChildProbe re-rendered, but the memoised child received the same `url` reference and bailed out
+  expect(urlRenders.length - rendersBefore).toBe(1)
 })
