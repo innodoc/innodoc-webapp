@@ -5,27 +5,20 @@ import type { ParserError } from '@innodoc/shared-core/types'
 import { serializeParserError } from './utils.js'
 
 /**
- * Error contract of the parser — the shape that decides whether the app's Markdown web worker
- * reports errors or hangs the page forever.
+ * Error contract of the parser — the shape that decides what the app's Markdown web worker posts
+ * when a document fails to parse.
  *
- * // NOTE(silent-hang): `markdownToHast` throws SYNCHRONOUSLY for parse-phase errors: it is
- * `processor.run(processor.parse(markdown))` and the micromark parse rejects inside `parse`.
- * The worker (packages/ui-content/src/hast-listener-middleware/markdown-to-hast-worker.ts,
- * lines 9-20) chains `markdownToHast(content).then(…).catch(…)` — but the throw escapes that
- * expression before `.then`/`.catch` are even attached, so `self.postMessage` (line 16) never
- * runs. On the main thread, `processMarkdown` in hast-listener-middleware.ts has already
- * dispatched `changeIsProcessing(true)` (line 38) and is stuck on
- * `await listenerApi.take(addHastResult.match …)` (line 51); the `finally` block (lines 53-55)
- * that would clear the processing state can only run after that await settles, which never
- * happens. Result: a Markdown syntax error satisfies `isParserError` and serializes to the
- * exact wire shape below, yet the user sees a permanent spinner — no error, no content.
+ * `markdownToHast` throws SYNCHRONOUSLY for parse-phase errors: it is
+ * `processor.run(processor.parse(markdown))` and the micromark parse rejects inside `parse`,
+ * before the returned promise exists. The worker
+ * (packages/ui-content/src/hast-listener-middleware/markdown-to-hast-worker.ts) therefore wraps
+ * the call in `try { await markdownToHast(…) } catch { … }` so both the synchronous parse throw
+ * and any async (transform-phase) rejection flow through one error branch that always posts a
+ * wire-shaped result. The worker-level behavior is pinned by the tests next to the worker module
+ * itself.
  *
- * Even on the (unreachable for parse errors) async path, the `.catch` handler (worker lines
- * 14-20) only posts a message for errors satisfying `isParserError`; anything else is
- * `console.error`'d with no `postMessage` — the same silent hang.
- *
- * This suite pins all of that as-is (pin, don't fix): if any of it changes, the worker's
- * behavior contract with the main thread has changed.
+ * This suite pins the parser-side facts that fix relies on: the synchronous throw, the
+ * `isParserError`-satisfying diagnostics, and the exact wire shape the worker posts.
  */
 
 const unclosedMdx = '<Info title="unclosed>'
@@ -90,15 +83,17 @@ test('serializeParserError of the thrown error yields the exact wire object the 
   })
 })
 
-test('the worker-style then/catch chain never observes the parse error (it escapes before the chain is attached)', () => {
-  let onFulfilled = 0
-  let onRejected = 0
-  // Same expression shape as markdown-to-hast-worker.ts line 9: markdownToHast(content).then(…).catch(…)
-  expect(() =>
-    markdownToHast(unclosedMdx)
-      .then(() => onFulfilled++)
-      .catch(() => onRejected++),
-  ).toThrow(/Unexpected end of file in attribute value/u)
-  expect(onFulfilled).toBe(0)
-  expect(onRejected).toBe(0)
+test('the worker-style try/await/catch observes the parse error (the pattern markdown-to-hast-worker.ts uses)', async () => {
+  let caught: unknown
+  // Same pattern as markdown-to-hast-worker.ts: the call sits inside a try block, so the
+  // synchronous parse throw is caught here exactly as it is in the worker.
+  try {
+    await markdownToHast(unclosedMdx)
+  } catch (error) {
+    caught = error
+  }
+  expect(caught).toBeDefined()
+  expect(caught).toBeInstanceOf(Error)
+  // The worker's error branch keys on this guard before serializing; the thrown value must satisfy it.
+  expect(isParserError(caught)).toBe(true)
 })
