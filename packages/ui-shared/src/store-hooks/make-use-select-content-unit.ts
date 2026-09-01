@@ -1,12 +1,10 @@
-import type { LanguageCode } from 'iso-639-1'
-import { createSelector } from '@reduxjs/toolkit'
-import { useMemo } from 'react'
-import { translateEntity } from '@innodoc/shared-core/translate'
-import { isApiPage, isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
+import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
 import type { ApiPage, ApiSection, ContentType, TranslatedPage, TranslatedSection } from '@innodoc/shared-core/types'
 import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
 import getPagesApi from '@innodoc/shared-store/slices/content/pages'
 import getSectionsApi from '@innodoc/shared-store/slices/content/sections'
+import { selectPageBySlug } from '@innodoc/shared-store/slices/content/selectors/pages'
+import { selectSectionByPath } from '@innodoc/shared-store/slices/content/selectors/sections'
 import { useRouteManager } from '@innodoc/ui-shared/hooks'
 import { useSelector } from './redux.js'
 
@@ -18,6 +16,10 @@ type UseSelectReturnType<C extends ContentUnit> = C extends ApiPage
 
 /**
  * Make page/section selection hook.
+ *
+ * The unit is looked up in the shared translated index (`selectPageBySlug` / `selectSectionByPath`
+ * in `@innodoc/shared-store`): no per-link `find()` over the whole array, and no selector built
+ * per component instance.
  *
  * @param contentType content type
  * @returns hook that selects a page/section
@@ -34,29 +36,21 @@ function makeUseSelectContentUnit<C extends ContentUnit>(contentType: ContentTyp
     const routeInfo = useSelector(selectRouteInfo)
     const courseSlug = isCourseRouteInfo(routeInfo) ? routeInfo.courseSlug : undefined
 
-    const selectContentUnit = useMemo(
-      () =>
-        createSelector(
-          [
-            (_result: { data: C[] | undefined }) => _result.data,
-            (_result, contentIdField: ContentIdField<C>) => contentIdField,
-            (_result, contentIdField, locale: LanguageCode) => locale,
-          ],
-          (contentUnits, idField, locale) => {
-            if (contentUnits === undefined) {
-              return
-            }
-            const contentUnit = contentUnits.find((u) => (isApiPage(u) ? u.slug : u.path) === idField)
-            return contentUnit ? translateEntity(contentUnit, locale) : undefined
-          },
-        ),
-      [],
-    )
-
     return useGetContentUnitsQuery(
       { courseSlug: courseSlug ?? '' },
       {
-        selectFromResult: (result) => ({ [contentType]: selectContentUnit(result, contentId, routeInfo.locale) }),
+        selectFromResult: (result) => {
+          // `result.data` is typed by whichever of the two query hooks the union resolves to;
+          // widen to `ContentUnit[]` and narrow per branch for the index lookups.
+          const data: (ApiPage | ApiSection)[] | undefined = result.data
+
+          return {
+            [contentType]:
+              contentType === 'page'
+                ? selectPageBySlug(data as ApiPage[] | undefined, routeInfo.locale, contentId)
+                : selectSectionByPath(data as ApiSection[] | undefined, routeInfo.locale, contentId),
+          }
+        },
         skip: !courseSlug || !contentId,
       },
     )

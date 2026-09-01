@@ -13,7 +13,7 @@ import useSelectLinkedPages from './use-select-linked-pages.js'
 
 // Captured via push (not a reassigned module variable): reassigning during render is a side
 // effect that the react-compiler lint rule (error in this repo) rejects.
-const seen: { pages: TranslatedPage[] }[] = []
+const seen: { pages: readonly TranslatedPage[] }[] = []
 
 function Probe({ linkLocation }: { linkLocation: PageLinkLocation }) {
   seen.push(useSelectLinkedPages(linkLocation))
