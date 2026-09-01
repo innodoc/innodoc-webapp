@@ -89,9 +89,9 @@ test('keeps question properties on inline question elements', async () => {
 })
 
 test('keeps grid properties on grid item elements', async () => {
-  const root = await markdownToHast('<Grid>\n<GridItem xs="12" xs-offset="2">\n\nhello\n\n</GridItem>\n</Grid>')
+  const root = await markdownToHast('<Grid>\n<GridItem xs="12" xsOffset="2">\n\nhello\n\n</GridItem>\n</Grid>')
   const items = collectElements(root).filter((el) => el.properties.name === 'GridItem')
-  expect(items.map((el) => el.properties)).toEqual([{ xs: '12', 'xs-offset': '2', name: 'GridItem' }])
+  expect(items.map((el) => el.properties)).toEqual([{ xs: '12', xsOffset: '2', name: 'GridItem' }])
 })
 
 test('keeps tab labels and tab item indexes', async () => {

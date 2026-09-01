@@ -2,10 +2,9 @@
  * The self-sufficiency contract of the sanitization schema.
  *
  * The renderer dispatches MDX components by `properties.name` (flow element → div,
- * inline element → span). Those attributes reach the output tree only through the
- * explicit entries in config.ts: hast-util-sanitize falls back to the upstream
- * `*` defaults for anything else, and a future upgrade that drops `name` from
- * those defaults must not silently break component dispatch.
+ * inline element → span). Those attributes must be guaranteed by the explicit
+ * entries in config.ts, not by the upstream `*` fallback: a future upgrade that
+ * drops `name` from those defaults must not silently break component dispatch.
  */
 import type { Element, Properties, Root } from 'hast'
 import { visit } from 'unist-util-visit'

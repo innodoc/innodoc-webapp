@@ -3,8 +3,8 @@
  *
  * The same element keeps different properties depending on where it is written
  * (inline text element → span vs. own line → flow element → div), because the
- * sanitization allowlist is per-tag. Also pins the kebab-vs-camel spelling
- * mismatch in the grid offset allowlist.
+ * sanitization allowlist is per-tag. Also pins that grid offsets use the
+ * camelCase (JSX-legal) spelling and that the kebab-case spelling is stripped.
  */
 import type { Element, Properties, Root } from 'hast'
 import { visit } from 'unist-util-visit'
@@ -32,42 +32,36 @@ test('keeps question properties on an inline question element', async () => {
   expect(questions.map((el) => el.properties)).toEqual([{ solution: '42', points: '5', name: 'TextQuestion' }])
 })
 
-test('FIXME(parser-loss): a question element on its own line loses all question properties', async () => {
+test('keeps question properties on a question element written on its own line', async () => {
   // Written on its own line, MDX promotes the element to a flow element, so the
-  // handler turns it into a div. QUESTION_PROPERTIES is only allowlisted on span,
-  // so sanitize strips solution/points/validation from the div — no error is raised.
-  // Author-visible result: a question with no solution, points or validation.
-  // ui-content's flowDivComponentMap has no TextQuestion entry, so the div renders
-  // as a bare <div> anyway.
+  // handler turns it into a div. QUESTION_PROPERTIES is allowlisted on div as well
+  // as span, so the question keeps its props regardless of position.
   const root = await markdownToHast('<TextQuestion solution="42" points="5">\n\nwhat is x?\n\n</TextQuestion>')
   const questions = collectElements(root).filter((el) => el.properties.name === 'TextQuestion')
   expect(questions.map((el) => el.tagName)).toEqual(['div'])
-  expect(questions.map((el) => el.properties)).toEqual([{ name: 'TextQuestion' }])
+  expect(questions.map((el) => el.properties)).toEqual([{ solution: '42', points: '5', name: 'TextQuestion' }])
 })
 
-test('keeps the kebab-case grid offset spelling on grid items', async () => {
+test('strips the non-JSX-legal kebab-case grid offset spelling from grid items', async () => {
+  // Kebab-case `xs-offset` is not a legal JSX identifier, so it is no longer
+  // allowlisted and is stripped by sanitize. Authors must use camelCase `xsOffset`.
   const root = await markdownToHast('<Grid>\n<GridItem xs="12" xs-offset="2">\n\nhello\n\n</GridItem>\n</Grid>')
   const items = collectElements(root).filter((el) => el.properties.name === 'GridItem')
-  expect(items.map((el) => el.properties)).toEqual([{ xs: '12', 'xs-offset': '2', name: 'GridItem' }])
+  expect(items.map((el) => el.properties)).toEqual([{ xs: '12', name: 'GridItem' }])
 })
 
-test('FIXME(parser-loss): the JSX-legal camelCase grid prop xsOffset is silently dropped', async () => {
-  // MDX attributes are JSX attributes: 'xs-offset' is not a legal JSX identifier
-  // (it only parses because mdast-util-mdx-jsx accepts the HTML-ish form), so an
-  // author writing JSX-native syntax writes 'xsOffset'. 'videoId' in
-  // YOUTUBE_VIDEO_PROPERTIES is camelCase and is the only allowlisted custom prop
-  // with a live consumer, and MUI Grid item props are camelCase (xsOffset). The
-  // allowlist's five *-offset entries are v1 leftovers in the wrong spelling — the
-  // spelling authors will actually write is the one the sanitizer discards.
+test('keeps the JSX-legal camelCase grid offset spelling on grid items', async () => {
+  // MDX attributes are JSX attributes: 'xsOffset' is the JSX-legal, MUI-Grid-native
+  // spelling that authors write, so the allowlist whitelists it.
   const root = await markdownToHast('<Grid>\n<GridItem xsOffset="2">\n\nc\n\n</GridItem>\n</Grid>')
   const items = collectElements(root).filter((el) => el.properties.name === 'GridItem')
-  expect(items.map((el) => el.properties)).toEqual([{ name: 'GridItem' }])
+  expect(items.map((el) => el.properties)).toEqual([{ xsOffset: '2', name: 'GridItem' }])
 })
 
-test('keeps xs and the kebab offset while dropping the camel offset on one grid item', async () => {
+test('keeps xs and the camel offset while dropping the kebab offset on one grid item', async () => {
   const root = await markdownToHast(
     '<Grid>\n<GridItem xs="12" xsOffset="2" xs-offset="4">\n\nm\n\n</GridItem>\n</Grid>',
   )
   const items = collectElements(root).filter((el) => el.properties.name === 'GridItem')
-  expect(items.map((el) => el.properties)).toEqual([{ xs: '12', 'xs-offset': '4', name: 'GridItem' }])
+  expect(items.map((el) => el.properties)).toEqual([{ xs: '12', xsOffset: '2', name: 'GridItem' }])
 })

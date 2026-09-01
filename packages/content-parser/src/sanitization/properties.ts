@@ -4,17 +4,20 @@ const TEXT_PROPERTIES = ['length', 'precision', 'supporting-points', 'simplifica
 
 const QUESTION_PROPERTIES = [...COMMON_PROPERTIES, ...TEXT_PROPERTIES] as const
 
+// Grid offsets use the camelCase (JSX-legal) spelling: kebab-case `*-offset` is not a legal
+// JSX identifier (it only parses because mdast-util-mdx-jsx accepts the HTML-ish form), and
+// MUI's Grid item props are camelCase. camelCase is the only supported spelling.
 const GRID_ITEM_PROPERTIES = [
   'xs',
   'sm',
   'md',
   'lg',
   'xl',
-  'xs-offset',
-  'sm-offset',
-  'md-offset',
-  'lg-offset',
-  'xl-offset',
+  'xsOffset',
+  'smOffset',
+  'mdOffset',
+  'lgOffset',
+  'xlOffset',
 ] as const
 
 const TABS_PROPERTIES = ['labels'] as const

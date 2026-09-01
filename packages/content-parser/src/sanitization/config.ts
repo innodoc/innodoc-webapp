@@ -31,6 +31,10 @@ const sanitizationConfig: Schema = {
       ...TAB_ITEM_PROPERTIES,
       ...YOUTUBE_VIDEO_PROPERTIES,
       ...VIDEO_PROPERTIES,
+      // Question props (solution/points/validation/…) are whitelisted on div too, not just span:
+      // a question written on its own line is promoted to a flow element (div), so without this
+      // it would lose every question prop in silence.
+      ...QUESTION_PROPERTIES,
     ],
 
     span: [...(defaultSchema.attributes?.span ?? []), 'name', ...QUESTION_PROPERTIES],
