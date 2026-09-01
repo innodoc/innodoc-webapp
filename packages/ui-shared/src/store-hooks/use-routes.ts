@@ -1,6 +1,6 @@
+import { useMemo } from 'react'
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { FrontendRouteInfo } from '@innodoc/shared-core/types'
-import { useMemo } from 'react'
 import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
 import { useRouteManager } from '@innodoc/ui-shared/hooks'
 import { useSelector } from './redux.js'

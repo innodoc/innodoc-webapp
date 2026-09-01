@@ -69,12 +69,10 @@ const hasCourseKey = (hasCourse: boolean): 'true' | 'false' => (hasCourse ? 'tru
 
 const PAGE_LINKS_BY_SLOT = Object.fromEntries(
   PAGE_LINK_LOCACTIONS.flatMap((location) =>
-    [true, false].map(
-      (hasCourse): [`${PageLinkLocation}:${'true' | 'false'}`, PageLinkDefinition[]] => [
-        `${location}:${hasCourseKey(hasCourse)}`,
-        pageLinks.filter((page) => isPageLinkVisible(page, location, hasCourse)),
-      ],
-    ),
+    [true, false].map((hasCourse): [`${PageLinkLocation}:${'true' | 'false'}`, PageLinkDefinition[]] => [
+      `${location}:${hasCourseKey(hasCourse)}`,
+      pageLinks.filter((page) => isPageLinkVisible(page, location, hasCourse)),
+    ]),
   ),
 ) as Record<`${PageLinkLocation}:${boolean}`, PageLinkDefinition[]>
 

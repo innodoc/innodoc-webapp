@@ -125,7 +125,11 @@
     // React - obsolete with modern JSX transform
     "react/react-in-jsx-scope": "off",
     // React Compiler
-    "react/react-compiler": "error",
+    // "react/react-compiler" is intentionally off: the compiler is not in the build (no
+    // babel-plugin-react-compiler in viteReact()), so the rule would lint against compiler behavior the
+    // app does not ship. Memoization is manual and governed by docs/selectors.md. Re-enable the rule
+    // when the compiler lands in the build - the `oxlint-disable react/react-compiler` comments in
+    // `packages/ui-shared/src/store-hooks` then document the expected compiler bails.
     "react-hooks-js/set-state-in-render": "error",
     // @eslint-react strict-type-checked (non-type-aware rules only)
     "eslint-react/no-forward-ref": "warn",

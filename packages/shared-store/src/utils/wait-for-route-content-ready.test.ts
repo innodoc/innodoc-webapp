@@ -9,9 +9,9 @@ import type {
   HastResult,
 } from '@innodoc/shared-core/types'
 import makeStore from '#make-store'
+import { changeRouteTransitionInfo } from '#slices/app'
 import getPagesApi from '#slices/content/pages'
 import getSectionsApi from '#slices/content/sections'
-import { changeRouteTransitionInfo } from '#slices/app'
 import { addHastResult } from '#slices/hast'
 import { waitForRouteContentReady } from './wait-for-route-content-ready.js'
 
@@ -61,7 +61,9 @@ function makeContent(hash: string): ContentWithHash {
 
 /** Seed a fulfilled content query and its hast result directly into the cache (no network) */
 async function seedReadyPage(store: ReturnType<typeof makeStore>, hash: string) {
-  await store.dispatch(getPagesApi(routeManager).util.upsertQueryData('getPageContent', pageContentArgs, makeContent(hash)))
+  await store.dispatch(
+    getPagesApi(routeManager).util.upsertQueryData('getPageContent', pageContentArgs, makeContent(hash)),
+  )
   store.dispatch(addHastResult({ hash, ...HAST_ROOT }))
 }
 
@@ -107,11 +109,7 @@ test('a section route waits for its content the same way', async () => {
   expect(settled).toBe(false)
 
   await store.dispatch(
-    getSectionsApi(routeManager).util.upsertQueryData(
-      'getSectionContent',
-      sectionContentArgs,
-      makeContent('def'),
-    ),
+    getSectionsApi(routeManager).util.upsertQueryData('getSectionContent', sectionContentArgs, makeContent('def')),
   )
   store.dispatch(addHastResult({ hash: 'def', ...HAST_ROOT }))
   await waitPromise
@@ -176,7 +174,9 @@ test('endpoint.select is called once per wait, not once per dispatched action', 
 
   // Settle the wait. RTK Query internals may call select during the upsert itself, so the count
   // is only asserted about the waiting machinery above
-  await store.dispatch(getPagesApi(routeManager).util.upsertQueryData('getPageContent', pageContentArgs, makeContent('abc')))
+  await store.dispatch(
+    getPagesApi(routeManager).util.upsertQueryData('getPageContent', pageContentArgs, makeContent('abc')),
+  )
   store.dispatch(addHastResult({ hash: 'abc', ...HAST_ROOT }))
   await waitPromise
 
