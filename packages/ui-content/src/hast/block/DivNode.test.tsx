@@ -73,3 +73,21 @@ test('DivNode renders a bare div for an MDX element whose name is not a known co
   expect(text.parentElement?.tagName).toBe('DIV')
   expect(text.parentElement?.className).toBe('')
 })
+
+test('DivNode dispatches a real pipeline block TextQuestion to the TextQuestion component', async () => {
+  // A question written on its own line is promoted to a flow element (div). The div keeps its
+  // question props (allowlisted on div, not just span) and its dispatch name, so DivNode must
+  // route it to the TextQuestion component instead of the bare-div fallback.
+  const root = await markdownToHast('<TextQuestion solution="42" points="5">\n\nwhat is x?\n\n</TextQuestion>')
+  const questionDiv = findElement(root, (el) => el.tagName === 'div' && el.properties.name === 'TextQuestion')
+
+  // Tree level: the flow div carries its question props through sanitize.
+  expect(questionDiv.properties).toMatchObject({ name: 'TextQuestion', solution: '42', points: '5' })
+
+  // Consumer level: DivNode dispatches to the TextQuestion component, so its input field renders.
+  // (The widget discards its children by design, so we do not assert on the authored prompt text.)
+  const harness = createTestHarness()
+  harness.render(<DivNode node={questionDiv}>{null}</DivNode>)
+
+  expect(screen.getByRole('textbox')).toBeInTheDocument()
+})
