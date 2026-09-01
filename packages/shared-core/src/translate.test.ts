@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
-import type { ApiBaseEntity, TranslatableString } from '@innodoc/shared-core/types'
-import { translateEntity, translateEntityArray } from './utils.js'
+import type { ApiBaseEntity, TranslatableString } from '#types'
+import { translateEntity, translateEntityArray } from './translate.js'
 
 /** Entity covering the three value classes `translateEntity` distinguishes */
 interface TestEntity extends ApiBaseEntity {

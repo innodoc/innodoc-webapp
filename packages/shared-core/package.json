@@ -30,6 +30,11 @@
       "development": "./src/schemas/schemas.ts",
       "default": "./dist/schemas/schemas.js"
     },
+    "./translate": {
+      "types": "./src/translate.ts",
+      "development": "./src/translate.ts",
+      "default": "./dist/translate.js"
+    },
     "./types": {
       "types": "./src/types/types.ts",
       "development": "./src/types/types.ts"
@@ -85,6 +90,11 @@
       "types": "./src/schemas/common.ts",
       "development": "./src/schemas/common.ts",
       "default": "./dist/schemas/common.js"
+    },
+    "#translate": {
+      "types": "./src/translate.ts",
+      "development": "./src/translate.ts",
+      "default": "./dist/translate.js"
     },
     "#typeguards": {
       "types": "./src/typeguards/typeguards.ts",

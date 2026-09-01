@@ -1,6 +1,7 @@
 import type { LanguageCode } from 'iso-639-1'
 import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
+import { translateEntity } from '@innodoc/shared-core/translate'
 import { isApiPage, isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
 import type { ApiPage, ApiSection, ContentType, TranslatedPage, TranslatedSection } from '@innodoc/shared-core/types'
 import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
@@ -8,7 +9,6 @@ import getPagesApi from '@innodoc/shared-store/slices/content/pages'
 import getSectionsApi from '@innodoc/shared-store/slices/content/sections'
 import { useRouteManager } from '@innodoc/ui-shared/hooks'
 import { useSelector } from './redux.js'
-import { translateEntity } from './utils.js'
 
 type ContentUnit = ApiPage | ApiSection
 type ContentIdField<C extends ContentUnit> = C extends ApiPage ? ApiPage['slug'] : ApiSection['path']

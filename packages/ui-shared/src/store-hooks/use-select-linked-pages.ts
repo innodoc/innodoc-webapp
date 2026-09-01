@@ -1,13 +1,13 @@
 import type { LanguageCode } from 'iso-639-1'
 import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
+import { translateEntityArray } from '@innodoc/shared-core/translate'
 import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
 import type { ApiPage, PageLinkLocation, TranslatedPage } from '@innodoc/shared-core/types'
 import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
 import getPagesApi from '@innodoc/shared-store/slices/content/pages'
 import { useRouteManager } from '@innodoc/ui-shared/hooks'
 import { useSelector } from './redux.js'
-import { translateEntityArray } from './utils.js'
 
 /**
  * Select pages for link lists.
