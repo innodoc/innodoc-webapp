@@ -44,7 +44,10 @@
     },
     "packages/ui-content": {
       "entry": ["src/hast-listener-middleware/markdown-to-hast-worker.ts"],
-      "project": ["src/**/*.ts?(x)"]
+      "project": ["src/**/*.ts?(x)"],
+      "vitest": {
+        "entry": ["src/**/*.test.ts?(x)"]
+      }
     },
     "packages/ui-features": {
       "project": ["src/**/*.ts?(x)"],
