@@ -1,8 +1,14 @@
 import camelcaseKeys from 'camelcase-keys'
 import crc32 from 'crc/crc32'
 import markdownToHast from '@innodoc/content-parser'
+import { serializeParserError } from '@innodoc/content-parser/utils'
 import type { RouteManager } from '@innodoc/shared-core/routes'
-import { isCoursePageRouteInfo, isCourseRouteInfo, isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
+import {
+  isCoursePageRouteInfo,
+  isCourseRouteInfo,
+  isCourseSectionRouteInfo,
+  isParserError,
+} from '@innodoc/shared-core/typeguards'
 import type {
   ApiCourse,
   ApiPage,
@@ -12,6 +18,7 @@ import type {
   FrontendRouteInfo,
   LanguageCode,
   PageSchema,
+  ParserError,
   QuerySectionSchema,
 } from '@innodoc/shared-core/types'
 import { changeRouteInfo } from '@innodoc/shared-store/slices/app/app-slice'
@@ -50,6 +57,47 @@ function hashContent(content: string): ContentWithHash {
   return {
     content,
     hash: crc32(content).toString(16),
+  }
+}
+
+/**
+ * Wire-shaped fallback for an SSR parse failure that is not a Markdown parser error.
+ *
+ * Mirrors `markdown-to-hast-worker.ts`'s `unknownError`, but with an honest `source` for the SSR
+ * context so an unexpected failure never surfaces as a `worker` error. Both `ruleId` and `source`
+ * are the values the in-app `MarkdownParserError` displays, so they must identify the SSR path.
+ */
+function unknownSsrParseError(error: unknown): ParserError {
+  return {
+    column: 0,
+    line: 0,
+    reason: error instanceof Error ? error.message : String(error),
+    ruleId: 'ssr-unknown-error',
+    source: 'ssr',
+  }
+}
+
+/**
+ * Convert Markdown to HAST and store the result (or a serialized error) under the content hash.
+ *
+ * `markdownToHast` throws SYNCHRONOUSLY for parse-phase errors (pinned in content-parser's
+ * utils.test.ts), so a bare `await markdownToHast(…)` would throw past `populateStoreForSSR` and
+ * make the whole SSR render 500. Wrapping the call and always dispatching `addHastResult` keeps a
+ * single parse error from failing the whole page: the store holds `{ hash, error }` and the SSR
+ * render shows the same in-app `MarkdownParserError` the client web worker produces. Both the
+ * page and course-section call sites route through this one helper.
+ */
+async function processMarkdownForSSR(store: Store, content: string, hash: string): Promise<void> {
+  try {
+    const root = await markdownToHast(content)
+    store.dispatch(addHastResult({ hash, root }))
+  } catch (error: unknown) {
+    if (isParserError(error)) {
+      store.dispatch(addHastResult({ hash, error: serializeParserError(error) }))
+    } else {
+      console.error('populateStoreForSSR: Unable to handle error object', error)
+      store.dispatch(addHastResult({ hash, error: unknownSsrParseError(error) }))
+    }
   }
 }
 
@@ -219,9 +267,8 @@ export async function populateStoreForSSR({
         ),
       )
 
-      // Convert Markdown to HAST
-      const hastRoot = await markdownToHast(content)
-      store.dispatch(addHastResult({ hash: contentWithHash.hash, root: hastRoot }))
+      // Convert Markdown to HAST (stores the result, or a serialized error, under the content hash)
+      await processMarkdownForSSR(store, content, contentWithHash.hash)
     } else if (isCourseSectionRouteInfo(routeInfo)) {
       // Get section ID from path
       const sectionId = await database.getSectionIdByPath(routeInfo.courseSlug, routeInfo.sectionPath)
@@ -258,9 +305,8 @@ export async function populateStoreForSSR({
         ),
       )
 
-      // Convert Markdown to HAST
-      const hastRoot = await markdownToHast(content)
-      store.dispatch(addHastResult({ hash: contentWithHash.hash, root: hastRoot }))
+      // Convert Markdown to HAST (stores the result, or a serialized error, under the content hash)
+      await processMarkdownForSSR(store, content, contentWithHash.hash)
     }
   }
 
