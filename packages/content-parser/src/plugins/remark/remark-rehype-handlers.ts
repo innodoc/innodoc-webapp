@@ -14,51 +14,67 @@ const remarkRehypeHandlers: Handlers = {
 
   // Turn MdxJsxFlowElement to `div`
   mdxJsxFlowElement: (state, node) => {
-    if (isMdxJsxFlowElement(node) && node.name !== null) {
-      const attributes = node.attributes.filter((attr): attr is MdxJsxAttribute => isMdxJsxAttribute(attr))
+    if (!isMdxJsxFlowElement(node)) {
+      return
+    }
 
-      const properties = Object.fromEntries(
-        attributes.filter((attr) => typeof attr.value === 'string').map((attr) => [attr.name, attr.value]) as [
-          string,
-          string,
-        ][],
-      )
+    // A null-named element is a JSX fragment: flatten its converted children into the parent
+    // (`mdast-util-to-hast`'s `state.all` spreads array results).
+    if (node.name === null) {
+      return state.all(node)
+    }
 
-      return {
-        type: 'element',
-        tagName: 'div',
-        properties: {
-          ...properties,
-          name: node.name,
-          type: node.type,
-        },
-        children: state.all(node),
-      }
+    const attributes = node.attributes.filter((attr): attr is MdxJsxAttribute => isMdxJsxAttribute(attr))
+
+    const properties = Object.fromEntries(
+      attributes.filter((attr) => typeof attr.value === 'string').map((attr) => [attr.name, attr.value]) as [
+        string,
+        string,
+      ][],
+    )
+
+    return {
+      type: 'element',
+      tagName: 'div',
+      properties: {
+        ...properties,
+        name: node.name,
+        type: node.type,
+      },
+      children: state.all(node),
     }
   },
 
   // Turn MdxJsxTextElement to `span`
   mdxJsxTextElement: (state, node) => {
-    if (isMdxJsxTextElement(node) && node.name !== null) {
-      const attributes = node.attributes.filter((attr): attr is MdxJsxAttribute => isMdxJsxAttribute(attr))
+    if (!isMdxJsxTextElement(node)) {
+      return
+    }
 
-      const properties = Object.fromEntries(
-        attributes.filter((attr) => typeof attr.value === 'string').map((attr) => [attr.name, attr.value]) as [
-          string,
-          string,
-        ][],
-      )
+    // A null-named element is a JSX fragment: flatten its converted children into the parent
+    // (`mdast-util-to-hast`'s `state.all` spreads array results).
+    if (node.name === null) {
+      return state.all(node)
+    }
 
-      return {
-        type: 'element',
-        tagName: 'span',
-        properties: {
-          ...properties,
-          name: node.name,
-          type: node.type,
-        },
-        children: [],
-      }
+    const attributes = node.attributes.filter((attr): attr is MdxJsxAttribute => isMdxJsxAttribute(attr))
+
+    const properties = Object.fromEntries(
+      attributes.filter((attr) => typeof attr.value === 'string').map((attr) => [attr.name, attr.value]) as [
+        string,
+        string,
+      ][],
+    )
+
+    return {
+      type: 'element',
+      tagName: 'span',
+      properties: {
+        ...properties,
+        name: node.name,
+        type: node.type,
+      },
+      children: state.all(node),
     }
   },
 }

@@ -1,16 +1,11 @@
 /**
- * Pin + finding — inline MDX element children are deleted (campaign plan §4.3).
+ * CHILDREN semantics for inline MDX text elements (campaign plan §4.3).
  *
- * `mdxJsxTextElement` in `remark-rehype-handlers.ts` literally returns
- * `children: []` — so for `a <TextQuestion ...>what is x?</TextQuestion> b` the
- * question prompt text is never in the output tree. The flow handler for the same
- * component (`mdxJsxFlowElement`) uses `state.all(node)`, the contrast pinned at
- * the end.
- *
- * Whether this is intended is an exercises-domain question (ui-content's
- * `SpanNode` is itself `TODO: fix span node` and currently returns `null`); the
- * parser's contract today is simply "an inline MDX element renders empty". These
- * pins make any future change — fix or further loss — trip a test here.
+ * `mdxJsxTextElement` in `remark-rehype-handlers.ts` transforms its children with
+ * `state.all(node)`, so for `a <TextQuestion ...>what is x?</TextQuestion> b` the
+ * question prompt text is in the output tree — the same delegation the flow handler
+ * for the same component (`mdxJsxFlowElement`) uses, the contrast pinned at the end.
+ * These pins trip if inline children are ever deleted (or further lost) again.
  *
  * This file owns CHILDREN semantics for text elements only; the handlers'
  * tagName/properties shape is pinned by `remark-rehype-handlers.test.ts` (T03).
@@ -50,7 +45,7 @@ const textElement: MdxJsxTextElement = {
   children: [{ type: 'text', value: 'what is x?' }],
 }
 
-test('FIXME(parser-loss): mdxJsxTextElement discards its children instead of transforming them', () => {
+test('mdxJsxTextElement keeps its children by transforming them with state.all', () => {
   const handler = remarkRehypeHandlers.mdxJsxTextElement as HandlerUnderTest | undefined
   if (handler === undefined) {
     throw new Error('mdxJsxTextElement handler is missing')
@@ -62,12 +57,12 @@ test('FIXME(parser-loss): mdxJsxTextElement discards its children instead of tra
     throw new Error('mdxJsxTextElement handler did not return an element')
   }
 
-  // The handler is written literally as `children: []`: the sentinels returned by
-  // state.all never reach the span, so inline MDX elements render empty today.
-  expect(result.children).toEqual([])
+  // The handler delegates to state.all, so the sentinels reach the span and inline
+  // MDX elements keep their content.
+  expect(result.children).toEqual([first, second])
 })
 
-test('FIXME(parser-loss): inline TextQuestion prompt text is never in the output tree', async () => {
+test('inline TextQuestion keeps its prompt text in the output tree', async () => {
   const root = await markdownToHast('a <TextQuestion solution="42" points="5">what is x?</TextQuestion> b')
 
   const spans: Element[] = []
@@ -87,13 +82,13 @@ test('FIXME(parser-loss): inline TextQuestion prompt text is never in the output
     throw new Error('TextQuestion span is missing')
   }
 
-  // §4.3: the question element arrives with its string props intact but no children…
+  // The question element arrives with its string props intact and its children transformed…
   expect(span.properties).toEqual({ solution: '42', points: '5', name: 'TextQuestion' })
-  expect(span.children).toEqual([])
+  expect(span.children).toHaveLength(1)
+  expect(span.children[0]).toMatchObject({ type: 'text', value: 'what is x?' })
 
-  // …and the prompt text is discarded, not merely relocated elsewhere in the tree.
-  expect(texts).not.toContain('what is x?')
-  expect(texts.join(' ')).not.toContain('what is x?')
+  // …and the prompt text is in the final tree, not discarded.
+  expect(texts).toContain('what is x?')
 })
 
 test('contrast: the same component in flow position keeps its children (state.all IS used)', () => {

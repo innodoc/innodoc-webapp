@@ -155,7 +155,7 @@ test('pipeline: <Info title={1 + 1}> keeps name only - the expression attribute 
   expect(paragraph.children[0]).toMatchObject({ type: 'text', value: 'x' })
 })
 
-test('mdxJsxFlowElement handler returns undefined for a null-named (fragment) element', () => {
+test('mdxJsxFlowElement handler flattens a null-named (fragment) element into its converted children', () => {
   const { state } = makeState()
 
   const result = call(flowHandler, state, {
@@ -165,10 +165,12 @@ test('mdxJsxFlowElement handler returns undefined for a null-named (fragment) el
     children: [{ type: 'text', value: 'x' }],
   })
 
-  expect(result).toBeUndefined()
+  // `mdast-util-to-hast`'s `state.all` spreads array results, so a fragment's
+  // converted children flatten into the parent instead of being dropped.
+  expect(result).toStrictEqual(sentinelChildren)
 })
 
-test('mdxJsxTextElement handler returns undefined for a null-named (fragment) element', () => {
+test('mdxJsxTextElement handler flattens a null-named (fragment) element into its converted children', () => {
   const { state } = makeState()
 
   const result = call(textHandler, state, {
@@ -178,14 +180,13 @@ test('mdxJsxTextElement handler returns undefined for a null-named (fragment) el
     children: [{ type: 'text', value: 'x' }],
   })
 
-  expect(result).toBeUndefined()
+  expect(result).toStrictEqual(sentinelChildren)
 })
 
-// FIXME(parser-loss): a null-named JSX fragment `<>x</>` is parsed as a null-named
-// mdxJsxTextElement inside a paragraph; the handler's `name !== null` guard makes it
-// return undefined, and mdast-util-to-hast's `state.all` drops undefined results -
-// so the fragment's text content never reaches the hast tree.
-test('FIXME(parser-loss): pipeline turns <>x</> into an empty p, dropping the fragment content', async () => {
+// A null-named JSX fragment `<>x</>` is parsed as a null-named mdxJsxTextElement inside a
+// paragraph. The handler returns `state.all(node)` for null names, so the fragment's content
+// survives as the paragraph's children.
+test('pipeline keeps the content of a null-named JSX fragment <>x</> in its paragraph', async () => {
   const root = (await markdownToHast('a\n\n<>x</>\n\nb')) as unknown as Element
   const first = childAt(root.children, 0)
   const fragment = childAt(root.children, 1)
@@ -198,7 +199,8 @@ test('FIXME(parser-loss): pipeline turns <>x</> into an empty p, dropping the fr
 
   expect(fragment.tagName).toBe('p')
   expect(fragment.properties).toStrictEqual({})
-  expect(fragment.children).toStrictEqual([])
+  expect(fragment.children).toHaveLength(1)
+  expect(fragment.children[0]).toMatchObject({ type: 'text', value: 'x' })
 
   expect(last.tagName).toBe('p')
   expect(last.children[0]).toMatchObject({ type: 'text', value: 'b' })
