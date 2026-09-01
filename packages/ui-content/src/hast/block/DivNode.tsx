@@ -16,7 +16,7 @@ interface DivComponentProps {
 
 type DivComponent = ComponentType<DivComponentProps>
 
-const flowDivComponentMap: Record<HastMdxJsxFlowDivElement['properties']['name'], DivComponent> = {
+const flowDivComponentMap: Partial<Record<HastMdxJsxFlowDivElement['properties']['name'], DivComponent>> = {
   // cards
   Example: ExampleCard,
   Exercise: ExerciseCard,
@@ -49,13 +49,17 @@ function DivNode({ children, id, node }: HastComponentProps<'div'>) {
   }
 
   if (isHastMdxJsxFlowDivElement(node)) {
+    // At runtime `name` can be any authored JSX tag (a raw `<div>` written in MDX parses as a
+    // flow element named `div`), so unmapped names fall back to the bare div below.
     const Component = flowDivComponentMap[node.properties.name]
 
-    return (
-      <Component id={id} nodeProps={node.properties}>
-        {children}
-      </Component>
-    )
+    if (Component) {
+      return (
+        <Component id={id} nodeProps={node.properties}>
+          {children}
+        </Component>
+      )
+    }
   }
 
   return <div>{children}</div>
