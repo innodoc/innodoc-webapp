@@ -44,8 +44,17 @@ test('values with no enumerable keys are misclassified as translatable - pinned 
   // `validateTranslatableString` is `Object.entries(x).every(...)` - vacuously true for key-less
   // objects, so a Date translates to null. Production never feeds Dates in (fetchBaseQuery hands
   // over JSON, where dates are strings), but any object-valued field would meet the same fate.
-  // Schema-driven translation is the fix; this test is its acceptance anchor.
+  // The identity cache landed without changing this classification; the schema-driven field list
+  // is the fix. This test is its acceptance anchor.
   expect(translateEntity(entity, 'en').createdAt).toBeNull()
+})
+
+test('empty array fields keep their reference instead of translating to null', () => {
+  // `Object.entries([]).every(...)` is vacuously true, so before the array guard landed an empty
+  // array was misclassified as translatable and translated to null (e.g. `linked: []` on a page).
+  const withEmptyArray: TestEntity = { ...entity, order: [] }
+
+  expect(translateEntity(withEmptyArray, 'en').order).toBe(withEmptyArray.order)
 })
 
 test('translateEntityArray translates every element', () => {

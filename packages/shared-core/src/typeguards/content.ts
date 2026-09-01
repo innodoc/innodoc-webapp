@@ -14,9 +14,30 @@ function isApiPage(thing: unknown): thing is ApiPage {
   return isArbitraryObject(thing) && typeof thing.slug === 'string'
 }
 
+/**
+ * Records whose `validateTranslatableString` verdict was positive, keyed by object identity.
+ *
+ * The records this guard is asked about are immutable state objects (JSON parsed at the API
+ * boundary, never mutated afterwards), so a positive verdict cannot go stale, and each entry is
+ * collected with its record - no eviction policy needed. Only positive verdicts are cached:
+ * the full `isLocale()`-per-key walk still runs on first sight, which is where a payload is
+ * genuinely untrusted, and every later pass is one `WeakSet.has()`.
+ */
+const validatedTranslatableStrings = new WeakSet<object>()
+
 /** Type guard for `TranslatableString` */
 function isTranslatableString(thing: unknown): thing is TranslatableString {
-  return isArbitraryObject(thing) && validateTranslatableString(thing)
+  if (!isArbitraryObject(thing)) {
+    return false
+  }
+  if (validatedTranslatableStrings.has(thing)) {
+    return true
+  }
+  if (validateTranslatableString(thing)) {
+    validatedTranslatableStrings.add(thing)
+    return true
+  }
+  return false
 }
 
 /** Type guard for `WithContentHash` */
