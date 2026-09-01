@@ -4,6 +4,7 @@ import { assert, expect, test } from 'vitest'
 import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/types'
 import getSectionsApi from '@innodoc/shared-store/slices/content/sections'
 import { createTestHarness, TEST_COURSE_SLUG } from '@innodoc/ui-test-utils'
+import { EMPTY_TRANSLATED_SECTIONS } from './constants.js'
 import useSelectBreadcrumbSections from './use-select-breadcrumb-sections.js'
 
 // The hook is route-driven: on `app:course:section` it derives the breadcrumb chain from the
@@ -11,7 +12,7 @@ import useSelectBreadcrumbSections from './use-select-breadcrumb-sections.js'
 // `path` as parentPath + segment), so the expected chain is recomputed from the raw query data -
 // titles are faker-generated and never hardcoded.
 
-const seen: { sections: TranslatedSection[] }[] = []
+const seen: { sections: readonly TranslatedSection[] }[] = []
 
 function Probe() {
   seen.push(useSelectBreadcrumbSections())
@@ -101,4 +102,34 @@ test('useSelectBreadcrumbSections returns an empty array for an unknown section 
   harness.render(<Probe />)
 
   expect(seen.at(-1)?.sections).toEqual([]) // the section lookup fails -> the selector's empty-array branch
+})
+
+test('useSelectBreadcrumbSections keeps the breadcrumb array reference stable across re-renders', async () => {
+  const harness = createTestHarness()
+  await harness.withCourse()
+  const raw = rawSections(harness)
+  const deep = raw.find((s) => s.path.split('/').length >= 3)
+  assert(deep, 'fixture course should have a section nested two levels deep')
+  harness.setRoute(sectionRoute('en', deep.path))
+
+  const from = seen.length
+  const { rerender } = harness.render(<Probe />)
+  rerender(<Probe />)
+
+  // Regression gate: the selector used to be created inside the hook body,
+  // so every render rebuilt the chain. Reference identity is the point; do not weaken it.
+  expect(seen[from + 1]?.sections).toBe(seen[from]?.sections)
+})
+
+test('useSelectBreadcrumbSections returns the same empty sentinel while the query is skipped', () => {
+  const harness = createTestHarness() // default: the course index route, no sectionPath -> skipped query
+
+  const from = seen.length
+  const { rerender } = harness.render(<Probe />)
+  rerender(<Probe />)
+
+  // A fresh `[]` per render defeats RTK Query's shallowEqual gate, so the consumer re-renders with
+  // the store. The frozen sentinel from `./constants.js` is the stable answer.
+  expect(seen[from + 1]?.sections).toBe(EMPTY_TRANSLATED_SECTIONS)
+  expect(seen[from + 1]?.sections).toBe(seen[from]?.sections)
 })

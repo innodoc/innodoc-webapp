@@ -11,11 +11,22 @@ import useSelectSectionChildren from './use-select-section-children.js'
 // never hardcoded. The fixture tree: 7 top-level sections, some childless, some nested up to
 // several levels deep (see shared-fixtures make-sections.ts).
 
-const seen: { sections: TranslatedSection[] }[] = []
+const seen: { sections: readonly TranslatedSection[] }[] = []
 
 function Probe({ parentId }: { parentId: ApiSection['parentId'] }) {
   seen.push(useSelectSectionChildren(parentId))
   return null
+}
+
+/** One hook per parent id, the way StaticToc mounts them. */
+function Probes({ order }: { order: ApiSection[] }) {
+  return (
+    <>
+      {order.map((parent) => (
+        <Probe key={parent.id} parentId={parent.id} />
+      ))}
+    </>
+  )
 }
 
 function rawSections(harness: ReturnType<typeof createTestHarness>): ApiSection[] {
@@ -83,11 +94,10 @@ test('useSelectSectionChildren returns an empty array outside a course', () => {
   expect(seen.at(-1)?.sections).toEqual([]) // the query is skipped -> the selector's empty-array branch
 })
 
-// Regression gate: `createSelector` is called inside the hook body, so every render gets a fresh
-// (un-memoised) selector and a rebuilt array. Marked `fails` on purpose - the modifier must be
-// removed when the selector is hoisted out of the hook. Do NOT make it green by comparing ids:
-// the reference identity is the point.
-test.fails('useSelectSectionChildren keeps the children array reference stable across re-renders', async () => {
+// Regression gate: `createSelector` used to be called inside the hook body, so every render got a
+// fresh (un-memoised) selector and a rebuilt array. Do NOT make it green by comparing ids: the
+// reference identity is the point.
+test('useSelectSectionChildren keeps the children array reference stable across re-renders', async () => {
   const harness = createTestHarness()
   await harness.withCourse()
 
@@ -96,4 +106,29 @@ test.fails('useSelectSectionChildren keeps the children array reference stable a
   rerender(<Probe parentId={null} />)
 
   expect(seen[from + 1]?.sections).toBe(seen[from]?.sections)
+})
+
+// StaticToc mounts one hook per rendered section, so the module-level selector is called with many
+// different parent ids. A single-entry cache would thrash and rebuild on every call;
+// reselect's weakMapMemoize keeps one entry per parent id, which is what this pins.
+test('useSelectSectionChildren caches one array per parent id across interleaved consumers', async () => {
+  const harness = createTestHarness()
+  await harness.withCourse()
+  const raw = rawSections(harness)
+
+  const parents = raw.filter((s) => raw.some((c) => c.parentId === s.id)).slice(0, 4)
+  assert(parents.length === 4, 'fixture course should have four sections with children')
+
+  const from = seen.length
+  const { rerender } = harness.render(<Probes order={parents} />)
+  const firstPass = seen.slice(from, from + parents.length)
+  // walk the same consumers in reverse: a cache holding fewer than `parents.length` entries has to
+  // rebuild, and a rebuilt array is a new reference
+  rerender(<Probes order={parents.toReversed()} />)
+  const secondPass = seen.slice(from + parents.length, from + 2 * parents.length)
+
+  expect(secondPass).toHaveLength(parents.length)
+  for (const [index, entry] of firstPass.entries()) {
+    expect(secondPass[parents.length - 1 - index]?.sections).toBe(entry.sections)
+  }
 })
