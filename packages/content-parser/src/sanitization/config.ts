@@ -14,9 +14,17 @@ const sanitizationConfig: Schema = {
   attributes: {
     ...defaultSchema.attributes,
 
+    // `name` is the MDX component dispatch key that ui-content's DivNode/SpanNode read, so it
+    // is allowlisted explicitly on div and span. hast-util-sanitize also falls back to the
+    // `*` defaults for attributes missing from a tag's own list; riding on that fallback meant
+    // a hast-util-sanitize upgrade dropping `name` from its defaults would break every custom
+    // component silently.
+    // No rehype-katex className values are allowlisted on purpose: the pipeline runs
+    // rehype-katex after rehype-sanitize, and its `output: 'html'` output never carries the
+    // legacy react-katex `math`/`math-display`/`math-inline` classes.
     div: [
       ...(defaultSchema.attributes?.div ?? []),
-      ['className', 'math', 'math-display'], // rehype-katex
+      'name',
       ['root'], // Mark root element for React rendering
       ...GRID_ITEM_PROPERTIES,
       ...TABS_PROPERTIES,
@@ -25,7 +33,7 @@ const sanitizationConfig: Schema = {
       ...VIDEO_PROPERTIES,
     ],
 
-    span: [...(defaultSchema.attributes?.span ?? []), ['className', 'math', 'math-inline'], ...QUESTION_PROPERTIES],
+    span: [...(defaultSchema.attributes?.span ?? []), 'name', ...QUESTION_PROPERTIES],
   },
   clobber: undefined,
   protocols: {
