@@ -1,6 +1,6 @@
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import { isCoursePageRouteInfo, isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
-import type { FrontendRouteInfo } from '@innodoc/shared-core/types'
+import type { ContentWithHash, FrontendRouteInfo } from '@innodoc/shared-core/types'
 import getPagesApi from '#slices/content/pages'
 import getSectionsApi from '#slices/content/sections'
 import { selectHastResultByHash } from '#slices/hast'
@@ -17,49 +17,57 @@ interface WaitForRouteContentReadyOptions {
   timeoutMs?: number
 }
 
+/** Shape of the RTK Query result the content readiness check reads */
+interface ContentQueryResult {
+  isError: boolean
+  isSuccess: boolean
+  data?: ContentWithHash
+}
+
 /**
- * Whether content for `routeInfo` is available in the store.
- *
- * Content routes require the RTK Query cache to be settled (fulfilled or error)
- * and, for fulfilled queries, the hast result to be present. Error states count
- * as ready so that the page's error UI can render instead of blocking.
- * Non-content routes are always ready.
+ * Whether a settled content query counts as ready: errors are ready (the page's error UI can
+ * render instead of blocking); fulfilled queries additionally need their hast result.
  */
-function isRouteContentReady(routeManager: RouteManager, state: RootState, routeInfo: FrontendRouteInfo): boolean {
+function isQueryReady(state: RootState, query: ContentQueryResult): boolean {
+  if (query.isError) {
+    return true
+  }
+  if (!query.isSuccess) {
+    return false
+  }
+  // Direct lookup, deliberately not memoised
+  return query.data !== undefined && selectHastResultByHash(state, query.data.hash) !== undefined
+}
+
+/**
+ * Prepare the RTK Query selector for the content query of `routeInfo`, or `undefined` for
+ * non-content routes (index, toc, progress, login, ...), which are immediately ready.
+ *
+ * `endpoint.select(args)` is not memoised by RTK Query (it builds a fresh selector and
+ * serialises the args on every call), so this runs **once per wait** - never inside the
+ * subscription callback where it would repeat for every dispatched action.
+ */
+function selectRouteContentQuery(
+  routeManager: RouteManager,
+  routeInfo: FrontendRouteInfo,
+): ((state: RootState) => ContentQueryResult) | undefined {
   if (isCoursePageRouteInfo(routeInfo)) {
-    const query = getPagesApi(routeManager).endpoints.getPageContent.select({
+    return getPagesApi(routeManager).endpoints.getPageContent.select({
       courseSlug: routeInfo.courseSlug,
       locale: routeInfo.locale,
       pageSlug: routeInfo.pageSlug,
-    })(state)
-
-    if (query.isError) {
-      return true
-    }
-    if (!query.isSuccess) {
-      return false
-    }
-    return selectHastResultByHash(state, query.data.hash) !== undefined
+    })
   }
 
   if (isCourseSectionRouteInfo(routeInfo)) {
-    const query = getSectionsApi(routeManager).endpoints.getSectionContent.select({
+    return getSectionsApi(routeManager).endpoints.getSectionContent.select({
       courseSlug: routeInfo.courseSlug,
       locale: routeInfo.locale,
       sectionPath: routeInfo.sectionPath,
-    })(state)
-
-    if (query.isError) {
-      return true
-    }
-    if (!query.isSuccess) {
-      return false
-    }
-    return selectHastResultByHash(state, query.data.hash) !== undefined
+    })
   }
 
-  // Non-content routes (index, toc, progress, login, ...) are immediately ready
-  return true
+  return undefined
 }
 
 /**
@@ -73,8 +81,10 @@ function waitForRouteContentReady(
   routeInfo: FrontendRouteInfo,
   { timeoutMs = 10_000 }: WaitForRouteContentReadyOptions = {},
 ): Promise<void> {
-  // Already ready?
-  if (isRouteContentReady(routeManager, store.getState(), routeInfo)) {
+  const selectQuery = selectRouteContentQuery(routeManager, routeInfo)
+
+  // Already ready, or a non-content route?
+  if (selectQuery === undefined || isQueryReady(store.getState(), selectQuery(store.getState()))) {
     return Promise.resolve()
   }
 
@@ -93,7 +103,7 @@ function waitForRouteContentReady(
     }
 
     const unsubscribe = store.subscribe(() => {
-      if (isRouteContentReady(routeManager, store.getState(), routeInfo)) {
+      if (isQueryReady(store.getState(), selectQuery(store.getState()))) {
         settle()
       }
     })
