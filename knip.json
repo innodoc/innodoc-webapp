@@ -22,7 +22,10 @@
       "project": ["tests/**/*.ts"]
     },
     "packages/content-parser": {
-      "project": ["src/**/*.ts?(x)"]
+      "project": ["src/**/*.ts?(x)"],
+      "vitest": {
+        "entry": ["src/**/*.test.ts?(x)"]
+      }
     },
     "packages/server-db": {
       "entry": ["src/migrations/*.ts"],

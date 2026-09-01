@@ -44,6 +44,7 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
+    "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -75,6 +76,7 @@
     "@types/remark-heading-id": "catalog:",
     "@types/unist": "catalog:",
     "@typescript/native": "catalog:",
-    "hast-util-sanitize": "catalog:"
+    "hast-util-sanitize": "catalog:",
+    "vitest": "catalog:"
   }
 }
