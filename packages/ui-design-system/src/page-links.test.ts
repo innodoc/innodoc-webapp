@@ -17,3 +17,10 @@ test('selectPageLinks returns course links and no index link for a course route'
 test('selectPageLinks only returns links bound to the requested slot', () => {
   expect(selectPageLinks('footer', false).map((page) => page.routeName)).toStrictEqual(['app:index'])
 })
+
+test('selectPageLinks returns the same reference for the same arguments', () => {
+  expect(selectPageLinks('nav', true)).toBe(selectPageLinks('nav', true))
+  expect(selectPageLinks('nav', false)).toBe(selectPageLinks('nav', false))
+  expect(selectPageLinks('footer', true)).toBe(selectPageLinks('footer', true))
+  expect(selectPageLinks('footer', false)).toBe(selectPageLinks('footer', false))
+})

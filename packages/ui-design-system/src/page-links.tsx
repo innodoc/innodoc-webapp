@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react'
+import { PAGE_LINK_LOCACTIONS } from '@innodoc/shared-core/constants'
 import type { FrontendRouteName, PageLinkLocation } from '@innodoc/shared-core/types'
 import { Icon } from '#misc'
 
@@ -51,8 +52,39 @@ const coursePageLinks: PageLinkDefinition[] = [
 
 const pageLinks = [...builtInPageLinks, ...coursePageLinks] as const
 
+/** Whether a page link belongs to `location` and matches the course context */
+function isPageLinkVisible(page: PageLinkDefinition, location: PageLinkLocation, hasCourse: boolean): boolean {
+  if (!page.linked?.includes(location)) {
+    return false
+  }
+
+  return page.routeName.startsWith('app:course:') ? hasCourse : !hasCourse
+}
+
+/**
+ * The (location × hasCourse) filter results, precomputed once: the list is static and tiny, so
+ * reference stability per argument comes for free, with no cache machinery.
+ */
+const hasCourseKey = (hasCourse: boolean): 'true' | 'false' => (hasCourse ? 'true' : 'false')
+
+const PAGE_LINKS_BY_SLOT = Object.fromEntries(
+  PAGE_LINK_LOCACTIONS.flatMap((location) =>
+    [true, false].map(
+      (hasCourse): [`${PageLinkLocation}:${'true' | 'false'}`, PageLinkDefinition[]] => [
+        `${location}:${hasCourseKey(hasCourse)}`,
+        pageLinks.filter((page) => isPageLinkVisible(page, location, hasCourse)),
+      ],
+    ),
+  ),
+) as Record<`${PageLinkLocation}:${boolean}`, PageLinkDefinition[]>
+
 /**
  * Page links to render in a layout slot.
+ *
+ * Not a store selector: a pure lookup over the static {@link pageLinks} list, returning one of
+ * the four precomputed module constants, so the same arguments always yield the same reference.
+ * Do not wrap it in `createSelector` or `useMemo` - the list is static and tiny, and stable
+ * references are already free.
  *
  * Visibility depends on the current route, not on the link definition:
  *
@@ -66,13 +98,7 @@ const pageLinks = [...builtInPageLinks, ...coursePageLinks] as const
  * @returns Visible page link definitions
  */
 function selectPageLinks(location: PageLinkLocation, hasCourse: boolean): PageLinkDefinition[] {
-  return pageLinks.filter((page) => {
-    if (!page.linked?.includes(location)) {
-      return false
-    }
-
-    return page.routeName.startsWith('app:course:') ? hasCourse : !hasCourse
-  })
+  return PAGE_LINKS_BY_SLOT[`${location}:${hasCourseKey(hasCourse)}`]
 }
 
 export { selectPageLinks }
