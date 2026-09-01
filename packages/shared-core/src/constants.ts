@@ -76,6 +76,7 @@ const HAST_MDX_JSX_FLOW_DIV_ELEMENT_NAME = [
   'Table',
   'Tabs',
   'TabItem',
+  'TextQuestion',
   'Video',
   'YouTube',
 ] as const
