@@ -1,6 +1,6 @@
 import type { Element, ElementContent } from 'hast'
-import { isElement } from 'hast-util-is-element'
 import type { State } from 'mdast-util-to-hast'
+import { isElement } from 'hast-util-is-element'
 import { expect, test } from 'vitest'
 import markdownToHast from '../../markdown-to-hast.js'
 import remarkRehypeHandlers from './remark-rehype-handlers.js'
