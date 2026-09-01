@@ -1,4 +1,4 @@
-import { type SyntheticEvent, useEffect, useRef, useState } from 'react'
+import { type SyntheticEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { isCourseSectionRouteInfo } from '@innodoc/shared-core/typeguards'
 import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
 import { useSelector } from '@innodoc/ui-shared/store-hooks'
@@ -23,12 +23,14 @@ function useManageExpanded() {
   // to close a current subtree.
   const prevSectionPath = useRef<string | null>(null)
 
-  // Expand current and parents
-  const expandedWithParents = getExpandedWithParents(currentSectionPath)
+  // Stable reference for an unchanged path, so the effect below only fires on real section changes
+  const expandedWithParents = useMemo(() => getExpandedWithParents(currentSectionPath), [currentSectionPath])
 
   const [expandedItems, setExpandedItems] = useState<string[]>(expandedWithParents)
 
-  // Expand parents on section change
+  // Expand parents on section change. `expandedItems` is deliberately not a dependency: the
+  // updater form of `setExpandedItems` already reads the previous state, and an unstable dep
+  // here would re-run the effect after every render, only stopped by the `prevSectionPath` guard.
   useEffect(() => {
     if (currentSectionPath && currentSectionPath !== prevSectionPath.current) {
       prevSectionPath.current = currentSectionPath
@@ -45,7 +47,7 @@ function useManageExpanded() {
         return newExpanded
       })
     }
-  }, [currentSectionPath, expandedItems, expandedWithParents, setExpandedItems])
+  }, [currentSectionPath, expandedWithParents])
 
   // Called when tree item expand button is clicked
   const onItemExpansionToggle = (ev: SyntheticEvent | null, itemId: string, isExpanded: boolean) => {
@@ -58,8 +60,12 @@ function useManageExpanded() {
     })
   }
 
-  // Currently selected nodes
-  const selectedItems = currentSectionPath === undefined ? emptySelected : [currentSectionPath]
+  // Currently selected nodes; stable reference while the path is unchanged, so the tree view
+  // can skip re-renders from this prop
+  const selectedItems = useMemo(
+    () => (currentSectionPath === undefined ? emptySelected : [currentSectionPath]),
+    [currentSectionPath],
+  )
 
   return { expandedItems, onItemExpansionToggle, selectedItems }
 }
