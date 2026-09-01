@@ -1,6 +1,3 @@
-import { gfmStrikethroughFromMarkdown } from 'mdast-util-gfm-strikethrough'
-import { gfmTableFromMarkdown } from 'mdast-util-gfm-table'
-import { gfmTable } from 'micromark-extension-gfm-table'
 import { mdxMd } from 'micromark-extension-mdx-md'
 import { unified } from 'unified'
 import { expect, test } from 'vitest'
@@ -72,10 +69,13 @@ test('remarkMdx and remarkGfm accumulate on the same processor data without clob
   p.use(remarkGfm)
   expect(p.data('micromarkExtensions')).toBeUndefined()
   p.freeze()
+  // remarkMdx contributes 2 micromark + 1 fromMarkdown extension; remarkGfm
+  // contributes 2 micromark + 2 fromMarkdown. Both counts must hold, otherwise
+  // the second plugin clobbered the first's list.
   const micromarkExtensions = p.data('micromarkExtensions') as unknown[]
   expect(micromarkExtensions).toHaveLength(4)
-  expect(micromarkExtensions).toEqual(expect.arrayContaining([mdxMd, gfmTable]))
+  // `mdxMd` is registered as a bare value and survived remarkGfm running after it.
+  expect(micromarkExtensions).toEqual(expect.arrayContaining([mdxMd]))
   const fromMarkdownExtensions = p.data('fromMarkdownExtensions') as unknown[]
   expect(fromMarkdownExtensions).toHaveLength(3)
-  expect(fromMarkdownExtensions).toEqual(expect.arrayContaining([gfmStrikethroughFromMarkdown, gfmTableFromMarkdown]))
 })

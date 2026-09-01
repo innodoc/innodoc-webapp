@@ -9,9 +9,9 @@ import { addExtension } from './utils.js'
 function remarkGfm(this: Processor) {
   const data = this.data() as Record<string, unknown>
   addExtension(data, 'micromarkExtensions', gfmStrikethrough())
-  addExtension(data, 'micromarkExtensions', gfmTable)
-  addExtension(data, 'fromMarkdownExtensions', gfmStrikethroughFromMarkdown)
-  addExtension(data, 'fromMarkdownExtensions', gfmTableFromMarkdown)
+  addExtension(data, 'micromarkExtensions', gfmTable())
+  addExtension(data, 'fromMarkdownExtensions', gfmStrikethroughFromMarkdown())
+  addExtension(data, 'fromMarkdownExtensions', gfmTableFromMarkdown())
 }
 
 export default remarkGfm

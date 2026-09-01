@@ -1,8 +1,6 @@
 import type { Element, Root as HastRoot } from 'hast'
-import type { Paragraph, Table } from 'mdast'
+import type { Table } from 'mdast'
 import type { Node as UnistNode } from 'unist'
-import { gfmTableFromMarkdown } from 'mdast-util-gfm-table'
-import { gfmTable } from 'micromark-extension-gfm-table'
 import remarkParse from 'remark-parse'
 import { unified } from 'unified'
 import { visit } from 'unist-util-visit'
@@ -11,29 +9,20 @@ import markdownToHast from '../../markdown-to-hast.js'
 import remarkGfm from './remark-gfm.js'
 
 /**
- * Campaign §4.1 — GFM pipe tables do not parse.
+ * Campaign §4.1 — GFM pipe tables now parse.
  *
- * An author writes a pipe table and gets back a paragraph of literal pipe
- * characters, with no error: silent content loss. `ui-content` already maps
- * table elements (`components-map.ts`; the table renderer was added in
- * e1b31c35) — it is simply fed nothing.
+ * `remark-gfm.ts` registered the `gfmTable` / `gfmTableFromMarkdown` factories
+ * uncalled (only `gfmStrikethrough()` was called). A bare factory in
+ * `micromarkExtensions` / `fromMarkdownExtensions` is silently ignored, so no
+ * table tokens were ever produced and authors saw a pipe table reflowed into a
+ * paragraph of literal pipe characters — with no error.
  *
- * These tests pin the CURRENT (wrong) behavior on purpose, so that any change
- * to the loss — a fix OR a further degradation — trips the suite.
- *
- * Localization (established empirically against the installed extensions):
- * the loss is NOT an MDX/rehype interaction and NOT the `addExtension`
- * wrapper. A minimal `remarkParse` + local `remarkGfm` processor (no MDX at
- * all) already produces no table node, while a minimal processor that calls
- * the same extension factories DOES parse a table. `remark-gfm.ts` registers
- * the `gfmTable` and `gfmTableFromMarkdown` factories uncalled (only
- * `gfmStrikethrough()` is called); micromark silently ignores a bare factory
- * function in `micromarkExtensions`, so no table tokens are ever produced.
- * That suspected root cause is unpinned by design of the tests-only campaign.
+ * Calling the factories (the fix) makes the extension work end to end: a pipe
+ * table parses to a real mdast `table` and renders to a hast
+ * `table > thead/tbody > tr > th/td`. These tests pin that fixed behavior.
  */
 
 const TABLE = '| a | b |\n| --- | --- |\n| 1 | 2 |'
-const TABLE_TAGS = new Set(['caption', 'table', 'tbody', 'td', 'th', 'thead', 'tr'])
 
 function tagNames(root: UnistNode): string[] {
   const names: string[] = []
@@ -45,6 +34,16 @@ function tagNames(root: UnistNode): string[] {
   return names
 }
 
+function elementsOf(root: HastRoot, tag: string): Element[] {
+  const els: Element[] = []
+  visit(root, 'element', (node) => {
+    if (node.tagName === tag) {
+      els.push(node)
+    }
+  })
+  return els
+}
+
 function textOf(node: UnistNode): string {
   const { value, children } = node as { value?: unknown; children?: UnistNode[] }
   if (typeof value === 'string') {
@@ -53,86 +52,52 @@ function textOf(node: UnistNode): string {
   return (children ?? []).map((child) => textOf(child)).join('')
 }
 
-it('FIXME(parser-loss): a gfm pipe table degrades to a literal-text paragraph, with no table node anywhere', async () => {
-  // Campaign §4.1: the table becomes a plain paragraph of pipe characters.
-  // `ui-content` has a working table renderer (e1b31c35) that is fed nothing,
-  // so authors see their table reflowed into a wall of text — with no error.
+it('a gfm pipe table produces a real table node (table > thead/tbody > tr > th/td), not a literal paragraph', async () => {
   const root: HastRoot = await markdownToHast(TABLE)
 
-  // No table/thead/tbody/tr/th/td/caption node survives anywhere in the tree.
-  expect(tagNames(root).some((tag) => TABLE_TAGS.has(tag))).toBe(false)
-  expect(tagNames(root)).toEqual(['div', 'p'])
+  // The exact element shape: the root div wraps a single table.
+  expect(tagNames(root)).toEqual(['div', 'table', 'thead', 'tr', 'th', 'th', 'tbody', 'tr', 'td', 'td'])
 
-  // The content degrades to literal text: the paragraph keeps the pipes.
-  expect(textOf(root)).toContain('| a | b |')
-  expect(textOf(root)).toContain('| --- | --- |')
-  expect(textOf(root)).toContain('1 | 2')
+  // Headers and body cells hold the cell text — the pipes are consumed, not kept as text.
+  expect(elementsOf(root, 'th').map((el) => textOf(el))).toEqual(['a', 'b'])
+  expect(elementsOf(root, 'td').map((el) => textOf(el))).toEqual(['1', '2'])
 })
 
-it('FIXME(parser-loss): an aligned gfm table degrades the same way', async () => {
+it('an aligned gfm table sets the align property on its cells', async () => {
   const root: HastRoot = await markdownToHast('| a | b |\n|:---|---:|\n| 1 | 2 |')
 
-  expect(tagNames(root).some((tag) => TABLE_TAGS.has(tag))).toBe(false)
-  expect(tagNames(root)).toEqual(['div', 'p'])
-  expect(textOf(root)).toContain('|:---|---:|')
+  expect(tagNames(root)).toEqual(['div', 'table', 'thead', 'tr', 'th', 'th', 'tbody', 'tr', 'td', 'td'])
+
+  const aligns = (tag: string) => elementsOf(root, tag).map((el) => el.properties.align)
+  expect(aligns('th')).toEqual(['left', 'right'])
+  expect(aligns('td')).toEqual(['left', 'right'])
 })
 
-it('FIXME(parser-loss): a table after a paragraph degrades to a second paragraph', async () => {
+it('a table after a paragraph coexists with the intro paragraph', async () => {
   const root: HastRoot = await markdownToHast(`intro\n\n${TABLE}`)
 
-  // The intro survives as its own paragraph; the table becomes a second
-  // paragraph of literal pipe text.
-  expect(tagNames(root).some((tag) => TABLE_TAGS.has(tag))).toBe(false)
-  expect(tagNames(root)).toEqual(['div', 'p', 'p'])
-  expect(root.children.map((child) => textOf(child))).toEqual(['intro', TABLE])
+  expect(tagNames(root)).toEqual(['div', 'p', 'table', 'thead', 'tr', 'th', 'th', 'tbody', 'tr', 'td', 'td'])
+
+  // The intro survives as its own paragraph; the table is its own sibling node.
+  expect(textOf(root.children[0] as UnistNode)).toBe('intro')
+  expect((root.children[1] as Element).tagName).toBe('table')
 })
 
-it('localizes the loss: the gfm plugin alone, without MDX, also produces no table node', () => {
-  // The campaign doc suspected an MDX-vs-GFM interaction. It is ruled out:
-  // this minimal processor has no MDX and no rehype stage at all, yet the
-  // table is already lost. The loss is registered by `remark-gfm.ts` itself.
-  //
-  // (unified runs a function plugin when the processor freezes on the first
-  // parse, so `parse` below is what triggers the extension registration.)
-  const processor = unified().use(remarkParse).use(remarkGfm)
-  const tree = processor.parse(TABLE)
-
-  const types: string[] = []
-  visit(tree, (node) => {
-    types.push(node.type)
-  })
-
-  expect(types).not.toContain('table')
-  expect((tree.children[0] as Paragraph).type).toBe('paragraph')
-  expect(textOf(tree.children[0] as UnistNode)).toBe(TABLE)
-})
-
-it('control: the same table extension parses a table when its factories are called', () => {
-  // Suspected root cause, unpinned by design of the tests-only campaign:
-  // `remark-gfm.ts` passes the `gfmTable` / `gfmTableFromMarkdown` factories
-  // into `micromarkExtensions` / `fromMarkdownExtensions` UNCALLEED (only
-  // `gfmStrikethrough()` is called). A bare factory function is silently
-  // ignored as an extension, so the micromark half never tokenizes the table
-  // (contrast §4.2 strikethrough, whose called micromark half still consumes
-  // the `~~` markers). With the factories called, the installed extensions
-  // work — so the loss is in the registration, not in the extension or in
-  // any downstream stage.
-  const processor = unified()
-    .use(remarkParse)
-    .data('micromarkExtensions', [gfmTable()])
-    .data('fromMarkdownExtensions', [gfmTableFromMarkdown()])
-  const tree = processor.parse(TABLE)
-
-  const types: string[] = []
-  visit(tree, (node) => {
-    types.push(node.type)
-  })
-  expect(types).toContain('table')
+it('the gfm plugin alone (no MDX, no rehype) parses a real mdast table node', () => {
+  // The loss lived in `remark-gfm.ts` registering the table factories uncalled —
+  // this minimal processor has no MDX or rehype stage at all, so finding a real
+  // table here proves the registration (now calling the factories) is the fix.
+  const tree = unified().use(remarkParse).use(remarkGfm).parse(TABLE)
 
   const table = tree.children[0] as Table
   expect(table.type).toBe('table')
   expect(table.align).toEqual([null, null])
+
   const rows = table.children
   expect(rows).toHaveLength(2)
   expect(rows.map((row) => row.children.length)).toEqual([2, 2])
+
+  const cellTexts = (cells: readonly UnistNode[]) => cells.map((cell) => textOf(cell))
+  expect(cellTexts(rows[0]?.children ?? [])).toEqual(['a', 'b'])
+  expect(cellTexts(rows[1]?.children ?? [])).toEqual(['1', '2'])
 })

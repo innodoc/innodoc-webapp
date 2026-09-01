@@ -1,29 +1,17 @@
 /**
- * Campaign §4.2 — GFM strikethrough does not parse (pin + find).
+ * Campaign §4.2 — GFM strikethrough now parses.
  *
- * `~~x~~` renders as plain `x`: the `~~` markers are *consumed* (the
- * micromark extension tokenizes, so authors never see literal tildes in the
- * output — the distinctive tell vs the table loss, where the markers stay
- * visible as text), but the mdast `delete` node is never built, so no `del`
- * element exists in the hast tree.
+ * `remark-gfm.ts` registered `gfmStrikethroughFromMarkdown` uncalled while its
+ * micromark half was called. The called micromark half still consumed the `~~`
+ * markers, but the inert fromMarkdown half never built the node, so `~~x~~`
+ * rendered as plain `x`. Calling the factory (the fix) makes the extension work:
+ * `~~x~~` parses to a mdast `delete` node and renders to a hast `<del>` element.
+ * (At these dependency versions the mdast node type is `delete`, not `del`.)
  *
- * These tests deliberately pin that loss: they stay green while the bug
- * persists and trip on either a fix (a `del` appears) or further
- * degradation (e.g. markers no longer consumed).
- *
- * Localized (observed, not fixed): `remark-gfm.ts` registers
- * `gfmStrikethroughFromMarkdown` — a *factory function* — into
- * `fromMarkdownExtensions` without calling it, while the micromark side is
- * called (`gfmStrikethrough()`). `mdast-util-from-markdown` reads no
- * `enter`/`exit` handlers from a bare function, so the `strikethrough`
- * token is skipped and only its child text survives. `gfmTableFromMarkdown`
- * is a factory as well — the parallel table loss is pinned by the table
- * test file, not here.
+ * These tests pin that fixed behavior.
  */
 import type { Element, Root as HastRoot } from 'hast'
 import type { Root as MdastRoot } from 'mdast'
-import { gfmStrikethroughFromMarkdown } from 'mdast-util-gfm-strikethrough'
-import { gfmStrikethrough } from 'micromark-extension-gfm-strikethrough'
 import remarkParse from 'remark-parse'
 import { unified } from 'unified'
 import { visit } from 'unist-util-visit'
@@ -56,32 +44,28 @@ function mdastNodeTypes(tree: MdastRoot): string[] {
   return types
 }
 
-test('FIXME(parser-loss): ~~x~~ renders as plain text — markers consumed, no del node built (§4.2)', async () => {
-  // FIXME(parser-loss): the tildes are consumed (text is 'x', never '~~x~~')
-  // yet no del element is built; the prompt survives as unmarked text.
+test('~~x~~ produces a del element wrapping the struck text', async () => {
   const root = await markdownToHast('~~x~~')
-  expect(hastTagNames(root)).toEqual(['div', 'p'])
-  expect(hastTagNames(root)).not.toContain('del')
-  expect(hastTagNames(root)).not.toContain('s')
+  expect(hastTagNames(root)).toEqual(['div', 'p', 'del'])
   expect(hastTexts(root)).toEqual(['x'])
 })
 
-test('FIXME(parser-loss): a ~~b~~ c keeps no del — surviving text runs merge into one text node', async () => {
+test('a ~~b~~ c keeps its surrounding text runs alongside the del', async () => {
   const root = await markdownToHast('a ~~b~~ c')
-  expect(hastTagNames(root)).toEqual(['div', 'p'])
-  expect(hastTagNames(root)).not.toContain('del')
-  // from-markdown merges the surviving runs; 'b' is plain text, no wrapper
-  expect(hastTexts(root)).toEqual(['a b c'])
+  expect(hastTagNames(root)).toEqual(['div', 'p', 'del'])
+  // The paragraph holds two text runs bracketing the del — the runs no longer merge.
+  expect(hastTexts(root)).toEqual(['a ', 'b', ' c'])
 })
 
-test('FIXME(parser-loss): tildes are consumed even when not word-delimited (a~~b~~c)', async () => {
+test('tildes not word-delimited (a~~b~~c) still produce a del', async () => {
   const root = await markdownToHast('a~~b~~c')
-  expect(hastTagNames(root)).toEqual(['div', 'p'])
-  expect(hastTagNames(root)).not.toContain('del')
-  expect(hastTexts(root)).toEqual(['abc'])
+  expect(hastTagNames(root)).toEqual(['div', 'p', 'del'])
+  expect(hastTexts(root)).toEqual(['a', 'b', 'c'])
 })
 
-test('FIXME(parser-loss): ~~~hard~~~ is swallowed by the tilde-fence parser, not by strikethrough', async () => {
+test('~~~hard~~~ stays a tilde-fenced code block, not a strikethrough', async () => {
+  // Tilde-fence precedence wins over strikethrough; pin the code block shape so a
+  // regression in either direction (a `del` leaking in, or the fence losing) trips.
   const root = await markdownToHast('~~~hard~~~')
   const tags = hastTagNames(root)
   expect(tags).toEqual(['div', 'pre', 'code'])
@@ -96,30 +80,14 @@ test('FIXME(parser-loss): ~~~hard~~~ is swallowed by the tilde-fence parser, not
   expect(hastTexts(root)).toEqual([''])
 })
 
-test('localization: the gfm plugin alone (no MDX) already loses the delete node', () => {
+test('the gfm plugin alone (no MDX) produces the delete node', () => {
   const tree = unified().use(remarkParse).use(remarkGfm).parse('~~x~~')
-  const types = mdastNodeTypes(tree)
-  expect(types).toEqual(['root', 'paragraph', 'text'])
-  expect(types).not.toContain('delete')
-  // the micromark half fires (tilde consumed — without it the text would be
-  // '~~x~~'); the fromMarkdown half is the inert one
-})
-
-test('localization: MDX registration is not implicated — mdx+gfm yields the identical mdast shape', () => {
-  const tree = unified().use(remarkParse).use(remarkMdx).use(remarkGfm).parse('~~x~~')
-  const types = mdastNodeTypes(tree)
-  expect(types).toEqual(['root', 'paragraph', 'text'])
-  expect(types).not.toContain('delete')
-  // the loss predates any MDX interaction: it lives in remark-gfm.ts itself
-})
-
-test('localization: calling the factory registers the extension — a delete node appears (root cause, informational only)', () => {
-  const tree = unified()
-    .use(remarkParse)
-    .data('micromarkExtensions', [gfmStrikethrough()])
-    .data('fromMarkdownExtensions', [gfmStrikethroughFromMarkdown()])
-    .parse('~~x~~')
   expect(mdastNodeTypes(tree)).toEqual(['root', 'paragraph', 'delete', 'text'])
-  // the one-line difference: remark-gfm.ts passes gfmStrikethroughFromMarkdown
-  // itself instead of gfmStrikethroughFromMarkdown(). Tests-only campaign: not fixed here.
+})
+
+test('MDX is not implicated — mdx+gfm yields the identical mdast shape as gfm alone', () => {
+  const gfm = unified().use(remarkParse).use(remarkGfm).parse('~~x~~')
+  const mdxGfm = unified().use(remarkParse).use(remarkMdx).use(remarkGfm).parse('~~x~~')
+  expect(mdastNodeTypes(mdxGfm)).toEqual(mdastNodeTypes(gfm))
+  expect(mdastNodeTypes(mdxGfm)).toEqual(['root', 'paragraph', 'delete', 'text'])
 })

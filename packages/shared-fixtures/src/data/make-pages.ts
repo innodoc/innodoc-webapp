@@ -40,6 +40,13 @@ const makePages = (courseId: number, fakers: Fakers) => {
 [example link reference][linkRef]
 
 [linkRef]: https://www.example.com/reference
+
+| Name | Value |
+| ---- | ----- |
+| one  | 1     |
+| two  | 2     |
+
+This is ~~struck~~ text.
 `
   firstPage.content.de = `Dies ist der Beginn der Reise.
 
@@ -47,6 +54,13 @@ const makePages = (courseId: number, fakers: Fakers) => {
 [Beispiel-Referenz-Link][linkRef]
 
 [linkRef]: https://www.example.com/reference
+
+| Name | Value |
+| ---- | ----- |
+| one  | 1     |
+| two  | 2     |
+
+This is ~~struck~~ text.
 `
 
   secondPage.data = {
