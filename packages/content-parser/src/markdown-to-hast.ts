@@ -10,6 +10,7 @@ import remarkMath from 'remark-math'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import { unified } from 'unified'
+import rehypeHeadingIdDedupe from './plugins/rehype-innodoc/heading-id-dedupe.js'
 import rehypeInnodoc from './plugins/rehype-innodoc/rehype-innodoc.js'
 import remarkGfm from './plugins/remark/remark-gfm.js'
 import remarkInnodoc from './plugins/remark/remark-innodoc/remark-innodoc.js'
@@ -32,6 +33,7 @@ const processor = unified()
   .use(remarkMath)
   .use(remarkRehype, { handlers: remarkRehypeHandlers })
   .use(rehypeSlug)
+  .use(rehypeHeadingIdDedupe)
   .use(rehypeInnodoc)
   .use(rehypeSanitize, sanitizationConfig)
   .use(rehypeKatex, { output: 'html' }) as Processor<MdastRoot, MdastRoot, HastRoot>

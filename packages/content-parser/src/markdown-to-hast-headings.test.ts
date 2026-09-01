@@ -4,15 +4,18 @@ import { expect, test } from 'vitest'
 import markdownToHast from '@innodoc/content-parser'
 
 // V7: remark-heading-id ({#custom} syntax, runs in the remark phase) and rehype-slug
-// (auto-slugs, runs in the rehype phase, after remark-rehype) coexist in the pipeline.
-// Observed interplay, pinned here:
+// (auto-slugs, runs in the rehype phase, after remark-rehype) coexist in the pipeline,
+// and rehype-heading-id-dedupe (plugins/rehype-innodoc/heading-id-dedupe.ts) runs right
+// after rehype-slug to de-duplicate the ids the two leave colliding. Observed interplay:
 // - a heading with a custom id keeps the EXACT id: it is neither slugified nor
-//   de-duplicated (rehype-slug skips any heading that already has `properties.id`)
-// - a custom id is never registered in the slugger, so a later auto heading whose
-//   text slugs to the same string produces a DUPLICATE id (both spellings stay)
+//   re-sanitized (rehype-slug skips any heading that already has `properties.id`)
+// - a custom id is never registered in the slugger, so an auto heading whose text
+//   slugs to the same string collides with it; the de-dupe pass keeps the FIRST
+//   occurrence's exact id in document order and suffixes later occurrences with the
+//   slugger's own `-1`/`-2` style, without ever colliding with an id kept elsewhere
 // - auto headings de-duplicate among themselves with numeric suffixes (dup, dup-1, dup-2)
-// - the slugger is module-level but reset at the start of each transform, so repeated
-//   parses of the same document do not shift each other's slugs
+// - the slugger and the de-dupe pass both reset per parse, so repeated parses of the
+//   same document do not shift each other's ids
 
 function collectHeadings(root: Root): Element[] {
   const found: Element[] = []
@@ -52,14 +55,50 @@ test('de-duplicates repeated auto headings with numeric suffixes', async () => {
   expect(collectHeadings(three).map((el) => el.properties.id)).toEqual(['dup', 'dup-1', 'dup-2'])
 })
 
-test('produces duplicate ids when a custom id collides with an auto slug', async () => {
+test('resolves custom/auto id collisions to unique ids, keeping the first occurrence', async () => {
   // rehype-slug skips headings that already have an id, so the custom id is not
-  // registered in the slugger and the auto heading does not avoid it
+  // registered in the slugger and the collision survives to the de-dupe pass:
+  // the first heading in document order keeps its exact id, the later one gets a
+  // slugger-style numeric suffix. Both orderings resolve the same way.
   const customFirst = await markdownToHast('## Dup {#dup}\n\n## Dup')
-  expect(collectHeadings(customFirst).map((el) => el.properties.id)).toEqual(['dup', 'dup'])
+  expect(collectHeadings(customFirst).map((el) => el.properties.id)).toEqual(['dup', 'dup-1'])
 
   const autoFirst = await markdownToHast('## Dup\n\n## Dup {#dup}')
-  expect(collectHeadings(autoFirst).map((el) => el.properties.id)).toEqual(['dup', 'dup'])
+  expect(collectHeadings(autoFirst).map((el) => el.properties.id)).toEqual(['dup', 'dup-1'])
+})
+
+test('suffixes every later occurrence in a three-way collision without chained suffixes', async () => {
+  // Custom id plus two auto headings that slug to it: the slugger hands the second
+  // auto heading `dup-1` BEFORE the pass runs, so when the pass renames the colliding
+  // `dup` it must skip the already-kept `dup-1` instead of producing `dup-1-1`.
+  const customFirst = await markdownToHast('## Dup {#dup}\n\n## Dup\n\n## Dup')
+  expect(collectHeadings(customFirst).map((el) => el.properties.id)).toEqual(['dup', 'dup-2', 'dup-1'])
+
+  const customMiddle = await markdownToHast('## Dup\n\n## Dup {#dup}\n\n## Dup')
+  expect(collectHeadings(customMiddle).map((el) => el.properties.id)).toEqual(['dup', 'dup-2', 'dup-1'])
+})
+
+test('keeps colliding custom ids unique among themselves', async () => {
+  // Two authored `{#x}` on different headings collide too (both survive rehype-slug
+  // untouched); the same first-occurrence-keeps rule applies.
+  const root = await markdownToHast('## One {#same}\n\n## Two {#same}')
+  expect(collectHeadings(root).map((el) => el.properties.id)).toEqual(['same', 'same-1'])
+})
+
+test('does not leak heading-id de-duplication state between documents', async () => {
+  const doc = '## Dup {#dup}\n\n## Dup'
+  const first = await markdownToHast(doc)
+  expect(collectHeadings(first).map((el) => el.properties.id)).toEqual(['dup', 'dup-1'])
+
+  // A fresh parse of the same colliding document must not continue where the first
+  // left off (no module-level seen-set): the second document still gets dup/dup-1.
+  const second = await markdownToHast(doc)
+  expect(collectHeadings(second).map((el) => el.properties.id)).toEqual(['dup', 'dup-1'])
+
+  const concurrent = await Promise.all([markdownToHast(doc), markdownToHast(doc)])
+  for (const root of concurrent) {
+    expect(collectHeadings(root).map((el) => el.properties.id)).toEqual(['dup', 'dup-1'])
+  }
 })
 
 test('maps heading levels one through six to h1 through h6', async () => {
