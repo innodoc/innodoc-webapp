@@ -1,10 +1,10 @@
 /* oxlint-disable react/react-compiler -- the probe writes the hook result to a module variable during
 render; a test-only capture pattern, the component never renders UI */
 import { assert, expect, test } from 'vitest'
+import { EMPTY_TRANSLATED_SECTIONS } from '@innodoc/shared-core/sentinels'
 import type { ApiSection, TranslatedSection } from '@innodoc/shared-core/types'
 import getSectionsApi from '@innodoc/shared-store/slices/content/sections'
 import { createTestHarness, TEST_COURSE_SLUG } from '@innodoc/ui-test-utils'
-import { EMPTY_TRANSLATED_SECTIONS } from './constants.js'
 import useSelectBreadcrumbSections from './use-select-breadcrumb-sections.js'
 
 // The hook is route-driven: on `app:course:section` it derives the breadcrumb chain from the
@@ -129,7 +129,7 @@ test('useSelectBreadcrumbSections returns the same empty sentinel while the quer
   rerender(<Probe />)
 
   // A fresh `[]` per render defeats RTK Query's shallowEqual gate, so the consumer re-renders with
-  // the store. The frozen sentinel from `./constants.js` is the stable answer.
+  // the store. The frozen sentinel from `@innodoc/shared-core/sentinels` is the stable answer.
   expect(seen[from + 1]?.sections).toBe(EMPTY_TRANSLATED_SECTIONS)
   expect(seen[from + 1]?.sections).toBe(seen[from]?.sections)
 })

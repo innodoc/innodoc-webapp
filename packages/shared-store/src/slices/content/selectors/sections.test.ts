@@ -1,8 +1,7 @@
 import { assert, expect, test } from 'vitest'
+import { EMPTY_SECTION_TREE, EMPTY_TRANSLATED_SECTIONS } from '@innodoc/shared-core/sentinels'
 import type { ApiSection } from '@innodoc/shared-core/types'
 import {
-  EMPTY_SECTION_TREE,
-  EMPTY_TRANSLATED_SECTIONS,
   selectBreadcrumbSections,
   selectSectionByPath,
   selectSectionChildren,

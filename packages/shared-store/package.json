@@ -132,15 +132,15 @@
       "development": "./src/slices/content/entities/sections.ts",
       "default": "./dist/slices/content/entities/sections.js"
     },
-    "#slices/content/selectors/sections": {
-      "types": "./src/slices/content/selectors/sections.ts",
-      "development": "./src/slices/content/selectors/sections.ts",
-      "default": "./dist/slices/content/selectors/sections.js"
-    },
     "#slices/content/selectors/pages": {
       "types": "./src/slices/content/selectors/pages.ts",
       "development": "./src/slices/content/selectors/pages.ts",
       "default": "./dist/slices/content/selectors/pages.js"
+    },
+    "#slices/content/selectors/sections": {
+      "types": "./src/slices/content/selectors/sections.ts",
+      "development": "./src/slices/content/selectors/sections.ts",
+      "default": "./dist/slices/content/selectors/sections.js"
     },
     "#slices/hast": {
       "types": "./src/slices/hast/hast-slice.ts",

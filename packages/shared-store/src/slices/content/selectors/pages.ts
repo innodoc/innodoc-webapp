@@ -1,14 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
+import { EMPTY_TRANSLATED_PAGES } from '@innodoc/shared-core/sentinels'
 import { translateEntity } from '@innodoc/shared-core/translate'
 import type { ApiPage, LanguageCode, PageLinkLocation, TranslatedPage } from '@innodoc/shared-core/types'
-
-/**
- * Frozen sentinel for the "no data yet / not applicable" branch. A fresh `[]` returned from a
- * `selectFromResult` defeats RTK Query's `shallowEqual` gate, so every skipped/loading consumer
- * re-renders with the store. Frozen: a write throws in strict mode
- * instead of silently corrupting every consumer at once.
- */
-const EMPTY_TRANSLATED_PAGES: readonly TranslatedPage[] = Object.freeze([])
 
 /**
  * One translated copy of every page, plus the two indexes every consumer needs.
@@ -90,4 +83,4 @@ function selectLinkedPages(
   return selectPageIndex(data, locale).linked.get(linkLocation) ?? EMPTY_TRANSLATED_PAGES
 }
 
-export { EMPTY_TRANSLATED_PAGES, selectLinkedPages, selectPageBySlug, selectPageIndex }
+export { selectLinkedPages, selectPageBySlug, selectPageIndex }

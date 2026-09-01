@@ -1,4 +1,4 @@
-import type { SectionWithChildren, TranslatedPage, TranslatedSection } from '@innodoc/shared-core/types'
+import type { SectionWithChildren, TranslatedPage, TranslatedSection } from '#types'
 
 /** Stable sentinels for "no data yet / not applicable". Frozen: a write throws in strict mode
  *  instead of corrupting every consumer at once. Never replace with a per-call `[]`.
@@ -6,9 +6,8 @@ import type { SectionWithChildren, TranslatedPage, TranslatedSection } from '@in
  *  Returning a fresh `[]` from a `selectFromResult` defeats RTK Query's `shallowEqual` gate, so
  *  every skipped/loading consumer re-renders with the store.
  *
- *  If the translated section layer lands, the selectors using these constants move to
- *  `packages/shared-store`, which may not import from `ui-*` — move this file to
- *  `@innodoc/shared-core` at that point. */
+ *  They live in `@innodoc/shared-core` because the consumers are the module-scoped selectors in
+ *  `@innodoc/shared-store` (which may not import from `ui-*`) and the `ui-*` store hooks alike. */
 export const EMPTY_TRANSLATED_SECTIONS: readonly TranslatedSection[] = Object.freeze([])
 export const EMPTY_SECTION_TREE: readonly SectionWithChildren[] = Object.freeze([])
 export const EMPTY_TRANSLATED_PAGES: readonly TranslatedPage[] = Object.freeze([])

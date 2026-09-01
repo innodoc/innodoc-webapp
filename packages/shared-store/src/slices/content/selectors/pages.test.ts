@@ -1,11 +1,7 @@
 import { assert, expect, test } from 'vitest'
+import { EMPTY_TRANSLATED_PAGES } from '@innodoc/shared-core/sentinels'
 import type { ApiPage } from '@innodoc/shared-core/types'
-import {
-  EMPTY_TRANSLATED_PAGES,
-  selectLinkedPages,
-  selectPageBySlug,
-  selectPageIndex,
-} from '#slices/content/selectors/pages'
+import { selectLinkedPages, selectPageBySlug, selectPageIndex } from '#slices/content/selectors/pages'
 
 const createdAt = new Date('2024-01-01T00:00:00.000Z')
 const updatedAt = new Date('2024-01-02T00:00:00.000Z')

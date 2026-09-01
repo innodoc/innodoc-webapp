@@ -30,6 +30,11 @@
       "development": "./src/schemas/schemas.ts",
       "default": "./dist/schemas/schemas.js"
     },
+    "./sentinels": {
+      "types": "./src/sentinels.ts",
+      "development": "./src/sentinels.ts",
+      "default": "./dist/sentinels.js"
+    },
     "./translate": {
       "types": "./src/translate.ts",
       "development": "./src/translate.ts",
@@ -90,6 +95,11 @@
       "types": "./src/schemas/common.ts",
       "development": "./src/schemas/common.ts",
       "default": "./dist/schemas/common.js"
+    },
+    "#sentinels": {
+      "types": "./src/sentinels.ts",
+      "development": "./src/sentinels.ts",
+      "default": "./dist/sentinels.js"
     },
     "#translate": {
       "types": "./src/translate.ts",

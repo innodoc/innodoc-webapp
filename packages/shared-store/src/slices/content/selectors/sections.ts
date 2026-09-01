@@ -1,15 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
+import { EMPTY_SECTION_TREE, EMPTY_TRANSLATED_SECTIONS } from '@innodoc/shared-core/sentinels'
 import { translateEntity } from '@innodoc/shared-core/translate'
 import type { ApiSection, LanguageCode, SectionWithChildren, TranslatedSection } from '@innodoc/shared-core/types'
-
-/**
- * Frozen sentinels for the "no data yet / not applicable" branches. A fresh `[]` returned from a
- * `selectFromResult` defeats RTK Query's `shallowEqual` gate, so every skipped/loading consumer
- * re-renders with the store. Frozen: a write throws in strict mode
- * instead of silently corrupting every consumer at once.
- */
-const EMPTY_TRANSLATED_SECTIONS: readonly TranslatedSection[] = Object.freeze([])
-const EMPTY_SECTION_TREE: readonly SectionWithChildren[] = Object.freeze([])
 
 /**
  * One translated copy of every section, plus the two indexes every consumer needs.
@@ -174,12 +166,4 @@ const selectSectionTree = createSelector(
   },
 )
 
-export {
-  EMPTY_SECTION_TREE,
-  EMPTY_TRANSLATED_SECTIONS,
-  selectBreadcrumbSections,
-  selectSectionByPath,
-  selectSectionChildren,
-  selectSectionIndex,
-  selectSectionTree,
-}
+export { selectBreadcrumbSections, selectSectionByPath, selectSectionChildren, selectSectionIndex, selectSectionTree }
