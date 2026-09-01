@@ -87,6 +87,7 @@
     "unified": "catalog:"
   },
   "devDependencies": {
+    "@innodoc/ui-test-utils": "workspace:*",
     "@testing-library/jest-dom": "catalog:",
     "@types/hast": "catalog:",
     "@types/node": "catalog:",
