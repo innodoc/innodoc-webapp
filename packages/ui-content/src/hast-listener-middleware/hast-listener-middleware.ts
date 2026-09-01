@@ -14,6 +14,14 @@ function isHastResultWithHash(obj: unknown): obj is HastResultWithHash {
   return isWithContentHash(obj) && (isHastRootDivElement(result.root) || isParserError(result.error))
 }
 
+/**
+ * How long `processMarkdown` waits for the Markdown->hast worker to post a result for the content
+ * hash before giving up. The worker posts for every failure it can catch, so a missing post is a
+ * bug, not a parse error - degrade to an error state instead of leaving the page on the
+ * processing spinner forever.
+ */
+const WORKER_RESULT_TIMEOUT_MS = 30_000
+
 const hastListenerMiddleware = createListenerMiddleware()
 
 /** Set up client-side listeners for the hast middleware. Must be called once after store creation. */
@@ -48,7 +56,26 @@ function setupHastListeners(routeManager: RouteManager) {
       try {
         worker.addEventListener('message', workerListener)
         worker.postMessage(content)
-        await listenerApi.take((action) => addHastResult.match(action) && action.payload.hash === content.hash)
+        const result = await listenerApi.take(
+          (action) => addHastResult.match(action) && action.payload.hash === content.hash,
+          WORKER_RESULT_TIMEOUT_MS,
+        )
+        if (result === null) {
+          // The worker never posted a result for this hash. Surface a synthesized error so the
+          // content renders as a parser error instead of hanging on the processing spinner.
+          listenerApi.dispatch(
+            addHastResult({
+              hash: content.hash,
+              error: {
+                column: 0,
+                line: 0,
+                reason: 'The Markdown worker timed out before posting a result.',
+                ruleId: 'worker-timeout',
+                source: 'worker',
+              },
+            }),
+          )
+        }
       } finally {
         worker.removeEventListener('message', workerListener)
         listenerApi.dispatch(changeIsProcessing(false))
