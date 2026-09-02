@@ -23,6 +23,10 @@
       "types": "./src/plugins/api/mock-database.ts",
       "development": "./src/plugins/api/mock-database.ts"
     },
+    "#plugins/i18n-plugin": {
+      "types": "./src/plugins/i18n-plugin.ts",
+      "development": "./src/plugins/i18n-plugin.ts"
+    },
     "#plugins/types": {
       "types": "./src/plugins/types.ts",
       "development": "./src/plugins/types.ts"
