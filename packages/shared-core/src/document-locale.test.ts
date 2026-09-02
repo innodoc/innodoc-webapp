@@ -22,3 +22,18 @@ test('the document locale is the default when the URL locale has no UI bundle', 
   expect(resolveDocumentLocale('fr', ['de', 'en'])).toBe('en')
   expect(resolveDocumentLocale('de', [])).toBe('en')
 })
+
+test('resolving the document locale is idempotent', () => {
+  // Every reader downstream of the resolution re-applies it (handler, store swap, identity
+  // checks), so applying it twice must equal applying it once - for supported and for
+  // unsupported inputs
+  for (const locale of ['de', 'en', 'fr']) {
+    const once = resolveDocumentLocale(locale, ['de', 'en'])
+    expect(resolveDocumentLocale(once, ['de', 'en'])).toBe(once)
+  }
+
+  for (const locale of ['de', 'fr']) {
+    const once = resolveDocumentLocale(locale, [])
+    expect(resolveDocumentLocale(once, [])).toBe(once)
+  }
+})
