@@ -25,8 +25,12 @@ export default defineConfig({
   // Retry on CI only
   retries: process.env.CI ? 2 : 0,
 
-  // Opt out of parallel tests on CI
-  workers: process.env.CI ? 1 : undefined,
+  // Opt out of parallel tests on CI. Locally the cap is the point: the dev server is a single
+  // Node process, and every worker's page load opens the whole module graph as concurrent HTTP/2
+  // streams on it. Beyond ~8 concurrent loads its response latency tail grows until the specs'
+  // 5s URL assertions stall (the URL-stall flake family). Measured wall time is flat (~21s) from
+  // 12 workers down to 4, so the cap costs nothing here and buys margin against sibling load.
+  workers: process.env.CI ? 1 : 8,
 
   reporter: 'html',
 
