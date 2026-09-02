@@ -39,8 +39,18 @@ export default defineConfig({
 
   projects: [
     {
+      // Warm up a cold dev server before the real specs. The webServer readiness above proves the
+      // API answers, not that the client bundle serves: on the first boot Vite transforms the
+      // module graph on demand, and page loads in that window lose module requests (HTTP/2 resets)
+      // and never fully hydrate, so the first client-side navigation in the real specs degrades
+      // into a full page load. One warm page load makes the transform caches hot.
+      name: 'setup',
+      testMatch: /global\.setup\.ts/u,
+    },
+    {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      dependencies: ['setup'],
     },
   ],
 
