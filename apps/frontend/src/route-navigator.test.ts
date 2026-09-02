@@ -92,7 +92,11 @@ function makeCourseRecord(locales: LanguageCode[]): ApiCourse {
 /** Put the course into the RTK Query cache the way a fulfilled fetch would */
 function seedCourse(store: Store, locales: LanguageCode[]) {
   return store.dispatch(
-    getCoursesApi(routeManager).util.upsertQueryData('getCourse', { courseSlug: COURSE_SLUG }, makeCourseRecord(locales)),
+    getCoursesApi(routeManager).util.upsertQueryData(
+      'getCourse',
+      { courseSlug: COURSE_SLUG },
+      makeCourseRecord(locales),
+    ),
   )
 }
 
@@ -175,12 +179,12 @@ test('a navigation to a course locale the course does not offer fetches the unca
   // The only request this navigation makes on its own is the course record. Anything else is a
   // test bug, so the fetch answers only for it and fails loudly otherwise
   const courseUrl = `${MOCK_ORIGIN}/api/course/${COURSE_SLUG}`
-  const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
+  const fetchMock = vi.fn<(input: RequestInfo | URL) => Promise<Response>>((input) => {
     const url = new Request(input).url
     if (url !== courseUrl) {
-      throw new Error(`Unexpected request: ${url}`)
+      return Promise.reject(new Error(`Unexpected request: ${url}`))
     }
-    return Response.json(makeCourseRecord(['de', 'en']))
+    return Promise.resolve(Response.json(makeCourseRecord(['de', 'en'])))
   })
   vi.stubGlobal('Request', TestRequest)
   vi.stubGlobal('fetch', fetchMock)
@@ -229,7 +233,9 @@ test('a navigation to an unresolvable course proceeds uncorrected once the cours
   store.dispatch(changeRouteInfo({ locale: 'en', name: 'app:index' }))
 
   // The course does not exist: the fetch the navigator starts answers 404
-  const fetchMock = vi.fn(async () => new Response(null, { status: 404 }))
+  const fetchMock = vi.fn<(input: RequestInfo | URL) => Promise<Response>>(() =>
+    Promise.resolve(new Response(null, { status: 404 })),
+  )
   vi.stubGlobal('Request', TestRequest)
   vi.stubGlobal('fetch', fetchMock)
 

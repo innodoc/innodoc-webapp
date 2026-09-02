@@ -97,6 +97,14 @@ interface CourseQueryResult {
 }
 
 /**
+ * Whether a course query counts as settled for the wait: an error means the record will not
+ * arrive, a fulfilled query additionally needs its data
+ */
+function isCourseQuerySettled(query: CourseQueryResult): boolean {
+  return query.isError || query.data !== undefined
+}
+
+/**
  * Make sure the course record the locale correction reads is in the cache.
  *
  * Nothing else on the client fetches course records, so this starts the `getCourse` fetch and
@@ -111,9 +119,8 @@ function waitForCourseRecord(store: Store, routeManager: RouteManager, courseSlu
   // Not memoised by RTK Query, so it is prepared once per wait - never inside the subscription
   // callback, where it would repeat for every dispatched action
   const selectCourse = coursesApi.endpoints.getCourse.select({ courseSlug })
-  const isSettled = (query: CourseQueryResult): boolean => query.isError || query.data !== undefined
 
-  if (isSettled(selectCourse(store.getState()))) {
+  if (isCourseQuerySettled(selectCourse(store.getState()))) {
     return Promise.resolve()
   }
 
@@ -133,7 +140,7 @@ function waitForCourseRecord(store: Store, routeManager: RouteManager, courseSlu
     }
 
     const unsubscribe = store.subscribe(() => {
-      if (isSettled(selectCourse(store.getState()))) {
+      if (isCourseQuerySettled(selectCourse(store.getState()))) {
         settle()
       }
     })
