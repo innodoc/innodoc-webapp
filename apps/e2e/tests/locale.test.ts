@@ -341,3 +341,45 @@ test("a history navigation to a course locale the course does not offer lands on
   await expect(page).toHaveURL(new RegExp(`${otherPath}$`, 'u'))
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
 })
+
+// The same correction when the course record is not in the cache yet: the boot route names no
+// course, so the course never enters the cache (a full load of the dead-locale URL would 302,
+// having fetched the course itself). The app fetches the course during the client navigation and
+// resolves the same canonical route - the dead URL must still not survive in the history, and the
+// answer must stay in the same document.
+test("a client navigation to a dead-locale URL of an uncached course lands on the course's first locale", async ({
+  page,
+}) => {
+  // Boot outside a course, stamped: a course route would have fetched the course into the cache,
+  // and a reload would stamp a different document. String form of `evaluate`, like `isHydrated`
+  // above: this project compiles for Node, without the DOM library
+  await page.addInitScript('window.__doc = String(Math.random())')
+  const loginPath = '/en/user/login'
+  await openApp(page, loginPath)
+  const docBefore = await page.evaluate<string>('window.__doc ?? ""')
+  expect(docBefore).not.toBe('')
+
+  // The browser lands on the /fr variant of the course home, as a stale history entry - the
+  // browser's own mechanics: a new entry, plus the popstate that back and forward report
+  const deadPath = courseSlugMode === 'URL' ? `/fr/${courseSlug}/page/home` : '/fr/page/home'
+  const entriesBeforePush = await page.evaluate<number>('history.length')
+  await page.evaluate(`window.history.pushState(null, "", ${JSON.stringify(deadPath)})`)
+  const deadEntries = await page.evaluate<number>('history.length')
+  expect(deadEntries).toBe(entriesBeforePush + 1)
+  await page.evaluate('window.dispatchEvent(new PopStateEvent("popstate"))')
+
+  // The app fetched the course, resolved the dead locale to the course's first locale (the fixture
+  // course declares `en` first), and rewrote the entry in place - in the same document, with the
+  // canonical page's content
+  const canonicalPath = courseSlugMode === 'URL' ? `/en/${courseSlug}/page/home` : '/en/page/home'
+  await expect(page).toHaveURL(new RegExp(`${canonicalPath}$`, 'u'), { timeout: 60_000 })
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+  expect(await page.evaluate<string>('window.__doc ?? ""')).toBe(docBefore)
+  // The dead entry was rewritten, not pushed behind: the app wrote no new entry, so the dead URL
+  // no longer names any entry in the history
+  expect(await page.evaluate<number>('history.length')).toBe(deadEntries)
+
+  // And a real back press restores the page the user came from, not the broken URL
+  await page.goBack()
+  await expect(page).toHaveURL(new RegExp(`${loginPath}$`, 'u'))
+})
