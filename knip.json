@@ -86,7 +86,9 @@
     "tooling/commands": {
       "entry": ["src/import-v1/main.ts"],
       "project": ["src/**/*.ts"],
-      "ignoreBinaries": ["vitest"]
+      "vitest": {
+        "entry": ["src/**/*.test.ts"]
+      }
     }
   }
 }

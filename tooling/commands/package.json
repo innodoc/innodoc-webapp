@@ -8,7 +8,8 @@
     "clean": "rm -rf dist",
     "print-routes": "tsx --conditions=development src/print-routes/main.ts",
     "test:unit": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest"
   },
   "dependencies": {
     "@innodoc/server-db": "workspace:*",
@@ -22,7 +23,8 @@
     "@types/node": "catalog:",
     "@typescript/native": "catalog:",
     "knex": "catalog:",
-    "tsx": "catalog:"
+    "tsx": "catalog:",
+    "vitest": "catalog:"
   },
   "bin": {
     "innodoc-import-v1": "./dist/import-v1/main.js",

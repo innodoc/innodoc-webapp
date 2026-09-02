@@ -55,6 +55,7 @@
     "wouter": "catalog:"
   },
   "devDependencies": {
+    "@innodoc/shared-fixtures": "workspace:*",
     "@innodoc/ui-test-utils": "workspace:*",
     "@testing-library/jest-dom": "catalog:",
     "@types/node": "catalog:",

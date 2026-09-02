@@ -8,6 +8,7 @@ import type { RenderFunction } from '@innodoc/frontend'
 import { RouteManager } from '@innodoc/shared-core/routes'
 import { configSchema } from '@innodoc/shared-core/schemas'
 import type { LanguageCode } from '@innodoc/shared-core/types'
+import makeCourses from '@innodoc/shared-fixtures/courses'
 import makeStore from '@innodoc/shared-store/ssr'
 import MockDatabase from '#plugins/api/mock-database'
 import i18nPlugin from '#plugins/i18n-plugin'
@@ -30,6 +31,10 @@ const config = configSchema.parse({
   smtpSender: 'test@example.com',
   courseSlugMode: 'URL',
   defaultCourseSlug: null,
+  // Pinned explicitly: the schema default of the page prefix is a copy of the section one, and
+  // these requests exercise course page URLs, which need the real prefix
+  pagePathPrefix: 'page',
+  sectionPathPrefix: 'section',
   discourseUrl: null,
   discourseSsoSecret: null,
 })
@@ -112,4 +117,38 @@ test('a valid locale without a UI bundle renders in the default locale, header a
   expect(renderContextLocales.at(-1)).toBe('en')
   expect(response.headers['content-language']).toBe('en')
   expect(storeLocales.at(-1)).toBe('en')
+})
+
+// The course declares the URL locale, but the page has no content row in it: a translation gap is
+// the intended content for that URL (it is promised via hreflang), so the handler answers 200 and
+// renders the document in the URL locale - the app shows its "not yet translated" state.
+test('a declared locale without content for the page answers 200 in the URL locale', async () => {
+  const [course] = makeCourses()
+  if (!course) {
+    throw new Error('Expected a fixture course')
+  }
+
+  const page = course.pages.find((p) => p.content.en !== undefined && p.content.de === undefined)
+  if (!page) {
+    throw new Error('Expected a fixture page without German content')
+  }
+
+  const response = await server.inject({ method: 'GET', url: `/de/test-course/page/${page.data.slug}` })
+
+  expect(response.statusCode).toBe(200)
+  expect(renderContextLocales.at(-1)).toBe('de')
+  expect(response.headers['content-language']).toBe('de')
+  expect(storeLocales.at(-1)).toBe('de')
+})
+
+// A page the course does not list is a genuine not-found, whatever the locale: the handler keeps
+// answering the app 404 without rendering.
+test('a page the course does not list still answers the app 404 without rendering', async () => {
+  const rendersBefore = render.mock.calls.length
+
+  const response = await server.inject({ method: 'GET', url: '/de/test-course/page/does-not-exist' })
+
+  expect(response.statusCode).toBe(404)
+  expect(response.payload).toContain('404 - Content not found')
+  expect(render.mock.calls.length).toBe(rendersBefore)
 })
