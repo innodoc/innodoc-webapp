@@ -302,13 +302,21 @@ function makeRouteNavigator(routeManager: RouteManager, store: Store): RouteNavi
         return
       }
 
+      // A navigation superseded while awaiting (an uncached course) must not mark its abandoned
+      // target as in flight: it would hold the routed outlet on the current page and fetch that
+      // target's content until the newest navigation clears the state. The check after the content
+      // wait covers a supersede that happens while waiting for it.
+      if (navigation !== navigations) {
+        return // superseded: the newest navigation owns the URL, the commit and the transition state
+      }
+
       // Starts the content fetch (the hast listener reacts to it) and marks the transition as in
       // flight, which keeps the routed outlet on the current page until the swap below.
       store.dispatch(changeRouteTransitionInfo(target))
       await waitForRouteContentReady(store, routeManager, target)
 
       if (navigation !== navigations) {
-        return // superseded: the newest navigation owns the URL, the commit and the transition state
+        return // superseded while waiting for the content: the newest navigation owns the URL, the commit and the transition state
       }
 
       const swap = () => {

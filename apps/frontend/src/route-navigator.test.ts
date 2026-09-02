@@ -100,6 +100,22 @@ function seedCourse(store: Store, locales: LanguageCode[]) {
   )
 }
 
+/** A promise the test resolves by hand, so a fetch can hang until the test releases it */
+function defer(): { promise: Promise<void>; release: () => void } {
+  let release: () => void
+  const promise = new Promise<void>((resolve) => {
+    release = () => {
+      resolve()
+    }
+  })
+  return {
+    promise,
+    release: () => {
+      release()
+    },
+  }
+}
+
 /** Seed the home page's content query as fulfilled, with its hast result (no network) */
 function seedPageContent(store: Store, locale: LanguageCode) {
   const args = { courseSlug: COURSE_SLUG, locale, pageSlug: 'home' }
@@ -254,6 +270,42 @@ test('a navigation to an unresolvable course proceeds uncorrected once the cours
   expect(navigate).toHaveBeenCalledTimes(1)
   expect(navigate).toHaveBeenCalledWith('/fr/toc', {})
   expect(selectRouteInfo(store.getState()).locale).toBe('en')
+})
+
+test('a navigation superseded while awaiting the course fetch leaves no transition for the abandoned target', async () => {
+  const store = makeStore()
+  store.dispatch(changeRouteInfo({ locale: 'en', name: 'app:index' }))
+
+  // The course fetch hangs until the test releases it, so the first navigation is mid-await when
+  // the second one supersedes it
+  const { promise: courseFetch, release: releaseCourseFetch } = defer()
+  const fetchMock = vi.fn<(input: RequestInfo | URL) => Promise<Response>>(() =>
+    courseFetch.then(() => Response.json(makeCourseRecord(['de', 'en']))),
+  )
+  vi.stubGlobal('Request', TestRequest)
+  vi.stubGlobal('fetch', fetchMock)
+
+  const navigate = vi.fn<(to: string, options?: NavigateOptions) => void>()
+  const navigator = makeRouteNavigator(routeManager, store)
+  navigator.aroundNav(navigate, '/fr/page/home', {})
+  // The newer navigation supersedes the first one while it is still awaiting the course fetch
+  navigator.aroundNav(navigate, '/en/user/login', {})
+  releaseCourseFetch()
+
+  // The newer navigation commits on its own
+  await vi.waitFor(() => {
+    expect(selectRouteInfo(store.getState()).name).toBe('app:user:login')
+  })
+  // Let the superseded navigation run its return path
+  await new Promise((resolve) => setImmediate(resolve))
+
+  expect(navigate).toHaveBeenCalledTimes(1)
+  expect(navigate).toHaveBeenCalledWith('/en/user/login', {})
+  expect(selectRouteInfo(store.getState())).toEqual({ locale: 'en', name: 'app:user:login' })
+  // The superseded navigation dispatched no transition for the abandoned target, so nothing
+  // holds the routed outlet on the old page
+  expect(selectRouteTransitionInfo(store.getState())).toBeNull()
+  expect(fetchMock).toHaveBeenCalledTimes(1)
 })
 
 test('a repeated navigation to the unoffered locale is a no-op once the corrected page is rendered', async () => {
