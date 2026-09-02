@@ -177,3 +177,76 @@ test('the root redirect follows Accept-Language, ignoring ?lng= and the i18next 
   expect(notARoute.status()).toBe(404)
   expect(notARoute.headers()['set-cookie']).toBeUndefined()
 })
+
+// A valid ISO 639-1 code without a UI bundle: the document renders in the default locale, and the
+// tag, the header and the rendered strings must all carry that one language - the URL's locale
+// must not leak into `<html lang>` or into the state the client hydrates with.
+test('SSR of an unpublished-locale page carries one language in tag, header, and strings', async ({ request }) => {
+  const response = await request.get('/fr/user/login', { headers: { 'Accept-Language': 'de-DE,de;q=0.9' } })
+
+  expect(response.status()).toBe(200)
+
+  const html = await response.text()
+
+  expect(html).toContain('lang="en"')
+  expect(html).toContain('aria-label="Open navigation"')
+  expect(html).not.toContain('aria-label="Navigation öffnen"')
+
+  // The header describes the document, so it must not stay on the detected language
+  expect(response.headers()['content-language']).toBe('en')
+})
+
+// The same page, hydrated, in a browser that prefers the other published locale: the client
+// mirrors the server's resolution, so nothing it carries - tag, strings, i18next - switches away
+// from the language the document was served in, and React keeps the tree it was given.
+test('an unpublished-locale page hydrates without switching language', async ({ browser }) => {
+  const context = await browser.newContext({ locale: 'de-DE' })
+  const page = await context.newPage()
+
+  const errors: string[] = []
+  // React reports a failed hydration as an uncaught error, which Playwright delivers as `pageerror`
+  // rather than as console output, so both are collected
+  page.on('console', (message) => {
+    if (message.type() === 'error') {
+      errors.push(message.text())
+    }
+  })
+  page.on('pageerror', (error) => errors.push(error.message))
+
+  try {
+    // The dev server drops module requests under load (see `smoke.test.ts`), and a document whose
+    // modules never loaded never hydrates: without hydration there is nothing to mismatch, so the
+    // assertions below would pass on a page that never came alive. Load again until React takes
+    // over.
+    await page.goto('/fr/user/login')
+
+    for (let attempt = 0; attempt < 8; attempt++) {
+      const hydrated = await page.waitForFunction(isHydrated, null, { timeout: 8000 }).then(
+        () => true,
+        () => false,
+      )
+
+      if (hydrated) {
+        break
+      }
+
+      if (attempt === 7) {
+        throw new Error('The app did not take over /fr/user/login: its client modules never loaded')
+      }
+
+      await page.reload()
+    }
+
+    const hydrationErrors = errors.filter((error) => /hydrat/iu.test(error))
+    expect(hydrationErrors, `console errors: ${errors.join('\n')}`).toHaveLength(0)
+
+    // The tag stays on the document's language, and so does what the hydrated app renders. The
+    // drawer button is hidden at desktop width, so it is looked up by attribute rather than by
+    // role, which skips hidden nodes. (String form of `evaluate`, like `isHydrated` above: this
+    // project compiles for Node, without the DOM library.)
+    expect(await page.evaluate('document.documentElement.lang')).toBe('en')
+    await expect(page.locator('[aria-label="Open navigation"]')).toBeAttached()
+  } finally {
+    await context.close()
+  }
+})
