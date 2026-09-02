@@ -38,6 +38,26 @@ test('course home renders its content', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Home page' })).toBeVisible()
 })
 
+// Regression guard: the dev server speaks HTTP/2, and a page load opens the whole module graph as
+// concurrent streams while Vite transforms keep the event loop busy. When the session's memory use
+// exceeds Node's `maxSessionMemory` cap, Node resets new streams with ENHANCE_YOUR_CALM, the browser
+// fails those module requests with `ERR_HTTP2_PROTOCOL_ERROR`, and the app stays stuck on the SSR
+// DOM (no hydration). The cap must stay above the peak of a dev page load - see the option in
+// `apps/backend/src/plugins/env/dev.ts`.
+test('dev server module graph loads without HTTP/2 protocol errors', async ({ page }) => {
+  const failures = new Set<string>()
+
+  page.on('requestfailed', (request) => {
+    failures.add(request.failure()?.errorText ?? 'unknown error')
+  })
+
+  await page.goto(scheme.entry, { waitUntil: 'networkidle' })
+
+  const protocolErrors = [...failures].filter((failure) => failure.includes('ERR_HTTP2_PROTOCOL_ERROR'))
+
+  expect(protocolErrors, `module requests failed with: ${[...failures].join(', ')}`).toHaveLength(0)
+})
+
 // Regression guard: a nav link whose URL could not be generated threw while the app shell rendered,
 // and the request answered 200 with an empty body - a white screen. The routes around a course are
 // where that happened, in the mode where a course URL needs a slug those very routes lack.
