@@ -76,10 +76,12 @@ interface NotYetTranslatedInput {
  * Whether the route's missing content is a translation gap rather than a failure.
  *
  * All three facts must hold: the course declares the document's locale, the page or section
- * exists in the course, and the content query carries no usable content - either the server's
- * not-yet-translated sentinel (SSR, and the client's cache after hydration) or a 404 from the
- * content API (client navigation). Anything else - a course without the locale, a page that does
- * not exist, a transient error - keeps the error states of today.
+ * exists in the course, and the content query carries no usable content for it - either a 404
+ * from the content API (client navigation), which is conclusive on its own, or the server's
+ * not-yet-translated sentinel in the cached data (SSR, and the client's cache after hydration).
+ * A stale cached data entry can shadow a query that just 404ed, so the 404 is checked before
+ * the data. Anything else - a course without the locale, a page that does not exist, a
+ * transient error - keeps the error states of today.
  */
 function isContentNotYetTranslated({ course, entity, locale, data, error }: NotYetTranslatedInput): boolean {
   if (entity === undefined || course === undefined) {
@@ -90,11 +92,11 @@ function isContentNotYetTranslated({ course, entity, locale, data, error }: NotY
     return false
   }
 
-  if (data !== undefined) {
-    return data.hash === NOT_YET_TRANSLATED_HASH
+  if (isNotFoundQueryError(error)) {
+    return true
   }
 
-  return isNotFoundQueryError(error)
+  return data?.hash === NOT_YET_TRANSLATED_HASH
 }
 
 function ContentPage({
