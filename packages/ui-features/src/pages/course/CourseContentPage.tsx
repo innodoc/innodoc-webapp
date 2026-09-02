@@ -3,8 +3,8 @@ import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
 import getPagesApi from '@innodoc/shared-store/slices/content/pages'
 import { PageHeader } from '@innodoc/ui-design-system/misc'
 import { useRouteManager } from '@innodoc/ui-shared/hooks'
-import { useSelector, useSelectPage } from '@innodoc/ui-shared/store-hooks'
-import ContentPage from './ContentPage.js'
+import { useSelector, useSelectCurrentCourse, useSelectPage } from '@innodoc/ui-shared/store-hooks'
+import ContentPage, { isContentNotYetTranslated } from './ContentPage.js'
 
 function CourseContentPage() {
   const routeManager = useRouteManager()
@@ -16,9 +16,10 @@ function CourseContentPage() {
     ? routeInfo
     : { courseSlug: undefined, pageSlug: undefined }
   const { page } = useSelectPage(pageSlug)
+  const { course } = useSelectCurrentCourse()
 
   // oxlint-disable-next-line react/react-compiler -- `pages` is cached via `??=` in `getPagesApi`, hook ref is stable
-  const { data, isError, isLoading } = pages.useGetPageContentQuery(
+  const { data, isError, isLoading, error } = pages.useGetPageContentQuery(
     {
       courseSlug: courseSlug ?? '',
       locale,
@@ -26,6 +27,10 @@ function CourseContentPage() {
     },
     { skip: !courseSlug || !pageSlug },
   )
+
+  // A declared locale whose content row is missing renders the same "not yet translated" state
+  // the server renders for it; every other missing-content case keeps the error states below
+  const notYetTranslated = isContentNotYetTranslated({ course, entity: page, locale, data, error })
 
   // TODO: isIconName
   // const iconName = isIconName(page.icon) ? page.icon : undefined
@@ -37,6 +42,7 @@ function CourseContentPage() {
       contentType="page"
       isError={isError}
       isLoading={isLoading}
+      notYetTranslated={notYetTranslated}
       contentIdValue={pageSlug}
     >
       {page ? <PageHeader iconName={page.icon ?? undefined}>{page.title}</PageHeader> : null}

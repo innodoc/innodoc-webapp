@@ -1,4 +1,19 @@
-import type { SectionWithChildren, TranslatedPage, TranslatedSection } from '#types'
+import type { ContentWithHash, SectionWithChildren, TranslatedPage, TranslatedSection } from '#types'
+
+/** Hash the {@link NOT_YET_TRANSLATED_CONTENT} sentinel carries. Never a real CRC32: it must
+ *  collide with none of the hashes the client computes for served content. */
+export const NOT_YET_TRANSLATED_HASH = 'not-yet-translated'
+
+/**
+ * Content the server puts in the content-query cache when a course declares the route's locale
+ * but the page or section has no content row in it: the app renders it as the localized
+ * "not yet translated" state instead of an error, and the client's own 404 for the same URL
+ * renders the same state (the store keeps one meaning for one situation).
+ */
+export const NOT_YET_TRANSLATED_CONTENT: Readonly<ContentWithHash> = Object.freeze({
+  content: '',
+  hash: NOT_YET_TRANSLATED_HASH,
+})
 
 /** Stable sentinels for "no data yet / not applicable". Frozen: a write throws in strict mode
  *  instead of corrupting every consumer at once. Never replace with a per-call `[]`.

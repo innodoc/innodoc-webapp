@@ -3,6 +3,7 @@ import crc32 from 'crc/crc32'
 import markdownToHast from '@innodoc/content-parser'
 import { serializeParserError } from '@innodoc/content-parser/utils'
 import type { RouteManager } from '@innodoc/shared-core/routes'
+import { NOT_YET_TRANSLATED_CONTENT } from '@innodoc/shared-core/sentinels'
 import {
   isCoursePageRouteInfo,
   isCourseRouteInfo,
@@ -254,13 +255,31 @@ export async function populateStoreForSSR({
       const content = await database.getPageContent(routeInfo.courseSlug, routeInfo.locale, routeInfo.pageSlug)
 
       if (!content) {
-        return {
-          success: false,
-          error: {
-            type: 'NOT_FOUND',
-            message: 'Content not found',
-          },
+        // The course declares the route's locale (step 3), so a missing content row is a
+        // translation gap, not an error: the URL is promised via hreflang, and the document for
+        // it is the localized "not yet translated" state. Only a page the course actually lists
+        // gets it - a page that does not exist at all stays a 404.
+        const pageExists = pages.some((page) => page.slug === routeInfo.pageSlug)
+
+        if (!pageExists) {
+          return {
+            success: false,
+            error: {
+              type: 'NOT_FOUND',
+              message: 'Content not found',
+            },
+          }
         }
+
+        await store.dispatch(
+          pagesApi.util.upsertQueryData(
+            'getPageContent',
+            { courseSlug: routeInfo.courseSlug, locale: routeInfo.locale, pageSlug: routeInfo.pageSlug },
+            NOT_YET_TRANSLATED_CONTENT,
+          ),
+        )
+
+        return { success: true }
       }
 
       // Hash content and upsert into RTK Query cache
@@ -292,13 +311,17 @@ export async function populateStoreForSSR({
       const content = await database.getSectionContent(routeInfo.courseSlug, routeInfo.locale, sectionId)
 
       if (!content) {
-        return {
-          success: false,
-          error: {
-            type: 'NOT_FOUND',
-            message: 'Content not found',
-          },
-        }
+        // The section exists (its id resolved above) and the course declares the locale: the same
+        // "not yet translated" state as for pages, not a 404.
+        await store.dispatch(
+          sectionsApi.util.upsertQueryData(
+            'getSectionContent',
+            { courseSlug: routeInfo.courseSlug, locale: routeInfo.locale, sectionPath: routeInfo.sectionPath },
+            NOT_YET_TRANSLATED_CONTENT,
+          ),
+        )
+
+        return { success: true }
       }
 
       // Hash content and upsert into RTK Query cache
