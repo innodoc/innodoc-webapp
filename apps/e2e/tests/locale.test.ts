@@ -154,15 +154,26 @@ test('the root redirect follows Accept-Language, ignoring ?lng= and the i18next 
   expect(locationPath(byCookie)).toMatch(/^\/en\//u)
   expect(byCookie.headers()['set-cookie']).toBeUndefined()
 
-  // Detection never steers a deep link: an unsupported locale in the path is corrected to the
-  // course's first locale (the fixture course declares `en` first) - even for a browser that
-  // prefers the other published locale. If detection still reached deep links, a German browser
-  // would land in `/de`.
-  const deepLink = await request.get('/xx', {
+  // Detection never steers a deep link: an ISO 639-1 code the course does not offer is corrected
+  // downstream to the course's first locale (the fixture course declares `en` first) - even for a
+  // browser that prefers the other published locale. If detection still reached deep links, a
+  // German browser would land in `/de`. (A tag outside the ISO 639-1 domain is not a route at all
+  // now, which is pinned on its own below.)
+  const deepLink = await request.get('/fr', {
     maxRedirects: 0,
     headers: { 'Accept-Language': 'de-DE,de;q=0.9' },
   })
 
   expect(deepLink.status()).toBe(302)
   expect(locationPath(deepLink)).toBe('/en')
+
+  // A locale outside the ISO 639-1 domain is not a route: the deep link 404s instead of being
+  // corrected or rendered, and nothing is written to the browser.
+  const notARoute = await request.get('/xx', {
+    maxRedirects: 0,
+    headers: { 'Accept-Language': 'de-DE,de;q=0.9' },
+  })
+
+  expect(notARoute.status()).toBe(404)
+  expect(notARoute.headers()['set-cookie']).toBeUndefined()
 })
