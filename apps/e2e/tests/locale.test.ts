@@ -1,3 +1,4 @@
+import type { APIResponse } from '@playwright/test'
 import { expect, test } from '@playwright/test'
 
 const courseSlugMode = process.env.INNODOC_PUBLIC_COURSE_SLUG_MODE ?? 'SINGLE'
@@ -34,6 +35,17 @@ test.describe.configure({ timeout: 120_000 })
 // Everything that runs in the browser is a string: the test project is compiled for Node, without
 // the DOM library, so `window` has no type to check here.
 const isHydrated = 'Object.keys(document.querySelector("#root") ?? {}).some((k) => k.startsWith("__reactContainer$"))'
+
+/** Path of the `Location` header a redirect response carries (the server sends it relative) */
+const locationPath = (response: APIResponse): string => {
+  const location = response.headers().location
+
+  if (!location) {
+    throw new Error(`Expected a Location header, got: ${JSON.stringify(response.headers())}`)
+  }
+
+  return new URL(location, 'https://localhost').pathname
+}
 
 /**
  * The language of a document is decided by its URL.
@@ -117,3 +129,40 @@ for (const [locale, expected] of Object.entries(cases) as [keyof typeof cases, L
     }
   })
 }
+
+// The root redirect is the one place detection still steers a document, and it must follow the
+// browser's stated preference alone: a `?lng=` param and a stale `i18next` cookie used to out-vote
+// `Accept-Language`. Neither may, and detection stays read-only - no cookie is ever written.
+test('the root redirect follows Accept-Language, ignoring ?lng= and the i18next cookie', async ({ request }) => {
+  // A browser that prefers German asks for English through the query-string back door
+  const byQuery = await request.get('/?lng=en', {
+    maxRedirects: 0,
+    headers: { 'Accept-Language': 'de-DE,de;q=0.9' },
+  })
+
+  expect(byQuery.status()).toBe(302)
+  expect(locationPath(byQuery)).toMatch(/^\/de\//u)
+  expect(byQuery.headers()['set-cookie']).toBeUndefined()
+
+  // A browser that prefers English carries a stale German cookie
+  const byCookie = await request.get('/', {
+    maxRedirects: 0,
+    headers: { 'Accept-Language': 'en-US,en;q=0.9', cookie: 'i18next=de' },
+  })
+
+  expect(byCookie.status()).toBe(302)
+  expect(locationPath(byCookie)).toMatch(/^\/en\//u)
+  expect(byCookie.headers()['set-cookie']).toBeUndefined()
+
+  // Detection never steers a deep link: an unsupported locale in the path is corrected to the
+  // course's first locale (the fixture course declares `en` first) - even for a browser that
+  // prefers the other published locale. If detection still reached deep links, a German browser
+  // would land in `/de`.
+  const deepLink = await request.get('/xx', {
+    maxRedirects: 0,
+    headers: { 'Accept-Language': 'de-DE,de;q=0.9' },
+  })
+
+  expect(deepLink.status()).toBe(302)
+  expect(locationPath(deepLink)).toBe('/en')
+})

@@ -29,6 +29,15 @@ const i18nPluginCb: FastifyPluginAsync<PluginOpts> = async (server, { config }) 
 
   const i18next = await initI18n([LanguageDetector, I18NextFsBackend], {
     backend: backendOpts,
+    // Detection has exactly one consumer: the `GET /` redirect, and the URL is the source of truth
+    // everywhere else. So the redirect follows the browser's stated preference alone (the
+    // `Accept-Language` header), and a `?lng=` param or a stale `i18next` cookie cannot out-vote it.
+    // Detection stays read-only: `caches` keeps its `false` default, so no cookie is ever written.
+    detection: {
+      order: ['header'],
+      lookupQuerystring: false,
+      lookupCookie: false,
+    },
     // debug: !config.isProduction,
     saveMissing: !config.isProduction,
     supportedLngs,

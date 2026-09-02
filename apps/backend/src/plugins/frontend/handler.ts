@@ -136,9 +136,10 @@ function makeFrontendHandler(render: RenderFunction, htmlTemplate: string): Rout
 
     // The locale of the URL decides the language of the document: `<html lang>`, the content fetched
     // below and the i18next the client hydrates with all follow it. The server's UI strings did not,
-    // because the request's i18next comes configured from browser detection (`?lng=`, cookie,
-    // `Accept-Language`) - and wherever that disagreed with the URL, hydration replaced every UI
-    // string of the markup, and React reported a mismatch and threw the tree away to re-render it.
+    // because the request's i18next comes configured from browser detection (the `Accept-Language`
+    // header alone - `?lng=` and the `i18next` cookie are disabled) - and wherever that disagreed
+    // with the URL, hydration replaced every UI string of the markup, and React reported a mismatch
+    // and threw the tree away to re-render it.
     // Switching the request's instance to the locale of the URL makes the two agree, and refreshes
     // the `Content-Language` header the middleware derives from that same detection. It is awaited
     // because the translations of a locale come off disk the first time they are used. A request
