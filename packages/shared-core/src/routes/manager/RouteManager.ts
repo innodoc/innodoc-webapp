@@ -5,6 +5,7 @@ import apiRoutes from '#routes/api-routes'
 import builtinRoutes from '#routes/builtin-routes'
 import courseRoutes from '#routes/course-routes'
 import userRoutes from '#routes/user-routes'
+import { isLocale } from '#typeguards/common'
 import { isContentType } from '#typeguards/content'
 import { isCourseContentRouteName, isFrontendRouteInfo, isFrontendRouteName } from '#typeguards/routes'
 import type {
@@ -185,6 +186,7 @@ class RouteManager {
    *
    * Matches the URL against all known frontend route patterns (in order of definition) and
    * extracts the route name, locale, and any dynamic parameters (courseSlug, pageSlug, sectionPath).
+   * A URL whose locale segment is not an ISO 639-1 code does not match any route.
    *
    * @param url - The URL path to parse (e.g., "/en/my-course/section/intro")
    * @returns `FrontendRouteInfo` if a route matches, `null` otherwise
@@ -208,8 +210,9 @@ class RouteManager {
         params[key === '*' ? 'sectionPath' : key] = value
       }
 
-      // locale is always the first required param - if missing, skip this match
-      if (!params.locale) {
+      // locale is always the first required param; it must be a real ISO 639-1 code, otherwise the
+      // URL is not a route and this match is skipped like any other non-match
+      if (!isLocale(params.locale)) {
         continue
       }
 
@@ -225,7 +228,7 @@ class RouteManager {
       // a dynamic route name, so we use a type assertion (same pattern as parseLinkSpecifier)
       return {
         name,
-        locale: params.locale as LanguageCode,
+        locale: params.locale,
         ...(courseSlug ? { courseSlug } : {}),
         // Spread remaining params (pageSlug, sectionPath) - only present on content routes
         ...(params.pageSlug ? { pageSlug: params.pageSlug } : {}),

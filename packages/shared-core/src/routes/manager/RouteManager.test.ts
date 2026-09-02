@@ -229,11 +229,8 @@ test('parseRouteFromUrl matches app:user:sign-up', () => {
 
 test('parseRouteFromUrl returns null for unmatched URL', () => {
   const routeManager = new RouteManager({ config: urlConfig })
-  // /unknown matches app:index (/:locale) with locale='unknown' - this is correct
-  expect(routeManager.parseRouteFromUrl('/unknown')).toStrictEqual({
-    name: 'app:index',
-    locale: 'unknown',
-  })
+  // 'unknown' is not an ISO 639-1 code, so /unknown is not a route either
+  expect(routeManager.parseRouteFromUrl('/unknown')).toBeNull()
   expect(routeManager.parseRouteFromUrl('/en/unknown/path')).toBeNull()
   expect(routeManager.parseRouteFromUrl('/')).toBeNull()
   expect(routeManager.parseRouteFromUrl('')).toBeNull()
@@ -261,6 +258,28 @@ test('parseRouteFromUrl extracts correct locale', () => {
   expect(result?.locale).toBe('fr')
 })
 
+test('parseRouteFromUrl resolves a valid locale the app has not published', () => {
+  const routeManager = new RouteManager({ config: urlConfig })
+  // 'fr' is an ISO 639-1 code even though the app has no UI bundle for it - whether it is
+  // serviceable is a separate decision, so it must still parse as a route
+  const result = routeManager.parseRouteFromUrl('/fr/user/login')
+  expect(result).toStrictEqual({ name: 'app:user:login', locale: 'fr' })
+})
+
+test('parseRouteFromUrl returns null for locales outside the ISO 639-1 domain', () => {
+  const routeManager = new RouteManager({ config: urlConfig })
+  expect(routeManager.parseRouteFromUrl('/xx/user/login')).toBeNull()
+  expect(routeManager.parseRouteFromUrl('/zzz/user/login')).toBeNull()
+  expect(routeManager.parseRouteFromUrl('/EN/user/login')).toBeNull()
+})
+
+test('parseRouteFromUrl returns null for locale-like segments that are not two-letter codes', () => {
+  const routeManager = new RouteManager({ config: urlConfig })
+  expect(routeManager.parseRouteFromUrl('/en-US/my-course')).toBeNull()
+  expect(routeManager.parseRouteFromUrl('/en_US/my-course')).toBeNull()
+  expect(routeManager.parseRouteFromUrl('/de/my-course')).not.toBeNull()
+})
+
 // parseRouteFromUrl tests (SINGLE mode)
 
 test('parseRouteFromUrl matches app:course:index (SINGLE mode - no courseSlug in URL)', () => {
@@ -275,12 +294,19 @@ test('parseRouteFromUrl matches app:course:index (SINGLE mode - no courseSlug in
   })
 })
 
-test('parseRouteFromUrl matches app:course:index for unknown top-level path (SINGLE mode)', () => {
+test('parseRouteFromUrl returns null for a top-level locale outside the ISO 639-1 domain (SINGLE mode)', () => {
   const routeManager = new RouteManager({ config: singleConfig })
-  // Any unknown top-level segment is treated as the course index (default course)
-  expect(routeManager.parseRouteFromUrl('/foo')).toStrictEqual({
+  // 'foo' is not an ISO 639-1 code, so even in SINGLE mode - where the course index pattern
+  // collapses to /:locale - the URL is not a route
+  expect(routeManager.parseRouteFromUrl('/foo')).toBeNull()
+})
+
+test('parseRouteFromUrl resolves a valid locale the app has not published (SINGLE mode)', () => {
+  const routeManager = new RouteManager({ config: singleConfig })
+  const result = routeManager.parseRouteFromUrl('/fr')
+  expect(result).toStrictEqual({
     name: 'app:course:index',
-    locale: 'foo',
+    locale: 'fr',
     courseSlug: 'default-course',
   })
 })
