@@ -2,6 +2,7 @@ import { diContainer, fastifyAwilixPlugin } from '@fastify/awilix'
 import { asClass, asFunction, asValue } from 'awilix'
 import Fastify, { type FastifyInstance } from 'fastify'
 import path from 'node:path'
+import { PassThrough } from 'node:stream'
 import { afterAll, beforeAll, expect, test, vi } from 'vitest'
 import type { RenderFunction } from '@innodoc/frontend'
 import { RouteManager } from '@innodoc/shared-core/routes'
@@ -33,11 +34,15 @@ const config = configSchema.parse({
 })
 
 // Stands in for the frontend SSR entry. The 404 answers never reach it; for valid routes it
-// records what the handler resolved as the document locale.
-const render = vi.fn<RenderFunction>(() => ({
-  status: Promise.resolve(200),
-  stream: '<html><body>rendered</body></html>',
-}))
+// records what the handler resolved as the document locale. The stream is a `PassThrough`, like
+// the real entry's, and is ended immediately: it stays empty, and the assertions concern the
+// status and the resolved locale.
+const render = vi.fn<RenderFunction>(() => {
+  const stream = new PassThrough()
+  stream.end()
+
+  return { status: Promise.resolve(200), stream }
+})
 
 let server: FastifyInstance
 
