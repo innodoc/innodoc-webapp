@@ -3,7 +3,6 @@ import createCache from '@emotion/cache'
 import { createStreamableHead, prepareStreamingTemplate, UnheadProvider } from '@unhead/react/stream/server'
 import { PassThrough } from 'node:stream'
 import { renderToPipeableStream } from 'react-dom/server'
-import { DEFAULT_LOCALES } from '@innodoc/shared-core/constants'
 import App from './App.js'
 import renderErrorShell, { makeErrorDetail } from './error-shell.js'
 
@@ -16,7 +15,7 @@ const SHELL_TIMEOUT = 10_000
 /** Transition of the render, drives the HTTP status: only the first one counts */
 type Phase = 'failed' | 'pending' | 'streaming'
 
-const render: RenderFunction = function render({ htmlTemplate, store, url, ...otherProps }) {
+const render: RenderFunction = function render({ htmlTemplate, i18n, locale, store, url, ...otherProps }) {
   // Use 'css' key to match @emotion/react's default SSR cache.
   // The SSR build of @emotion/react falls back to a default cache with key 'css'
   // when CacheProvider context isn't resolved (which happens for some MUI v9
@@ -25,21 +24,14 @@ const render: RenderFunction = function render({ htmlTemplate, store, url, ...ot
   const emotionCache = createCache({ key: 'css' })
   const { head } = createStreamableHead()
 
+  const preloadedState = store.getState()
+
   // The client mirrors the server's supported locales so that i18next's default
   // 'dev' fallback is never added to the list of languages to load (which would
-  // cause a spurious 404 request for a 'dev' locale file).
-  const supportedLocales = Array.isArray(otherProps.i18n.options.supportedLngs)
-    ? otherProps.i18n.options.supportedLngs
-    : []
-
-  // Seed the client i18next with the route's locale (the URL is the source of
-  // truth) instead of the request-detected language, so the client's language
-  // matches the redux app slice. Fall back to the default locale for URLs with
-  // an unsupported locale prefix (e.g., /fr/... when only 'en' and 'de' exist).
-  const preloadedState = store.getState()
-  const routeLocale = preloadedState.app.routeInfo.locale
-  const locale = supportedLocales.includes(routeLocale) ? routeLocale : (DEFAULT_LOCALES[0] ?? 'en')
-
+  // cause a spurious 404 request for a 'dev' locale file). The locale comes from the handler, which
+  // resolved it from the URL and rendered the markup in it, so the client cannot hydrate a different
+  // language than the one it was served.
+  const supportedLocales = Array.isArray(i18n.options.supportedLngs) ? i18n.options.supportedLngs : []
   const state = { preloadedState, locale, supportedLocales }
   const stream = new PassThrough()
 
@@ -92,7 +84,7 @@ const render: RenderFunction = function render({ htmlTemplate, store, url, ...ot
   const reactNode = (
     <div id="root">
       <UnheadProvider value={head}>
-        <App emotionCache={emotionCache} store={store} url={url} {...otherProps} />
+        <App emotionCache={emotionCache} i18n={i18n} store={store} url={url} {...otherProps} />
       </UnheadProvider>
     </div>
   )

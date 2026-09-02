@@ -1,11 +1,18 @@
 import type { i18n } from 'i18next'
 import type { Readable } from 'node:stream'
 import type { RouteManager } from '@innodoc/shared-core/routes'
+import type { LanguageCode } from '@innodoc/shared-core/types'
 import type { RootState, Store } from '@innodoc/shared-store/types'
 
 interface RenderContext {
   htmlTemplate: string
   i18n: i18n
+  /**
+   * Locale the document is rendered in, resolved from the URL by the request handler. Passed in so
+   * that the server markup and the client seed cannot disagree on it, which is what makes hydration
+   * possible.
+   */
+  locale: LanguageCode
   routeManager: RouteManager
   store: Store
   url: string

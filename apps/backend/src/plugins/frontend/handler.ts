@@ -23,6 +23,39 @@ function resolveLocale(detected: string | undefined): LanguageCode {
 }
 
 /**
+ * Locales the UI can actually render.
+ *
+ * `i18next` appends its internal `cimode` marker to `supportedLngs` when it initialises, and that is
+ * not a language: a document rendered in it has every UI string replaced by its key.
+ *
+ * @param supportedLngs - `supportedLngs` as configured on the server's i18next instance
+ * @returns Locale codes the UI bundles exist for
+ */
+function uiLocales(supportedLngs: false | readonly string[] | undefined): string[] {
+  if (!supportedLngs) {
+    return []
+  }
+
+  return supportedLngs.filter((lng) => lng !== 'cimode')
+}
+
+/**
+ * Resolve the locale the document is rendered in: the one carried by the URL, as long as the UI
+ * bundles exist for it, and the default locale otherwise.
+ *
+ * @param locale - Locale parsed from the URL
+ * @param supported - Locales the UI can render, see {@link uiLocales}
+ * @returns Locale code to render and to hand to the client
+ */
+function resolveDocumentLocale(locale: string, supported: readonly string[]): LanguageCode {
+  if (supported.includes(locale)) {
+    return locale as LanguageCode
+  }
+
+  return DEFAULT_LOCALES[0] ?? 'en'
+}
+
+/**
  * Generate the redirect target for the root path (`/`, no locale in the URL).
  *
  * In URL mode (multi-course) the target is the index page; in SINGLE/SUBDOMAIN
@@ -101,6 +134,22 @@ function makeFrontendHandler(render: RenderFunction, htmlTemplate: string): Rout
       return
     }
 
+    // The locale of the URL decides the language of the document: `<html lang>`, the content fetched
+    // below and the i18next the client hydrates with all follow it. The server's UI strings did not,
+    // because the request's i18next comes configured from browser detection (`?lng=`, cookie,
+    // `Accept-Language`) - and wherever that disagreed with the URL, hydration replaced every UI
+    // string of the markup, and React reported a mismatch and threw the tree away to re-render it.
+    // Switching the request's instance to the locale of the URL makes the two agree, and refreshes
+    // the `Content-Language` header the middleware derives from that same detection. It is awaited
+    // because the translations of a locale come off disk the first time they are used. A request
+    // whose detection already agrees is left alone: it has nothing to correct, and the switch runs
+    // through the backend connector that every request's instance shares.
+    const locale = resolveDocumentLocale(routeInfo.locale, uiLocales(i18n.options.supportedLngs))
+
+    if (i18n.resolvedLanguage !== locale) {
+      await i18n.changeLanguage(locale)
+    }
+
     // Populate store with data for this route (using direct DB calls)
     const populateResult = await populateStoreForSSR({
       store,
@@ -126,7 +175,7 @@ function makeFrontendHandler(render: RenderFunction, htmlTemplate: string): Rout
     }
 
     // Render with populated store
-    const { status, stream } = render({ htmlTemplate, i18n, routeManager, store, url })
+    const { status, stream } = render({ htmlTemplate, i18n, locale, routeManager, store, url })
 
     // Awaits the app shell, which is the first thing the stream writes anyway, so nothing arrives
     // later than it would have. It is what lets a failed render answer 500 with an error page
