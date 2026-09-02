@@ -68,6 +68,16 @@ This is ~~struck~~ text.
     linked: ['footer', 'nav'],
   }
 
+  // The course declares `de`, but this page has no content row in it: the app renders its
+  // "not yet translated" state for it. The page is deliberately one that no other suite opens
+  // (the e2e suites navigate to `home` and the first footer link only), so the gap stays a
+  // fixture for the translation-gap behavior instead of a surprise elsewhere.
+  const untranslatedPage = pages.at(3)
+  if (!untranslatedPage) {
+    throw new Error('Expected pages')
+  }
+  delete untranslatedPage.content.de
+
   return pages
 }
 
