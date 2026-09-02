@@ -14,6 +14,11 @@ interface Frontmatter {
   type?: string
 }
 
+/** A distinct content-locale row as returned by the coverage check's queries */
+interface LocaleRow {
+  locale: string
+}
+
 /** Importer for v1 content folders */
 class Importer {
   protected knex: Knex | null = null
@@ -22,6 +27,8 @@ class Importer {
   protected courseSlug: CourseSchema['slug'] | null = null
   protected manifest: Manifest | null = null
   protected courseId: CourseSchema['id'] | null = null
+  protected pageIds: number[] = []
+  protected sectionIds: number[] = []
 
   /** Import a course from a folder */
   public async import(importFolder: string, courseSlug: string) {
@@ -35,6 +42,7 @@ class Importer {
     await this.createCourse()
     await this.createPages()
     await this.createSections()
+    await this.warnOnLocaleCoverage()
     return await this.finish()
   }
 
@@ -59,6 +67,8 @@ class Importer {
       this.courseSlug = null
       this.manifest = null
       this.courseId = null
+      this.pageIds = []
+      this.sectionIds = []
     }
 
     return courseId
@@ -148,7 +158,10 @@ class Importer {
     }
     const result = (await this.trx('pages').insert([pageData], ['id'])) as InsertResult
 
-    return result[0].id
+    const pageId = result[0].id
+    this.pageIds.push(pageId)
+
+    return pageId
   }
 
   /** Create all course sections */
@@ -220,6 +233,7 @@ class Importer {
         }
         const result = (await this.trx('sections').insert([sectionData], ['id'])) as InsertResult
         sectionId = result[0].id
+        this.sectionIds.push(sectionId)
       }
 
       // Insert title
@@ -238,6 +252,44 @@ class Importer {
     }
 
     return sectionId
+  }
+
+  /**
+   * One server-side warning if the imported content does not cover exactly the locales the course
+   * declares: a declared locale without a content row renders as the "not yet translated" state
+   * at runtime, and a content row in an undeclared locale can never be served. Log only - the
+   * import itself is not affected, and a complete coverage logs nothing.
+   */
+  protected async warnOnLocaleCoverage() {
+    if (
+      !this.trx ||
+      !this.manifest ||
+      !this.courseSlug ||
+      (this.pageIds.length === 0 && this.sectionIds.length === 0)
+    ) {
+      return
+    }
+
+    const [pageRows, sectionRows] = (await Promise.all([
+      this.trx('pages_content_trans').distinct('locale').select('locale').whereIn('page_id', this.pageIds),
+      this.trx('sections_content_trans').distinct('locale').select('locale').whereIn('section_id', this.sectionIds),
+    ])) as [LocaleRow[], LocaleRow[]]
+
+    const covered = new Set([...pageRows, ...sectionRows].map((row) => row.locale))
+    const declared = this.manifest.languages
+    const missing = declared.filter((locale) => !covered.has(locale))
+    const undeclared = [...covered].filter((locale) => !declared.some((declaredLocale) => declaredLocale === locale))
+
+    const problems = [
+      missing.length > 0 ? `missing for declared locale(s) ${missing.join(', ')}` : null,
+      undeclared.length > 0 ? `present for undeclared locale(s) ${undeclared.join(', ')}` : null,
+    ].filter((problem): problem is string => problem !== null)
+
+    if (problems.length === 0) {
+      return
+    }
+
+    console.warn(`Imported course '${this.courseSlug}' has incomplete locale coverage: ${problems.join('; ')}`)
   }
 
   /** Read and parse Markdown content file, parse YAML frontmatter */
