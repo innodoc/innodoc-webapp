@@ -141,7 +141,7 @@ function stripTrailingSlashes(path: string): string {
  * self-referential HTTP requests during SSR.
  *
  * This function:
- * 1. Sets the route info
+ * 1. Sets the route info (in the document locale, not the raw URL locale - see below)
  * 2. Fetches course metadata (for all course routes)
  * 3. Validates locale
  * 4. Redirects the course index to the course home page (`homeLink`)
@@ -151,6 +151,10 @@ function stripTrailingSlashes(path: string): string {
  * @param options - Options object
  * @param options.store - Redux store
  * @param options.routeInfo - Parsed route info from URL
+ * @param options.locale - Document locale resolved from the URL by the request handler. The store
+ *   keeps this value (not the raw URL locale) so that `<html lang>` and the client's i18next carry
+ *   the language the document is actually rendered in. The course-locale check and the content
+ *   fetches below keep using `routeInfo.locale`: a course is served in the locales it declares.
  * @param options.routeManager - Route manager instance
  * @param options.database - Database instance for direct data access
  * @param options.url - Requested URL path (without query string)
@@ -159,18 +163,20 @@ function stripTrailingSlashes(path: string): string {
 export async function populateStoreForSSR({
   store,
   routeInfo,
+  locale,
   routeManager,
   database,
   url,
 }: {
   store: Store
   routeInfo: FrontendRouteInfo
+  locale: LanguageCode
   routeManager: RouteManager
   database: SsrDatabase
   url: string
 }): Promise<PopulateStoreResult> {
-  // Step 1: Set route info
-  store.dispatch(changeRouteInfo(routeInfo))
+  // Step 1: Set route info, normalised to the document locale
+  store.dispatch(changeRouteInfo({ ...routeInfo, locale }))
 
   // Step 2: Fetch course metadata (for all course routes)
   if (isCourseRouteInfo(routeInfo)) {

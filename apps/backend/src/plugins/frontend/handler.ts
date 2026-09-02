@@ -3,6 +3,7 @@ import type { RenderFunction } from '@innodoc/frontend'
 import { populateStoreForSSR } from '@innodoc/frontend/populate-store'
 import type Database from '@innodoc/server-db'
 import { DEFAULT_LOCALES } from '@innodoc/shared-core/constants'
+import { resolveDocumentLocale, uiLocales } from '@innodoc/shared-core/document-locale'
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import { localeSchema } from '@innodoc/shared-core/schemas'
 import type { ConfigSchema, LanguageCode } from '@innodoc/shared-core/types'
@@ -17,39 +18,6 @@ import type { ConfigSchema, LanguageCode } from '@innodoc/shared-core/types'
 function resolveLocale(detected: string | undefined): LanguageCode {
   if (detected !== undefined && localeSchema.safeParse(detected).success) {
     return detected as LanguageCode
-  }
-
-  return DEFAULT_LOCALES[0] ?? 'en'
-}
-
-/**
- * Locales the UI can actually render.
- *
- * `i18next` appends its internal `cimode` marker to `supportedLngs` when it initialises, and that is
- * not a language: a document rendered in it has every UI string replaced by its key.
- *
- * @param supportedLngs - `supportedLngs` as configured on the server's i18next instance
- * @returns Locale codes the UI bundles exist for
- */
-function uiLocales(supportedLngs: false | readonly string[] | undefined): string[] {
-  if (!supportedLngs) {
-    return []
-  }
-
-  return supportedLngs.filter((lng) => lng !== 'cimode')
-}
-
-/**
- * Resolve the locale the document is rendered in: the one carried by the URL, as long as the UI
- * bundles exist for it, and the default locale otherwise.
- *
- * @param locale - Locale parsed from the URL
- * @param supported - Locales the UI can render, see {@link uiLocales}
- * @returns Locale code to render and to hand to the client
- */
-function resolveDocumentLocale(locale: string, supported: readonly string[]): LanguageCode {
-  if (supported.includes(locale)) {
-    return locale as LanguageCode
   }
 
   return DEFAULT_LOCALES[0] ?? 'en'
@@ -151,10 +119,15 @@ function makeFrontendHandler(render: RenderFunction, htmlTemplate: string): Rout
       await i18n.changeLanguage(locale)
     }
 
-    // Populate store with data for this route (using direct DB calls)
+    // Populate store with data for this route (using direct DB calls). The store keeps the resolved
+    // document locale - the same value the markup, the `Content-Language` header and the client seed
+    // below carry - so `<html lang>` and the client's i18next cannot read the document as two
+    // languages. The course-locale check and the content fetches inside keep the URL's own locale:
+    // a course is served in the locales it declares, whatever the UI bundles cover.
     const populateResult = await populateStoreForSSR({
       store,
       routeInfo,
+      locale,
       routeManager,
       database,
       url: path,

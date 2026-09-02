@@ -7,6 +7,7 @@ import { afterAll, beforeAll, expect, test, vi } from 'vitest'
 import type { RenderFunction } from '@innodoc/frontend'
 import { RouteManager } from '@innodoc/shared-core/routes'
 import { configSchema } from '@innodoc/shared-core/schemas'
+import type { LanguageCode } from '@innodoc/shared-core/types'
 import makeStore from '@innodoc/shared-store/ssr'
 import MockDatabase from '#plugins/api/mock-database'
 import i18nPlugin from '#plugins/i18n-plugin'
@@ -37,7 +38,13 @@ const config = configSchema.parse({
 // records what the handler resolved as the document locale. The stream is a `PassThrough`, like
 // the real entry's, and is ended immediately: it stays empty, and the assertions concern the
 // status and the resolved locale.
-const render = vi.fn<RenderFunction>(() => {
+/** What each render call observed, so a test can read back the values the handler passed on */
+const renderContextLocales: LanguageCode[] = []
+const storeLocales: LanguageCode[] = []
+
+const render = vi.fn<RenderFunction>((ctx) => {
+  renderContextLocales.push(ctx.locale)
+  storeLocales.push(ctx.store.getState().app.routeInfo.locale)
   const stream = new PassThrough()
   stream.end()
 
@@ -93,4 +100,16 @@ test('a valid locale still renders, in the locale of the URL', async () => {
   expect(response.statusCode).toBe(200)
   expect(render).toHaveBeenCalledTimes(1)
   expect(render).toHaveBeenCalledWith(expect.objectContaining({ locale: 'en', url: '/en/user/login' }))
+})
+
+// The one resolved document locale must reach the render context, the response header and the
+// store (where `<html lang>` reads from) alike: a valid ISO 639-1 code without a UI bundle renders
+// in the default locale everywhere, never as a mixture of two languages in one document.
+test('a valid locale without a UI bundle renders in the default locale, header and store included', async () => {
+  const response = await server.inject({ method: 'GET', url: '/fr/user/login' })
+
+  expect(response.statusCode).toBe(200)
+  expect(renderContextLocales.at(-1)).toBe('en')
+  expect(response.headers['content-language']).toBe('en')
+  expect(storeLocales.at(-1)).toBe('en')
 })

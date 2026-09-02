@@ -6,6 +6,7 @@ import type {
   CoursePageRouteInfo,
   CourseSectionRouteInfo,
   CourseSchema,
+  FrontendRouteInfo,
   LanguageCode,
   PageSchema,
   ParserError,
@@ -83,6 +84,21 @@ const sectionRoute: CourseSectionRouteInfo = {
   sectionPath: 'intro',
 }
 
+/** A valid ISO 639-1 code the deployment does not publish (no UI bundle) */
+const UNSUPPORTED_LOCALE = 'fr' as LanguageCode
+
+/** The route of a full page load of `/fr/user/login` (T1-validated, no UI bundle for it) */
+const loginRoute: FrontendRouteInfo = {
+  locale: UNSUPPORTED_LOCALE,
+  name: 'app:user:login',
+}
+
+/** The route of a full page load of `/fr` (URL-mode index) */
+const indexRoute: FrontendRouteInfo = {
+  locale: UNSUPPORTED_LOCALE,
+  name: 'app:index',
+}
+
 function hashOf(content: string): string {
   return crc32(content).toString(16)
 }
@@ -108,6 +124,7 @@ test('a page with a parse error does not throw and stores the serialized error f
   const populateResult = await populateStoreForSSR({
     store,
     routeInfo: pageRoute,
+    locale: LOCALE,
     routeManager,
     database,
     url: '/en/page/home',
@@ -136,6 +153,7 @@ test('a course section with a parse error behaves the same way', async () => {
   const populateResult = await populateStoreForSSR({
     store,
     routeInfo: sectionRoute,
+    locale: LOCALE,
     routeManager,
     database,
     url: '/en/section/intro',
@@ -156,6 +174,7 @@ test('valid content still stores the parsed root for its content hash', async ()
   const populateResult = await populateStoreForSSR({
     store,
     routeInfo: pageRoute,
+    locale: LOCALE,
     routeManager,
     database,
     url: '/en/page/home',
@@ -165,4 +184,58 @@ test('valid content still stores the parsed root for its content hash', async ()
   const result = hastResultFor(store, hashOf(validContent))
   expect(result?.error).toBeUndefined()
   expect(result?.root).toBeDefined()
+})
+
+// The store keeps the document locale the request handler resolved from the URL, not the raw URL
+// locale: a document served in the default locale must carry it in `routeInfo.locale`, which is
+// where `<html lang>` and the client's i18next read it from.
+test('a non-course page under an unpublished locale stores the default locale in routeInfo', async () => {
+  for (const routeInfo of [loginRoute, indexRoute]) {
+    const store = makeStore()
+
+    // The document locale the handler resolves for `fr`: no UI bundle, so the default
+    const populateResult = await populateStoreForSSR({
+      store,
+      routeInfo,
+      locale: LOCALE,
+      routeManager,
+      database: makeDatabase(),
+      url: routeInfo.name === 'app:index' ? '/fr' : '/fr/user/login',
+    })
+    expect(populateResult.success).toBe(true)
+    expect(store.getState().app.routeInfo).toEqual({ ...routeInfo, locale: LOCALE })
+  }
+})
+
+test('a published locale stores the URL locale unchanged in routeInfo', async () => {
+  const store = makeStore()
+
+  const populateResult = await populateStoreForSSR({
+    store,
+    routeInfo: { locale: LOCALE, name: 'app:user:login' },
+    locale: LOCALE,
+    routeManager,
+    database: makeDatabase(),
+    url: '/en/user/login',
+  })
+  expect(populateResult.success).toBe(true)
+  expect(store.getState().app.routeInfo.locale).toBe(LOCALE)
+})
+
+// The per-course narrowing stays on the URL's own locale: a course that does not offer the URL's
+// locale redirects to its first one, whatever the document locale resolved to.
+test('a course without the URL locale still redirects to its first locale', async () => {
+  const store = makeStore()
+  const frPageRoute: CoursePageRouteInfo = { ...pageRoute, locale: UNSUPPORTED_LOCALE }
+
+  const populateResult = await populateStoreForSSR({
+    store,
+    routeInfo: frPageRoute,
+    locale: LOCALE,
+    routeManager,
+    database: makeDatabase(),
+    url: '/fr/page/home',
+  })
+  expect(populateResult.success).toBe(false)
+  expect(populateResult.redirect).toEqual({ url: '/en/page/home', statusCode: 302 })
 })

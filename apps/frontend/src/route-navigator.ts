@@ -1,5 +1,6 @@
 import type { AroundNavHandler } from 'wouter'
 import { flushSync } from 'react-dom'
+import { resolveDocumentLocale, uiLocales } from '@innodoc/shared-core/document-locale'
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { FrontendRouteInfo } from '@innodoc/shared-core/types'
 import {
@@ -51,6 +52,21 @@ function pathOf(to: string): string {
   const [withoutHash = ''] = to.split('#')
   const [withoutSearch = ''] = withoutHash.split('?')
   return withoutSearch
+}
+
+/**
+ * The route info the store keeps after a navigation.
+ *
+ * The store holds the document locale - the URL locale as long as the UI can render it, the default
+ * otherwise - mirroring the resolution the request handler applies on SSR. That is what keeps
+ * `<html lang>`, the language switcher and the i18next this store feeds all on the language the
+ * document is rendered in. Read at swap time, which is client-only: this module is imported during
+ * SSR as well, where no `__initial_state__` exists yet. The route the content is fetched for keeps
+ * the URL's own locale - the transition dispatch upstream of the swap still carries it.
+ */
+function withDocumentLocale(target: FrontendRouteInfo): FrontendRouteInfo {
+  const { supportedLocales } = globalThis.__initial_state__
+  return { ...target, locale: resolveDocumentLocale(target.locale, uiLocales(supportedLocales)) }
 }
 
 /** Scroll to hash */
@@ -150,7 +166,7 @@ function makeRouteNavigator(routeManager: RouteManager, store: Store): RouteNavi
 
       const swap = () => {
         flushSync(() => {
-          store.dispatch(changeRouteInfo(target)) // store swap
+          store.dispatch(changeRouteInfo(withDocumentLocale(target))) // store swap
           store.dispatch(changeRouteTransitionInfo(null)) // state hygiene, in the same render
           commitUrl?.() // wouter swap
         })

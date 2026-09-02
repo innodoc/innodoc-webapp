@@ -80,6 +80,7 @@ test('a non-parser failure does not throw and stores an honest ssr-sourced error
     const populateResult = await populateStoreForSSR({
       store,
       routeInfo: pageRoute,
+      locale: LOCALE,
       routeManager,
       database,
       url: '/en/page/home',
