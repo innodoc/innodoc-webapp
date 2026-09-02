@@ -49,6 +49,7 @@
     "@mui/material": "catalog:",
     "@unhead/react": "catalog:",
     "i18next": "catalog:",
+    "iso-639-1": "catalog:",
     "react": "catalog:",
     "react-i18next": "catalog:",
     "wouter": "catalog:"
