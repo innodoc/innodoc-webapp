@@ -9,7 +9,8 @@ import { RouteManagerProvider } from '@innodoc/shared-core/routes'
 import type { Store } from '@innodoc/shared-store/types'
 import PageShell from '@innodoc/ui-features/page-shell'
 import RoutesSwitch from '@innodoc/ui-features/routes-switch'
-import { makeAroundNav } from './around-nav.js'
+import { makeRouteNavigator } from './route-navigator.js'
+import useHistorySync from './use-history-sync.js'
 
 interface AppProps {
   emotionCache: EmotionCache
@@ -20,13 +21,16 @@ interface AppProps {
 }
 
 function App({ emotionCache, i18n, url, routeManager, store }: AppProps) {
-  const aroundNav = useMemo(() => makeAroundNav(routeManager, store), [routeManager, store])
+  const routeNavigator = useMemo(() => makeRouteNavigator(routeManager, store), [routeManager, store])
+
+  // Follow the browser's back and forward buttons, which wouter's aroundNav never sees
+  useHistorySync(routeNavigator)
 
   return (
     <ReduxProvider store={store}>
       <I18nextProvider i18n={i18n}>
         <RouteManagerProvider routeManager={routeManager}>
-          <Router ssrPath={url} aroundNav={aroundNav}>
+          <Router ssrPath={url} aroundNav={routeNavigator.aroundNav}>
             <PageShell emotionCache={emotionCache}>
               <RoutesSwitch routeManager={routeManager} />
             </PageShell>
