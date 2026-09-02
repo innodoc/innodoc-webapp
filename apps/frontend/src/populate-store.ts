@@ -47,7 +47,7 @@ interface PopulateStoreResult {
     statusCode: 301 | 302
   }
   error?: {
-    type: 'NOT_FOUND' | 'LOCALE_MISMATCH' | 'API_ERROR'
+    type: 'NOT_FOUND' | 'API_ERROR'
     message: string
   }
 }
