@@ -10,6 +10,11 @@
       "development": "./src/constants.ts",
       "default": "./dist/constants.js"
     },
+    "./document-locale": {
+      "types": "./src/document-locale.ts",
+      "development": "./src/document-locale.ts",
+      "default": "./dist/document-locale.js"
+    },
     "./icons": {
       "types": "./src/icons.ts",
       "development": "./src/icons.ts",
@@ -55,6 +60,11 @@
       "types": "./src/constants.ts",
       "development": "./src/constants.ts",
       "default": "./dist/constants.js"
+    },
+    "#document-locale": {
+      "types": "./src/document-locale.ts",
+      "development": "./src/document-locale.ts",
+      "default": "./dist/document-locale.js"
     },
     "#icons": {
       "types": "./src/icons.ts",
