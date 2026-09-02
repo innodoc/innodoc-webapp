@@ -7,7 +7,8 @@ import type { RootState } from '#types'
  * The locales the cached course declares, read from the RTK Query cache.
  *
  * `undefined` while the course record is not in the cache: the reader has nothing to check a
- * locale against, and nothing is fetched here - the course arrives with the page's own data.
+ * locale against, and nothing is fetched here - the route navigator, which must correct against
+ * the record, fetches it itself before deciding.
  *
  * Deliberately not memoised: `endpoint.select` builds a fresh selector per call, so this is for
  * low-frequency readers (the route navigator, once per navigation), never for render loops.

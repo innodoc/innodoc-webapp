@@ -1,5 +1,5 @@
 import type { NavigateOptions } from 'wouter'
-import { beforeEach, expect, test, vi } from 'vitest'
+import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import { RouteManager } from '@innodoc/shared-core/routes'
 import type { ApiCourse, ContentWithHash, HastResult, LanguageCode } from '@innodoc/shared-core/types'
 import makeStore from '@innodoc/shared-store'
@@ -39,6 +39,20 @@ function setLocation(pathname: string, search = '', hash = '') {
 /** The history entry commit the navigator writes (the `this`-free core of `History['pushState']`) */
 type HistoryCommit = (data: unknown, unused: string, url?: string | null) => void
 
+/** Origin the course fetch resolves its relative URL against: Node has none of its own */
+const MOCK_ORIGIN = 'http://mock.local'
+
+/**
+ * Node resolves a relative URL against nothing - `new Request('/api/...')` throws - so RTK Query's
+ * fetch could never run in this environment. Resolve it against a fixed origin instead, the same
+ * trick the RTL setup applies (ui-test-utils' stub-globals).
+ */
+class TestRequest extends Request {
+  constructor(input: RequestInfo | URL, init?: RequestInit) {
+    super(typeof input === 'string' ? new URL(input, MOCK_ORIGIN).href : input, init)
+  }
+}
+
 let pushState: HistoryCommit
 let replaceState: HistoryCommit
 
@@ -54,14 +68,18 @@ beforeEach(() => {
   globalThis.history = { pushState, replaceState } as unknown as History
 })
 
+// The tests that stub the course fetch restore the real globals
+afterEach(() => {
+  vi.unstubAllGlobals()
+})
+
 /** The course the tests navigate in: the fixture's first locale is `de`, so a corrected target
  * differs from the app default */
-function seedCourse(store: Store, locales: LanguageCode[]) {
-  const now = new Date('2024-01-01T00:00:00.000Z')
-  const course: ApiCourse = {
+function makeCourseRecord(locales: LanguageCode[]): ApiCourse {
+  return {
     id: 1,
-    createdAt: now,
-    updatedAt: now,
+    createdAt: new Date('2024-01-01T00:00:00.000Z'),
+    updatedAt: new Date('2024-01-01T00:00:00.000Z'),
     slug: COURSE_SLUG,
     title: { de: 'Testkurs', en: 'Test course' },
     shortTitle: null,
@@ -69,9 +87,12 @@ function seedCourse(store: Store, locales: LanguageCode[]) {
     homeLink: 'app:course:page|home',
     locales,
   }
+}
 
+/** Put the course into the RTK Query cache the way a fulfilled fetch would */
+function seedCourse(store: Store, locales: LanguageCode[]) {
   return store.dispatch(
-    getCoursesApi(routeManager).util.upsertQueryData('getCourse', { courseSlug: COURSE_SLUG }, course),
+    getCoursesApi(routeManager).util.upsertQueryData('getCourse', { courseSlug: COURSE_SLUG }, makeCourseRecord(locales)),
   )
 }
 
@@ -143,21 +164,87 @@ test("a navigation to a course locale the course does not offer commits the cour
   expect(query(store.getState()).isSuccess).toBe(true)
 })
 
-test('a navigation to an unoffered locale proceeds uncorrected while the course record is not in the cache', async () => {
+test('a navigation to a course locale the course does not offer fetches the uncached course and then corrects', async () => {
   const store = makeStore()
   store.dispatch(changeRouteInfo({ locale: 'en', name: 'app:index' }))
-  // Deliberately no course in the cache: there is nothing to correct against, and nothing is
-  // fetched here - the navigation proceeds as before
+  // The course record is deliberately not in the cache: the navigator has to fetch it before it
+  // can tell that `fr` is not offered. The corrected locale's content is ready, like in the cached
+  // variant above
+  await seedPageContent(store, 'de')
+
+  // The only request this navigation makes on its own is the course record. Anything else is a
+  // test bug, so the fetch answers only for it and fails loudly otherwise
+  const courseUrl = `${MOCK_ORIGIN}/api/course/${COURSE_SLUG}`
+  const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
+    const url = new Request(input).url
+    if (url !== courseUrl) {
+      throw new Error(`Unexpected request: ${url}`)
+    }
+    return Response.json(makeCourseRecord(['de', 'en']))
+  })
+  vi.stubGlobal('Request', TestRequest)
+  vi.stubGlobal('fetch', fetchMock)
+
+  const navigate = vi.fn<(to: string, options?: NavigateOptions) => void>()
+  makeRouteNavigator(routeManager, store).aroundNav(navigate, '/fr/page/home', {})
+
+  await vi.waitFor(() => {
+    expect(selectRouteInfo(store.getState()).name).toBe('app:course:page')
+  })
+
+  // The canonical target the SSR redirect would have produced: the course's first locale
+  expect(selectRouteInfo(store.getState())).toEqual({
+    courseSlug: COURSE_SLUG,
+    locale: 'de',
+    name: 'app:course:page',
+    pageSlug: 'home',
+  })
+  expect(selectRouteTransitionInfo(store.getState())).toBeNull()
+  // The dead URL never entered the history: the canonical one was committed in its place
+  expect(navigate).toHaveBeenCalledTimes(1)
+  expect(navigate).toHaveBeenCalledWith('/de/page/home', { replace: true })
+  // The course record arrived from the fetch, not a seed
+  expect(fetchMock).toHaveBeenCalledTimes(1)
+  const courseQuery = getCoursesApi(routeManager).endpoints.getCourse.select({ courseSlug: COURSE_SLUG })
+  expect(courseQuery(store.getState()).isSuccess).toBe(true)
+  expect(courseQuery(store.getState()).data?.locales).toEqual(['de', 'en'])
+  // The content is ready for the corrected locale, and the dead locale never reached a query, so
+  // nothing can render an error for it
+  const deadContent = getPagesApi(routeManager).endpoints.getPageContent.select({
+    courseSlug: COURSE_SLUG,
+    locale: 'fr',
+    pageSlug: 'home',
+  })
+  expect(deadContent(store.getState()).status).toBe('uninitialized')
+  const correctedContent = getPagesApi(routeManager).endpoints.getPageContent.select({
+    courseSlug: COURSE_SLUG,
+    locale: 'de',
+    pageSlug: 'home',
+  })
+  expect(correctedContent(store.getState()).isSuccess).toBe(true)
+})
+
+test('a navigation to an unresolvable course proceeds uncorrected once the course fetch has errored', async () => {
+  const store = makeStore()
+  store.dispatch(changeRouteInfo({ locale: 'en', name: 'app:index' }))
+
+  // The course does not exist: the fetch the navigator starts answers 404
+  const fetchMock = vi.fn(async () => new Response(null, { status: 404 }))
+  vi.stubGlobal('Request', TestRequest)
+  vi.stubGlobal('fetch', fetchMock)
 
   const navigate = vi.fn<(to: string, options?: NavigateOptions) => void>()
   makeRouteNavigator(routeManager, store).aroundNav(navigate, '/fr/toc', {})
 
+  // The navigation must not hang on the dead fetch: it proceeds uncorrected, as before the course
+  // fetch existed, and the content fetch answers it (with an error) once the page's own data loads
   await vi.waitFor(() => {
     expect(selectRouteInfo(store.getState()).name).toBe('app:course:toc')
   })
 
-  // The URL is committed as asked (no correction, no replace), and the store holds the document
-  // locale as before
+  expect(fetchMock).toHaveBeenCalledTimes(1)
+  const courseQuery = getCoursesApi(routeManager).endpoints.getCourse.select({ courseSlug: COURSE_SLUG })
+  expect(courseQuery(store.getState()).isError).toBe(true)
   expect(navigate).toHaveBeenCalledTimes(1)
   expect(navigate).toHaveBeenCalledWith('/fr/toc', {})
   expect(selectRouteInfo(store.getState()).locale).toBe('en')
@@ -171,6 +258,9 @@ test('a repeated navigation to the unoffered locale is a no-op once the correcte
 
   const navigate = vi.fn<(to: string, options?: NavigateOptions) => void>()
   makeRouteNavigator(routeManager, store).aroundNav(navigate, '/fr/page/home', {})
+
+  // Let the pipeline reach its fast path: the course is cached, so no await holds it back
+  await new Promise((resolve) => setImmediate(resolve))
 
   // The corrected target is the rendered route: the fast path takes it, nothing is refetched, and
   // the dead URL is not committed - the canonical one, as a replace. No ping-pong: the redirect
@@ -216,6 +306,9 @@ test('a history navigation to the rendered route writes no URL', async () => {
   setLocation('/de/page/home')
 
   makeRouteNavigator(routeManager, store).syncWithLocation()
+
+  // Let the pipeline reach its fast path: the course is cached, so no await holds it back
+  await new Promise((resolve) => setImmediate(resolve))
 
   // The URL is where the reader asked to be: one back press must not become a step forward
   expect(pushState).not.toHaveBeenCalled()

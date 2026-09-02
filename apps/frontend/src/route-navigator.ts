@@ -3,15 +3,16 @@ import { flushSync } from 'react-dom'
 import { resolveDocumentLocale, uiLocales } from '@innodoc/shared-core/document-locale'
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
-import type { FrontendRouteInfo } from '@innodoc/shared-core/types'
+import type { ApiCourse, FrontendRouteInfo } from '@innodoc/shared-core/types'
 import {
   changeRouteInfo,
   changeRouteTransitionInfo,
   selectRouteInfo,
   selectRouteTransitionInfo,
 } from '@innodoc/shared-store/slices/app'
+import getCoursesApi from '@innodoc/shared-store/slices/content/courses'
 import { selectCourseLocales } from '@innodoc/shared-store/slices/content/selectors/courses'
-import type { RootState, Store } from '@innodoc/shared-store/types'
+import type { Store } from '@innodoc/shared-store/types'
 import { waitForRouteContentReady } from '@innodoc/shared-store/utils'
 
 /**
@@ -89,6 +90,58 @@ function withDocumentLocale(target: FrontendRouteInfo): FrontendRouteInfo {
   return { ...target, locale: resolveDocumentLocale(target.locale, uiLocales(supportedLocales)) }
 }
 
+/** Shape of the RTK Query result the course record wait reads */
+interface CourseQueryResult {
+  isError: boolean
+  data?: ApiCourse
+}
+
+/**
+ * Make sure the course record the locale correction reads is in the cache.
+ *
+ * Nothing else on the client fetches course records, so this starts the `getCourse` fetch and
+ * waits for it to settle - like the content readiness wait, an errored fetch counts as settled,
+ * and a timeout resolves anyway: an unresolvable course must not hold a navigation hostage. The
+ * caller re-reads the record after settling and corrects nothing when the fetch delivered none.
+ * A record already cached as an error is read as-is, so a navigation to a dead URL cannot turn
+ * the correction into a refetch storm.
+ */
+function waitForCourseRecord(store: Store, routeManager: RouteManager, courseSlug: string): Promise<void> {
+  const coursesApi = getCoursesApi(routeManager)
+  // Not memoised by RTK Query, so it is prepared once per wait - never inside the subscription
+  // callback, where it would repeat for every dispatched action
+  const selectCourse = coursesApi.endpoints.getCourse.select({ courseSlug })
+  const isSettled = (query: CourseQueryResult): boolean => query.isError || query.data !== undefined
+
+  if (isSettled(selectCourse(store.getState()))) {
+    return Promise.resolve()
+  }
+
+  void store.dispatch(coursesApi.endpoints.getCourse.initiate({ courseSlug }))
+
+  return new Promise<void>((resolve) => {
+    let settled = false
+
+    const settle = () => {
+      if (settled) {
+        return
+      }
+      settled = true
+      clearTimeout(timer)
+      unsubscribe()
+      resolve()
+    }
+
+    const unsubscribe = store.subscribe(() => {
+      if (isSettled(selectCourse(store.getState()))) {
+        settle()
+      }
+    })
+
+    const timer = setTimeout(settle, 10_000)
+  })
+}
+
 /**
  * The target route with a course locale the course does not serve corrected to the course's first
  * locale - the same canonical target the SSR redirect produces (populate-store.ts answers a full
@@ -97,20 +150,30 @@ function withDocumentLocale(target: FrontendRouteInfo): FrontendRouteInfo {
  * the redirect would have produced.
  *
  * Returns the target unchanged (same reference) when it is not a course route or the locale is
- * offered. Also unchanged while the course record is not in the cache yet: the navigation then
- * proceeds uncorrected, and the content fetch answers it (with an error for a locale the course
- * does not offer) once the page's own data has loaded the course.
+ * offered.
+ *
+ * The correction reads the course record from the cache, and a navigation can name a course the
+ * session has never loaded: while the record is not cached, it is fetched here before the
+ * correction decides. An unresolvable course must not hold the navigation hostage: the fetch
+ * settles on an error (and on timeout) as well, after which the correction finds no locales and
+ * returns the target unchanged - the navigation proceeds uncorrected, and the content fetch
+ * answers it (with an error for a locale the course does not offer) exactly as it did before the
+ * course was fetched here.
  */
-function withOfferedCourseLocale(
+async function withOfferedCourseLocale(
   routeManager: RouteManager,
-  state: RootState,
+  store: Store,
   target: FrontendRouteInfo,
-): FrontendRouteInfo {
+): Promise<FrontendRouteInfo> {
   if (!isCourseRouteInfo(target)) {
     return target
   }
 
-  const locales = selectCourseLocales(routeManager, state, target.courseSlug)
+  if (selectCourseLocales(routeManager, store.getState(), target.courseSlug) === undefined) {
+    await waitForCourseRecord(store, routeManager, target.courseSlug)
+  }
+
+  const locales = selectCourseLocales(routeManager, store.getState(), target.courseSlug)
   if (locales === undefined || locales.includes(target.locale)) {
     return target
   }
@@ -199,34 +262,39 @@ function makeRouteNavigator(routeManager: RouteManager, store: Store): RouteNavi
    * @param options What the route change takes care of, see {@link ChangeRouteOptions}
    */
   function changeRoute(to: string, { commitUrl, scroll }: ChangeRouteOptions) {
-    const state = store.getState()
-    const parsed = routeManager.parseRouteFromUrl(pathOf(to))
-    // A course is served in the locales it declares: correct an unoffered one before anything
-    // else, so the identity check, the content fetch and the commit all work on the route the SSR
-    // redirect would have produced
-    const target = parsed === null ? null : withOfferedCourseLocale(routeManager, state, parsed)
-    const corrected = target !== null && target !== parsed
-    const url = corrected ? routeManager.generateFrontendUrlPath({ ...target }) + suffixOf(to) : to
-    const current = selectRouteInfo(state)
+    // Claim the navigation's place in line before anything async runs: the supersede check below
+    // compares these numbers, and a navigation that awaits (an uncached course) must not claim its
+    // number after a newer one has
     const navigation = ++navigations
 
-    // Nothing to load: an unknown route (which the routed outlet answers with its 404) or a
-    // navigation that stays on the rendered route (hash- or search-only). The target is normalised
-    // the same way the store is, so a hash-only navigation on a page whose URL locale has no UI
-    // bundle still hits this fast path. Release the held view, which belongs to a navigation that
-    // will never commit, and move the URL.
-    if (!target || isSameRouteInfo(withDocumentLocale(target), current)) {
-      if (selectRouteTransitionInfo(store.getState()) !== null) {
-        store.dispatch(changeRouteTransitionInfo(null))
-      }
-      commitUrl?.(url, corrected)
-      if (scroll) {
-        scrollToHash()
-      }
-      return
-    }
-
     void (async () => {
+      const state = store.getState()
+      const parsed = routeManager.parseRouteFromUrl(pathOf(to))
+      // A course is served in the locales it declares: correct an unoffered one before anything
+      // else, so the identity check, the content fetch and the commit all work on the route the SSR
+      // redirect would have produced. The correction reads the course record from the cache, so an
+      // uncached course is fetched first
+      const target = parsed === null ? null : await withOfferedCourseLocale(routeManager, store, parsed)
+      const corrected = target !== null && target !== parsed
+      const url = corrected ? routeManager.generateFrontendUrlPath({ ...target }) + suffixOf(to) : to
+      const current = selectRouteInfo(state)
+
+      // Nothing to load: an unknown route (which the routed outlet answers with its 404) or a
+      // navigation that stays on the rendered route (hash- or search-only). The target is normalised
+      // the same way the store is, so a hash-only navigation on a page whose URL locale has no UI
+      // bundle still hits this fast path. Release the held view, which belongs to a navigation that
+      // will never commit, and move the URL.
+      if (!target || isSameRouteInfo(withDocumentLocale(target), current)) {
+        if (selectRouteTransitionInfo(store.getState()) !== null) {
+          store.dispatch(changeRouteTransitionInfo(null))
+        }
+        commitUrl?.(url, corrected)
+        if (scroll) {
+          scrollToHash()
+        }
+        return
+      }
+
       // Starts the content fetch (the hast listener reacts to it) and marks the transition as in
       // flight, which keeps the routed outlet on the current page until the swap below.
       store.dispatch(changeRouteTransitionInfo(target))
