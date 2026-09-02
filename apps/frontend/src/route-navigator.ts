@@ -2,6 +2,7 @@ import type { AroundNavHandler } from 'wouter'
 import { flushSync } from 'react-dom'
 import { resolveDocumentLocale, uiLocales } from '@innodoc/shared-core/document-locale'
 import type { RouteManager } from '@innodoc/shared-core/routes'
+import { isCourseRouteInfo } from '@innodoc/shared-core/typeguards'
 import type { FrontendRouteInfo } from '@innodoc/shared-core/types'
 import {
   changeRouteInfo,
@@ -9,7 +10,8 @@ import {
   selectRouteInfo,
   selectRouteTransitionInfo,
 } from '@innodoc/shared-store/slices/app'
-import type { Store } from '@innodoc/shared-store/types'
+import { selectCourseLocales } from '@innodoc/shared-store/slices/content/selectors/courses'
+import type { RootState, Store } from '@innodoc/shared-store/types'
 import { waitForRouteContentReady } from '@innodoc/shared-store/utils'
 
 /**
@@ -24,7 +26,9 @@ import { waitForRouteContentReady } from '@innodoc/shared-store/utils'
  *   programmatic `navigate`, `Redirect`). The pipeline writes the URL as part of the swap.
  * - {@link RouteNavigator.syncWithLocation} follows navigations the app did not perform, i.e. the
  *   browser's back and forward buttons. The history entry already exists and the address bar has
- *   already moved by the time this runs, so the pipeline must not write the URL again.
+ *   already moved by the time this runs, so the pipeline must not write the URL again - except
+ *   when the entry names a URL the app corrects (a course locale the course does not serve): the
+ *   dead entry is rewritten in place, never pushed.
  */
 interface RouteNavigator {
   /** wouter `aroundNav` handler for navigations the app performs itself. */
@@ -59,6 +63,18 @@ function pathOf(to: string): string {
 }
 
 /**
+ * The search and hash of a wouter `to`, kept for a rewritten path: a correction moves the route,
+ * not the parameters the reader travelled with
+ */
+function suffixOf(to: string): string {
+  const [withoutHash = ''] = to.split('#')
+  const hash = to.slice(withoutHash.length)
+  const [withoutSearch = ''] = withoutHash.split('?')
+  const search = withoutHash.slice(withoutSearch.length)
+  return search + hash
+}
+
+/**
  * The route info the store keeps after a navigation.
  *
  * The store holds the document locale - the URL locale as long as the UI can render it, the default
@@ -71,6 +87,42 @@ function pathOf(to: string): string {
 function withDocumentLocale(target: FrontendRouteInfo): FrontendRouteInfo {
   const { supportedLocales } = globalThis.__initial_state__
   return { ...target, locale: resolveDocumentLocale(target.locale, uiLocales(supportedLocales)) }
+}
+
+/**
+ * The target route with a course locale the course does not serve corrected to the course's first
+ * locale - the same canonical target the SSR redirect produces (populate-store.ts answers a full
+ * load of an unoffered locale with a 302 to `course.locales[0]`). Applied before anything else
+ * in the pipeline, so the identity check, the content fetch and the commit all work on the route
+ * the redirect would have produced.
+ *
+ * Returns the target unchanged (same reference) when it is not a course route or the locale is
+ * offered. Also unchanged while the course record is not in the cache yet: the navigation then
+ * proceeds uncorrected, and the content fetch answers it (with an error for a locale the course
+ * does not offer) once the page's own data has loaded the course.
+ */
+function withOfferedCourseLocale(
+  routeManager: RouteManager,
+  state: RootState,
+  target: FrontendRouteInfo,
+): FrontendRouteInfo {
+  if (!isCourseRouteInfo(target)) {
+    return target
+  }
+
+  const locales = selectCourseLocales(routeManager, state, target.courseSlug)
+  if (locales === undefined || locales.includes(target.locale)) {
+    return target
+  }
+
+  // A course that declares no locale cannot serve one: SSR would redirect to a broken URL, so
+  // here the navigation is left uncorrected instead
+  const firstLocale = locales[0]
+  if (firstLocale === undefined) {
+    return target
+  }
+
+  return { ...target, locale: firstLocale }
 }
 
 /** Scroll to hash */
@@ -108,11 +160,18 @@ function canAnimateSwap(): boolean {
 /** What a route change takes care of besides the target URL */
 interface ChangeRouteOptions {
   /**
-   * Moves the URL to the target, in the same synchronous swap as the store. Absent when the URL is
-   * already where the reader asked to be, which is the case for a history navigation: writing it
-   * again would push a new entry, turning one back press into a step forward nobody asked for.
+   * Moves the URL to the committed route, in the same synchronous swap as the store.
+   *
+   * `to` is the URL to commit - the canonical one when the reader asked for a course locale the
+   * course does not serve, which the SSR redirect would have corrected. `replace` is true then: a
+   * `replaceState` commit, so the URL the reader asked for never enters the history, and the
+   * entry that already names it is rewritten in place.
+   *
+   * Absent when the URL is already where the reader asked to be and needs no correction, which is
+   * the case for a history navigation: writing it again would push a new entry, turning one back
+   * press into a step forward nobody asked for.
    */
-  commitUrl?: () => void
+  commitUrl?: (to: string, replace: boolean) => void
 
   /**
    * Whether the app owns the scroll position. It does not for a history navigation, where the browser
@@ -140,8 +199,15 @@ function makeRouteNavigator(routeManager: RouteManager, store: Store): RouteNavi
    * @param options What the route change takes care of, see {@link ChangeRouteOptions}
    */
   function changeRoute(to: string, { commitUrl, scroll }: ChangeRouteOptions) {
-    const target = routeManager.parseRouteFromUrl(pathOf(to))
-    const current = selectRouteInfo(store.getState())
+    const state = store.getState()
+    const parsed = routeManager.parseRouteFromUrl(pathOf(to))
+    // A course is served in the locales it declares: correct an unoffered one before anything
+    // else, so the identity check, the content fetch and the commit all work on the route the SSR
+    // redirect would have produced
+    const target = parsed === null ? null : withOfferedCourseLocale(routeManager, state, parsed)
+    const corrected = target !== null && target !== parsed
+    const url = corrected ? routeManager.generateFrontendUrlPath({ ...target }) + suffixOf(to) : to
+    const current = selectRouteInfo(state)
     const navigation = ++navigations
 
     // Nothing to load: an unknown route (which the routed outlet answers with its 404) or a
@@ -153,7 +219,7 @@ function makeRouteNavigator(routeManager: RouteManager, store: Store): RouteNavi
       if (selectRouteTransitionInfo(store.getState()) !== null) {
         store.dispatch(changeRouteTransitionInfo(null))
       }
-      commitUrl?.()
+      commitUrl?.(url, corrected)
       if (scroll) {
         scrollToHash()
       }
@@ -174,7 +240,7 @@ function makeRouteNavigator(routeManager: RouteManager, store: Store): RouteNavi
         flushSync(() => {
           store.dispatch(changeRouteInfo(withDocumentLocale(target))) // store swap
           store.dispatch(changeRouteTransitionInfo(null)) // state hygiene, in the same render
-          commitUrl?.() // wouter swap
+          commitUrl?.(url, corrected) // wouter swap
         })
       }
 
@@ -195,16 +261,26 @@ function makeRouteNavigator(routeManager: RouteManager, store: Store): RouteNavi
     aroundNav: (navigate, to, options) => {
       changeRoute(to, {
         scroll: true,
-        commitUrl: () => {
-          navigate(to, options)
+        commitUrl: (url, replace) => {
+          navigate(url, replace ? { ...options, replace: true } : options)
         },
       })
     },
     syncWithLocation: () => {
       const { pathname, search } = globalThis.location
-      // The browser has already moved the address bar to the entry the reader chose, so the only thing
-      // left behind is the route in the store - and there is no URL for the app to write.
-      changeRoute(`${pathname}${search}`, { scroll: false })
+      // The browser has already moved the address bar to the entry the reader chose, so the only
+      // thing left behind is the route in the store - and there is no URL for the app to write:
+      // writing it as a new entry would turn one back press into a step forward nobody asked for.
+      // The one exception is a corrected target: the entry names a URL the course does not serve,
+      // and rewriting it in place is what keeps the next back press from stranding on the dead URL.
+      changeRoute(`${pathname}${search}`, {
+        scroll: false,
+        commitUrl: (url, replace) => {
+          if (replace) {
+            globalThis.history.replaceState(null, '', url)
+          }
+        },
+      })
     },
   }
 }

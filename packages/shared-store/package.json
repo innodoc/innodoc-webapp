@@ -65,6 +65,11 @@
       "development": "./src/slices/content/entities/sections.ts",
       "default": "./dist/slices/content/entities/sections.js"
     },
+    "./slices/content/selectors/courses": {
+      "types": "./src/slices/content/selectors/courses.ts",
+      "development": "./src/slices/content/selectors/courses.ts",
+      "default": "./dist/slices/content/selectors/courses.js"
+    },
     "./slices/content/selectors/sections": {
       "types": "./src/slices/content/selectors/sections.ts",
       "development": "./src/slices/content/selectors/sections.ts",

@@ -1,4 +1,4 @@
-import type { APIResponse } from '@playwright/test'
+import type { APIResponse, Page } from '@playwright/test'
 import { expect, test } from '@playwright/test'
 
 const courseSlugMode = process.env.INNODOC_PUBLIC_COURSE_SLUG_MODE ?? 'SINGLE'
@@ -45,6 +45,49 @@ const locationPath = (response: APIResponse): string => {
   }
 
   return new URL(location, 'https://localhost').pathname
+}
+
+/**
+ * Load `path` and wait until React has taken the document over.
+ *
+ * The dev server drops module requests under load (see `smoke.test.ts`), and a document whose
+ * modules never loaded never hydrates. Load again until the app runs.
+ */
+async function openApp(page: Page, path: string) {
+  await page.goto(path)
+
+  for (let attempt = 0; attempt < 8; attempt++) {
+    const hydrated = await page.waitForFunction(isHydrated, null, { timeout: 8000 }).then(
+      () => true,
+      () => false,
+    )
+
+    if (hydrated) {
+      return
+    }
+
+    await page.reload()
+  }
+
+  throw new Error(`The app did not take over ${path}: its client modules never loaded`)
+}
+
+/**
+ * The href of the first visible course page link other than `excludedHref`, or null.
+ *
+ * String form of `evaluate`, like `isHydrated` above: this project compiles for Node, without the
+ * DOM library
+ */
+const firstVisiblePageLink = (excludedHref: string) =>
+  `Array.from(document.querySelectorAll('a[href*="/page/"]')).find((a) =>
+    a.getAttribute('href') !== ${JSON.stringify(excludedHref)} && !!a.offsetParent
+  )?.getAttribute('href') ?? null`
+
+/** The href of the first visible in-app link to a course page other than `excludedHref` */
+async function linkToAnotherCoursePage(page: Page, excludedHref: string): Promise<string> {
+  // The footer's page list is loaded by the client after hydration, so wait for it
+  const handle = await page.waitForFunction(firstVisiblePageLink(excludedHref), { timeout: 30_000 })
+  return (await handle.jsonValue()) as string
 }
 
 /**
@@ -249,4 +292,52 @@ test('an unpublished-locale page hydrates without switching language', async ({ 
   } finally {
     await context.close()
   }
+})
+
+// A client navigation to a course locale the course does not offer must land where a full load
+// would: a full load of such a URL is the SSR 302 to the course's first locale, so the app
+// resolves the same canonical route client-side, and the dead URL must not survive in the
+// history.
+//
+// An in-app click cannot reach such a URL by construction: the UI only links to locales the
+// course offers (the language menu is driven by `course.locales`, every other link uses the
+// current locale). The way a user meets a dead-locale URL client-side is through the browser's
+// history - a stale entry - so this test moves the browser to it with exactly the browser's own
+// mechanics: a new history entry, plus the popstate event that back and forward report.
+test("a history navigation to a course locale the course does not offer lands on the course's first locale", async ({
+  page,
+}) => {
+  await openApp(page, cases.de.path)
+
+  // A real in-app click first, so the back below has a genuine page to restore
+  const entriesBeforeClick = await page.evaluate<number>('history.length')
+  const otherPath = await linkToAnotherCoursePage(page, cases.de.path)
+  await page.locator(`a[href="${otherPath}"]`).first().click()
+  await expect(page).toHaveURL(new RegExp(`${otherPath}$`, 'u'))
+  // The click pushed one entry (the fresh tab's first entry is the browser's own business)
+  const entries = await page.evaluate<number>('history.length')
+  expect(entries).toBe(entriesBeforeClick + 1)
+
+  // The browser lands on the /fr variant of the page the app is showing, as a stale history entry.
+  // String form of `evaluate`, like `isHydrated` above: this project compiles for Node, without
+  // the DOM library
+  const deadPath = otherPath.replace(/^\/de\//u, '/fr/')
+  await page.evaluate(`window.history.pushState(null, "", ${JSON.stringify(deadPath)})`)
+  // The dead entry exists for now; the app's answer to the popstate below must not add one
+  const deadEntries = await page.evaluate<number>('history.length')
+  await page.evaluate('window.dispatchEvent(new PopStateEvent("popstate"))')
+
+  // The app resolves the dead locale to the course's first locale (the fixture course declares
+  // `en` first) and rewrites the entry in place, with the canonical page's content
+  const canonicalPath = otherPath.replace(/^\/de\//u, '/en/')
+  await expect(page).toHaveURL(new RegExp(`${canonicalPath}$`, 'u'), { timeout: 60_000 })
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+  // The dead entry was rewritten, not pushed behind: the app wrote no new entry, so the dead URL
+  // no longer names any entry in the history
+  expect(await page.evaluate<number>('history.length')).toBe(deadEntries)
+
+  // And a real back press restores the page the user came from, not the broken URL
+  await page.goBack()
+  await expect(page).toHaveURL(new RegExp(`${otherPath}$`, 'u'))
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
 })
