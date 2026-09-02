@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { querySectionSchema, translatableString } from '#schemas'
+import { localeSchema, querySectionSchema, translatableString } from '#schemas'
 
 const section = {
   id: 1,
@@ -13,6 +13,26 @@ const section = {
   type: 'regular',
   order: [1],
 }
+
+test('localeSchema accepts ISO 639-1 two-letter codes', () => {
+  expect(localeSchema.safeParse('de').success).toBe(true)
+  expect(localeSchema.safeParse('en').success).toBe(true)
+  expect(localeSchema.safeParse('fr').success).toBe(true)
+})
+
+test('localeSchema rejects strings outside the ISO 639-1 domain', () => {
+  expect(localeSchema.safeParse('xx').success).toBe(false)
+  expect(localeSchema.safeParse('dev').success).toBe(false)
+  expect(localeSchema.safeParse('cimode').success).toBe(false)
+  expect(localeSchema.safeParse('en_US').success).toBe(false)
+  expect(localeSchema.safeParse('EN').success).toBe(false)
+  expect(localeSchema.safeParse('').success).toBe(false)
+})
+
+test('localeSchema rejects non-strings', () => {
+  expect(localeSchema.safeParse(123).success).toBe(false)
+  expect(localeSchema.safeParse(null).success).toBe(false)
+})
 
 test('translatableString accepts locale keys with string values', () => {
   expect(translatableString.safeParse({ en: 'Hello', de: 'Hallo' }).success).toBe(true)

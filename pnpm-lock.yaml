@@ -470,6 +470,9 @@ importers:
       vite:
         specifier: 'catalog:'
         version: 8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.9(@types/node@25.9.3)(jsdom@29.1.1)(msw@2.14.6(@types/node@25.9.3)(typescript@7.0.2))(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))
 
   apps/e2e:
     devDependencies:
@@ -711,6 +714,9 @@ importers:
       i18next:
         specifier: 'catalog:'
         version: 26.3.1(typescript@6.0.3)
+      iso-639-1:
+        specifier: 'catalog:'
+        version: 3.1.5
       react:
         specifier: 'catalog:'
         version: 19.2.7
@@ -745,9 +751,6 @@ importers:
       '@typescript/native':
         specifier: 'catalog:'
         version: typescript@7.0.2
-      iso-639-1:
-        specifier: 'catalog:'
-        version: 3.1.5
       mdast-util-mdx-jsx:
         specifier: 'catalog:'
         version: 3.2.0
@@ -11236,7 +11239,7 @@ snapshots:
       magic-string: 0.30.21
       obug: 2.1.1
       pathe: 2.0.3
-      picomatch: 4.0.4
+      picomatch: 4.0.7
       std-env: 4.1.0
       tinybench: 2.9.0
       tinyexec: 1.2.2
@@ -11264,7 +11267,7 @@ snapshots:
       magic-string: 0.30.21
       obug: 2.1.1
       pathe: 2.0.3
-      picomatch: 4.0.4
+      picomatch: 4.0.7
       std-env: 4.1.0
       tinybench: 2.9.0
       tinyexec: 1.2.2
@@ -11292,7 +11295,7 @@ snapshots:
       magic-string: 0.30.21
       obug: 2.1.1
       pathe: 2.0.3
-      picomatch: 4.0.4
+      picomatch: 4.0.7
       std-env: 4.1.0
       tinybench: 2.9.0
       tinyexec: 1.2.2

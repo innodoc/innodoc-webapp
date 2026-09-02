@@ -1,4 +1,4 @@
-import isLocaleValidator from 'validator/lib/isLocale.js'
+import ISO6391 from 'iso-639-1'
 import { COURSE_SLUG_MODES } from '#constants'
 import type { ArbitraryObject, CourseSlugMode, LanguageCode } from '#types'
 
@@ -7,9 +7,9 @@ function isArbitraryObject(object: unknown): object is ArbitraryObject {
   return typeof object === 'object' && object !== null
 }
 
-/** Type guard for `LanguageCode` */
+/** Type guard for `LanguageCode` - exactly the ISO 639-1 two-letter codes the type covers */
 function isLocale(thing: unknown): thing is LanguageCode {
-  return typeof thing === 'string' && isLocaleValidator(thing)
+  return typeof thing === 'string' && ISO6391.validate(thing)
 }
 
 /** Type guard for `CourseSlugMode` */

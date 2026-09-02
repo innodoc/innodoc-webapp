@@ -111,6 +111,11 @@
       "development": "./src/typeguards/typeguards.ts",
       "default": "./dist/typeguards/typeguards.js"
     },
+    "#typeguards/common": {
+      "types": "./src/typeguards/common.ts",
+      "development": "./src/typeguards/common.ts",
+      "default": "./dist/typeguards/common.js"
+    },
     "#typeguards/content": {
       "types": "./src/typeguards/content.ts",
       "development": "./src/typeguards/content.ts",
@@ -135,6 +140,7 @@
   "dependencies": {
     "hast-util-is-element": "catalog:",
     "i18next": "catalog:",
+    "iso-639-1": "catalog:",
     "react": "catalog:",
     "react-i18next": "catalog:",
     "regexparam": "catalog:",
@@ -148,7 +154,6 @@
     "@types/react": "catalog:",
     "@types/validator": "catalog:",
     "@typescript/native": "catalog:",
-    "iso-639-1": "catalog:",
     "mdast-util-mdx-jsx": "catalog:",
     "type-fest": "catalog:",
     "vite": "catalog:",

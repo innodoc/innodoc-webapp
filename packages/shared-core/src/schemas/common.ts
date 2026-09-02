@@ -1,11 +1,11 @@
 import isFQDN from 'validator/lib/isFQDN.js'
 import isIP from 'validator/lib/isIP.js'
-import isLocale from 'validator/lib/isLocale.js'
 import isPort from 'validator/lib/isPort.js'
 import isSlug from 'validator/lib/isSlug.js'
 import z from 'zod'
 import { PATH_RE } from '#constants'
 import { ICON_NAMES } from '#icons'
+import { isLocale } from '#typeguards/common'
 
 // split off, so we don't create a circular typing on `translatableString` schema
 function validateTranslatableString(obj: object) {
@@ -22,7 +22,12 @@ const iconNameSchema = z
   .enum(ICON_NAMES, { message: 'Icon name must be defined in the ICON_NAMES manifest (@innodoc/shared-core/icons)' })
   .describe('Icon name')
 const slugSchema = z.string().refine(isSlug, { message: 'String must be a slug' })
-const localeSchema = z.string().refine(isLocale, { message: 'String must be a valid locale' })
+// The `: boolean` annotation is load-bearing: TypeScript infers `isLocale`'s type predicate
+// into the callback, and zod would then narrow the schema output to `LanguageCode`, changing
+// `translatableString`'s record key type from `string` to the 183-code union.
+const localeSchema = z
+  .string()
+  .refine((val): boolean => isLocale(val), { message: 'String must be a valid ISO 639-1 locale code' })
 const hostnameSchema = z.string().refine(isHostname, { message: 'Invalid hostname' })
 const portSchema = z.coerce
   .number()
