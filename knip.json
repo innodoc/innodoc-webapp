@@ -8,7 +8,10 @@
     "apps/backend": {
       "project": ["src/**/*.ts"],
       "ignoreBinaries": ["mkcert"],
-      "ignoreDependencies": ["pino-pretty"]
+      "ignoreDependencies": ["pino-pretty"],
+      "vitest": {
+        "entry": ["src/**/*.test.ts"]
+      }
     },
     "apps/frontend": {
       "project": ["src/**/*.ts?(x)"],

@@ -39,6 +39,7 @@
     "dev": "tsx watch --conditions=development --include='../../packages/**/*' --exclude='./../frontend/**/*' --exclude='../../packages/*/node_modules' --clear-screen=false src/main.ts",
     "dev:mkcert": "mkcert -install && mkdir -p cert && mkcert -key-file cert/key.pem -cert-file cert/cert.pem innodoc.dev '*.innodoc.dev' localhost 127.0.0.1 ::1",
     "start": "NODE_ENV=production node ./dist/main.js",
+    "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -67,7 +68,8 @@
     "@types/node": "catalog:",
     "iso-639-1": "catalog:",
     "tsx": "catalog:",
-    "vite": "catalog:"
+    "vite": "catalog:",
+    "vitest": "catalog:"
   },
   "bin": {
     "innodoc-webapp": "./dist/main.js"
