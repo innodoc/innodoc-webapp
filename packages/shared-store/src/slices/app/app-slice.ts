@@ -38,6 +38,6 @@ const appSlice = createSlice({
 })
 
 export type { AppSliceState }
-export { selectRouteInfo } from './selectors.js'
+export { selectRouteInfo, selectRouteTransitionInfo } from './selectors.js'
 export const { changeRouteInfo, changeRouteTransitionInfo } = appSlice.actions
 export default appSlice
