@@ -2,7 +2,7 @@ import type { ComponentType } from 'react'
 import { Redirect, Route, Switch } from 'wouter'
 import type { RouteManager } from '@innodoc/shared-core/routes'
 import type { FrontendRouteName } from '@innodoc/shared-core/types'
-import { selectRouteInfo } from '@innodoc/shared-store/slices/app'
+import { selectRouteInfo, selectRouteTransitionInfo } from '@innodoc/shared-store/slices/app'
 import { useSelector } from '@innodoc/ui-shared/store-hooks'
 import CourseContentPage from './course/CourseContentPage.js'
 import CourseHomeRedirect from './course/CourseHomeRedirect.js'
@@ -41,7 +41,15 @@ interface PageComponentProps {
 }
 
 function PageComponent({ routeName }: PageComponentProps) {
-  const Component = routeRegistry[routeName].component
+  const routeInfo = useSelector(selectRouteInfo)
+  const transitionInfo = useSelector(selectRouteTransitionInfo)
+
+  // A navigation is a two-step move: the URL gets there first, the store only once the target's
+  // content has loaded. While that is in flight, `routeName` - matched on the URL - already names
+  // the target, but the content in the store is still the current page. Rendering the target then
+  // would show it without its data, so the page being left stays on screen until the swap.
+  const shownRouteName = transitionInfo === null ? routeName : routeInfo.name
+  const Component = routeRegistry[shownRouteName].component
 
   return <Component />
 }
