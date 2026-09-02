@@ -36,6 +36,10 @@ interface RouteNavigator {
 /**
  * Compare identity fields of two route infos.
  * Hash and search are intentionally ignored (wouter is pathname+search based).
+ *
+ * Both arguments must carry the document locale (see {@link withDocumentLocale}): the store holds
+ * the normalised locale, so comparing a raw URL locale against it would miss same-route
+ * navigations on pages whose URL locale has no UI bundle.
  */
 function isSameRouteInfo(a: FrontendRouteInfo, b: FrontendRouteInfo): boolean {
   return (
@@ -141,9 +145,11 @@ function makeRouteNavigator(routeManager: RouteManager, store: Store): RouteNavi
     const navigation = ++navigations
 
     // Nothing to load: an unknown route (which the routed outlet answers with its 404) or a
-    // navigation that stays on the rendered route (hash- or search-only). Release the held view,
-    // which belongs to a navigation that will never commit, and move the URL.
-    if (!target || isSameRouteInfo(target, current)) {
+    // navigation that stays on the rendered route (hash- or search-only). The target is normalised
+    // the same way the store is, so a hash-only navigation on a page whose URL locale has no UI
+    // bundle still hits this fast path. Release the held view, which belongs to a navigation that
+    // will never commit, and move the URL.
+    if (!target || isSameRouteInfo(withDocumentLocale(target), current)) {
       if (selectRouteTransitionInfo(store.getState()) !== null) {
         store.dispatch(changeRouteTransitionInfo(null))
       }
