@@ -78,8 +78,8 @@ async function harnessWithCourseLocaleGap() {
 
 // The harness' i18next instance loads no resources. Load the `languages` keys the app's UI
 // bundles carry, scoped to the active test, so the fallback resolution can be asserted against
-// real keys. The instance's default namespace is `translation` (the app's `initI18n` uses
-// `common`), so the keys are registered there.
+// real keys. The harness' default namespace is `common` (mirroring the app's `initI18n`), so the
+// keys are registered there.
 //
 // The runtime `ResourceStore` exposes these bundle-level APIs, but the shipped i18next 26 d.ts
 // does not, so the minimal shape used here is stated explicitly.
@@ -91,13 +91,13 @@ interface ResourceStoreLike {
 async function withUiLanguageKeys(test: () => Promise<void>) {
   const resourceStore = i18n.services.resourceStore as unknown as ResourceStoreLike
   for (const lng of ['de', 'en'] as const) {
-    resourceStore.addResourceBundle(lng, 'translation', { languages: { de: 'Deutsch', en: 'English' } }, true)
+    resourceStore.addResourceBundle(lng, 'common', { languages: { de: 'Deutsch', en: 'English' } }, true)
   }
   try {
     await test()
   } finally {
     for (const lng of ['de', 'en'] as const) {
-      resourceStore.removeResourceBundle(lng, 'translation')
+      resourceStore.removeResourceBundle(lng, 'common')
     }
     await i18n.changeLanguage('ci')
   }

@@ -31,6 +31,9 @@ const theme = extendTheme(undefined, createTheme())
 
 await i18n.use(initReactI18next).init({
   lng: 'ci',
+  // The app's i18n instance defaults to the 'common' namespace (shared-core's initI18n); mirror it
+  // so tests that add 'common' resources see the translated strings, not the fallback children
+  defaultNS: 'common',
   interpolation: {
     escapeValue: false, // not needed for react!!
   },
