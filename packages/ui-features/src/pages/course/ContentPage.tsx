@@ -12,21 +12,21 @@ import type {
 } from '@innodoc/shared-core/types'
 import HastNode from '@innodoc/ui-content'
 import { Code } from '@innodoc/ui-design-system/misc'
-import { getContentIdField } from '@innodoc/ui-design-system/utils'
 import ErrorPage from '#pages/error'
 
 function ContentError({ contentType, contentIdValue }: ErrorProperties) {
-  const contentIdField = getContentIdField(contentType)
+  // The locale strings interpolate the id under its semantic name (pageSlug/sectionPath), so the
+  // value's key must match the string, not the content's own field name
+  const { i18nKey, contentIdKey } =
+    contentType === 'page'
+      ? { i18nKey: 'error.failedToLoadPage', contentIdKey: 'pageSlug' }
+      : { i18nKey: 'error.failedToLoadSection', contentIdKey: 'sectionPath' }
 
   return (
     <ErrorPage
       errorMessage={
-        <Trans
-          components={{ 1: <Code /> }}
-          i18nKey={`error.failedToLoad${contentType === 'page' ? 'Page' : 'Section'}`}
-          values={{ [contentIdField]: contentIdValue }}
-        >
-          {`Failed to load ${contentType}: <1>{{${contentIdField}}}</1>`}
+        <Trans components={{ 1: <Code /> }} i18nKey={i18nKey} values={{ [contentIdKey]: contentIdValue }}>
+          {`Failed to load ${contentType}: <1>{{${contentIdKey}}}</1>`}
         </Trans>
       }
     />

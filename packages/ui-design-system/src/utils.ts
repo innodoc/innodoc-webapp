@@ -1,4 +1,4 @@
-import type { ContentType, TranslatedSection } from '@innodoc/shared-core/types'
+import type { TranslatedSection } from '@innodoc/shared-core/types'
 
 /** Format section title */
 function formatSectionTitle(section: TranslatedSection, preferShort = false) {
@@ -11,9 +11,4 @@ function getSectionNumberFromOrder(section: TranslatedSection) {
   return section.order.map((n) => (n + 1).toString()).join('.')
 }
 
-/** Get content ID field for content type */
-function getContentIdField(type: ContentType) {
-  return type === 'page' ? 'slug' : 'path'
-}
-
-export { formatSectionTitle, getContentIdField, getSectionNumberFromOrder }
+export { formatSectionTitle, getSectionNumberFromOrder }
