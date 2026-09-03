@@ -22,7 +22,7 @@ const PAGE_LINK_LOCACTIONS = ['nav', 'footer'] as const
 const DEFAULT_SECTION_PATH_PREFIX = 'section'
 
 /** Default page path prefix */
-const DEFAULT_PAGE_PATH_PREFIX = 'section'
+const DEFAULT_PAGE_PATH_PREFIX = 'page'
 
 /** Default route name */
 const DEFAULT_ROUTE_NAME = 'app:index'
