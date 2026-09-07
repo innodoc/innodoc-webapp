@@ -30,6 +30,12 @@
     "lint:fix": "oxlint --fix .",
     "========= Production": "",
     "start": "NODE_ENV=production turbo run --filter=@innodoc/backend start",
+    "========= Release": "",
+    "release": "commit-and-tag-version",
+    "release:alpha": "commit-and-tag-version -p alpha",
+    "release:beta": "commit-and-tag-version -p beta",
+    "release:ga": "commit-and-tag-version -r 2.0.0",
+    "release:rc": "commit-and-tag-version -p rc",
     "========= Test": "",
     "test": "turbo run test --filter=!@innodoc/e2e --output-logs=new-only",
     "test:e2e": "turbo run test --filter=@innodoc/e2e --ui=stream",
@@ -72,7 +78,10 @@
     "pnpm": ">=10"
   },
   "commit-and-tag-version": {
-    "header": "# Changelog\n\nAll notable changes to this project will be documented in this file.\n"
+    "header": "# Changelog\n\nAll notable changes to this project will be documented in this file.\n",
+    "compareUrlFormat": "https://github.com/innodoc/innodoc-webapp/compare/{{previousTag}}...{{currentTag}}",
+    "commitUrlFormat": "https://github.com/innodoc/innodoc-webapp/commit/{{hash}}",
+    "issueUrlFormat": "https://github.com/innodoc/innodoc-webapp/issues/{{id}}"
   },
   "commitlint": {
     "extends": [
