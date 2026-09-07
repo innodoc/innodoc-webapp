@@ -4,16 +4,22 @@ on:
   push:
     branches:
       - dev
-      - main
   pull_request:
     branches:
-      - main
+      - dev
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/dev' }}
 
 jobs:
   checks:
     name: Checks and tests
     timeout-minutes: 30
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
@@ -48,6 +54,8 @@ jobs:
     name: E2E (${{ matrix.course-slug-mode }})
     timeout-minutes: 30
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
