@@ -1,0 +1,73 @@
+# Publishes a GitHub Release for each version tag a human pushes (docs/releasing.md).
+# Releases are cut by a human: a `v*` tag push only publishes release notes. This
+# workflow never bumps a version, never creates a tag, and never builds or deploys —
+# container image publishing is a separate, later decision, and this tree has no
+# Dockerfile to build from.
+
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+# The only workflow in this repo that needs write access: it creates the Release.
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Publish GitHub Release
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Same pnpm/node preamble as ci.yml. No `pnpm ci`: this job runs no workspace
+      # code — it only reads CHANGELOG.md and hands off to the release action.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - name: Extract release notes for ${{ github.ref_name }} from CHANGELOG.md
+        id: notes
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          # Version = tag with the leading v stripped (v2.0.0-alpha.0 -> 2.0.0-alpha.0).
+          # Print the section whose heading is `## [<version>]`, up to the next
+          # same-level `## ` heading, excluding both headings. `###` subheadings stay
+          # part of the section. Leaves an empty file when the changelog has no
+          # section for this version.
+          version="${TAG#v}"
+          awk -v version="$version" '
+            !in_section && index($0, "## [" version "]") == 1 { in_section = 1; next }
+            in_section && /^## / { exit }
+            in_section { print }
+          ' CHANGELOG.md > release-notes.md
+
+          # softprops/action-gh-release@v2 generates notes only from a truthy input
+          # string: 'true' turns generation on, anything else keeps it off. Flip it on
+          # exactly when the extraction found nothing; with an empty body the action
+          # publishes the GitHub-generated notes as-is, without pre-pending anything.
+          if [ -s release-notes.md ]; then
+            echo "generate_notes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "generate_notes=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          # Prerelease cuts (any version containing '-', i.e. -alpha/-beta/-rc) are
+          # listed as prereleases so GitHub does not report them as the latest stable.
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          body_path: release-notes.md
+          generate_release_notes: ${{ steps.notes.outputs.generate_notes }}
