@@ -3,7 +3,7 @@
   "workspaces": {
     ".": {
       "ignoreBinaries": ["dot"],
-      "ignoreDependencies": ["@commitlint/cli", "commit-and-tag-version", "oxlint-config-presets"]
+      "ignoreDependencies": ["oxlint-config-presets"]
     },
     "apps/backend": {
       "project": ["src/**/*.ts"],
