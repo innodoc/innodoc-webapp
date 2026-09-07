@@ -33,6 +33,12 @@ jobs:
       - name: Install dependencies
         run: pnpm ci
 
+      # The documented local workflow builds first (AGENTS.md): type-aware lint and depcruise
+      # both fail against unbuilt workspace deps. Turbo caches the result, and test already
+      # depends on build transitively, so nothing extra is compiled here.
+      - name: Build
+        run: pnpm build
+
       - name: Lint and format
         run: pnpm lint && pnpm fmt:check
 
