@@ -1,5 +1,12 @@
 {
   "globalDependencies": [".env*"],
+  "globalEnv": [
+    "INNODOC_PUBLIC_APP_ROOT",
+    "INNODOC_PUBLIC_COURSE_SLUG_MODE",
+    "INNODOC_PUBLIC_DEFAULT_COURSE_SLUG",
+    "INNODOC_PUBLIC_PAGE_PATH_PREFIX",
+    "INNODOC_PUBLIC_SECTION_PATH_PREFIX"
+  ],
   "ui": "tui",
   "tasks": {
     "build": {
