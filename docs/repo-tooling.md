@@ -2,6 +2,8 @@
 
 Three tools enforce monorepo hygiene, each with a different focus.
 
+Cutting a release is documented in `docs/releasing.md`.
+
 ## syncpack
 
 **Focus:** `package.json` consistency & formatting.
