@@ -1,9 +1,14 @@
 import { expect, test } from '@playwright/test'
 
+const courseSlugMode = process.env.INNODOC_PUBLIC_COURSE_SLUG_MODE ?? 'SINGLE'
+
+/** Slug of the course the mock API serves */
+const courseSlug = 'test-course'
+
 // The mock course home page carries a GFM pipe table and a strikethrough
 // (packages/shared-fixtures/.../make-pages.ts). Asserting both render proves the
 // full pipeline (markdown -> hast -> React) handles GFM, in mock mode with no DB.
-const homePath = '/en/page/home'
+const homePath = courseSlugMode === 'URL' ? `/en/${courseSlug}/page/home` : '/en/page/home'
 
 test('GFM pipe table renders as a real table with header and body cells', async ({ page }) => {
   await page.goto(homePath)

@@ -177,6 +177,11 @@ for (const [locale, expected] of Object.entries(cases) as [keyof typeof cases, L
 // browser's stated preference alone: a `?lng=` param and a stale `i18next` cookie used to out-vote
 // `Accept-Language`. Neither may, and detection stays read-only - no cookie is ever written.
 test('the root redirect follows Accept-Language, ignoring ?lng= and the i18next cookie', async ({ request }) => {
+  // The redirect target depends on the course slug mode: in URL mode the root points at the
+  // course index page (`/de`), in SINGLE mode at the default course's home page (`/de/page/home`)
+  const deTarget = courseSlugMode === 'URL' ? /^\/de$/u : /^\/de\//u
+  const enTarget = courseSlugMode === 'URL' ? /^\/en$/u : /^\/en\//u
+
   // A browser that prefers German asks for English through the query-string back door
   const byQuery = await request.get('/?lng=en', {
     maxRedirects: 0,
@@ -184,7 +189,7 @@ test('the root redirect follows Accept-Language, ignoring ?lng= and the i18next 
   })
 
   expect(byQuery.status()).toBe(302)
-  expect(locationPath(byQuery)).toMatch(/^\/de\//u)
+  expect(locationPath(byQuery)).toMatch(deTarget)
   expect(byQuery.headers()['set-cookie']).toBeUndefined()
 
   // A browser that prefers English carries a stale German cookie
@@ -194,21 +199,27 @@ test('the root redirect follows Accept-Language, ignoring ?lng= and the i18next 
   })
 
   expect(byCookie.status()).toBe(302)
-  expect(locationPath(byCookie)).toMatch(/^\/en\//u)
+  expect(locationPath(byCookie)).toMatch(enTarget)
   expect(byCookie.headers()['set-cookie']).toBeUndefined()
 
-  // Detection never steers a deep link: an ISO 639-1 code the course does not offer is corrected
-  // downstream to the course's first locale (the fixture course declares `en` first) - even for a
-  // browser that prefers the other published locale. If detection still reached deep links, a
-  // German browser would land in `/de`. (A tag outside the ISO 639-1 domain is not a route at all
-  // now, which is pinned on its own below.)
+  // Detection never steers a deep link. In SINGLE mode an ISO 639-1 code the course does not offer
+  // is corrected downstream to the course's first locale (the fixture course declares `en` first)
+  // - even for a browser that prefers the other published locale. In URL mode `/fr` is the course
+  // index page, not a course route, so the correction never runs: the document renders in the
+  // default locale. (A tag outside the ISO 639-1 domain is not a route at all now, which is pinned
+  // on its own below.)
   const deepLink = await request.get('/fr', {
     maxRedirects: 0,
     headers: { 'Accept-Language': 'de-DE,de;q=0.9' },
   })
 
-  expect(deepLink.status()).toBe(302)
-  expect(locationPath(deepLink)).toBe('/en')
+  if (courseSlugMode === 'URL') {
+    expect(deepLink.status()).toBe(200)
+    expect(await deepLink.text()).toContain('lang="en"')
+  } else {
+    expect(deepLink.status()).toBe(302)
+    expect(locationPath(deepLink)).toBe('/en')
+  }
 
   // A locale outside the ISO 639-1 domain is not a route: the deep link 404s instead of being
   // corrected or rendered, and nothing is written to the browser.
