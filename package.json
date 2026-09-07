@@ -1,6 +1,6 @@
 {
   "name": "innodoc",
-  "version": "0.2.3",
+  "version": "2.0.0-alpha.0",
   "private": true,
   "type": "module",
   "scripts": {
