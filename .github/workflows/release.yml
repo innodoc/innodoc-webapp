@@ -25,13 +25,13 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Same pnpm/node preamble as ci.yml. No `pnpm ci`: this job runs no workspace
       # code — it only reads CHANGELOG.md and hands off to the release action.
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
           cache: pnpm
@@ -53,7 +53,7 @@ jobs:
             in_section { print }
           ' CHANGELOG.md > release-notes.md
 
-          # softprops/action-gh-release@v2 generates notes only from a truthy input
+          # softprops/action-gh-release@v3 generates notes only from a truthy input
           # string: 'true' turns generation on, anything else keeps it off. Flip it on
           # exactly when the extraction found nothing; with an empty body the action
           # publishes the GitHub-generated notes as-is, without pre-pending anything.
@@ -64,7 +64,7 @@ jobs:
           fi
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           # Prerelease cuts (any version containing '-', i.e. -alpha/-beta/-rc) are
           # listed as prereleases so GitHub does not report them as the latest stable.
